@@ -4,13 +4,13 @@ name: az datashare
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **datashare** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az datashare** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands to manage datashare.
-description: For a summary of CLI commands for Data Share, see https://docs.microsoft.com/azure/data-share/azure-cli-references-for-data-share.
+  > This reference is part of the **datashare** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az datashare** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage Data Share.
+description: ''
 directCommands:
 - uid: az_datashare_create
   name: az datashare create
-  summary: Create a datashare.
+  summary: Create a share.
   description: ''
   syntax: >-
     az datashare create --account-name
@@ -20,15 +20,15 @@ directCommands:
                         [--share-kind {CopyBased, InPlace}]
                         [--terms]
   examples:
-  - summary: Create a datashare
-    syntax: az datashare create --account-name MyAccount --resource-group MyResourceGroup --description "share description" --share-kind "CopyBased" --terms "Confidential" --name MyShare
+  - summary: Shares_Create
+    syntax: az datashare create --account-name "Account1" --resource-group "SampleResourceGroup" --description "share description" --share-kind "CopyBased" --terms "Confidential" --name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --share-name -n
     summary: The name of the share.
     description: ''
   - isRequired: true
@@ -48,7 +48,7 @@ directCommands:
     description: ''
 - uid: az_datashare_delete
   name: az datashare delete
-  summary: Delete a datashare.
+  summary: Delete a share.
   description: ''
   syntax: >-
     az datashare delete --account-name
@@ -57,15 +57,15 @@ directCommands:
                         [--no-wait]
                         [--yes]
   examples:
-  - summary: Delete a datashare
-    syntax: az datashare delete --account-name MyAccount --resource-group MyResourceGroup --name MyShare
+  - summary: Shares_Delete
+    syntax: az datashare delete --account-name "Account1" --resource-group "SampleResourceGroup" --name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --share-name -n
     summary: The name of the share.
     description: ''
   - isRequired: true
@@ -81,14 +81,17 @@ directCommands:
     description: ''
 - uid: az_datashare_list
   name: az datashare list
-  summary: List datashares in an account.
+  summary: List shares in an account.
   description: ''
   syntax: >-
     az datashare list --account-name
                       --resource-group
+                      [--filter]
+                      [--orderby]
+                      [--skip-token]
   examples:
-  - summary: List datashares
-    syntax: az datashare list --account-name MyAccount --resource-group MyResourceGroup
+  - summary: Shares_ListByAccount
+    syntax: az datashare list --account-name "Account1" --resource-group "SampleResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --account-name
@@ -98,25 +101,145 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-- uid: az_datashare_show
-  name: az datashare show
-  summary: Show a datashare.
+  optionalParameters:
+  - name: --filter
+    summary: Filters the results using OData syntax.
+    description: ''
+  - name: --orderby
+    summary: Sorts the results using OData syntax.
+    description: ''
+  - name: --skip-token
+    summary: Continuation Token.
+    description: ''
+- uid: az_datashare_list-synchronization
+  name: az datashare list-synchronization
+  summary: List synchronizations of a share.
   description: ''
   syntax: >-
-    az datashare show --account-name
-                      --name
-                      --resource-group
+    az datashare list-synchronization --account-name
+                                      --name
+                                      --resource-group
+                                      [--filter]
+                                      [--orderby]
+                                      [--skip-token]
   examples:
-  - summary: Show a datashare
-    syntax: az datashare show --account-name MyAccount --resource-group MyResourceGroup --name MyShare
+  - summary: Shares_ListSynchronizations
+    syntax: az datashare list-synchronization --account-name "Account1" --resource-group "SampleResourceGroup" --name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --share-name -n
     summary: The name of the share.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --filter
+    summary: Filters the results using OData syntax.
+    description: ''
+  - name: --orderby
+    summary: Sorts the results using OData syntax.
+    description: ''
+  - name: --skip-token
+    summary: Continuation token.
+    description: ''
+- uid: az_datashare_list-synchronization-detail
+  name: az datashare list-synchronization-detail
+  summary: List synchronization details.
+  description: ''
+  syntax: >-
+    az datashare list-synchronization-detail --account-name
+                                             --name
+                                             --resource-group
+                                             [--consumer-email]
+                                             [--consumer-name]
+                                             [--consumer-tenant-name]
+                                             [--duration-ms]
+                                             [--end-time]
+                                             [--filter]
+                                             [--message]
+                                             [--orderby]
+                                             [--skip-token]
+                                             [--start-time]
+                                             [--status]
+                                             [--synchronization-id]
+  examples:
+  - summary: Shares_ListSynchronizationDetails
+    syntax: az datashare list-synchronization-detail --account-name "Account1" --resource-group "SampleResourceGroup" --name "Share1" --synchronization-id "7d0536a6-3fa5-43de-b152-3d07c4f6b2bb"
+  requiredParameters:
+  - isRequired: true
+    name: --account-name
+    summary: The name of the share account.
+    description: ''
+  - isRequired: true
+    name: --name --share-name -n
+    summary: The name of the share.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --consumer-email
+    summary: Email of the user who created the synchronization.
+    description: ''
+  - name: --consumer-name
+    summary: Name of the user who created the synchronization.
+    description: ''
+  - name: --consumer-tenant-name
+    summary: Tenant name of the consumer who created the synchronization.
+    description: ''
+  - name: --duration-ms
+    summary: Synchronization duration.
+    description: ''
+  - name: --end-time
+    summary: End time of synchronization.
+    description: ''
+  - name: --filter
+    summary: Filters the results using OData syntax.
+    description: ''
+  - name: --message
+    summary: Message of synchronization.
+    description: ''
+  - name: --orderby
+    summary: Sorts the results using OData syntax.
+    description: ''
+  - name: --skip-token
+    summary: Continuation token.
+    description: ''
+  - name: --start-time
+    summary: Start time of synchronization.
+    description: ''
+  - name: --status
+    summary: Raw Status.
+    description: ''
+  - name: --synchronization-id
+    summary: Synchronization id.
+    description: ''
+- uid: az_datashare_show
+  name: az datashare show
+  summary: Get a share.
+  description: ''
+  syntax: >-
+    az datashare show --account-name
+                      --name
+                      --resource-group
+  examples:
+  - summary: Shares_Get
+    syntax: az datashare show --account-name "Account1" --resource-group "SampleResourceGroup" --name "Share1"
+  requiredParameters:
+  - isRequired: true
+    name: --account-name
+    summary: The name of the share account.
+    description: ''
+  - isRequired: true
+    name: --name --share-name -n
+    summary: The name of the share to retrieve.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -138,16 +261,16 @@ directCommands:
                       [--timeout]
                       [--updated]
   examples:
-  - summary: Pause executing next line of CLI script until the datashare is successfully provisioned.
-    syntax: az datashare wait --account-name MyAccount --resource-group MyResourceGroup --name MyShare --created
+  - summary: Pause executing next line of CLI script until the datashare is successfully deleted.
+    syntax: az datashare wait --account-name "Account1" --resource-group "SampleResourceGroup" --name "Share1" --deleted
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: The name of the share.
+    name: --name --share-name -n
+    summary: The name of the share to retrieve.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -185,66 +308,67 @@ commands:
 - az_datashare_account_show
 - az_datashare_account_update
 - az_datashare_account_wait
-- az_datashare_consumer
-- az_datashare_consumer_dataset-mapping
-- az_datashare_consumer_dataset-mapping_create
-- az_datashare_consumer_dataset-mapping_delete
-- az_datashare_consumer_dataset-mapping_list
-- az_datashare_consumer_dataset-mapping_show
-- az_datashare_consumer_invitation
-- az_datashare_consumer_invitation_list
-- az_datashare_consumer_invitation_reject
-- az_datashare_consumer_invitation_show
-- az_datashare_consumer_share-subscription
-- az_datashare_consumer_share-subscription_create
-- az_datashare_consumer_share-subscription_delete
-- az_datashare_consumer_share-subscription_list
-- az_datashare_consumer_share-subscription_list-source-dataset
-- az_datashare_consumer_share-subscription_list-source-share-synchronization-setting
-- az_datashare_consumer_share-subscription_show
-- az_datashare_consumer_share-subscription_synchronization
-- az_datashare_consumer_share-subscription_synchronization_cancel
-- az_datashare_consumer_share-subscription_synchronization_list
-- az_datashare_consumer_share-subscription_synchronization_list-detail
-- az_datashare_consumer_share-subscription_synchronization_start
-- az_datashare_consumer_share-subscription_synchronization_wait
-- az_datashare_consumer_share-subscription_wait
-- az_datashare_consumer_trigger
-- az_datashare_consumer_trigger_create
-- az_datashare_consumer_trigger_delete
-- az_datashare_consumer_trigger_list
-- az_datashare_consumer_trigger_show
-- az_datashare_consumer_trigger_wait
+- az_datashare_consumer-invitation
+- az_datashare_consumer-invitation_list-invitation
+- az_datashare_consumer-invitation_reject-invitation
+- az_datashare_consumer-invitation_show
+- az_datashare_consumer-source-data-set
+- az_datashare_consumer-source-data-set_list
 - az_datashare_create
-- az_datashare_dataset
-- az_datashare_dataset_create
-- az_datashare_dataset_delete
-- az_datashare_dataset_list
-- az_datashare_dataset_show
-- az_datashare_dataset_wait
+- az_datashare_data-set
+- az_datashare_data-set_create
+- az_datashare_data-set_delete
+- az_datashare_data-set_list
+- az_datashare_data-set_show
+- az_datashare_data-set_wait
+- az_datashare_data-set-mapping
+- az_datashare_data-set-mapping_create
+- az_datashare_data-set-mapping_delete
+- az_datashare_data-set-mapping_list
+- az_datashare_data-set-mapping_show
 - az_datashare_delete
+- az_datashare_email-registration
+- az_datashare_email-registration_activate-email
+- az_datashare_email-registration_register-email
 - az_datashare_invitation
 - az_datashare_invitation_create
 - az_datashare_invitation_delete
 - az_datashare_invitation_list
 - az_datashare_invitation_show
 - az_datashare_list
+- az_datashare_list-synchronization
+- az_datashare_list-synchronization-detail
 - az_datashare_provider-share-subscription
+- az_datashare_provider-share-subscription_adjust
 - az_datashare_provider-share-subscription_list
 - az_datashare_provider-share-subscription_reinstate
 - az_datashare_provider-share-subscription_revoke
 - az_datashare_provider-share-subscription_show
 - az_datashare_provider-share-subscription_wait
+- az_datashare_share-subscription
+- az_datashare_share-subscription_cancel-synchronization
+- az_datashare_share-subscription_create
+- az_datashare_share-subscription_delete
+- az_datashare_share-subscription_list
+- az_datashare_share-subscription_list-source-share-synchronization-setting
+- az_datashare_share-subscription_list-synchronization
+- az_datashare_share-subscription_list-synchronization-detail
+- az_datashare_share-subscription_show
+- az_datashare_share-subscription_synchronize
+- az_datashare_share-subscription_wait
 - az_datashare_show
-- az_datashare_synchronization
-- az_datashare_synchronization_list
-- az_datashare_synchronization_list-detail
 - az_datashare_synchronization-setting
 - az_datashare_synchronization-setting_create
 - az_datashare_synchronization-setting_delete
 - az_datashare_synchronization-setting_list
 - az_datashare_synchronization-setting_show
 - az_datashare_synchronization-setting_wait
+- az_datashare_trigger
+- az_datashare_trigger_create
+- az_datashare_trigger_delete
+- az_datashare_trigger_list
+- az_datashare_trigger_show
+- az_datashare_trigger_wait
 - az_datashare_wait
 globalParameters:
 - name: --debug
@@ -262,4 +386,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: For a summary of CLI commands for Data Share, see https://docs.microsoft.com/azure/data-share/azure-cli-references-for-data-share.
+  description: Manage Data Share.
