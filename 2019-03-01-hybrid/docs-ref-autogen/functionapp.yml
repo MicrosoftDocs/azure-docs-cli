@@ -27,7 +27,7 @@ directCommands:
                           [--os-type {Linux, Windows}]
                           [--plan]
                           [--role]
-                          [--runtime {custom, dotnet, dotnet-isolated, java, node, powershell, python}]
+                          [--runtime]
                           [--runtime-version]
                           [--scope]
                           [--subnet]
@@ -106,11 +106,10 @@ directCommands:
     summary: Role name or id the system assigned identity will have.
     description: ''
   - name: --runtime
-    parameterValueGroup: custom, dotnet, dotnet-isolated, java, node, powershell, python
-    summary: The functions runtime stack.
+    summary: The functions runtime stack. Use "az functionapp list-runtimes" to check supported runtimes and versions.
     description: ''
   - name: --runtime-version
-    summary: 'The version of the functions runtime stack. Allowed values for each --runtime are: dotnet-isolated -> [5.0 (preview), 6.0], node -> [12, 14, 16 (preview)], java -> [8, 11], powershell -> [7.0], python -> [3.7, 3.8, 3.9].'
+    summary: The version of the functions runtime stack. The functions runtime stack. Use "az functionapp list-runtimes" to check supported runtimes and versions.
     description: ''
   - name: --scope
     summary: Scope that the system assigned identity can access.
@@ -259,6 +258,22 @@ directCommands:
   description: ''
   syntax: az functionapp list-consumption-locations [--subscription]
   optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+- uid: az_functionapp_list-runtimes
+  name: az functionapp list-runtimes
+  summary: List available built-in stacks which can be used for function apps.
+  description: ''
+  syntax: >-
+    az functionapp list-runtimes [--os {linux, windows}]
+                                 [--subscription]
+  optionalParameters:
+  - name: --os --os-type
+    parameterValueGroup: linux, windows
+    summary: Limit the output to just windows or linux runtimes.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
@@ -523,6 +538,7 @@ commands:
 - az_functionapp_keys_set
 - az_functionapp_list
 - az_functionapp_list-consumption-locations
+- az_functionapp_list-runtimes
 - az_functionapp_log
 - az_functionapp_log_deployment
 - az_functionapp_log_deployment_list
@@ -559,5 +575,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/26/2022
+  ms.date: 02/11/2022
   description: Manage function apps. To install the Azure Functions Core tools see https://github.com/Azure/azure-functions-core-tools.

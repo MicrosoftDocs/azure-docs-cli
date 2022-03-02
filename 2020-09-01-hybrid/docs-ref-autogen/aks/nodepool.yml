@@ -37,6 +37,7 @@ directCommands:
                         [--os-type]
                         [--ppg]
                         [--priority {Regular, Spot}]
+                        [--scale-down-mode {Deallocate, Delete}]
                         [--snapshot-id]
                         [--spot-max-price]
                         [--subscription]
@@ -134,7 +135,7 @@ directCommands:
     summary: Public IP prefix ID used to assign public IPs to VMSS nodes.
     description: ''
   - name: --node-taints
-    summary: The node taints for the node pool. You can't change the node taints through CLI after the node pool is created.
+    summary: The node taints for the node pool.
     description: ''
   - name: --node-vm-size -s
     summary: Size of Virtual Machines to create as Kubernetes nodes.
@@ -152,6 +153,11 @@ directCommands:
     defaultValue: Regular
     parameterValueGroup: Regular, Spot
     summary: The priority of the node pool.
+    description: ''
+  - name: --scale-down-mode
+    defaultValue: Delete
+    parameterValueGroup: Deallocate, Delete
+    summary: Describe how VMs are added to or removed from nodepools.
     description: ''
   - name: --snapshot-id
     summary: The source snapshot id used to create this nodepool.
@@ -237,7 +243,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_list
   name: az aks nodepool list
-  summary: List node pools in the managed Kubernetes cluster.
+  summary: List node pools in the managed Kubernetes cluster. To get list of nodes in the cluster run `kubectl get nodes` command.
   description: ''
   syntax: >-
     az aks nodepool list --cluster-name
@@ -403,6 +409,8 @@ directCommands:
                            [--min-count]
                            [--mode {System, User}]
                            [--no-wait]
+                           [--node-taints]
+                           [--scale-down-mode {Deallocate, Delete}]
                            [--subscription]
                            [--tags]
                            [--update-cluster-autoscaler]
@@ -454,6 +462,13 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --node-taints
+    summary: The node taints for the node pool.
+    description: ''
+  - name: --scale-down-mode
+    parameterValueGroup: Deallocate, Delete
+    summary: Describe how VMs are added to or removed from nodepools.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -544,5 +559,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/26/2022
+  ms.date: 02/24/2022
   description: Commands to manage node pools in Kubernetes kubernetes cluster.

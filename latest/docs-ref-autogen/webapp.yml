@@ -52,6 +52,7 @@ directCommands:
                      [--deployment-source-url]
                      [--docker-registry-server-password]
                      [--docker-registry-server-user]
+                     [--https-only {false, true}]
                      [--multicontainer-config-file]
                      [--multicontainer-config-type {COMPOSE, KUBE}]
                      [--role]
@@ -65,12 +66,12 @@ directCommands:
   examples:
   - summary: Create a web app with the default configuration.
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName
-  - summary: Create a web app with a Java 11 runtime using '|' delimiter.
+  - summary: Create a web app with a Java 11 runtime using '|' delimiter. (not recommended for powershell; use the ":" delimiter instead)
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java|11|Java SE|11"
   - summary: Create a web app with a Java 11 runtime using ':' delimiter.
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java:11:Java SE:11"
   - summary: Create a web app with a NodeJS 10.14 runtime and deployed from a local git repository.
-    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node|10.14" --deployment-local-git
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node|12LTS" --deployment-local-git
   - summary: Create a web app with an image from DockerHub.
     syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i nginx
   - summary: Create a web app with an image from a private DockerHub registry.
@@ -115,6 +116,10 @@ directCommands:
   - name: --docker-registry-server-user -s
     summary: The container registry server username.
     description: ''
+  - name: --https-only
+    parameterValueGroup: false, true
+    summary: Redirect all traffic made to an app using HTTP to HTTPS.
+    description: ''
   - name: --multicontainer-config-file
     summary: Linux only. Config file for multicontainer apps. (local or remote).
     description: ''
@@ -127,7 +132,7 @@ directCommands:
     summary: Role name or id the system assigned identity will have.
     description: ''
   - name: --runtime -r
-    summary: 'Canonicalized web runtime in the format of Framework|Version, e.g. "PHP|7.2". Allowed delimiters: "|" or ":". Use `az webapp list-runtimes` for available list.'
+    summary: 'Canonicalized web runtime in the format of Framework:Version, e.g. "PHP:7.2". Allowed delimiters: "|" or ":". If using powershell, please use the ":" delimiter or be sure to properly escape the "|" character. Use `az webapp list-runtimes` for available list.'
     description: ''
   - name: --scope
     summary: Scope that the system assigned identity can access.
@@ -350,10 +355,15 @@ directCommands:
   description: ''
   syntax: >-
     az webapp list-runtimes [--linux]
+                            [--os {linux, windows}]
                             [--subscription]
   optionalParameters:
   - name: --linux
     summary: List runtime stacks for linux based web apps.
+    description: ''
+  - name: --os --os-type
+    parameterValueGroup: linux, windows
+    summary: Limit the output to just windows or linux runtimes.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -571,7 +581,7 @@ directCommands:
     syntax: az webapp up
   - summary: Create a web app with a specified name
     syntax: az webapp up -n MyUniqueAppName
-  - summary: Create a web app with a specified name and a Java 11 runtime using '|' delimiter
+  - summary: Create a web app with a specified name and a Java 11 runtime using '|' delimiter (not recommended for powershell; use the ":" delimiter instead)
     syntax: az webapp up -n MyUniqueAppName --runtime "java|11|Java SE|11"
   - summary: Create a web app with a specified name and a Java 11 runtime using ':' delimiter
     syntax: az webapp up -n MyUniqueAppName --runtime "java:11:Java SE:11"
@@ -617,7 +627,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --runtime -r
-    summary: 'Canonicalized web runtime in the format of Framework|Version, e.g. "PHP|7.2". Allowed delimiters: "|" or ":". Use `az webapp list-runtimes` for available list.'
+    summary: 'Canonicalized web runtime in the format of Framework:Version, e.g. "PHP:7.2". Allowed delimiters: "|" or ":". If using powershell, please use the ":" delimiter or be sure to properly escape the "|" character. Use `az webapp list-runtimes` for available list.'
     description: ''
   - name: --sku
     parameterValueGroup: B1, B2, B3, D1, F1, FREE, I1, I1v2, I2, I2v2, I3, I3v2, P1V2, P1V3, P2V2, P2V3, P3V2, P3V3, PC2, PC3, PC4, S1, S2, S3, SHARED, WS1, WS2, WS3
