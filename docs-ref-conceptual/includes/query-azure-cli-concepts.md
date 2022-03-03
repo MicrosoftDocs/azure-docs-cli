@@ -9,11 +9,7 @@ ms.custom: devx-track-azurecli
 
 Azure CLI uses queries to select and modify the output of Azure CLI commands. Queries are executed client-side on the Azure CLI command's return value. Queries are executed on the JSON output before any display formatting.
 
-The escape characters needed in queries differ for different environments. It is recommended to run queries in Azure CloudShell and cmd because these shells require less escape characters. To ensure the query examples are syntactically correct, select the tab for the shell you are using.
-
-> [!NOTE]
->
-> When using Azure CLI in PowerShell on Windows, some extra escaping may be necessary for the query argument. Please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md) for more detail.
+The escape characters needed in queries differ for different environments. It is recommended to run queries in Azure CloudShell or cmd because these shells require less escape characters. To ensure the query examples are syntactically correct, select the tab for the shell you are using.
 
 ## Dictionary and list CLI results
 
@@ -112,74 +108,37 @@ az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publi
 ]
 ```
 
-## Get a single value
-
-A common case is that you need to only get _one_ value out of a CLI command, such as an Azure resource ID, a resource name, a username, or a password. In that case, you also often want to store the value in a local environment variable. To get a single property, first make
-sure that you're only getting one property out of the query. Modifying the last example to get only the admin username:
-
-## [Cmd](#tab/cmd)
-
-```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
-```
-
-## [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o json
-```
-
-## [Bash](#tab/bash)
-
-```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json
-```
----
-
-
-
-```JSON
-"azureuser"
-```
-
-This looks like a valid single value, but note that the `"` characters are returned as part of the output. This indicates
-that the object is a JSON string. It's important to note that when you assign this value directly as output from the command
-to an environment variable, the quotes may __not__ be interpreted by the shell:
-
-```azurecli
-USER=$(az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json)
-echo $USER
-```
-
-```output
-"azureuser"
-```
-
-This is almost certainly not what you want. In this case, you want to use an output format which doesn't enclose returned values with
-type information. The best output option that the CLI offers for this purpose is `tsv`, tab-separated values. In particular, when retrieving
-a value that's only a single value (not a dictionary or list), `tsv` output is guaranteed to be unquoted.
-
-```azurecli-interactive
-az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o tsv
-```
-
-```output
-azureuser
-```
-
-For more information about the `tsv` output format, see [Output formats - TSV output format](format-output-azure-cli.md#tsv-output-format)
-
 ## Query Boolean values
 
 Querying Boolean values is slightly different.  There are two options:
 
-```azurecli
+## [Cmd](#tab/cmd)
+```azurecli-interactive
+REM Boolean values are assumed to be true, so this syntax returns the current default subscription.
+az account list --query "[?isDefault]"
+
+# If you want a false value, use an escape character.
+az account list --query "[?isDefault == ``false``]"
+```
+
+## [PowerShell](#tab/powershell)
+```azurecli-interactive
 # Boolean values are assumed to be true, so this syntax returns the current default subscription.
 az account list --query "[?isDefault]"
 
 # If you want a false value, use an escape character.
 az account list --query "[?isDefault == ``false``]"
 ```
+
+## [Bash](#tab/bash)
+```azurecli-interactive
+# Boolean values are assumed to be true, so this syntax returns the current default subscription.
+az account list --query "[?isDefault]"
+
+# If you want a false value, use an escape character.
+az account list --query "[?isDefault == ``false``]"
+```
+---
 
 ## Get multiple values
 
@@ -385,6 +344,76 @@ az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.ma
 For large arrays, it may be faster to apply the filter before selecting data.
 
 See the [JMESPath specification - Built-in Functions](http://jmespath.org/specification.html#built-in-functions) for the full list of functions.
+
+## Formatting Query Results
+
+The Azure CLI uses JSON as its default output format, however different output formats may better suit a query depending on its purpose and results.
+
+### TSV Output Format
+
+The `tsv` output format returns tab- and newline-separated values without additional formatting, keys, or other symbols. This is useful when the output is consumed by another command.
+
+One use case for `tsv` formatting is queries that retrieve a value out of a CLI command, such as an Azure resource ID or resource name, and store the value in a local environment variable. By default the results are returned in JSON format. This may be an issue when dealing with JSON strings which are enclosed in `"` characters. The quotes may __not__ be interpreted by the shell if the command output is directly assigned to the environment variable. This can be seen in the following example that assigns a query result to an environment variable:
+
+## [Cmd](#tab/cmd)
+
+NOTE SYNTAX IS NOT CORRECT
+
+```azurecli-interactive
+set USER=$(az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json)
+echo %USER%
+```
+
+## [PowerShell](#tab/powershell)
+
+```powershell
+USER=$(az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json)
+echo $USER
+```
+
+## [Bash](#tab/bash)
+
+```azurecli-interactive
+USER=$(az vm show -g QueryDemo -n TestVM --query 'osProfile.adminUsername' -o json)
+echo $USER
+```
+---
+
+
+```JSON
+"azureuser"
+```
+
+To prevent enclosing return values with type information use `tsv`formatting as demonstrated in the following example query:
+
+## [Cmd](#tab/cmd)
+
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o tsv
+```
+
+## [PowerShell](#tab/powershell)
+
+```powershell
+az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o tsv
+```
+
+## [Bash](#tab/bash)
+
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query "osProfile.adminUsername" -o tsv
+```
+---
+
+```output
+azureuser
+```
+
+### Table Output Format
+
+The `table` format prints output as an ASCII table, making it easy to read and scan. Nested objects are not 
+
+For more information about output formats, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
 
 ## Change output
 
