@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 03/08/2022
+ms.date: 03/03/2022
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,7 +14,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 # Azure CLI release notes
 
-## March 08, 2022
+## March 03, 2022
 
 Version 2.34.1
 
