@@ -99,7 +99,7 @@ az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publi
 ```
 ---
 
-```json
+```output
 [
   {
     "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMobZNJTqgjWn/IB5xlilvE4Y+BMYpqkDnGRUcA0g9BYPgrGSQquCES37v2e3JmpfDPHFsaR+CPKlVr2GoVJMMHeRcMJhj50ZWq0hAnkJBhlZVWy8S7dwdGAqPyPmWM2iJDCVMVrLITAJCno47O4Ees7RCH6ku7kU86b1NOanvrNwqTHr14wtnLhgZ0gQ5GV1oLWvMEVg1YFMIgPRkTsSQKWCG5lLqQ45aU/4NMJoUxGyJTL9i8YxMavaB1Z2npfTQDQo9+womZ7SXzHaIWC858gWNl9e5UFyHDnTEDc14hKkf1CqnGJVcCJkmSfmrrHk/CkmF0ZT3whTHO1DhJTtV stramer@contoso",
@@ -108,48 +108,28 @@ az vm show -g QueryDemo -n TestVM --query osProfile.linuxConfiguration.ssh.publi
 ]
 ```
 
-## Query Boolean values
-
-Querying Boolean values is slightly different.  There are two options:
-
-## [Cmd](#tab/cmd)
-```azurecli-interactive
-REM Boolean values are assumed to be true, so this syntax returns the current default subscription.
-az account list --query "[?isDefault]"
-
-# If you want a false value, use an escape character.
-az account list --query "[?isDefault == ``false``]"
-```
-
-## [PowerShell](#tab/powershell)
-```azurecli-interactive
-# Boolean values are assumed to be true, so this syntax returns the current default subscription.
-az account list --query "[?isDefault]"
-
-# If you want a false value, use an escape character.
-az account list --query "[?isDefault == ``false``]"
-```
-
-## [Bash](#tab/bash)
-```azurecli-interactive
-# Boolean values are assumed to be true, so this syntax returns the current default subscription.
-az account list --query "[?isDefault]"
-
-# If you want a false value, use an escape character.
-az account list --query "[?isDefault == ``false``]"
-```
----
-
 ## Get multiple values
 
 To get more than one property, put expressions in square brackets  `[ ]` (a __multiselect list__) as a comma-separated list. To get the VM name,
 admin user, and SSH key all at once use the command:
 
-```azurecli-interactive
+## [Cmd](#tab/cmd)
+```cmd
 az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]' -o json
 ```
 
-```json
+## [PowerShell](#tab/powershell)
+```powershell
+az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]' -o json
+```
+
+## [Bash](#tab/bash)
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query '[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]' -o json
+```
+---
+
+```output
 [
   "TestVM",
   "azureuser",
@@ -166,11 +146,24 @@ The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
 `displayName` will be the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modifying the example from the
 last section by changing the multiselect list to a hash:
 
-```azurecli-interactive
+
+## [Cmd](#tab/cmd)
+```cmd
 az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }" -o json
 ```
 
-```json
+## [PowerShell](#tab/powershell)
+```powershell
+az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }" -o json
+```
+
+## [Bash](#tab/bash)
+```azurecli-interactive
+az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }" -o json
+```
+---
+
+```output
 {
   "VMName": "TestVM",
   "admin": "azureuser",
@@ -180,8 +173,7 @@ az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUs
 
 ## Get properties in an array
 
-An array has no properties of its own, but it can be indexed. This feature is shown in the last example with the expression
-`publicKeys[0]`, which gets the first element of the `publicKeys` array. There's no guarantee CLI output is ordered, so avoid using
+An array has no properties of its own, but it can be indexed. This feature is shown in the last example with the expression `publicKeys[0]`, which gets the first element of the `publicKeys` array. There's no guarantee CLI output is ordered, so avoid using
 indexing unless you're sure of the order or don't care what element you get. To access the properties of elements in an array,
 you do one of two operations: _flattening_ and _filtering_. This section covers how to flatten an array.
 
@@ -259,19 +251,57 @@ az vm show -g QueryDemo -n TestVM --query "{VMName:name, admin:osProfile.adminUs
 ## Filter arrays
 
 The other operation used to get data from an array is _filtering_. Filtering is done with the `[?...]` JMESPath operator.
-This operator takes a predicate as its contents. A predicate is any statement that can be evaluated
-to either `true` or `false`. Expressions where the predicate evaluates to `true` are included in the output.
+This operator takes a predicate as its contents. A predicate is any statement, including Boolean properties, that can be evaluated to either `true` or `false`. Expressions where the predicate evaluates to `true` are included in the output.
 
-JMESPath offers the standard comparison and logical operators. These include `<`, `<=`, `>`, `>=`, `==`, and `!=`.
-JMESPath also supports logical and (`&&`), or (`||`), and not (`!`). Expressions can be grouped within parenthesis, allowing for more
-complex predicate expressions. For the full details on predicates and logical operations, see the
-[JMESPath specification](http://jmespath.org/specification.html).
+The following two queries demonstrate how to list all VMs in a resource group whose `osProfile.disablePasswordAuthentication` property are true and false respectively.
 
-In the last section, we flattened an array to get the complete list of all VMs in a resource group. Using filters, this output can be restricted to only Linux VMs:
+## [Cmd](#tab/cmd)
+```azurecli-interactive
+REM Boolean values are assumed to be true, so you can directly evaluate the osProfile.disablePasswordAuthentication property.
+az vm list -g QueryDemo --query "[?osProfile.disablePasswordAuthentication]"
 
+# To check if a Boolean property is false, use an comparison operator.
+az vm list -g QueryDemo --query "[?osProfile.disablePasswordAuthentication == `false`]"
+```
+
+## [PowerShell](#tab/powershell)
+```azurecli-interactive
+# Boolean values are assumed to be true, so you can directly evaluate the osProfile.disablePasswordAuthentication property.
+az vm list -g QueryDemo --query "[?osProfile.disablePasswordAuthentication]"
+
+# To check if a Boolean property is false, use an comparison operator.
+az vm list -g QueryDemo --query "[?osProfile.disablePasswordAuthentication == ``false``]"
+```
+
+## [Bash](#tab/bash)
+```azurecli-interactive
+# Boolean values are assumed to be true, so you can directly evaluate the osProfile.disablePasswordAuthentication property.
+az vm list -g QueryDemo --query "[?osProfile.disablePasswordAuthentication]"
+
+# To check if a Boolean property is false, use an comparison operator.
+az vm list -g QueryDemo --query "[?osProfile.disablePasswordAuthentication == ``false``]"
+```
+---
+
+JMESPath offers the standard comparison and logical operators. These include `<`, `<=`, `>`, `>=`, `==`, and `!=`. JMESPath also supports logical and (`&&`), or (`||`), and not (`!`). Expressions can be grouped within parenthesis, allowing for more complex predicate expressions. For the full details on predicates and logical operations, see the [JMESPath specification](http://jmespath.org/specification.html).
+
+In the last section, you flattened an array to get the complete list of all VMs in a resource group. Using filters, this output can be restricted to only Linux VMs:
+
+## [Cmd](#tab/cmd)
+```cmd
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
+```
+
+## [PowerShell](#tab/powershell)
+```powershell
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
+```
+
+## [Bash](#tab/bash)
 ```azurecli-interactive
 az vm list -g QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
 ```
+---
 
 ```output
 Name    Admin
@@ -280,11 +310,23 @@ Test-2  sttramer
 TestVM  azureuser
 ```
 
-We can also filter numerical values such as the OS disk size. This example demonstrates how to filter the list of VMs to only display those with a disk size of 10GB or more .
+You can also filter numerical values such as the OS disk size. This example demonstrates how to filter the list of VMs to display those with a disk size equal to or larger than 10GB.
 
+## [Cmd](#tab/cmd)
+```cmd
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`30\`].{Name:name,  admin:osProfile.adminUsername, Disc Size:storageProfile.osDisk.diskSizeGb }" --output table
+```
+
+## [PowerShell](#tab/powershell)
+```powershell
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`30\`].{Name:name,  admin:osProfile.adminUsername, Disc Size:storageProfile.osDisk.diskSizeGb }" --output table
+```
+
+## [Bash](#tab/bash)
 ```azurecli-interactive
 az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`30\`].{Name:name,  admin:osProfile.adminUsername, Disc Size:storageProfile.osDisk.diskSizeGb }" --output table
 ```
+---
 
 ```output
 Name    Admin
@@ -303,9 +345,21 @@ JMESPath also has built-in functions that can help with filtering. One such func
 which checks to see if a string contains a substring. Expressions are evaluated before calling the function, so the first
 argument can be a full JMESPath expression. The next example finds all VMs using SSD storage for their OS disk:
 
+## [Cmd](#tab/cmd)
+```cmd
+az vm list -g QueryDemo --query "[? contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}" -o json
+```
+
+## [PowerShell](#tab/powershell)
+```powershell
+az vm list -g QueryDemo --query "[? contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}" -o json
+```
+
+## [Bash](#tab/bash)
 ```azurecli-interactive
 az vm list -g QueryDemo --query "[? contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}" -o json
 ```
+---
 
 ```json
 [
@@ -320,13 +374,24 @@ az vm list -g QueryDemo --query "[? contains(storageProfile.osDisk.managedDisk.s
 ]
 ```
 
-This query is a little long. The `storageProfile.osDisk.managedDisk.storageAccountType` key
-is mentioned twice, and rekeyed in the output. One way to shorten it is to apply the filter
+This query is a little long. The `storageProfile.osDisk.managedDisk.storageAccountType` key is mentioned twice, and rekeyed in the output. One way to shorten it is to apply the filter
 after flattening and selecting data.
 
+## [Cmd](#tab/cmd)
+```cmd
+az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[? contains(Storage,'SSD')]" -o json
+```
+
+## [PowerShell](#tab/powershell)
+```powershell
+az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[? contains(Storage,'SSD')]" -o json
+```
+
+## [Bash](#tab/bash)
 ```azurecli-interactive
 az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[? contains(Storage,'SSD')]" -o json
 ```
+---
 
 ```json
 [
@@ -421,9 +486,24 @@ JMESPath functions also have another purpose, which is to operate on the results
 For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later
 as part of a function. The next example shows how to sort a VM list by OS disk size:
 
+## [Cmd](#tab/cmd)
+
+```cmd
+az vm list -g QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
+```
+
+## [PowerShell](#tab/powershell)
+
+```powershell
+az vm list -g QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
+```
+
+## [Bash](#tab/bash)
+
 ```azurecli-interactive
 az vm list -g QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
 ```
+---
 
 ```output
 Name     Size
@@ -440,7 +520,24 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 To start experimenting with JMESPath, the [JMESPath-terminal](https://github.com/jmespath/jmespath.terminal) Python package offers an interactive environment to work
 with queries. Data is piped as input, and then queries are written and run in the editor.
 
+## [Cmd](#tab/cmd)
+
+```cmd
+pip install jmespath-terminal
+az vm list --output json | jpterm
+```
+
+## [PowerShell](#tab/powershell)
+
+```powershell
+pip install jmespath-terminal
+az vm list --output json | jpterm
+```
+
+## [Bash](#tab/bash)
+
 ```azurecli
 pip install jmespath-terminal
 az vm list --output json | jpterm
 ```
+---
