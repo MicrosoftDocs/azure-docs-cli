@@ -16,6 +16,7 @@ directCommands:
                       [--dds {false, true}]
                       [--disable-local-auth {false, true}]
                       [--disable-module-sas {false, true}]
+                      [--edr {false, true}]
                       [--fc]
                       [--fcs]
                       [--fcu]
@@ -50,6 +51,8 @@ directCommands:
     syntax: az iot hub create --resource-group MyResourceGroup --name MyIotHub --location westus --mi-system-assigned --role "Storage Blob Data Contributor" --scopes {resourceId}
   - summary: Create an IoT Hub with local authentication, device SAS keys, and module SAS keys all disabled
     syntax: az iot hub create --resource-group MyResourceGroup --name MyIotHub --location westus --disable-local-auth --disable-device-sas --disable-module-sas
+  - summary: Create an IoT Hub with data residency enforced. This will disable cross-region disaster recovery.
+    syntax: az iot hub create --resource-group MyResourceGroup --name MyIoTHub --edr
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -79,6 +82,10 @@ directCommands:
   - name: --disable-module-sas --dms
     parameterValueGroup: false, true
     summary: A boolean indicating whether or not to disable module-scoped SAS keys for authentication.
+    description: ''
+  - name: --edr --enforce-data-residency
+    parameterValueGroup: false, true
+    summary: Enforce data residency for this IoT Hub by disabling cross-region disaster recovery. This property is immutable once set on the resource. Only available in select regions. Learn more at https://aka.ms/iothubdisabledr.
     description: ''
   - name: --fc --fileupload-storage-container-name
     summary: The name of the root container where you upload files. The container need not exist but should be creatable using the connectionString specified.
@@ -1046,5 +1053,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/27/2022
+  ms.date: 02/24/2022
   description: Manage Azure IoT hubs.

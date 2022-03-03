@@ -12,6 +12,7 @@ directCommands:
     az batch job create [--account-endpoint]
                         [--account-key]
                         [--account-name]
+                        [--allow-task-preemption]
                         [--id]
                         [--job-manager-task-command-line]
                         [--job-manager-task-environment-settings]
@@ -37,6 +38,9 @@ directCommands:
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
     description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
+    description: ''
   - name: --id
     summary: Required. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case).
     description: ''
@@ -59,7 +63,7 @@ directCommands:
     summary: If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+    summary: A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
     description: ''
   - name: --max-parallel-tasks
     summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
@@ -274,6 +278,7 @@ directCommands:
                        [--account-endpoint]
                        [--account-key]
                        [--account-name]
+                       [--allow-task-preemption]
                        [--if-match]
                        [--if-modified-since]
                        [--if-none-match]
@@ -281,6 +286,7 @@ directCommands:
                        [--job-max-task-retry-count]
                        [--job-max-wall-clock-time]
                        [--json-file]
+                       [--max-parallel-tasks]
                        [--metadata]
                        [--on-all-tasks-complete {noaction, terminatejob}]
                        [--pool-id]
@@ -301,6 +307,9 @@ directCommands:
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
     description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
+    description: ''
   - name: --if-match
     summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
     description: ''
@@ -320,7 +329,10 @@ directCommands:
     summary: If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: A file containing the job update parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+    summary: A file containing the job update parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
+    description: ''
+  - name: --max-parallel-tasks
+    summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
     description: ''
   - name: --metadata
     summary: If omitted, it takes the default value of an empty list; in effect, any existing metadata is deleted. Space-separated values in 'key=value' format.
@@ -348,6 +360,7 @@ directCommands:
                      [--account-endpoint]
                      [--account-key]
                      [--account-name]
+                     [--allow-task-preemption]
                      [--if-match]
                      [--if-modified-since]
                      [--if-none-match]
@@ -376,6 +389,9 @@ directCommands:
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
     description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. Specify either 'true' or 'false' to update the property.
+    description: ''
   - name: --if-match
     summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
     description: ''
@@ -395,7 +411,7 @@ directCommands:
     summary: If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: A file containing the job patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+    summary: A file containing the job patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
     description: ''
   - name: --max-parallel-tasks
     summary: The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.

@@ -19,8 +19,11 @@ directCommands:
                                   [--enable-auto-inflate {false, true}]
                                   [--enable-kafka {false, true}]
                                   [--enable-trusted-service-access {false, true}]
+                                  [--encryption-config]
                                   [--location]
                                   [--maximum-throughput-units]
+                                  [--mi-system-assigned {false, true}]
+                                  [--mi-user-assigned]
                                   [--sku {Basic, Premium, Standard}]
                                   [--subscription]
                                   [--tags]
@@ -28,6 +31,8 @@ directCommands:
   examples:
   - summary: Creates a new namespace.
     syntax: az eventhubs namespace create --resource-group myresourcegroup --name mynamespace --location westus --tags tag1=value1 tag2=value2 --sku Standard --enable-auto-inflate --maximum-throughput-units 20
+  - summary: Create a new namespace with Identity and Encryption enabled.
+    syntax: az eventhubs namespace create --resource-group myresourcegroup --name mynamespace --location westus --sku Premium --mi-user-assigned /subscriptions/{subscriptionId}/resourceGroups/{resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MSIName --encryption-config key-name=key1 key-vault-uri=https://mykeyvault.vault.azure.net/ user-assigned-identity=/subscriptions/{subscriptionId}}/resourceGroups/{resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MSIName --encryption-config key-name=key1 key-vault-uri=https://mykeyvault.vault.azure.net/ user-assigned-identity=/subscriptions/{subscriptionId}}/resourceGroups/{resourcegroup}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MSIName
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -68,11 +73,21 @@ directCommands:
     parameterValueGroup: false, true
     summary: A boolean value that indicates whether Trusted Service Access is enabled for Network Rule Set.
     description: ''
+  - name: --encryption-config
+    summary: List of KeyVaultProperties objects.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --maximum-throughput-units
     summary: Upper limit of throughput units when AutoInflate is enabled, vaule should be within 0 to 20 throughput units. ( 0 if AutoInflateEnabled = true).
+    description: ''
+  - name: --mi-system-assigned
+    parameterValueGroup: false, true
+    summary: Enable System Assigned Identity.
+    description: ''
+  - name: --mi-user-assigned
+    summary: List of User Assigned Identity ids.
     description: ''
   - name: --sku
     defaultValue: Standard
@@ -306,7 +321,13 @@ commands:
 - az_eventhubs_namespace_authorization-rule_update
 - az_eventhubs_namespace_create
 - az_eventhubs_namespace_delete
+- az_eventhubs_namespace_encryption
+- az_eventhubs_namespace_encryption_add
+- az_eventhubs_namespace_encryption_remove
 - az_eventhubs_namespace_exists
+- az_eventhubs_namespace_identity
+- az_eventhubs_namespace_identity_assign
+- az_eventhubs_namespace_identity_remove
 - az_eventhubs_namespace_list
 - az_eventhubs_namespace_network-rule
 - az_eventhubs_namespace_network-rule_add
@@ -339,5 +360,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/29/2021
+  ms.date: 02/23/2022
   description: Manage Azure EventHubs namespace and Authorizationrule.
