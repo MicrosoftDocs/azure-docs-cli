@@ -105,8 +105,9 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    python -m pip install --upgrade pip
    pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ azure-cli
    ```
-
-1. Upgrade Azure CLI beta
+   You can now start using Azure CLI beta.
+   
+1. If there is an update, you may upgrade Azure CLI beta
 
    ```bash
    pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ --upgrade azure-cli
