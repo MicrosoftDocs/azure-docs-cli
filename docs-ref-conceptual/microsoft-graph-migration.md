@@ -83,7 +83,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    python -m venv <env_name>
    ```
 
-1. Activate the virtual environment
+2. Activate the virtual environment
 
    ### [Windows PowerShell](#tab/powershell)
 
@@ -99,7 +99,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    ---
    These commands can also be used to reactivate your virtual environment.
 
-1. Install Azure CLI beta
+3. Install Azure CLI beta
 
    ```bash
    python -m pip install --upgrade pip
@@ -107,13 +107,13 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    ```
    You can now start using Azure CLI beta.
    
-1. If there is an update, you may upgrade Azure CLI beta
+4. If there is an update, you may upgrade Azure CLI beta
 
    ```bash
    pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ --upgrade azure-cli
    ```
 
-2. Deactivate the virtual environment
+5. Deactivate the virtual environment
 
    After you finish using Azure CLI beta, you can close the terminal window, or use the `deactivate` command.
 
