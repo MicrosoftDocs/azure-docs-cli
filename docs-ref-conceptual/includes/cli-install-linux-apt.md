@@ -14,7 +14,7 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 | Distribution | Version |
 |:-------------|:--------|
 | Ubuntu       | 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa) |
-| Debian       | Debian 9 (Stretch), Debian 10 (Buster), Debian 11 (Bullseye) |
+| Debian       | 9 (Stretch), 10 (Buster), 11 (Bullseye) |
 
 > [!WARNING]
 > Starting from Azure CLI 2.34.0, no DEB packages are released for Ubuntu 14.04 (Trusty Tahir) and Debian 8 (Jessie). You may continue to use historical versions of Azure CLI on these systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
