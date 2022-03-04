@@ -106,7 +106,13 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ azure-cli
    ```
 
-1. Deactivate the virtual environment
+1. Upgrade Azure CLI beta
+
+   ```bash
+   pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ --upgrade azure-cli
+   ```
+
+2. Deactivate the virtual environment
 
    After you finish using Azure CLI beta, you can close the terminal window, or use the `deactivate` command.
 
