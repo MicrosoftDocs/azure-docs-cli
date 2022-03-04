@@ -69,7 +69,7 @@ Command argument and behavior breaking changes are listed below.
 
 ## Try Azure CLI beta with Microsoft Graph
 
-Azure CLI is built on [Python](https://www.python.org/). The supported Python versions are 3.6, 3.7, 3.8. On Windows, you will first need to [install Python](https://www.python.org/downloads/windows/).
+Azure CLI is built on [Python](https://www.python.org/). The supported Python versions are 3.7, 3.8, 3.9, 3.10. On Windows, you will first need to [install Python](https://www.python.org/downloads/windows/).
 
 Azure CLI beta can only be installed with `pip` from a Microsoft repository. Use `python` or `python3` to execute the following commands, depending on the Linux distribution or your installed Python version.
 
