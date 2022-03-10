@@ -35,5 +35,23 @@ az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`10\`].{N
 ```azurecli-interactive
 az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`10\`].{Name:name,  DiskSize:storageProfile.osDisk.diskSizeGb}" --output table
 ```
+---
+
+### Example query using flattening and filtering
+## [Cmd](#tab/cmd)
+```cmd
+az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[? contains(Storage,'SSD')]" -o json
+```
+
+## [PowerShell](#tab/powershell)
+```powershell
+az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[? contains(Storage,'SSD')]" -o json
+```
+
+## [Bash](#tab/bash)
+```azurecli-interactive
+az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}[? contains(Storage,'SSD')]" -o json
+```
+---
 
 ---
