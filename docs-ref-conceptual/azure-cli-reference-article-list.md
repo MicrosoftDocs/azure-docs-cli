@@ -314,7 +314,7 @@ Follow these links to published articles that use each Azure CLI reference comma
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
 | az aks browse| Concept| [Deploy a SQL Server container in Kubernetes with Azure Kubernetes Services (AKS)](/sql/linux/tutorial-sql-server-containers-kubernetes#create-the-deployment)
-| | How-to guide| [Troubleshoot [!INCLUDE[big-data-clusters-2019](../includes/ssbigdataclusters-ss-nover.md)] Kubernetes](/sql/big-data-cluster/cluster-troubleshooting-commands#start-dashboard-when-cluster-is-running-in-aks)
+cluster-troubleshooting-commands#start-dashboard-when-cluster-is-running-in-aks)
 | | Tutorial| [Deploy an Azure SQL Edge container in Kubernetes](/azure/azure-sql-edge/deploy-kubernetes#create-the-deployment)
 | az aks check-acr| How-to guide| [Authenticate with Azure Container Registry from Azure Kubernetes Service](/azure/aks/cluster-container-registry-integration#troubleshooting)
 | | How-to guide| [Troubleshoot registry login](/azure/container-registry/container-registry-troubleshoot-login#further-diagnosis)
