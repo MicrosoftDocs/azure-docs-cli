@@ -30,7 +30,7 @@ Command argument and behavior breaking changes are listed below.
 - Replace `--native-app` with `--is-fallback-public-client`
 - Replace `--oauth2-allow-implicit-flow` with `--enable-access-token-issuance`
 - Add `--enable-id-token-issuance` to set `web/implicitGrantSettings/enableIdTokenIssuance`
-- Remove `--password` and `--credential-description`. Use `az ad app credential reset` to let Graph create a password for you (https://github.com/Azure/azure-cli/issues/20675)
+- Remove `--password` and `--credential-description`. Use `az ad app credential reset` to let Graph service create a password for you (https://github.com/Azure/azure-cli/issues/20675)
 - Add `--key-display-name` to set `keyCredential`'s `displayName`
 
 ### `az ad app permission grant`
