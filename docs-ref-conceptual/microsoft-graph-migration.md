@@ -4,7 +4,7 @@ description: Learn about the Microsoft Graph migration of Azure CLI.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 02/24/2022
+ms.date: 03/08/2022
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -24,22 +24,23 @@ Command argument and behavior breaking changes are listed below.
 
 ### `az ad app create`
 
-- `--reply-urls` argument is split into `--web-redirect-uris` and `--public-client-redirect-uris`
-- `--homepage` argument is replaced by `--web-home-page-url`
-- `--available-to-other-tenants` is replaced by `--sign-in-audience`
-- `--native-app` is replaced by `--is-fallback-public-client`
-- `--oauth2-allow-implicit-flow` is replaced by `--enable-access-token-issuance`
-- `--enable-id-token-issuance` is introduced to set `web/implicitGrantSettings/enableIdTokenIssuance`
-- `--password` is removed. Use `az ad app credential reset` to let Graph create a password for you (https://github.com/Azure/azure-cli/issues/20675)
+- Split `--reply-urls` into `--web-redirect-uris` and `--public-client-redirect-uris`
+- Replace `--homepage` with `--web-home-page-url`
+- Replace `--available-to-other-tenants` with `--sign-in-audience`
+- Replace `--native-app` with `--is-fallback-public-client`
+- Replace `--oauth2-allow-implicit-flow` with `--enable-access-token-issuance`
+- Add `--enable-id-token-issuance` to set `web/implicitGrantSettings/enableIdTokenIssuance`
+- Remove `--password` and `--credential-description`. Use `az ad app credential reset` to let Graph service create a password for you (https://github.com/Azure/azure-cli/issues/20675)
+- Add `--key-display-name` to set `keyCredential`'s `displayName`
 
 ### `az ad app permission grant`
 
-- `--expires` argument is removed
+- Remove `--expires`
 
 ### `az ad app credential reset`
 
-- `--credential-description` is replaced by `--display-name` (https://github.com/Azure/azure-cli/issues/20561)
-- `--password` is removed. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
+- Replace `--credential-description` with `--display-name` (https://github.com/Azure/azure-cli/issues/20561)
+- Remove `--password`. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
 
 ### `az ad sp delete`
 
@@ -52,15 +53,15 @@ Command argument and behavior breaking changes are listed below.
 
 ### `az ad sp credential reset`
 
-- `--password` is removed. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
+- Remove `--password`. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
 
 ### `az ad group get-member-groups`
 
-- `--additional-properties` argument is removed
+- Remove `--additional-properties`
 
 ### `az ad group member add`
 
-- `--additional-properties` argument is removed
+- Remove `--additional-properties`
 
 ## Known issues
 
@@ -106,7 +107,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
    pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ azure-cli
    ```
    You can now start using Azure CLI beta.
-   
+
 4. If there is an update, you may upgrade Azure CLI beta
 
    ```bash
