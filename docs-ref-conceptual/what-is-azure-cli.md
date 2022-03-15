@@ -51,7 +51,7 @@ Now, how easy was that?!  See [Manage subscriptions with Azure CLI](manage-azure
 Another common use of the Azure CLI is managing role assignments. 
 
 ```azurecli
-az role assignment create --assignee servicePrincipalName --role Reader
+az role assignment create --assignee servicePrincipalName --role Reader --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 az role assignment delete --assignee userSign-inName --role Contributor
 ```
 
