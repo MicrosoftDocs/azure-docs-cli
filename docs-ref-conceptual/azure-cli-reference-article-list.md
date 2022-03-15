@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 keywords: reference
 ---
 
-# Azure CLI reference link summary
+# Azure CLI reference article summary
 
 Follow these links to published articles that show how to use Azure CLI reference commands to complete a task. 
 
@@ -833,7 +833,7 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az configure](/cli/azure/reference-index#az-configure)| How-to guide| [Deploy Azure File Sync](/azure/storage/file-sync/file-sync-deployment-guide#create-a-sync-group-and-a-cloud-endpoint)
  
 | | How-to guide| [Customer intent: As an ML engineer or data scientist, I want to create an endpoint to host my models for batch scoring, so that I can use the same endpoint continuously for different large datasets on-demand or on-schedule.](/azure/machine-learning/how-to-use-batch-endpoint#prerequisites)
 
@@ -984,9 +984,6 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
-| | How-to guide| [Create Azure Arc data controller in direct connectivity mode using CLI](/azure/azure-arc/data/create-data-controller-direct-cli#validate--the-custom-location-is-created)
-| | How-to guide| [Create Azure Arc data controller from Azure portal - Direct connectivity mode](/azure/azure-arc/data/create-data-controller-direct-azure-portal#monitor-the-creation-from-your-kubernetes-cluster)
 | [az customlocation create](/cli/azure/customlocation#az-customlocation-create)| How-to guide| [Create and manage custom locations on Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/custom-locations#create-custom-location)
 | | How-to guide| [Create Azure Arc data controller in direct connectivity mode using CLI](/azure/azure-arc/data/create-data-controller-direct-cli#set-environment-variables)
 | | Quickstart| [Route cloud events to Webhooks with Azure Event Grid on Kubernetes](/azure/event-grid/kubernetes/create-topic-subscription#create-a-custom-location)
@@ -1559,14 +1556,14 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az feedback](/cli/azure/reference-index#az-feedback)| Get started| [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli#give-feedback)
 | | Tutorial| [7 - Summary](/cli/azure/azure-cli-vm-tutorial-7#get-support)
 
 ## find
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az find](/cli/azure/reference-index#az-find)| Get started| [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli#finding-commands)
 | | Tutorial| [Tutorial: Order Azure Data Box](/azure/databox/data-box-deploy-ordered#install-the-cli-locally)
 | | How-to guide| [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli#list-all-az-search-commands)
 
@@ -1783,7 +1780,7 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az interactive](/cli/azure/reference-index#az-interactive)| Get started| [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli#interactive-mode)
 | | How-to guide| [Azure CLI interactive mode](/cli/azure/interactive-azure-cli#what-is-the-azure-cli-interactive-mode)
 | | Get started| [Keyword: manage azure stack CLI](/azure-stack/user/azure-stack-version-profiles-azurecli2#known-issues)
 
@@ -1931,9 +1928,6 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
-| | How-to guide| [Azure Monitor Container Insights for Azure Arc-enabled Kubernetes clusters](/azure/azure-monitor/containers/container-insights-enable-arc-enabled-clusters#option-4--on-azure-stack-edge)
-| | How-to guide| [Deploy and manage Azure Arc-enabled Kubernetes cluster extensions](/azure/azure-arc/kubernetes/extensions#show-details-of-an-extension-instance)
 | [az k8s-extension create](/cli/azure/k8s-extension#az-k8s-extension-create)| Concept| [Understand Azure Policy for Kubernetes clusters](/azure/governance/policy/concepts/policy-for-kubernetes#example)
 | | How-to guide| [Azure Monitor Container Insights for Azure Arc-enabled Kubernetes clusters](/azure/azure-monitor/containers/container-insights-enable-arc-enabled-clusters#option-4--on-azure-stack-edge)
 | | How-to guide| [Deploy and manage Azure Arc-enabled Kubernetes cluster extensions](/azure/azure-arc/kubernetes/extensions#create-extensions-instance)
@@ -2156,7 +2150,7 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az login](/cli/azure/reference-index#az-login)| Install| [Sign in with Azure CLI](/cli/azure/authenticate-azure-cli#sign-in-with-credentials-on-the-command-line)
 | | Other| [Define variables](/azure/devops/pipelines/process/variables#prerequisites)
 | | Tutorial| [Create an Azure service principal with the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli#certificatebased-authentication)
 
@@ -2164,7 +2158,7 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az logout](/cli/azure/reference-index#az-logout)| How-to guide| [Deploy to App Service using GitHub Actions](/azure/app-service/deploy-github-actions#python)
 | | How-to guide| [Continuous deployment to Azure App Service](/azure/app-service/deploy-continuous-deployment#authenticate-by-using-a-service-principal)
 | | How-to guide| [Create a virtual network peering - Resource Manager, different subscriptions and Azure Active Directory tenants](/azure/virtual-network/create-peering-different-subscriptions#a-namecliacreate-peering--azure-cli)
 
@@ -3410,7 +3404,7 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az rest](/cli/azure/reference-index#az-rest)| How-to guide| [Elevate access to manage all Azure subscriptions and management groups](/azure/role-based-access-control/elevate-access-global-admin#view-elevate-access-logs-using-azure-cli)
 | | Other| [High availability for Azure SQL Database and SQL Managed Instance](/azure/azure-sql/database/high-availability-sla#testing-application-fault-resiliency)
 | | How-to guide| [How to use Azure CLI effectively](/cli/azure/use-cli-effectively#rest-api-commands)
 
@@ -4185,7 +4179,7 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az upgrade](/cli/azure/reference-index#az-upgrade)| Install| [Install Azure CLI on Windows](/cli/azure/install-azure-cli-windows#azure-cli-command-for-update-only)
 | | Install| [How to update the Azure CLI](/cli/azure/update-azure-cli#manual-update)
 | | Tutorial| [Tutorial: Deploy a Django web app with PostgreSQL in Azure App Service](/azure/app-service/tutorial-python-postgresql-app#1-set-up-your-initial-environment)
 
@@ -4193,7 +4187,7 @@ Follow these links to published articles that show how to use Azure CLI referenc
 	
 |Reference command | Article type | Link to article showing use |
 |-|-|-|
- 
+| [az version](/cli/azure/reference-index#az-version)| How-to guide| [How to use Azure CLI effectively](/cli/azure/use-cli-effectively#use-quotation-marks-in-arguments)
 | | How-to guide| [Use tags to organize your Azure resources and management hierarchy](/azure/azure-resource-manager/management/tag-resources#apply-tags)
 | | How-to guide| [Set up Azure App Service access restrictions](/azure/app-service/app-service-ip-restrictions#manage-access-restriction-rules-programmatically)
 
