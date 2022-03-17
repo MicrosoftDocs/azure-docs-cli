@@ -80,9 +80,9 @@ accepted values: DevTest, Production
 
 ||
 |-|
-|[Programmatically create Azure subscriptions for a Microsoft Customer Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-customer-agreement#response)
-|[Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement#response)
-|[Programmatically create Azure subscriptions for a Microsoft Partner Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-partner-agreement#response)
+|[Programmatically create Azure subscriptions for a Microsoft Customer Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-customer-agreement?tabs=azure-cli)
+|[Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement?tabs=azure-cli)
+|[Programmatically create Azure subscriptions for a Microsoft Partner Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-partner-agreement?tabs=azure-cli)
 
 ## az account alias delete
 
