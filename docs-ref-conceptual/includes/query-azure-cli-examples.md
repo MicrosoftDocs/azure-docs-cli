@@ -54,4 +54,20 @@ az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.ma
 ```
 ---
 
+## Example query using pipes
+## [Cmd](#tab/cmd)
+```cmd
+$ az disk list --query '[].id | [?contains(@,`pvc-faf0f176-8b8d-11e8-923b-deb28c58d242`)]' -o tsv
+```
+
+## [PowerShell](#tab/powershell)
+```powershell
+$ az disk list --query '[].id | [?contains(@,`pvc-faf0f176-8b8d-11e8-923b-deb28c58d242`)]' -o tsv
+```
+
+## [Bash](#tab/bash)
+```azurecli-interactive
+$ az disk list --query '[].id | [?contains(@,`pvc-faf0f176-8b8d-11e8-923b-deb28c58d242`)]' -o tsv
+```
+---
 ---
