@@ -50,14 +50,6 @@ CreateAlias
 az account alias create --name "aliasForNewSub" --billing-scope "/providers/Microsoft.Billing/billingAccounts/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:024cabf4-7321-4cf9-be59-df0c77ca51de_2019-05-31/billingProfiles/PE2Q-NOIT-BG7-TGB/invoiceSections/MTT4-OBS7-PJA-TGB" --display-name "Contoso MCA subscription" --workload "Production"
 ```
 
-### Learn
-
-|||
-|-|-|
-|How-to guide| [Programmatically create Azure subscriptions for a Microsoft Customer Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-customer-agreement#response)
-|How-to guide| [Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement#response)
-|How-to guide| [Programmatically create Azure subscriptions for a Microsoft Partner Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-partner-agreement#response)
-
 ### Required Parameters
 `--name -n`
 Alias Name.
@@ -84,4 +76,22 @@ accepted values: DevTest, Production
 
 ### Global Parameters
 
+### Learn
+
+||
+|-|
+|[Programmatically create Azure subscriptions for a Microsoft Customer Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-customer-agreement#response)
+|[Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement#response)
+|[Programmatically create Azure subscriptions for a Microsoft Partner Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-partner-agreement#response)
+
 ## az account alias delete
+
+### Example
+
+### Required Parameters
+
+### Global Parameters
+
+### Learn
+
+
