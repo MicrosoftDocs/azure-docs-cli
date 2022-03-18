@@ -15,7 +15,7 @@ keywords: azure persisted parameters, persisted parameters
 
 # Azure CLI persisted parameter
 
-The Azure CLI [az config param-persist](/cli/azure/config/param-persist) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don't contribute to the _intent_ of the command.  When you store parameter values with persisted parameter, you reduce redundancy and can significantly shorten CLI command syntax.
+The Azure CLI [az config param-persist](../latest/docs-ref-autogen/config/param-persist.yml) reference provides the ability to retain local persisted parameter values for Azure CLI commands.  This removes the need to continually retype common parameters. For example, location and resource-group are required parameters in many CLI commands, but they don't contribute to the _intent_ of the command.  When you store parameter values with persisted parameter, you reduce redundancy and can significantly shorten CLI command syntax.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
@@ -81,8 +81,8 @@ There are two Azure CLI commands that can be used to default parameter values: `
 
 | Reference | Scope | Set | Use
 |-|-|-|-|
-[`az config set defaults.<option>=<value>`](/cli/azure/config) | Scoped globally across the CLI | Set explicitly using `az config set defaults.<option>=<value>` | Use for settings such as logging, data collection, and default argument values
-[`az config param-persist`](/cli/azure/config/param-persist) | Scoped locally to a specific working directory | Set automatically once persisted parameters are turned on | Use for individual workload sequential commands.
+[`az config set defaults.<option>=<value>`](../latest/docs-ref-autogen/config.yml) | Scoped globally across the CLI | Set explicitly using `az config set defaults.<option>=<value>` | Use for settings such as logging, data collection, and default argument values
+[`az config param-persist`](../latest/docs-ref-autogen/config/param-persist.yml) | Scoped locally to a specific working directory | Set automatically once persisted parameters are turned on | Use for individual workload sequential commands.
 
 ### Command examples
 
