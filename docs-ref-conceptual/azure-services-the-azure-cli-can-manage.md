@@ -133,7 +133,7 @@ Support rapid growth and innovate faster with secure, enterprise-grade, and full
 |[Azure Database for MariaDB](/cli/azure/service-page/azure%20database%20for%20mariadb) | [Create an Azure Database for MariaDB server](/azure/mariadb/quickstart-create-mariadb-server-database-using-azure-cli)
 |[Azure Database for MySQL](/cli/azure/service-page/azure%20database%20for%20mysql) | [Create a MySQL Flexible Server](/azure/mysql/flexible-server/tutorial-php-database-app#create-a-mysql-flexible-server-preview)
 |[Azure Database for PostgreSQL](/cli/azure/service-page/azure%20database%20for%20postgresql) | [Create an Azure Database for PostgreSQL server](/azure/postgresql/quickstart-create-server-database-azure-cli)
-|[Azure SQL Database](./azure-cli-reference-for-sql.md#sql-database) | [Create an Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
+|[Azure SQL Database](./azure-cli-reference-for-sql.md) | [Create an Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
 | |[Manage server-level IP firewall rules](/azure/azure-sql/database/firewall-configure#use-cli-to-manage-server-level-ip-firewall-rules)
 
 ## Developer Tools
@@ -142,12 +142,12 @@ Use Microsoft's comprehensive set of development tools to build, manage, and con
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[App Configuration](./azure-cli-reference-for-hosted-apps.md#azure-web-app-configuration) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
+|[App Configuration](./azure-cli-reference-for-hosted-apps.md) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
 | |[Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app?pivots=platform-linux)
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
 |[Azure Lab Services](/cli/azure/service-page/azure%20lab%20services) |
-|[Azure Pipelines](./azure-cli-reference-for-devops.md#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+|[Azure Pipelines](./azure-cli-reference-for-devops.md) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&preserve-view=true&tabs=azure-cli)
 |[Visual Studio](/cli/azure/service-page/visual%20studio) |
@@ -158,16 +158,16 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Artifacts](./azure-cli-reference-for-devops.md#azure-artifacts) | [Publish and download universal packages](/azure/devops/artifacts/quickstarts/universal-packages?view=azure-devops&preserve-view=true)
-|[Azure Boards](./azure-cli-reference-for-devops.md#azure-boards) | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths?view=azure-devops&preserve-view=true&tabs=azure-devops-cli#open-project-settings-list-project-areas)
+|[Azure Artifacts](./azure-cli-reference-for-devops.md) | [Publish and download universal packages](/azure/devops/artifacts/quickstarts/universal-packages?view=azure-devops&preserve-view=true)
+|[Azure Boards](./azure-cli-reference-for-devops.md) | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths?view=azure-devops&preserve-view=true&tabs=azure-devops-cli#open-project-settings-list-project-areas)
 |[Azure DevOps](./azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
 |[Azure Monitor](azure-cli-reference-for-monitor.md) | [Create diagnostic settings to send platform logs and metrics to different destinations](/azure/azure-monitor/essentials/diagnostic-settings?tabs=CMD#create-using-azure-cli)
 | |[How to configure Azure Activity log profiles](/azure/azure-monitor/essentials/activity-log#configure-log-profile-using-azure-cli)
-|[Azure Pipelines](./azure-cli-reference-for-devops.md#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+|[Azure Pipelines](./azure-cli-reference-for-devops.md) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&preserve-view=true&tabs=azure-cli)
-|[Azure Repos](./azure-cli-reference-for-devops.md#azure-repos) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops&preserve-view=true)
+|[Azure Repos](./azure-cli-reference-for-devops.md) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops&preserve-view=true)
 
 ## Hybrid
 
@@ -180,7 +180,7 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure IoT Edge](../latest/docs-ref-autogen/iot/edge.yml) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
 |[Azure Security Center](/cli/azure/service-page/azure%20security%20center) |
 |[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) |
-|[Azure SQL Database](./azure-cli-reference-for-sql.md#sql-database) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
+|[Azure SQL Database](./azure-cli-reference-for-sql.md) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
 |[Azure Stack HCI](../latest/docs-ref-autogen/stack-hci.yml) |
 
 ## Identity
@@ -321,7 +321,7 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure Storage](./azure-cli-reference-for-storage.md) | [Configure Azure Storage firewalls and virtual networks](/azure/storage/common/storage-network-security?tabs=azure-cli)
 | | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
 | | [Create an Azure file share](/azure/storage/files/storage-how-to-create-file-share?tabs=azure-cli)
-|[Storage Accounts](./azure-cli-reference-for-storage.md#storage-accounts) | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
+|[Storage Accounts](./azure-cli-reference-for-storage.md) | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
 | | [Manage storage account access keys](/azure/storage/common/storage-account-keys-manage?tabs=azure-cli)
 
 ## Web
