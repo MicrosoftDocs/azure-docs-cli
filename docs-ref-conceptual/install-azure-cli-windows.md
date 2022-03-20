@@ -48,6 +48,9 @@ You can also install the Azure CLI using PowerShell. Start PowerShell as adminis
 
 > [!Note]
 > PowerShell must be run as administrator.
+ 
+> [!Note]
+> Depending on your OS version you may need to modify the Transport Layer Security (TLS) version that is enabled.
 
 Start PowerShell as administrator and run the following command:
 
@@ -74,6 +77,14 @@ You can now run the Azure CLI with the `az` command from either Windows Command 
 ## Troubleshooting
 
 Here are some common problems seen when installing the Azure CLI on Windows. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+
+### TLS version blocks connection
+
+If you can't download the MSI installer because your Transport Layer Security (TLS) version is not permitted in this storage account.  In PowerShell, you do this with the following command:
+
+> ```powershell
+> [Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12
+> ```
 
 ### Proxy blocks connection
 
