@@ -14,7 +14,7 @@ keywords: microsoft graph, ms graph, active directory graph, ad graph
 
 # Microsoft Graph migration
 
-Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), Azure CLI will be migrated from AD Graph to Microsoft Graph.
+Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), the underlying Active Directory Graph API will be replaced by Microsoft Graph API in Azure CLI 2.37.0.
 
 ## Breaking changes
 
