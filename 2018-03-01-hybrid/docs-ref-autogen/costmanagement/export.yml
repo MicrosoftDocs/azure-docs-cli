@@ -19,7 +19,6 @@ directCommands:
                                     --storage-container
                                     --timeframe {BillingMonthToDate, Custom, MonthToDate, TheLastBillingMonth, TheLastMonth, WeekToDate}
                                     [--dataset-configuration]
-                                    [--dataset-grouping]
                                     [--recurrence {Annually, Daily, Monthly, Weekly}]
                                     [--recurrence-period]
                                     [--schedule-status {Active, Inactive}]
@@ -28,11 +27,11 @@ directCommands:
                                     [--type {ActualCost, AmortizedCost, Usage}]
   examples:
   - summary: Create an export for ManagementGroup scope
-    syntax: az costmanagement export create --name "TestExport" --type "Usage" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --dataset-grouping name="SubscriptionName" type="Dimension" --dataset-grouping name="Environment" type="Tag" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "providers/Microsoft.Management/managementGroups/TestMG"
+    syntax: az costmanagement export create --name "TestExport" --type "Usage" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "providers/Microsoft.Management/managementGroups/TestMG"
   - summary: Create an export for ResourceGroup scope
-    syntax: az costmanagement export create --name "TestExport" --type "Usage" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --dataset-grouping name="SubscriptionName" type="Dimension" --dataset-grouping name="Environment" type="Tag" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG"
+    syntax: az costmanagement export create --name "TestExport" --type "Usage" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG"
   - summary: Create an export for Subscription scope
-    syntax: az costmanagement export create --name "TestExport" --type "Usage" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --dataset-grouping name="SubscriptionName" type="Dimension" --dataset-grouping name="Environment" type="Tag" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000"
+    syntax: az costmanagement export create --name "TestExport" --type "Usage" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
     name: --name
@@ -59,9 +58,6 @@ directCommands:
   - name: --dataset-configuration
     summary: 'Has configuration information for the data in the export. The configuration will be ignored if aggregation and grouping are provided. Expect value: columns=xx.'
     description: ''
-  - name: --dataset-grouping
-    summary: 'Array of group by expression to use in the query. Query can have up to 2 group by clauses. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: type, name.'
-    description: ''
   - name: --recurrence
     parameterValueGroup: Annually, Daily, Monthly, Weekly
     summary: The schedule recurrence.
@@ -70,8 +66,9 @@ directCommands:
     summary: 'Has start and end date of the recurrence. The start date must be in future. If present, the end date must be greater than start date. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: from, to. The time format is like 2020-05-01T00:00:00.'
     description: ''
   - name: --schedule-status
+    defaultValue: Inactive
     parameterValueGroup: Active, Inactive
-    summary: The status of the schedule.Whether active or not. If inactive, the export's scheduled execution is paused.
+    summary: The status of the export's schedule. If inactive, the export's scheduled execution is paused.
     description: ''
   - name: --storage-directory
     summary: The root directory in the storage container to store exports.
@@ -80,6 +77,7 @@ directCommands:
     summary: 'Has time period for pulling data for the query. Expect value: from=TIMESTAMP1 to=TIMESTAMP2. The timestamp format is like 2020-05-01T00:00:00.The TIMESTAMP1 must in the future and TIMESTAMP2 must be greater than TIMESTAMP1.'
     description: ''
   - name: --type
+    defaultValue: Usage
     parameterValueGroup: ActualCost, AmortizedCost, Usage
     summary: The type of the query.
     description: ''
@@ -159,7 +157,6 @@ directCommands:
     az costmanagement export update --name
                                     --scope
                                     [--dataset-configuration]
-                                    [--dataset-grouping]
                                     [--recurrence {Annually, Daily, Monthly, Weekly}]
                                     [--recurrence-period]
                                     [--schedule-status {Active, Inactive}]
@@ -170,11 +167,11 @@ directCommands:
                                     [--timeframe {BillingMonthToDate, Custom, MonthToDate, TheLastBillingMonth, TheLastMonth, WeekToDate}]
   examples:
   - summary: Update an export in a ManagementGroup scope
-    syntax: az costmanagement export update --name "TestExport" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --dataset-grouping name="SubscriptionName" type="Dimension" --dataset-grouping name="Environment" type="Tag" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "providers/Microsoft.Management/managementGroups/TestMG"
+    syntax: az costmanagement export update --name "TestExport" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "providers/Microsoft.Management/managementGroups/TestMG"
   - summary: Update an export in a ResourceGroup scope
-    syntax: az costmanagement export update --name "TestExport" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --dataset-grouping name="SubscriptionName" type="Dimension" --dataset-grouping name="Environment" type="Tag" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG"
+    syntax: az costmanagement export update --name "TestExport" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG"
   - summary: Update an export in a Subscription scope
-    syntax: az costmanagement export update --name "TestExport" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --dataset-grouping name="SubscriptionName" type="Dimension" --dataset-grouping name="Environment" type="Tag" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000"
+    syntax: az costmanagement export update --name "TestExport" --dataset-configuration columns="Date" columns="MeterId" columns="InstanceId" columns="ResourceLocation" columns="PreTaxCost" --timeframe "MonthToDate" --storage-container="exports" --storage-account-id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Storage/storageAccounts/ccmeastusdiag182" --storage-directory="ad-hoc" --recurrence "Weekly" --recurrence-period from="2018-06-01T00:00:00Z" to="2018-10-31T00:00:00Z" --schedule-status "Active" --scope "subscriptions/00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
     name: --name
@@ -188,9 +185,6 @@ directCommands:
   - name: --dataset-configuration
     summary: 'Has configuration information for the data in the export. The configuration will be ignored if aggregation and grouping are provided. Expect value: columns=xx.'
     description: ''
-  - name: --dataset-grouping
-    summary: 'Array of group by expression to use in the query. Query can have up to 2 group by clauses. Expect value: KEY1=VALUE1 KEY2=VALUE2 ... , available KEYs are: type, name.'
-    description: ''
   - name: --recurrence
     parameterValueGroup: Annually, Daily, Monthly, Weekly
     summary: The schedule recurrence.
@@ -200,7 +194,7 @@ directCommands:
     description: ''
   - name: --schedule-status
     parameterValueGroup: Active, Inactive
-    summary: The status of the schedule.Whether active or not. If inactive, the export's scheduled execution is paused.
+    summary: The status of the export's schedule. If inactive, the export's scheduled execution is paused.
     description: ''
   - name: --storage-account-id
     summary: The ID of the storage account to store exports.
