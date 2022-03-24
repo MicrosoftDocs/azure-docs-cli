@@ -664,7 +664,6 @@ The `table` format prints output as an ASCII table, making it easy to read and s
 >
 > Certain keys are filtered out and not printed in the table view. These keys are `id`, `type`, and `etag`. To see these values, you can change the key name in a multiselect hash.
 >
->## [Cmd](#tab/cmd)
 >```azurecli
 > az vm show -g QueryDemo -n TestVM --query "{objectID:id}" --output table
 >```

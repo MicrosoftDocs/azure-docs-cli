@@ -16,25 +16,26 @@ This section shows example queries for storage accounts.
 This section shows example queries for Virtual Machines (VMs).
 
 ### Example query for VMs with a disk size larger than 10GB
-This example returns the names of VMs whose disks are larger than 10GB.
+This example returns the names of VMs whose disks are larger than 50GB.
 
 ## [Cmd](#tab/cmd)
 
-```azurecli-interactive
-az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`10\`].{Name:name,  DiskSize:storageProfile.osDisk.diskSizeGb}" --output table
+```cmd
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
 ## [PowerShell](#tab/powershell)
 
-```azurecli-interactive
-az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`10\`].{Name:name,  DiskSize:storageProfile.osDisk.diskSizeGb}" --output table
+```powershell 
+az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb <=\`10\`].{Name:name,  DiskSize:storageProfile.osDisk.diskSizeGb}" --output table
+az vm list -g QueryDemo --query '[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }' --output table
 ```
+
 ---
 
 ### Example query using flattening and filtering
