@@ -26,3 +26,12 @@ The `--query` argument is supported by all commands in the Azure CLI. This artic
 [!INCLUDE [Query Examples](includes/query-azure-cli-examples.md)]
 
 ---
+
+## Next steps
+
+To learn more about JMESPath queries see [JMESPath Tutorial](https://jmespath.org/tutorial.html).
+
+To learn more about other Azure CLI concepts mentioned in this article see:
+
+* [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli)
+* [How to use Azure CLI effectively](/cli/azure/use-cli-effectively)
