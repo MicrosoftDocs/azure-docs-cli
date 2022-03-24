@@ -62,7 +62,7 @@ az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoin
 ## Query examples for Virtual Machines
 This section shows example queries for Virtual Machines (VMs).
 
-### Example query for VMs with a disk size larger than 10GB
+### Example query for VMs with a disk size larger than 50GB
 This example returns the names of VMs whose disk size is larger than 50GB.
 
 ## [Cmd](#tab/cmd)
