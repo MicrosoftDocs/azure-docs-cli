@@ -80,7 +80,7 @@ Here are some common problems seen when installing the Azure CLI on Windows. If 
 
 ### TLS version blocks connection
 
-If you can't download the MSI installer because your Transport Layer Security (TLS) version is not permitted in this storage account.  In PowerShell, you can switch to using TLS 1.2 with with the following command:
+If you can't download the MSI installer because your Transport Layer Security (TLS) version is not permitted in this storage account.  In PowerShell, you can switch to using TLS 1.2 with the following command:
 
 > ```powershell
 > [Net.ServicePointManager]::SecurityProtocol =[Net.SecurityProtocolType]::Tls12
