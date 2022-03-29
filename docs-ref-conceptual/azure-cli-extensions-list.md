@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/28/2022
+ms.date: 03/29/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -45,7 +45,7 @@ You will be prompted to install an extension on first use.
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.37.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.24.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.13.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall/HISTORY.rst) |
-|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.24.1 | The Azure IoT extension for Azure CLI. | GA | [0.13.0](https://github.com/azure/azure-iot-cli-extension) |
+|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.24.1 | The Azure IoT extension for Azure CLI. | GA | [0.14.0](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
 |[blockchain](https://github.com/Azure/azure-cli-extensions/tree/master/src/blockchain) | 2.3.1 | Microsoft Azure Command-Line Tools BlockchainManagementClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/blockchain/HISTORY.rst) |
@@ -75,7 +75,7 @@ You will be prompted to install an extension on first use.
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[db-up](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/db-up/HISTORY.rst) |
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
-|[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/master/src/desktopvirtualization) | 2.3.1 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/desktopvirtualization/HISTORY.rst) |
+|[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.15.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
@@ -117,8 +117,8 @@ You will be prompted to install an extension on first use.
 |[ml](https://github.com/Azure/azure-cli-extensions/tree/master/src/machinelearningservices) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension | Preview | [2.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/machinelearningservices) |
 |[monitor-control-service](https://github.com/Azure/azure-cli-extensions/tree/master/src/monitor-control-service) | 2.15.0 | Microsoft Azure Command-Line Tools MonitorClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/monitor-control-service/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview) | 2.0.56 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [0.3.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/netappfiles-preview/HISTORY.rst) |
-|[next](https://github.com/Azure/azure-cli-extensions) | 2.20.0 | Microsoft Azure Command-Line Tools Next Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
-|[notification-hub](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools Notification Hub Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
+|[next](https://github.com/Azure/azure-cli-extensions) | 2.20.0 | Microsoft Azure Command-Line Tools Next Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions) |
+|[notification-hub](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools Notification Hub Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions) |
 |[offazure](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMigrateV2 Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure/HISTORY.rst) |
 |[peering](https://github.com/Azure/azure-cli-extensions/tree/master/src/peering) | 2.3.1 | Microsoft Azure Command-Line Tools PeeringManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/peering/HISTORY.rst) |
 |[portal](https://github.com/Azure/azure-cli-extensions/tree/master/src/portal) | 2.3.1 | Microsoft Azure Command-Line Tools Portal Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/portal/HISTORY.rst) |
