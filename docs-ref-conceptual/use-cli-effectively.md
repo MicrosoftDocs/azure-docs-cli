@@ -13,13 +13,9 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 
 # How to use Azure CLI effectively
 
-Azure CLI allows you to configure and manage Azure from Bash, PowerShell, or a Command Prompt window. Azure CLI supports command reuse, both on an ad-hoc basis and through scripts. You'll need to be aware of the capabilities of the shell that you run.
+Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First learn how to [choose the right environment](/cli/azure/choose-the-right-azure-command-line-tool#different-shell-environments) and [install the Azure CLI](/cli/azure/install-azure-cli).  Then use this article to discover useful tips on how to avoid common pitfalls and effectively use the Azure CLI.
 
-This article discusses useful tips on how to use the Azure CLI and how to avoid pitfalls.
-
-[!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
-
-If you have questions about any Azure CLI command, search in [Azure CLI Reference](/cli/azure/reference-index).
+To learn more about specific Azure CLI commands, search in the [Azure CLI Reference list](/cli/azure/reference-index).
 
 ## Output formatting
 
@@ -45,7 +41,11 @@ az account list --output table
 
 Here are three common formats:
 
-* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az config](/cli/azure/config) command.
+* The `json` format shows information as a JSON string.
+  * JSON gives you the most comprehensive information.
+  * This format is the default but you can use the `--output` argument to specify a different option.
+  * Change the global default format to one of your personal preference by using the [az config](/cli/azure/config) such as `az config set core.output=table`.
+  * Note that JSON format preserves the double quotes, generally making in unsuitable for scripting purposes.
 * The `table` format presents output as a human readable table. You can specify which values appear in the table and use queries to customize the output.
 * The `tsv` format returns tab-separated and newline-separated values without extra formatting, keys, or other symbols.
 
