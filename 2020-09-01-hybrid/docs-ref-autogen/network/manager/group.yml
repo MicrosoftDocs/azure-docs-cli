@@ -13,19 +13,22 @@ directCommands:
   summary: Create a network group.
   description: ''
   syntax: >-
-    az network manager group create --name
+    az network manager group create --member-type {Microsoft.Network/virtualNetworks}
+                                    --name
                                     --network-manager-name
                                     --resource-group
-                                    [--conditional-membership]
                                     [--description]
                                     [--display-name]
-                                    [--group-members]
                                     [--if-match]
-                                    [--member-type {Microsoft.Network/virtualNetworks, Microsoft.Network/virtualNetworks/subnets}]
   examples:
   - summary: Create/Update Azure Virtual Network Manager Network Group
-    syntax: az network manager group create --name "TestNetworkGroup" --network-manager-name "testNetworkManager" --description "A sample group" --conditional-membership "" --display-name "My Network Group" --group-members resource-id="/subscriptions/subscriptionC/resourceGroup/rg1/providers/Microsoft.Network/virtualnetworks/vnet1" --member-type "Microsoft.Network/virtualNetworks" --resource-group "rg1"
+    syntax: az network manager group create --name "TestNetworkGroup" --network-manager-name "testNetworkManager" --description "A sample group" --display-name "My Network Group" --member-type "Microsoft.Network/virtualNetworks" --resource-group "rg1"
   requiredParameters:
+  - isRequired: true
+    name: --member-type
+    parameterValueGroup: Microsoft.Network/virtualNetworks
+    summary: Group member type.
+    description: 'Usage: --member-type "Microsoft.Network/virtualNetworks".'
   - isRequired: true
     name: --name --network-group-name -n
     summary: The name of the network group to get.
@@ -39,31 +42,14 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --conditional-membership
-    summary: Network group conditional filter.
-    description: ''
   - name: --description
     summary: A description of the network group.
     description: ''
   - name: --display-name
     summary: A friendly name for the network group.
     description: ''
-  - name: --group-members
-    summary: Group members of network group.
-    description: >-
-      Usage: --group-members resource-id=XX
-
-
-      resource-id: Resource Id.
-
-
-      Multiple actions can be specified by using more than one --group-members argument.
   - name: --if-match
     summary: The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
-    description: ''
-  - name: --member-type
-    parameterValueGroup: Microsoft.Network/virtualNetworks, Microsoft.Network/virtualNetworks/subnets
-    summary: Group member type.
     description: ''
 - uid: az_network_manager_group_delete
   name: az network manager group delete
@@ -190,11 +176,9 @@ directCommands:
                                     --network-manager-name
                                     --resource-group
                                     [--add]
-                                    [--conditional-membership]
                                     [--description]
                                     [--display-name]
                                     [--force-string]
-                                    [--group-members]
                                     [--if-match]
                                     [--member-type {Subnet, VirtualNetwork}]
                                     [--remove]
@@ -216,9 +200,6 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
-  - name: --conditional-membership
-    summary: Network group conditional filter.
-    description: ''
   - name: --description
     summary: A description of the network group.
     description: ''
@@ -228,16 +209,6 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
-  - name: --group-members
-    summary: Group members of network group.
-    description: >-
-      Usage: --group-members resource-id=XX
-
-
-      resource-id: Resource Id.
-
-
-      Multiple actions can be specified by using more than one --group-members argument.
   - name: --if-match
     summary: The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
     description: ''
