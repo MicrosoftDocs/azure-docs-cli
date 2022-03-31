@@ -4,57 +4,63 @@ name: az desktopvirtualization hostpool
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **desktopvirtualization** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az desktopvirtualization hostpool** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **desktopvirtualization** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az desktopvirtualization hostpool** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Desktopvirtualization hostpool.
 description: ''
 directCommands:
 - uid: az_desktopvirtualization_hostpool_create
   name: az desktopvirtualization hostpool create
-  summary: Create or update a host pool.
+  summary: Create a host pool.
   description: ''
   syntax: >-
-    az desktopvirtualization hostpool create --host-pool-type {Personal, Pooled}
+    az desktopvirtualization hostpool create --host-pool-type {BYODesktop, Personal, Pooled}
                                              --load-balancer-type {BreadthFirst, DepthFirst, Persistent}
-                                             --location
                                              --name
-                                             --personal-desktop-assignment-type {Automatic, Direct}
+                                             --preferred-app-group-type {Desktop, None, RailApplications}
                                              --resource-group
                                              [--custom-rdp-property]
                                              [--description]
                                              [--friendly-name]
+                                             [--location]
                                              [--max-session-limit]
+                                             [--personal-desktop-assignment-type {Automatic, Direct}]
                                              [--registration-info]
                                              [--ring]
-                                             [--sso-context]
+                                             [--sso-client-id]
+                                             [--sso-client-secret-key-vault-path]
+                                             [--sso-secret-type {Certificate, CertificateInKeyVault, SharedKey, SharedKeyInKeyVault}]
+                                             [--ssoadfs-authority]
+                                             [--start-vm-on-connect {false, true}]
                                              [--tags]
                                              [--validation-environment {false, true}]
                                              [--vm-template]
   examples:
   - summary: HostPool_Create
-    syntax: az desktopvirtualization hostpool create --location "centralus" --description "des1" --friendly-name "friendly" --host-pool-type "Pooled" --load-balancer-type "BreadthFirst" --max-session-limit 999999 --personal-desktop-assignment-type "Automatic" --registration-info expiration-time="2020-10-01T14:01:54.9571247Z" registration-token-operation="Update" --sso-context "KeyVaultPath" --tags tag1="value1" tag2="value2" --name "MyHostPool" --resource-group "MyResourceGroup"
+    syntax: az desktopvirtualization hostpool create --location "centralus" --description "des1" --friendly-name "friendly" --host-pool-type "Pooled" --load-balancer-type "BreadthFirst" --max-session-limit 999999 --personal-desktop-assignment-type "Automatic" --preferred-app-group-type "Desktop" --registration-info expiration-time="2020-10-01T14:01:54.9571247Z" registration-token-operation="Update" --sso-client-id "client" --sso-client-secret-key-vault-path "https://keyvault/secret" --sso-secret-type "SharedKey" --ssoadfs-authority "https://adfs" --start-vm-on-connect false --vm-template "{json:json}" --tags tag1="value1" tag2="value2" --name "MyHostPool" --resource-group "MyResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --host-pool-type
-    parameterValueGroup: Personal, Pooled
+    parameterValueGroup: BYODesktop, Personal, Pooled
     summary: HostPool type for desktop.
-    description: ''
+    description: >-
+      Personal: Users will be assigned a SessionHost either by administrators (PersonalDesktopAssignmentType = Direct) or upon connecting to the pool (PersonalDesktopAssignmentType = Automatic). They will always be redirected to their assigned SessionHost.
+
+      Pooled: Users get a new (random) SessionHost every time it connects to the HostPool.
+
+      BYODesktop: Users assign their own machines, load balancing logic remains the same as Personal. --personal-desktop-ssignment-type must be Direct.
   - isRequired: true
     name: --load-balancer-type
     parameterValueGroup: BreadthFirst, DepthFirst, Persistent
     summary: The type of the load balancer.
     description: ''
   - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The name of the host pool within the specified resource group.
     description: ''
   - isRequired: true
-    name: --personal-desktop-assignment-type
-    parameterValueGroup: Automatic, Direct
-    summary: PersonalDesktopAssignment type for HostPool.
+    name: --preferred-app-group-type -t
+    parameterValueGroup: Desktop, None, RailApplications
+    summary: The type of preferred application group type, default to Desktop Application Group.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -70,8 +76,15 @@ directCommands:
   - name: --friendly-name
     summary: Friendly name of HostPool.
     description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
   - name: --max-session-limit
     summary: The max session limit of HostPool.
+    description: ''
+  - name: --personal-desktop-assignment-type
+    parameterValueGroup: Automatic, Direct
+    summary: PersonalDesktopAssignment type for HostPool.
     description: ''
   - name: --registration-info
     summary: The registration info of HostPool.
@@ -87,8 +100,22 @@ directCommands:
   - name: --ring
     summary: The ring number of HostPool.
     description: ''
-  - name: --sso-context
-    summary: Path to keyvault containing ssoContext secret.
+  - name: --sso-client-id
+    summary: ClientId for the registered Relying Party used to issue WVD SSO certificates.
+    description: ''
+  - name: --sso-client-secret-key-vault-path -p
+    summary: Path to Azure KeyVault storing the secret used for communication to ADFS.
+    description: ''
+  - name: --sso-secret-type
+    parameterValueGroup: Certificate, CertificateInKeyVault, SharedKey, SharedKeyInKeyVault
+    summary: The type of single sign on Secret Type.
+    description: ''
+  - name: --ssoadfs-authority
+    summary: URL to customer ADFS server for signing WVD SSO certificates.
+    description: ''
+  - name: --start-vm-on-connect
+    parameterValueGroup: false, true
+    summary: The flag to turn on/off StartVMOnConnect feature.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -137,6 +164,25 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_desktopvirtualization_hostpool_retrieve-registration-token
+  name: az desktopvirtualization hostpool retrieve-registration-token
+  summary: Registration token of the host pool.
+  description: ''
+  syntax: >-
+    az desktopvirtualization hostpool retrieve-registration-token --name
+                                                                  --resource-group
+  examples:
+  - summary: HostPools_RetrieveRegistrationToken_Post
+    syntax: az desktopvirtualization hostpool retrieve-registration-token --name "MyHostPool" --resource-group "MyResourceGroup"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the host pool within the specified resource group.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_desktopvirtualization_hostpool_show
   name: az desktopvirtualization hostpool show
   summary: Get a host pool.
@@ -169,14 +215,20 @@ directCommands:
                                              [--load-balancer-type {BreadthFirst, DepthFirst, Persistent}]
                                              [--max-session-limit]
                                              [--personal-desktop-assignment-type {Automatic, Direct}]
+                                             [--preferred-app-group-type {Desktop, None, RailApplications}]
                                              [--registration-info]
                                              [--ring]
-                                             [--sso-context]
+                                             [--sso-client-id]
+                                             [--sso-client-secret-key-vault-path]
+                                             [--sso-secret-type {Certificate, CertificateInKeyVault, SharedKey, SharedKeyInKeyVault}]
+                                             [--ssoadfs-authority]
+                                             [--start-vm-on-connect {false, true}]
                                              [--tags]
                                              [--validation-environment {false, true}]
+                                             [--vm-template]
   examples:
   - summary: HostPool_Update
-    syntax: az desktopvirtualization hostpool update --description "des1" --friendly-name "friendly" --load-balancer-type "BreadthFirst" --max-session-limit 999999 --personal-desktop-assignment-type "Automatic" --registration-info expiration-time="2020-10-01T15:01:54.9571247Z" registration-token-operation="Update" --sso-context "KeyVaultPath" --tags tag1="value1" tag2="value2" --name "MyHostPool" --resource-group "MyResourceGroup"
+    syntax: az desktopvirtualization hostpool update --description "des1" --friendly-name "friendly" --load-balancer-type "BreadthFirst" --max-session-limit 999999 --personal-desktop-assignment-type "Automatic" --registration-info expiration-time="2020-10-01T15:01:54.9571247Z" registration-token-operation="Update" --sso-client-id "client" --sso-client-secret-key-vault-path "https://keyvault/secret" --sso-secret-type "SharedKey" --ssoadfs-authority "https://adfs" --start-vm-on-connect false --vm-template "{json:json}" --tags tag1="value1" tag2="value2" --name "MyHostPool" --resource-group "MyResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -207,6 +259,10 @@ directCommands:
     parameterValueGroup: Automatic, Direct
     summary: PersonalDesktopAssignment type for HostPool.
     description: ''
+  - name: --preferred-app-group-type -t
+    parameterValueGroup: Desktop, None, RailApplications
+    summary: The type of preferred application group type, default to Desktop Application Group.
+    description: ''
   - name: --registration-info
     summary: The registration info of HostPool.
     description: >-
@@ -219,8 +275,22 @@ directCommands:
   - name: --ring
     summary: The ring number of HostPool.
     description: ''
-  - name: --sso-context
-    summary: Path to keyvault containing ssoContext secret.
+  - name: --sso-client-id
+    summary: ClientId for the registered Relying Party used to issue WVD SSO certificates.
+    description: ''
+  - name: --sso-client-secret-key-vault-path -p
+    summary: Path to Azure KeyVault storing the secret used for communication to ADFS.
+    description: ''
+  - name: --sso-secret-type
+    parameterValueGroup: Certificate, CertificateInKeyVault, SharedKey, SharedKeyInKeyVault
+    summary: The type of single sign on Secret Type.
+    description: ''
+  - name: --ssoadfs-authority
+    summary: URL to customer ADFS server for signing WVD SSO certificates.
+    description: ''
+  - name: --start-vm-on-connect
+    parameterValueGroup: false, true
+    summary: The flag to turn on/off StartVMOnConnect feature.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -229,10 +299,14 @@ directCommands:
     parameterValueGroup: false, true
     summary: Is validation environment.
     description: ''
+  - name: --vm-template
+    summary: VM template for sessionhosts configuration within hostpool.
+    description: ''
 commands:
 - az_desktopvirtualization_hostpool_create
 - az_desktopvirtualization_hostpool_delete
 - az_desktopvirtualization_hostpool_list
+- az_desktopvirtualization_hostpool_retrieve-registration-token
 - az_desktopvirtualization_hostpool_show
 - az_desktopvirtualization_hostpool_update
 globalParameters:
