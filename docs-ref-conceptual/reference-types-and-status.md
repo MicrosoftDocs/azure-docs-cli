@@ -36,7 +36,7 @@ See [Reference list A -Z](/cli/azure/reference-index) for a complete list of ref
 
 ## What are modules?
 
-A module is a container for a group of Azure CLI reference commands.  There are two kinds of modules: **core** and **extension**.  Core modules are part of the primary Azure CLI service.  Extensions are optional add-ons.  All Azure CLI commands belong to a module, although the module type determines the release schedule, status and installation method as described here:
+A module is a container for a group of Azure CLI reference commands.  There are two kinds of modules: **core** and **extension**.  Core modules are part of the primary Azure CLI service.  Extensions are optional add-ons.  All Azure CLI commands belong to a module, and the module type determines the release schedule, status and installation method as described here:
 
 |                |                           Core                           |                       Extension                        |
 | -------------- | -------------------------------------------------------- | ------------------------------------------------------ |
