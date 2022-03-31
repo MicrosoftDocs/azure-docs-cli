@@ -32,6 +32,7 @@ A **reference subgroup** can have multiple levels such as `az network applicatio
 |-|-|-|-|-|
 |network|application-gateway|private-link|ip-config|add
 
+See [Reference list A -Z](/cli/azure/reference-index) for a complete list of reference commands.
 
 ## What are modules?
 
@@ -44,7 +45,7 @@ A module is a container for a group of Azure CLI reference commands.  There are 
 | **Released**   | On a schedule                                            | As new features or updates become available            |
 | **Status**     | Can be GA (Generally Available), preview or experimental | Also can be GA, preview or experimental                |
 
-To get a list of modules use the [az --help]() and [az extension list-available --output table]() commands.
+To get a list of modules use the [get from Chase]() and [az extension list-available --output table](/cli/azure/extension#az-extension-list-available) commands.
 
 ```azurecli-interactive
 # Get list of Core modules
@@ -53,8 +54,6 @@ To get a list of modules use the [az --help]() and [az extension list-available 
 # Get list of Extension modules
 az extension list-available --output table
 ```
-
-See [Reference list A -Z](/cli/azure/reference-index) for a complete list of reference commands.
 
 ### Core
 
