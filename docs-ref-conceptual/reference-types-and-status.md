@@ -12,23 +12,30 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli references, reference types, reference status
 ---
 
-# Overview: Azure CLI reference types and status
+# Overview: Azure CLI terminology and support levels
 
-The Azure CLI has different reference types, which are sometimes described interchangeably with reference status. This article explains the difference between an Azure CLI type and a status, and provides information for working with both.
+This article explains Azure CLI terminologies.  When talking about reference groups, status, modules and extensions, some terms also relate directly to support levels.
 
 ## Azure CLI syntax components
 
-The Azure CLI syntax is a combination of references, commands, and parameters. Often the **full reference command** is referred to as **command**.
+The Azure CLI syntax is a combination of groups, references, commands, and parameters. Often the **full reference command** is referred to as **command**.
 
-| Azure Service | Reference | Reference subservice | Command | Full reference command | Parameter Examples
+| Azure Service | Reference group | Reference subgroup(s) | Command | Full reference command | Parameter Examples
 |-|-|-|-|-|-|
 | Azure CLI | [az config](/cli/azure/config) | | | az config | --local, --output -o
 | Azure Network | [az network](/cli/azure/network) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az-network-application-gateway-create) | --name, --resource-group, --capacity
 | Azure DevOps Server | [az pipelines](/cli/azure/pipelines) | agent | list | [az pipelines agent list](/cli/azure/pipelines/agent) | --pool-id, --agent-name, --demands
 
-## What are reference types?
+A **reference subgroup** can have multiple levels such as `az network application-gateway private-link ip-config add`
 
-A reference type tells you if the reference command is part of the primary Azure CLI service, or if it is an optional add-on. There are two types of Azure CLI reference commands: **core** and **extension**.
+| Reference Group | Subgroups | || Command|
+|-|-|-|-|-|
+|network|application-gateway|private-link|ip-config|add
+
+
+## What are modules?
+
+A module is a container for a group of Azure CLI reference commands.  There are two kinds of modules: **core** and **extension**.  Core modules are part of the primary Azure CLI service.  Extensions are optional add-ons.  All Azure CLI commands belong to a module, although the module type determines the release schedule, status and installation method as described here:
 
 |                |                           Core                           |                       Extension                        |
 | -------------- | -------------------------------------------------------- | ------------------------------------------------------ |
@@ -37,11 +44,21 @@ A reference type tells you if the reference command is part of the primary Azure
 | **Released**   | On a schedule                                            | As new features or updates become available            |
 | **Status**     | Can be GA (Generally Available), preview or experimental | Also can be GA, preview or experimental                |
 
-All Azure CLI references can be run in Windows, macOS, Linux, Docker, and Azure Cloud Shell.
+To get a list of modules use the [az --help]() and [az extension list-available --output table]() commands.
+
+```azurecli-interactive
+# Get list of Core modules
+<this information is needed from Chase>
+
+# Get list of Extension modules
+az extension list-available --output table
+```
+
+See [Reference list A -Z](/cli/azure/reference-index) for a complete list of reference commands.
 
 ### Core
 
-Azure CLI references that have been published as a permanent part of the CLI are called **core references**. All core references install with the Azure CLI and you cannot choose a subset of references. If you run the CLI through Azure Cloud Shell, core references are always up to date. See [Core reference list for the Azure CLI](/cli/azure/reference-index) for a complete list of core reference commands.
+Azure CLI references that have been published as a permanent part of the CLI are called **core references**. All core references install with the Azure CLI and you cannot choose a subset of references. If you run the CLI through Azure Cloud Shell, core references are always up to date. 
 
 ### Extension
 
@@ -54,14 +71,13 @@ Extensions aren't shipped as part of the CLI but run as CLI commands. Some exten
 | az iot hub certificate create     | yes     |              |
 | az iot hub device identify create |         | yes          |
 
-> [!IMPORTANT]
-> You must install an extension prior to use by running the [az extension add](/cli/azure/extension#az-extension-add) command.
+You will be prompted to install an extension upon first use.  You can also install an extension by running the [az extension add](/cli/azure/extension#az-extension-add) command.
 
 You can learn more about extension references including installation and updating in [Use extensions with the Azure CLI](azure-cli-extensions-overview.md).  See [Available extensions for the Azure CLI](azure-cli-extensions-list.md) for a complete list of extension reference commands.
 
 ## What is reference status?
 
-Regardless of type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It is the reference command status, not type, that determines stability and support level.
+Regardless of module type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It is the reference command status, not type, that determines stability and support level.
 
 | | GA  | Public preview | Experimental
 |-|-|-|-|
@@ -83,12 +99,12 @@ Although most commands and parameters for a single reference have a single statu
 | az network firewall create | All                                                                  | Extension |     |                | yes          |
 
 > [!NOTE]
-> The above table is only an example and **isn't** representative of current reference status for example commands.
+> The above table is only an example and **isn't** representative of current reference status for examples.
 
 > [!NOTE]
 > Warnings indicating **public preview** or **experimental** are part of the Azure CLI command output and should be expected.
 
 ## See also
 
-- [Core reference list for the Azure CLI](/cli/azure/reference-index)
+- [Azure CLI A - Z reference list](/cli/azure/reference-index)
 - [Available extensions for the Azure CLI](azure-cli-extensions-list.md)
