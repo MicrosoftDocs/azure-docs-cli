@@ -6,13 +6,25 @@ ms.author: dbradish
 manager: barbkess
 ms.custom: devx-track-azurecli
 ---
-
 This section contains examples of JMESPath queries for different Azure resources.
 
 ## Query examples for Azure accounts
 
-### Example query for tenant and subscription ID 
-This examples returns the tenant ID and subscription ID of the Azure account and subscription you are using.
+This section shows example queries for storage accounts.
+
+* This examples returns the tenant ID and subscription ID of the Azure account and subscription you are using.
+
+## [Bash](#tab/bash)
+
+```azurecli-interactive
+az account show --query '{tenantId:tenantId,subscriptionid:id}'
+```
+
+## [PowerShell](#tab/powershell)
+
+```powershell
+az account show --query '{tenantId:tenantId,subscriptionid:id}'
+```
 
 ## [Cmd](#tab/cmd)
 
@@ -20,16 +32,29 @@ This examples returns the tenant ID and subscription ID of the Azure account and
 az account show --query '{tenantId:tenantId,subscriptionid:id}'
 ```
 
-## [PowerShell](#tab/powershell)
+---
 
-```powershell 
-az account show --query '{tenantId:tenantId,subscriptionid:id}'
-```
+## Query examples for Azure Active Directory service principals
+This section shows example queries for AAD service principals.
+
+* The following query returns the first Microsoft Graph application service principal who has read permissions.
 
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az account show --query '{tenantId:tenantId,subscriptionid:id}'
+az ad sp list --display-name "Microsoft Graph" --query "[0].appRoles[?value=='User.Read.All' && contains(allowedMemberTypes, 'Application')].id" --output tsv
+```
+
+## [PowerShell](#tab/powershell)
+
+```powershell
+az ad sp list --display-name "Microsoft Graph" --query "[0].appRoles[?value=='User.Read.All' && contains(allowedMemberTypes, 'Application')].id" --output tsv
+```
+
+## [Cmd](#tab/cmd)
+
+```cmd
+az ad sp list --display-name "Microsoft Graph" --query "[0].appRoles[?value=='User.Read.All' && contains(allowedMemberTypes, 'Application')].id" --output tsv
 ```
 
 ---
@@ -37,12 +62,11 @@ az account show --query '{tenantId:tenantId,subscriptionid:id}'
 ## Query examples for storage accounts
 This section shows example queries for storage accounts.
 
-### Example query for primary table endpoints of a storage account
-This example returns the primary endpoints for all tables a storage account.
+* This example returns the primary endpoints for all tables a storage account.
 
-## [Cmd](#tab/cmd)
+## [Bash](#tab/bash)
 
-```cmd
+```azurecli-interactive
 az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoints.table"
 ```
 
@@ -52,9 +76,9 @@ az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoin
 az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoints.table"
 ```
 
-## [Bash](#tab/bash)
+## [Cmd](#tab/cmd)
 
-```azurecli-interactive
+```cmd
 az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoints.table"
 ```
 
@@ -62,12 +86,11 @@ az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoin
 ## Query examples for Virtual Machines
 This section shows example queries for Virtual Machines (VMs).
 
-### Example query for VMs with a disk size larger than 50GB
-This example returns the names of VMs whose disk size is larger than 50GB.
+* This example returns the names of VMs whose disk size is larger than 50GB.
 
-## [Cmd](#tab/cmd)
+## [Bash](#tab/bash)
 
-```cmd
+```azurecli-interactive
 az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
@@ -77,20 +100,19 @@ az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Nam
 az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
-## [Bash](#tab/bash)
+## [Cmd](#tab/cmd)
 
-```azurecli-interactive
+```cmd
 az vm list -g QueryDemo --query '[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }' --output table
 ```
 
 ---
 
-### Example query for VMs with SSD storage
-The following query demonstrates how to list the names and storage account types of VMs who use SSD storage.
+* The following query demonstrates how to list the names and storage account types of VMs who use SSD storage.
 
-## [Cmd](#tab/cmd)
+## [Badh](#tab/bash)
 
-```cmd
+```azurecli-interactive
 az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
@@ -100,9 +122,9 @@ az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.ma
 az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
-## [Bash](#tab/bash)
+## [Cmd](#tab/cmd)
 
-```azurecli-interactive
+```cmd
 az vm list -g QueryDemo --query '[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,`SSD`)]'
 ```
 ---
@@ -110,12 +132,11 @@ az vm list -g QueryDemo --query '[].{Name:name, Storage:storageProfile.osDisk.ma
 ## Query examples for cognitive services
 This section shows example queries for cognitive services.
 
-### Example query for endpoints
-The following query demonstrates how to list endpoints of a cognitive service.
+* The following query demonstrates how to list endpoints of a cognitive service.
 
-## [Cmd](#tab/cmd)
+## [Bash](#tab/bash)
 
-```cmd
+```azurecli-interactive
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "endpoint"
 
 ```
@@ -126,23 +147,25 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "endpoint"
 ```
 
-## [Bash](#tab/bash)
+## [Cmd](#tab/cmd)
 
-```azurecli-interactive
+```cmd
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "endpoint"
+
 ```
+
+
 ---
 ## Query examples for virtual vetworks
 This section shows example queries for virtual networks (VNet).
 
-### Example query for listing IP address IDs
-The following query lists the IDs of IP addresses that contain the substring in the shell variable IP.
+* e following query lists the IDs of IP addresses that contain the substring in the shell variable IP.
 
-## [Cmd](#tab/cmd)
+## [Bash](#tab/bash)
 
-```cmd
-Set IP="MY_EXTERNAL_IP"
-az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '%IP%')].[id]" --output tsv)
+```azurecli-interactive
+IP="MY_EXTERNAL_IP"
+az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
 ```
 
 ## [PowerShell](#tab/powershell)
@@ -152,11 +175,57 @@ $IP="MY_EXTERNAL_IP"
 az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
 ```
 
+## [Cmd](#tab/cmd)
+
+```cmd
+Set IP="MY_EXTERNAL_IP"
+az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '%IP%')].[id]" --output tsv)
+```
+
+---
+
+## Query examples for web apps
+This section shows example queries for web apps.
+
+* The following query lists all web apps that are currently running.
+
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-IP="MY_EXTERNAL_IP"
-az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+az webapp list --query "[?state=='Running']"
 ```
 
+## [PowerShell](#tab/powershell)
+
+```powershell
+az webapp list --query "[?state=='Running']"
+```
+
+## [Cmd](#tab/cmd)
+
+```cmd
+az webapp list --query "[?state=='Running']"
+```
+
+---
+
+* The following query returns the profile name and url of all web apps whose profile name ends with FTP.
+
+## [Bash](#tab/bash)
+
+```azurecli-interactive
+az webapp deployment list-publishing-profiles --name DemoApp --resource-group DemoGroup --query "[?ends_with(profileName, 'FTP')].{profileName: profileName, publishUrl: publishUrl}"
+```
+
+## [PowerShell](#tab/powershell)
+
+```powershell
+az webapp deployment list-publishing-profiles --name DemoApp --resource-group DemoGroup --query "[?ends_with(profileName, 'FTP')].{profileName: profileName, publishUrl: publishUrl}"
+```
+
+## [Cmd](#tab/cmd)
+
+```cmd
+az webapp deployment list-publishing-profiles --name DemoApp --resource-group DemoGroup --query "[?ends_with(profileName, 'FTP')].{profileName: profileName, publishUrl: publishUrl}"
+```
 ---
