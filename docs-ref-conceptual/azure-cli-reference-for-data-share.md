@@ -31,7 +31,7 @@ List of Azure Data Share CLI references that can be used to manage Azure Data Sh
 | [az datashare dataset](/cli/azure/datashare/dataset) | Commands for providers to manage Azure Data Share datasets.
 | [az datashare invitation](/cli/azure/datashare/invitation) | Commands for consumers to manage Azure Data Share invitations.
 | [az datashare provider-share-subscription](/cli/azure/datashare/provider-share-subscription) | Commands for providers to manage Azure Data Share subscriptions.
-| [az datashare synchronization](/cli/azure/datashare/synchronization) | Commands to manage Azure Data Share synchronization.
+| [az datashare synchronization](/cli/azure/datashare) | Commands to manage Azure Data Share synchronization.
 | [az datashare synchronization-setting](/cli/azure/datashare/synchronization-setting) | Commands for providers to manage Azure Data Share synchronization settings.
 
 ## Reference examples
