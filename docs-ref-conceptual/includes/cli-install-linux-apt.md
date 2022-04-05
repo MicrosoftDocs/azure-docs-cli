@@ -13,7 +13,7 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 | Distribution | Version |
 |:-------------|:--------|
-| Ubuntu       | 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa) |
+| Ubuntu       | 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 21.10 (Impish Indri) |
 | Debian       | 9 (Stretch), 10 (Buster), 11 (Bullseye) |
 
 > [!WARNING]
