@@ -27,7 +27,7 @@ Use __ctrl-shift-v__ (__cmd-shift-v__ on macOS) to paste tutorial text into Azur
 
 ## Shell variables
 
-Shell variables store values for future use and can be used to pass values to command parameters. Shell variables allow for the reuse of commands, both on their own and in scripts. This tutorial uses shell variables for easier customization of command parameters. To use your own parameter values instead of using the provided values, change the values assigned to the shell variables. For more information about shell variables see [Use shell variables](/cli/azure/azure-cli-variables#use-shell-variables).
+Shell variables store values for future use and can be used to pass values to command parameters. Shell variables allow for the reuse of commands, both on their own and in scripts. This tutorial uses shell variables for easier customization of command parameters. To use your own parameter values instead of using the provided values, change the values assigned to the shell variables. For more information about shell variables see [Use shell variables](./azure-cli-variables.md#use-shell-variables).
 
 ## Create a resource group
 

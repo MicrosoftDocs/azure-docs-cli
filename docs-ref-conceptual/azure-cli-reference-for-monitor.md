@@ -75,6 +75,6 @@ az monitor activity-log alert create --name MyAlertName --resource-group MyResou
 
 - [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-- Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
+- Discover additional [core](../latest/docs-ref-autogen/reference-index.yml) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
 
 - Learn more about extension references in [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).

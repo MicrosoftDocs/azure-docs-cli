@@ -19,7 +19,7 @@ This article discusses useful tips on how to use the Azure CLI and how to avoid 
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
 
-If you have questions about any Azure CLI command, search in [Azure CLI Reference](/cli/azure/reference-index).
+If you have questions about any Azure CLI command, search in [Azure CLI Reference](../latest/docs-ref-autogen/reference-index.yml).
 
 ## Output formatting
 
@@ -45,7 +45,7 @@ az account list --output table
 
 Here are three common formats:
 
-* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az config](/cli/azure/config) command.
+* The `json` format shows information in as a JSON string. This format gives you the most comprehensive information. This format is the default. You can change the default format by using the [az config](../latest/docs-ref-autogen/config.yml) command.
 * The `table` format presents output as a human readable table. You can specify which values appear in the table and use queries to customize the output.
 * The `tsv` format returns tab-separated and newline-separated values without extra formatting, keys, or other symbols.
 
@@ -205,13 +205,13 @@ az vm update --resource-group VMResources --name virtual-machine-01 \
 
 ## Generic resource commands
 
-A service you want to work with might not have Azure CLI support yet. You can use the [az resource](/cli/azure/resource) commands to work with these resources.
+A service you want to work with might not have Azure CLI support yet. You can use the [az resource](../latest/docs-ref-autogen/resource.yml) commands to work with these resources.
 
 If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az-deployment-group-create). For working examples, see [Azure Quickstart Templates](https://azure.microsoft.com/resources/templates/).
 
 ## REST API commands
 
-If generic update arguments and [az resource](/cli/azure/resource) don't meet your needs, you can use [az rest](/cli/azure/reference-index#az-rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
+If generic update arguments and [az resource](../latest/docs-ref-autogen/resource.yml) don't meet your needs, you can use [az rest](/cli/azure/reference-index#az-res) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
 
 This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), we call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
 

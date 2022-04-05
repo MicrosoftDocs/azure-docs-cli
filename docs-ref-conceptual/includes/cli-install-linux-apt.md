@@ -74,7 +74,7 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 ## Install specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
+You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
 1. To view available versions with command:
 

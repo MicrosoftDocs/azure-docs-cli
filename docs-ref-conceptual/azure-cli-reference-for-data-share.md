@@ -25,8 +25,8 @@ List of Azure Data Share CLI references that can be used to manage Azure Data Sh
 
 |Azure CLI Reference |Description
 |-|-|
-| [az datashare](/cli/azure/datashare) | All commands to manage Azure Data Share.
-| [az datashare account](/cli/azure/datashare/account) | Commands to manage Azure Data Share accounts.
+| [az datashare](../latest/docs-ref-autogen/datashare.yml) | All commands to manage Azure Data Share.
+| [az datashare account](../latest/docs-ref-autogen/datashare/account.yml) | Commands to manage Azure Data Share accounts.
 | [az datashare consumer](/cli/azure/datashare/consumer) | Commands for consumers to manage Azure Data Share.
 | [az datashare dataset](/cli/azure/datashare/dataset) | Commands for providers to manage Azure Data Share datasets.
 | [az datashare invitation](/cli/azure/datashare/invitation) | Commands for consumers to manage Azure Data Share invitations.
@@ -61,4 +61,4 @@ az datashare account create --location westus --tags tag1=Red tag2=White --name 
 
 * [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-* Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
+* Discover additional [core](../latest/docs-ref-autogen/reference-index.yml) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
