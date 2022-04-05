@@ -22,14 +22,19 @@ directCommands:
   description: 'When a workspace is created, several Azure resources that will be used by Azure ML also get created by default: Azure Storage, Azure Container Registry, Azure Key Vault, and Azure Application Insights. You can instead use existing Azure resource instances for those when creating the workspace by specifying the resource IDs in the workspace configuration YAML file.'
   syntax: >-
     az ml workspace create --resource-group
+                           [--application-insights]
+                           [--container-registry]
                            [--description]
                            [--display-name]
                            [--file]
+                           [--image-build-compute]
                            [--location]
                            [--name]
                            [--no-wait]
+                           [--public-network-access]
                            [--set]
                            [--tags]
+                           [--update-dependent-resources]
   examples:
   - summary: Create a workspace from a YAML specification file.
     syntax: az ml workspace create --file workspace.yml --resource-group my-resource-group
@@ -39,14 +44,23 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --application-insights
+    summary: ARM id of the application insights associated with this workspace.
+    description: ''
+  - name: --container-registry
+    summary: ARM id of the container registry associated with this workspace.
+    description: ''
   - name: --description
-    summary: Description of the object.
+    summary: Description of the Azure ML workspace.
     description: ''
   - name: --display-name
     summary: Display name for the workspace.
     description: ''
   - name: --file -f
     summary: Local path to the YAML file containing the Azure ML workspace specification.
+    description: ''
+  - name: --image-build-compute -i
+    summary: The name of the compute target to use for building environment Docker images when the container registry is behind a VNet.
     description: ''
   - name: --location -l
     summary: The location to be used for the new workspace.
@@ -57,11 +71,17 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for workspace creation to finish.
     description: ''
+  - name: --public-network-access
+    summary: Allow public endpoint connectivity when a workspace is private link enabled.
+    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
     description: ''
   - name: --tags
     summary: Space-separated key-value pairs for the tags of the object.
+    description: ''
+  - name: --update-dependent-resources -u
+    summary: Specifying --update_dependent_resources, gives your consent to update the workspace dependent resources. Updating the workspace-attached Azure Container Registry or Application Insights resource may break lineage of previous jobs, deployed inference endpoints, or your ability to rerun earlier jobs in this workspace.
     description: ''
 - uid: az_ml_workspace_delete
   name: az ml workspace delete
@@ -226,7 +246,7 @@ directCommands:
     summary: ARM id of the container registry associated with this workspace.
     description: ''
   - name: --description
-    summary: Description of the object.
+    summary: Description of the Azure ML workspace.
     description: ''
   - name: --display-name
     summary: Display name for the workspace.
@@ -253,7 +273,7 @@ directCommands:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --update-dependent-resources -u
-    summary: Specifying --update_dependent_resources, gives your consent to update the workspace dependent resources. Note that updating the workspace-attached Azure Container Registry resource may break lineage of previous jobs or your ability to rerun earlier jobs in this workspace. Also, updating the workspace-attached Azure Application Insights resource may break lineage of deployed inference endpoints this workspace. Only set this argument if you are sure that you want to perform this operation. If this argument is not set, the command to update Azure Container Registry and Azure Application Insights will fail.
+    summary: Specifying --update_dependent_resources, gives your consent to update the workspace dependent resources. Updating the workspace-attached Azure Container Registry or Application Insights resource may break lineage of previous jobs, deployed inference endpoints, or your ability to rerun earlier jobs in this workspace.
     description: ''
 commands:
 - az_ml_workspace_create

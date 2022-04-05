@@ -469,7 +469,7 @@ Version 2.30.0
 
 ### Core
 
-* [BREAKING CHANGE] Migrate from ADAL to MSAL. For more details, see [MSAL-based Azure CLI](/cli/azure/msal-based-azure-cli)
+* [BREAKING CHANGE] Migrate from ADAL to MSAL. For more details, see [MSAL-based Azure CLI](./msal-based-azure-cli.md)
 
 ### ACR
 

@@ -13,7 +13,7 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 | Distribution | Version |
 |:-------------|:--------|
-| Ubuntu       | 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa) |
+| Ubuntu       | 16.04 LTS (Xenial Xerus), 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 21.10 (Impish Indri) |
 | Debian       | 9 (Stretch), 10 (Buster), 11 (Bullseye) |
 
 > [!WARNING]
@@ -74,7 +74,7 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 ## Install specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
+You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
 1. To view available versions with command:
 

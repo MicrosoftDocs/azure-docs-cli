@@ -8,6 +8,41 @@ extensionInformation: >-
 summary: Manage Azure ML environments.
 description: Azure ML environments define the execution environment for jobs and endpoint deployments, encapsulating the dependencies for training and inference. These environment definitions are built into Docker images.
 directCommands:
+- uid: az_ml_environment_archive
+  name: az ml environment archive
+  summary: Archive an environment.
+  description: Archiving an environment will hide it by default from list queries (`az ml environment list`). You can still continue to reference and use an archived environment in your workflows. You can archive either an environment container or a specific environment version. Archiving an environment container will archive all versions of the environment under that given name. You can restore an archived environment using `az ml environment restore`. If the entire environment container is archived, you cannot restore individual versions of the environment - you will need to restore the environment container.
+  syntax: >-
+    az ml environment archive --name
+                              --resource-group
+                              --workspace-name
+                              [--label]
+                              [--version]
+  examples:
+  - summary: Archive an environment container (archives all versions of that environment)
+    syntax: az ml environment archive --name my-env --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Archive a specific environment version
+    syntax: az ml environment archive --name my-env --version 1 --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --label -l
+    summary: Label of the environment.
+    description: ''
+  - name: --version -v
+    summary: Version of the environment.
+    description: ''
 - uid: az_ml_environment_create
   name: az ml environment create
   summary: Create an environment.
@@ -56,7 +91,7 @@ directCommands:
     summary: Local path to a conda specification file. --image/-i must also be specified if this argument is used.
     description: ''
   - name: --description
-    summary: Description of the object.
+    summary: Description of the environment.
     description: ''
   - name: --dockerfile-path -d
     defaultValue: /Dockerfile
@@ -83,36 +118,6 @@ directCommands:
   - name: --version -v
     summary: Version of the environment.
     description: ''
-- uid: az_ml_environment_delete
-  name: az ml environment delete
-  summary: Delete an environment.
-  description: ''
-  syntax: >-
-    az ml environment delete --name
-                             --resource-group
-                             --workspace-name
-                             [--label]
-                             [--version]
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name of the environment.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --label -l
-    summary: Label of the environment.
-    description: ''
-  - name: --version -v
-    summary: Version of the environment.
-    description: ''
 - uid: az_ml_environment_list
   name: az ml environment list
   summary: List environments in a workspace.
@@ -120,6 +125,7 @@ directCommands:
   syntax: >-
     az ml environment list --resource-group
                            --workspace-name
+                           [--include-archived]
                            [--max-results]
                            [--name]
   examples:
@@ -139,11 +145,49 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
+  - name: --include-archived
+    summary: List archived environments and active environments.
+    description: ''
   - name: --max-results -r
     summary: Max number of results to return.
     description: ''
   - name: --name -n
     summary: Name of the environment. If provided, all the environment versions under this name will be returned.
+    description: ''
+- uid: az_ml_environment_restore
+  name: az ml environment restore
+  summary: Restore an archived environment.
+  description: When an archived environment is restored, it will no longer be hidden from list queries (`az ml environment list`). If an entire environment container is archived, you can restore that archived container. This will restore all versions of the environment under that given name. You cannot restore only a specific environment version if the entire environment container is archived - you will need to restore the entire container. If only an individual environment version was archived, you can restore that specific version.
+  syntax: >-
+    az ml environment restore --name
+                              --resource-group
+                              --workspace-name
+                              [--label]
+                              [--version]
+  examples:
+  - summary: Restore an archived environment container (restores all versions of that environment)
+    syntax: az ml environment restore --name my-env --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Restore a specific archived environment version
+    syntax: az ml environment restore --name my-env --version 1 --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --label -l
+    summary: Label of the environment.
+    description: ''
+  - name: --version -v
+    summary: Version of the environment.
     description: ''
 - uid: az_ml_environment_show
   name: az ml environment show
@@ -225,9 +269,10 @@ directCommands:
     summary: Version of the environment.
     description: ''
 commands:
+- az_ml_environment_archive
 - az_ml_environment_create
-- az_ml_environment_delete
 - az_ml_environment_list
+- az_ml_environment_restore
 - az_ml_environment_show
 - az_ml_environment_update
 globalParameters:
