@@ -166,16 +166,16 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_blob_download
   name: az storage blob download
-  summary: Downloads a blob to a file path, with automatic chunking and progress notifications.
-  description: Returns an instance of Blob with properties and metadata.
+  summary: Download a blob to a file path.
+  description: ''
   syntax: >-
-    az storage blob download --container-name
-                             --file
-                             --name
+    az storage blob download --file
                              [--account-key]
                              [--account-name]
                              [--auth-mode {key, login}]
+                             [--blob-url]
                              [--connection-string]
+                             [--container-name]
                              [--end-range]
                              [--if-match]
                              [--if-modified-since]
@@ -183,25 +183,23 @@ directCommands:
                              [--if-unmodified-since]
                              [--lease-id]
                              [--max-connections]
+                             [--name]
                              [--no-progress]
                              [--open-mode]
                              [--sas-token]
                              [--snapshot]
                              [--start-range]
+                             [--tags-condition]
                              [--timeout]
                              [--validate-content]
+                             [--version-id]
+  examples:
+  - summary: Download a blob.
+    syntax: az storage blob download -f /path/to/file -c mycontainer -n MyBlob
   requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
   - isRequired: true
     name: --file -f
     summary: Path of file to write out to.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
     description: ''
   optionalParameters:
   - name: --account-key
@@ -214,8 +212,14 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --end-range
     summary: 'End of byte range to use for downloading a section of the blob. If end_range is given, start_range must be provided. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of blob.'
@@ -237,7 +241,10 @@ directCommands:
     description: ''
   - name: --max-connections
     defaultValue: "2"
-    summary: If set to 2 or greater, an initial get will be done for the first self.MAX_SINGLE_GET_SIZE bytes of the blob. If this is the entire blob, the method returns at this point. If it is not, it will download the remaining data parallel using the number of threads equal to max_connections. Each chunk will be of size self.MAX_CHUNK_GET_SIZE. If set to 1, a single large get request will be done. This is not generally recommended but available if very few threads should be used, network requests are very expensive, or a non-seekable stream prevents parallel download. This may also be useful if many blobs are expected to be empty as an extra request is required for empty blobs if max_connections is greater than 1.
+    summary: The number of parallel connections with which to download.
+    description: ''
+  - name: --name -n
+    summary: The blob name.
     description: ''
   - name: --no-progress
     summary: Include this flag to disable progress reporting for the command.
@@ -255,11 +262,17 @@ directCommands:
   - name: --start-range
     summary: 'Start of byte range to use for downloading a section of the blob. If no end_range is given, all bytes after the start_range will be downloaded. The start_range and end_range params are inclusive. Ex: start_range=0, end_range=511 will download first 512 bytes of blob.'
     description: ''
+  - name: --tags-condition
+    summary: Specify a SQL where clause on blob tags to operate only on blobs with a matching value.
+    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   - name: --validate-content
-    summary: If set to true, validates an MD5 hash for each retrieved portion of the blob. This is primarily valuable for detecting bitflips on the wire if using http instead of https as https (the default) will already validate. Note that the service will only return transactional MD5s for chunks 4MB or less so the first get request will be of size self.MAX_CHUNK_GET_SIZE instead of self.MAX_SINGLE_GET_SIZE. If self.MAX_CHUNK_GET_SIZE was set to greater than 4MB an error will be thrown. As computing the MD5 takes processing time and more requests will need to be done due to the reduced chunk size there may be some increase in latency.
+    summary: If true, calculates an MD5 hash for each chunk of the blob. The storage service checks the hash of the content that has arrived with the hash that was sent. This is primarily valuable for detecting bitflips on the wire if using http instead of https, as https (the default), will already validate. Note that this MD5 hash is not stored with the blob. Also note that if enabled, the memory-efficient algorithm will not be used because computing the MD5 hash requires buffering entire blocks, and doing so defeats the purpose of the memory-efficient algorithm.
+    description: ''
+  - name: --version-id
+    summary: An optional blob version ID. This parameter is only for versioning enabled account.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_blob_download-batch
@@ -315,7 +328,7 @@ directCommands:
     description: ''
   - name: --max-connections
     defaultValue: "2"
-    summary: Maximum number of parallel connections to use when the blob size exceeds 64MB.
+    summary: The number of parallel connections with which to download.
     description: ''
   - name: --no-progress
     summary: Include this flag to disable progress reporting for the command.
@@ -415,14 +428,14 @@ directCommands:
   summary: Generate a shared access signature for the blob.
   description: ''
   syntax: >-
-    az storage blob generate-sas --container-name
-                                 --name
-                                 [--account-key]
+    az storage blob generate-sas [--account-key]
                                  [--account-name]
                                  [--as-user]
                                  [--auth-mode {key, login}]
+                                 [--blob-url]
                                  [--cache-control]
                                  [--connection-string]
+                                 [--container-name]
                                  [--content-disposition]
                                  [--content-encoding]
                                  [--content-language]
@@ -431,9 +444,12 @@ directCommands:
                                  [--full-uri]
                                  [--https-only]
                                  [--ip]
+                                 [--name]
                                  [--permissions]
                                  [--policy-name]
+                                 [--snapshot]
                                  [--start]
+                                 [--timeout]
   examples:
   - summary: Generate a sas token for a blob with read-only permissions.
     syntax: >-
@@ -447,15 +463,6 @@ directCommands:
       az storage blob generate-sas -c myycontainer -n MyBlob --ip "176.134.171.0-176.134.171.255" --permissions r --expiry $end --https-only
   - summary: Generate a shared access signature for the blob. (autogenerated)
     syntax: az storage blob generate-sas --account-key 00000000 --account-name MyStorageAccount --container-name mycontainer --expiry 2018-01-01T00:00:00Z --name MyBlob --permissions r
-  requiredParameters:
-  - isRequired: true
-    name: --container-name -c
-    summary: The container name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The blob name.
-    description: ''
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -470,11 +477,17 @@ directCommands:
     parameterValueGroup: key, login
     summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
+  - name: --blob-url
+    summary: The full endpoint URL to the Blob, including SAS token and snapshot if used. This could be either the primary endpoint, or the secondary endpoint depending on the current `location_mode`.
+    description: ''
   - name: --cache-control
     summary: Response header value for Cache-Control when resource is accessed using this shared access signature.
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --container-name -c
+    summary: The container name.
     description: ''
   - name: --content-disposition
     summary: Response header value for Content-Disposition when resource is accessed using this shared access signature.
@@ -489,7 +502,7 @@ directCommands:
     summary: Response header value for Content-Type when resource is accessed using this shared access signature.
     description: ''
   - name: --expiry
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --id that specifies this value.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --policy-name that specifies this value.
     description: ''
   - name: --full-uri
     summary: Indicates that this command return the full blob URI and the shared access signature token.
@@ -500,14 +513,23 @@ directCommands:
   - name: --ip
     summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
     description: ''
+  - name: --name -n
+    summary: The blob name.
+    description: ''
   - name: --permissions
-    summary: 'The permissions the SAS grants. Allowed values: (a)dd (c)reate (d)elete (r)ead (w)rite (a)dd (c)reate (d)elete (r)ead (w)rite. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
+    summary: 'The permissions the SAS grants. Allowed values: (a)dd (c)reate (d)elete (e)xecute (i)set_immutability_policy (m)ove (r)ead (t)ag (w)rite (x)delete_previous_version (y)permanent_delete. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
     description: ''
   - name: --policy-name
     summary: The name of a stored access policy within the container's ACL.
     description: ''
+  - name: --snapshot
+    summary: An optional blob snapshot ID. Opaque DateTime value that, when present, specifies the blob snapshot to grant permission.
+    description: ''
   - name: --start
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --id that specifies this value. Defaults to the time of the request.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --policy-name that specifies this value. Defaults to the time of the request.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_blob_list
@@ -1680,5 +1702,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/25/2022
+  ms.date: 03/29/2022
   description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

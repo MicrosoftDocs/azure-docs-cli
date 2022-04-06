@@ -106,15 +106,21 @@ directCommands:
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
                   [--enable-managed-identity]
+                  [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
                   [--enable-private-cluster]
                   [--enable-rbac]
                   [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
                   [--enable-ultra-ssd]
+                  [--enable-windows-gmsa]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
+                  [--gmsa-dns-server]
+                  [--gmsa-root-domain-name]
+                  [--kubelet-config]
                   [--kubernetes-version]
+                  [--linux-os-config]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-outbound-ip-prefixes]
@@ -132,7 +138,7 @@ directCommands:
                   [--node-count]
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
-                  [--node-osdisk-type]
+                  [--node-osdisk-type {Ephemeral, Managed}]
                   [--node-public-ip-prefix-id]
                   [--node-vm-size]
                   [--nodepool-labels]
@@ -141,6 +147,7 @@ directCommands:
                   [--os-sku]
                   [--outbound-type {loadBalancer, userDefinedRouting}]
                   [--pod-cidr]
+                  [--pod-subnet-id]
                   [--ppg]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
@@ -213,6 +220,10 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --aks-custom-headers WindowsContainerRuntime=containerd,AKSHTTPCustomFeatures=Microsoft.ContainerService/CustomNodeConfigPreview
   - summary: Create a kubernetes cluster with FIPS-enabled OS
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-fips-image
+  - summary: Create a kubernetes cluster with enabling Windows gmsa and with setting DNS server in the vnet used by the cluster.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa
+  - summary: Create a kubernetes cluster with enabling Windows gmsa but without setting DNS server in the vnet used by the cluster.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   - summary: create a kubernetes cluster with a snapshot id.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
   requiredParameters:
@@ -318,6 +329,7 @@ directCommands:
           - http_application_routing : configure ingress with automatic public DNS name creation.
           - monitoring               : turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one.
                                        Specify "--workspace-resource-id" to use an existing workspace.
+                                       Specify "--enable-msi-auth-for-monitoring" to use Managed Identity Auth.
                                        If monitoring addon is enabled --no-wait argument will have no effect
           - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
                                        Learn more at aka.ms/aks/policy.
@@ -346,6 +358,10 @@ directCommands:
     defaultValue: "1"
     summary: Using a system assigned managed identity to manage cluster resource group.
     description: ''
+  - name: --enable-msi-auth-for-monitoring
+    parameterValueGroup: false, true
+    summary: Enable Managed Identity Auth for Monitoring addon.
+    description: ''
   - name: --enable-node-public-ip
     summary: Enable VMSS node public IP.
     description: ''
@@ -364,16 +380,37 @@ directCommands:
   - name: --enable-ultra-ssd
     summary: Enable UltraSSD, default value is false.
     description: ''
+  - name: --enable-windows-gmsa
+    summary: Enable Windows gmsa.
+    description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
     description: ''
   - name: --generate-ssh-keys
     summary: Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
     description: ''
+  - name: --gmsa-dns-server
+    summary: Specify DNS server for Windows gmsa for this cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --gmsa-root-domain-name
+    summary: Specify root domain name for Windows gmsa for this cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --kubelet-config
+    summary: Path to JSON file containing Kubelet configurations for agent nodes. https://aka.ms/aks/custom-node-config.
+    description: ''
   - name: --kubernetes-version -k
     summary: Version of Kubernetes to use for creating the cluster, such as "1.16.9".
     description: ''
     valueFrom: '`az aks get-versions`'
+  - name: --linux-os-config
+    summary: Path to JSON file containing OS configurations for Linux agent nodes. https://aka.ms/aks/custom-node-config.
+    description: ''
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
     description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 100].
@@ -396,13 +433,13 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
     description: If not specified, defaults to 110, or 30 for advanced networking configurations.
   - name: --min-count
-    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --network-plugin
     parameterValueGroup: azure, kubenet
@@ -433,6 +470,7 @@ directCommands:
     summary: Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
     description: ''
   - name: --node-osdisk-type
+    parameterValueGroup: Ephemeral, Managed
     summary: "OS disk type to be used for machines in a given agent pool: Ephemeral or Managed. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation."
     description: ''
   - name: --node-public-ip-prefix-id
@@ -461,6 +499,9 @@ directCommands:
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
     description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+  - name: --pod-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
+    description: ''
   - name: --ppg
     summary: The ID of a PPG.
     description: ''
@@ -597,6 +638,7 @@ directCommands:
     These addons are available:
         - http_application_routing : configure ingress with automatic public DNS name creation.
         - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
+                                     Requires "--enable_msi_auth_for_monitoring" for managed identity auth.
                                      If monitoring addon is enabled --no-wait argument will have no effect
         - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
         - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
@@ -613,6 +655,7 @@ directCommands:
                          [--appgw-subnet-cidr]
                          [--appgw-subnet-id]
                          [--appgw-watch-namespace]
+                         [--enable-msi-auth-for-monitoring]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
                          [--no-wait]
@@ -654,6 +697,9 @@ directCommands:
     description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
+    description: ''
+  - name: --enable-msi-auth-for-monitoring
+    summary: Enable Managed Identity Auth for Monitoring addon.
     description: ''
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
@@ -1075,6 +1121,9 @@ directCommands:
                   [--enable-managed-identity]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
+                  [--enable-windows-gmsa]
+                  [--gmsa-dns-server]
+                  [--gmsa-root-domain-name]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-outbound-ip-prefixes]
@@ -1132,6 +1181,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --tags "foo=bar" "baz=qux"
   - summary: Update a kubernetes cluster with custom headers
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --aks-custom-headers WindowsContainerRuntime=containerd,AKSHTTPCustomFeatures=Microsoft.ContainerService/CustomNodeConfigPreview
+  - summary: Enable Windows gmsa for a kubernetes cluster with setting DNS server in the vnet used by the cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa
+  - summary: Enable Windows gmsa for a kubernetes cluster without setting DNS server in the vnet used by the cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1212,6 +1265,21 @@ directCommands:
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
+  - name: --enable-windows-gmsa
+    summary: Enable Windows gmsa on cluster.
+    description: ''
+  - name: --gmsa-dns-server
+    summary: Specify DNS server for Windows gmsa on cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --gmsa-root-domain-name
+    summary: Specify root domain name for Windows gmsa on cluster.
+    description: >-
+      You do not need to set this if you have set DNS server in the VNET used by the cluster.
+
+      You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
     description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 100].
@@ -1228,10 +1296,10 @@ directCommands:
     summary: Load balancer outbound allocated ports.
     description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs.
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --min-count
-    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --no-uptime-sla
     summary: Change a paid managed cluster to a free one.
@@ -1512,10 +1580,17 @@ commands:
 - az_aks_nodepool_list
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
+- az_aks_nodepool_snapshot
+- az_aks_nodepool_snapshot_create
+- az_aks_nodepool_snapshot_delete
+- az_aks_nodepool_snapshot_list
+- az_aks_nodepool_snapshot_show
+- az_aks_nodepool_snapshot_wait
 - az_aks_nodepool_start
 - az_aks_nodepool_stop
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
+- az_aks_nodepool_wait
 - az_aks_pod-identity
 - az_aks_pod-identity_add
 - az_aks_pod-identity_delete
@@ -1534,6 +1609,7 @@ commands:
 - az_aks_snapshot_delete
 - az_aks_snapshot_list
 - az_aks_snapshot_show
+- az_aks_snapshot_wait
 - az_aks_start
 - az_aks_stop
 - az_aks_update
@@ -1560,5 +1636,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/24/2022
+  ms.date: 03/31/2022
   description: Manage Azure Kubernetes Services.

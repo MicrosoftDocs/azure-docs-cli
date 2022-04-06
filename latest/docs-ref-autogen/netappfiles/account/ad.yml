@@ -18,22 +18,24 @@ directCommands:
                                   [--ad-name]
                                   [--add]
                                   [--administrators]
-                                  [--aes-encryption]
-                                  [--allow-local-ldap-users]
+                                  [--aes-encryption {false, true}]
+                                  [--allow-local-ldap-users {false, true}]
                                   [--backup-operators]
                                   [--encrypt-dc-conn {false, true}]
                                   [--force-string]
+                                  [--group-dn]
+                                  [--group-filter]
                                   [--ids]
                                   [--kdc-ip]
                                   [--ldap-over-tls]
-                                  [--ldap-signing]
+                                  [--ldap-signing {false, true}]
                                   [--organizational-unit]
                                   [--remove]
                                   [--resource-group]
                                   [--security-operators]
                                   [--server-root-ca-cert]
                                   [--set]
-                                  [--tags]
+                                  [--user-dn]
   examples:
   - summary: Add an active directory to the account
     syntax: az netappfiles account ad add -g mygroup --name myname --username aduser --password aduser --smb-server-name SMBSERVER --dns 1.2.3.4 --domain westcentralus
@@ -69,16 +71,18 @@ directCommands:
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --administrators
-    summary: Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier.
+    summary: Users to be added to the Built-in Administrators active directory group. A space seperated string of unique usernames without domain specifier.
     description: ''
   - name: --aes-encryption
+    parameterValueGroup: false, true
     summary: If enabled, AES encryption will be enabled for SMB communication.
     description: ''
   - name: --allow-local-ldap-users
+    parameterValueGroup: false, true
     summary: If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes.
     description: ''
   - name: --backup-operators
-    summary: Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier.
+    summary: Users to be added to the Built-in Backup Operator active directory group. A space separated string of unique usernames without domain specifier.
     description: ''
   - name: --encrypt-dc-conn
     parameterValueGroup: false, true
@@ -86,6 +90,12 @@ directCommands:
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --group-dn
+    summary: This specifies the group DN, which overrides the base DN for group lookups.
+    description: ''
+  - name: --group-filter
+    summary: This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -97,6 +107,7 @@ directCommands:
     summary: Specifies whether or not the LDAP traffic needs to be secured via TLS.
     description: ''
   - name: --ldap-signing
+    parameterValueGroup: false, true
     summary: Specifies whether or not the LDAP traffic needs to be signed.
     description: ''
   - name: --organizational-unit
@@ -109,7 +120,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --security-operators
-    summary: Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier.
+    summary: Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A space seperated list of unique usernames without domain specifier.
     description: ''
   - name: --server-root-ca-cert
     summary: When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes.
@@ -117,8 +128,8 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+  - name: --user-dn
+    summary: This specifies the user DN, which overrides the base DN for user lookups.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_account_ad_list
@@ -184,22 +195,24 @@ directCommands:
                                      [--ad-name]
                                      [--add]
                                      [--administrators]
-                                     [--aes-encryption]
-                                     [--allow-local-ldap-users]
+                                     [--aes-encryption {false, true}]
+                                     [--allow-local-ldap-users {false, true}]
                                      [--backup-operators]
                                      [--encrypt-dc-conn {false, true}]
                                      [--force-string]
+                                     [--group-dn]
+                                     [--group-filter]
                                      [--ids]
                                      [--kdc-ip]
                                      [--ldap-over-tls]
-                                     [--ldap-signing]
+                                     [--ldap-signing {false, true}]
                                      [--organizational-unit]
                                      [--remove]
                                      [--resource-group]
                                      [--security-operators]
                                      [--server-root-ca-cert]
                                      [--set]
-                                     [--tags]
+                                     [--user-dn]
   examples:
   - summary: Update an active directory on the account
     syntax: az netappfiles account ad update -g mygroup --name myname --active-directory-id 123 --username aduser --password aduser --smb-server-name SMBSERVER --dns 1.2.3.4 --domain westcentralus
@@ -239,16 +252,18 @@ directCommands:
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --administrators
-    summary: Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier.
+    summary: Users to be added to the Built-in Administrators active directory group. A space seperated list of unique usernames without domain specifier.
     description: ''
   - name: --aes-encryption
+    parameterValueGroup: false, true
     summary: If enabled, AES encryption will be enabled for SMB communication.
     description: ''
   - name: --allow-local-ldap-users
+    parameterValueGroup: false, true
     summary: If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes.
     description: ''
   - name: --backup-operators
-    summary: Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier.
+    summary: Users to be added to the Built-in Backup Operator active directory group. A space seperated list of unique usernames without domain specifier.
     description: ''
   - name: --encrypt-dc-conn
     parameterValueGroup: false, true
@@ -256,6 +271,12 @@ directCommands:
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --group-dn
+    summary: This specifies the group DN, which overrides the base DN for group lookups.
+    description: ''
+  - name: --group-filter
+    summary: This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -267,6 +288,7 @@ directCommands:
     summary: Specifies whether or not the LDAP traffic needs to be secured via TLS.
     description: ''
   - name: --ldap-signing
+    parameterValueGroup: false, true
     summary: Specifies whether or not the LDAP traffic needs to be signed.
     description: ''
   - name: --organizational-unit
@@ -279,7 +301,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --security-operators
-    summary: Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier.
+    summary: Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A space seperated list of unique usernames without domain specifier.
     description: ''
   - name: --server-root-ca-cert
     summary: When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes.
@@ -287,8 +309,8 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+  - name: --user-dn
+    summary: This specifies the user DN, which overrides the base DN for user lookups.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 commands:
@@ -315,5 +337,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/24/2022
+  ms.date: 03/29/2022
   description: Manage Azure NetApp Files (ANF) Account active directories.

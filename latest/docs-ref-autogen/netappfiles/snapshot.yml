@@ -10,11 +10,11 @@ directCommands:
   description: ''
   syntax: >-
     az netappfiles snapshot create --account-name
-                                   --location
                                    --name
                                    --pool-name
                                    --resource-group
                                    --volume-name
+                                   [--location]
   examples:
   - summary: Create an ANF snapshot
     syntax: az netappfiles snapshot create -g mygroup --account-name myaccname --pool-name mypoolname --volume-name myvolname --name mysnapname -l eastus
@@ -22,10 +22,6 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: The name of the ANF account.
-    description: ''
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --name --snapshot-name -n -s
@@ -42,6 +38,10 @@ directCommands:
   - isRequired: true
     name: --volume-name -v
     summary: The name of the ANF volume.
+    description: ''
+  optionalParameters:
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_snapshot_delete
@@ -105,6 +105,50 @@ directCommands:
     description: ''
   - isRequired: true
     name: --volume-name -v
+    summary: The name of the ANF volume.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_snapshot_restore-files
+  name: az netappfiles snapshot restore-files
+  summary: Restore specified files from the specified snapshot to the active filesystem.
+  description: ''
+  syntax: >-
+    az netappfiles snapshot restore-files --file-paths
+                                          [--account-name]
+                                          [--destination-path]
+                                          [--ids]
+                                          [--name]
+                                          [--pool-name]
+                                          [--resource-group]
+                                          [--volume-name]
+  examples:
+  - summary: Restore files from snapshot
+    syntax: az netappfiles snapshot restore-files -g mygroup --account-name myaccname --pool-name mypoolname --volume-name myvolname --name mysnapname --file-paths myfilepaths
+  requiredParameters:
+  - isRequired: true
+    name: --file-paths
+    summary: Required. A space seperated string of filed to be restored.
+    description: ''
+  optionalParameters:
+  - name: --account-name -a
+    summary: The name of the ANF account.
+    description: ''
+  - name: --destination-path
+    summary: Destination folder where the files will be restored.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --snapshot-name -n -s
+    summary: The name of the ANF snapshot.
+    description: ''
+  - name: --pool-name -p
+    summary: The name of the ANF pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --volume-name -v
     summary: The name of the ANF volume.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -190,6 +234,7 @@ commands:
 - az_netappfiles_snapshot_policy_show
 - az_netappfiles_snapshot_policy_update
 - az_netappfiles_snapshot_policy_volumes
+- az_netappfiles_snapshot_restore-files
 - az_netappfiles_snapshot_show
 - az_netappfiles_snapshot_update
 globalParameters:
@@ -211,5 +256,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/24/2022
+  ms.date: 03/29/2022
   description: Manage Azure NetApp Files (ANF) Snapshot Resources.

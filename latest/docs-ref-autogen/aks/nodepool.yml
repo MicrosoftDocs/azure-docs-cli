@@ -19,8 +19,10 @@ directCommands:
                         [--enable-node-public-ip]
                         [--enable-ultra-ssd]
                         [--eviction-policy {Deallocate, Delete}]
+                        [--kubelet-config]
                         [--kubernetes-version]
                         [--labels]
+                        [--linux-os-config]
                         [--max-count]
                         [--max-pods]
                         [--max-surge]
@@ -29,12 +31,13 @@ directCommands:
                         [--no-wait]
                         [--node-count]
                         [--node-osdisk-size]
-                        [--node-osdisk-type]
+                        [--node-osdisk-type {Ephemeral, Managed}]
                         [--node-public-ip-prefix-id]
                         [--node-taints]
                         [--node-vm-size]
                         [--os-sku]
                         [--os-type]
+                        [--pod-subnet-id]
                         [--ppg]
                         [--priority {Regular, Spot}]
                         [--scale-down-mode {Deallocate, Delete}]
@@ -62,7 +65,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -93,6 +96,9 @@ directCommands:
     parameterValueGroup: Deallocate, Delete
     summary: The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
     description: ''
+  - name: --kubelet-config
+    summary: Path to JSON file containing Kubelet configurations for agent nodes. https://aka.ms/aks/custom-node-config.
+    description: ''
   - name: --kubernetes-version -k
     summary: Version of Kubernetes to use for creating the cluster, such as "1.16.9".
     description: ''
@@ -100,8 +106,11 @@ directCommands:
   - name: --labels
     summary: The node labels for the node pool. See https://aka.ms/node-labels for syntax of labels.
     description: ''
+  - name: --linux-os-config
+    summary: Path to JSON file containing OS configurations for Linux agent nodes. https://aka.ms/aks/custom-node-config.
+    description: ''
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
@@ -110,7 +119,7 @@ directCommands:
     summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
     description: ''
   - name: --min-count
-    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --mode
     defaultValue: User
@@ -128,6 +137,7 @@ directCommands:
     summary: Size in GB of the OS disk for each node in the agent pool. Minimum 30 GB.
     description: ''
   - name: --node-osdisk-type
+    parameterValueGroup: Ephemeral, Managed
     summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation. ('Ephemeral' or 'Managed').
     description: ''
   - name: --node-public-ip-prefix-id
@@ -144,6 +154,9 @@ directCommands:
     description: ''
   - name: --os-type
     summary: The OS Type. Linux or Windows.
+    description: ''
+  - name: --pod-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
     description: ''
   - name: --ppg
     summary: The ID of a PPG.
@@ -191,7 +204,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -261,7 +274,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -291,7 +304,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -399,7 +412,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -420,13 +433,13 @@ directCommands:
     summary: The node labels for the node pool. See https://aka.ms/node-labels for syntax of labels.
     description: ''
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --max-surge
     summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
     description: ''
   - name: --min-count
-    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --mode
     parameterValueGroup: System, User
@@ -469,7 +482,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -496,6 +509,62 @@ directCommands:
     summary: The source snapshot id used to upgrade this nodepool.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
+- uid: az_aks_nodepool_wait
+  name: az aks nodepool wait
+  summary: Wait for a node pool to reach a desired state.
+  description: If an operation on a node pool was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
+  syntax: >-
+    az aks nodepool wait --agent-pool-name
+                         --name
+                         --resource-group
+                         [--created]
+                         [--custom]
+                         [--deleted]
+                         [--exists]
+                         [--interval]
+                         [--timeout]
+                         [--updated]
+  examples:
+  - summary: Wait for a node pool to reach a desired state, polling every minute for up to thirty minutes.
+    syntax: az aks nodepool wait --created --interval 60 --name MyManagedCluster --resource-group MyResourceGroup --nodepool-name MyNodePool --timeout 1800
+  requiredParameters:
+  - isRequired: true
+    name: --agent-pool-name --nodepool-name
+    summary: The node pool name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the managed cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 commands:
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
@@ -503,10 +572,17 @@ commands:
 - az_aks_nodepool_list
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
+- az_aks_nodepool_snapshot
+- az_aks_nodepool_snapshot_create
+- az_aks_nodepool_snapshot_delete
+- az_aks_nodepool_snapshot_list
+- az_aks_nodepool_snapshot_show
+- az_aks_nodepool_snapshot_wait
 - az_aks_nodepool_start
 - az_aks_nodepool_stop
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
+- az_aks_nodepool_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -526,5 +602,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/24/2022
+  ms.date: 03/31/2022
   description: Commands to manage node pools in Kubernetes kubernetes cluster.

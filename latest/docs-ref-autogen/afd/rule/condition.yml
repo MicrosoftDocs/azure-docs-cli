@@ -9,7 +9,7 @@ directCommands:
   summary: Add a condition to a delivery rule.
   description: ''
   syntax: >-
-    az afd rule condition add --match-variable {Cookies, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, UrlFileExtension, UrlFileName, UrlPath}
+    az afd rule condition add --match-variable {ClientPort, Cookies, HostName, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, ServerPort, SocketAddr, SslProtocol, UrlFileExtension, UrlFileName, UrlPath}
                               --operator
                               [--ids]
                               [--match-values]
@@ -19,15 +19,15 @@ directCommands:
                               [--rule-name]
                               [--rule-set-name]
                               [--selector]
-                              [--transform {Lowercase, Uppercase}]
+                              [--transforms {Lowercase, RemoveNulls, Trim, Uppercase, UrlDecode, UrlEncode}]
   examples:
   - summary: Add a remote address condition.
     syntax: az afd rule condition add -g group --rule-set-name ruleSetName --profile-name profile --rule-name name --match-variable RemoteAddress --operator GeoMatch --match-values "TH"
   requiredParameters:
   - isRequired: true
     name: --match-variable
-    parameterValueGroup: Cookies, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, UrlFileExtension, UrlFileName, UrlPath
-    summary: Name of the match condition.
+    parameterValueGroup: ClientPort, Cookies, HostName, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, ServerPort, SocketAddr, SslProtocol, UrlFileExtension, UrlFileName, UrlPath
+    summary: 'Name of the match condition: https://docs.microsoft.com/en-us/azure/frontdoor/rules-match-conditions.'
     description: ''
   - isRequired: true
     name: --operator
@@ -38,7 +38,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --match-values
-    summary: Match values of the match condition (comma separated).
+    summary: Match values of the match condition.
     description: ''
   - name: --negate-condition
     parameterValueGroup: false, true
@@ -59,8 +59,8 @@ directCommands:
   - name: --selector
     summary: Selector of the match condition.
     description: ''
-  - name: --transform
-    parameterValueGroup: Lowercase, Uppercase
+  - name: --transforms
+    parameterValueGroup: Lowercase, RemoveNulls, Trim, Uppercase, UrlDecode, UrlEncode
     summary: Transform to apply before matching.
     description: ''
 - uid: az_afd_rule_condition_list

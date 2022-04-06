@@ -19,11 +19,14 @@ directCommands:
                         --supported-protocols {Http, Https}
                         [--content-types-to-compress]
                         [--custom-domains]
+                        [--enable-caching {false, true}]
                         [--enable-compression {false, true}]
+                        [--enabled-state {Disabled, Enabled}]
                         [--link-to-default-domain {Disabled, Enabled}]
                         [--origin-path]
                         [--patterns-to-match]
-                        [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                        [--query-parameters]
+                        [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
                         [--rule-sets]
   examples:
   - summary: Creates a route to assoicate the endpoint's default domain with an origin group for all HTTPS requests.
@@ -75,22 +78,34 @@ directCommands:
   - name: --custom-domains
     summary: Custom domains referenced by this endpoint.
     description: ''
+  - name: --enable-caching
+    parameterValueGroup: false, true
+    summary: Indicates whether caching is enanbled on that route.
+    description: ''
   - name: --enable-compression
     parameterValueGroup: false, true
     summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    description: ''
+  - name: --enabled-state
+    defaultValue: Enabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to enable this route.
     description: ''
   - name: --link-to-default-domain
     parameterValueGroup: Disabled, Enabled
     summary: Whether this route will be linked to the default endpoint domain.
     description: ''
   - name: --origin-path
-    summary: A directory path on the origin that AFD can use to retrieve content from. E.g, "/img/\*".
+    summary: A directory path on the origin that Azure Front Door can use to retrieve content from.
     description: ''
   - name: --patterns-to-match
     summary: The route patterns of the rule.
     description: ''
+  - name: --query-parameters
+    summary: Query parameters to include or exclude.
+    description: ''
   - name: --query-string-caching-behavior
-    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
+    parameterValueGroup: IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString
     summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --rule-sets
@@ -189,7 +204,9 @@ directCommands:
   syntax: >-
     az afd route update [--content-types-to-compress]
                         [--custom-domains]
+                        [--enable-caching {false, true}]
                         [--enable-compression {false, true}]
+                        [--enabled-state {Disabled, Enabled}]
                         [--endpoint-name]
                         [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
                         [--https-redirect {Disabled, Enabled}]
@@ -199,7 +216,8 @@ directCommands:
                         [--origin-path]
                         [--patterns-to-match]
                         [--profile-name]
-                        [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                        [--query-parameters]
+                        [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
                         [--resource-group]
                         [--route-name]
                         [--rule-sets]
@@ -218,9 +236,17 @@ directCommands:
   - name: --custom-domains
     summary: Custom domains referenced by this endpoint.
     description: ''
+  - name: --enable-caching
+    parameterValueGroup: false, true
+    summary: Indicates whether caching is enanbled on that route.
+    description: ''
   - name: --enable-compression
     parameterValueGroup: false, true
     summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    description: ''
+  - name: --enabled-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to enable this route.
     description: ''
   - name: --endpoint-name
     summary: Name of the endpoint.
@@ -244,7 +270,7 @@ directCommands:
     summary: Name or ID of the origin group to be associated with.
     description: ''
   - name: --origin-path
-    summary: A directory path on the origin that AFD can use to retrieve content from. E.g, "/img/\*".
+    summary: A directory path on the origin that Azure Front Door can use to retrieve content from.
     description: ''
   - name: --patterns-to-match
     summary: The route patterns of the rule.
@@ -252,8 +278,11 @@ directCommands:
   - name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
+  - name: --query-parameters
+    summary: Query parameters to include or exclude.
+    description: ''
   - name: --query-string-caching-behavior
-    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
+    parameterValueGroup: IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString
     summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --resource-group -g
