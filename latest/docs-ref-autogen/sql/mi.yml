@@ -81,7 +81,7 @@ directCommands:
     summary: Generate and assign an Azure Active Directory Identity for this managed instance for use with key management services like Azure KeyVault.
     description: ''
   - name: --backup-storage-redundancy --bsr
-    summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo.'
+    summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
     description: ''
   - name: --capacity -c
     summary: The capacity of the managed instance in integer number of vcores.
@@ -277,6 +277,7 @@ directCommands:
     az sql mi update [--add]
                      [--admin-password]
                      [--assign-identity]
+                     [--backup-storage-redundancy]
                      [--capacity]
                      [--edition]
                      [--family]
@@ -300,6 +301,7 @@ directCommands:
                      [--tags]
                      [--user-assigned-identity-id]
                      [--vnet-name]
+                     [--yes]
   examples:
   - summary: Updates a mi with specified parameters and with identity
     syntax: az sql mi update -g mygroup -n myinstance -i -p mypassword --license-type mylicensetype --capacity vcorecapacity --storage storagesize
@@ -323,6 +325,8 @@ directCommands:
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
   - summary: Move managed instance to another subnet
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --subnet /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \
+  - summary: Update mi backup storage redundancy
+    syntax: az sql mi update -g mygroup -n myinstance --bsr Local
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -332,6 +336,9 @@ directCommands:
     description: ''
   - name: --assign-identity -i
     summary: Generate and assign an Azure Active Directory Identity for this managed instance for use with key management services like Azure KeyVault. If identity is already assigned - do nothing.
+    description: ''
+  - name: --backup-storage-redundancy --bsr
+    summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
     description: ''
   - name: --capacity -c
     summary: The capacity of the managed instance in integer number of vcores.
@@ -407,6 +414,9 @@ directCommands:
   - name: --vnet-name
     summary: The virtual network name.
     description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
 - az_sql_mi_ad-admin
@@ -455,5 +465,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2021
+  ms.date: 03/29/2022
   description: Manage SQL managed instances.

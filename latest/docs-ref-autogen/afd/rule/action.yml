@@ -9,22 +9,26 @@ directCommands:
   summary: Add an action to a delivery rule.
   description: ''
   syntax: >-
-    az afd rule action add --action-name {CacheExpiration, CacheKeyQueryString, ModifyRequestHeader, ModifyResponseHeader, OriginGroupOverride, RequestHeader, ResponseHeader, UrlRedirect, UrlRewrite, UrlSigning}
-                           [--cache-behavior {BypassCache, Override, SetIfMissing}]
+    az afd rule action add --action-name {ModifyRequestHeader, ModifyResponseHeader, RouteConfigurationOverride, UrlRedirect, UrlRewrite}
+                           [--cache-behavior {HonorOrigin, OverrideAlways, OverrideIfOriginMissing}]
                            [--cache-duration]
                            [--custom-fragment]
                            [--custom-hostname]
                            [--custom-path]
                            [--custom-querystring]
                            [--destination]
+                           [--enable-caching {false, true}]
+                           [--enable-compression {false, true}]
+                           [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
                            [--header-action {Append, Delete, Overwrite}]
                            [--header-name]
                            [--header-value]
                            [--ids]
+                           [--origin-group]
                            [--preserve-unmatched-path {false, true}]
                            [--profile-name]
                            [--query-parameters]
-                           [--query-string-behavior {Exclude, ExcludeAll, Include, IncludeAll}]
+                           [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
                            [--redirect-protocol {Http, Https, MatchRequest}]
                            [--redirect-type {Found, Moved, PermanentRedirect, TemporaryRedirect}]
                            [--resource-group]
@@ -39,12 +43,12 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --action-name
-    parameterValueGroup: CacheExpiration, CacheKeyQueryString, ModifyRequestHeader, ModifyResponseHeader, OriginGroupOverride, RequestHeader, ResponseHeader, UrlRedirect, UrlRewrite, UrlSigning
-    summary: Name of the action.
+    parameterValueGroup: ModifyRequestHeader, ModifyResponseHeader, RouteConfigurationOverride, UrlRedirect, UrlRewrite
+    summary: 'The name of the action for the delivery rule: https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions.'
     description: ''
   optionalParameters:
   - name: --cache-behavior
-    parameterValueGroup: BypassCache, Override, SetIfMissing
+    parameterValueGroup: HonorOrigin, OverrideAlways, OverrideIfOriginMissing
     summary: Caching behavior for the requests.
     description: ''
   - name: --cache-duration
@@ -65,6 +69,18 @@ directCommands:
   - name: --destination
     summary: The destination path to be used in the rewrite.
     description: ''
+  - name: --enable-caching
+    parameterValueGroup: false, true
+    summary: Indicates whether to enable caching on the route.
+    description: ''
+  - name: --enable-compression
+    parameterValueGroup: false, true
+    summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    description: ''
+  - name: --forwarding-protocol
+    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
+    summary: Protocol this rule will use when forwarding traffic to backends.
+    description: ''
   - name: --header-action
     parameterValueGroup: Append, Delete, Overwrite
     summary: Header action for the requests.
@@ -78,6 +94,9 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --origin-group
+    summary: Name or ID of the OriginGroup that would override the default OriginGroup.
+    description: ''
   - name: --preserve-unmatched-path
     parameterValueGroup: false, true
     summary: If True, the remaining path after the source                pattern will be appended to the new destination path.
@@ -86,11 +105,11 @@ directCommands:
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
   - name: --query-parameters
-    summary: Query parameters to include or exclude (comma separated).
+    summary: Query parameters to include or exclude.
     description: ''
-  - name: --query-string-behavior
-    parameterValueGroup: Exclude, ExcludeAll, Include, IncludeAll
-    summary: Query string behavior for the requests.
+  - name: --query-string-caching-behavior
+    parameterValueGroup: IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString
+    summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --redirect-protocol
     parameterValueGroup: Http, Https, MatchRequest

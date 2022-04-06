@@ -9,35 +9,38 @@ directCommands:
   summary: Creates a new delivery rule within the specified rule set.
   description: ''
   syntax: >-
-    az afd rule create --action-name {CacheExpiration, CacheKeyQueryString, ModifyRequestHeader, ModifyResponseHeader, OriginGroupOverride, RequestHeader, ResponseHeader, UrlRedirect, UrlRewrite, UrlSigning}
+    az afd rule create --action-name {ModifyRequestHeader, ModifyResponseHeader, RouteConfigurationOverride, UrlRedirect, UrlRewrite}
                        --order
                        --profile-name
                        --resource-group
                        --rule-name
                        --rule-set-name
-                       [--cache-behavior {BypassCache, Override, SetIfMissing}]
+                       [--cache-behavior {HonorOrigin, OverrideAlways, OverrideIfOriginMissing}]
                        [--cache-duration]
                        [--custom-fragment]
                        [--custom-hostname]
                        [--custom-path]
                        [--custom-querystring]
                        [--destination]
+                       [--enable-caching {false, true}]
+                       [--enable-compression {false, true}]
+                       [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
                        [--header-action {Append, Delete, Overwrite}]
                        [--header-name]
                        [--header-value]
                        [--match-processing-behavior {Continue, Stop}]
                        [--match-values]
-                       [--match-variable {Cookies, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, UrlFileExtension, UrlFileName, UrlPath}]
+                       [--match-variable {ClientPort, Cookies, HostName, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, ServerPort, SocketAddr, SslProtocol, UrlFileExtension, UrlFileName, UrlPath}]
                        [--negate-condition {false, true}]
                        [--operator]
                        [--preserve-unmatched-path {false, true}]
                        [--query-parameters]
-                       [--query-string-behavior {Exclude, ExcludeAll, Include, IncludeAll}]
+                       [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
                        [--redirect-protocol {Http, Https, MatchRequest}]
                        [--redirect-type {Found, Moved, PermanentRedirect, TemporaryRedirect}]
                        [--selector]
                        [--source-pattern]
-                       [--transform {Lowercase, Uppercase}]
+                       [--transforms {Lowercase, RemoveNulls, Trim, Uppercase, UrlDecode, UrlEncode}]
   examples:
   - summary: Create a rule to append a response header for requests from Thailand.
     syntax: az afd rule create -g group --rule-set-name ruleset1 --profile-name profile --order 2 --match-variable RemoteAddress --operator GeoMatch --match-values TH --rule-name disablecahing --action-name ModifyResponseHeader --header-action Append --header-name X-CDN --header-value AFDX
@@ -46,8 +49,8 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --action-name
-    parameterValueGroup: CacheExpiration, CacheKeyQueryString, ModifyRequestHeader, ModifyResponseHeader, OriginGroupOverride, RequestHeader, ResponseHeader, UrlRedirect, UrlRewrite, UrlSigning
-    summary: Name of the action.
+    parameterValueGroup: ModifyRequestHeader, ModifyResponseHeader, RouteConfigurationOverride, UrlRedirect, UrlRewrite
+    summary: 'The name of the action for the delivery rule: https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions.'
     description: ''
   - isRequired: true
     name: --order
@@ -71,7 +74,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --cache-behavior
-    parameterValueGroup: BypassCache, Override, SetIfMissing
+    parameterValueGroup: HonorOrigin, OverrideAlways, OverrideIfOriginMissing
     summary: Caching behavior for the requests.
     description: ''
   - name: --cache-duration
@@ -92,6 +95,18 @@ directCommands:
   - name: --destination
     summary: The destination path to be used in the rewrite.
     description: ''
+  - name: --enable-caching
+    parameterValueGroup: false, true
+    summary: Indicates whether to enable caching on the route.
+    description: ''
+  - name: --enable-compression
+    parameterValueGroup: false, true
+    summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    description: ''
+  - name: --forwarding-protocol
+    parameterValueGroup: HttpOnly, HttpsOnly, MatchRequest
+    summary: Protocol this rule will use when forwarding traffic to backends.
+    description: ''
   - name: --header-action
     parameterValueGroup: Append, Delete, Overwrite
     summary: Header action for the requests.
@@ -107,11 +122,11 @@ directCommands:
     summary: Indicate whether rules engine should continue to run the remaining rules or stop if matched. Defaults to Continue.
     description: ''
   - name: --match-values
-    summary: Match values of the match condition (comma separated).
+    summary: Match values of the match condition.
     description: ''
   - name: --match-variable
-    parameterValueGroup: Cookies, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, UrlFileExtension, UrlFileName, UrlPath
-    summary: Name of the match condition.
+    parameterValueGroup: ClientPort, Cookies, HostName, HttpVersion, IsDevice, PostArgs, QueryString, RemoteAddress, RequestBody, RequestHeader, RequestMethod, RequestScheme, RequestUri, ServerPort, SocketAddr, SslProtocol, UrlFileExtension, UrlFileName, UrlPath
+    summary: 'Name of the match condition: https://docs.microsoft.com/en-us/azure/frontdoor/rules-match-conditions.'
     description: ''
   - name: --negate-condition
     parameterValueGroup: false, true
@@ -125,11 +140,11 @@ directCommands:
     summary: If True, the remaining path after the source                pattern will be appended to the new destination path.
     description: ''
   - name: --query-parameters
-    summary: Query parameters to include or exclude (comma separated).
+    summary: Query parameters to include or exclude.
     description: ''
-  - name: --query-string-behavior
-    parameterValueGroup: Exclude, ExcludeAll, Include, IncludeAll
-    summary: Query string behavior for the requests.
+  - name: --query-string-caching-behavior
+    parameterValueGroup: IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString
+    summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --redirect-protocol
     parameterValueGroup: Http, Https, MatchRequest
@@ -145,8 +160,8 @@ directCommands:
   - name: --source-pattern
     summary: A request URI pattern that identifies the type of requests that may be rewritten.
     description: ''
-  - name: --transform
-    parameterValueGroup: Lowercase, Uppercase
+  - name: --transforms
+    parameterValueGroup: Lowercase, RemoveNulls, Trim, Uppercase, UrlDecode, UrlEncode
     summary: Transform to apply before matching.
     description: ''
 - uid: az_afd_rule_delete

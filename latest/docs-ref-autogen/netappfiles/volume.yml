@@ -11,7 +11,6 @@ directCommands:
   syntax: >-
     az netappfiles volume create --account-name
                                  --file-path
-                                 --location
                                  --name
                                  --pool-name
                                  --resource-group
@@ -28,6 +27,7 @@ directCommands:
                                  [--coolness-period]
                                  [--default-group-quota]
                                  [--default-user-quota]
+                                 [--enable-subvolumes]
                                  [--encryption-key-source]
                                  [--endpoint-type]
                                  [--has-root-access]
@@ -40,6 +40,7 @@ directCommands:
                                  [--kerberos5p-r]
                                  [--kerberos5p-rw]
                                  [--ldap-enabled {false, true}]
+                                 [--location]
                                  [--network-features]
                                  [--policy-enforced {false, true}]
                                  [--protocol-types]
@@ -72,10 +73,6 @@ directCommands:
   - isRequired: true
     name: --file-path
     summary: A 1-80 character long alphanumeric string value that identifies a unique file share or mount point in the target delegate subnet.
-    description: ''
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
     name: --name --volume-name -n -v
@@ -134,6 +131,9 @@ directCommands:
   - name: --default-user-quota
     summary: Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
     description: ''
+  - name: --enable-subvolumes
+    summary: Flag indicating whether subvolume operations are enabled on the volume. Possible values are Enabled and Disabled. Default value is Disabled.
+    description: ''
   - name: --encryption-key-source
     summary: Encryption Key Source.
     description: ''
@@ -172,6 +172,9 @@ directCommands:
   - name: --ldap-enabled
     parameterValueGroup: false, true
     summary: Specifies whether LDAP is enabled or not for a given NFS volume.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --network-features
     summary: Basic network, or Standard features available to the volume. Possible values are Basic and Standard. Default value is Basic.
@@ -250,6 +253,7 @@ directCommands:
   description: ''
   syntax: >-
     az netappfiles volume delete [--account-name]
+                                 [--force-delete {false, true}]
                                  [--ids]
                                  [--name]
                                  [--pool-name]
@@ -260,6 +264,10 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: The name of the ANF account.
+    description: ''
+  - name: --force-delete
+    parameterValueGroup: false, true
+    summary: An option to force delete the volume. Will cleanup resources connected to the particular volume.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -424,6 +432,7 @@ directCommands:
                                  [--snapshot-policy-id]
                                  [--tags]
                                  [--throughput-mibps]
+                                 [--unix-permissions]
                                  [--usage-threshold]
                                  [--vault-id]
   examples:
@@ -491,6 +500,9 @@ directCommands:
   - name: --throughput-mibps
     summary: Maximum throughput in Mibps that can be achieved by this volume and this will be accepted as input only for manual qosType volume.
     description: ''
+  - name: --unix-permissions
+    summary: UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file- read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.
+    description: ''
   - name: --usage-threshold
     summary: The maximum storage quota allowed for a file system as integer number of GiB. Min 100 GiB, max 100TiB.
     description: ''
@@ -544,5 +556,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/24/2022
+  ms.date: 03/29/2022
   description: Manage Azure NetApp Files (ANF) Volume Resources.

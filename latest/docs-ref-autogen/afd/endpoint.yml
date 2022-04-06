@@ -7,30 +7,21 @@ directCommands:
 - uid: az_afd_endpoint_create
   name: az afd endpoint create
   summary: Creates an endpoint within the specified profile.
-  description: ''
+  description: Azure Front Door will generate a deterministic DNS domain based on the customer input endpoint name in the form of <endpoint name>-<hash>.z01.azurefd.net, the deterministic DNS domain could be reused within the tenant, subscription, or resource group depends on the --name-reuse-scope option. Customer will get the same DNS domain in the reuse scope if the endpoint get deleted and recreated.
   syntax: >-
-    az afd endpoint create --enabled-state {Disabled, Enabled}
-                           --endpoint-name
-                           --origin-response-timeout-seconds
+    az afd endpoint create --endpoint-name
                            --profile-name
                            --resource-group
+                           [--enabled-state {Disabled, Enabled}]
+                           [--name-reuse-scope {NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse}]
                            [--tags]
   examples:
-  - summary: Creates an enabled endpoint with origin response timeout set to 60 seconds.
-    syntax: az afd endpoint create -g group --endpoint-name endpoint1 --profile-name profile --origin-response-timeout-seconds 60 --enabled-state Enabled
+  - summary: Creates an enabled endpoint
+    syntax: az afd endpoint create -g group --endpoint-name endpoint1 --profile-name profile --enabled-state Enabled
   requiredParameters:
-  - isRequired: true
-    name: --enabled-state
-    parameterValueGroup: Disabled, Enabled
-    summary: Whether to enable this endpoint.
-    description: ''
   - isRequired: true
     name: --endpoint-name
     summary: Name of the endpoint under the profile which is unique globally.
-    description: ''
-  - isRequired: true
-    name: --origin-response-timeout-seconds
-    summary: Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
     description: ''
   - isRequired: true
     name: --profile-name
@@ -41,6 +32,16 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --enabled-state
+    defaultValue: Enabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to enable this endpoint.
+    description: ''
+  - name: --name-reuse-scope
+    defaultValue: TenantReuse
+    parameterValueGroup: NoReuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse
+    summary: Indicates the endpoint name reuse scope. The default value is TenantReuse.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -164,13 +165,12 @@ directCommands:
     az afd endpoint update [--enabled-state {Disabled, Enabled}]
                            [--endpoint-name]
                            [--ids]
-                           [--origin-response-timeout-seconds]
                            [--profile-name]
                            [--resource-group]
                            [--tags]
   examples:
-  - summary: Update an endpoint's origin response timeout to 30 seconds.
-    syntax: az afd endpoint update -g group --endpoint-name endpoint1 --profile-name profile --origin-response-timeout-seconds 30
+  - summary: Update an endpoint's state to disabled.
+    syntax: az afd endpoint update -g group --endpoint-name endpoint1 --profile-name profile --enabled-state Disabled
   optionalParameters:
   - name: --enabled-state
     parameterValueGroup: Disabled, Enabled
@@ -181,9 +181,6 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --origin-response-timeout-seconds
-    summary: Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns.
     description: ''
   - name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.

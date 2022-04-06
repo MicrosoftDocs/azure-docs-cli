@@ -29,8 +29,12 @@ directCommands:
     az ams account create --name
                           --resource-group
                           --storage-account
+                          [--default-action]
+                          [--disable-public-network]
+                          [--ip-allow-list]
                           [--location]
-                          [--mi-system-assigned]
+                          [--mi-system-assigned {false, true}]
+                          [--mi-user-assigned]
                           [--tags]
   requiredParameters:
   - isRequired: true
@@ -46,11 +50,24 @@ directCommands:
     summary: The name or resource ID of the primary storage account to attach to the Azure Media Services account. The storage account MUST be in the same Azure subscription as the Media Services account. It is strongly recommended that the storage account be in the same resource group as the Media Services account. Blob only accounts are not allowed as primary.
     description: ''
   optionalParameters:
+  - name: --default-action
+    summary: 'The behavior for IP access control in Key Delivery. Allowed values: Allow,Deny.'
+    description: ''
+  - name: --disable-public-network
+    summary: Set this flag to disable public network access for resources under the Media Services account. If not set public network access will be enabled.
+    description: ''
+  - name: --ip-allow-list
+    summary: The IP allow list for access control in Key Delivery. If the default action is set to Allow, the IP allow list must be empty.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --mi-system-assigned
+    parameterValueGroup: false, true
     summary: Set the system managed identity on the media services account.
+    description: ''
+  - name: --mi-user-assigned
+    summary: Set the user managed identities on the media services account.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -150,6 +167,10 @@ commands:
 - az_ams_account_encryption
 - az_ams_account_encryption_set
 - az_ams_account_encryption_show
+- az_ams_account_identity
+- az_ams_account_identity_assign
+- az_ams_account_identity_remove
+- az_ams_account_identity_show
 - az_ams_account_list
 - az_ams_account_mru
 - az_ams_account_mru_set
@@ -183,5 +204,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/24/2021
+  ms.date: 03/30/2022
   description: Manage Azure Media Services accounts.

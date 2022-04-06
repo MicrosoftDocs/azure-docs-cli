@@ -15,6 +15,8 @@ directCommands:
                         [--assign-identity]
                         [--disable-local-auth {false, true}]
                         [--enable-public-network {false, true}]
+                        [--enable-purge-protection {false, true}]
+                        [--retention-days]
                         [--sku {Free, Standard}]
                         [--tags]
   examples:
@@ -50,6 +52,13 @@ directCommands:
   - name: --enable-public-network -e
     parameterValueGroup: false, true
     summary: When true, requests coming from public networks have permission to access this store while private endpoint is enabled. When false, only requests made through Private Links can reach this store.
+    description: ''
+  - name: --enable-purge-protection -p
+    parameterValueGroup: false, true
+    summary: Property specifying whether protection against purge is enabled for this App Configuration. Setting this property to true activates protection against purge for this App Configuration and its contents. Enabling this functionality is irreversible.
+    description: ''
+  - name: --retention-days
+    summary: Number of days to retain the soft delete enabled App Configuration after deleting. Must be a positive integer between 0 and 7.
     description: ''
   - name: --sku
     defaultValue: Standard
@@ -97,6 +106,67 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+- uid: az_appconfig_list-deleted
+  name: az appconfig list-deleted
+  summary: List all deleted, but not yet purged App Configurations.
+  description: ''
+  syntax: az appconfig list-deleted
+  examples:
+  - summary: List all deleted, but not yet purged App Configurations.
+    syntax: az appconfig list-deleted
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+- uid: az_appconfig_purge
+  name: az appconfig purge
+  summary: Permanently delete an App Configuration. Aka 'purge' the deleted App Configuration.
+  description: ''
+  syntax: >-
+    az appconfig purge --name
+                       [--location]
+                       [--yes]
+  examples:
+  - summary: Purge a deleted App Configuration named 'sample-app-configuration'.
+    syntax: az appconfig purge --name sample-app-configuration
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --location -l
+    summary: Location of the deleted App Configuration. Can be viewed using command `az appconfig show-deleted`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+- uid: az_appconfig_recover
+  name: az appconfig recover
+  summary: Recover a previously deleted, but not yet purged App Configuration.
+  description: ''
+  syntax: >-
+    az appconfig recover --name
+                         [--location]
+                         [--resource-group]
+                         [--yes]
+  examples:
+  - summary: Recover a deleted App Configuration named 'sample-app-configuration'.
+    syntax: az appconfig recover --name sample-app-configuration
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --location -l
+    summary: Location of the deleted App Configuration. Can be viewed using command `az appconfig show-deleted`.
+    description: ''
+  - name: --resource-group -g
+    summary: Resource group of the deleted App Configuration.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
 - uid: az_appconfig_show
   name: az appconfig show
   summary: Show properties of an App Configuration.
@@ -117,6 +187,26 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+- uid: az_appconfig_show-deleted
+  name: az appconfig show-deleted
+  summary: Show properties of a deleted, but not yet purged App Configuration.
+  description: ''
+  syntax: >-
+    az appconfig show-deleted --name
+                              [--location]
+  examples:
+  - summary: Show properties of a deleted App Configuration named 'sample-app-configuration'.
+    syntax: az appconfig show-deleted --name sample-app-configuration
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --location -l
+    summary: Location of the deleted App Configuration.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
 - uid: az_appconfig_update
   name: az appconfig update
   summary: Update an App Configuration.
@@ -125,6 +215,7 @@ directCommands:
     az appconfig update --name
                         [--disable-local-auth {false, true}]
                         [--enable-public-network {false, true}]
+                        [--enable-purge-protection {false, true}]
                         [--encryption-key-name]
                         [--encryption-key-vault]
                         [--encryption-key-version]
@@ -156,6 +247,10 @@ directCommands:
   - name: --enable-public-network -e
     parameterValueGroup: false, true
     summary: When true, requests coming from public networks have permission to access this store while private endpoint is enabled. When false, only requests made through Private Links can reach this store.
+    description: ''
+  - name: --enable-purge-protection -p
+    parameterValueGroup: false, true
+    summary: Property specifying whether protection against purge is enabled for this App Configuration. Setting this property to true activates protection against purge for this App Configuration and its contents. Enabling this functionality is irreversible.
     description: ''
   - name: --encryption-key-name
     summary: The name of the KeyVault key.
@@ -216,9 +311,13 @@ commands:
 - az_appconfig_kv_show
 - az_appconfig_kv_unlock
 - az_appconfig_list
+- az_appconfig_list-deleted
+- az_appconfig_purge
+- az_appconfig_recover
 - az_appconfig_revision
 - az_appconfig_revision_list
 - az_appconfig_show
+- az_appconfig_show-deleted
 - az_appconfig_update
 globalParameters:
 - name: --debug
@@ -239,5 +338,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/02/2021
+  ms.date: 03/16/2022
   description: Manage App Configurations.
