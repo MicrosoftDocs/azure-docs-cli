@@ -23,8 +23,6 @@ The `--query` argument is supported by all commands in the Azure CLI. This artic
 
 # [Examples](#tab/examples)
 
-## Query examples
-
 [!INCLUDE [Query Examples](includes/query-azure-cli-examples.md)]
 
 ---
