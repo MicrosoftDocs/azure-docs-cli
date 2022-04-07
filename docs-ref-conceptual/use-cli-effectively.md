@@ -241,7 +241,7 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 az vm stop --ids %vm_ids% :: CLI stops all VMs in parallel
 ```
 
-Use this Windows PowerShell script for saving IDs to variables:
+Use this PowerShell script for saving IDs to variables:
 
 ```powershell
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
@@ -261,7 +261,7 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 )
 ```
 
-Use this Windows PowerShell script to loop through a list:
+Use this PowerShell script to loop through a list:
 
 ```powershell
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
