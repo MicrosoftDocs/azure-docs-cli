@@ -70,7 +70,7 @@ To install specific version, replace the `-Uri` argument with `https://azcliprod
 ### Install or update
 
    ```PowerShell
-   winget install AzureCLI
+   winget install -e --id Microsoft.AzureCLI
    ```
 ---
 
