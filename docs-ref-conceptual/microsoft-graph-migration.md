@@ -86,7 +86,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
 2. Activate the virtual environment
 
-   ### [Windows PowerShell](#tab/powershell)
+   ### [PowerShell](#tab/powershell)
 
    ```powershell
    . .\<env_name>\Scripts\Activate.ps1
@@ -126,7 +126,7 @@ To avoid overwriting your installed Azure CLI, we recommend installing the beta 
 
 To uninstall Azure CLI beta, delete the virtual environment folder.
 
-### [Windows PowerShell](#tab/powershell)
+### [PowerShell](#tab/powershell)
 
 ```powershell
 Remove-Item -Force -Recurse <env_name>

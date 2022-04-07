@@ -14,16 +14,17 @@ directCommands:
   description: Create data controller - kube config is required on your system along with credentials for the monitoring dashboards provided by the following environment variables - AZDATA_LOGSUI_USERNAME and AZDATA_LOGSUI_PASSWORD for Logs Dashboard, and AZDATA_METRICSUI_USERNAME and AZDATA_METRICSUI_PASSWORD for Metrics Dashboard. Alternatively AZDATA_USERNAME and AZDATA_PASSWORD will be used as a fallback if either sets of environment variables are missing.
   syntax: >-
     az arcdata dc create --connectivity-mode
-                         --location
                          --name
                          --resource-group
                          [--annotations]
                          [--auto-upload-logs {false, true}]
                          [--auto-upload-metrics {false, true}]
+                         [--cluster-name]
                          [--custom-location]
                          [--infrastructure]
                          [--k8s-namespace]
                          [--labels]
+                         [--location]
                          [--logs-ui-private-key-file]
                          [--logs-ui-public-key-file]
                          [--metrics-ui-private-key-file]
@@ -48,10 +49,6 @@ directCommands:
     summary: The connectivity to Azure - indirect or direct - which the data controller should operate in.
     description: ''
   - isRequired: true
-    name: --location -l
-    summary: The Azure location in which the data controller metadata will be stored (e.g. eastus).
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The name for the data controller.
     description: ''
@@ -71,6 +68,9 @@ directCommands:
     parameterValueGroup: false, true
     summary: Enable auto upload metrics.
     description: ''
+  - name: --cluster-name
+    summary: '[Required] Name of the Kubernetes cluster.'
+    description: ''
   - name: --custom-location
     summary: '[Required] The name of the custom location.'
     description: ''
@@ -78,10 +78,13 @@ directCommands:
     summary: "The infrastructure on which the data controller will be running on. Allowed values: ['aws', 'gcp', 'azure', 'alibaba', 'onpremises', 'other', 'auto']."
     description: ''
   - name: --k8s-namespace -k
-    summary: '[Required] The Kubernetes namespace to deploy the data controller into. If it exists already it will be used. If it does not exist, an attempt will be made to create it first.'
+    summary: The Kubernetes namespace to deploy the data controller into. If it exists already it will be used. If it does not exist, an attempt will be made to create it first.
     description: ''
   - name: --labels
     summary: Comma-separated list of labels to apply to all data controller resources.
+    description: ''
+  - name: --location -l
+    summary: '[Required] The Azure location in which the data controller metadata will be stored (e.g. eastus).'
     description: ''
   - name: --logs-ui-private-key-file
     summary: Path to the file containing a PEM formatted certificate private key to be used for the Logs UI dashboard endpoint.
@@ -120,7 +123,7 @@ directCommands:
     summary: Comma-separated list of labels to apply to all PVCs created by the data controller.
     description: ''
   - name: --use-k8s
-    summary: Create data controller using local Kubernetes APIs.
+    summary: '[Required] Create data controller using local Kubernetes APIs.'
     description: ''
 - uid: az_arcdata_dc_delete
   name: az arcdata dc delete
@@ -217,23 +220,22 @@ directCommands:
   summary: Update data controller.
   description: Updates the datacontroller to enable/disable auto uploading logs and metrics.
   syntax: >-
-    az arcdata dc update --name
-                         --resource-group
-                         [--auto-upload-logs {false, true}]
+    az arcdata dc update [--auto-upload-logs {false, true}]
                          [--auto-upload-metrics {false, true}]
+                         [--desired-version]
+                         [--k8s-namespace]
+                         [--maintenance-duration]
+                         [--maintenance-enabled {false, true}]
+                         [--maintenance-recurrence]
+                         [--maintenance-start]
+                         [--maintenance-time-zone]
+                         [--name]
                          [--no-wait]
+                         [--resource-group]
+                         [--use-k8s]
   examples:
   - summary: Data controller upgrade.
     syntax: az arcdata dc update --auto-upload-logs true --auto-upload-metrics true --name dc-name --resource-group resource-group
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: Data controller name.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --auto-upload-logs
     parameterValueGroup: false, true
@@ -243,8 +245,39 @@ directCommands:
     parameterValueGroup: false, true
     summary: Enable auto upload metrics.
     description: ''
+  - name: --desired-version -v
+    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest.
+    description: ''
+  - name: --k8s-namespace -k
+    summary: '[Required] The Kubernetes namespace with a deployed data controller.'
+    description: ''
+  - name: --maintenance-duration
+    summary: Duration of the default maintenance window.
+    description: ''
+  - name: --maintenance-enabled
+    parameterValueGroup: false, true
+    summary: Set the enabled flag on the default maintenance window.
+    description: ''
+  - name: --maintenance-recurrence
+    summary: Recurring interval for the default maintenance window.
+    description: ''
+  - name: --maintenance-start
+    summary: Date time of the start of the first default maintenance window.
+    description: ''
+  - name: --maintenance-time-zone
+    summary: Timezone used to calculate maintenance window.
+    description: ''
+  - name: --name -n
+    summary: Data controller name.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --use-k8s
+    summary: Create data controller using local Kubernetes APIs.
     description: ''
 - uid: az_arcdata_dc_upgrade
   name: az arcdata dc upgrade
