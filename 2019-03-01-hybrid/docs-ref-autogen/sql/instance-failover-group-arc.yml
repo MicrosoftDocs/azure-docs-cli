@@ -1,0 +1,160 @@
+### YamlMime:AzureCLIGroup
+uid: az_sql_instance-failover-group-arc
+name: az sql instance-failover-group-arc
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **arcdata** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az sql instance-failover-group-arc** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Create or Delete a Failover Group.
+description: ''
+directCommands:
+- uid: az_sql_instance-failover-group-arc_create
+  name: az sql instance-failover-group-arc create
+  summary: Create a failover group custom resource.
+  description: Create a failover group custom resource to create a distributed availability group.
+  syntax: >-
+    az sql instance-failover-group-arc create --mi
+                                              --name
+                                              --partner-mi
+                                              --partner-mirroring-cert-file
+                                              --partner-mirroring-url
+                                              --role
+                                              [--k8s-namespace]
+                                              [--shared-name]
+                                              [--use-k8s]
+  examples:
+  - summary: Ex 1 - Create a failover group custom resource fogCr1 to create failover group by using shared name sharedName1 between sqlmi instance sqlmi1 and partner sqlmi instance sqlmi2. It requires partner sqlmi primary mirror partnerPrimary:5022 and partner sqlmi mirror endpoint certificate file ./sqlmi2.cer.
+    syntax: az sql instance-failover-group-arc create --name fogCr1 --shared-name sharedName1 --mi sqlmi1 --role primary --partner-mi sqlmi2 --partner-mirroring-url partnerPrimary:5022 --partner-mirroring-cert-file ./sqlmi2.cer --use-k8s
+  requiredParameters:
+  - isRequired: true
+    name: --mi
+    summary: The name of the local SQL managed instance.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the distributed availability group resource.
+    description: ''
+  - isRequired: true
+    name: --partner-mi
+    summary: The name of the partner SQL managed instance or remote SQL instance.
+    description: ''
+  - isRequired: true
+    name: --partner-mirroring-cert-file -f
+    summary: The filename of mirroring endpoint public certificate for the partner SQL managed instance or availability group on remote SQL instance. Only PEM format is supported.
+    description: ''
+  - isRequired: true
+    name: --partner-mirroring-url -u
+    summary: The mirroring endpoint URL of the partner SQL managed instance or availability group on remote SQL instance.
+    description: ''
+  - isRequired: true
+    name: --role
+    summary: 'The requested role of the failover group. Allowed values are: primary, secondary. role can be changed.'
+    description: ''
+  optionalParameters:
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --shared-name
+    summary: The shared name of the failover group for this SQL managed instance. Both Managed Instance and its partner have to use the same shared name.
+    description: ''
+  - name: --use-k8s
+    summary: Create SQL managed instance using local Kubernetes APIs.
+    description: ''
+- uid: az_sql_instance-failover-group-arc_delete
+  name: az sql instance-failover-group-arc delete
+  summary: Delete a failover group custom resource on a sqlmi instance.
+  description: Delete a failover group custom resource on a sqlmi instance to delete a distributed availability group. It requires a custom resource name.
+  syntax: >-
+    az sql instance-failover-group-arc delete --name
+                                              [--k8s-namespace]
+                                              [--use-k8s]
+  examples:
+  - summary: Ex 1 - delete failover group resources named fogCr1.
+    syntax: az sql instance-failover-group-arc delete --name fogCr1 --use-k8s
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: The name of the failover group resource.
+    description: ''
+  optionalParameters:
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --use-k8s
+    summary: Create SQL managed instance using local Kubernetes APIs.
+    description: ''
+- uid: az_sql_instance-failover-group-arc_show
+  name: az sql instance-failover-group-arc show
+  summary: Show a distributed availability group custom resource.
+  description: Show a distributed availability group custom resource. It requires a custom resource name.
+  syntax: >-
+    az sql instance-failover-group-arc show --name
+                                            [--k8s-namespace]
+                                            [--use-k8s]
+  examples:
+  - summary: Ex 1 - show failover group resources named fogCr1.
+    syntax: az sql instance-failover-group-arc show --name fogCr1 --use-k8s
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: The name of the failover group resource.
+    description: ''
+  optionalParameters:
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --use-k8s
+    summary: Create SQL managed instance using local Kubernetes APIs.
+    description: ''
+- uid: az_sql_instance-failover-group-arc_update
+  name: az sql instance-failover-group-arc update
+  summary: Update a failover group custom resource.
+  description: Update a failover group custom resource to change the role of distributed availability group.
+  syntax: >-
+    az sql instance-failover-group-arc update --name
+                                              --role
+                                              [--k8s-namespace]
+                                              [--use-k8s]
+  examples:
+  - summary: Ex 1 - Update a failover group custom resource fogCr1 to secondary role from primary
+    syntax: az sql instance-failover-group-arc update --name fogCr1 --role secondary --use-k8s
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the failover group resource.
+    description: ''
+  - isRequired: true
+    name: --role
+    summary: 'The requested role change of failover group resource. Role can only be changed to: secondary, force-primary-allow-data-loss, force-secondary.'
+    description: ''
+  optionalParameters:
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance exists. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
+commands:
+- az_sql_instance-failover-group-arc_create
+- az_sql_instance-failover-group-arc_delete
+- az_sql_instance-failover-group-arc_show
+- az_sql_instance-failover-group-arc_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Create or Delete a Failover Group.
