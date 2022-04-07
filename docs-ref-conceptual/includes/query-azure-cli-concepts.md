@@ -299,7 +299,7 @@ az account list --query '[?isDefault == `false`].name'
 
 ### [PowerShell](#tab/powershell)
 
-```azurecli-interactive
+```powershell
 # Boolean values are assumed to be true, so you can directly evaluate the isDefault property to return the default subscription.
 az account list --query "[?isDefault].name"
 
@@ -310,7 +310,7 @@ az account list --query "[?isDefault == ``false``].name"
 
 ### [Cmd](#tab/cmd)
 
-```azurecli-interactive
+```cmd
 REM Boolean values are assumed to be true, so you can directly evaluate the isDefault property to return the default subscription.
 az account list --query "[?isDefault].name"
 
@@ -627,16 +627,19 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.
 When combined with the `--output table` output format, the column names match up with the `displayKey` value of the multiselect hash making it easier to skim the information:
 
 ### [Bash](#tab/bash)
+
 ```azurecli-interactive
 az vm list --resource-group QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}' --output table
 ```
 
 ### [PowerShell](#tab/powershell)
+
 ```powershell
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
 
 ### [Cmd](#tab/cmd)
+
 ```cmd
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
