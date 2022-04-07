@@ -65,6 +65,13 @@ To install specific version, replace the `-Uri` argument with `https://azcliprod
 ### Azure CLI Command (for update only)
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
 
+# [Windows Package Manager (winget)](#tab/winget)
+
+### Install or update
+
+   ```PowerShell
+   winget install AzureCLI
+   ```
 ---
 
 ## Run the Azure CLI
