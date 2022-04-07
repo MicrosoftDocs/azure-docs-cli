@@ -47,7 +47,7 @@ az vm show --resource-group QueryDemo --name TestVM
 
 ### [PowerShell](#tab/powershell)
 
-To avoid possible quoting issues with older versions of PowerShell, please ensure you are using the latest version. To install the latest version of PowerShell please see [Install PowerShell on Windows, Linux, and macOS](powershell/scripting/install/installing-powershell).
+To avoid possible quoting issues with older versions of PowerShell, please ensure you are using the latest version. To install the latest version of PowerShell please see [Install PowerShell on Windows, Linux, and macOS](/powershell/scripting/install/installing-powershell).
 
 ```powershell
 az vm show --resource-group QueryDemo --name TestVM
