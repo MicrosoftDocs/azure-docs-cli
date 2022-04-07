@@ -23,13 +23,13 @@ az account show --query '{tenantId:tenantId,subscriptionid:id}'
 ## [PowerShell](#tab/powershell)
 
 ```powershell
-az account show --query '{tenantId:tenantId,subscriptionid:id}'
+az account show --query "{tenantId:tenantId,subscriptionid:id}"
 ```
 
 ## [Cmd](#tab/cmd)
 
 ```cmd
-az account show --query '{tenantId:tenantId,subscriptionid:id}'
+az account show --query "{tenantId:tenantId,subscriptionid:id}"
 ```
 
 ---
@@ -42,7 +42,7 @@ This section shows example queries for AAD service principals.
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az ad sp list --display-name "Microsoft Graph" --query "[0].appRoles[?value=='User.Read.All' && contains(allowedMemberTypes, 'Application')].id" --output tsv
+az ad sp list --display-name "Microsoft Graph" --query '[0].appRoles[?value==`User.Read.All` && contains(allowedMemberTypes, `Application`)].id' --output tsv
 ```
 
 ## [PowerShell](#tab/powershell)
@@ -67,19 +67,19 @@ This section shows example queries for storage accounts.
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoints.table"
+az storage account show --resource-group QueryDemo --name mystorageaccount --query 'primaryEndpoints.table'
 ```
 
 ## [PowerShell](#tab/powershell)
 
 ```powershell 
-az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoints.table"
+az storage account show --resource-group QueryDemo --name mystorageaccount --query "primaryEndpoints.table"
 ```
 
 ## [Cmd](#tab/cmd)
 
 ```cmd
-az storage account show -n mystorageaccount -g QueryDemo --query "primaryEndpoints.table"
+az storage account show --resource-group QueryDemo --name mystorageaccount --query "primaryEndpoints.table"
 ```
 
 ---
@@ -91,42 +91,45 @@ This section shows example queries for Virtual Machines (VMs).
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
+az vm list --resource-group QueryDemo --query '[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }' --output table
 ```
 
 ## [PowerShell](#tab/powershell)
 
 ```powershell
-az vm list -g QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
+az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
+
+Notice the extra escape characters (`\``) surrounding the 50 in the command above. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be taken into consideration. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 ## [Cmd](#tab/cmd)
 
 ```cmd
-az vm list -g QueryDemo --query '[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }' --output table
+az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
 ---
 
 * The following query demonstrates how to list the names and storage account types of VMs who use SSD storage.
 
-## [Badh](#tab/bash)
+## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
+az vm list --resource-group QueryDemo --query '[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,`SSD`)]'
 ```
 
 ## [PowerShell](#tab/powershell)
 
 ```powershell
-az vm list -g QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
+az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
 ## [Cmd](#tab/cmd)
 
 ```cmd
-az vm list -g QueryDemo --query '[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,`SSD`)]'
+az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
+
 ---
 
 ## Query examples for cognitive services
@@ -137,49 +140,49 @@ This section shows example queries for cognitive services.
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "endpoint"
+az cognitiveservices account show --resource-group QueryDemo --name "resource-name" --query 'properties.endpoint'
 
 ```
 
 ## [PowerShell](#tab/powershell)
 
 ```powershell
-az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "endpoint"
+az cognitiveservices account show --resource-group QueryDemo --name "resource-name" --query "properties.endpoint"
 ```
 
 ## [Cmd](#tab/cmd)
 
 ```cmd
-az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "endpoint"
+az cognitiveservices account show --resource-group QueryDemo --name "resource-name" --query "properties.endpoint"
 
 ```
 
-
 ---
+
 ## Query examples for virtual vetworks
 This section shows example queries for virtual networks (VNet).
 
-* e following query lists the IDs of IP addresses that contain the substring in the shell variable IP.
+* The following query lists the IDs of IP addresses that contain the substring in the variable IP.
 
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-IP="MY_EXTERNAL_IP"
-az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+IP="20.127"
+az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv
 ```
 
 ## [PowerShell](#tab/powershell)
 
 ```powershell
-$IP="MY_EXTERNAL_IP"
-az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv)
+$IP="20.127"
+az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv
 ```
 
 ## [Cmd](#tab/cmd)
 
 ```cmd
-Set IP="MY_EXTERNAL_IP"
-az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '%IP%')].[id]" --output tsv)
+Set IP="20.127"
+az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '%IP%')].[id]" --output tsv
 ```
 
 ---
@@ -192,19 +195,19 @@ This section shows example queries for web apps.
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az webapp list --query "[?state=='Running']"
+az webapp list --resource-group DemoGroup --query '[?state==`Running`]'
 ```
 
 ## [PowerShell](#tab/powershell)
 
 ```powershell
-az webapp list --query "[?state=='Running']"
+az webapp list --resource-group DemoGroup --query "[?state=='Running']"
 ```
 
 ## [Cmd](#tab/cmd)
 
 ```cmd
-az webapp list --query "[?state=='Running']"
+az webapp list --resource-group DemoGroup --query "[?state=='Running']"
 ```
 
 ---
@@ -214,7 +217,7 @@ az webapp list --query "[?state=='Running']"
 ## [Bash](#tab/bash)
 
 ```azurecli-interactive
-az webapp deployment list-publishing-profiles --name DemoApp --resource-group DemoGroup --query "[?ends_with(profileName, 'FTP')].{profileName: profileName, publishUrl: publishUrl}"
+az webapp deployment list-publishing-profiles --name DemoApp --resource-group DemoGroup --query '[?ends_with(profileName, `FTP`)].{profileName: profileName, publishUrl: publishUrl}'
 ```
 
 ## [PowerShell](#tab/powershell)
