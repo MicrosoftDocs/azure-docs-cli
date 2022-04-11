@@ -30,7 +30,7 @@ A command that always returns only a single object returns a dictionary as a JSO
 az account show
 ```
 
-The command will output a dictionary as a JSON object. Some content has been omitted.
+The command will output a dictionary as a JSON object. The following output has some fields omitted for brevity, and identifying information removed
 
 ```JSON
 bash-5.1# az account show
@@ -41,7 +41,7 @@ bash-5.1# az account show
   "name": "C & L Azure developer experience content projects",
   "state": "Enabled",
   "user": {
-    "name": "v-crabeler@microsoft.com",
+    "name": "user@contoso.com",
     "type": "user"
   }
 }
@@ -57,3 +57,4 @@ az account show --output table
 ```
 
 For more information about formatting the output, see [Output Formats](format-output-azure-cli).
+
