@@ -108,7 +108,7 @@ az group create --name $resourceGroup --location "$location"
 
 ### Using If Exists to create or delete a resource group
 
-The following command creates a new resource group only if one of the specified name does not exist.
+The following script creates a new resource group only if one with the specified name does not exist.
 
 ```cli
 if [ $(az group exists --name $resourceGroup) = false ]; 
@@ -116,12 +116,13 @@ if [ $(az group exists --name $resourceGroup) = false ];
 fi
 ```
 
-The following command deletes an existing new resource group if one of the specified name exists. It uses the `--no-wait` argument to return control without waiting for the command to complete.
+The following script deletes an existing new resource group if one of the specified name exists. It uses the `--no-wait` argument to return control without waiting for the command to complete.
 
 ```cli
 if [ $(az group exists --name $resourceGroup) = true ]; 
-   then az group delete --name $resourceGroup -y --no-wait
+   then az group delete --name $resourceGroup -y
 fi
+az group show --name $resourceGroup
 ```
 
 ### Using Grep to determine if a resource group exists
@@ -132,7 +133,51 @@ The following command pipes the output of the `az group list` command to the `gr
 az group list --output tsv | grep $resourceGroup -q || az group create --name $resourceGroup --location "$location"
 ```
 
+### Using CASE statement to determine if a resource group exists
 
+The following CASE statement creates The following script creates a new resource group only if one with the specified name does not exist. If one with the specified name exists, the CASE statement echoes that the resource group exists.
+
+```azurecli
+var=$(az group list --query "[? contains(name, '$resourceGroup')].name" --output tsv)
+case $resourceGroup in
+$var)
+echo $resourceGroup exists;;
+*)
+az group create --name $resourceGroup --location "$location";;
+esac
+```
+
+## Creating multiple VMs
+
+```azurecli
+vm="msdocs-learn-bash-vm-$randomIdentifier"
+nic="msdocs-learn-bash-nic-$randomIdentifier"
+for i in `seq 1 3`; do
+    az vm create \
+        --resource-group $resourceGroup \
+        --name $vm$i \
+        --nics nic$i \
+        --image UbuntuLTS \
+        --admin-username azureuser \
+        --generate-ssh-keys \
+        --public-ip-sku Standard \
+        --no-wait
+done
+```
+
+
+
+## Creating multiple containers
+
+### Creating storage account
+
+```azurecli
+storage="msdocsbash$randomIdentifier"
+echo "Creating $storage..."
+az storage account create --name $storage --resource-group $resourceGroup --location "$location" --sku Standard_LRS
+```
+
+### Using 
 
 
 ## Querying array results
