@@ -23,5 +23,12 @@ In this tutorial, you will learn to create and query Azure resource using Bash a
 [!INCLUDE [azure-cli-prepare-your-environment.md](/azure-docs-pr/includes/azure-cli-prepare-your-environment.md)]
 
 
+## Querying dictionary results
+
+A command that always returns only a single object return a dictionary. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object.
+
+```azurecli-interactive
+az account show
+```
 
 
