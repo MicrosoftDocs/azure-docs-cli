@@ -75,6 +75,32 @@ az account show --query user.name -o tsv
 
 ### Querying and formatting multiple values, including nested values
 
-```azurecli-interactive
+The following queries demonstrate querying multiple values and renaming the values returned, using multiple output formats.
 
+```azurecli-interactive
+az account show --query [name,id,user.name] # return multiple values
+az account show --query [name,id,user.name] -o table
+az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" # rename the values returned
+az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table
 ```
+
+For more information about returning multiple values, see [Get multiple values](/cli/azure/query-azure-cli#get-multiple-values).
+
+### Querying boolean values
+
+The following queries demonstrates querying all accounts in a subscription, potentially returning a JSON array if there are multiple subscriptions for a given account, and then querying for which account is the default account, and which accounts are not the default account. These queries build on what you learned previously to filter and format the results. Finally, it creates a local variable containing the subscription id for use later in this tutorial.
+
+```azurecli-interactive
+az account list
+az account list --query "[?isDefault]" # Returns the default subscription
+az account list --query "[?isDefault]" -o table # Returns the default subscription as a table
+az account list --query "[?isDefault].[name,id]" # Returns the name and id of the default subscription
+az account list --query "[?isDefault].[name,id]" -o table # Returns the name and id of the default subscription as a table
+az account list --query "[?isDefault].{SubscriptionName: name, SubscriptionId: id}" -o table # Returns the name and id of the default subscription as a table with friendly names
+az account list --query "[?isDefault == \`false\`]" # Returns the non-default subscriptions
+az account list --query "[?isDefault == \`false\`].name" -o table # Returns the non-default subscriptions as a table
+az account list --query "[?isDefault].id" -o tsv # Returns the subscription id without quotation marks
+subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)" # Captures the subscription id as a local variable.
+echo $subscriptionId # Returns the contents of the local variable.
+```
+
