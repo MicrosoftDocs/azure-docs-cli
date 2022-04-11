@@ -9,12 +9,15 @@ ms.date: 04/11/2022
 ---
 # Learning Bash with Azure CLI
 
-In this tutorial, you will learn to create and query Azure resource using Bash and the Azure CLI.
+In this tutorial, you will learn to create and query Azure resources using Bash and the Azure CLI. You will learn how to do the following:
 
 > [!div class="checklist"]
 >
-> - 
-> - 
+> - Querying results as JSON dictionaries or arrays
+> - Formatting output as JSON, table, or TSV
+> - Querying and formatting single and multiple values
+> - Use If/Then, Case, Do Until, Do While, Grep, and For Each
+> - Work with local and environment variables
 
 If you don't have an Azure subscription, create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
@@ -68,4 +71,10 @@ az account show --query name -o tsv
 
 az account show --query user.name
 az account show --query user.name -o tsv
+```
+
+### Querying and formatting multiple values, including nested values
+
+```azurecli-interactive
+
 ```
