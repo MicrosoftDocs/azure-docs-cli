@@ -22,7 +22,7 @@ az account show --query '{tenantId:tenantId,subscriptionid:id}'
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az account show --query "{tenantId:tenantId,subscriptionid:id}"
 ```
 
@@ -48,7 +48,7 @@ az ad sp list --display-name "Microsoft Graph" --query '[0].appRoles[?value==`Us
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az ad sp list --display-name "Microsoft Graph" --query "[0].appRoles[?value=='User.Read.All' && contains(allowedMemberTypes, 'Application')].id" --output tsv
 ```
 
@@ -74,7 +74,7 @@ az storage account show --resource-group QueryDemo --name mystorageaccount --que
 
 ### [PowerShell](#tab/powershell)
 
-```powershell 
+```powershell-interactive 
 az storage account show --resource-group QueryDemo --name mystorageaccount --query "primaryEndpoints.table"
 ```
 
@@ -100,7 +100,7 @@ az vm list --resource-group QueryDemo --query '[?storageProfile.osDisk.diskSizeG
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
@@ -125,7 +125,7 @@ az vm list --resource-group QueryDemo --query '[].{Name:name, Storage:storagePro
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
@@ -151,7 +151,7 @@ az cognitiveservices account show --resource-group QueryDemo --name DemoAccount 
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az cognitiveservices account show --resource-group QueryDemo --name DemoAccount --query "properties.endpoint"
 ```
 
@@ -179,7 +179,7 @@ az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 $IP="20.127"
 az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '$IP')].[id]" --output tsv
 ```
@@ -207,7 +207,7 @@ az webapp list --resource-group DemoGroup --query '[?state==`Running`]'
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az webapp list --resource-group DemoGroup --query "[?state=='Running']"
 ```
 
@@ -229,7 +229,7 @@ az webapp deployment list-publishing-profiles --resource-group DemoGroup --name 
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az webapp deployment list-publishing-profiles --resource-group DemoGroup --name DemoApp --query "[?ends_with(profileName, 'FTP')].{profileName: profileName, publishUrl: publishUrl}"
 ```
 

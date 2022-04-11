@@ -49,7 +49,7 @@ az vm show --resource-group QueryDemo --name TestVM
 
 To avoid possible quoting issues with older versions of PowerShell, please ensure you are using the latest version. To install the latest version of PowerShell please see [Install PowerShell on Windows, Linux, and macOS](/powershell/scripting/install/installing-powershell).
 
-```powershell
+```powershell-interactive
 az vm show --resource-group QueryDemo --name TestVM
 ```
 
@@ -63,7 +63,7 @@ az vm show --resource-group QueryDemo --name TestVM
 
 The command will output a dictionary. Some content has been omitted.
 
-```output
+```json
 {
   "additionalCapabilities": null,
   "availabilitySet": null,
@@ -109,7 +109,7 @@ az vm show --resource-group QueryDemo --name TestVM --query 'osProfile.linuxConf
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConfiguration.ssh.publicKeys"
 ```
 
@@ -121,7 +121,7 @@ az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConf
 
 ---
 
-```output
+```json
 [
   {
     "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMobZNJTqgjWn/IB5xlilvE4Y+BMYpqkDnGRUcA0g9BYPgrGSQquCES37v2e3JmpfDPHFsaR+CPKlVr2GoVJMMHeRcMJhj50ZWq0hAnkJBhlZVWy8S7dwdGAqPyPmWM2iJDCVMVrLITAJCno47O4Ees7RCH6ku7kU86b1NOanvrNwqTHr14wtnLhgZ0gQ5GV1oLWvMEVg1YFMIgPRkTsSQKWCG5lLqQ45aU/4NMJoUxGyJTL9i8YxMavaB1Z2npfTQDQo9+womZ7SXzHaIWC858gWNl9e5UFyHDnTEDc14hKkf1CqnGJVcCJkmSfmrrHk/CkmF0ZT3whTHO1DhJTtV stramer@contoso",
@@ -142,7 +142,7 @@ az vm show --resource-group QueryDemo --name TestVM --query '[name, osProfile.ad
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]"
 ```
 
@@ -153,7 +153,7 @@ az vm show --resource-group QueryDemo --name TestVM --query "[name, osProfile.ad
 ```
 ---
 
-```output
+```json
 [
   "TestVM",
   "azureuser",
@@ -178,7 +178,7 @@ az vm show --resource-group QueryDemo --name TestVM --query '{VMName:name, admin
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }"
 ```
 
@@ -190,7 +190,7 @@ az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin
 
 ---
 
-```output
+```json
 {
   "VMName": "TestVM",
   "admin": "azureuser",
@@ -214,7 +214,7 @@ az vm list --resource-group QueryDemo --query '[].{Name:name, OS:storageProfile.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}" 
 ```
 
@@ -258,7 +258,7 @@ az vm show --resource-group QueryDemo --name TestVM --query '{VMName:name, admin
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }"
 ```
 
@@ -269,7 +269,7 @@ az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin
 ```
 ---
 
-```output
+```json
 {
   "VMName": "TestVM",
   "admin": "azureuser",
@@ -299,7 +299,7 @@ az account list --query '[?isDefault == `false`].name'
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 # Boolean values are assumed to be true, so you can directly evaluate the isDefault property to return the default subscription.
 az account list --query "[?isDefault].name"
 
@@ -333,7 +333,7 @@ az vm list --resource-group QueryDemo --query '[?storageProfile.osDisk.osType==`
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
 ```
 
@@ -345,7 +345,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.osType=='
 
 ---
 
-```output
+```json
 Name    Admin
 ------  ---------
 Test-2  sttramer
@@ -362,7 +362,7 @@ az vm list --resource-group QueryDemo --query '[?storageProfile.osDisk.diskSizeG
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
@@ -376,7 +376,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 
 ---
 
-```output
+```json
 Name     Admin     DiskSize
 -------  --------  --------
 WinTest  winadmin  127
@@ -402,7 +402,7 @@ az vm list --resource-group QueryDemo --query '[?contains(storageProfile.osDisk.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[?contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}"
 ```
 
@@ -414,7 +414,7 @@ az vm list --resource-group QueryDemo --query "[?contains(storageProfile.osDisk.
 
 ---
 
-```output
+```json
 [
   {
     "Name": "TestVM",
@@ -439,7 +439,7 @@ az vm list --resource-group QueryDemo --query '[].{Name:name, Storage:storagePro
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
@@ -479,7 +479,7 @@ az vm list --resource-group QueryDemo --query 'sort_by([].{Name:name, Size:stora
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
 ```
 
@@ -491,7 +491,7 @@ az vm list --resource-group QueryDemo --query "sort_by([].{Name:name, Size:stora
 
 ---
 
-```output
+```json
 Name     Size
 -------  ------
 Test-2   30
@@ -522,7 +522,7 @@ echo $USER
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 $USER=$(az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername")
 echo $USER
 ```
@@ -536,7 +536,7 @@ echo %USER%
 
 ---
 
-```output
+```json
 "azureuser"
 ```
 
@@ -551,7 +551,7 @@ echo $USER
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 $USER=$(az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername" --output tsv)
 echo $USER
 ```
@@ -566,7 +566,7 @@ echo %USER%
 
 ---
 
-```output
+```json
 azureuser
 ```
 
@@ -592,7 +592,7 @@ az vm list --resource-group QueryDemo --query '[].{Name:name, OS:storageProfile.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}"
 ```
 
@@ -634,7 +634,7 @@ az vm list --resource-group QueryDemo --query '[].{Name:name, OS:storageProfile.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell
+```powershell-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
 
@@ -646,7 +646,7 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.
 
 ---
 
-```output
+```json
 Name     OS       Admin
 -------  -------  ---------
 Test-2   Linux    sttramer
