@@ -18,9 +18,9 @@ In this tutorial, you will learn to create and query Azure resource using Bash a
 
 ## Starting Bash
 
-[!INCLUDE [quickstarts-free-trial-note](~/azure-docs-pr/articles/includes/quickstarts-free-trial-note.md)]
+[!INCLUDE [quickstarts-free-trial-note](~/azure-docs-pr/includes/quickstarts-free-trial-note.md)]
 
-[!INCLUDE [azure-cli-prepare-your-environment.md](~/azure-docs-pr/articles/includes/azure-cli-prepare-your-environment.md)]
+[!INCLUDE [azure-cli-prepare-your-environment.md](~/azure-docs-pr/includes/azure-cli-prepare-your-environment.md)]
 
 
 
