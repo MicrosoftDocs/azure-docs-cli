@@ -18,5 +18,5 @@ In this tutorial, you will learn to create and query Azure resource using Bash a
 
 ## Starting Bash
 
-[!INCLUDE [quickstarts-free-trial-note](/azure-docs/includes/quickstarts-free-trial-note.md)]
+[!INCLUDE [quickstarts-free-trial-note](./includes/quickstarts-free-trial-note.md)]
 
