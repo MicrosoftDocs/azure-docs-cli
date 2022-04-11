@@ -27,7 +27,7 @@ Start Bash using Azure Cloud Shell or a local install. For more information, see
 
 ## Querying dictionary results
 
-A command that always returns only a single object returns a dictionary as a JSON object. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object.
+A command that always returns only a single object returns a dictionary as a JSON object. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command.
 
 ```azurecli-interactive
 az account show
@@ -86,6 +86,65 @@ az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: 
 
 For more information about returning multiple values, see [Get multiple values](/cli/azure/query-azure-cli#get-multiple-values).
 
+## Creating objects
+
+### Setting a random value for use in subsequent commands
+
+Setting and using a random value allows you to run scripts multiple times without naming conflicts. Some values for objects must be unique across the service while others do not. Moreover, when you delete an object, it does not get deleted immediately - causing a naming conflict if you run the script another time immediately after you delete an object.
+
+```azurecli-interactive
+let "randomIdentifier=$RANDOM*$RANDOM"
+```
+
+### Creating a resource group
+
+The following commands create a uniquely named resource group using variables and the [Az Group Create](/cli/azure/group#az-group-create) command.
+
+```azurecli
+resourceGroup="msdocs-learn-bash-$randomIdentifier"
+location="East US"
+az group create --name $resourceGroup --location "$location"
+```
+
+### Using If Exists to create or delete a resource group
+
+The following command creates a new resource group only if one of the specified name does not exist.
+
+```cli
+if [ $(az group exists --name $resourceGroup) = false ]; 
+   then az group create --name $resourceGroup --location "$location" 
+fi
+```
+
+The following command deletes an existing new resource group if one of the specified name exists. It uses the `--no-wait` argument to return control without waiting for the command to complete.
+
+```cli
+if [ $(az group exists --name $resourceGroup) = true ]; 
+   then az group delete --name $resourceGroup -y --no-wait
+fi
+```
+
+### Using Grep to determine if a resource group exists
+
+The following command pipes the output of the `az group list` command to the `grep` command. If the specified resource group does not exist, the command creates the resource group using the previously defined variables.
+
+```cli
+az group list --output tsv | grep $resourceGroup -q || az group create --name $resourceGroup --location "$location"
+```
+
+
+
+
+## Querying array results
+
+A command that always returns only a single object returns a dictionary as a JSON object. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object using the [Account List](/cli/azure/account#az-account-show) command.
+
+```azurecli-interactive
+az account list
+```
+
+The command will output a dictionary as a JSON object. The following output has some fields omitted for brevity, and identifying information removed
+
 ### Querying boolean values
 
 The following queries demonstrates querying all accounts in a subscription, potentially returning a JSON array if there are multiple subscriptions for a given account, and then querying for which account is the default account, and which accounts are not the default account. These queries build on what you learned previously to filter and format the results. Finally, it creates a local variable containing the subscription id for use later in this tutorial.
@@ -102,5 +161,9 @@ az account list --query "[?isDefault == \`false\`].name" -o table # Returns the 
 az account list --query "[?isDefault].id" -o tsv # Returns the subscription id without quotation marks
 subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)" # Captures the subscription id as a local variable.
 echo $subscriptionId # Returns the contents of the local variable.
+az account list --query "[? contains(name, 'Test')].id" -o tsv # Returns the subscription id of a non-default subscription containing the substring 'Test'
+subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv) # Captures the subscription id as a local variable. 
+az account set -s $subscriptionId # Sets the current active subscription
 ```
 
+For more information about querying boolean values, see [Query boolean values](/cli/azure/query-azure-cli#query-boolean-values). For more information about filtering arrays, see [Filter arrays](/cli/azure/query-azure-cli#filter-arrays).
