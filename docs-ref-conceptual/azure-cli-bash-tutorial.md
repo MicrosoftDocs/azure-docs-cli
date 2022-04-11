@@ -16,7 +16,7 @@ In this tutorial, you will learn to create and query Azure resource using Bash a
 > - 
 > - 
 
-If you don't have an [Azure subscription](../articles/guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
+If you don't have an Azure subscription, create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
 ## Starting Bash
 
@@ -50,11 +50,22 @@ bash-5.1# az account show
 
 ### Formatting the output as a table
 
-The default output is always a JSON object. Using the `--output table` argument to format the output as a table. You can shorten the argument to `-o table`.
+Use the `--output table` argument to format the output as an ASCII table. Nested objects aren't included in table output, but can still be filtered as part of a query. You can shorten the argument to `-o table`. We will explore additional formatting options later in this tutorial.
 
 ```azurecli
 az account show --output table
 ```
 
-For more information about formatting the output, see [Output Formats](format-output-azure-cli).
+For more information about formatting the output as a table, see [Output Formats](/cli/azure/format-output-azure-cli#table-output-format).
 
+### Querying and formatting single values and nested values
+
+The following queries demonstrate querying single values and nested values. The final query in this set demonstrates formatting the output with the `-o tsv` argument. This argument returns the results as tab- and newline-separated values. This is useful for removing quotation marks
+
+```azurecli-interactive
+az account show --query name
+az account show --query name -o tsv
+
+az account show --query user.name
+az account show --query user.name -o tsv
+```
