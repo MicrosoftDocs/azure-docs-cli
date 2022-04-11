@@ -13,34 +13,58 @@ directCommands:
   summary: Create a network manager security configuration admin rule.
   description: ''
   syntax: >-
-    az network manager security-admin-config rule-collection rule create --configuration-name
+    az network manager security-admin-config rule-collection rule create --access {Allow, AlwaysAllow, Deny}
+                                                                         --configuration-name
+                                                                         --direction {Inbound, Outbound}
+                                                                         --kind {Custom, Default}
                                                                          --name
+                                                                         --priority
+                                                                         --protocol {Ah, Any, Esp, Icmp, Tcp, Udp}
                                                                          --resource-group
                                                                          --rule-collection-name
                                                                          --rule-name
-                                                                         [--access {Allow, AlwaysAllow, Deny}]
                                                                          [--description]
                                                                          [--dest-port-ranges]
                                                                          [--destinations]
-                                                                         [--direction {Inbound, Outbound}]
                                                                          [--display-name]
                                                                          [--flag]
-                                                                         [--kind {Custom, Default}]
-                                                                         [--priority]
-                                                                         [--protocol {Ah, Any, Esp, Icmp, Tcp, Udp}]
                                                                          [--source-port-ranges]
                                                                          [--sources]
   examples:
   - summary: Create security admin rules
-    syntax: az network manager security-admin-config rule-collection rule create --configuration-name "myTestSecurityConfig" --network-manager-name "testNetworkManager" --resource-group "rg1" --rule-collection-name "myTestCollection" --rule-name "SampleAdminRule" --kind "Custom" --protocol "Tcp" --access "Allow" --priority 32 --direction "Inbound"
+    syntax: az network manager security-admin-config rule-collection rule create --configuration-name "myTestSecurityConfig" --network-manager-name "testNetworkManager" --resource-group "rg1" --rule-collection-name "myTestCollection" --rule-name "SampleAdminRule" --kind "Custom" --protocol "Tcp" --access "Allow" --priority 32 --direction "Inbound" --destinations address-prefix="*" address-prefix-type="IPPrefix"  --dest-port-ranges 22
   requiredParameters:
+  - isRequired: true
+    name: --access
+    parameterValueGroup: Allow, AlwaysAllow, Deny
+    summary: Indicates the access allowed for this particular rule.
+    description: ''
   - isRequired: true
     name: --configuration-name
     summary: The name of the network manager security Configuration.
     description: ''
   - isRequired: true
+    name: --direction
+    parameterValueGroup: Inbound, Outbound
+    summary: Indicates if the traffic matched against the rule in inbound or outbound.
+    description: ''
+  - isRequired: true
+    name: --kind
+    parameterValueGroup: Custom, Default
+    summary: Required. Whether the rule is custom or default.Constant filled by server.
+    description: ''
+  - isRequired: true
     name: --name --network-manager-name -n
     summary: The name of the network manager.
+    description: ''
+  - isRequired: true
+    name: --priority
+    summary: The priority of the rule.
+    description: ''
+  - isRequired: true
+    name: --protocol
+    parameterValueGroup: Ah, Any, Esp, Icmp, Tcp, Udp
+    summary: Network protocol this rule applies to.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -55,10 +79,6 @@ directCommands:
     summary: The name of the rule.
     description: ''
   optionalParameters:
-  - name: --access
-    parameterValueGroup: Allow, AlwaysAllow, Deny
-    summary: Indicates the access allowed for this particular rule.
-    description: ''
   - name: --description
     summary: A description for this rule. Restricted to 140 chars.
     description: ''
@@ -73,30 +93,15 @@ directCommands:
 
       address-prefix: Address prefix.
 
-      address-prefix-type: Address prefix type.
+      address-prefix-type: Address prefix type. Address prefix type is an enum with values IPPrefix or ServiceTag.
 
 
       Multiple actions can be specified by using more than one --destination argument.
-  - name: --direction
-    parameterValueGroup: Inbound, Outbound
-    summary: Indicates if the traffic matched against the rule in inbound or outbound.
-    description: ''
   - name: --display-name
     summary: A friendly name for the rule.
     description: ''
   - name: --flag
     summary: Default rule flag.
-    description: ''
-  - name: --kind
-    parameterValueGroup: Custom, Default
-    summary: Required. Whether the rule is custom or default.Constant filled by server.
-    description: ''
-  - name: --priority
-    summary: The priority of the rule.
-    description: ''
-  - name: --protocol
-    parameterValueGroup: Ah, Any, Esp, Icmp, Tcp, Udp
-    summary: Network protocol this rule applies to.
     description: ''
   - name: --source-port-ranges
     summary: The source port ranges.
@@ -109,7 +114,7 @@ directCommands:
 
       address-prefix: Address prefix.
 
-      address-prefix-type: Address prefix type.
+      address-prefix-type: Address prefix type. Address prefix type is an enum with values IPPrefix or ServiceTag.
 
 
       Multiple actions can be specified by using more than one --sources argument.

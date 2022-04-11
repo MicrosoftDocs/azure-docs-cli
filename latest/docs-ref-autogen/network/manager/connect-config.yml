@@ -15,17 +15,17 @@ directCommands:
   syntax: >-
     az network manager connect-config create --applies-to-groups
                                              --configuration-name
+                                             --connectivity-topology {HubAndSpoke, Mesh}
                                              --name
                                              --resource-group
-                                             [--connectivity-topology {HubAndSpoke, Mesh}]
                                              [--delete-existing-peering {false, true}]
                                              [--description]
                                              [--display-name]
-                                             [--hubs]
+                                             [--hub]
                                              [--is-global {false, true}]
   examples:
   - summary: Create/Update Azure Virtual Network Manager Connectivity Configuration
-    syntax: az network manager connect-config create --configuration-name "myTestConnectivityConfig" --description "Sample Configuration" --applies-to-groups group-connectivity="None" is-global=false network-group-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkManagers/testNetworkManager/networkManagerGroups/group1" use-hub-gateway=true --connectivity-topology "HubAndSpoke" --delete-existing-peering true --display-name "myTestConnectivityConfig" --hubs resource-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myTestConnectivityConfig" resource-type="Microsoft.Network/virtualNetworks" --is-global true --network-manager-name "testNetworkManager" --resource-group "myResourceGroup"
+    syntax: az network manager connect-config create --configuration-name "myTestConnectivityConfig" --description "Sample Configuration" --applies-to-groups group-connectivity="None" is-global=false network-group-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkManagers/testNetworkManager/networkManagerGroups/group1" use-hub-gateway=true --connectivity-topology "HubAndSpoke" --delete-existing-peering true --display-name "myTestConnectivityConfig" --hub resource-id="subscriptions/subscriptionA/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myTestConnectivityConfig" resource-type="Microsoft.Network/virtualNetworks" --is-global true --network-manager-name "testNetworkManager" --resource-group "myResourceGroup"
   requiredParameters:
   - isRequired: true
     name: --applies-to-groups
@@ -49,6 +49,11 @@ directCommands:
     summary: The name of the network manager connectivity configuration.
     description: ''
   - isRequired: true
+    name: --connectivity-topology
+    parameterValueGroup: HubAndSpoke, Mesh
+    summary: Connectivity topology type.
+    description: ''
+  - isRequired: true
     name: --name --network-manager-name -n
     summary: The name of the network manager.
     description: ''
@@ -57,10 +62,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --connectivity-topology
-    parameterValueGroup: HubAndSpoke, Mesh
-    summary: Connectivity topology type.
-    description: ''
   - name: --delete-existing-peering
     parameterValueGroup: false, true
     summary: Flag if need to remove current existing peerings.
@@ -71,18 +72,15 @@ directCommands:
   - name: --display-name
     summary: A friendly name for the resource.
     description: ''
-  - name: --hubs
+  - name: --hub
     summary: The hub vnets.
     description: >-
-      Usage: --hubs resource-id=XX resource-type=XX
+      Usage: --hub resource-id=XX resource-type=XX
 
 
       resource-id: Resource ID
 
-      resource-type: Resource Type
-
-
-      Multiple actions can be specified by using more than one --hubs argument.
+      resource-type: Resource Type.
   - name: --is-global
     parameterValueGroup: false, true
     summary: Flag if global mesh is supported.
@@ -178,12 +176,11 @@ directCommands:
                                              --resource-group
                                              [--add]
                                              [--applies-to-groups]
-                                             [--connectivity-topology {HubAndSpoke, Mesh}]
                                              [--delete-existing-peering {false, true}]
                                              [--description]
                                              [--display-name]
                                              [--force-string]
-                                             [--hubs]
+                                             [--hub]
                                              [--is-global {false, true}]
                                              [--remove]
                                              [--set]
@@ -220,10 +217,6 @@ directCommands:
 
 
       Multiple actions can be specified by using more than one --applies-to-groups argument.
-  - name: --connectivity-topology
-    parameterValueGroup: HubAndSpoke, Mesh
-    summary: Connectivity topology type.
-    description: ''
   - name: --delete-existing-peering
     parameterValueGroup: false, true
     summary: Flag if need to remove current existing peerings.
@@ -237,18 +230,15 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
-  - name: --hubs
+  - name: --hub
     summary: The hub vnets.
     description: >-
-      Usage: --hubs resource-id=XX resource-type=XX
+      Usage: --hub resource-id=XX resource-type=XX
 
 
       resource-id: Resource ID
 
-      resource-type: Resource Type
-
-
-      Multiple actions can be specified by using more than one --hubs argument.
+      resource-type: Resource Type.
   - name: --is-global
     parameterValueGroup: false, true
     summary: Flag if global mesh is supported.
