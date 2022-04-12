@@ -25,17 +25,18 @@ If you don't have an Azure subscription, create an [Azure free account](https://
 
 ## Starting Bash
 
-Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a local install. For more information, see [Install the Azure CLI](/cli/azure/install-azure-cli). This tutorial assumes that you are either running Bash using Azure Cloud Shell or running Azure CLI locally in a docker container.
+Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a [local install of the Azure CLI](/cli/azure/install-azure-cli). This tutorial assumes that you are running Bash either using Azure Cloud Shell or running Azure CLI locally in a docker container.
 
 ## Querying dictionary results
 
-A command that always returns only a single object returns a dictionary as a JSON object. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command. For more information on working with subscriptions, see [Managing subscriptions](/cli/azure/manage-azure-subscriptions-azure-cli).
+A command that always returns only a single object returns a JSON dictionary. Dictionaries are unordered objects accessed with keys. For this tutorial, we are going to start by querying the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command.
 
 ```azurecli-interactive
 az account show
+az account show --output json # JSON is the default format
 ```
 
-The command will output a dictionary as a JSON object. The following output has some fields omitted for brevity, and identifying information removed
+The following JSON dictionary output has some fields omitted for brevity, and identifying information has been removed or genericized.
 
 ```JSON
 bash-5.1# az account show
@@ -50,22 +51,21 @@ bash-5.1# az account show
     "type": "user"
   }
 }
-
 ```
 
 ### Formatting the output as YAML
 
-Use the `--output yaml` argument (or `-o yaml`) to format the output in `yanl` format, a plain-text data serialization format. We will explore a number of formatting options in this tutorial.
+Use the `--output yaml` argument (or `-o yaml`) to format the output in [yaml](https://yaml.org/) format, a plain-text data serialization format. YAML tends to be easier to read than JSON, and easily maps to that format. Some applications and CLI commands take YAML as configuration input, instead of JSON.
 
 ```azurecli
 az account show --output yaml
 ```
 
-For more information about formatting the output as a table, see [YAML output format](/cli/azure/format-output-azure-cli#yaml-output-format).
+For more information about formatting the output as yaml, see [YAML output format](/cli/azure/format-output-azure-cli#yaml-output-format).
 
 ### Formatting the output as a table
 
-Use the `--output table` argument (or `-o table`) to format the output as an ASCII table. Nested objects aren't included in table output, but can still be filtered as part of a query. We will explore additional formatting options later in this tutorial.
+Use the `--output table` argument (or `-o table`) to format the output as an ASCII table. Nested objects aren't included in table output, but can still be filtered as part of a query.
 
 ```azurecli
 az account show --output table
@@ -75,19 +75,19 @@ For more information about formatting the output as a table, see [Table output f
 
 ### Querying and formatting single values and nested values
 
-The following queries demonstrate querying single values, including nested values. The final query in this set demonstrates formatting the output using the `-o tsv` argument. This argument returns the results as tab- and newline-separated values. This is useful for removing quotation marks in the value returned - which is useful when capturing the result into a variable for later use (as we will demonstrate later in this tutorial).
+The following queries demonstrate querying single values, including nested values in a JSON dictionary output. The final query in this set demonstrates formatting the output using the `-o tsv` argument. This argument returns the results as tab- and newline-separated values. This is useful for removing quotation marks in the value returned - which is useful to consume the output into other commands and tools that need to process the text in some form (as we will demonstrate later in this tutorial).
 
 ```azurecli-interactive
-az account show --query name
-az account show --query name -o tsv # Removes quotation marks
+az account show --query name # Querying a single value
+az account show --query name -o tsv # Removes quotation marks from the output
 
 az account show --query user.name # Querying a nested value
-az account show --query user.name -o tsv # Removes quotation marks
+az account show --query user.name -o tsv # Removes quotation marks from the output
 ```
 
 ### Querying and formatting multiple values, including nested values
 
-The following queries demonstrate querying multiple values and renaming the values returned, using multiple output formats.
+To get more than one property, put expressions in square brackets [ ] (a multiselect list) as a comma-separated list. The following queries demonstrate querying multiple values in a JSON dictionary output, using multiple output formats.
 
 ```azurecli-interactive
 az account show --query [name,id,user.name] # return multiple values
@@ -98,7 +98,7 @@ For more information about returning multiple values, see [Get multiple values](
 
 ### Renaming properties in a query
 
-The following queries demonstrate the use of the { } (multiselect hash) operator to get a dictionary instead of an array when querying for multiple values.
+The following queries demonstrate the use of the { } (multiselect hash) operator to get a dictionary instead of an array when querying for multiple values. It also demonstrates renaming properties in the query result.
 
 ```azurecli
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" # Rename the values returned
@@ -109,7 +109,9 @@ For more information on renaming properties in a query, see [Rename properties i
 
 ### Querying boolean values
 
-The following queries demonstrates querying all accounts in a subscription, potentially returning a JSON array if there are multiple subscriptions for a given account, and then querying for which account is the default account, and which accounts are not the default account. These queries build on what you learned previously to filter and format the results. Finally, it creates a variable containing the subscription id for use later in this tutorial.
+Boolean values are assumed to be true, so the `"[?isDefault]"` query syntax for the `az account list` command returns the current default subscription. To get the false values, you must use an escape character, such as `\`.
+
+The following queries demonstrates querying all accounts in a subscription, potentially returning a JSON array if there are multiple subscriptions for a given account, and then querying for which account is the default subscription. It also demonstrates querying for the accounts that are not the default subscription. These queries build on what you learned previously to filter and format the results. Finally, the final query demonstrates storing the query results in a variable.
 
 ```azurecli-interactive
 az account list
@@ -130,15 +132,18 @@ subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv
 az account set -s $subscriptionId # Sets the current active subscription
 ```
 
-- For more information about querying boolean values, see [Query boolean values](/cli/azure/query-azure-cli#query-boolean-values). 
+- For more information about querying boolean values, see [Query boolean values](/cli/azure/query-azure-cli#query-boolean-values).
 - For more information about filtering arrays, see [Filter arrays](/cli/azure/query-azure-cli#filter-arrays).
 - For more information about using variables, see [How to use variables](/cli/azure/azure-cli-variables).
+- For more information on working with subscriptions, see [Managing subscriptions](/cli/azure/manage-azure-subscriptions-azure-cli).
 
 ## Creating objects using variables and randomization
 
 ### Setting a random value for use in subsequent commands
 
 Setting and using a random value for use in variables allows you to run scripts multiple times without naming conflicts. Naming conflicts can occur because a value must be unique across the service or because an object you have deleted still exists within Azure until the deletion process is complete.
+
+$RANDOM is a bash function (not a constant) that returns a random signed 16 bit integer (from 0 through 32767). The `let` command is a built-in Bash command to evaluate arithmetic expressions. Using the following command creates a sufficiently unique value for most purposes.
 
 ```azurecli-interactive
 let "randomIdentifier=$RANDOM*$RANDOM"
