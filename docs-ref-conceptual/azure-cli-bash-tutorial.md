@@ -143,7 +143,7 @@ az account set -s $subscriptionId # Sets the current active subscription
 
 Setting and using a random value for use in variables allows you to run scripts multiple times without naming conflicts. Naming conflicts can occur because a value must be unique across the service or because an object you have deleted still exists within Azure until the deletion process is complete.
 
-$RANDOM is a bash function (not a constant) that returns a random signed 16 bit integer (from 0 through 32767). The `let` command is a built-in Bash command to evaluate arithmetic expressions. Using the following command creates a sufficiently unique value for most purposes.
+`$RANDOM` is a bash function (not a constant) that returns a random signed 16 bit integer (from 0 through 32767). The `let` command is a built-in Bash command to evaluate arithmetic expressions. Using the following command creates a sufficiently unique value for most purposes.
 
 ```azurecli-interactive
 let "randomIdentifier=$RANDOM*$RANDOM"
@@ -151,7 +151,7 @@ let "randomIdentifier=$RANDOM*$RANDOM"
 
 ### Creating a resource group
 
-The following commands create a uniquely named resource group using variables and the [Az Group Create](/cli/azure/group#az-group-create) command. Quotation marks are used for the $location variable because the location variable has a space in it.
+The following commands create a uniquely named resource group using variables and the [az group create](/cli/azure/group#az-group-create) command. Quotation marks are used for the `$location` variable because the value for the location variable frequently has a space in it, as this example illustrates.
 
 ```azurecli
 resourceGroup="msdocs-learn-bash-$randomIdentifier"
@@ -159,9 +159,9 @@ location="East US"
 az group create --name $resourceGroup --location "$location"
 ```
 
-Review the properties of the resource group that was just created.
+In the JSON dictionary output, review the properties of the resource group that was just created.
 
-### Using If Exists to create or delete a resource group
+### Using If Exists Then to create or delete a resource group
 
 The following script creates a new resource group only if one with the specified name does not already exist.
 
@@ -171,7 +171,7 @@ if [ $(az group exists --name $resourceGroup) = false ];
 fi
 ```
 
-The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this tutorial, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations).
+The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this tutorial, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations). We will demonstrate the use of the `--no-wait` argument at the end of this tutorial.
 
 ```cli
 if [ $(az group exists --name $resourceGroup) = true ]; 
@@ -180,7 +180,7 @@ fi
 az group show --name $resourceGroup
 ```
 
-### Using Grep to determine if a resource group exists
+### Using Grep to determine if a resource group exists, and create the resource group if it does not
 
 The following command pipes the output of the `az group list` command to the `grep` command. If the specified resource group does not exist, the command creates the resource group using the previously defined variables.
 
@@ -188,7 +188,7 @@ The following command pipes the output of the `az group list` command to the `gr
 az group list --output tsv | grep $resourceGroup -q || az group create --name $resourceGroup --location "$location"
 ```
 
-### Using CASE statement to determine if a resource group exists
+### Using CASE statement to determine if a resource group exists, and create the resource group if it does not
 
 The following CASE statement creates a new resource group only if one with the specified name does not already exist. If one with the specified name exists, the CASE statement echoes that the resource group exists.
 
@@ -204,11 +204,11 @@ esac
 
 ## Using for loops and querying arrays
 
-In this section of the tutorial, we will create a storage account and then use for loops to create a number of containers. We will then explore querying JSON arrays.
+In this section of the tutorial, we will create a storage account and then use for loops to create a number of blobs and containers. We will also demonstrate querying JSON arrays and working with environment variables.
 
 ### Create storage account
 
-The following command creates a storage account that we will use when we create a number of storage containers.
+The following command uses the [az storage account create](/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create) command to create a storage account that we will use when creating storage containers.
 
 ```azurecli
 storageAccount="learnbash$randomIdentifier"
@@ -217,18 +217,12 @@ az storage account create --name $storageAccount --location "$location" --resour
 
 ### Get the storage account keys
 
-The following commands do the following:
-
-- Return both of the storage account key values
-- Return one of the storage account key values
-- Populate a variable containing one of the storage account key values
-
-We will use the variable containing the key value when creating storage containers.
+The following commands use the [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list) command to return storage account key values. We then store a key value in a variable for use when creating storage containers.
 
 ```azurecli
-az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[].value" -o tsv
+az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[].value" -o tsv # returns both storage account key values
 
-az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[0].value" -o tsv
+az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[0].value" -o tsv # returns a single storage account key value
 
 accountKey=$(az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[0].value" -o tsv)
 
@@ -237,7 +231,7 @@ echo $accountKey
 
 ### Create storage container
 
-We will start by creating a single storage container.
+We will start by using the [az storage container create](/cli/azure/storage/container#az-storage-container-create) to create a single storage container and then use the [az storage container list](/cli/azure/storage/container#az-storage-container-list) to query the name of the created container.
 
 ```azurecli
 container="learningbash"
@@ -248,7 +242,7 @@ az storage container list --account-name $storageAccount --account-key $accountK
 
 ### Upload data to container
 
-The following script creates three sample files using a for loop to upload as blobs to the storage container.
+The following script creates three sample files using a for loop.
 
 ```azurecli
 for i in `seq 1 3`; do
@@ -256,7 +250,7 @@ for i in `seq 1 3`; do
 done
 ```
 
-The following script uploads the sample files to the container and then displays the names of the blobs in the container.
+The following script uses the [az storage blob upload-batch](/cli/azure/storage/blob#az-storage-blob-upload-batch) command to upload the blobs to the storage container. 
 
 ```azurecli
 az storage blob upload-batch \
@@ -265,7 +259,11 @@ az storage blob upload-batch \
     --destination $container \
     --account-key $accountKey \
     --account-name $storageAccount
+```
 
+The following script uses the [az storage blob list](/cli/azure/storage/blob#az-storage-blob-list) command to list the blobs in the container.
+
+```azurecli
 az storage blob list \
     --container-name $container \
     --account-key $accountKey \
@@ -307,15 +305,15 @@ az storage container list --account-name $storageAccount --account-key $accountK
 
 ### Use EXPORT to define environment variables
 
-You can use corresponding environment variables to store your authentication credentials rather than specifying them in each command. To do this, use EXPORT.
+In the preceding storage container scripts, we specified the account name and account key with every command. Instead, you can store your authentication credentials using the corresponding environment variables: `AZURE_STORAGE_ACCOUNT` and `AZURE_STORAGE_KEY`. To do this, use EXPORT.
 
 ```azurecli
 export AZURE_STORAGE_ACCOUNT=$storageAccount
 export AZURE_STORAGE_KEY=$accountKey
-az storage container list # Uses the environment variables
+az storage container list # Uses the environment variables to display the list of containers.
 ```
 
-Create a metadata string and update a contain with that string, using the environment variable.
+The following script creates a metadata string and then uses the [az storage container metadata update](/cli/azure/storage/container/metadata#az-storage-container-metadata-update) command to update a container with that string, again using the environment variables.
 
 ```azurecli
 metadata="key=value pie=delicious" # Define metadata
@@ -326,14 +324,14 @@ az storage container metadata show \
     --name $containerName # Show the metadata
 ```
 
-Delete a single named container
+The following command uses the [az storage container delete](/cli/azure/storage/container#az-storage-container-delete) command to delete a single named container and then delete multiple containers in a loop.
 
 ```azurecli
 az storage container delete \
     --name $container
 ```
 
-Get list of containers
+Get list of containers containing a specific prefix and store results into a variable.
 
 ```azurecli
 containerPrefix="learnbash"
@@ -343,7 +341,7 @@ containerList=$(az storage container list \
     --output tsv)
 ```
 
-Delete containers in a loop using the `--prefix` argument.
+Delete the list of containers in a loop using the `--prefix` argument.
 
 ```azurecli
 for row in $containerList
