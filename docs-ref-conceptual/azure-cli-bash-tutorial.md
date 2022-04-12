@@ -347,55 +347,11 @@ do
 done
 ```
 
+## Clean up resources
 
-## d
-
-# Delete containers by iterating a loop
-containerList=$(az storage container list \
-    --query "[].name" \
-    --prefix $containerPrefix \
-    --output tsv)
-for row in $containerList
-do
-    tmpName=$(echo $row | sed -e 's/\r//g')
-    az storage container delete \
-    --name $tmpName 
-done
+When you are finished this tutorial, delete the resource group and all resources within it. Use the `--no-wait` argument.
+```cli
+if [ $(az group exists --name $resourceGroup) = true ]; 
+   then az group delete --name $resourceGroup -y  --no-wait
+fi
 ```
-
-```azurecli-interactive
-export AZURE_STORAGE_ACCOUNT=<storage_account_name>
-export AZURE_STORAGE_KEY="$(az storage account keys list --account-name <storage_account_name> --resource-group <resource_group_name> --query "[0].value" --output tsv)"
-
-az storage container create --name testcontainer
-
-# Create an Azure storage account in the resource group.
-echo "Creating $AZURE_STORAGE_ACCOUNT"
-az storage account create --name $AZURE_STORAGE_ACCOUNT --location "$location" --resource-group $resourceGroup --sku $skuStorage
-
-# Set the storage account key as an environment variable. 
-export AZURE_STORAGE_KEY=$(az storage account keys list -g $resourceGroup -n $AZURE_STORAGE_ACCOUNT --query '[0].value' -o tsv)
-
-
-
-
-
-## Querying array results
-
-Arrays are sequences of objects that can be indexed. Commands that could return more than one object return an array.  For this section, we are going to query the [VM](/cli/azure/vm) object using the [az vm list](/cli/azure/vm#az-wm-list) command.
-
-```azurecli
-az vm list -g $resourceGroup
-```
-
-This command outputs an array displaying all VM information under the subscription.
-
-```azurecli
-az vm list -g $resourceGroup --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}" -o json
-```
-
-
-az vm show -g $resourceGroup -n DevExVM2 --query "{objectID:id}" -o table
-
-
-
