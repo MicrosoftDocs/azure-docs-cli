@@ -9,15 +9,17 @@ ms.date: 04/11/2022
 ---
 # Learning Bash with Azure CLI
 
-In this tutorial, you will learn to create and query Azure resources using Bash and the Azure CLI. You will learn how to do the following:
+In this tutorial, you will learn to create, query, and delete Azure resources using Bash and the Azure CLI. You will learn how to do the following:
 
 > [!div class="checklist"]
 >
-> - Querying results as JSON dictionaries or arrays
-> - Formatting output as JSON, table, or TSV
-> - Querying, filtering, and formatting single and multiple values
-> - Use If/Then, Case, Do Until, Do While, Grep, and For Each
-> - Work with variables
+> - Query results as JSON dictionaries or arrays
+> - Format output as JSON, table, or TSV
+> - Query, filter, and format single and multiple values
+> - Use if/exists/then and case syntax
+> - Use for loops
+> - Use grep, sed, paste, and bc commands
+> - Populate and use shell and environment variables
 
 If you don't have an Azure subscription, create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
@@ -350,6 +352,7 @@ done
 ## Clean up resources
 
 When you are finished this tutorial, delete the resource group and all resources within it. Use the `--no-wait` argument.
+
 ```cli
 if [ $(az group exists --name $resourceGroup) = true ]; 
    then az group delete --name $resourceGroup -y  --no-wait
