@@ -25,7 +25,7 @@ If you don't have an Azure subscription, create an [Azure free account](https://
 
 ## Starting Bash
 
-Start Bash using Azure Cloud Shell or a local install. For more information, see [Install the Azure CLI](/cli/azure/install-azure-cli). This tutorial assumes that you are either running Bash using Azure Cloud Shell or running Azure CLI locally in a docker container.
+Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a local install. For more information, see [Install the Azure CLI](/cli/azure/install-azure-cli). This tutorial assumes that you are either running Bash using Azure Cloud Shell or running Azure CLI locally in a docker container.
 
 ## Querying dictionary results
 
