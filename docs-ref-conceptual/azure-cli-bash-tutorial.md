@@ -15,7 +15,7 @@ In this tutorial, you will learn to create and query Azure resources using Bash 
 >
 > - Querying results as JSON dictionaries or arrays
 > - Formatting output as JSON, table, or TSV
-> - Querying and formatting single and multiple values
+> - Querying, filtering, and formatting single and multiple values
 > - Use If/Then, Case, Do Until, Do While, Grep, and For Each
 > - Work with local and environment variables
 
@@ -27,7 +27,7 @@ Start Bash using Azure Cloud Shell or a local install. For more information, see
 
 ## Querying dictionary results
 
-A command that always returns only a single object returns a dictionary as a JSON object. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command.
+A command that always returns only a single object returns a dictionary as a JSON object. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command. For more information on working with subscriptions, see [Managing subscriptions](/cli/azure/manage-azure-subscriptions-azure-cli).
 
 ```azurecli-interactive
 az account show
@@ -41,7 +41,7 @@ bash-5.1# az account show
   "environmentName": "AzureCloud",
   "isDefault": true,
   "managedByTenants": [],
-  "name": "C & L Azure developer experience content projects",
+  "name": "My test subscription",
   "state": "Enabled",
   "user": {
     "name": "user@contoso.com",
@@ -51,26 +51,36 @@ bash-5.1# az account show
 
 ```
 
+### Formatting the output as YAML
+
+Use the `--output yaml` argument (or `-o yaml`) to format the output in `yanl` format, a plain-text data serialization format. We will explore a number of formatting options in this tutorial.
+
+```azurecli
+az account show --output yaml
+```
+
+For more information about formatting the output as a table, see [YAML output format](/cli/azure/format-output-azure-cli#yaml-output-format).
+
 ### Formatting the output as a table
 
-Use the `--output table` argument to format the output as an ASCII table. Nested objects aren't included in table output, but can still be filtered as part of a query. You can shorten the argument to `-o table`. We will explore additional formatting options later in this tutorial.
+Use the `--output table` argument (or `-o table`) to format the output as an ASCII table. Nested objects aren't included in table output, but can still be filtered as part of a query. We will explore additional formatting options later in this tutorial.
 
 ```azurecli
 az account show --output table
 ```
 
-For more information about formatting the output as a table, see [Output Formats](/cli/azure/format-output-azure-cli#table-output-format).
+For more information about formatting the output as a table, see [Table output format](/cli/azure/format-output-azure-cli#table-output-format).
 
 ### Querying and formatting single values and nested values
 
-The following queries demonstrate querying single values and nested values. The final query in this set demonstrates formatting the output with the `-o tsv` argument. This argument returns the results as tab- and newline-separated values. This is useful for removing quotation marks
+The following queries demonstrate querying single values, including nested values. The final query in this set demonstrates formatting the output using the `-o tsv` argument. This argument returns the results as tab- and newline-separated values. This is useful for removing quotation marks in the value returned - which is useful when capturing the result into a variable for later use (as we will demonstrate later in this tutorial).
 
 ```azurecli-interactive
 az account show --query name
-az account show --query name -o tsv
+az account show --query name -o tsv # Removes quotation marks
 
-az account show --query user.name
-az account show --query user.name -o tsv
+az account show --query user.name # Querying a nested value
+az account show --query user.name -o tsv # Removes quotation marks
 ```
 
 ### Querying and formatting multiple values, including nested values
@@ -79,18 +89,19 @@ The following queries demonstrate querying multiple values and renaming the valu
 
 ```azurecli-interactive
 az account show --query [name,id,user.name] # return multiple values
-az account show --query [name,id,user.name] -o table
-az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" # rename the values returned
-az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table
+az account show --query [name,id,user.name] -o table # return multiple values as a table
+
+az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" # Rename the values returned
+az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table # Rename the values returned in a table
 ```
 
 For more information about returning multiple values, see [Get multiple values](/cli/azure/query-azure-cli#get-multiple-values).
 
-## Creating objects
+## Creating objects using variables and randomization
 
 ### Setting a random value for use in subsequent commands
 
-Setting and using a random value allows you to run scripts multiple times without naming conflicts. Some values for objects must be unique across the service while others do not. Moreover, when you delete an object, it does not get deleted immediately - causing a naming conflict if you run the script another time immediately after you delete an object.
+Setting and using a random value for use in variables allows you to run scripts multiple times without naming conflicts. Naming conflicts can occur because a value must be unique across the service or because an object you have deleted still exists within Azure until the deletion process is complete.
 
 ```azurecli-interactive
 let "randomIdentifier=$RANDOM*$RANDOM"
@@ -98,7 +109,7 @@ let "randomIdentifier=$RANDOM*$RANDOM"
 
 ### Creating a resource group
 
-The following commands create a uniquely named resource group using variables and the [Az Group Create](/cli/azure/group#az-group-create) command.
+The following commands create a uniquely named resource group using variables and the [Az Group Create](/cli/azure/group#az-group-create) command. Quotation marks are used for the $location variable because the location variable has a space in it.
 
 ```azurecli
 resourceGroup="msdocs-learn-bash-$randomIdentifier"
@@ -106,9 +117,11 @@ location="East US"
 az group create --name $resourceGroup --location "$location"
 ```
 
+Review the properties of the resource group that was just created.
+
 ### Using If Exists to create or delete a resource group
 
-The following script creates a new resource group only if one with the specified name does not exist.
+The following script creates a new resource group only if one with the specified name does not already exist.
 
 ```cli
 if [ $(az group exists --name $resourceGroup) = false ]; 
@@ -116,11 +129,11 @@ if [ $(az group exists --name $resourceGroup) = false ];
 fi
 ```
 
-The following script deletes an existing new resource group if one of the specified name exists. It uses the `--no-wait` argument to return control without waiting for the command to complete.
+The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this tutorial, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations).
 
 ```cli
 if [ $(az group exists --name $resourceGroup) = true ]; 
-   then az group delete --name $resourceGroup -y
+   then az group delete --name $resourceGroup -y # --no-wait
 fi
 az group show --name $resourceGroup
 ```
@@ -135,19 +148,21 @@ az group list --output tsv | grep $resourceGroup -q || az group create --name $r
 
 ### Using CASE statement to determine if a resource group exists
 
-The following CASE statement creates The following script creates a new resource group only if one with the specified name does not exist. If one with the specified name exists, the CASE statement echoes that the resource group exists.
+The following CASE statement creates a new resource group only if one with the specified name does not already exist. If one with the specified name exists, the CASE statement echoes that the resource group exists.
 
 ```azurecli
 var=$(az group list --query "[? contains(name, '$resourceGroup')].name" --output tsv)
 case $resourceGroup in
 $var)
-echo $resourceGroup exists;;
+echo The $resourceGroup resource group already exists.;;
 *)
 az group create --name $resourceGroup --location "$location";;
 esac
 ```
 
 ## Creating multiple VMs
+
+The following script uses a for loop to create multiple virtual machines in the resource group that you previously created.
 
 ```azurecli
 vm="msdocs-learn-bash-vm-$randomIdentifier"
