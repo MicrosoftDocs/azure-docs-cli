@@ -103,7 +103,7 @@ az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: 
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table # Rename the values returned in a table
 ```
 
-For more information on renaming properties in a query, see [Rename properties in a query](i#rename-properties-in-a-query).
+For more information on renaming properties in a query, see [Rename properties in a query](/cli/azure/query-azure-cli#rename-properties-in-a-query).
 
 ### Querying boolean values
 
