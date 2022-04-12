@@ -17,7 +17,7 @@ In this tutorial, you will learn to create and query Azure resources using Bash 
 > - Formatting output as JSON, table, or TSV
 > - Querying, filtering, and formatting single and multiple values
 > - Use If/Then, Case, Do Until, Do While, Grep, and For Each
-> - Work with local and environment variables
+> - Work with variables
 
 If you don't have an Azure subscription, create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
@@ -90,12 +90,47 @@ The following queries demonstrate querying multiple values and renaming the valu
 ```azurecli-interactive
 az account show --query [name,id,user.name] # return multiple values
 az account show --query [name,id,user.name] -o table # return multiple values as a table
+```
 
+For more information about returning multiple values, see [Get multiple values](/cli/azure/query-azure-cli#get-multiple-values).
+
+### Renaming properties in a query
+
+The following queries demonstrate the use of the { } (multiselect hash) operator to get a dictionary instead of an array when querying for multiple values.
+
+```azurecli
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" # Rename the values returned
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table # Rename the values returned in a table
 ```
 
-For more information about returning multiple values, see [Get multiple values](/cli/azure/query-azure-cli#get-multiple-values).
+For more information on renaming properties in a query, see [Rename properties in a query](i#rename-properties-in-a-query).
+
+### Querying boolean values
+
+The following queries demonstrates querying all accounts in a subscription, potentially returning a JSON array if there are multiple subscriptions for a given account, and then querying for which account is the default account, and which accounts are not the default account. These queries build on what you learned previously to filter and format the results. Finally, it creates a variable containing the subscription id for use later in this tutorial.
+
+```azurecli-interactive
+az account list
+az account list --query "[?isDefault]" # Returns the default subscription
+az account list --query "[?isDefault]" -o table # Returns the default subscription as a table
+az account list --query "[?isDefault].[name,id]" # Returns the name and id of the default subscription
+az account list --query "[?isDefault].[name,id]" -o table # Returns the name and id of the default subscription as a table
+az account list --query "[?isDefault].{SubscriptionName: name, SubscriptionId: id}" -o table # Returns the name and id of the default subscription as a table with friendly names
+
+az account list --query "[?isDefault == \`false\`]" # Returns all non-default subscriptions, if any
+az account list --query "[?isDefault == \`false\`].name" -o table # Returns all non-default subscriptions, if any, as a table
+
+az account list --query "[?isDefault].id" -o tsv # Returns the subscription id without quotation marks
+subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)" # Captures the subscription id as a variable.
+echo $subscriptionId # Returns the contents of the variable.
+az account list --query "[? contains(name, 'Test')].id" -o tsv # Returns the subscription id of a non-default subscription containing the substring 'Test'
+subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv) # Captures the subscription id as a variable. 
+az account set -s $subscriptionId # Sets the current active subscription
+```
+
+- For more information about querying boolean values, see [Query boolean values](/cli/azure/query-azure-cli#query-boolean-values). 
+- For more information about filtering arrays, see [Filter arrays](/cli/azure/query-azure-cli#filter-arrays).
+- For more information about using variables, see [How to use variables](/cli/azure/azure-cli-variables).
 
 ## Creating objects using variables and randomization
 
@@ -160,70 +195,207 @@ az group create --name $resourceGroup --location "$location";;
 esac
 ```
 
-## Creating multiple VMs
+## Using for loops and querying arrays
 
-The following script uses a for loop to create multiple virtual machines in the resource group that you previously created.
+In this section of the tutorial, we will create a storage account and then use for loops to create a number of containers. We will then explore querying JSON arrays.
+
+### Create storage account
+
+The following command creates a storage account that we will use when we create a number of storage containers.
 
 ```azurecli
-vm="msdocs-learn-bash-vm-$randomIdentifier"
-nic="msdocs-learn-bash-nic-$randomIdentifier"
+storageAccount="learnbash$randomIdentifier"
+az storage account create --name $storageAccount --location "$location" --resource-group $resourceGroup --sku Standard_LRS --encryption-services blob
+```
+
+### Get the storage account keys
+
+The following commands do the following:
+
+- Return both of the storage account key values
+- Return one of the storage account key values
+- Populate a variable containing one of the storage account key values
+
+We will use the variable containing the key value when creating storage containers.
+
+```azurecli
+az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[].value" -o tsv
+
+az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[0].value" -o tsv
+
+accountKey=$(az storage account keys list --resource-group $resourceGroup --account-name $storageAccount --query "[0].value" -o tsv)
+
+echo $accountKey
+```
+
+### Create storage container
+
+We will start by creating a single storage container.
+
+```azurecli
+container="learningbash"
+az storage container create --account-name $storageAccount --account-key $accountKey --name $container
+
+az storage container list --account-name $storageAccount --account-key $accountKey --query [].name
+```
+
+### Upload data to container
+
+The following script creates three sample files using a for loop to upload as blobs to the storage container.
+
+```azurecli
 for i in `seq 1 3`; do
-    az vm create \
-        --resource-group $resourceGroup \
-        --name $vm$i \
-        --nics nic$i \
-        --image UbuntuLTS \
-        --admin-username azureuser \
-        --generate-ssh-keys \
-        --public-ip-sku Standard \
-        --no-wait
+    echo $randomIdentifier > container_size_sample_file_$i.txt
+done
+```
+
+The following script uploads the sample files to the container and then displays the names of the blobs in the container.
+
+```azurecli
+az storage blob upload-batch \
+    --pattern "container_size_sample_file_*.txt" \
+    --source . \
+    --destination $container \
+    --account-key $accountKey \
+    --account-name $storageAccount
+
+az storage blob list \
+    --container-name $container \
+    --account-key $accountKey \
+    --account-name $storageAccount \
+    --query "[].name"
+```
+
+The following script displays the total bytes in the storage container.
+
+```azurecli
+bytes=`az storage blob list \
+    --container-name $container \
+    --account-key $accountKey \
+    --account-name $storageAccount \
+    --query "[*].[properties.contentLength]" \
+    --output tsv | paste -s -d+ | bc`
+
+echo "Total bytes in container: $bytes"
+echo $bytes
+```
+
+### Create many containers using loops
+
+Next, we will create multiple containers using a loop demonstrating a couple of ways to write the loop.
+
+```azurecli
+for i in `seq 1 4`; do 
+az storage container create --account-name $storageAccount --account-key $accountKey --name learnbash-$i
+done
+
+for value in {5..8}
+for (( i=5; i<10; i++))
+do
+az storage container create --account-name $storageAccount --account-key $accountKey --name learnbash-$i
+done
+
+az storage container list --account-name $storageAccount --account-key $accountKey --query [].name
+```
+
+### Use EXPORT to define environment variables
+
+You can use corresponding environment variables to store your authentication credentials rather than specifying them in each command. To do this, use EXPORT.
+
+```azurecli
+export AZURE_STORAGE_ACCOUNT=$storageAccount
+export AZURE_STORAGE_KEY=$accountKey
+az storage container list # Uses the environment variables
+```
+
+Create a metadata string and update a contain with that string, using the environment variable.
+
+```azurecli
+metadata="key=value pie=delicious" # Define metadata
+az storage container metadata update \
+    --name $container \
+    --metadata $metadata # Update the metadata
+az storage container metadata show \
+    --name $containerName # Show the metadata
+```
+
+Delete a single named container
+
+```azurecli
+az storage container delete \
+    --name $container
+```
+
+Get list of containers
+
+```azurecli
+containerPrefix="learnbash"
+containerList=$(az storage container list \
+    --query "[].name" \
+    --prefix $containerPrefix \
+    --output tsv)
+```
+
+Delete containers in a loop using the `--prefix` argument.
+
+```azurecli
+for row in $containerList
+do
+    tmpName=$(echo $row | sed -e 's/\r//g')
+    az storage container delete \
+    --name $tmpName 
 done
 ```
 
 
+## d
 
-## Creating multiple containers
-
-### Creating storage account
-
-```azurecli
-storage="msdocsbash$randomIdentifier"
-echo "Creating $storage..."
-az storage account create --name $storage --resource-group $resourceGroup --location "$location" --sku Standard_LRS
+# Delete containers by iterating a loop
+containerList=$(az storage container list \
+    --query "[].name" \
+    --prefix $containerPrefix \
+    --output tsv)
+for row in $containerList
+do
+    tmpName=$(echo $row | sed -e 's/\r//g')
+    az storage container delete \
+    --name $tmpName 
+done
 ```
 
-### Using 
+```azurecli-interactive
+export AZURE_STORAGE_ACCOUNT=<storage_account_name>
+export AZURE_STORAGE_KEY="$(az storage account keys list --account-name <storage_account_name> --resource-group <resource_group_name> --query "[0].value" --output tsv)"
+
+az storage container create --name testcontainer
+
+# Create an Azure storage account in the resource group.
+echo "Creating $AZURE_STORAGE_ACCOUNT"
+az storage account create --name $AZURE_STORAGE_ACCOUNT --location "$location" --resource-group $resourceGroup --sku $skuStorage
+
+# Set the storage account key as an environment variable. 
+export AZURE_STORAGE_KEY=$(az storage account keys list -g $resourceGroup -n $AZURE_STORAGE_ACCOUNT --query '[0].value' -o tsv)
+
+
+
 
 
 ## Querying array results
 
-A command that always returns only a single object returns a dictionary as a JSON object. Dictionaries are unordered objects accessed with keys. For this section, we are going to query the [Account](/cli/azure/account) object using the [Account List](/cli/azure/account#az-account-show) command.
+Arrays are sequences of objects that can be indexed. Commands that could return more than one object return an array.  For this section, we are going to query the [VM](/cli/azure/vm) object using the [az vm list](/cli/azure/vm#az-wm-list) command.
 
-```azurecli-interactive
-az account list
+```azurecli
+az vm list -g $resourceGroup
 ```
 
-The command will output a dictionary as a JSON object. The following output has some fields omitted for brevity, and identifying information removed
+This command outputs an array displaying all VM information under the subscription.
 
-### Querying boolean values
-
-The following queries demonstrates querying all accounts in a subscription, potentially returning a JSON array if there are multiple subscriptions for a given account, and then querying for which account is the default account, and which accounts are not the default account. These queries build on what you learned previously to filter and format the results. Finally, it creates a local variable containing the subscription id for use later in this tutorial.
-
-```azurecli-interactive
-az account list
-az account list --query "[?isDefault]" # Returns the default subscription
-az account list --query "[?isDefault]" -o table # Returns the default subscription as a table
-az account list --query "[?isDefault].[name,id]" # Returns the name and id of the default subscription
-az account list --query "[?isDefault].[name,id]" -o table # Returns the name and id of the default subscription as a table
-az account list --query "[?isDefault].{SubscriptionName: name, SubscriptionId: id}" -o table # Returns the name and id of the default subscription as a table with friendly names
-az account list --query "[?isDefault == \`false\`]" # Returns the non-default subscriptions
-az account list --query "[?isDefault == \`false\`].name" -o table # Returns the non-default subscriptions as a table
-az account list --query "[?isDefault].id" -o tsv # Returns the subscription id without quotation marks
-subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)" # Captures the subscription id as a local variable.
-echo $subscriptionId # Returns the contents of the local variable.
-az account list --query "[? contains(name, 'Test')].id" -o tsv # Returns the subscription id of a non-default subscription containing the substring 'Test'
-subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv) # Captures the subscription id as a local variable. 
-az account set -s $subscriptionId # Sets the current active subscription
+```azurecli
+az vm list -g $resourceGroup --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}" -o json
 ```
 
-For more information about querying boolean values, see [Query boolean values](/cli/azure/query-azure-cli#query-boolean-values). For more information about filtering arrays, see [Filter arrays](/cli/azure/query-azure-cli#filter-arrays).
+
+az vm show -g $resourceGroup -n DevExVM2 --query "{objectID:id}" -o table
+
+
+
