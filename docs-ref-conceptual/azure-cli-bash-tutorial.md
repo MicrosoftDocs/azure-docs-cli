@@ -208,7 +208,7 @@ In this section of the tutorial, we will create a storage account and then use f
 
 ### Create storage account
 
-The following command uses the [az storage account create](/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-create) command to create a storage account that we will use when creating storage containers.
+The following command uses the [az storage account create](/cli/azure/storage/account#az-storage-account-create) command to create a storage account that we will use when creating storage containers.
 
 ```azurecli
 storageAccount="learnbash$randomIdentifier"
