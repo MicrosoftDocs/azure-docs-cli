@@ -38,7 +38,7 @@ az account show --query "{tenantId:tenantId,subscriptionid:id}"
 
 This section shows example queries for AAD service principals.
 
-* The following query returns the first Microsoft Graph application service principal who has read permissions.
+- The following query returns the first Microsoft Graph application service principal who has read permissions.
 
 ### [Bash](#tab/bash)
 
