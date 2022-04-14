@@ -140,7 +140,7 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storagePro
 ### Query examples for cognitive services
 This section shows example queries for cognitive services.
 
-* The following query demonstrates how to list endpoints of a cognitive service.
+-  The following query demonstrates how to list endpoints of a cognitive service.
 
 ### [Bash](#tab/bash)
 
