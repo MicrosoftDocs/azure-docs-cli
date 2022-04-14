@@ -168,7 +168,7 @@ az cognitiveservices account show --resource-group QueryDemo --name DemoAccount 
 
 This section shows example queries for virtual networks (VNet).
 
-* The following query lists the IDs of IP addresses that contain the substring in the variable IP.
+- The following query lists the IDs of IP addresses that contain the substring in the variable IP.
 
 ### [Bash](#tab/bash)
 
