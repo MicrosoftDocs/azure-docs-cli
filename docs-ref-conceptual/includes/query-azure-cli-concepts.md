@@ -386,7 +386,7 @@ For large arrays, it may be faster to apply the filter before selecting data.
 
 > [!IMPORTANT]
 >
-> In JMESPath, strings are always surrounded by single quotes (`'`) or escape characters (`\``). If you use double quotes as part of a string in a filter predicate, you'll get empty output.
+> In JMESPath, strings are always surrounded by single quotes (`'`) or escape characters (`` ` ``). If you use double quotes as part of a string in a filter predicate, you'll get empty output.
 
 ## JMESPath functions
 
