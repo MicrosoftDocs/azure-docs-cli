@@ -187,7 +187,7 @@ fi
 
 The following script creates a new resource group only if one with the specified name does not already exist.
 
-```cli
+```azurecli
 if [ $(az group exists --name $resourceGroup) = false ]; then 
    az group create --name $resourceGroup --location "$location" 
 else
@@ -197,7 +197,7 @@ fi
 
 The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this tutorial, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations). We will demonstrate the use of the `--no-wait` argument at the end of this tutorial.
 
-```cli
+```azurecli
 if [ $(az group exists --name $resourceGroup) = true ]; then 
    az group delete --name $resourceGroup -y # --no-wait
 else
@@ -210,7 +210,7 @@ fi
 
 The following command pipes the output of the `az group list` command to the `grep` command. If the specified resource group does not exist, the command creates the resource group using the previously defined variables.
 
-```cli
+```azurecli
 az group list --output tsv | grep $resourceGroup -q || az group create --name $resourceGroup --location "$location"
 ```
 
@@ -382,7 +382,7 @@ done
 
 When you are finished this tutorial, delete the resource group and all resources within it. Use the `--no-wait` argument.
 
-```cli
+```azurecli
 if [ $(az group exists --name $resourceGroup) = true ]; then 
    az group delete --name $resourceGroup -y  --no-wait
 else
