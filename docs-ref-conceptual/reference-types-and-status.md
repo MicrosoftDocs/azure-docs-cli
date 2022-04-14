@@ -98,8 +98,7 @@ Although most commands and parameters for a single reference have a single statu
 |                            | --newFutureParameter2                                                | Extension |     |                | yes          |
 | az network firewall create | All                                                                  | Extension |     |                | yes          |
 
-> [!NOTE]
-> The above table is only an example and **isn't** representative of current reference status for examples.
+The above table is only an example and **isn't** representative of current reference status for examples.
 
 ## See also
 
