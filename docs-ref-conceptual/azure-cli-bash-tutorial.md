@@ -57,7 +57,7 @@ bash-5.1# az account show
 
 Use the `--output yaml` argument (or `-o yaml`) to format the output in [yaml](https://yaml.org/) format, a plain-text data serialization format. YAML tends to be easier to read than JSON, and easily maps to that format. Some applications and CLI commands take YAML as configuration input, instead of JSON.
 
-```azurecli
+```azurecli-interactive
 az account show --output yaml
 ```
 
@@ -67,7 +67,7 @@ For more information about formatting the output as yaml, see [YAML output forma
 
 Use the `--output table` argument (or `-o table`) to format the output as an ASCII table. Nested objects aren't included in table output, but can still be filtered as part of a query.
 
-```azurecli
+```azurecli-interactive
 az account show --output table
 ```
 
@@ -100,7 +100,7 @@ For more information about returning multiple values, see [Get multiple values](
 
 The following queries demonstrate the use of the { } (multiselect hash) operator to get a dictionary instead of an array when querying for multiple values. It also demonstrates renaming properties in the query result.
 
-```azurecli
+```azurecli-interactive
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" # Rename the values returned
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table # Rename the values returned in a table
 ```
@@ -149,35 +149,61 @@ Setting and using a random value for use in variables allows you to run scripts 
 let "randomIdentifier=$RANDOM*$RANDOM"
 ```
 
-### Creating a resource group
+### Working with spaces and quotation marks
 
-The following commands create a uniquely named resource group using variables and the [az group create](/cli/azure/group#az-group-create) command. Quotation marks are used for the `$location` variable because the value for the location variable frequently has a space in it, as this example illustrates.
+Spaces are used for separating commands, options, and arguments. Use quote marks to tell the Bash shell to ignore all special characters, of which a white space is a special character. When the Bash shell sees the first quote mark, it ignores special characters until the closing quote mark. However, sometimes you want the Bash shell to parse certain special characters, such as dollar signs, back quotes, and backslashes. For this, use double quotes.
+
+The following commands use the [az group create](/cli/azure/group#az-group-create) command to illustrate the use of single and double quote marks to handle spaces and evaluate special characters when working with variables and creating an object.
 
 ```azurecli
+resourceGroup='msdocs-learn-bash-$randomIdentifier'
+echo $resourceGroup # The $ is ignored in the creation of the $resourceGroup variable
 resourceGroup="msdocs-learn-bash-$randomIdentifier"
-location="East US"
-az group create --name $resourceGroup --location "$location"
+echo $resourceGroup # The $randomIdentifier is evaluated when defining the $resourceGroup variable
+location="East US" # The space is ignored when defining the $location variable
+echo The value of the location variable is $location # The value of the $location variable is evaluated
+echo "The value of the location variable is $location" # The value of the $location variable is evaluated
+echo "The value of the location variable is \$location" # The value of the $location variable is not evaluated
+echo 'The value of the location variable is $location' # The value of the $location variable is not evaluated
+az group create --name $resourceGroup --location $location # Notice that the space in the $location variable is not ignored and the command fails as it treats the value after the space as a new command 
+az group create --name $resourceGroup --location "$location" # Notice that the space in the $location variable is ignored and the location argument accepts the entire string as the value 
 ```
 
 In the JSON dictionary output, review the properties of the resource group that was just created.
 
-### Using If Exists Then to create or delete a resource group
+### Using If Then Else to determine if variable is null
+
+To evaluate strings, use `!=` and to evaluate numbers use `-ne`. The following If Then Else statement evaluates whether the $resourceGroup variable has been set. If yes, it returns the value of the variable. If no, it sets the variable.
+
+```azurecli
+if [ $resourceGroup != '' ]; then
+   echo $resourceGroup
+else
+   resourceGroup="msdocs-learn-bash-$randomIdentifier"
+fi
+```
+
+### Using If Then to create or delete a resource group
 
 The following script creates a new resource group only if one with the specified name does not already exist.
 
 ```cli
-if [ $(az group exists --name $resourceGroup) = false ]; 
-   then az group create --name $resourceGroup --location "$location" 
+if [ $(az group exists --name $resourceGroup) = false ]; then 
+   az group create --name $resourceGroup --location "$location" 
+else
+   echo $resourceGroup
 fi
 ```
 
 The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this tutorial, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations). We will demonstrate the use of the `--no-wait` argument at the end of this tutorial.
 
 ```cli
-if [ $(az group exists --name $resourceGroup) = true ]; 
-   then az group delete --name $resourceGroup -y # --no-wait
+if [ $(az group exists --name $resourceGroup) = true ]; then 
+   az group delete --name $resourceGroup -y # --no-wait
+else
+   echo The $resourceGroup resource group does not exist
 fi
-az group show --name $resourceGroup
+
 ```
 
 ### Using Grep to determine if a resource group exists, and create the resource group if it does not
@@ -250,7 +276,7 @@ for i in `seq 1 3`; do
 done
 ```
 
-The following script uses the [az storage blob upload-batch](/cli/azure/storage/blob#az-storage-blob-upload-batch) command to upload the blobs to the storage container. 
+The following script uses the [az storage blob upload-batch](/cli/azure/storage/blob#az-storage-blob-upload-batch) command to upload the blobs to the storage container.
 
 ```azurecli
 az storage blob upload-batch \
