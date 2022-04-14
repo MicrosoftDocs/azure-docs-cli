@@ -219,7 +219,7 @@ az webapp list --resource-group DemoGroup --query "[?state=='Running']"
 
 ---
 
-* The following query returns the profile name and url of all web apps whose profile name ends with FTP.
+- The following query returns the profile name and url of all web apps whose profile name ends with FTP.
 
 ### [Bash](#tab/bash)
 
