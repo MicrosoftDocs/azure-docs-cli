@@ -383,7 +383,9 @@ done
 When you are finished this tutorial, delete the resource group and all resources within it. Use the `--no-wait` argument.
 
 ```cli
-if [ $(az group exists --name $resourceGroup) = true ]; 
-   then az group delete --name $resourceGroup -y  --no-wait
+if [ $(az group exists --name $resourceGroup) = true ]; then 
+   az group delete --name $resourceGroup -y  --no-wait
+else
+   echo The $resourceGroup resource group does not exist
 fi
 ```
