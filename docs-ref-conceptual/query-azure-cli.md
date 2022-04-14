@@ -33,5 +33,5 @@ To learn more about JMESPath queries see [JMESPath Tutorial](https://jmespath.or
 
 To learn more about other Azure CLI concepts mentioned in this article see:
 
-* [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli)
-* [How to use Azure CLI effectively](/cli/azure/use-cli-effectively)
+- [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli)
+- [How to use Azure CLI effectively](/cli/azure/use-cli-effectively)
