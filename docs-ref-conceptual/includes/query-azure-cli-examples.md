@@ -90,7 +90,7 @@ az storage account show --resource-group QueryDemo --name mystorageaccount --que
 
 This section shows example queries for Virtual Machines (VMs).
 
-* This example returns the names of VMs whose disk size is larger than 50GB.
+- This example returns the names of VMs whose disk size is larger than 50GB.
 
 ### [Bash](#tab/bash)
 
