@@ -197,7 +197,7 @@ az network public-ip list --query "[?ipAddress!=null]|[?contains(ipAddress, '%IP
 
 This section shows example queries for web apps.
 
-* The following query lists all web apps that are currently running.
+- The following query lists all web apps that are currently running.
 
 ### [Bash](#tab/bash)
 
