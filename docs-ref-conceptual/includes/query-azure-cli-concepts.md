@@ -582,7 +582,7 @@ The `table` format prints output as an ASCII table, making it easy to read and s
 > az vm show --resource-group QueryDemo --name TestVM --query "{objectID:id}" --output table
 >```
 
-We can use a previous query to demonstrate this. The original query returned a json containing the name, OS, and administrator name for each VM in the resource group:
+We can use a previous query to demonstrate this. The original query returned a JSON object containing the name, OS, and administrator name for each VM in the resource group:
 
 ### [Bash](#tab/bash)
 
