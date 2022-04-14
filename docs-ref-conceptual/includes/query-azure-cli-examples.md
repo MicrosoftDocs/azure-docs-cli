@@ -64,7 +64,7 @@ az ad sp list --display-name "Microsoft Graph" --query "[0].appRoles[?value=='Us
 
 This section shows example queries for storage accounts.
 
-* This example returns the primary endpoints for all tables a storage account.
+- This example returns the primary endpoints for all tables a storage account.
 
 ### [Bash](#tab/bash)
 
