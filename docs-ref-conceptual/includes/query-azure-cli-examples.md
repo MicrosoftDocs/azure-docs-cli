@@ -12,7 +12,7 @@ This section contains examples of JMESPath queries for different Azure resources
 
 This section shows example queries for storage accounts.
 
-* This examples returns the tenant ID and subscription ID of the Azure account and subscription you are using.
+- This examples returns the tenant ID and subscription ID of the Azure account and subscription you are using.
 
 ### [Bash](#tab/bash)
 
