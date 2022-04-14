@@ -115,7 +115,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 
 ---
 
-* The following query demonstrates how to list the names and storage account types of VMs who use SSD storage.
+- The following query demonstrates how to list the names and storage account types of VMs who use SSD storage.
 
 ### [Bash](#tab/bash)
 
