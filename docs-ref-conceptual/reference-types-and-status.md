@@ -14,7 +14,7 @@ keywords: azure cli references, reference types, reference status
 
 # Overview: Azure CLI terminology and support levels
 
-This article explains Azure CLI terminologies.  When talking about reference groups, status, modules and extensions, some terms also relate directly to support levels.
+This article explains Azure CLI terminologies.  There are syntax components, reference types, and statuses.  It is the status that determines the support level.
 
 ## Azure CLI syntax components
 
@@ -34,9 +34,9 @@ A **reference subgroup** can have multiple levels such as `az network applicatio
 
 See [Reference list A -Z](/cli/azure/reference-index) for a complete list of reference commands.
 
-## What are modules?
+## What is reference type?
 
-A module is a container for a group of Azure CLI reference commands.  There are two kinds of modules: **core** and **extension**.  Core modules are part of the primary Azure CLI service.  Extensions are optional add-ons.  All Azure CLI commands belong to a module, and the module type determines the release schedule, status and installation method as described here:
+Azure CLI commands are either part of the **core** Azure CLI service, or they are an **extension**.  Extensions are optional add-ons.  The reference type determines the release schedule, status and installation method as described here:
 
 |                |                           Core                           |                       Extension                        |
 | -------------- | -------------------------------------------------------- | ------------------------------------------------------ |
@@ -45,13 +45,13 @@ A module is a container for a group of Azure CLI reference commands.  There are 
 | **Released**   | On a schedule                                            | As new features or updates become available            |
 | **Status**     | Can be GA (Generally Available), preview or experimental | Also can be GA, preview or experimental                |
 
-To get a list of modules use the [get from Chase]() and [az extension list-available --output table](/cli/azure/extension#az-extension-list-available) commands.
+To get a list of command groups run `az`.  For a list of extensions, use [az extension list-available --output table](/cli/azure/extension#az-extension-list-available) commands.
 
 ```azurecli-interactive
-# Get list of Core modules
-<this information is needed from Chase>
+# Get list of all command groups
+az
 
-# Get list of Extension modules
+# Get list of extensions
 az extension list-available --output table
 ```
 
@@ -61,14 +61,12 @@ Azure CLI references that have been published as a permanent part of the CLI are
 
 ### Extension
 
-Extensions aren't shipped as part of the CLI but run as CLI commands. Some extensions are a permanent part of the Azure CLI, but often, an extension will give you access to private preview and experimental commands. A single reference, such as **az iot hub**, can have both core and extension commands.  Here are a four examples:
+Extensions aren't shipped as part of the CLI but run as CLI commands. Some extensions are a permanent part of the Azure CLI, but often, an extension will give you access to private preview and experimental commands. A single reference group, such as **az iot hub**, can have both core and extension commands.  Here are two examples:
 
 |      Full reference command       | Is Core | Is Extension |
 | --------------------------------- | ------- | ------------ |
 | az iot hub list                   | yes     |              |
-| az iot hub query                  |         | yes          |
-| az iot hub certificate create     | yes     |              |
-| az iot hub device identify create |         | yes          |
+| az iot hub job list               |         | yes          |
 
 You will be prompted to install an extension upon first use.  You can also install an extension by running the [az extension add](/cli/azure/extension#az-extension-add) command.
 
@@ -76,12 +74,15 @@ You can learn more about extension references including installation and updatin
 
 ## What is reference status?
 
-Regardless of module type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It is the reference command status, not type, that determines stability and support level.
+Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It is the reference command status, not type, that determines stability and support level.
 
 | | GA  | Public preview | Experimental
 |-|-|-|-|
 | **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback. Will often migrate to public preview.  Can be removed.
 | **Support level** | Full | Partial | None
+
+> [!NOTE]
+> Warnings indicating **public preview** or **experimental** are part of the Azure CLI command output and should be expected.
 
 Although most commands and parameters for a single reference have a single status, this is not always the case. A GA reference that is being built out to offer more commands can have GA, preview, and experimental reference commands. As new parameters are added to increase functionality, a single command can also have parameters that fall under different status categories. Here are example references that have different statuses:
 
@@ -99,9 +100,6 @@ Although most commands and parameters for a single reference have a single statu
 
 > [!NOTE]
 > The above table is only an example and **isn't** representative of current reference status for examples.
-
-> [!NOTE]
-> Warnings indicating **public preview** or **experimental** are part of the Azure CLI command output and should be expected.
 
 ## See also
 
