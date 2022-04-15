@@ -378,6 +378,21 @@ do
 done
 ```
 
+## Error handling
+
+To exit a script immediately if a command returns a non-zero status, run the following command:
+
+```azurecli-interactive
+set -e
+```
+
+For more information about setting shell options and other help topics, run the following commands:
+
+```azurecli-interactive
+help set
+help help
+```
+
 ## Clean up resources
 
 When you are finished this tutorial, delete the resource group and all resources within it. Use the `--no-wait` argument.
