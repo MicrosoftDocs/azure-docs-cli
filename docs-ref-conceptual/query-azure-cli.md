@@ -4,7 +4,7 @@ description: The Azure CLI uses the --query argument to execute a JMESPath query
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 04/14/2022
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

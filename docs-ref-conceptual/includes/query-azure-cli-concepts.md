@@ -7,7 +7,7 @@ manager: barbkess
 ms.custom: devx-track-azurecli
 ---
 
-Azure CLI uses queries to select and modify the output of Azure CLI commands. Queries are executed client-side on the Azure CLI command's return value. Queries are executed on the JSON output before any display formatting.
+Azure CLI uses queries to select and modify the output of Azure CLI commands. Queries are executed client-side on the Azure CLI command's returned JSON object before any display formatting.
 
 The escape characters needed in queries differ for different environments. It is recommended to run queries in Azure CloudShell or cmd because these shells require less escape characters. To ensure the query examples are syntactically correct, select the tab for the shell you are using.
 
@@ -129,6 +129,8 @@ az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConf
   }
 ]
 ```
+
+Note that query strings are case sensitive. For example, changing 'osProfile' to 'OsProfile' in the query above will not return the correct results.
 
 ## Get multiple values
 
@@ -318,6 +320,8 @@ REM To check if a Boolean property is false, you can use the comparison operator
 az account list --query "[?!isDefault].name"
 az account list --query "[?isDefault == `false`].name"
 ```
+
+Please note that the example above only works when using the Command Prompt interactively. To execute multiple az commands in a batch script using the Command Prompt, prefix each az command with `call`. For example use `call az account list` instead of `az account list`.
 
 ---
 
@@ -555,7 +559,6 @@ echo $USER
 $USER=$(az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername" --output tsv)
 echo $USER
 ```
-
 
 ### [Cmd](#tab/cmd)
 
