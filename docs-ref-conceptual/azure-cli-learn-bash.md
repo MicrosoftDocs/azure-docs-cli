@@ -5,11 +5,11 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: sample
-ms.date: 04/11/2022
+ms.date: 04/18/2022
 ---
 # Learning Bash with Azure CLI
 
-In this tutorial, you will learn to create, query, and delete Azure resources using Bash and the Azure CLI. You will learn how to do the following:
+In this article, you will learn to create, query, and delete Azure resources using Bash and the Azure CLI. You will learn how to do the following:
 
 > [!div class="checklist"]
 >
@@ -25,11 +25,11 @@ If you don't have an Azure subscription, create an [Azure free account](https://
 
 ## Starting Bash
 
-Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a [local install of the Azure CLI](/cli/azure/install-azure-cli). This tutorial assumes that you are running Bash either using Azure Cloud Shell or running Azure CLI locally in a docker container.
+Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a [local install of the Azure CLI](/cli/azure/install-azure-cli). This article assumes that you are running Bash either using Azure Cloud Shell or running Azure CLI locally in a docker container.
 
 ## Querying dictionary results
 
-A command that always returns only a single object returns a JSON dictionary. Dictionaries are unordered objects accessed with keys. For this tutorial, we are going to start by querying the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command.
+A command that always returns only a single object returns a JSON dictionary. Dictionaries are unordered objects accessed with keys. For this article, we are going to start by querying the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command.
 
 ```azurecli-interactive
 az account show
@@ -75,7 +75,7 @@ For more information about formatting the output as a table, see [Table output f
 
 ### Querying and formatting single values and nested values
 
-The following queries demonstrate querying single values, including nested values in a JSON dictionary output. The final query in this set demonstrates formatting the output using the `-o tsv` argument. This argument returns the results as tab- and newline-separated values. This is useful for removing quotation marks in the value returned - which is useful to consume the output into other commands and tools that need to process the text in some form (as we will demonstrate later in this tutorial).
+The following queries demonstrate querying single values, including nested values in a JSON dictionary output. The final query in this set demonstrates formatting the output using the `-o tsv` argument. This argument returns the results as tab- and newline-separated values. This is useful for removing quotation marks in the value returned - which is useful to consume the output into other commands and tools that need to process the text in some form (as we will demonstrate later in this article).
 
 ```azurecli-interactive
 az account show --query name # Querying a single value
@@ -195,7 +195,7 @@ else
 fi
 ```
 
-The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this tutorial, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations). We will demonstrate the use of the `--no-wait` argument at the end of this tutorial.
+The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this article, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations). We will demonstrate the use of the `--no-wait` argument at the end of this article.
 
 ```azurecli
 if [ $(az group exists --name $resourceGroup) = true ]; then 
@@ -230,7 +230,7 @@ esac
 
 ## Using for loops and querying arrays
 
-In this section of the tutorial, we will create a storage account and then use for loops to create a number of blobs and containers. We will also demonstrate querying JSON arrays and working with environment variables.
+In this section of the article, we will create a storage account and then use for loops to create a number of blobs and containers. We will also demonstrate querying JSON arrays and working with environment variables.
 
 ### Create storage account
 
@@ -395,7 +395,7 @@ help help
 
 ## Clean up resources
 
-When you are finished this tutorial, delete the resource group and all resources within it. Use the `--no-wait` argument.
+When you are finished this article, delete the resource group and all resources within it. Use the `--no-wait` argument.
 
 ```azurecli
 if [ $(az group exists --name $resourceGroup) = true ]; then 
