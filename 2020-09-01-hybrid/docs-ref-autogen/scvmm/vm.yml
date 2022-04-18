@@ -1,0 +1,404 @@
+### YamlMime:AzureCLIGroup
+uid: az_scvmm_vm
+name: az scvmm vm
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **scvmm** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az scvmm vm** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage Arc for SCVMM Virtual Machine resources.
+description: ''
+directCommands:
+- uid: az_scvmm_vm_create
+  name: az scvmm vm create
+  summary: Create VM resource.
+  description: ''
+  syntax: >-
+    az scvmm vm create --custom-location
+                       --location
+                       --name
+                       --resource-group
+                       [--admin-password]
+                       [--availability-sets]
+                       [--cloud]
+                       [--cpu-count]
+                       [--disk]
+                       [--dynamic-memory-enabled {false, true}]
+                       [--dynamic-memory-max]
+                       [--dynamic-memory-min]
+                       [--inventory-item]
+                       [--memory-size]
+                       [--nic]
+                       [--no-wait]
+                       [--tags]
+                       [--vm-template]
+                       [--vmmserver]
+  examples:
+  - summary: Enable an exiting VM to azure.
+    syntax: az scvmm vm create --subscription contoso-sub --resource-group contoso-rg --location eastus --custom-location contoso-cl --inventory-item 01234567-0123-0123-0123-0123456789ab --name contoso-vm
+  - summary: Create a new VM in vmmserver using a VM Template
+    syntax: az scvmm vm create --subscription contoso-sub --resource-group contoso-rg --location eastus --custom-location contoso-cl --vm-template contoso-vmtemplate --cloud contoso-cloud --name contoso-vm
+  - summary: Create a new VM specifying some template overrides
+    syntax: az scvmm vm create --subscription contoso-sub --resource-group contoso-rg --location eastus --custom-location contoso-cl --vm-template contoso-vmtemplate --cloud contoso-cloud --name contoso-vm --cpu-count 2 --memory-size 2048 --dynamic-memory-enabled true --disk name=disk_1 disk-size=2 bus=0 --nic name=nic_1 network=contoso-vnet
+  requiredParameters:
+  - isRequired: true
+    name: --custom-location
+    summary: Name or ID of the custom location that will manage this resource.
+    description: ''
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the resource.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --admin-password
+    summary: Admin password for the vm.
+    description: ''
+  - name: --availability-sets -a
+    summary: List of the name or the ID of the availability sets for the vm.
+    description: ''
+  - name: --cloud -c
+    summary: Name or ID of the cloud for deploying the vm.
+    description: ''
+  - name: --cpu-count
+    summary: Number of desired vCPUs for the vm.
+    description: ''
+  - name: --disk
+    summary: 'Disk overrides for the vm.Usage: --disk name=<> disk-size=<> template-disk-id=<> bus-type=<> bus=<> lun=<> vhd-type=<> qos-name=<> qos-id=<>.'
+    description: ''
+  - name: --dynamic-memory-enabled
+    parameterValueGroup: false, true
+    summary: If dynamic memory should be enabled.
+    description: ''
+  - name: --dynamic-memory-max
+    summary: DynamicMemoryMax in MBs for the vm.
+    description: ''
+  - name: --dynamic-memory-min
+    summary: DynamicMemoryMin in MBs for the vm.
+    description: ''
+  - name: --inventory-item -i
+    summary: Name or ID of the inventory item.
+    description: ''
+  - name: --memory-size
+    summary: Desired memory size in MBs for the vm.
+    description: ''
+  - name: --nic
+    summary: 'Network overrides for the vm.Usage: --nic name=<> network=<> ipv4-address-type=<> ipv6-address-type=<> mac-address-type=<> mac-address=<>.'
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --vm-template -t
+    summary: Name or ID of the vm template for deploying the vm.
+    description: ''
+  - name: --vmmserver -v
+    summary: Name or ID of the vmmserver that is managing this resource.
+    description: ''
+- uid: az_scvmm_vm_delete
+  name: az scvmm vm delete
+  summary: Delete VM resource.
+  description: ''
+  syntax: >-
+    az scvmm vm delete --name
+                       --resource-group
+                       [--force]
+                       [--no-wait]
+                       [--retain]
+                       [--yes]
+  examples:
+  - summary: Delete a VM by ARM ID from both azure and VMM
+    syntax: az scvmm vm delete --ids /subscriptions/01234567-0123-0123-0123-0123456789ab/resourceGroups/contoso-rg/providers/Microsoft.ScVmm/virtualMachines/contoso-vm
+  - summary: Delete a VM by name from both azure and VMM
+    syntax: az scvmm vm delete --subscription contoso-sub --resource-group contoso-rg --name contoso-avset
+  - summary: Disable a VM from azure retaining the actual VM in the VMM infra
+    syntax: az scvmm vm delete --subscription contoso-sub --resource-group contoso-rg --name contoso-avset --retain
+  - summary: Force delete the VM ARM resource
+    syntax: az scvmm vm delete --subscription contoso-sub --resource-group contoso-rg --name contoso-avset --force
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the resource.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --force
+    summary: Force the resource to be deleted from azure.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --retain
+    summary: Disable the VM from azure but retain the VM in VMM.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_scvmm_vm_list
+  name: az scvmm vm list
+  summary: Retrieve a list of VMs.
+  description: ''
+  syntax: az scvmm vm list [--resource-group]
+  examples:
+  - summary: Retrieve a list of VMs present in a resource group
+    syntax: az scvmm vm list --subscription contoso-sub --resource-group contoso-rg
+  - summary: Retrieve a list of VMs present in a subscription
+    syntax: az scvmm vm list --subscription contoso-sub
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_scvmm_vm_restart
+  name: az scvmm vm restart
+  summary: Restart a VM.
+  description: ''
+  syntax: >-
+    az scvmm vm restart --name
+                        --resource-group
+                        [--no-wait]
+  examples:
+  - summary: Restart a vm
+    syntax: az scvmm vm restart --subscription contoso-sub --resource-group contoso-rg --name contoso-vm
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the resource.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: az_scvmm_vm_show
+  name: az scvmm vm show
+  summary: Get details of an VM.
+  description: ''
+  syntax: >-
+    az scvmm vm show --name
+                     --resource-group
+  examples:
+  - summary: Get details of an VM by ARM ID
+    syntax: az scvmm vm show --ids /subscriptions/01234567-0123-0123-0123-0123456789ab/resourceGroups/contoso-rg/providers/Microsoft.ScVmm/virtualMachines/contoso-vm
+  - summary: Get details of an VM by name
+    syntax: az scvmm vm show --subscription contoso-sub --resource-group contoso-rg --name contoso-vm
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the resource.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_scvmm_vm_start
+  name: az scvmm vm start
+  summary: Start a VM.
+  description: ''
+  syntax: >-
+    az scvmm vm start --name
+                      --resource-group
+                      [--no-wait]
+  examples:
+  - summary: Start a vm
+    syntax: az scvmm vm start --subscription contoso-sub --resource-group contoso-rg --name contoso-vm
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the resource.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: az_scvmm_vm_stop
+  name: az scvmm vm stop
+  summary: Stop a VM.
+  description: ''
+  syntax: >-
+    az scvmm vm stop --name
+                     --resource-group
+                     [--no-wait]
+                     [--skip-shutdown {false, true}]
+  examples:
+  - summary: Shut down the VM gracefully
+    syntax: az scvmm vm stop --subscription contoso-sub --resource-group contoso-rg --name contoso-vm
+  - summary: Power off the VM
+    syntax: az scvmm vm stop --subscription contoso-sub --resource-group contoso-rg --name contoso-vm --skip-shutdown
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the resource.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --skip-shutdown
+    parameterValueGroup: false, true
+    summary: Skip shutdown and power-off immediately.
+    description: ''
+- uid: az_scvmm_vm_update
+  name: az scvmm vm update
+  summary: Update a VM. Management of VM disks and NICs are not using this subcommand. There are separate subcommands for the same.
+  description: ''
+  syntax: >-
+    az scvmm vm update --name
+                       --resource-group
+                       [--availability-sets]
+                       [--cpu-count]
+                       [--dynamic-memory-enabled {false, true}]
+                       [--dynamic-memory-max]
+                       [--dynamic-memory-min]
+                       [--memory-size]
+                       [--no-wait]
+                       [--tags]
+  examples:
+  - summary: Update a VM to have 2 vCPUs and 4GB Memory.
+    syntax: az scvmm vm update --subscription contoso-sub --resource-group contoso-rg --name contoso-vm --cpu-count 2 --memory-size 4096 --tags department=Sales
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the resource.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --availability-sets -a
+    summary: List of the name or the ID of the availability sets for the vm.
+    description: ''
+  - name: --cpu-count
+    summary: Number of desired vCPUs for the vm.
+    description: ''
+  - name: --dynamic-memory-enabled
+    parameterValueGroup: false, true
+    summary: If dynamic memory should be enabled.
+    description: ''
+  - name: --dynamic-memory-max
+    summary: DynamicMemoryMax in MBs for the vm.
+    description: ''
+  - name: --dynamic-memory-min
+    summary: DynamicMemoryMin in MBs for the vm.
+    description: ''
+  - name: --memory-size
+    summary: Desired memory size in MBs for the vm.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: az_scvmm_vm_wait
+  name: az scvmm vm wait
+  summary: Place the CLI in a waiting state until a condition of the vm is met.
+  description: ''
+  syntax: >-
+    az scvmm vm wait --resource-group
+                     --virtual-machine-name
+                     [--created]
+                     [--custom]
+                     [--deleted]
+                     [--exists]
+                     [--interval]
+                     [--timeout]
+                     [--updated]
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --virtual-machine-name
+    summary: Name of the VirtualMachine.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+commands:
+- az_scvmm_vm_create
+- az_scvmm_vm_delete
+- az_scvmm_vm_disk
+- az_scvmm_vm_disk_add
+- az_scvmm_vm_disk_delete
+- az_scvmm_vm_disk_list
+- az_scvmm_vm_disk_show
+- az_scvmm_vm_disk_update
+- az_scvmm_vm_disk_wait
+- az_scvmm_vm_list
+- az_scvmm_vm_nic
+- az_scvmm_vm_nic_add
+- az_scvmm_vm_nic_delete
+- az_scvmm_vm_nic_list
+- az_scvmm_vm_nic_show
+- az_scvmm_vm_nic_update
+- az_scvmm_vm_nic_wait
+- az_scvmm_vm_restart
+- az_scvmm_vm_show
+- az_scvmm_vm_start
+- az_scvmm_vm_stop
+- az_scvmm_vm_update
+- az_scvmm_vm_wait
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage Arc for SCVMM Virtual Machine resources.
