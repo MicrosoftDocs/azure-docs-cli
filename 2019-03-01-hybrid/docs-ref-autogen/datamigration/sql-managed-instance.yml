@@ -14,9 +14,9 @@ directCommands:
   description: ''
   syntax: >-
     az datamigration sql-managed-instance cancel --managed-instance-name
+                                                 --migration-operation-id
                                                  --resource-group
                                                  --target-db-name
-                                                 [--migration-operation-id]
                                                  [--no-wait]
   examples:
   - summary: Stop ongoing migration for the database.
@@ -27,6 +27,10 @@ directCommands:
     summary: Name of the target SQL Managed Instance.
     description: ''
   - isRequired: true
+    name: --migration-operation-id
+    summary: ID tracking migration operation.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -35,9 +39,6 @@ directCommands:
     summary: The name of the target database.
     description: ''
   optionalParameters:
-  - name: --migration-operation-id
-    summary: ID tracking migration operation.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -49,11 +50,9 @@ directCommands:
     az datamigration sql-managed-instance create --managed-instance-name
                                                  --resource-group
                                                  --target-db-name
-                                                 [--migration-operation-id]
                                                  [--migration-service]
                                                  [--no-wait]
                                                  [--offline-configuration]
-                                                 [--provisioning-error]
                                                  [--scope]
                                                  [--source-database-name]
                                                  [--source-location]
@@ -79,9 +78,6 @@ directCommands:
     summary: The name of the target database.
     description: ''
   optionalParameters:
-  - name: --migration-operation-id
-    summary: ID tracking current migration operation.
-    description: ''
   - name: --migration-service
     summary: Resource Id of the Migration Service.
     description: ''
@@ -97,11 +93,8 @@ directCommands:
       offline: Offline migration
 
       last-backup-name: Last backup name for offline migration. This is optional for migrations from file share. If it is not provided, then the service will determine the last backup file name based on latest backup files present in file share.
-  - name: --provisioning-error
-    summary: Error message for migration provisioning failure, if any.
-    description: ''
   - name: --scope
-    summary: Resource Id of the target resource (SQL VM or SQL Managed Instance).
+    summary: Resource Id of the target resource (SQL VM, SQL Managed Instance or SQL DB).
     description: ''
   - name: --source-database-name
     summary: Name of the source database.
@@ -144,9 +137,9 @@ directCommands:
   description: ''
   syntax: >-
     az datamigration sql-managed-instance cutover --managed-instance-name
+                                                  --migration-operation-id
                                                   --resource-group
                                                   --target-db-name
-                                                  [--migration-operation-id]
                                                   [--no-wait]
   examples:
   - summary: Cutover online migration operation for the database.
@@ -157,6 +150,10 @@ directCommands:
     summary: Name of the target SQL Managed Instance.
     description: ''
   - isRequired: true
+    name: --migration-operation-id
+    summary: ID tracking migration operation.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -165,9 +162,6 @@ directCommands:
     summary: The name of the target database.
     description: ''
   optionalParameters:
-  - name: --migration-operation-id
-    summary: ID tracking migration operation.
-    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -182,7 +176,9 @@ directCommands:
                                                [--expand]
                                                [--migration-operation-id]
   examples:
-  - summary: Get Database Migration resource.
+  - summary: Get Sql MI database Migration with the expand parameter.
+    syntax: az datamigration sql-managed-instance show --expand "MigrationStatusDetails" --managed-instance-name "managedInstance1" --resource-group "testrg" --target-db-name "db1"
+  - summary: Get Sql MI database Migration without the expand parameter.
     syntax: az datamigration sql-managed-instance show --managed-instance-name "managedInstance1" --resource-group "testrg" --target-db-name "db1"
   requiredParameters:
   - isRequired: true
@@ -199,7 +195,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --expand
-    summary: The child resources to include in the response.
+    summary: Complete migration details be included in the response.
     description: ''
   - name: --migration-operation-id
     summary: Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved.
@@ -251,7 +247,7 @@ directCommands:
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
-    summary: The child resources to include in the response.
+    summary: Complete migration details be included in the response.
     description: ''
   - name: --interval
     defaultValue: "30"
