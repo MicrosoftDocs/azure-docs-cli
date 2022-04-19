@@ -101,6 +101,7 @@ directCommands:
                   [--enable-ultra-ssd]
                   [--enable-vmss]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity {false, true}]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
@@ -409,6 +410,10 @@ directCommands:
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa.
     description: ''
+  - name: --enable-workload-identity
+    parameterValueGroup: false, true
+    summary: (PREVIEW) Enable workload identity addon.
+    description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
     description: ''
@@ -642,6 +647,7 @@ directCommands:
   syntax: >-
     az aks delete --name
                   --resource-group
+                  [--ignore-pod-disruption-budget]
                   [--no-wait]
                   [--yes]
   examples:
@@ -657,6 +663,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --ignore-pod-disruption-budget
+    summary: Ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -795,6 +804,7 @@ directCommands:
                            [--admin]
                            [--context]
                            [--file]
+                           [--format {azure, exec}]
                            [--overwrite-existing]
                            [--public-fqdn]
                            [--user]
@@ -820,6 +830,10 @@ directCommands:
   - name: --file -f
     defaultValue: ~/.kube/config
     summary: Kubernetes configuration file to update. Use "-" to print YAML to stdout instead.
+    description: ''
+  - name: --format
+    parameterValueGroup: azure, exec
+    summary: Specify the format of the returned credential. Available values are ["exec", "azure"]. Only take effect when requesting clusterUser credential of AAD clusters.
     description: ''
   - name: --overwrite-existing
     summary: Overwrite any existing cluster entry with the same name.
@@ -1086,6 +1100,7 @@ directCommands:
                   [--disable-pod-security-policy]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
+                  [--disable-workload-identity {false, true}]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-azure-keyvault-kms]
@@ -1100,6 +1115,7 @@ directCommands:
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity {false, true}]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--http-proxy-config]
@@ -1242,6 +1258,10 @@ directCommands:
   - name: --disable-secret-rotation
     summary: Disable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
+  - name: --disable-workload-identity
+    parameterValueGroup: false, true
+    summary: (PREVIEW) Disable Workload Identity addon for cluster.
+    description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
     description: ''
@@ -1283,6 +1303,10 @@ directCommands:
     description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa on cluster.
+    description: ''
+  - name: --enable-workload-identity
+    parameterValueGroup: false, true
+    summary: (PREVIEW) Enable Workload Identity addon for cluster.
     description: ''
   - name: --gmsa-dns-server
     summary: Specify DNS server for Windows gmsa on cluster.

@@ -64,19 +64,21 @@ directCommands:
                             [--if-none-match]
                             [--key-vault-properties]
                             [--location]
-                            [--network-access {Disabled, Enabled}]
                             [--no-wait]
                             [--optimized-autoscale]
+                            [--outbound-net-access {Disabled, Enabled}]
+                            [--public-ip-type {DualStack, IPv4}]
                             [--public-network-access {Disabled, Enabled}]
                             [--tags]
                             [--trusted-external-tenants]
                             [--type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
-                            [--uai]
+                            [--user-assigned]
+                            [--vcluster-graduation]
                             [--virtual-network-configuration]
                             [--zones]
   examples:
   - summary: KustoClustersCreateOrUpdate
-    syntax: az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --allowed-ip-range-list "0.0.0.0/0" --enable-auto-stop true --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --public-network-access "Enabled" --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
+    syntax: az kusto cluster create --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-double-encryption false --enable-purge true --enable-streaming-ingest true --sku name="Standard_L8s" capacity=2 tier="Standard" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -101,14 +103,7 @@ directCommands:
   optionalParameters:
   - name: --accepted-audiences
     summary: The cluster's accepted audiences.
-    description: >-
-      Usage: --accepted-audiences value=XX
-
-
-      value: GUID or valid URL representing an accepted audience.
-
-
-      Multiple actions can be specified by using more than one --accepted-audiences argument.
+    description: ''
   - name: --allowed-fqdn-list
     summary: List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster.
     description: ''
@@ -151,19 +146,15 @@ directCommands:
       Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX user-identity=XX
 
 
-      key-name: The name of the key vault key.
+      key-name: Required. The name of the key vault key.
 
       key-version: The version of the key vault key.
 
-      key-vault-uri: The Uri of the key vault.
+      key-vault-uri: Required. The Uri of the key vault.
 
       user-identity: The user assigned identity (ARM resource id) that has access to the key.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - name: --network-access --restrict-outbound-network-access
-    parameterValueGroup: Disabled, Enabled
-    summary: Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -181,6 +172,14 @@ directCommands:
       minimum: Required. Minimum allowed instances count.
 
       maximum: Required. Maximum allowed instances count.
+  - name: --outbound-net-access --restrict-outbound-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
+    description: ''
+  - name: --public-ip-type
+    parameterValueGroup: DualStack, IPv4
+    summary: Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6).
+    description: ''
   - name: --public-network-access
     parameterValueGroup: Disabled, Enabled
     summary: Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed.
@@ -202,8 +201,11 @@ directCommands:
     parameterValueGroup: None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned
     summary: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
     description: ''
-  - name: --uai --user-assigned-identities
+  - name: --user-assigned --user-assigned-identities
     summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/json-file/@json-file."
+    description: ''
+  - name: --vcluster-graduation --virtual-cluster-graduation-properties
+    summary: Virtual Cluster graduation properties.
     description: ''
   - name: --virtual-network-configuration
     summary: Virtual network definition.
@@ -366,7 +368,7 @@ directCommands:
                                                                --resource-group
   examples:
   - summary: Get Kusto cluster outbound network dependencies
-    syntax: az kusto cluster list-outbound-network-dependency-endpoint --name "kustoclusterrptest" --resource-group "kustorptest"
+    syntax: az kusto cluster list-outbound-network-dependency-endpoint --name "kustoCluster" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -516,19 +518,21 @@ directCommands:
                             [--if-match]
                             [--key-vault-properties]
                             [--location]
-                            [--network-access {Disabled, Enabled}]
                             [--no-wait]
                             [--optimized-autoscale]
+                            [--outbound-net-access {Disabled, Enabled}]
+                            [--public-ip-type {DualStack, IPv4}]
                             [--public-network-access {Disabled, Enabled}]
                             [--sku]
                             [--tags]
                             [--trusted-external-tenants]
                             [--type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
-                            [--uai]
+                            [--user-assigned]
+                            [--vcluster-graduation]
                             [--virtual-network-configuration]
   examples:
   - summary: KustoClustersUpdate
-    syntax: az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-auto-stop true --enable-purge true --enable-streaming-ingest true --engine-type "V3" --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --restrict-outbound-network-access "Disabled" --resource-group "kustorptest"
+    syntax: az kusto cluster update --name "kustoclusterrptest4" --type "SystemAssigned" --location "westus" --enable-purge true --enable-streaming-ingest true --engine-type "V2" --key-vault-properties key-name="keyName" key-vault-uri="https://dummy.keyvault.com" key-version="keyVersion" --resource-group "kustorptest"
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -541,14 +545,7 @@ directCommands:
   optionalParameters:
   - name: --accepted-audiences
     summary: The cluster's accepted audiences.
-    description: >-
-      Usage: --accepted-audiences value=XX
-
-
-      value: GUID or valid URL representing an accepted audience.
-
-
-      Multiple actions can be specified by using more than one --accepted-audiences argument.
+    description: ''
   - name: --allowed-fqdn-list
     summary: List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster.
     description: ''
@@ -588,19 +585,15 @@ directCommands:
       Usage: --key-vault-properties key-name=XX key-version=XX key-vault-uri=XX user-identity=XX
 
 
-      key-name: The name of the key vault key.
+      key-name: Required. The name of the key vault key.
 
       key-version: The version of the key vault key.
 
-      key-vault-uri: The Uri of the key vault.
+      key-vault-uri: Required. The Uri of the key vault.
 
       user-identity: The user assigned identity (ARM resource id) that has access to the key.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - name: --network-access --restrict-outbound-network-access
-    parameterValueGroup: Disabled, Enabled
-    summary: Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -618,6 +611,14 @@ directCommands:
       minimum: Required. Minimum allowed instances count.
 
       maximum: Required. Maximum allowed instances count.
+  - name: --outbound-net-access --restrict-outbound-network-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'.
+    description: ''
+  - name: --public-ip-type
+    parameterValueGroup: DualStack, IPv4
+    summary: Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6).
+    description: ''
   - name: --public-network-access
     parameterValueGroup: Disabled, Enabled
     summary: Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed.
@@ -650,8 +651,11 @@ directCommands:
     parameterValueGroup: None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned
     summary: The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove all identities.
     description: ''
-  - name: --uai --user-assigned-identities
+  - name: --user-assigned --user-assigned-identities
     summary: "The list of user identities associated with the Kusto cluster. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. Expected value: json-string/json-file/@json-file."
+    description: ''
+  - name: --vcluster-graduation --virtual-cluster-graduation-properties
+    summary: Virtual Cluster graduation properties.
     description: ''
   - name: --virtual-network-configuration
     summary: Virtual network definition.
