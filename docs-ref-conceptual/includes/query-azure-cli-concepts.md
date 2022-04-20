@@ -509,7 +509,7 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 
 The Azure CLI uses JSON as its default output format, however different output formats may better suit a query depending on its purpose and results. Note that queries are always run on the `JSON` output first and then formatted.
 
-This section will go over `tsv` and `table` formatting and some use cases for each format. For more information about output formats, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+This section will go over `tsv` and `table` formatting and some use cases for each format. For more information about output formats, see [Output formats for Azure CLI commands](../format-output-azure-cli.md).
 
 ### TSV output format
 

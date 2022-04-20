@@ -25,7 +25,7 @@ If you don't have an Azure subscription, create an [Azure free account](https://
 
 ## Starting Bash
 
-Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a [local install of the Azure CLI](/cli/azure/install-azure-cli). This article assumes that you are running Bash either using Azure Cloud Shell or running Azure CLI locally in a docker container.
+Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a [local install of the Azure CLI](./install-azure-cli.md). This article assumes that you are running Bash either using Azure Cloud Shell or running Azure CLI locally in a docker container.
 
 ## Querying dictionary results
 
@@ -61,7 +61,7 @@ Use the `--output yaml` argument (or `-o yaml`) to format the output in [yaml](h
 az account show --output yaml
 ```
 
-For more information about formatting the output as yaml, see [YAML output format](/cli/azure/format-output-azure-cli#yaml-output-format).
+For more information about formatting the output as yaml, see [YAML output format](./format-output-azure-cli.md#yaml-output-format).
 
 ### Formatting the output as a table
 
@@ -71,7 +71,7 @@ Use the `--output table` argument (or `-o table`) to format the output as an ASC
 az account show --output table
 ```
 
-For more information about formatting the output as a table, see [Table output format](/cli/azure/format-output-azure-cli#table-output-format).
+For more information about formatting the output as a table, see [Table output format](./format-output-azure-cli.md#table-output-format).
 
 ### Querying and formatting single values and nested values
 
@@ -94,7 +94,7 @@ az account show --query [name,id,user.name] # return multiple values
 az account show --query [name,id,user.name] -o table # return multiple values as a table
 ```
 
-For more information about returning multiple values, see [Get multiple values](/cli/azure/query-azure-cli#get-multiple-values).
+For more information about returning multiple values, see [Get multiple values](./query-azure-cli.md#get-multiple-values).
 
 ### Renaming properties in a query
 
@@ -105,7 +105,7 @@ az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: 
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table # Rename the values returned in a table
 ```
 
-For more information on renaming properties in a query, see [Rename properties in a query](/cli/azure/query-azure-cli#rename-properties-in-a-query).
+For more information on renaming properties in a query, see [Rename properties in a query](./query-azure-cli.md#rename-properties-in-a-query).
 
 ### Querying boolean values
 
@@ -132,10 +132,10 @@ subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv
 az account set -s $subscriptionId # Sets the current active subscription
 ```
 
-- For more information about querying boolean values, see [Query boolean values](/cli/azure/query-azure-cli#query-boolean-values).
-- For more information about filtering arrays, see [Filter arrays](/cli/azure/query-azure-cli#filter-arrays).
-- For more information about using variables, see [How to use variables](/cli/azure/azure-cli-variables).
-- For more information on working with subscriptions, see [Managing subscriptions](/cli/azure/manage-azure-subscriptions-azure-cli).
+- For more information about querying boolean values, see [Query boolean values](./query-azure-cli.md#query-boolean-values).
+- For more information about filtering arrays, see [Filter arrays](./query-azure-cli.md#filter-arrays).
+- For more information about using variables, see [How to use variables](./azure-cli-variables.md).
+- For more information on working with subscriptions, see [Managing subscriptions](./manage-azure-subscriptions-azure-cli.md).
 
 ## Creating objects using variables and randomization
 
@@ -195,7 +195,7 @@ else
 fi
 ```
 
-The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this article, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](/cli/azure/use-cli-effectively#asynchronous-operations). We will demonstrate the use of the `--no-wait` argument at the end of this article.
+The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this article, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](./use-cli-effectively.md#asynchronous-operations). We will demonstrate the use of the `--no-wait` argument at the end of this article.
 
 ```azurecli
 if [ $(az group exists --name $resourceGroup) = true ]; then 

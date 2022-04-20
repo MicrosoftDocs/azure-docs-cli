@@ -29,10 +29,10 @@ List of Azure Data Share CLI references that can be used to manage Azure Data Sh
 | [az datashare account](../latest/docs-ref-autogen/datashare/account.yml) | Commands to manage Azure Data Share accounts.
 | [az datashare consumer](/cli/azure/datashare/consumer) | Commands for consumers to manage Azure Data Share.
 | [az datashare dataset](/cli/azure/datashare/dataset) | Commands for providers to manage Azure Data Share datasets.
-| [az datashare invitation](/cli/azure/datashare/invitation) | Commands for consumers to manage Azure Data Share invitations.
-| [az datashare provider-share-subscription](/cli/azure/datashare/provider-share-subscription) | Commands for providers to manage Azure Data Share subscriptions.
-| [az datashare synchronization](/cli/azure/datashare) | Commands to manage Azure Data Share synchronization.
-| [az datashare synchronization-setting](/cli/azure/datashare/synchronization-setting) | Commands for providers to manage Azure Data Share synchronization settings.
+| [az datashare invitation](../latest/docs-ref-autogen/datashare/invitation.yml) | Commands for consumers to manage Azure Data Share invitations.
+| [az datashare provider-share-subscription](../latest/docs-ref-autogen/datashare/provider-share-subscription.yml) | Commands for providers to manage Azure Data Share subscriptions.
+| [az datashare synchronization](../latest/docs-ref-autogen/datashare.yml) | Commands to manage Azure Data Share synchronization.
+| [az datashare synchronization-setting](../latest/docs-ref-autogen/datashare/synchronization-setting.yml) | Commands for providers to manage Azure Data Share synchronization settings.
 
 ## Reference examples
 

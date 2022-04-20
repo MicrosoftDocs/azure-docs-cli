@@ -48,13 +48,13 @@ This table lists some common commands used in the CLI and links to their referen
 
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
-| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
-| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
-| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
-| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
-| [Web applications](/azure/app-service) | [az webapp](/cli/azure/webapp) |
-| [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
-| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
+| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](../latest/docs-ref-autogen/group.yml) |
+| [Virtual machines](/azure/virtual-machines) | [az vm](../latest/docs-ref-autogen/vm.yml) |
+| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](../latest/docs-ref-autogen/storage/account.yml) |
+| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](../latest/docs-ref-autogen/keyvault.yml) |
+| [Web applications](/azure/app-service) | [az webapp](../latest/docs-ref-autogen/webapp.yml) |
+| [SQL databases](/azure/sql-database) | [az sql server](../latest/docs-ref-autogen/sql/server.yml) |
+| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](../latest/docs-ref-autogen/cosmosdb.yml) |
 
 ## Finding commands
 
@@ -133,4 +133,4 @@ az feedback
 ## See also
 
 * [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
-* [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+* [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
