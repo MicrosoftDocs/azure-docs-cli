@@ -1,15 +1,17 @@
 --- 
-title: Learning Bash with Azure CLI
-description: Learning Bash with Azure CLI
+title: How-to learn Bash with Azure CLI | Microsoft Docs
+description: Learn how to use Bash with Azure CLI.  Query, format output, filter, use variables, and use Bash constructs of loops, if/exists/then and case statements.
 author: dbradish-microsoft
 ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: sample
 ms.date: 04/18/2022
 ---
-# Learning Bash with Azure CLI
+# Learn to use Bash with the Azure CLI
 
-In this article, you will learn to create, query, and delete Azure resources using Bash and the Azure CLI. You will learn how to do the following:
+Azure CLI reference commands can execute in several different [shell environments](choose-the-right-azure-command-line-tool.md#different-shell-environments), but Microsoft Docs primarily use the Bash environment. If you are new to Bash and also the Azure CLI, you will find this article a great place to begin your learning journey.  Work through this article much like you would a tutorial, and you'll soon be using the Azure CLI in a Bash environment with ease.
+
+In this article, you will learn how to do the following:
 
 > [!div class="checklist"]
 >
