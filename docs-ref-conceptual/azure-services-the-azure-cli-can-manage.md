@@ -177,11 +177,11 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure Arc](/cli/azure/service-page/azure%20arc) | [Delete Azure Arc data controller](/azure/azure-arc/data/uninstall-azure-arc-data-controller)
 |[Azure Database for PostgreSQL](/cli/azure/service-page/azure%20database%20for%20postgresql) | [Deploy a Django web app with PostgreSQL in Azure App Service](/azure/app-service/tutorial-python-postgresql-app?tabs=cmd%2Cclone&pivots=postgres-single-server)
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
-|[Azure IoT Edge](../latest/docs-ref-autogen/iot/edge.yml) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
-|[Azure Security Center](/cli/azure/service-page/azure%20security%20center) |
-|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) |
-|[Azure SQL Database](./azure-cli-reference-for-sql.md) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
-|[Azure Stack HCI](../latest/docs-ref-autogen/stack-hci.yml) |
+|[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
+|[Microsoft Defender for Cloud](/cli/azure/service-page/azure%20security%20center) |
+|[Microsoft Sentinel](/cli/azure/service-page/azure%20sentinel) |
+|[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql#sql-database) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
+|[Azure Stack HCI](/cli/azure/stack-hci) |
 
 ## Identity
 
@@ -298,8 +298,8 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |-|-|
 |[Azure Active Directory (AD)](/cli/azure/service-page/azure%20active%20directory) | [Create an Azure service principal](create-an-azure-service-principal-azure-cli.md)
 |[Azure Dedicated HSM](/cli/azure/service-page/azure%20dedicated%20hsm) | [Deploying HSMs into an existing virtual network using the Azure CLI](/azure/dedicated-hsm/tutorial-deploy-hsm-cli)
-|[Azure Security Center](/cli/azure/service-page/azure%20security%20center) |
-|[Azure Sentinel](/cli/azure/service-page/azure%20sentinel) |
+|[Microsoft Defender for Cloud](/cli/azure/service-page/azure%20security%20center) |
+|[Microsoft Sentinel](/cli/azure/service-page/azure%20sentinel) |
 |[Key Vault](/cli/azure/service-page/azure%20key%20vault) | [Use a managed identity to connect Key Vault to an Azure web app in .NET](/azure/key-vault/general/tutorial-net-create-vault-azure-web-app)
 | | [Set and retrieve a secret from Azure Key Vault using Azure CLI](/azure/key-vault/secrets/quick-create-cli)
 |[Microsoft Azure Attestation](/cli/azure/service-page/azure%20attestation) | [Set up Azure Attestation with Azure CLI](/azure/attestation/quickstart-azure-cli)
@@ -348,4 +348,5 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 ## See also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
-- [Command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
+- [Command reference list for the Azure CLI](/cli/azure/reference-index)
+

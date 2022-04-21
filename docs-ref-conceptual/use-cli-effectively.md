@@ -55,7 +55,7 @@ For more information about these and other formats, see [Output formats for Azur
 
 Azure CLI commands run in a shell. This article uses Bash, but there are other options. You can use standard shell syntax to simplify Azure CLI usage.
 
-You can save a value as a variable. Variables allow you to use values more than once or to create more general scripts. This example assigns an ID found by the [az vm list](/cli/azure/vm#az-vm-list) command to a variable.
+You can save a value as a variable. Variables allow you to use values more than once or to create more general scripts. This example uses the [az vm list](/cli/azure/vm#az_vm_list) command with the query `[?powerState=='VM running'].id` to find the IDs of running VMs. To learn more about `--query` and JMESPath queries see [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md).
 
 ```azurecli
 running_vm_ids=$(az vm list --resource-group MyResourceGroup --show-details \
@@ -325,3 +325,4 @@ For more information about PowerShell error handling, see [Everything you wanted
 - [Query Azure CLI command output](query-azure-cli.md)
 - [Output formats for Azure CLI commands](format-output-azure-cli.md)
 - [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md)
+

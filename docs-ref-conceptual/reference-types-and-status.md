@@ -22,9 +22,9 @@ The Azure CLI syntax is a combination of groups, references, commands, and param
 
 | Azure Service | Reference group | Reference subgroup(s) | Command | Full reference command | Parameter Examples
 |-|-|-|-|-|-|
-| Azure CLI | [az config](/cli/azure/config) | | | az config | --local, --output -o
-| Azure Network | [az network](/cli/azure/network) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az-network-application-gateway-create) | --name, --resource-group, --capacity
-| Azure DevOps Server | [az pipelines](/cli/azure/pipelines) | agent | list | [az pipelines agent list](/cli/azure/pipelines/agent) | --pool-id, --agent-name, --demands
+| Azure CLI | [az config](../latest/docs-ref-autogen/config.yml) | | | az config | --local, --output -o
+| Azure Network | [az network](../latest/docs-ref-autogen/network.yml) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az-network-application-gateway-create) | --name, --resource-group, --capacity
+| Azure DevOps Server | [az pipelines](../latest/docs-ref-autogen/pipelines.yml) | agent | list | [az pipelines agent list](../latest/docs-ref-autogen/pipelines/agent.yml) | --pool-id, --agent-name, --demands
 
 A **reference subgroup** can have multiple levels such as `az network application-gateway private-link ip-config add`
 
@@ -32,7 +32,7 @@ A **reference subgroup** can have multiple levels such as `az network applicatio
 |-|-|-|-|-|
 |network|application-gateway|private-link|ip-config|add
 
-See [Reference list A -Z](/cli/azure/reference-index) for a complete list of reference commands.
+See [Reference list A -Z](../latest/docs-ref-autogen/reference-index.yml) for a complete list of reference commands.
 
 ## What is reference type?
 
@@ -102,5 +102,5 @@ The above table is only an example and **isn't** representative of current refer
 
 ## See also
 
-- [Azure CLI A - Z reference list](/cli/azure/reference-index)
+- [Azure CLI A - Z reference list](../latest/docs-ref-autogen/reference-index.yml)
 - [Available extensions for the Azure CLI](azure-cli-extensions-list.md)

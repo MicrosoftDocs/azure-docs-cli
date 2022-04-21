@@ -71,6 +71,7 @@ directCommands:
                   [--azure-keyvault-kms-key-id]
                   [--client-secret]
                   [--cluster-autoscaler-profile]
+                  [--cluster-snapshot-id]
                   [--crg-id]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
@@ -101,6 +102,7 @@ directCommands:
                   [--enable-ultra-ssd]
                   [--enable-vmss]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity {false, true}]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
@@ -217,8 +219,10 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa
   - summary: Create a kubernetes cluster with enabling Windows gmsa but without setting DNS server in the vnet used by the cluster.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
-  - summary: create a kubernetes cluster with a snapshot id.
+  - summary: create a kubernetes cluster with a nodepool snapshot id.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
+  - summary: create a kubernetes cluster with a cluster snapshot id.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
   - summary: create a kubernetes cluster with a Capacity Reservation Group(CRG) ID.
     syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.9 --node-vm-size VMSize --assign-identity CRG-RG-ID --enable-managed-identity --crg-id "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
   - summary: create a kubernetes cluster with support of hostgroup id.
@@ -302,6 +306,9 @@ directCommands:
     description: ''
   - name: --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
+  - name: --cluster-snapshot-id
+    summary: The source cluster snapshot id is used to create new cluster.
     description: ''
   - name: --crg-id
     summary: The crg-id used to associate the new cluster with the existed Capacity Reservation Group resource.
@@ -408,6 +415,10 @@ directCommands:
     description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa.
+    description: ''
+  - name: --enable-workload-identity
+    parameterValueGroup: false, true
+    summary: (PREVIEW) Enable workload identity addon.
     description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
@@ -584,7 +595,7 @@ directCommands:
     summary: Skip role assignment for subnet (advanced networking).
     description: If specified, please make sure your service principal has the access to your subnet.
   - name: --snapshot-id
-    summary: The source snapshot id used to create this cluster.
+    summary: The source nodepool snapshot id used to create this cluster.
     description: ''
   - name: --ssh-key-value
     defaultValue: ~\.ssh\id_rsa.pub
@@ -1095,6 +1106,7 @@ directCommands:
                   [--disable-pod-security-policy]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
+                  [--disable-workload-identity {false, true}]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-azure-keyvault-kms]
@@ -1109,6 +1121,7 @@ directCommands:
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity {false, true}]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--http-proxy-config]
@@ -1251,6 +1264,10 @@ directCommands:
   - name: --disable-secret-rotation
     summary: Disable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
+  - name: --disable-workload-identity
+    parameterValueGroup: false, true
+    summary: (PREVIEW) Disable Workload Identity addon for cluster.
+    description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
     description: ''
@@ -1292,6 +1309,10 @@ directCommands:
     description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa on cluster.
+    description: ''
+  - name: --enable-workload-identity
+    parameterValueGroup: false, true
+    summary: (PREVIEW) Enable Workload Identity addon for cluster.
     description: ''
   - name: --gmsa-dns-server
     summary: Specify DNS server for Windows gmsa on cluster.
