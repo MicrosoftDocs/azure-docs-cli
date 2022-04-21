@@ -40,14 +40,14 @@ az account show --output table
 az account list --query "[?isDefault]"
 
 # get a list of subscriptions except for the default subscription
-az account list --query "[?isDefault == \`false\`]"
+az account list --query "[?isDefault == false]"
 
 # get the details of a specific subscription
 az account show --subscription MySubscriptionName
 ```
 
 > [!TIP]
-> The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+> The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
 Subscriptions contain resource groups. An Azure resource group is a container that holds related resources for an Azure solution. If your command works with resources in your active subscription, you don't need to specify `--subscription`.
 
@@ -93,7 +93,7 @@ If you run the [az account list](/cli/azure/account#az_account_list) command aga
 
 Azure management groups contain subscriptions. Management groups provide a way to manage access, policies, and compliance for those subscriptions. For more information, see [What are Azure management groups](/azure/governance/management-groups/overview).
 
-Use the [az account management-group](/cli/azure/account/management-group) commands to create and manage Azure Management Groups.
+Use the [az account management-group](../latest/docs-ref-autogen/account/management-group.yml) commands to create and manage Azure Management Groups.
 
 You can create a management group for several of your subscriptions by using the [az account management-group create](/cli/azure/account/management-group#az-account-management-group-create) command:
 
@@ -132,7 +132,7 @@ Removing a subscription or deleting a management group doesn't delete or deactiv
 
 As an administrator, you may need to lock a subscription to prevent users from deleting or modifying it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
 
-In Azure CLI, use the [az account lock](/cli/azure/account/lock) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a subscription:
+In Azure CLI, use the [az account lock](../latest/docs-ref-autogen/account/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a subscription:
 
 ```azurecli
 az account lock create --name "Cannot delete subscription" --lock-type CanNotDelete

@@ -25,7 +25,7 @@ This article discusses various ways to specify values in Azure CLI commands.
 
 ## Use shell variables
 
-Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](/cli/azure/use-cli-effectively). You can use variables in Bash to pass values for parameters to commands. Using variables with the Azure CLI also allows reuse of commands, either piecemeal or in scripts.
+Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](./use-cli-effectively.md). You can use variables in Bash to pass values for parameters to commands. Using variables with the Azure CLI also allows reuse of commands, either piecemeal or in scripts.
 
 This example creates a new storage disk of the same type as the storage disk on an existing virtual machine.
 
@@ -44,9 +44,9 @@ osType=$(az vm get-instance-view --resource-group $MyResourceGroup \
 az disk create --resource-group $MyResourceGroup --name DestinationDisk --size-gb 20 --os-type $osType
 ```
 
-This example shows how to assign values to variables that are reused, like **MyResourceGroup**. A command gets a value to assign to **osType**.
+This example shows how to assign values to variables that are reused, like **MyResourceGroup** and **osType**. The command [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) combined with the query `storageProfile.osDisk.osType` returns the disk's OS type. Wrapping the command with `$()` assigns the command's return value to `osType`. To learn more about `--query` and JMESPath queries see [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md).
 
-When you assign a value to a variable from another command, be sure that the command uses a compatible output format. The [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) command uses the `tsv` output format. This option returns values without extra formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+When you assign a value to a variable from another command, be sure that the command uses a compatible output format. The [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) command uses the `tsv` output format. This option returns values without extra formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
 In this example, the **MySubscription** variable must be in quotation marks. The value of the variable contains spaces, which the command can't parse. If you work only with subscription IDs, you don't need to use quotation marks.
 
@@ -58,7 +58,7 @@ Many commands require a specific subscription. Azure resources exist in resource
 az account show --output table
 ```
 
-You might have access to only one subscription. For more information, see [Use Azure subscriptions with Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+You might have access to only one subscription. For more information, see [Use Azure subscriptions with Azure CLI](./manage-azure-subscriptions-azure-cli.md)
 You can use the [az account set](/cli/azure/account#az_account_set) command to set your current subscription:
 
 ```azurecli
@@ -112,7 +112,7 @@ As long as persistence is on, your can leave the `--resource-group` parameter ou
 az storage account create --name storage135 --location eastus --sku Standard_LRS
 ```
 
-For more information, see [Azure CLI persisted parameter](/cli/azure/param-persist-howto).
+For more information, see [Azure CLI persisted parameter](./param-persist-howto.md).
 
 ## Clean up resources
 

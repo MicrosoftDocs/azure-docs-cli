@@ -73,7 +73,7 @@ cd azCLI
 
 ## 2. Turn on Persisted parameters
 
-[Persisted parameters](/cli/azure/config/param-persist) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](/cli/azure/reference-types-and-status) to learn about the Azure CLI reference types, status, and support levels.
+[Persisted parameters](../latest/docs-ref-autogen/config/param-persist.yml) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](./reference-types-and-status.md) to learn about the Azure CLI reference types, status, and support levels.
 
 ```azurecli
 az config param-persist on
@@ -123,7 +123,7 @@ To store values for persisted parameters, execute an Azure CLI command of your c
 
 1. Create a persisted parameter without creating a new resource.
 
-   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](/cli/azure/param-persist-howto#compare-parameter-persistence-and-global-variables) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az_param_persist_delete) command.
+   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](./param-persist-howto.md) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az_param_persist_delete) command.
 
    ```azurecli
    # Clear all persisted parameters for demonstration.
@@ -299,7 +299,7 @@ az storage account create --name SA4inAzCLI --sku Standard_LRS
 
 ## 8. Clean up resources
 
-When no longer needed, use the [az group delete](/cli/azure/group) command to remove the resource group, and all related resources.
+When no longer needed, use the [az group delete](../latest/docs-ref-autogen/group.yml) command to remove the resource group, and all related resources.
 
 ```azurecli
 az group delete --name RG1forTutorial
@@ -308,4 +308,4 @@ az group delete --name RG1forTutorial
 ## See also
 
 - [(How to work with Azure CLI persisted parameters](param-persist-howto.md)
-- [Azure CLI configuration options](/cli/azure/azure-cli-configuration)
+- [Azure CLI configuration options](./azure-cli-configuration.md)
