@@ -39,7 +39,7 @@ az group list --output table
 ```
 
 > [!TIP]
-> The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+> The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
 When you create a resource, you create it in a resource group. The following example shows a storage account created by using the [az storage account create](/cli/azure/storage/account#az_storage_account_create) command:
 
@@ -99,7 +99,7 @@ az config param-persist off
 
 Azure CLI saves your persisted values. You can see them in the local context file. If you turn on parameter persistence again, those values are already set.
 
-For more information about using the [az config param-persist](/cli/azure/config/param-persist) commands, see [Use persisted parameters to simplify sequential Azure CLI commands](/cli/azure/param-persist-tutorial).
+For more information about using the [az config param-persist](../latest/docs-ref-autogen/config/param-persist.yml) commands, see [Use persisted parameters to simplify sequential Azure CLI commands](./param-persist-tutorial.md).
 
 ## Set a default resource group
 
@@ -117,7 +117,7 @@ To set a default resource group for your Azure CLI installation, run the [az con
 az config set defaults.group=MyResourceGroup
 ```
 
-The command sets a value for a specified key, in this case `defaults.group`. For available configuration options, see [Azure CLI configuration](/cli/azure/azure-cli-configuration).
+The command sets a value for a specified key, in this case `defaults.group`. For available configuration options, see [Azure CLI configuration](./azure-cli-configuration.md).
 
 > [!NOTE]
 > The [az config set](/cli/azure/config#az_config_set) command does not validate the existence of the resource group you enter. The command simply stores the key-value pair.
@@ -162,8 +162,8 @@ az config param-persist delete --all
 
 ## See also
 
-[Azure CLI configuration](/cli/azure/azure-cli-configuration)
+[Azure CLI configuration](./azure-cli-configuration.md)
 
-[Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](/cli/azure/param-persist-tutorial)
+[Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](./param-persist-tutorial.md)
 
 [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md)
