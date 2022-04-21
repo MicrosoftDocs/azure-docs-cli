@@ -35,7 +35,6 @@ directCommands:
                      [--proxy-override {Default, Proxy, Redirect}]
                      [--public-data-endpoint-enabled {false, true}]
                      [--storage]
-                     [--subscription]
                      [--tags]
                      [--timezone-id]
                      [--user-assigned-identity-id]
@@ -82,7 +81,7 @@ directCommands:
     summary: Generate and assign an Azure Active Directory Identity for this managed instance for use with key management services like Azure KeyVault.
     description: ''
   - name: --backup-storage-redundancy --bsr
-    summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo.'
+    summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
     description: ''
   - name: --capacity -c
     summary: The capacity of the managed instance in integer number of vcores.
@@ -146,9 +145,6 @@ directCommands:
   - name: --storage
     summary: The storage size of the managed instance. Storage size must be specified in increments of 32 GB.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -174,7 +170,6 @@ directCommands:
                      [--name]
                      [--no-wait]
                      [--resource-group]
-                     [--subscription]
                      [--yes]
   examples:
   - summary: Delete a managed instance
@@ -192,9 +187,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -209,7 +201,6 @@ directCommands:
                        [--no-wait]
                        [--replica-type]
                        [--resource-group]
-                       [--subscription]
   examples:
   - summary: Failover a managed instance primary replica
     syntax: az sql mi failover -g mygroup -n myinstance
@@ -231,9 +222,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_list
   name: az sql mi list
@@ -242,7 +230,6 @@ directCommands:
   syntax: >-
     az sql mi list [--expand-ad-admin]
                    [--resource-group]
-                   [--subscription]
   examples:
   - summary: List all managed instances in the current subscription.
     syntax: az sql mi list
@@ -255,9 +242,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_show
   name: az sql mi show
@@ -268,7 +252,6 @@ directCommands:
                    [--ids]
                    [--name]
                    [--resource-group]
-                   [--subscription]
   examples:
   - summary: Get the details for a managed instance
     syntax: az sql mi show -g mygroup -n myinstance
@@ -285,9 +268,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_update
   name: az sql mi update
@@ -297,6 +277,7 @@ directCommands:
     az sql mi update [--add]
                      [--admin-password]
                      [--assign-identity]
+                     [--backup-storage-redundancy]
                      [--capacity]
                      [--edition]
                      [--family]
@@ -317,10 +298,10 @@ directCommands:
                      [--set]
                      [--storage]
                      [--subnet]
-                     [--subscription]
                      [--tags]
                      [--user-assigned-identity-id]
                      [--vnet-name]
+                     [--yes]
   examples:
   - summary: Updates a mi with specified parameters and with identity
     syntax: az sql mi update -g mygroup -n myinstance -i -p mypassword --license-type mylicensetype --capacity vcorecapacity --storage storagesize
@@ -344,6 +325,8 @@ directCommands:
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
   - summary: Move managed instance to another subnet
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --subnet /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \
+  - summary: Update mi backup storage redundancy
+    syntax: az sql mi update -g mygroup -n myinstance --bsr Local
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -353,6 +336,9 @@ directCommands:
     description: ''
   - name: --assign-identity -i
     summary: Generate and assign an Azure Active Directory Identity for this managed instance for use with key management services like Azure KeyVault. If identity is already assigned - do nothing.
+    description: ''
+  - name: --backup-storage-redundancy --bsr
+    summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
     description: ''
   - name: --capacity -c
     summary: The capacity of the managed instance in integer number of vcores.
@@ -419,9 +405,6 @@ directCommands:
   - name: --subnet
     summary: Name or ID of the subnet that allows access to an Azure Sql Managed Instance. If subnet name is provided, --vnet-name must be provided.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -430,6 +413,9 @@ directCommands:
     description: ''
   - name: --vnet-name
     summary: The virtual network name.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
@@ -473,9 +459,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2021
+  ms.date: 03/29/2022
   description: Manage SQL managed instances.

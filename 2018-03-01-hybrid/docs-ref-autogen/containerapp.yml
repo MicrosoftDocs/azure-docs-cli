@@ -1,0 +1,394 @@
+### YamlMime:AzureCLIGroup
+uid: az_containerapp
+name: az containerapp
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **containerapp** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az containerapp** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage Azure Container Apps.
+description: ''
+directCommands:
+- uid: az_containerapp_create
+  name: az containerapp create
+  summary: Create a container app.
+  description: ''
+  syntax: >-
+    az containerapp create --name
+                           --resource-group
+                           [--args]
+                           [--command]
+                           [--container-name]
+                           [--cpu]
+                           [--dapr-app-id]
+                           [--dapr-app-port]
+                           [--dapr-app-protocol {grpc, http}]
+                           [--enable-dapr {false, true}]
+                           [--env-vars]
+                           [--environment]
+                           [--image]
+                           [--ingress {external, internal}]
+                           [--max-replicas]
+                           [--memory]
+                           [--min-replicas]
+                           [--no-wait]
+                           [--registry-password]
+                           [--registry-server]
+                           [--registry-username]
+                           [--revision-suffix]
+                           [--revisions-mode {multiple, single}]
+                           [--secrets]
+                           [--system-assigned]
+                           [--tags]
+                           [--target-port]
+                           [--transport {auto, http, http2}]
+                           [--user-assigned]
+                           [--yaml]
+  examples:
+  - summary: Create a container app and retrieve its fully qualified domain name.
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --image myregistry.azurecr.io/my-app:v1.0 --environment MyContainerappEnv \
+          --ingress external --target-port 80 \
+          --registry-server myregistry.azurecr.io --registry-username myregistry --registry-password $REGISTRY_PASSWORD \
+          --query properties.configuration.ingress.fqdn
+  - summary: Create a container app with resource requirements and replica count limits.
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --image nginx --environment MyContainerappEnv \
+          --cpu 0.5 --memory 1.0Gi \
+          --min-replicas 4 --max-replicas 8
+  - summary: Create a container app with secrets and environment variables.
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --image my-app:v1.0 --environment MyContainerappEnv \
+          --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
+          --env-vars GREETING="Hello, world" SECRETENV=secretref:anothersecret
+  - summary: Create a container app using a YAML configuration. Example YAML configuration - https://aka.ms/azure-container-apps-yaml
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --environment MyContainerappEnv \
+          --yaml "path/to/yaml/file.yml"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Containerapp.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --args
+    summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --command
+    summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --container-name
+    summary: Name of the container.
+    description: ''
+  - name: --cpu
+    summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    description: ''
+  - name: --dapr-app-id
+    summary: The Dapr application identifier.
+    description: ''
+  - name: --dapr-app-port
+    summary: The port Dapr uses to talk to the application.
+    description: ''
+  - name: --dapr-app-protocol
+    parameterValueGroup: grpc, http
+    summary: The protocol Dapr uses to talk to the application.
+    description: ''
+  - name: --enable-dapr
+    parameterValueGroup: false, true
+    summary: Boolean indicating if the Dapr side car is enabled.
+    description: ''
+  - name: --env-vars
+    summary: A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    description: ''
+  - name: --environment
+    summary: Name or resource ID of the container app's environment.
+    description: ''
+  - name: --image -i
+    summary: Container image, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --ingress
+    parameterValueGroup: external, internal
+    summary: The ingress type.
+    description: ''
+  - name: --max-replicas
+    summary: The maximum number of replicas.
+    description: ''
+  - name: --memory
+    summary: Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    description: ''
+  - name: --min-replicas
+    summary: The minimum number of replicas.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --registry-password
+    summary: The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --registry-server
+    summary: The container registry server hostname, e.g. myregistry.azurecr.io.
+    description: ''
+  - name: --registry-username
+    summary: The username to log in to container registry.
+    description: ''
+  - name: --revision-suffix
+    summary: User friendly suffix that is appended to the revision name.
+    description: ''
+  - name: --revisions-mode
+    defaultValue: single
+    parameterValueGroup: multiple, single
+    summary: The active revisions mode for the container app.
+    description: ''
+  - name: --secrets -s
+    summary: A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+    description: ''
+  - name: --system-assigned
+    summary: Boolean indicating whether to assign system-assigned identity.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --target-port
+    summary: The application port used for ingress traffic.
+    description: ''
+  - name: --transport
+    defaultValue: auto
+    parameterValueGroup: auto, http, http2
+    summary: The transport protocol used for ingress traffic.
+    description: ''
+  - name: --user-assigned
+    summary: Space-separated user identities to be assigned.
+    description: ''
+  - name: --yaml
+    summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+    description: ''
+- uid: az_containerapp_delete
+  name: az containerapp delete
+  summary: Delete a container app.
+  description: ''
+  syntax: >-
+    az containerapp delete --name
+                           --resource-group
+                           [--no-wait]
+                           [--yes]
+  examples:
+  - summary: Delete a container app.
+    syntax: az containerapp delete -g MyResourceGroup -n MyContainerapp
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Containerapp.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_containerapp_list
+  name: az containerapp list
+  summary: List container apps.
+  description: ''
+  syntax: az containerapp list [--resource-group]
+  examples:
+  - summary: List container apps in the current subscription.
+    syntax: az containerapp list
+  - summary: List container apps by resource group.
+    syntax: az containerapp list -g MyResourceGroup
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_containerapp_show
+  name: az containerapp show
+  summary: Show details of a container app.
+  description: ''
+  syntax: >-
+    az containerapp show --name
+                         --resource-group
+  examples:
+  - summary: Show the details of a container app.
+    syntax: az containerapp show -n MyContainerapp -g MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Containerapp.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_containerapp_update
+  name: az containerapp update
+  summary: Update a container app. In multiple revisions mode, create a new revision based on the latest revision.
+  description: ''
+  syntax: >-
+    az containerapp update --name
+                           --resource-group
+                           [--args]
+                           [--command]
+                           [--container-name]
+                           [--cpu]
+                           [--image]
+                           [--max-replicas]
+                           [--memory]
+                           [--min-replicas]
+                           [--no-wait]
+                           [--remove-all-env-vars]
+                           [--remove-env-vars]
+                           [--replace-env-vars]
+                           [--revision-suffix]
+                           [--set-env-vars]
+                           [--tags]
+                           [--yaml]
+  examples:
+  - summary: Update a container app's container image.
+    syntax: >-
+      az containerapp update -n MyContainerapp -g MyResourceGroup \
+          --image myregistry.azurecr.io/my-app:v2.0
+  - summary: Update a container app's resource requirements and scale limits.
+    syntax: >-
+      az containerapp update -n MyContainerapp -g MyResourceGroup \
+          --cpu 0.5 --memory 1.0Gi \
+          --min-replicas 4 --max-replicas 8
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Containerapp.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --args
+    summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --command
+    summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --container-name
+    summary: Name of the container.
+    description: ''
+  - name: --cpu
+    summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    description: ''
+  - name: --image -i
+    summary: Container image, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --max-replicas
+    summary: The maximum number of replicas.
+    description: ''
+  - name: --memory
+    summary: Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    description: ''
+  - name: --min-replicas
+    summary: The minimum number of replicas.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remove-all-env-vars
+    summary: Option to remove all environment variable(s) from the container.
+    description: ''
+  - name: --remove-env-vars
+    summary: A list of environment variable(s) to remove from container. Space-separated env var name values.
+    description: ''
+  - name: --replace-env-vars
+    summary: A list of environment variable(s) to replace from the container. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --revision-suffix
+    summary: User friendly suffix that is appended to the revision name.
+    description: ''
+  - name: --set-env-vars
+    summary: A list of environment variable(s) to add to the container. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --yaml
+    summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+    description: ''
+commands:
+- az_containerapp_create
+- az_containerapp_dapr
+- az_containerapp_dapr_disable
+- az_containerapp_dapr_enable
+- az_containerapp_delete
+- az_containerapp_env
+- az_containerapp_env_create
+- az_containerapp_env_dapr-component
+- az_containerapp_env_dapr-component_list
+- az_containerapp_env_dapr-component_remove
+- az_containerapp_env_dapr-component_set
+- az_containerapp_env_dapr-component_show
+- az_containerapp_env_delete
+- az_containerapp_env_list
+- az_containerapp_env_show
+- az_containerapp_github-action
+- az_containerapp_github-action_add
+- az_containerapp_github-action_delete
+- az_containerapp_github-action_show
+- az_containerapp_identity
+- az_containerapp_identity_assign
+- az_containerapp_identity_remove
+- az_containerapp_identity_show
+- az_containerapp_ingress
+- az_containerapp_ingress_disable
+- az_containerapp_ingress_enable
+- az_containerapp_ingress_show
+- az_containerapp_ingress_traffic
+- az_containerapp_ingress_traffic_set
+- az_containerapp_ingress_traffic_show
+- az_containerapp_list
+- az_containerapp_registry
+- az_containerapp_registry_list
+- az_containerapp_registry_remove
+- az_containerapp_registry_set
+- az_containerapp_registry_show
+- az_containerapp_revision
+- az_containerapp_revision_activate
+- az_containerapp_revision_copy
+- az_containerapp_revision_deactivate
+- az_containerapp_revision_list
+- az_containerapp_revision_restart
+- az_containerapp_revision_set-mode
+- az_containerapp_revision_show
+- az_containerapp_secret
+- az_containerapp_secret_list
+- az_containerapp_secret_remove
+- az_containerapp_secret_set
+- az_containerapp_secret_show
+- az_containerapp_show
+- az_containerapp_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: json
+  parameterValueGroup: json, jsonc, table, tsv
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage Azure Container Apps.

@@ -58,7 +58,7 @@ Use Azure Analytics to gather, store, process, analyze, and visualize data of an
 |[Azure Stream Analytics](/cli/azure/service-page/azure%20stream%20analytics) | [Create an Azure Stream Analytics job](/azure/stream-analytics/quick-create-azure-cli)
 |[Azure Synapse Analytics](/cli/azure/service-page/azure%20synapse%20analytics) | [Create an Azure synapse workspace](/azure/synapse-analytics/quickstart-create-workspace-cli)
 || [Create a Synapse SQL pool](/azure/synapse-analytics/sql-data-warehouse/create-data-warehouse-azure-cli)
-|[Power BI Embedded](/cli/azure/powerbi) | [Create Power BI Embedded capacity](/power-bi/developer/embedded/azure-pbie-create-capacity?tabs=CLI)
+|[Power BI Embedded](../latest/docs-ref-autogen/powerbi.yml) | [Create Power BI Embedded capacity](/power-bi/developer/embedded/azure-pbie-create-capacity?tabs=CLI)
 
 ## Blockchain
 
@@ -93,10 +93,10 @@ Access cloud compute capacity and scale on demand—and only pay for the resourc
 |[Azure Service Fabric](/cli/azure/service-page/azure%20service%20fabric) | [Deploy Linux containers to Service Fabric](/azure/service-fabric/service-fabric-quickstart-containers-linux#create-a-service-fabric-cluster)
 | |[Create a Service Fabric cluster](/azure/service-fabric/service-fabric-cluster-creation-via-arm)
 |[Azure Spring Cloud](/cli/azure/service-page/azure%20spring%20cloud) | [Read a secret from Azure Key Vault in a Spring Boot application](/azure/developer/java/spring-framework/configure-spring-boot-starter-java-app-with-azure-key-vault#deploy-to-azure-spring-cloud)
-|[Azure Static Web Apps](/cli/azure/staticwebapp) | [Build your first static site](/azure/static-web-apps/get-started-cli?tabs=vanilla-javascript)
-|[Azure Virtual Machines](/cli/azure/azure-cli-reference-for-virtual-machines) | [Create a Linux VM](/azure/virtual-machines/linux/quick-create-cli)
+|[Azure Static Web Apps](../latest/docs-ref-autogen/staticwebapp.yml) | [Build your first static site](/azure/static-web-apps/get-started-cli?tabs=vanilla-javascript)
+|[Azure Virtual Machines](./azure-cli-reference-for-virtual-machines.md) | [Create a Linux VM](/azure/virtual-machines/linux/quick-create-cli)
 | |[Create a Windows VM](/azure/virtual-machines/windows/quick-create-cli)
-|[Azure Virtual Machine Scale Sets (VMSS)](/cli/azure/vmss) | [Create a Linux VM with Accelerated Networking](/azure/virtual-network/create-vm-accelerated-networking-cli#vmss)
+|[Azure Virtual Machine Scale Sets (VMSS)](../latest/docs-ref-autogen/vmss.yml) | [Create a Linux VM with Accelerated Networking](/azure/virtual-network/create-vm-accelerated-networking-cli#vmss)
 |[Azure VMWare Solution](/cli/azure/service-page/azure%20vmware%20solution) | [Attach disk pools to Azure VMware Solution hosts](/azure/azure-vmware/attach-disk-pools-to-azure-vmware-solution-hosts)
 |[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
 | |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
@@ -133,7 +133,7 @@ Support rapid growth and innovate faster with secure, enterprise-grade, and full
 |[Azure Database for MariaDB](/cli/azure/service-page/azure%20database%20for%20mariadb) | [Create an Azure Database for MariaDB server](/azure/mariadb/quickstart-create-mariadb-server-database-using-azure-cli)
 |[Azure Database for MySQL](/cli/azure/service-page/azure%20database%20for%20mysql) | [Create a MySQL Flexible Server](/azure/mysql/flexible-server/tutorial-php-database-app#create-a-mysql-flexible-server-preview)
 |[Azure Database for PostgreSQL](/cli/azure/service-page/azure%20database%20for%20postgresql) | [Create an Azure Database for PostgreSQL server](/azure/postgresql/quickstart-create-server-database-azure-cli)
-|[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql#sql-database) | [Create an Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
+|[Azure SQL Database](./azure-cli-reference-for-sql.md) | [Create an Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?tabs=azure-cli)
 | |[Manage server-level IP firewall rules](/azure/azure-sql/database/firewall-configure#use-cli-to-manage-server-level-ip-firewall-rules)
 
 ## Developer Tools
@@ -142,12 +142,12 @@ Use Microsoft's comprehensive set of development tools to build, manage, and con
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[App Configuration](/cli/azure/azure-cli-reference-for-hosted-apps#azure-web-app-configuration) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
+|[App Configuration](./azure-cli-reference-for-hosted-apps.md) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container?pivots=container-linux)
 | |[Build an ASP.NET Core and Azure SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app?pivots=platform-linux)
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
 |[Azure Lab Services](/cli/azure/service-page/azure%20lab%20services) |
-|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+|[Azure Pipelines](./azure-cli-reference-for-devops.md) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&preserve-view=true&tabs=azure-cli)
 |[Visual Studio](/cli/azure/service-page/visual%20studio) |
@@ -158,16 +158,16 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Artifacts](/cli/azure/azure-cli-reference-for-devops#azure-artifacts) | [Publish and download universal packages](/azure/devops/artifacts/quickstarts/universal-packages?view=azure-devops&preserve-view=true)
-|[Azure Boards](/cli/azure/azure-cli-reference-for-devops#azure-boards) | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths?view=azure-devops&preserve-view=true&tabs=azure-devops-cli#open-project-settings-list-project-areas)
-|[Azure DevOps](/cli/azure/azure-cli-reference-for-devops) | See links in reference summary.
+|[Azure Artifacts](./azure-cli-reference-for-devops.md) | [Publish and download universal packages](/azure/devops/artifacts/quickstarts/universal-packages?view=azure-devops&preserve-view=true)
+|[Azure Boards](./azure-cli-reference-for-devops.md) | [Define area paths and assign to a team](/azure/devops/organizations/settings/set-area-paths?view=azure-devops&preserve-view=true&tabs=azure-devops-cli#open-project-settings-list-project-areas)
+|[Azure DevOps](./azure-cli-reference-for-devops.md) | See links in reference summary.
 |[Azure DevTest Labs](/cli/azure/service-page/azure%20devtest%20labs) | [Create and manage virtual machines with DevTest Labs](/azure/devtest-labs/devtest-lab-vmcli)
 |[Azure Monitor](azure-cli-reference-for-monitor.md) | [Create diagnostic settings to send platform logs and metrics to different destinations](/azure/azure-monitor/essentials/diagnostic-settings?tabs=CMD#create-using-azure-cli)
 | |[How to configure Azure Activity log profiles](/azure/azure-monitor/essentials/activity-log#configure-log-profile-using-azure-cli)
-|[Azure Pipelines](/cli/azure/azure-cli-reference-for-devops#azure-pipelines) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
+|[Azure Pipelines](./azure-cli-reference-for-devops.md) | [How to define pipeline variables](/azure/devops/pipelines/process/variables?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Azure Pipelines agents](/azure/devops/pipelines/agents/agents?view=azure-devops&preserve-view=true&tabs=azure-devops-cli)
 | |[Create your first pipeline](/azure/devops/pipelines/create-first-pipeline?view=azure-devops&preserve-view=true&tabs=azure-cli)
-|[Azure Repos](/cli/azure/azure-cli-reference-for-devops#azure-repos) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops&preserve-view=true)
+|[Azure Repos](./azure-cli-reference-for-devops.md) | [Get started with Git using the Azure CLI](/azure/devops/repos/git/share-your-code-in-git-cmdline?view=azure-devops&preserve-view=true)
 
 ## Hybrid
 
@@ -208,14 +208,14 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure Cosmos DB](azure-cli-reference-for-cosmos-db.md) | [Samples for Azure Cosmos DB Core (SQL) API](/azure/cosmos-db/cli-samples)
 |[Azure Functions](/cli/azure/service-page/azure%20functions) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=azure-cli)
 | |[How to target Azure Functions runtime versions](/azure/azure-functions/set-runtime-version?tabs=azurecli)
-|[Azure IoT Central](/cli/azure/iot/central) | [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli?tabs=azure-cli)
-|[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy and monitor IoT Edge modules at scale](/azure/iot-edge/how-to-deploy-cli-at-scale)
+|[Azure IoT Central](../latest/docs-ref-autogen/iot/central.yml) | [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli?tabs=azure-cli)
+|[Azure IoT Edge](../latest/docs-ref-autogen/iot/edge.yml) | [Deploy and monitor IoT Edge modules at scale](/azure/iot-edge/how-to-deploy-cli-at-scale)
 | |[Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
-|[Azure IoT Hub](/cli/azure/iot/hub) | [Configure IoT Hub message routing](/azure/iot-hub/tutorial-routing)
+|[Azure IoT Hub](../latest/docs-ref-autogen/iot/hub.yml) | [Configure IoT Hub message routing](/azure/iot-hub/tutorial-routing)
 |[Azure Logic Apps](/cli/azure/service-page/azure%20logic%20apps) | [Create and manage integration accounts for B2B enterprise integrations in Azure Logic Apps](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account?tabs=azure-cli)
 |[Azure Machine Learning](/cli/azure/service-page/azure%20machine%20learning) | [Create and manage an Azure Machine Learning compute instance](/azure/machine-learning/how-to-create-manage-compute-instance?tabs=azure-cli)
 | |[Manage access to an Azure Machine Learning workspace](/azure/machine-learning/how-to-assign-roles)
-|[Azure Maps](/cli/azure/maps) |
+|[Azure Maps](../latest/docs-ref-autogen/maps.yml) |
 |[Azure Notification Hubs](/cli/azure/service-page/azure%20notification%20hubs) | [Set up push notifications in a notification hub](/azure/notification-hubs/configure-notification-hub-portal-pns-settings?tabs=azure-cli)
 | | [Create an Azure notification hub using the Azure CLI](/azure/notification-hubs/create-notification-hub-azure-cli)
 |[Azure Stream Analytics](/cli/azure/service-page/azure%20stream%20analytics) | [Create an Azure Stream Analytics job using the Azure CLI](/azure/stream-analytics/quick-create-azure-cli)
@@ -227,11 +227,11 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Automation](/cli/azure/automation) | [Enable Update Management using Azure Resource Manager template](/azure/automation/update-management/enable-from-template)
-|[Azure Advisor](/cli/azure/advisor) | [Create Azure Advisor alerts on new recommendations using an ARM template](/azure/advisor/advisor-alerts-arm?tabs=CLI)
-|[Azure Backup](/cli/azure/backup) | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
+|[Automation](../latest/docs-ref-autogen/automation.yml) | [Enable Update Management using Azure Resource Manager template](/azure/automation/update-management/enable-from-template)
+|[Azure Advisor](../latest/docs-ref-autogen/advisor.yml) | [Create Azure Advisor alerts on new recommendations using an ARM template](/azure/advisor/advisor-alerts-arm?tabs=CLI)
+|[Azure Backup](../latest/docs-ref-autogen/backup.yml) | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
 | | [Back up a virtual machine in Azure with the Azure CLI](/azure/backup/quick-backup-vm-cli)
-|[Azure Blueprint](/cli/azure/blueprint) | [Define and Assign an Azure Blueprint with Azure CLI](/azure/governance/blueprints/create-blueprint-azurecli)
+|[Azure Blueprint](../latest/docs-ref-autogen/blueprint.yml) | [Define and Assign an Azure Blueprint with Azure CLI](/azure/governance/blueprints/create-blueprint-azurecli)
 |[Azure Cost Management and Billing](/cli/azure/service-page/azure%20cost%20management%20+%20billing) | [Create and manage exported data](/azure/cost-management-billing/costs/tutorial-export-acm-data?tabs=azure-cli)
 | |[Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement?tabs=azure-cli)
 |[Azure Managed Applications](/cli/azure/service-page/azure%20managed%20applications) | [Create and publish a managed application definition](/azure/azure-resource-manager/managed-applications/publish-service-catalog-app?tabs=azure-cli)
@@ -242,9 +242,9 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 | |[Remediate non-compliant resources with Azure Policy remediation tasks](/azure/governance/policy/how-to/remediate-resources#create-a-remediation-task-through-azure-cli)
 |[Azure Resource Manager](/cli/azure/service-page/azure%20resource%20manager) | [Use tags to organize your Azure resources and management hierarchy](/azure/azure-resource-manager/management/tag-resources#azure-cli)
 | | [Manage Azure Resource Manager resource groups by using Azure CLI](/azure/azure-resource-manager/management/manage-resource-groups-cli)
-|[Azure Resource Manager templates](/cli/azure/group) | [Azure Resource Manager template specs](/azure/azure-resource-manager/templates/template-specs?tabs=azure-cli)
+|[Azure Resource Manager templates](../latest/docs-ref-autogen/group.yml) | [Azure Resource Manager template specs](/azure/azure-resource-manager/templates/template-specs?tabs=azure-cli)
 | | [Create and deploy template spec](/azure/azure-resource-manager/templates/quickstart-create-template-specs?tabs=azure-cli)
-|[Traffic Manager](/cli/azure/network/traffic-manager/) | [Create a Traffic Manager profile for a highly available web application using Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli)
+|[Traffic Manager](../latest/docs-ref-autogen/network/traffic-manager.yml) | [Create a Traffic Manager profile for a highly available web application using Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli)
 
 ## Media
 
@@ -281,14 +281,14 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure DNS](/cli/azure/network/dns) | [Import and export a DNS zone file using the Azure CLI](/azure/dns/dns-import-export)
+|[Azure DNS](../latest/docs-ref-autogen/network/dns.yml) | [Import and export a DNS zone file using the Azure CLI](/azure/dns/dns-import-export)
 | | [Host reverse DNS lookup zones in Azure DNS](/azure/dns/dns-reverse-dns-hosting)
-|[Azure Private Link](/cli/azure/network/private-link-service) | [Create a Private Link service using Azure CLI](/azure/private-link/create-private-link-service-cli)
+|[Azure Private Link](../latest/docs-ref-autogen/network/private-link-service.yml) | [Create a Private Link service using Azure CLI](/azure/private-link/create-private-link-service-cli)
 |[Content Delivery Network](/cli/azure/service-page/content%20delivery%20network) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint)
-|[Load Balancer](/cli/azure/network/lb) | [Backend pool management](/azure/load-balancer/backend-pool-management)
+|[Load Balancer](../latest/docs-ref-autogen/network/lb.yml) | [Backend pool management](/azure/load-balancer/backend-pool-management)
 | | [Monitoring load balancer](/azure/load-balancer/monitor-load-balancer)
-|[Traffic Manager](/cli/azure/network/traffic-manager/) | [Create a Traffic Manager profile for a highly available web application using Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli)
-|[Virtual Network](/cli/azure/network/vnet) | [Create a Linux virtual machine with Accelerated Networking using Azure CLI](/azure/virtual-network/create-vm-accelerated-networking-cli)
+|[Traffic Manager](../latest/docs-ref-autogen/network/traffic-manager.yml) | [Create a Traffic Manager profile for a highly available web application using Azure CLI](/azure/traffic-manager/quickstart-create-traffic-manager-profile-cli)
+|[Virtual Network](../latest/docs-ref-autogen/network/vnet.yml) | [Create a Linux virtual machine with Accelerated Networking using Azure CLI](/azure/virtual-network/create-vm-accelerated-networking-cli)
 | | [Create a virtual network peering - Resource Manager, different subscriptions and Azure Active Directory tenants](/azure/virtual-network/create-peering-different-subscriptions)
 | | [Add or remove a subnet delegation](/azure/virtual-network/manage-subnet-delegation#azure-cli)
 
@@ -308,7 +308,7 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 
 | Azure CLI references for service | Microsoft Docs
 |-|-|
-|[Azure Backup](/cli/azure/backup) | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
+|[Azure Backup](../latest/docs-ref-autogen/backup.yml) | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
 | | [Back up a virtual machine in Azure with the Azure CLI](/azure/backup/quick-backup-vm-cli)
 |[Azure Data Lake Storage](/cli/azure/service-page/azure%20data%20lake%20storage) |[Get started with Azure Data Lake Storage Gen1](/azure/data-lake-store/data-lake-store-get-started-cli-2.0)
 || [Get started with Azure Data Lake Analytics](/azure/data-lake-analytics/data-lake-analytics-get-started-cli)
@@ -318,10 +318,10 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure HPC Cache](/cli/azure/service-page/azure%20hpc%20cache) | [Create an Azure HPC Cache](/azure/hpc-cache/hpc-cache-create?tabs=azure-cli)
 | | [Manage your cache](/azure/hpc-cache/hpc-cache-manage?tabs=azure-cli)
 |[Azure NetApp Files](/cli/azure/service-page/azure%20netapp%20files) | [Set up Azure NetApp Files and create an NFS volume](/azure/azure-netapp-files/azure-netapp-files-quickstart-set-up-account-create-volumes?tabs=azure-cli)
-|[Azure Storage](/cli/azure/azure-cli-reference-for-storage) | [Configure Azure Storage firewalls and virtual networks](/azure/storage/common/storage-network-security?tabs=azure-cli)
+|[Azure Storage](./azure-cli-reference-for-storage.md) | [Configure Azure Storage firewalls and virtual networks](/azure/storage/common/storage-network-security?tabs=azure-cli)
 | | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
 | | [Create an Azure file share](/azure/storage/files/storage-how-to-create-file-share?tabs=azure-cli)
-|[Storage Accounts](/cli/azure/azure-cli-reference-for-storage#storage-accounts) | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
+|[Storage Accounts](./azure-cli-reference-for-storage.md) | [Create a storage account](/azure/storage/common/storage-account-create?tabs=azure-cli)
 | | [Manage storage account access keys](/azure/storage/common/storage-account-keys-manage?tabs=azure-cli)
 
 ## Web
@@ -343,9 +343,10 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure Web Apps](/cli/azure/service-page/azure%20web%20apps) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity?tabs=dotnet#using-the-azure-cli)
 | |[Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container?pivots=container-linux)
 |[Content Delivery Network](/cli/azure/service-page/content%20delivery%20network) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint)
-|[Azure Static Web Apps](/cli/azure/staticwebapp) | [Build your first static site](/azure/static-web-apps/get-started-cli?tabs=vanilla-javascript)
+|[Azure Static Web Apps](../latest/docs-ref-autogen/staticwebapp.yml) | [Build your first static site](/azure/static-web-apps/get-started-cli?tabs=vanilla-javascript)
 
 ## See also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
 - [Command reference list for the Azure CLI](/cli/azure/reference-index)
+

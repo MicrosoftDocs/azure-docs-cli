@@ -34,6 +34,7 @@ directCommands:
                          [--no-external-endpoint]
                          [--no-wait]
                          [--path]
+                         [--readable-secondaries]
                          [--replicas]
                          [--resource-group]
                          [--retention-days]
@@ -127,8 +128,11 @@ directCommands:
   - name: --path
     summary: The path to the azext_arcdata file for the SQL managed instance json file.
     description: ''
+  - name: --readable-secondaries
+    summary: Number of replicas to be made readable. Applies only to Business Critical tier.  Value must be between 0 and the number of replicas minus 1.
+    description: ''
   - name: --replicas
-    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3' or '1' with default of '1'.
+    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3', '2', '1' with default of '1'.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group in which the sqlmi resource should be added.
@@ -149,7 +153,7 @@ directCommands:
     summary: Comma-separated list of annotations to apply to all PVCs.
     description: ''
   - name: --storage-class-backups
-    summary: The storage class to be used for backups (/var/opt/mssql/backups). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
+    summary: A ReadWriteMany (RWX) capable storage class to be used for backups (/var/opt/mssql/backups). If no value is specified, the default storage class will be used.
     description: ''
   - name: --storage-class-data -d
     summary: The storage class to be used for data files (.mdf, .ndf). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
@@ -424,6 +428,8 @@ directCommands:
                          [--no-wait]
                          [--path]
                          [--preferred-primary-replica]
+                         [--readable-secondaries]
+                         [--replicas]
                          [--resource-group]
                          [--retention-days]
                          [--service-annotations]
@@ -482,6 +488,12 @@ directCommands:
     description: ''
   - name: --preferred-primary-replica
     summary: The preferred primary replica to be updated.
+    description: ''
+  - name: --readable-secondaries
+    summary: Number of replicas to be made readable. Applies only to Business Critical tier.  Value must be between 0 and the number of replicas minus 1.
+    description: ''
+  - name: --replicas
+    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3', '2', '1' with default of '1'.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group in which the sqlmi resource should be updated.
@@ -568,11 +580,6 @@ commands:
 - az_sql_mi-arc_config_remove
 - az_sql_mi-arc_config_replace
 - az_sql_mi-arc_create
-- az_sql_mi-arc_dag
-- az_sql_mi-arc_dag_create
-- az_sql_mi-arc_dag_delete
-- az_sql_mi-arc_dag_show
-- az_sql_mi-arc_dag_update
 - az_sql_mi-arc_delete
 - az_sql_mi-arc_edit
 - az_sql_mi-arc_endpoint
@@ -595,6 +602,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

@@ -4,38 +4,31 @@ name: az datashare synchronization-setting
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **datashare** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az datashare synchronization-setting** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands for providers to manage datashare synchronization settings.
+  > This reference is part of the **datashare** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az datashare synchronization-setting** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage synchronization setting with datashare.
 description: ''
 directCommands:
 - uid: az_datashare_synchronization-setting_create
   name: az datashare synchronization-setting create
-  summary: Create a synchronization setting.
+  summary: Create a synchronizationSetting.
   description: ''
   syntax: >-
     az datashare synchronization-setting create --account-name
                                                 --name
-                                                --recurrence-interval {Day, Hour}
                                                 --resource-group
                                                 --share-name
-                                                --synchronization-time
-                                                [--kind {ScheduleBased}]
+                                                [--scheduled-synchronization-setting]
   examples:
-  - summary: Create a synchronization setting
-    syntax: az datashare synchronization-setting create --account-name MyAccount --resource-group MyResourceGroup --share-name MyShare --name MyDataset --recurrence-interval Day --synchronization-time "2020-04-05 10:50:00 +00:00" --kind ScheduleBased
+  - summary: SynchronizationSettings_Create
+    syntax: az datashare synchronization-setting create --account-name "Account1" --resource-group "SampleResourceGroup" --share-name "Share1" --scheduled-synchronization-setting recurrence-interval="Day" synchronization-time="2018-11-14T04:47:52.9614956Z" --name "Dataset1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --synchronization-setting-name -n
     summary: The name of the synchronizationSetting.
-    description: ''
-  - isRequired: true
-    name: --recurrence-interval
-    parameterValueGroup: Day, Hour
-    summary: Synchronization Recurrence Interval.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -43,21 +36,23 @@ directCommands:
     description: ''
   - isRequired: true
     name: --share-name
-    summary: The name of the share.
-    description: ''
-  - isRequired: true
-    name: --synchronization-time
-    summary: 'Synchronization time. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
+    summary: The name of the share to add the synchronization setting to.
     description: ''
   optionalParameters:
-  - name: --kind
-    defaultValue: ScheduleBased
-    parameterValueGroup: ScheduleBased
-    summary: Kind of synchronization.
-    description: ''
+  - name: --scheduled-synchronization-setting
+    summary: A type of synchronization setting based on schedule.
+    description: >-
+      Usage: --scheduled-synchronization-setting recurrence-interval=XX synchronization-time=XX kind=XX
+
+
+      recurrence-interval: Required. Recurrence Interval
+
+      synchronization-time: Required. Synchronization time
+
+      kind: Required. Kind of synchronization setting.
 - uid: az_datashare_synchronization-setting_delete
   name: az datashare synchronization-setting delete
-  summary: Delete a synchronization setting in a share.
+  summary: Delete a synchronizationSetting in a share.
   description: ''
   syntax: >-
     az datashare synchronization-setting delete --account-name
@@ -67,16 +62,16 @@ directCommands:
                                                 [--no-wait]
                                                 [--yes]
   examples:
-  - summary: Delete a synchronization setting
-    syntax: az datashare synchronization-setting delete --account-name MyAccount --resource-group MyResourceGroup --share-name MyShare --name MySyncrhonizationSetting
+  - summary: SynchronizationSettings_Delete
+    syntax: az datashare synchronization-setting delete --account-name "Account1" --resource-group "SampleResourceGroup" --share-name "Share1" --name "SynchronizationSetting1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: The name of the synchronizationSetting.
+    name: --name --synchronization-setting-name -n
+    summary: The name of the synchronizationSetting .
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -95,15 +90,16 @@ directCommands:
     description: ''
 - uid: az_datashare_synchronization-setting_list
   name: az datashare synchronization-setting list
-  summary: List synchronization settings in a share.
+  summary: List synchronizationSettings in a share.
   description: ''
   syntax: >-
     az datashare synchronization-setting list --account-name
                                               --resource-group
                                               --share-name
+                                              [--skip-token]
   examples:
-  - summary: List synchronization settings
-    syntax: az datashare synchronization-setting list --account-name MyAccount --resource-group MyResourceGroup --share-name MyShare
+  - summary: SynchronizationSettings_ListByShare
+    syntax: az datashare synchronization-setting list --account-name "Account1" --resource-group "SampleResourceGroup" --share-name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
@@ -117,9 +113,13 @@ directCommands:
     name: --share-name
     summary: The name of the share.
     description: ''
+  optionalParameters:
+  - name: --skip-token
+    summary: Continuation token.
+    description: ''
 - uid: az_datashare_synchronization-setting_show
   name: az datashare synchronization-setting show
-  summary: Show a synchronization setting in a share.
+  summary: Get a synchronizationSetting in a share.
   description: ''
   syntax: >-
     az datashare synchronization-setting show --account-name
@@ -127,15 +127,15 @@ directCommands:
                                               --resource-group
                                               --share-name
   examples:
-  - summary: Show a synchronization setting
-    syntax: az datashare synchronization-setting show --account-name MyAccount --resource-group MyResourceGroup --share-name MyShare --name MySyncrhonizationSetting
+  - summary: SynchronizationSettings_Get
+    syntax: az datashare synchronization-setting show --account-name "Account1" --resource-group "SampleResourceGroup" --share-name "Share1" --name "SynchronizationSetting1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --synchronization-setting-name -n
     summary: The name of the synchronizationSetting.
     description: ''
   - isRequired: true
@@ -148,7 +148,7 @@ directCommands:
     description: ''
 - uid: az_datashare_synchronization-setting_wait
   name: az datashare synchronization-setting wait
-  summary: Place the CLI in a waiting state until a condition of the datashare synchronization setting is met.
+  summary: Place the CLI in a waiting state until a condition of the datashare synchronization-setting is met.
   description: ''
   syntax: >-
     az datashare synchronization-setting wait --account-name
@@ -163,15 +163,15 @@ directCommands:
                                               [--timeout]
                                               [--updated]
   examples:
-  - summary: Pause executing next line of CLI script until the datashare synchronization setting is successfully provisioned.
-    syntax: az datashare synchronization-setting wait --account-name MyAccount --resource-group MyResourceGroup --share-name MyShare --name MySyncrhonizationSetting --created
+  - summary: Pause executing next line of CLI script until the datashare synchronization-setting is successfully deleted.
+    syntax: az datashare synchronization-setting wait --account-name "Account1" --resource-group "SampleResourceGroup" --share-name "Share1" --name "SynchronizationSetting1" --deleted
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --synchronization-setting-name -n
     summary: The name of the synchronizationSetting.
     description: ''
   - isRequired: true
@@ -225,7 +225,9 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands for providers to manage datashare synchronization settings.
+  description: Manage synchronization setting with datashare.

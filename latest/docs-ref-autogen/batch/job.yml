@@ -12,6 +12,7 @@ directCommands:
     az batch job create [--account-endpoint]
                         [--account-key]
                         [--account-name]
+                        [--allow-task-preemption]
                         [--id]
                         [--job-manager-task-command-line]
                         [--job-manager-task-environment-settings]
@@ -25,7 +26,6 @@ directCommands:
                         [--pool-id]
                         [--priority]
                         [--required-slots]
-                        [--subscription]
                         [--uses-task-dependencies]
   optionalParameters:
   - name: --account-endpoint
@@ -36,6 +36,9 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
     description: ''
   - name: --id
     summary: Required. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case).
@@ -59,7 +62,7 @@ directCommands:
     summary: If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+    summary: A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
     description: ''
   - name: --max-parallel-tasks
     summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
@@ -75,9 +78,6 @@ directCommands:
     description: ''
   - name: --required-slots
     summary: The number of scheduling slots that the Task requires to run. The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling slots available. For multi-instance Tasks, this property is not supported and must not be specified.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --uses-task-dependencies
     summary: Whether Tasks in the Job can define dependencies on each other. The default is false. True if flag present.
@@ -96,7 +96,6 @@ directCommands:
                         [--if-modified-since]
                         [--if-none-match]
                         [--if-unmodified-since]
-                        [--subscription]
                         [--yes]
   requiredParameters:
   - isRequired: true
@@ -125,9 +124,6 @@ directCommands:
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -146,7 +142,6 @@ directCommands:
                          [--if-modified-since]
                          [--if-none-match]
                          [--if-unmodified-since]
-                         [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-id
@@ -177,9 +172,6 @@ directCommands:
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job_enable
   name: az batch job enable
@@ -194,7 +186,6 @@ directCommands:
                         [--if-modified-since]
                         [--if-none-match]
                         [--if-unmodified-since]
-                        [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-id
@@ -222,9 +213,6 @@ directCommands:
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job_list
   name: az batch job list
@@ -238,7 +226,6 @@ directCommands:
                       [--filter]
                       [--job-schedule-id]
                       [--select]
-                      [--subscription]
   optionalParameters:
   - name: --account-endpoint
     summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
@@ -261,9 +248,6 @@ directCommands:
   - name: --select
     summary: An OData $select clause.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job_reset
   name: az batch job reset
@@ -274,6 +258,7 @@ directCommands:
                        [--account-endpoint]
                        [--account-key]
                        [--account-name]
+                       [--allow-task-preemption]
                        [--if-match]
                        [--if-modified-since]
                        [--if-none-match]
@@ -281,11 +266,11 @@ directCommands:
                        [--job-max-task-retry-count]
                        [--job-max-wall-clock-time]
                        [--json-file]
+                       [--max-parallel-tasks]
                        [--metadata]
                        [--on-all-tasks-complete {noaction, terminatejob}]
                        [--pool-id]
                        [--priority]
-                       [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-id
@@ -300,6 +285,9 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
     description: ''
   - name: --if-match
     summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
@@ -320,7 +308,10 @@ directCommands:
     summary: If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: A file containing the job update parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+    summary: A file containing the job update parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
+    description: ''
+  - name: --max-parallel-tasks
+    summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
     description: ''
   - name: --metadata
     summary: If omitted, it takes the default value of an empty list; in effect, any existing metadata is deleted. Space-separated values in 'key=value' format.
@@ -335,9 +326,6 @@ directCommands:
   - name: --priority
     summary: The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. If omitted, it is set to the default value 0.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job_set
   name: az batch job set
@@ -348,6 +336,7 @@ directCommands:
                      [--account-endpoint]
                      [--account-key]
                      [--account-name]
+                     [--allow-task-preemption]
                      [--if-match]
                      [--if-modified-since]
                      [--if-none-match]
@@ -360,7 +349,6 @@ directCommands:
                      [--on-all-tasks-complete {noaction, terminatejob}]
                      [--pool-id]
                      [--priority]
-                     [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-id
@@ -375,6 +363,9 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. Specify either 'true' or 'false' to update the property.
     description: ''
   - name: --if-match
     summary: An ETag value associated with the version of the resource known to the client. The operation will be performed only if the resource's current ETag on the service exactly matches the value specified by the client.
@@ -395,7 +386,7 @@ directCommands:
     summary: If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: A file containing the job patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+    summary: A file containing the job patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
     description: ''
   - name: --max-parallel-tasks
     summary: The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API.
@@ -413,9 +404,6 @@ directCommands:
   - name: --priority
     summary: The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. If omitted, the priority of the Job is left unchanged.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job_show
   name: az batch job show
@@ -432,7 +420,6 @@ directCommands:
                       [--if-none-match]
                       [--if-unmodified-since]
                       [--select]
-                      [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-id
@@ -466,9 +453,6 @@ directCommands:
   - name: --select
     summary: An OData $select clause.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job_stop
   name: az batch job stop
@@ -483,7 +467,6 @@ directCommands:
                       [--if-modified-since]
                       [--if-none-match]
                       [--if-unmodified-since]
-                      [--subscription]
                       [--terminate-reason]
   requiredParameters:
   - isRequired: true
@@ -511,9 +494,6 @@ directCommands:
     description: ''
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --terminate-reason
     summary: Termination reason.
@@ -548,9 +528,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/07/2021
+  ms.date: 03/30/2022
   description: Manage Batch jobs.

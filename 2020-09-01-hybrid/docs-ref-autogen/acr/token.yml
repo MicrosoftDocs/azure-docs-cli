@@ -19,7 +19,6 @@ directCommands:
                         [--resource-group]
                         [--scope-map]
                         [--status]
-                        [--subscription]
   examples:
   - summary: Create a token with repository permissions defined in the scope map 'MyScopeMap'.
     syntax: az acr token create -n MyToken -r MyRegistry --scope-map MyScopeMap
@@ -38,7 +37,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --expiration
@@ -48,14 +47,14 @@ directCommands:
     summary: Number of days for which the credentials will be valid. If not specified, the expiration will default to the max value "9999-12-31T23:59:59.999999+00:00".
     description: ''
   - name: --gateway
-    summary: Gateway permissions. Use the format "--gateway GATEWAY [ACTION1 ACTION2 ...]" per flag. Valid actions are {'config/write', 'message/write', 'message/read', 'config/read'}.
+    summary: Gateway permissions. Use the format "--gateway GATEWAY [ACTION1 ACTION2 ...]" per flag. Valid actions are {'message/write', 'message/read', 'config/read', 'config/write'}.
     description: ''
   - name: --no-passwords
     parameterValueGroup: false, true
-    summary: Do not generate passwords, instead use "az acr token credential generate".
+    summary: Do not generate passwords during token creation. You can generate the passwords after the token is created by using `az acr token credentials generate` command.
     description: ''
   - name: --repository
-    summary: Repository permissions. Use the format "--repository REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/write', 'content/read', 'content/delete', 'metadata/read', 'metadata/write'}.
+    summary: Repository permissions. Use the format "--repository REPO [ACTION1 ACTION2 ...]" per flag. Valid actions are {'content/read', 'content/delete', 'metadata/write', 'content/write', 'metadata/read'}.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -67,9 +66,6 @@ directCommands:
     defaultValue: enabled
     summary: The status of the token.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_token_delete
   name: az acr token delete
@@ -79,7 +75,6 @@ directCommands:
     az acr token delete --name
                         --registry
                         [--resource-group]
-                        [--subscription]
                         [--yes]
   examples:
   - summary: Delete the token 'MyToken'.
@@ -91,14 +86,11 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -111,21 +103,17 @@ directCommands:
   syntax: >-
     az acr token list --registry
                       [--resource-group]
-                      [--subscription]
   examples:
   - summary: List tokens under the registry 'MyRegistry'.
     syntax: az acr token list -r MyRegistry
   requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_token_show
@@ -136,7 +124,6 @@ directCommands:
     az acr token show --name
                       --registry
                       [--resource-group]
-                      [--subscription]
   examples:
   - summary: Get information for the token 'MyToken'.
     syntax: az acr token show -n MyToken -r MyRegistry
@@ -147,14 +134,11 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 - uid: az_acr_token_update
@@ -167,7 +151,6 @@ directCommands:
                         [--resource-group]
                         [--scope-map]
                         [--status]
-                        [--subscription]
   examples:
   - summary: Update the token 'MyToken', making it associated with the scope map 'MyNewScopeMap'.
     syntax: az acr token update -n MyToken -r MyRegistry --scope-map MyNewScopeMap
@@ -178,7 +161,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --resource-group -g
@@ -190,9 +173,6 @@ directCommands:
   - name: --status
     defaultValue: enabled
     summary: The status of the token.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
 commands:
@@ -217,9 +197,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/28/2021
+  ms.date: 03/28/2022
   description: Manage tokens for an Azure Container Registry.

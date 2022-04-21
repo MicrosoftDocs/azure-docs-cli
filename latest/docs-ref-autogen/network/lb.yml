@@ -26,7 +26,6 @@ directCommands:
                          [--sku {Basic, Gateway, Standard}]
                          [--subnet]
                          [--subnet-address-prefix]
-                         [--subscription]
                          [--tags]
                          [--validate]
                          [--vnet-address-prefix]
@@ -106,9 +105,6 @@ directCommands:
     defaultValue: 10.0.0.0/24
     summary: The CIDR address prefix to use when creating a new subnet.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -131,7 +127,6 @@ directCommands:
     az network lb delete [--ids]
                          [--name]
                          [--resource-group]
-                         [--subscription]
   examples:
   - summary: Delete a load balancer.
     syntax: az network lb delete -g MyResourceGroup -n MyLb
@@ -145,17 +140,12 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_list
   name: az network lb list
   summary: List load balancers.
   description: ''
-  syntax: >-
-    az network lb list [--resource-group]
-                       [--subscription]
+  syntax: az network lb list [--resource-group]
   examples:
   - summary: List load balancers.
     syntax: az network lb list -g MyResourceGroup
@@ -163,8 +153,40 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_lb_list-mapping
+  name: az network lb list-mapping
+  summary: List inbound NAT rule port mappings.
+  description: ''
+  syntax: >-
+    az network lb list-mapping --backend-pool-name
+                               --request
+                               [--ids]
+                               [--name]
+                               [--resource-group]
+  examples:
+  - summary: List inbound NAT rule port mappings based on IP.
+    syntax: az network lb list-mapping -n MyLb -g MyResourceGroup --backend-pool-name MyAddressPool --request ip=XX
+  - summary: List inbound NAT rule port mappings based on NIC.
+    syntax: az network lb list-mapping -n MyLb -g MyResourceGroup --backend-pool-name MyAddressPool --request nic=XX
+  requiredParameters:
+  - isRequired: true
+    name: --backend-pool-name
+    summary: The name of the backend address pool.
+    description: ''
+  - isRequired: true
+    name: --request
+    summary: Query inbound NAT rule port mapping request.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The load balancer name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_list-nic
@@ -175,7 +197,6 @@ directCommands:
     az network lb list-nic [--ids]
                            [--name]
                            [--resource-group]
-                           [--subscription]
   examples:
   - summary: List associated load balancer network interfaces.
     syntax: az network lb list-nic -g MyResourceGroup --name MyLb
@@ -189,9 +210,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_show
   name: az network lb show
@@ -202,7 +220,6 @@ directCommands:
                        [--ids]
                        [--name]
                        [--resource-group]
-                       [--subscription]
   examples:
   - summary: Get the details of a load balancer.
     syntax: az network lb show -g MyResourceGroup -n MyLb
@@ -219,9 +236,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_update
   name: az network lb update
@@ -235,7 +249,6 @@ directCommands:
                          [--remove]
                          [--resource-group]
                          [--set]
-                         [--subscription]
   examples:
   - summary: Update the tags of a load balancer.
     syntax: az network lb update -g MyResourceGroup -n MyLb --set tags.CostCenter=MyBusinessGroup
@@ -261,9 +274,6 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_wait
   name: az network lb wait
@@ -279,7 +289,6 @@ directCommands:
                        [--interval]
                        [--name]
                        [--resource-group]
-                       [--subscription]
                        [--timeout]
                        [--updated]
   examples:
@@ -313,9 +322,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -362,6 +368,7 @@ commands:
 - az_network_lb_inbound-nat-rule_show
 - az_network_lb_inbound-nat-rule_update
 - az_network_lb_list
+- az_network_lb_list-mapping
 - az_network_lb_list-nic
 - az_network_lb_outbound-rule
 - az_network_lb_outbound-rule_create
@@ -397,9 +404,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/26/2022
+  ms.date: 03/09/2022
   description: To learn more about Azure Load Balancer visit https://docs.microsoft.com/azure/load-balancer/load-balancer-get-started-internet-arm-cli.

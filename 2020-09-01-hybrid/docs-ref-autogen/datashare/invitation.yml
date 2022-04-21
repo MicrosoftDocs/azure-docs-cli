@@ -4,8 +4,8 @@ name: az datashare invitation
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **datashare** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az datashare invitation** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands for providers to manage datashare invitations.
+  > This reference is part of the **datashare** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az datashare invitation** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage invitation with datashare.
 description: ''
 directCommands:
 - uid: az_datashare_invitation_create
@@ -14,22 +14,23 @@ directCommands:
   description: ''
   syntax: >-
     az datashare invitation create --account-name
-                                   --name
+                                   --invitation-name
                                    --resource-group
                                    --share-name
+                                   [--expiration-date]
                                    [--target-active-directory-id]
                                    [--target-email]
                                    [--target-object-id]
   examples:
-  - summary: Create an invitation
-    syntax: az datashare invitation create --account-name MyAccount --target-email "receiver@microsoft.com" --name MyInvitation --resource-group MyResourceGroup --share-name MyShare
+  - summary: Invitations_Create
+    syntax: az datashare invitation create --account-name "Account1" --expiration-date "2020-08-26T22:33:24.5785265Z" --target-email "receiver@microsoft.com" --name "Invitation1" --resource-group "SampleResourceGroup" --share-name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --invitation-name --name -n
     summary: The name of the invitation.
     description: ''
   - isRequired: true
@@ -38,9 +39,12 @@ directCommands:
     description: ''
   - isRequired: true
     name: --share-name
-    summary: The name of the share.
+    summary: The name of the share to send the invitation for.
     description: ''
   optionalParameters:
+  - name: --expiration-date
+    summary: The expiration date for the invitation and share subscription.
+    description: ''
   - name: --target-active-directory-id
     summary: The target Azure AD Id. Can't be combined with email.
     description: ''
@@ -56,20 +60,20 @@ directCommands:
   description: ''
   syntax: >-
     az datashare invitation delete --account-name
-                                   --name
+                                   --invitation-name
                                    --resource-group
                                    --share-name
                                    [--yes]
   examples:
-  - summary: Delete an invitation
-    syntax: az datashare invitation delete --account-name MyAccount --name MyInvitation --resource-group MyResourceGroup --share-name MyShare
+  - summary: Invitations_Delete
+    syntax: az datashare invitation delete --account-name "Account1" --name "Invitation1" --resource-group "SampleResourceGroup" --share-name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --invitation-name --name -n
     summary: The name of the invitation.
     description: ''
   - isRequired: true
@@ -92,9 +96,12 @@ directCommands:
     az datashare invitation list --account-name
                                  --resource-group
                                  --share-name
+                                 [--filter]
+                                 [--orderby]
+                                 [--skip-token]
   examples:
-  - summary: List invitations
-    syntax: az datashare invitation list --account-name MyAccount --resource-group MyResourceGroup --share-name MyShare
+  - summary: Invitations_ListByShare
+    syntax: az datashare invitation list --account-name "Account1" --resource-group "SampleResourceGroup" --share-name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
@@ -108,25 +115,35 @@ directCommands:
     name: --share-name
     summary: The name of the share.
     description: ''
+  optionalParameters:
+  - name: --filter
+    summary: Filters the results using OData syntax.
+    description: ''
+  - name: --orderby
+    summary: Sorts the results using OData syntax.
+    description: ''
+  - name: --skip-token
+    summary: The continuation token.
+    description: ''
 - uid: az_datashare_invitation_show
   name: az datashare invitation show
-  summary: Show an invitation in a share.
+  summary: Get an invitation in a share.
   description: ''
   syntax: >-
     az datashare invitation show --account-name
-                                 --name
+                                 --invitation-name
                                  --resource-group
                                  --share-name
   examples:
-  - summary: Show an invitation
-    syntax: az datashare invitation show --account-name MyAccount --name MyInvitation --resource-group MyResourceGroup --share-name MyShare
+  - summary: Invitations_Get
+    syntax: az datashare invitation show --account-name "Account1" --name "Invitation1" --resource-group "SampleResourceGroup" --share-name "Share1"
   requiredParameters:
   - isRequired: true
     name: --account-name
     summary: The name of the share account.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --invitation-name --name -n
     summary: The name of the invitation.
     description: ''
   - isRequired: true
@@ -155,7 +172,9 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands for providers to manage datashare invitations.
+  description: Manage invitation with datashare.

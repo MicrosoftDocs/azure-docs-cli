@@ -7,9 +7,9 @@ directCommands:
 - uid: az_afd_custom-domain_create
   name: az afd custom-domain create
   summary: Create a custom domain within the specified profile.
-  description: Your need to create a DNS TXT record to prove the custom domain's ownership to make the operation successful. Suggest to use "--no-wait" if the DNS update take a lot of time. Use "az afd custom-domain show" to obtain the validation token and create a DNS TXT record for record "_dnsauth.{your custom domain}" with the validation token as its value.
+  description: The operation will complete with a created custom domain with its validation state set to 'Pending. You have to create a DNS TXT record "_dnsauth.<your_custom_domain>" with the validation token as its value to make the domain's validation state become 'Approved' to server traffic. Use "az afd custom-domain show" to obtain the validation token. The validation token will expire after 7 days and your domain's validation state will become "Timeout" if no correct TXT record detected in that period. You could use 'az afd custom-domain regenerate-validation-token' to regenerate the validation token to restart the validation process.
   syntax: >-
-    az afd custom-domain create --certificate-type {CustomerCertificate, ManagedCertificate}
+    az afd custom-domain create --certificate-type {AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate}
                                 --custom-domain-name
                                 --host-name
                                 --minimum-tls-version {TLS10, TLS12}
@@ -18,7 +18,6 @@ directCommands:
                                 [--azure-dns-zone]
                                 [--no-wait]
                                 [--secret]
-                                [--subscription]
   examples:
   - summary: Create a custom domain that uses AFD managed cerficate for SSL/TLS encryption.
     syntax: az afd custom-domain create -g group --custom-domain-name customDomain --profile-name profile --host-name www.contoso.com --minimum-tls-version TLS12 --certificate-type ManagedCertificate
@@ -27,7 +26,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --certificate-type
-    parameterValueGroup: CustomerCertificate, ManagedCertificate
+    parameterValueGroup: AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate
     summary: Defines the source of the SSL certificate.
     description: ''
   - isRequired: true
@@ -61,9 +60,6 @@ directCommands:
   - name: --secret
     summary: Name of the azure front door secret.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_afd_custom-domain_delete
   name: az afd custom-domain delete
   summary: Delete a custom domain.
@@ -73,7 +69,6 @@ directCommands:
                                 [--ids]
                                 [--profile-name]
                                 [--resource-group]
-                                [--subscription]
                                 [--yes]
   examples:
   - summary: Delete a custom domain.
@@ -91,9 +86,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -104,7 +96,6 @@ directCommands:
   syntax: >-
     az afd custom-domain list --profile-name
                               --resource-group
-                              [--subscription]
   examples:
   - summary: List all the custom domains within the specified profile.
     syntax: az afd custom-domain list -g group --profile-name profile
@@ -117,9 +108,30 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_afd_custom-domain_regenerate-validation-token
+  name: az afd custom-domain regenerate-validation-token
+  summary: Regenerate the domain validation token to restart the validation process.
+  description: ''
+  syntax: >-
+    az afd custom-domain regenerate-validation-token [--custom-domain-name]
+                                                     [--ids]
+                                                     [--profile-name]
+                                                     [--resource-group]
+  examples:
+  - summary: Regenerate the domain validation token.
+    syntax: az afd custom-domain regenerate-validation-token -g MyResourceGroup --profile-name MyProfle --custom-domain-name MyCustomDomain
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --custom-domain-name
+    summary: Name of the custom domain.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --profile-name
+    summary: Name of the CDN profile which is unique within the resource group.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: az_afd_custom-domain_show
   name: az afd custom-domain show
@@ -130,7 +142,6 @@ directCommands:
                               [--ids]
                               [--profile-name]
                               [--resource-group]
-                              [--subscription]
   examples:
   - summary: show details of the custom domain within the specified profile.
     syntax: az afd custom-domain show -g group --profile-name profile  --custom-domain-name customDomainName
@@ -147,23 +158,19 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_afd_custom-domain_update
   name: az afd custom-domain update
   summary: Update a custom domain within the specified profile.
   description: ''
   syntax: >-
     az afd custom-domain update [--azure-dns-zone]
-                                [--certificate-type {CustomerCertificate, ManagedCertificate}]
+                                [--certificate-type {AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate}]
                                 [--custom-domain-name]
                                 [--ids]
                                 [--minimum-tls-version {TLS10, TLS12}]
                                 [--profile-name]
                                 [--resource-group]
                                 [--secret]
-                                [--subscription]
   examples:
   - summary: Update the custom domain's supported minimum TLS version.
     syntax: az afd custom-domain update -g group --custom-domain-name customDomain --profile-name profile --minimum-tls-version TLS12
@@ -174,7 +181,7 @@ directCommands:
     summary: ID of the Azure DNS zone.
     description: ''
   - name: --certificate-type
-    parameterValueGroup: CustomerCertificate, ManagedCertificate
+    parameterValueGroup: AzureFirstPartyManagedCertificate, CustomerCertificate, ManagedCertificate
     summary: Defines the source of the SSL certificate.
     description: ''
   - name: --custom-domain-name
@@ -196,9 +203,6 @@ directCommands:
   - name: --secret
     summary: Name of the azure front door secret.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_afd_custom-domain_wait
   name: az afd custom-domain wait
   summary: Place the CLI in a waiting state until a condition of the custom domain is met.
@@ -213,7 +217,6 @@ directCommands:
                               [--interval]
                               [--profile-name]
                               [--resource-group]
-                              [--subscription]
                               [--timeout]
                               [--updated]
   examples:
@@ -248,9 +251,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
@@ -262,6 +262,7 @@ commands:
 - az_afd_custom-domain_create
 - az_afd_custom-domain_delete
 - az_afd_custom-domain_list
+- az_afd_custom-domain_regenerate-validation-token
 - az_afd_custom-domain_show
 - az_afd_custom-domain_update
 - az_afd_custom-domain_wait
@@ -278,6 +279,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

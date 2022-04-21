@@ -12,6 +12,7 @@ directCommands:
     az batch job-schedule create [--account-endpoint]
                                  [--account-key]
                                  [--account-name]
+                                 [--allow-task-preemption]
                                  [--do-not-run-after]
                                  [--do-not-run-until]
                                  [--id]
@@ -29,7 +30,6 @@ directCommands:
                                  [--recurrence-interval]
                                  [--required-slots]
                                  [--start-window]
-                                 [--subscription]
                                  [--uses-task-dependencies]
   optionalParameters:
   - name: --account-endpoint
@@ -40,6 +40,9 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
     description: ''
   - name: --do-not-run-after
     summary: If you do not specify a doNotRunAfter time, and you are creating a recurring Job Schedule, the Job Schedule will remain active until you explicitly terminate it. Expected format is an ISO-8601 timestamp.
@@ -66,7 +69,7 @@ directCommands:
     summary: If the Job does not complete within the time limit, the Batch service terminates it and any Tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the Job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: A file containing the cloud job schedule specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Cloud Job Schedule Arguments' are ignored.
+    summary: A file containing the cloud job schedule specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
     description: ''
   - name: --max-parallel-tasks
     summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
@@ -93,9 +96,6 @@ directCommands:
   - name: --start-window
     summary: If a Job is not created within the startWindow interval, then the 'opportunity' is lost; no Job will be created until the next recurrence of the schedule. If the schedule is recurring, and the startWindow is longer than the recurrence interval, then this is equivalent to an infinite startWindow, because the Job that is 'due' in one recurrenceInterval is not carried forward into the next recurrence interval. The default is infinite. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --uses-task-dependencies
     summary: Whether Tasks in the Job can define dependencies on each other. The default is false. True if flag present.
     description: ''
@@ -113,7 +113,6 @@ directCommands:
                                  [--if-modified-since]
                                  [--if-none-match]
                                  [--if-unmodified-since]
-                                 [--subscription]
                                  [--yes]
   requiredParameters:
   - isRequired: true
@@ -142,9 +141,6 @@ directCommands:
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -162,7 +158,6 @@ directCommands:
                                   [--if-modified-since]
                                   [--if-none-match]
                                   [--if-unmodified-since]
-                                  [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-schedule-id
@@ -190,9 +185,6 @@ directCommands:
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job-schedule_enable
   name: az batch job-schedule enable
@@ -207,7 +199,6 @@ directCommands:
                                  [--if-modified-since]
                                  [--if-none-match]
                                  [--if-unmodified-since]
-                                 [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-schedule-id
@@ -235,9 +226,6 @@ directCommands:
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job-schedule_list
   name: az batch job-schedule list
@@ -250,7 +238,6 @@ directCommands:
                                [--expand]
                                [--filter]
                                [--select]
-                               [--subscription]
   optionalParameters:
   - name: --account-endpoint
     summary: 'Batch service endpoint. Alternatively, set by environment variable: AZURE_BATCH_ENDPOINT.'
@@ -270,9 +257,6 @@ directCommands:
   - name: --select
     summary: An OData $select clause.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job-schedule_reset
   name: az batch job-schedule reset
@@ -283,6 +267,7 @@ directCommands:
                                 [--account-endpoint]
                                 [--account-key]
                                 [--account-name]
+                                [--allow-task-preemption]
                                 [--do-not-run-after]
                                 [--do-not-run-until]
                                 [--if-match]
@@ -304,7 +289,6 @@ directCommands:
                                 [--recurrence-interval]
                                 [--required-slots]
                                 [--start-window]
-                                [--subscription]
                                 [--uses-task-dependencies]
   requiredParameters:
   - isRequired: true
@@ -320,6 +304,9 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. True if flag present.
     description: ''
   - name: --do-not-run-after
     summary: If you do not specify a doNotRunAfter time, and you are creating a recurring Job Schedule, the Job Schedule will remain active until you explicitly terminate it. Expected format is an ISO-8601 timestamp.
@@ -358,7 +345,7 @@ directCommands:
     summary: The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space-separated values in 'key=value' format.
     description: ''
   - name: --json-file
-    summary: A file containing the job schedule update parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Schedule Arguments' are ignored.
+    summary: A file containing the job schedule update parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
     description: ''
   - name: --max-parallel-tasks
     summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
@@ -385,9 +372,6 @@ directCommands:
   - name: --start-window
     summary: If a Job is not created within the startWindow interval, then the 'opportunity' is lost; no Job will be created until the next recurrence of the schedule. If the schedule is recurring, and the startWindow is longer than the recurrence interval, then this is equivalent to an infinite startWindow, because the Job that is 'due' in one recurrenceInterval is not carried forward into the next recurrence interval. The default is infinite. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --uses-task-dependencies
     summary: Whether Tasks in the Job can define dependencies on each other. The default is false. True if flag present.
     description: ''
@@ -401,6 +385,7 @@ directCommands:
                               [--account-endpoint]
                               [--account-key]
                               [--account-name]
+                              [--allow-task-preemption]
                               [--do-not-run-after]
                               [--do-not-run-until]
                               [--if-match]
@@ -422,7 +407,6 @@ directCommands:
                               [--recurrence-interval]
                               [--required-slots]
                               [--start-window]
-                              [--subscription]
                               [--uses-task-dependencies]
   requiredParameters:
   - isRequired: true
@@ -438,6 +422,9 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API. Specify either 'true' or 'false' to update the property.
     description: ''
   - name: --do-not-run-after
     summary: If you do not specify a doNotRunAfter time, and you are creating a recurring Job Schedule, the Job Schedule will remain active until you explicitly terminate it. Expected format is an ISO-8601 timestamp.
@@ -476,7 +463,7 @@ directCommands:
     summary: The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space-separated values in 'key=value' format.
     description: ''
   - name: --json-file
-    summary: A file containing the job schedule patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Schedule Arguments' are ignored.
+    summary: A file containing the job schedule patch parameter specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all '{group_title(arg[0])} Arguments' are ignored.
     description: ''
   - name: --max-parallel-tasks
     summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
@@ -503,9 +490,6 @@ directCommands:
   - name: --start-window
     summary: If a Job is not created within the startWindow interval, then the 'opportunity' is lost; no Job will be created until the next recurrence of the schedule. If the schedule is recurring, and the startWindow is longer than the recurrence interval, then this is equivalent to an infinite startWindow, because the Job that is 'due' in one recurrenceInterval is not carried forward into the next recurrence interval. The default is infinite. The minimum value is 1 minute. If you specify a lower value, the Batch service rejects the schedule with an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --uses-task-dependencies
     summary: Whether Tasks in the Job can define dependencies on each other. The default is false. Specify either 'true' or 'false' to update the property.
     description: ''
@@ -525,7 +509,6 @@ directCommands:
                                [--if-none-match]
                                [--if-unmodified-since]
                                [--select]
-                               [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-schedule-id
@@ -559,9 +542,6 @@ directCommands:
   - name: --select
     summary: An OData $select clause.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 - uid: az_batch_job-schedule_stop
   name: az batch job-schedule stop
@@ -576,7 +556,6 @@ directCommands:
                                [--if-modified-since]
                                [--if-none-match]
                                [--if-unmodified-since]
-                               [--subscription]
   requiredParameters:
   - isRequired: true
     name: --job-schedule-id
@@ -604,9 +583,6 @@ directCommands:
   - name: --if-unmodified-since
     summary: A timestamp indicating the last modified time of the resource known to the client. The operation will be performed only if the resource on the service has not been modified since the specified time.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batch/_help.py
 commands:
 - az_batch_job-schedule_create
@@ -631,9 +607,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/07/2021
+  ms.date: 03/30/2022
   description: Manage Batch job schedules.

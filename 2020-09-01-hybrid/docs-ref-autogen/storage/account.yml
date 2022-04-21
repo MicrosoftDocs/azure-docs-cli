@@ -8,17 +8,11 @@ directCommands:
   name: az storage account check-name
   summary: Check that the storage account name is valid and is not already in use.
   description: ''
-  syntax: >-
-    az storage account check-name --name
-                                  [--subscription]
+  syntax: az storage account check-name --name
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the storage account within the specified resource group.
-    description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_create
@@ -29,6 +23,7 @@ directCommands:
     az storage account create --name
                               --resource-group
                               [--access-tier {Cool, Hot}]
+                              [--account-type]
                               [--action]
                               [--allow-blob-public-access]
                               [--allow-cross-tenant-replication]
@@ -73,10 +68,10 @@ directCommands:
                               [--publish-microsoft-endpoints {false, true}]
                               [--require-infrastructure-encryption]
                               [--routing-choice {InternetRouting, MicrosoftRouting}]
+                              [--sam-account-name]
                               [--sas-expiration-period]
                               [--sku {Premium_LRS, Premium_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS}]
                               [--subnet]
-                              [--subscription]
                               [--tags]
                               [--user-identity-id]
                               [--vnet-name]
@@ -98,6 +93,9 @@ directCommands:
   - name: --access-tier
     parameterValueGroup: Cool, Hot
     summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
+    description: ''
+  - name: --account-type
+    summary: The storage account type.
     description: ''
   - name: --action
     defaultValue: Allow
@@ -246,6 +244,9 @@ directCommands:
     parameterValueGroup: InternetRouting, MicrosoftRouting
     summary: Routing Choice defines the kind of network routing opted by the user.
     description: ''
+  - name: --sam-account-name
+    summary: ''
+    description: ''
   - name: --sas-expiration-period
     summary: ''
     description: ''
@@ -256,9 +257,6 @@ directCommands:
     description: ''
   - name: --subnet
     summary: ''
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -278,7 +276,6 @@ directCommands:
     az storage account delete [--ids]
                               [--name]
                               [--resource-group]
-                              [--subscription]
                               [--yes]
   examples:
   - summary: Delete a storage account using a resource ID.
@@ -294,9 +291,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -316,7 +310,6 @@ directCommands:
                                 [--name]
                                 [--no-wait]
                                 [--resource-group]
-                                [--subscription]
                                 [--yes]
   examples:
   - summary: Failover a storage account.
@@ -339,9 +332,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -362,7 +352,6 @@ directCommands:
                                     [--ids]
                                     [--ip]
                                     [--start]
-                                    [--subscription]
   examples:
   - summary: Generate a sas token for the account that is valid for queue and table services on Linux.
     syntax: >-
@@ -383,7 +372,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --permissions
-    summary: 'The permissions the SAS grants. Allowed values: (a)dd (c)reate (d)elete (l)ist (p)rocess (r)ead (u)pdate (w)rite (a)dd (c)reate (d)elete (l)ist (p)rocess (r)ead (u)pdate (w)rite. Can be combined.'
+    summary: 'The permissions the SAS grants. Allowed values: (a)dd (a)dd (c)reate (c)reate (d)elete (d)elete (l)ist (l)ist (p)rocess (p)rocess (r)ead (r)ead (u)pdate (u)pdate (w)rite (w)rite. Can be combined.'
     description: ''
   - isRequired: true
     name: --resource-types
@@ -415,17 +404,12 @@ directCommands:
   - name: --start
     summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Defaults to the time of the request.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_list
   name: az storage account list
   summary: List storage accounts.
   description: ''
-  syntax: >-
-    az storage account list [--resource-group]
-                            [--subscription]
+  syntax: az storage account list [--resource-group]
   examples:
   - summary: List all storage accounts in a subscription.
     syntax: az storage account list
@@ -434,9 +418,6 @@ directCommands:
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_revoke-delegation-keys
@@ -447,7 +428,6 @@ directCommands:
     az storage account revoke-delegation-keys [--ids]
                                               [--name]
                                               [--resource-group]
-                                              [--subscription]
   examples:
   - summary: Revoke all user delegation keys for a storage account by resource ID.
     syntax: az storage account revoke-delegation-keys --ids /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Storage/storageAccounts/{StorageAccount}
@@ -463,9 +443,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_show
   name: az storage account show
@@ -476,7 +453,6 @@ directCommands:
                             [--ids]
                             [--name]
                             [--resource-group]
-                            [--subscription]
   examples:
   - summary: Show properties for a storage account by resource ID.
     syntax: az storage account show --ids /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Storage/storageAccounts/{StorageAccount}
@@ -495,9 +471,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_show-connection-string
   name: az storage account show-connection-string
@@ -513,7 +486,6 @@ directCommands:
                                               [--queue-endpoint]
                                               [--resource-group]
                                               [--sas-token]
-                                              [--subscription]
                                               [--table-endpoint]
   examples:
   - summary: Get a connection string for a storage account.
@@ -552,9 +524,6 @@ directCommands:
   - name: --sas-token
     summary: The SAS token to be used in the connection-string.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --table-endpoint
     summary: Custom endpoint for tables.
     description: ''
@@ -563,9 +532,7 @@ directCommands:
   name: az storage account show-usage
   summary: Show the current count and limit of the storage accounts under the subscription.
   description: ''
-  syntax: >-
-    az storage account show-usage --location
-                                  [--subscription]
+  syntax: az storage account show-usage --location
   examples:
   - summary: Show the current count and limit of the storage accounts under the subscription. (autogenerated)
     syntax: az storage account show-usage --location westus2
@@ -574,10 +541,6 @@ directCommands:
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_update
   name: az storage account update
@@ -585,6 +548,7 @@ directCommands:
   description: ''
   syntax: >-
     az storage account update [--access-tier {Cool, Hot}]
+                              [--account-type]
                               [--add]
                               [--allow-blob-public-access]
                               [--allow-cross-tenant-replication]
@@ -625,10 +589,10 @@ directCommands:
                               [--remove]
                               [--resource-group]
                               [--routing-choice {InternetRouting, MicrosoftRouting}]
+                              [--sam-account-name]
                               [--sas-expiration-period]
                               [--set]
                               [--sku {Premium_LRS, Premium_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS}]
-                              [--subscription]
                               [--tags]
                               [--use-subdomain {false, true}]
                               [--user-identity-id]
@@ -639,6 +603,9 @@ directCommands:
   - name: --access-tier
     parameterValueGroup: Cool, Hot
     summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
+    description: ''
+  - name: --account-type
+    summary: ''
     description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -770,6 +737,9 @@ directCommands:
     parameterValueGroup: InternetRouting, MicrosoftRouting
     summary: Routing Choice defines the kind of network routing opted by the user.
     description: ''
+  - name: --sam-account-name
+    summary: ''
+    description: ''
   - name: --sas-expiration-period
     summary: ''
     description: ''
@@ -779,9 +749,6 @@ directCommands:
   - name: --sku
     parameterValueGroup: Premium_LRS, Premium_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS
     summary: The storage account SKU.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -857,9 +824,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/30/2021
+  ms.date: 03/29/2022
   description: Manage storage accounts.

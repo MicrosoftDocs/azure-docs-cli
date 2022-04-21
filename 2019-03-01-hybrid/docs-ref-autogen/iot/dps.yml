@@ -54,9 +54,9 @@ directCommands:
   syntax: >-
     az iot dps create --name
                       --resource-group
+                      [--edr {false, true}]
                       [--location]
                       [--sku {S1}]
-                      [--subscription]
                       [--tags]
                       [--unit]
   examples:
@@ -64,6 +64,8 @@ directCommands:
     syntax: az iot dps create --name MyDps --resource-group MyResourceGroup
   - summary: Create an Azure IoT Hub Device Provisioning Service with the standard pricing tier S1, in the 'eastus' region.
     syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --location eastus
+  - summary: Create an Azure IoT Hub Device Provisioning Service with data residency enforced. This will disable cross-region disaster recovery.
+    syntax: az iot dps create --name MyDps --resource-group MyResourceGroup --edr
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -74,6 +76,10 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --edr --enforce-data-residency
+    parameterValueGroup: false, true
+    summary: Enforce data residency for this IoT Hub Device Provisioning Service by disabling cross geo-pair disaster recovery. This property is immutable once set on the resource. Only available in select regions. Learn more at https://aka.ms/dpsdr.
+    description: ''
   - name: --location -l
     summary: Location of your IoT Hub Device Provisioning Service. Default is the location of target resource group.
     description: ''
@@ -81,9 +87,6 @@ directCommands:
     defaultValue: S1
     parameterValueGroup: S1
     summary: Pricing tier for the IoT Hub Device Provisioning Service.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -101,7 +104,6 @@ directCommands:
     az iot dps delete [--ids]
                       [--name]
                       [--resource-group]
-                      [--subscription]
   examples:
   - summary: Delete an Azure IoT Hub Device Provisioning Service 'MyDps'
     syntax: az iot dps delete --name MyDps --resource-group MyResourceGroup
@@ -115,17 +117,12 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
 - uid: az_iot_dps_list
   name: az iot dps list
   summary: List Azure IoT Hub Device Provisioning Service instances.
   description: ''
-  syntax: >-
-    az iot dps list [--resource-group]
-                    [--subscription]
+  syntax: az iot dps list [--resource-group]
   examples:
   - summary: List all Azure IoT Hub Device Provisioning Services in a subscription.
     syntax: az iot dps list
@@ -134,9 +131,6 @@ directCommands:
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
 - uid: az_iot_dps_show
@@ -147,7 +141,6 @@ directCommands:
     az iot dps show [--ids]
                     [--name]
                     [--resource-group]
-                    [--subscription]
   examples:
   - summary: Show details of an Azure IoT Hub Device Provisioning Service 'MyDps'
     syntax: az iot dps show --name MyDps --resource-group MyResourceGroup
@@ -160,9 +153,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/iot/_help.py
 - uid: az_iot_dps_update
@@ -177,7 +167,6 @@ directCommands:
                       [--remove]
                       [--resource-group]
                       [--set]
-                      [--subscription]
                       [--tags]
   examples:
   - summary: Update Allocation Policy to 'GeoLatency' of an Azure IoT Hub Device Provisioning Service 'MyDps'
@@ -203,9 +192,6 @@ directCommands:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -238,9 +224,14 @@ commands:
 - az_iot_dps_enrollment_show
 - az_iot_dps_enrollment_update
 - az_iot_dps_enrollment-group
+- az_iot_dps_enrollment-group_compute-device-key
 - az_iot_dps_enrollment-group_create
 - az_iot_dps_enrollment-group_delete
 - az_iot_dps_enrollment-group_list
+- az_iot_dps_enrollment-group_registration
+- az_iot_dps_enrollment-group_registration_delete
+- az_iot_dps_enrollment-group_registration_list
+- az_iot_dps_enrollment-group_registration_show
 - az_iot_dps_enrollment-group_show
 - az_iot_dps_enrollment-group_update
 - az_iot_dps_linked-hub
@@ -275,9 +266,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/27/2022
+  ms.date: 02/24/2022
   description: Manage Azure IoT Hub Device Provisioning Service.

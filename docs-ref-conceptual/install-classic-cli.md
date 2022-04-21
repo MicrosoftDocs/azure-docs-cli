@@ -1,9 +1,9 @@
 ---
 title: Install the Azure classic CLI | Microsoft Docs
 description: Learn how to install the Azure classic CLI for macOS, Linux, and Windows to use open-source shell-based commands for managing Microsoft Azure services.
-author: dbradish-microsoft
-ms.author: dbradish
-manager: barbkess
+author: jiasli
+ms.author: jiasli
+manager: yonzhan
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli

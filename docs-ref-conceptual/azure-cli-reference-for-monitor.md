@@ -31,7 +31,7 @@ List of Azure CLI references that can be used to manage Azure Monitor, reference
 |-|-|-|-|
 | [az monitor](/cli/azure/monitor) | | The top-level command group for all Azure CLI commands for Azure Monitor. | [Azure Monitor overview](/azure/azure-monitor/overview)
 | [az monitor action-group](/cli/azure/monitor/action-group) | | Manage action groups, which relate to notifications once an alert has fired. | [Azure Monitor alerts](/azure/azure-monitor/platform/alerts-overview)
-| [az monitor action-rule](/cli/azure/monitor/action-rule) | yes | Manage action rules, which let you add or suppress the action groups on your fired alerts. | [Azure Monitor alerts](/azure/azure-monitor/alerts/alerts-action-rules)
+| [az monitor action-rule](/azure/azure-monitor/alerts/alerts-action-rules) | yes | Manage action rules, which let you add or suppress the action groups on your fired alerts. | [Azure Monitor alerts](/azure/azure-monitor/alerts/alerts-action-rules)
 | [az monitor activity-log](/cli/azure/monitor/activity-log) | | Manage activity logs, including activity log alerts. | [Azure activity logs](/azure/azure-monitor/platform/activity-log)
 | [az monitor app-insights](/cli/azure/monitor/app-insights) | yes | Manage Application Insights for application monitoring. | [Application insights overview](/azure/azure-monitor/app/app-insights-overview)
 | [az monitor autoscale](/cli/azure/monitor/autoscale) | | Manage autoscale settings. | [Autoscale overview](/azure/azure-monitor/platform/autoscale-overview)
@@ -75,6 +75,6 @@ az monitor activity-log alert create --name MyAlertName --resource-group MyResou
 
 - [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 
-- Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
+- Discover additional [core](../latest/docs-ref-autogen/reference-index.yml) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
 
 - Learn more about extension references in [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).

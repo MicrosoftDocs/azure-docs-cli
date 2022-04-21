@@ -1,9 +1,9 @@
 ---
 title: Install the Azure CLI for Windows | Microsoft Docs
 description: To install the Azure CLI on Windows, you must use Powershell, or an MSI installer, which gives you access to the CLI through the Windows Command Prompt (CMD).
-author: dbradish-microsoft
-ms.author: dbradish
-manager: barbkess
+author: jiasli
+ms.author: jiasli
+manager: yonzhan
 ms.prod: azure
 ms.date: 08/19/2021
 ms.topic: conceptual
@@ -38,7 +38,7 @@ Download and install the latest release of the Azure CLI. When the installer ask
 
 ### Specific version
 
-To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
+To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
 # [Microsoft Installer (MSI) with Command](#tab/azure-powershell)
 
@@ -57,7 +57,7 @@ Start PowerShell as administrator and run the following command:
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
 
-To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
+To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
 > [!Note]
 > After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
