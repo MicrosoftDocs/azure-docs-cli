@@ -18,7 +18,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   - isRequired: true
     name: --run-id
@@ -110,7 +110,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --agent-pool
@@ -139,7 +139,7 @@ directCommands:
     summary: The type of the auto trigger for base image dependency updates.
     description: ''
   - name: --cmd
-    summary: Commands to execute. This also supports additional docker run parameters (https://docs.docker.com/engine/reference/commandline/run/) or even other docker commands (https://docs.docker.com/engine/reference/commandline/docker/).
+    summary: Commands to execute. This also supports additional docker run parameters or even other docker commands.
     description: ''
   - name: --commit-trigger-enabled
     defaultValue: "1"
@@ -147,7 +147,7 @@ directCommands:
     summary: Indicates whether the source control commit trigger is enabled.
     description: ''
   - name: --context -c
-    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
+    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or a remote tarball (e.g., 'http://server/context.tar.gz'), or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
     description: ''
   - name: --cpu
     defaultValue: "2"
@@ -243,7 +243,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --resource-group -g
@@ -266,7 +266,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --resource-group -g
@@ -296,7 +296,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --image -t
@@ -324,6 +324,7 @@ directCommands:
     az acr task logs --registry
                      [--image]
                      [--name]
+                     [--no-format]
                      [--resource-group]
                      [--run-id]
   examples:
@@ -338,7 +339,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --image -t
@@ -346,6 +347,9 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The name of the task.
+    description: ''
+  - name: --no-format
+    summary: Indicates whether the logs should be displayed in raw format.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -366,6 +370,7 @@ directCommands:
                     [--context]
                     [--file]
                     [--log-template]
+                    [--no-format]
                     [--no-logs]
                     [--no-wait]
                     [--resource-group]
@@ -390,7 +395,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --agent-pool
@@ -400,13 +405,16 @@ directCommands:
     summary: Build argument in '--arg name[=value]' format. Multiples supported by passing '--arg` multiple times.
     description: ''
   - name: --context -c
-    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
+    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or a remote tarball (e.g., 'http://server/context.tar.gz'), or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
     description: ''
   - name: --file -f
     summary: Relative path of the the task/docker file to the source code root folder. Task files must be suffixed with '.yaml' or piped from the standard input using '-'.
     description: ''
   - name: --log-template
     summary: "The repository and tag template for run log artifact using the format: 'log/repo:tag' (e.g., 'acr/logs:{{.Run.ID}}'). Only applicable to CMK enabled registry."
+    description: ''
+  - name: --no-format
+    summary: Indicates whether the logs should be displayed in raw format.
     description: ''
   - name: --no-logs
     summary: Do not show logs after successfully queuing the build.
@@ -454,7 +462,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --resource-group -g
@@ -478,7 +486,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   - isRequired: true
     name: --run-id
@@ -543,7 +551,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   optionalParameters:
   - name: --agent-pool
@@ -567,7 +575,7 @@ directCommands:
     summary: Indicates whether the source control commit trigger is enabled.
     description: ''
   - name: --context -c
-    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
+    summary: The full URL to the source code repository (Requires '.git' suffix for a github repo) or a remote tarball (e.g., 'http://server/context.tar.gz'), or the repository of an OCI artifact in an Azure container registry (e.g., 'oci://myregistry.azurecr.io/myartifact:mytag'). If '/dev/null' is specified, the value will be set to None and ignored. This is a required argument if the task is not a system task.
     description: ''
   - name: --cpu
     summary: The CPU configuration in terms of number of cores required for the run.
@@ -645,7 +653,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --registry -r
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    summary: The name of the container registry. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
     description: ''
   - isRequired: true
     name: --run-id

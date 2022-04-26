@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 04/05/2022
+ms.date: 04/26/2022
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -13,6 +13,125 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## April 26, 2022
+
+Version 2.36.0
+
+### ACR
+
+* `acr task run`: Add `--no-format` option
+* `acr task logs`: Add `--no-format` option
+* `acr taskrun logs`: Add `--no-format` option
+
+### AKS
+
+* `az aks create`: Add `--nat-gateway-managed-outbound-ip-count` and `--nat-gateway-idle-timeout` to support nat gateway integration
+* `az aks create`: Add `managedNATGateway` and `userAssignedNATGateway` to supported outbound type
+* `az aks check-acr`: Bump canipull to 0.0.4-alpha to skip location check if cname returns only privatelink
+
+### AMS
+
+* `az ams asset-track create`: Add command to create an asset track
+* `az ams asset-track show`: Add command to show an asset track
+* `az ams asset-track list`: Add command to list all tracks under an asset
+* `az ams asset-track update`: Add command to update the parameters of a track
+* `az ams asset-track update-data`: Add update-data command to refresh the server in case track file was updated
+* `az ams asset-track delete`: Add command to delete track
+* `az ams streaming-endpoint get-skus`: Add command to get skus under a streaming endpoint
+
+### App Config
+
+* Fix feature flag import for missing description when using 'appconfig/kvset' profile
+
+### App Service
+
+* `az staticwebapp create`: Allow creating Static Web Apps not connected to a github repo
+* Fix #21943: `az webapp config backup create`: Fix AttributeError 'str' object has no attribute 'get'
+
+### Backup
+
+* `az backup policy create/set`: Add support for creating/updating IaaSVM MBPD policy
+
+### Bot Service
+
+* `az bot directline/email/facebook/kik/msteams/skype/slack/sms/telegram create`: Add `--location` argument as specified by user to channel creation for regionality/EUDB
+
+### CDN
+
+* `az afd rule create`: Fix rule creation failure with action type RouteConfigurationOverride
+* `az afd route create`: Fix route creation issue with disabled `--link-to-default-domain option`
+* Fix #22066: `az cdn name-exists` missing type argument
+
+### Compute
+
+* `az vm create`: Fix the bug of "NoneType object has no attribute lower" when creating Flex VMSS without `--vm-sku` parameter
+* `az restore-point create`: Add a new parameter `--source-restore-point` to support cross region copy
+* `az restore-point show`: Add a new parameter `--instance-view` to show the instance view of a restore point and replace the deprecated `--expand`
+* `az restore-point collection show`: Add a new parameter `--restore-points` to show all contained restore points in the restore point collection and replace the deprecated `--expand`
+* `az sig image-version create`: Add new parameter `--target-region-cvm-encryption` to support Confidential VM encrypting the OS disk
+* `az vm/vmss create`: Install guest attestation extension and enable system managed identity by default when Trusted Launch configuration is met
+* `az vm/vmss create`: Add new parameter `--disable-integrity-monitoring` to disable the default behavior (installing guest attestation extension and turning on MSI) when creating VM/VMSS compliant with Trusted Launch
+
+### IoT
+
+* [BREAKING CHANGE] `iot dps access-policy`: Deprecate access-policy in favor of policy
+
+### Key Vault
+
+* `az keyvault key`: GA SKR and keyvault key rotation
+* Fix #20520: `az keyvault network-rule`: Support removing multiple IP
+
+### NetAppFiles
+
+* `az netappfiles volume-group`: Add command group to manage volume group resources
+
+### Network
+
+* Fix #21845: `az network routeserver create` required `--public-ip-address` argument
+* Fix #21829: `az network traffic-manager endpoint update` required `--type` argument
+* Private link add `Microsoft.Network/privateLinkServices` provider
+* Fix #22085: `az network nsg rule create` has no attribute "is_default"
+
+### Packaging
+
+* Release DEB package for Ubuntu 22.04 Jammy Jellyfish
+* Release RPM package for RHEL 8, CentOS Stream 8
+* Release RPM package for Mariner 1.0, 2.0 preview
+
+### RDBMS
+
+* `az postgres server create`: Fix error message for invalid server names
+
+### Security
+
+* Add `az security automation` CLI commands
+
+### Service Bus
+
+* `az servicebus namespace create`: Add zone redundant parameter
+* `az servicebus namespace authorization-rule keys renew`: Add `--key-value` parameter
+
+### Service Connector
+
+* `az webapp connection`: Add command `create sql/webpubsub` to support more target resources
+
+### SQL
+
+* `az sql mi create`, `az sql mi update`: Add `--service-principal-type` parameter to support Win Auth (Kerberos)
+
+### Storage
+
+* Fix #21914: `az storage blob upload`: Make block size larger (100MB) for large files (>200GB)
+* `az storage account/container/blob generate-sas`: Add `--encryption-scope`
+* Fix #21920: `az storage copy`&`az storage remove`: Hide credentials in warning message
+* Add `--blob-endpoint/--file-endpoint/--table-endpoint/--queue-endpoint` for data service commands to support customized service endpoint
+* GA storage file datalake soft delete
+* `az storage cors add`: Allow `PATCH` for `--methods`
+* `az storage entity`: Support specifying `EdmType` for `--entity`
+* Fix #21966: `az storage blob download-batch`: Fix failure when `--pattern` is blob name
+* Fix #21414: `az storage blob sync`: Fix the flag `--delete-destination` default to false
+* `az storage account blob-inventory-policy create`: Add missing fields, add excludePrefix in filter
 
 ## April 05, 2022
 

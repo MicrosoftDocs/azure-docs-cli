@@ -34,6 +34,7 @@ directCommands:
                      [--pid]
                      [--proxy-override {Default, Proxy, Redirect}]
                      [--public-data-endpoint-enabled {false, true}]
+                     [--service-principal-type {None, SystemAssigned}]
                      [--storage]
                      [--tags]
                      [--timezone-id]
@@ -51,6 +52,8 @@ directCommands:
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --license-type LicenseIncluded --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --capacity 8 --storage 32GB --edition GeneralPurpose --family Gen5 --backup-storage-redundancy Local
   - summary: Create a managed instance with maintenance configuration
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} -m SQL_{Region}_{MaintenanceConfigName}
+  - summary: Create a managed instance with Service Principal enabled
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --service-principal-type SystemAssigned
   - summary: Create a managed instance without SQL Admin, with AAD admin and AD Only enabled
     syntax: az sql mi create --enable-ad-only-auth --external-admin-principal-type User --external-admin-name myUserName --external-admin-sid c5e964e2-6bb2-2222-1111-3b16ec0e1234 -g myResourceGroup -n miName --subnet /subscriptions/78975f9f-2222-1111-1111-29c42ac70000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/vnet-test/subnets/ManagedInstance
   - summary: Create a managed instance without SQL Admin, with AD admin, AD Only enabled, User ManagedIdenties and Identity Type is SystemAssigned,UserAssigned.
@@ -141,6 +144,10 @@ directCommands:
   - name: --public-data-endpoint-enabled
     parameterValueGroup: false, true
     summary: Whether or not the public data endpoint is enabled for the instance.
+    description: ''
+  - name: --service-principal-type
+    parameterValueGroup: None, SystemAssigned
+    summary: Service Principal type to be used for this Managed Instance. Possible values are SystemAssigned and None.
     description: ''
   - name: --storage
     summary: The storage size of the managed instance. Storage size must be specified in increments of 32 GB.
@@ -295,6 +302,7 @@ directCommands:
                      [--public-data-endpoint-enabled {false, true}]
                      [--remove]
                      [--resource-group]
+                     [--service-principal-type {None, SystemAssigned}]
                      [--set]
                      [--storage]
                      [--subnet]
@@ -319,6 +327,8 @@ directCommands:
     syntax: az sql mi update -g mygroup -n myinstance -m SQL_{Region}_{MaintenanceConfigName}
   - summary: Remove maintenance configuration from managed instance
     syntax: az sql mi update -g mygroup -n myinstance -m SQL_Default
+  - summary: Update a managed instance with Service Principal
+    syntax: az sql mi update -g mygroup -n myinstance --service-principal-type SystemAssigned
   - summary: Update a managed instance with User Managed Identies and Identity Type is SystemAssigned,UserAssigned.
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type SystemAssigned,UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi
   - summary: Update a managed instance with User Managed Identies and Identity Type is UserAssigned
@@ -396,6 +406,10 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --service-principal-type
+    parameterValueGroup: None, SystemAssigned
+    summary: Service Principal type to be used for this Managed Instance. Possible values are SystemAssigned and None.
+    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
@@ -465,5 +479,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/29/2022
+  ms.date: 04/15/2022
   description: Manage SQL managed instances.

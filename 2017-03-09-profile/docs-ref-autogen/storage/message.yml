@@ -6,7 +6,7 @@ description: 'Please specify one of the following authentication parameters for 
 directCommands:
 - uid: az_storage_message_clear
   name: az storage message clear
-  summary: Deletes all messages from the specified queue.
+  summary: Delete all messages from the specified queue.
   description: ''
   syntax: >-
     az storage message clear --queue-name
@@ -15,6 +15,9 @@ directCommands:
                              [--connection-string]
                              [--sas-token]
                              [--timeout]
+  examples:
+  - summary: Delete all messages from the specified queue.
+    syntax: az storage message clear -q myqueue --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --queue-name -q
@@ -39,8 +42,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_message_delete
   name: az storage message delete
-  summary: Deletes the specified message.
-  description: 'Normally after a client retrieves a message with the get_messages operation,  the client is expected to process and delete the message. To delete the  message, you must have two items of data: id and pop_receipt. The  id is returned from the previous get_messages operation. The  pop_receipt is returned from the most recent get_messages() or  update_message() operation. In order for the delete_message operation  to succeed, the pop_receipt specified on the request must match the  pop_receipt returned from the get_messages() or update_message()  operation.'
+  summary: Delete the specified message.
+  description: ''
   syntax: >-
     az storage message delete --id
                               --pop-receipt
@@ -50,6 +53,9 @@ directCommands:
                               [--connection-string]
                               [--sas-token]
                               [--timeout]
+  examples:
+  - summary: Delete the specified message.
+    syntax: az storage message delete --id messageid --pop-receipt popreceiptreturned -q myqueue --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --id
@@ -82,8 +88,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_message_get
   name: az storage message get
-  summary: Retrieves one or more messages from the front of the queue.
-  description: When a message is retrieved from the queue, the response includes the message  content and a pop_receipt value, which is required to delete the message.  The message is not automatically deleted from the queue, but after it has  been retrieved, it is not visible to other clients for the time interval  specified by the visibility_timeout parameter.
+  summary: Retrieve one or more messages from the front of the queue.
+  description: ''
   syntax: >-
     az storage message get --queue-name
                            [--account-key]
@@ -93,6 +99,9 @@ directCommands:
                            [--sas-token]
                            [--timeout]
                            [--visibility-timeout]
+  examples:
+  - summary: Retrieve one message from the front of the queue and reset the visibility timeout to 5 minutes later.
+    syntax: az storage message get -q myqueue --visibility-timeout 300 --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --queue-name -q
@@ -123,8 +132,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_message_peek
   name: az storage message peek
-  summary: Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message.
-  description: Only messages that are visible may be retrieved. When a message is retrieved  for the first time with a call to get_messages, its dequeue_count property  is set to 1. If it is not deleted and is subsequently retrieved again, the  dequeue_count property is incremented. The client may use this value to  determine how many times a message has been retrieved. Note that a call  to peek_messages does not increment the value of DequeueCount, but returns  this value for the client to read.
+  summary: Retrieve one or more messages from the front of the queue, but do not alter the visibility of the message.
+  description: ''
   syntax: >-
     az storage message peek --queue-name
                             [--account-key]
@@ -133,6 +142,9 @@ directCommands:
                             [--num-messages]
                             [--sas-token]
                             [--timeout]
+  examples:
+  - summary: Retrieve 5 messages from the front of the queue (do not alter the visibility of the message).
+    syntax: az storage message peek -q myqueue --num-messages 5 --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --queue-name -q
@@ -160,8 +172,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_message_put
   name: az storage message put
-  summary: Adds a new message to the back of the message queue.
-  description: The visibility timeout specifies the time that the message will be  invisible. After the timeout expires, the message will become visible.  If a visibility timeout is not specified, the default value of 0 is used.  The message time-to-live specifies how long a message will remain in the  queue. The message will be deleted from the queue when the time-to-live  period expires.
+  summary: Add a new message to the back of the message queue.
+  description: ''
   syntax: >-
     az storage message put --content
                            --queue-name
@@ -172,6 +184,9 @@ directCommands:
                            [--time-to-live]
                            [--timeout]
                            [--visibility-timeout]
+  examples:
+  - summary: Add a new message which will live one day.
+    syntax: az storage message put -q myqueue --content mymessagecontent --time-to-live 86400 --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --content
@@ -206,8 +221,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_message_update
   name: az storage message update
-  summary: Updates the visibility timeout of a message.
-  description: You can also use this operation to update the contents of a message.  This operation can be used to continually extend the invisibility of a  queue message. This functionality can be useful if you want a worker role  to “lease” a queue message. For example, if a worker role calls get_messages  and recognizes that it needs more time to process a message, it can  continually extend the message’s invisibility until it is processed. If  the worker role were to fail during processing, eventually the message  would become visible again and another worker role could process it.
+  summary: Update the visibility timeout of a message.
+  description: ''
   syntax: >-
     az storage message update --id
                               --pop-receipt
@@ -219,6 +234,12 @@ directCommands:
                               [--content]
                               [--sas-token]
                               [--timeout]
+  examples:
+  - summary: Update the visibility timeout and content of a message.
+    syntax: >-
+      az storage message update --id messageid --pop-receipt popreceiptreturned -q myqueue
+
+      --visibility-timeout 3600 --content newmessagecontent --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --id
@@ -282,5 +303,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/29/2022
+  ms.date: 04/13/2022
   description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

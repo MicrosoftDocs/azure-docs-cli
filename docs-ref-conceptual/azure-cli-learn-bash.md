@@ -134,8 +134,7 @@ subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv
 az account set -s $subscriptionId # Sets the current active subscription
 ```
 
-- For more information about querying boolean values, see [Query boolean values](./query-azure-cli.md).
-- For more information about filtering arrays, see [Filter arrays](./query-azure-cli.md).
+- For more information about filtering arrays and querying boolean values, see [Filter arrays with boolean expressions](./query-azure-cli.md#filter-arrays-with-boolean-expressions).
 - For more information about using variables, see [How to use variables](./azure-cli-variables.md).
 - For more information on working with subscriptions, see [Managing subscriptions](./manage-azure-subscriptions-azure-cli.md).
 
