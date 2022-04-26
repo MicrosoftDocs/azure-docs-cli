@@ -6,7 +6,7 @@ description: ''
 directCommands:
 - uid: az_storage_queue_create
   name: az storage queue create
-  summary: Creates a queue under the given account.
+  summary: Create a queue under the given account.
   description: ''
   syntax: >-
     az storage queue create --name
@@ -17,6 +17,9 @@ directCommands:
                             [--metadata]
                             [--sas-token]
                             [--timeout]
+  examples:
+  - summary: Create a queue under the given account with metadata.
+    syntax: az storage queue create -n myqueue --metadata key1=value1 key2=value2 --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -47,8 +50,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_delete
   name: az storage queue delete
-  summary: Deletes the specified queue and any messages it contains.
-  description: When a queue is successfully deleted, it is immediately marked for deletion  and is no longer accessible to clients. The queue is later removed from  the Queue service during garbage collection.  Note that deleting a queue is likely to take at least 40 seconds to complete.  If an operation is attempted against the queue while it was being deleted,  an AzureConflictHttpError will be thrown.
+  summary: Delete the specified queue and any messages it contains.
+  description: ''
   syntax: >-
     az storage queue delete --name
                             [--account-key]
@@ -57,6 +60,9 @@ directCommands:
                             [--fail-not-exist]
                             [--sas-token]
                             [--timeout]
+  examples:
+  - summary: Delete the specified queue, throw an exception if the queue doesn't exist.
+    syntax: az storage queue delete -n myqueue --fail-not-exist --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -84,7 +90,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_exists
   name: az storage queue exists
-  summary: Returns a boolean indicating whether the queue exists.
+  summary: Return a boolean indicating whether the queue exists.
   description: ''
   syntax: >-
     az storage queue exists --name
@@ -93,6 +99,9 @@ directCommands:
                             [--connection-string]
                             [--sas-token]
                             [--timeout]
+  examples:
+  - summary: Check whether the queue exists.
+    syntax: az storage queue exists -n myqueue --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -117,8 +126,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_generate-sas
   name: az storage queue generate-sas
-  summary: Generates a shared access signature for the queue.
-  description: Use the returned signature with the sas_token parameter of QueueService.
+  summary: Generate a shared access signature for the queue.Use the returned signature with the sas_token parameter of QueueService.
+  description: ''
   syntax: >-
     az storage queue generate-sas --name
                                   [--account-key]
@@ -131,6 +140,17 @@ directCommands:
                                   [--policy-name]
                                   [--sas-token]
                                   [--start]
+  examples:
+  - summary: Generate a sas token for the queue with read-only permissions.
+    syntax: >-
+      end=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+
+      az storage queue generate-sas -n myqueue --account-name mystorageaccount --permissions r --expiry $end --https-only
+  - summary: Generate a sas token for the queue with ip range specified.
+    syntax: >-
+      end=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+
+      az storage queue generate-sas -n myqueue --account-name mystorageaccount --ip "176.134.171.0-176.134.171.255" --permissions r --expiry $end --https-only
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -216,14 +236,17 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_stats
   name: az storage queue stats
-  summary: Retrieves statistics related to replication for the Queue service.
-  description: It is  only available when read-access geo-redundant replication is enabled for  the storage account.  With geo-redundant replication, Azure Storage maintains your data durable  in two locations. In both locations, Azure Storage constantly maintains  multiple healthy replicas of your data. The location where you read,  create, update, or delete data is the primary storage account location.  The primary location exists in the region you choose at the time you  create an account via the Azure Management Azure classic portal, for  example, North Central US. The location to which your data is replicated  is the secondary location. The secondary location is automatically  determined based on the location of the primary; it is in a second data  center that resides in the same region as the primary location. Read-only  access is available from the secondary location, if read-access geo-redundant  replication is enabled for your storage account.
+  summary: Retrieve statistics related to replication for the Queue service. It is only available when read-access geo-redundant replication is enabled for the storage account.
+  description: ''
   syntax: >-
     az storage queue stats [--account-key]
                            [--account-name]
                            [--connection-string]
                            [--sas-token]
                            [--timeout]
+  examples:
+  - summary: Show statistics related to replication for the Queue service.
+    syntax: az storage queue stats --account-name mystorageaccount
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -276,5 +299,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/29/2022
+  ms.date: 04/13/2022
   description: Manage storage queues.
