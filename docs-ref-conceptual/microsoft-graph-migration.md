@@ -36,6 +36,7 @@ Command argument and behavior breaking changes are listed below.
 ### `az ad app permission grant`
 
 - Remove `--expires`
+- `--scope` doesn't default to `user_impersonation` anymore and is now required.
 
 ### `az ad app credential reset`
 
@@ -53,6 +54,7 @@ Command argument and behavior breaking changes are listed below.
 
 ### `az ad sp credential reset`
 
+- Rename `--name` to `--id`
 - Remove `--password`. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
 
 ### `az ad group get-member-groups`
