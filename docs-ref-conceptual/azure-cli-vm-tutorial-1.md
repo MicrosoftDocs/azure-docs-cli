@@ -18,7 +18,7 @@ keywords: azure cli create vm, virtual machine in azure cli, shell variables
 In this tutorial, you'll learn how to create a virtual network (VNet) and deploy a virtual machine (VM) to the VNet with the Azure CLI. This tutorial
 also covers Azure CLI specific concepts such as shell variables and output queries.
 
-This tutorial can be completed with the interactive experienced offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
+This tutorial can be completed with the interactive experience offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
 locally.
 
 Use __ctrl-shift-v__ (__cmd-shift-v__ on macOS) to paste tutorial text into Azure Cloud Shell.
