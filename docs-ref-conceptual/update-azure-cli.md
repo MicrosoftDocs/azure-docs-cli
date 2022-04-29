@@ -22,9 +22,13 @@ You can rely on package managers to update a local install of the Azure CLI on W
 
 This is content for Windows
 
+::: zone-end
+
 ::: zone pivot="linux"
 
 This is content for Linux
+
+::: zone-end
 
 ::: zone pivot="macos"
 
