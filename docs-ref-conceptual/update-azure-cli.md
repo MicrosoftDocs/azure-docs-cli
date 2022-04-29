@@ -8,6 +8,8 @@ ms.date: 9/21/2021
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
+zone_pivot_group_filename: azure/zone-pivot-groups.json
+zone_pivot_groups: cli-test-zone-pivot
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: update azure cli
 ---
@@ -15,6 +17,20 @@ keywords: update azure cli
 # How to update the Azure CLI
 
 You can rely on package managers to update a local install of the Azure CLI on Windows, macOS and Linux environments (see the `Update` section in each platform-specific install instruction). The CLI also provides in-tool commands to upgrade manually or automatically.
+
+::: zone pivot="windows"
+
+This is content for Windows
+
+::: zone pivot="linux"
+
+This is content for Linux
+
+::: zone pivot="macos"
+
+This is content for macOS
+
+::: zone-end
 
 ## Manual Update
 [!INCLUDE [az-upgrade](includes/az-upgrade.md)]
