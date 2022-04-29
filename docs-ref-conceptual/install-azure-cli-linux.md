@@ -4,7 +4,7 @@ description: Learn how to install and run the Azure CLI on Linux manually. You c
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 08/19/2021
+ms.date: 04/29/2022
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli 
