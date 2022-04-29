@@ -8,6 +8,25 @@ extensionInformation: >-
 summary: Manage Azure Container Apps.
 description: ''
 directCommands:
+- uid: az_containerapp_browse
+  name: az containerapp browse
+  summary: Open a containerapp in the browser, if possible.
+  description: ''
+  syntax: >-
+    az containerapp browse --name
+                           --resource-group
+  examples:
+  - summary: open a containerapp in the browser
+    syntax: az containerapp browse -n MyContainerapp -g MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Containerapp.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_containerapp_create
   name: az containerapp create
   summary: Create a container app.
@@ -197,6 +216,47 @@ directCommands:
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
+- uid: az_containerapp_exec
+  name: az containerapp exec
+  summary: Open an SSH-like interactive shell within a container app replica.
+  description: ''
+  syntax: >-
+    az containerapp exec --name
+                         --resource-group
+                         [--command]
+                         [--container]
+                         [--replica]
+                         [--revision]
+  examples:
+  - summary: exec into a container app
+    syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup
+  - summary: exec into a particular container app replica and revision
+    syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup --replica MyReplica --revision MyRevision
+  - summary: open a bash shell in a containerapp
+    syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup --command bash
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Containerapp.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --command
+    defaultValue: sh
+    summary: The startup command (bash, zsh, sh, etc.).
+    description: ''
+  - name: --container
+    summary: The name of the container to ssh into.
+    description: ''
+  - name: --replica
+    summary: The name of the replica to ssh into. List replicas with 'az containerapp replica list'. A replica may not exist if there is not traffic to your app.
+    description: ''
+  - name: --revision
+    summary: The name of the container app revision to ssh into. Defaults to the latest revision.
+    description: ''
 - uid: az_containerapp_list
   name: az containerapp list
   summary: List container apps.
@@ -229,6 +289,113 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_containerapp_up
+  name: az containerapp up
+  summary: Create or update a container app as well as any associated resources (ACR, resource group, container apps environment, Github Actions, etc.).
+  description: ''
+  syntax: >-
+    az containerapp up --name
+                       [--branch]
+                       [--browse]
+                       [--context-path]
+                       [--env-vars]
+                       [--environment]
+                       [--image]
+                       [--ingress {external, internal}]
+                       [--location]
+                       [--logs-workspace-id]
+                       [--logs-workspace-key]
+                       [--registry-password]
+                       [--registry-server]
+                       [--registry-username]
+                       [--repo]
+                       [--resource-group]
+                       [--service-principal-client-id]
+                       [--service-principal-client-secret]
+                       [--service-principal-tenant-id]
+                       [--source]
+                       [--target-port]
+                       [--token]
+  examples:
+  - summary: Create a container app from a dockerfile in a Github repo (setting up github actions)
+    syntax: az containerapp up -n MyContainerapp --repo https://github.com/myAccount/myRepo
+  - summary: Create a container app from a dockerfile in a local directory
+    syntax: az containerapp up -n MyContainerapp --source .
+  - summary: Create a container app from an image in a registry
+    syntax: az containerapp up -n MyContainerapp --image myregistry.azurecr.io/myImage:myTag
+  - summary: Create a container app from an image in a registry with ingress enabled and a specified environment
+    syntax: az containerapp up -n MyContainerapp --image myregistry.azurecr.io/myImage:myTag --ingress external --target-port 80 --environment MyEnv
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Containerapp.
+    description: ''
+  optionalParameters:
+  - name: --branch -b
+    defaultValue: main
+    summary: The branch of the GitHub repo. Defaults to "main".
+    description: ''
+  - name: --browse
+    summary: Open the app in a web browser after creation and deployment, if possible.
+    description: ''
+  - name: --context-path
+    summary: Path in the repo from which to run the docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
+    description: ''
+  - name: --env-vars
+    summary: A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    description: ''
+  - name: --environment
+    summary: Name or resource ID of the container app's environment.
+    description: ''
+  - name: --image -i
+    summary: Container image, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --ingress
+    parameterValueGroup: external, internal
+    summary: The ingress type.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --logs-workspace-id
+    summary: Name or resource ID of the Log Analytics workspace to send diagnostics logs to. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
+    description: ''
+  - name: --logs-workspace-key
+    summary: Log Analytics workspace key to configure your Log Analytics workspace. You can use "az monitor log-analytics workspace get-shared-keys" to retrieve the key.
+    description: ''
+  - name: --registry-password
+    summary: The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --registry-server
+    summary: The container registry server hostname, e.g. myregistry.azurecr.io.
+    description: ''
+  - name: --registry-username
+    summary: The username to log in to container registry.
+    description: ''
+  - name: --repo
+    summary: 'Create an app via Github Actions. In the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --service-principal-client-id --sp-cid
+    summary: The service principal client ID. Used by Github Actions to authenticate with Azure.
+    description: ''
+  - name: --service-principal-client-secret --sp-sec
+    summary: The service principal client secret. Used by Github Actions to authenticate with Azure.
+    description: ''
+  - name: --service-principal-tenant-id --sp-tid
+    summary: The service principal tenant ID. Used by Github Actions to authenticate with Azure.
+    description: ''
+  - name: --source
+    summary: Local directory path to upload to Azure container registry.
+    description: ''
+  - name: --target-port
+    summary: The application port used for ingress traffic.
+    description: ''
+  - name: --token
+    summary: 'A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If missing (and using --repo), a browser page will be opened to authenticate with Github.'
     description: ''
 - uid: az_containerapp_update
   name: az containerapp update
@@ -301,19 +468,19 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove-all-env-vars
-    summary: Option to remove all environment variable(s) from the container.
+    summary: Remove all environment variable(s) from container..
     description: ''
   - name: --remove-env-vars
-    summary: A list of environment variable(s) to remove from container. Space-separated env var name values.
+    summary: Remove environment variable(s) from container. Space-separated environment variable names.
     description: ''
   - name: --replace-env-vars
-    summary: A list of environment variable(s) to replace from the container. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    summary: Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
     description: ''
   - name: --revision-suffix
     summary: User friendly suffix that is appended to the revision name.
     description: ''
   - name: --set-env-vars
-    summary: A list of environment variable(s) to add to the container. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    summary: Add or update environment variable(s) in container. Existing environmentenvironment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -322,6 +489,7 @@ directCommands:
     summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
     description: ''
 commands:
+- az_containerapp_browse
 - az_containerapp_create
 - az_containerapp_dapr
 - az_containerapp_dapr_disable
@@ -337,6 +505,7 @@ commands:
 - az_containerapp_env_delete
 - az_containerapp_env_list
 - az_containerapp_env_show
+- az_containerapp_exec
 - az_containerapp_github-action
 - az_containerapp_github-action_add
 - az_containerapp_github-action_delete
@@ -353,11 +522,16 @@ commands:
 - az_containerapp_ingress_traffic_set
 - az_containerapp_ingress_traffic_show
 - az_containerapp_list
+- az_containerapp_logs
+- az_containerapp_logs_show
 - az_containerapp_registry
 - az_containerapp_registry_list
 - az_containerapp_registry_remove
 - az_containerapp_registry_set
 - az_containerapp_registry_show
+- az_containerapp_replica
+- az_containerapp_replica_list
+- az_containerapp_replica_show
 - az_containerapp_revision
 - az_containerapp_revision_activate
 - az_containerapp_revision_copy
@@ -372,6 +546,7 @@ commands:
 - az_containerapp_secret_set
 - az_containerapp_secret_show
 - az_containerapp_show
+- az_containerapp_up
 - az_containerapp_update
 globalParameters:
 - name: --debug

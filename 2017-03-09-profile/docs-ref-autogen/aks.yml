@@ -120,7 +120,7 @@ directCommands:
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
-                  [--load-balancer-sku]
+                  [--load-balancer-sku {basic, standard}]
                   [--location]
                   [--max-count]
                   [--max-pods]
@@ -135,7 +135,7 @@ directCommands:
                   [--node-count]
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
-                  [--node-osdisk-type]
+                  [--node-osdisk-type {Ephemeral, Managed}]
                   [--node-public-ip-prefix-id]
                   [--node-resource-group]
                   [--node-vm-size]
@@ -480,6 +480,7 @@ directCommands:
     summary: Load balancer outbound allocated ports.
     description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs. Please specify a value in the range of [0, 64000] that is a multiple of 8.
   - name: --load-balancer-sku
+    parameterValueGroup: basic, standard
     summary: Azure Load Balancer SKU selection for your cluster. basic or standard.
     description: Select between Basic or Standard Azure Load Balancer SKU for your AKS cluster.
   - name: --location -l
@@ -525,13 +526,14 @@ directCommands:
     defaultValue: "3"
     summary: Number of nodes in the Kubernetes node pool. It is required when --enable-cluster-autoscaler specified. After creating a cluster, you can change the size of its node pool with `az aks scale`.
     description: ''
-  - name: --node-osdisk-diskencryptionset-id
-    summary: ResourceId of the disk encryption set to use for enabling encryption at rest.
+  - name: --node-osdisk-diskencryptionset-id -d
+    summary: ResourceId of the disk encryption set to use for enabling encryption at rest on agent node os disk.
     description: ''
   - name: --node-osdisk-size
     summary: Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
     description: ''
   - name: --node-osdisk-type
+    parameterValueGroup: Ephemeral, Managed
     summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
     description: ''
   - name: --node-public-ip-prefix-id
@@ -1093,6 +1095,7 @@ directCommands:
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
                   [--assign-identity]
+                  [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--azure-keyvault-kms-key-id]
@@ -1222,7 +1225,10 @@ directCommands:
     summary: Comma-separated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
   - name: --assign-identity
-    summary: (PREVIEW) Specify an existing user assigned identity to manage cluster resource group.
+    summary: Specify an existing user assigned identity to manage cluster resource group.
+    description: ''
+  - name: --assign-kubelet-identity
+    summary: Update cluster's kubelet identity to an existing user assigned identity. Note, this operation will recreate all agent node in the cluster.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -1287,7 +1293,7 @@ directCommands:
     summary: (Preview) If set to true, will enable getting static credential for this cluster.
     description: ''
   - name: --enable-managed-identity
-    summary: (PREVIEW) Update current cluster to managed identity to manage cluster resource group.
+    summary: Update current cluster to managed identity to manage cluster resource group.
     description: ''
   - name: --enable-oidc-issuer
     summary: (PREVIEW) Enable OIDC issuer.
