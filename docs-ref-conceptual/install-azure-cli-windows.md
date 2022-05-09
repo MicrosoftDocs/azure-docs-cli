@@ -111,7 +111,7 @@ Once on this screen type __Azure CLI__ into the program search bar. The program 
 
 ## Remove data
 
-If you don't plan to reinstall Azure CLI, remove its data from `C:\Users\<username>\.azure`.
+If you don't plan to reinstall Azure CLI, remove its data from `C:\Users\<username>\.azure\msal_token_cache.bin` or `C:\Users\<username>\.azure\msal_token_cache.json`.
 
 ## Next Steps
 
