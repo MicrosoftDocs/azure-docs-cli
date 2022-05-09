@@ -57,6 +57,14 @@ Command argument and behavior breaking changes are listed below.
 - Rename `--name` to `--id`
 - Remove `--password`. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
 
+### `az ad user create`
+
+- Replace `--force-change-password-next-login` with `--force-change-password-next-sign-in`
+
+### `az ad user update`
+
+- Replace `--force-change-password-next-login` with `--force-change-password-next-sign-in`
+
 ### `az ad group get-member-groups`
 
 - Remove `--additional-properties`
