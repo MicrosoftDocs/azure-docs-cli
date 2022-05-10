@@ -7,7 +7,7 @@ manager: yonzhan
 ms.date: 04/29/2022
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
 zone_pivot_group_filename: azure/zone-pivot-groups.json
 zone_pivot_groups: cli-linux-installation-method
@@ -30,6 +30,12 @@ When you are ready to install the Azure CLI on Linux, it is recommended to use a
 ::: zone pivot="dnf"
 
 [!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-dnf.md)]
+
+::: zone-end
+
+::: zone pivot="tdnf"
+
+[!INCLUDE [cli-install-linux-tdnf](includes/cli-install-linux-tdnf.md)]
 
 ::: zone-end
 
