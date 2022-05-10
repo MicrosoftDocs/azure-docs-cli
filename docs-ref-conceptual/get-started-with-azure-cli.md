@@ -132,5 +132,7 @@ az feedback
 
 ## See also
 
-* [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
+* [Choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
+* [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
+* [Services the Azure CLI can manage](./azure-services-the-azure-cli-can-manage.md)
 * [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)

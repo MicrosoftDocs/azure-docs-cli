@@ -36,5 +36,6 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 
 ## See also
 
-* [Update the Azure CLI](update-azure-cli.md)
-* [What is Azure CLI?](what-is-azure-cli.md)
+* [Choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
+* [Update the Azure CLI](./update-azure-cli.md)
+* [What is Azure CLI?](./what-is-azure-cli.md)

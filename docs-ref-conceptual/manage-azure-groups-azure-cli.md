@@ -1,4 +1,4 @@
----
+--
 title: How to manage Azure resource groups – Azure CLI | Microsoft Docs
 description: Learn how to manage Azure resource groups in the Azure CLI, a cross-platform tool to connect to Azure and execute administrative commands on Azure resources.
 author: dbradish-microsoft
@@ -163,7 +163,5 @@ az config param-persist delete --all
 ## See also
 
 [Azure CLI configuration](./azure-cli-configuration.md)
-
 [Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](./param-persist-tutorial.md)
-
-[Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md)
+[Use multiple Azure subscriptions](./manage-azure-subscriptions-azure-cli.md)
