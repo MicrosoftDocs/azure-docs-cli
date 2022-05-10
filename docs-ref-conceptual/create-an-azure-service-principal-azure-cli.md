@@ -312,4 +312,7 @@ If your account doesn't have permission to assign a role, you see an error messa
 ## See also
 
 * [Application and service principal objects in Azure Active Directory](/azure/active-directory/develop/app-objects-and-service-principals)
-* [How to manage service principals](/azure/developer/python/how-to-manage-service-principals)
+* [Manage service principals using the Azure portal](/azure/developer/python/how-to-manage-service-principals)
+* [Azure authentication with service principals](/azure/developer/java/sdk/identity-service-principal-auth)
+* [Service principals with Azure Kubernetes Service (AKS)](/azure/aks/kubernetes-service-principal)
+* [View the service principal of a managed identity](/azure/active-directory/managed-identities-azure-resources/how-to-view-managed-identity-service-principal-cli)
