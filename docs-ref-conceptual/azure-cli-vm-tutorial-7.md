@@ -49,6 +49,6 @@ For more information on the CLI features that were shown in the tutorial see:
 
 For more information on virtual networks and virtual machines see:
 
-* [Virtual networks and virtual machines in Azure](azure/virtual-network/network-overview)
-* [Linux virtual machines in Azure](azure/virtual-machines/linux/overview)
-* [Bringing and creating Linux images in Azure](azure/virtual-machines/linux/imaging)
+* [Virtual networks and virtual machines in Azure](/azure/virtual-network/network-overview)
+* [Linux virtual machines in Azure](/azure/virtual-machines/linux/overview)
+* [Bringing and creating Linux images in Azure](/azure/virtual-machines/linux/imaging)

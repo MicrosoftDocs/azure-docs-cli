@@ -121,7 +121,6 @@ See [az network](../latest/docs-ref-autogen/network.yml) for an alphabetic list 
 
 ## See also
 
-* [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
+* Manage Linux or Windows virtual machines with [az vm](../latest/docs-ref-autogen/vm.yml).
 * Discover additional [reference commands](../latest/docs-ref-autogen/reference-index.yml) and [available extensions](./azure-cli-extensions-list.md) in the Azure CLI documentation.
 * [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
-* Manage Linux or Windows virtual machines with [az vm](../latest/docs-ref-autogen/vm.yml).

@@ -135,4 +135,4 @@ az config param-persist delete --all
 
 * [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
 * [How to use the Azure CLI effectively](./use-cli-effectively.md)
-* [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md)
+* [How to query Azure CLI command output](./query-azure-cli.md)
