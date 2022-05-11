@@ -405,3 +405,8 @@ else
    echo The $resourceGroup resource group does not exist
 fi
 ```
+
+## See also
+
+* [How to use the Azure CLI effectively](use-cli-effectively.md)
+* [How to query Azure CLI command output](query-azure-cli.md)

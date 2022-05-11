@@ -60,5 +60,5 @@ az datashare account create --location westus --tags tag1=Red tag2=White --name 
 ## See also
 
 * [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
-
-* Discover additional [core](../latest/docs-ref-autogen/reference-index.yml) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
+* Discover additional [reference commands](../latest/docs-ref-autogen/reference-index.yml) and [available extensions](./azure-cli-extensions-list.md) in the Azure CLI documentation.
+* [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)

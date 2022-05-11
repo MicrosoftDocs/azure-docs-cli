@@ -165,4 +165,4 @@ az account lock delete --name "Cannot delete subscription"
 
 * [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology)
 * [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory)
-* [Sign in with Azure CLI](./authenticate-azure-cli.md)
+* [Manage Azure resource groups](./manage-azure-groups-azure-cli.md)

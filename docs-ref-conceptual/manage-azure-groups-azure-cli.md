@@ -162,8 +162,6 @@ az config param-persist delete --all
 
 ## See also
 
-[Azure CLI configuration](./azure-cli-configuration.md)
-
-[Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](./param-persist-tutorial.md)
-
-[Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md)
+* [Azure CLI configuration](./azure-cli-configuration.md)
+* [Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](./param-persist-tutorial.md)
+* [Use multiple Azure subscriptions](./manage-azure-subscriptions-azure-cli.md)
