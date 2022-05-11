@@ -104,7 +104,7 @@ The following command gets the SSH public keys authorized to connect to the VM b
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm show --resource-group QueryDemo --name TestVM --query 'osProfile.linuxConfiguration.ssh.publicKeys'
+az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConfiguration.ssh.publicKeys"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -139,7 +139,7 @@ To get more than one property, put expressions separated by commas in square bra
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm show --resource-group QueryDemo --name TestVM --query '[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]'
+az vm show --resource-group QueryDemo --name TestVM --query "[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -175,7 +175,7 @@ last section by changing the multiselect list to a hash:
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm show --resource-group QueryDemo --name TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }'
+az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData}"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -211,7 +211,7 @@ The following query gets the name, OS, and administrator name for each VM in a r
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}'
+az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -255,7 +255,7 @@ element:
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm show --resource-group QueryDemo --name TestVM --query '{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }'
+az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -292,11 +292,11 @@ The first query demonstrate how to list the names of all Azure subscriptions con
 
 ```azurecli-interactive
 # Boolean values are assumed to be true, so you can directly evaluate the isDefault property to return the default subscription.
-az account list --query '[?isDefault].name'
+az account list --query "[?isDefault].name"
 
 # To check if a Boolean property is false, you can use the comparison operator == or the logical operator !.
 az account list --query '[?!isDefault].name'
-az account list --query '[?isDefault == `false`].name'
+az account list --query "[?isDefault == \`false\`].name"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -309,6 +309,8 @@ az account list --query "[?isDefault].name"
 az account list --query "[?!isDefault].name"
 az account list --query "[?isDefault == ``false``].name"
 ```
+
+Notice the extra escape characters (`` ` ``) surrounding the 50 in the command above. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be taken into consideration. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
@@ -332,7 +334,7 @@ In the last section, you flattened an array to get the complete list of all VMs 
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query '[?storageProfile.osDisk.osType==`Linux`].{Name:name,  admin:osProfile.adminUsername}' --output table
+az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -361,7 +363,7 @@ You can also filter numerical values such as the OS disk size. The following exa
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query '[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }' --output table
+az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=\`50\`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -401,7 +403,7 @@ Expressions are evaluated before calling the function, so arguments themselves c
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query '[?contains(storageProfile.osDisk.managedDisk.storageAccountType,`SSD`)].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}'
+az vm list --resource-group QueryDemo --query "[?contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -438,7 +440,7 @@ Similar to how `|` is used in the command line, `|` can be used in JMESPath quer
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query '[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,`SSD`)]'
+az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -472,13 +474,12 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 
 ## Manipulating output with functions
 
-JMESPath functions also have another purpose, which is to operate on the results of a query. Any function that returns a non-boolean value changes the result of an expression. For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later
-as part of a function. The next example shows how to sort a VM list by OS disk size:
+JMESPath functions also have another purpose, which is to operate on the results of a query. Any function that returns a non-boolean value changes the result of an expression. For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later as part of a function. The next example shows how to sort a VM list by OS disk size:
 
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query 'sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)' --output table
+az vm list --resource-group QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -499,7 +500,7 @@ az vm list --resource-group QueryDemo --query "sort_by([].{Name:name, Size:stora
 Name     Size
 -------  ------
 Test-2   30
-Test-VM  32
+TestVM   32
 WinTest  127
 ```
 
@@ -520,7 +521,7 @@ One use case for `tsv` formatting is queries that retrieve a value out of a CLI 
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-USER=$(az vm show --resource-group QueryDemo --name TestVM --query 'osProfile.adminUsername')
+USER=$(az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername")
 echo $USER
 ```
 
@@ -544,12 +545,12 @@ echo %USER%
 "azureuser"
 ```
 
-To prevent enclosing return values with type information use `tsv`formatting as demonstrated in the following query:
+To prevent enclosing return values with type information use `tsv` formatting as demonstrated in the following query:
 
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-USER=$(az vm show --resource-group QueryDemo --name TestVM --query 'osProfile.adminUsername' --output tsv)
+USER=$(az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername" --output tsv)
 echo $USER
 ```
 
@@ -590,7 +591,7 @@ We can use a previous query to demonstrate this. The original query returned a J
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}'
+az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}"
 ```
 
 ### [PowerShell](#tab/powershell)
@@ -632,7 +633,7 @@ When combined with the `--output table` output format, the column names match up
 ### [Bash](#tab/bash)
 
 ```azurecli-interactive
-az vm list --resource-group QueryDemo --query '[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}' --output table
+az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
 
 ### [PowerShell](#tab/powershell)
