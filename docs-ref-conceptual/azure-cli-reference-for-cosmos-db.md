@@ -102,8 +102,6 @@ See [az cosmosdb](/cli/azure/service-page/azure%20cosmos%20db) for an alphabetic
 
 ## See also
 
-- [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
-
-- Discover additional [references](../latest/docs-ref-autogen/reference-index.yml) and [available extensions](./azure-cli-extensions-list.md) in the Azure CLI documentation.
-
-- Learn more about extension references in [Use extensions with Azure CLI](./azure-cli-extensions-overview.md).
+* [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
+* Discover additional [reference commands](../latest/docs-ref-autogen/reference-index.yml) and [available extensions](./azure-cli-extensions-list.md) in the Azure CLI documentation.
+* [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)

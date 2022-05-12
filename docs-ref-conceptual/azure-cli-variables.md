@@ -131,8 +131,8 @@ You can remove the persistent parameters by running the [az config param-persist
 az config param-persist delete --all
 ```
 
-## Next steps
+## See also
 
-* [Azure CLI persisted parameter](param-persist-howto.md)
-* [Working with resource groups in Azure CLI](manage-azure-groups-azure-cli.md)
-* [Create an Azure support request in Azure CLI](azure-cli-support-request.md)
+* [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
+* [How to use the Azure CLI effectively](./use-cli-effectively.md)
+* [How to query Azure CLI command output](./query-azure-cli.md)

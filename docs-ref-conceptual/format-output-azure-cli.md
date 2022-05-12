@@ -218,4 +218,7 @@ What default output format would you like?
 Please enter a choice [1]:
 ```
 
-To learn more about configuring your environment, see [Azure CLI configuration](./azure-cli-configuration.md).
+## See also
+
+* [Azure CLI configuration](./azure-cli-configuration.md)
+* [How to query Azure CLI command output](./query-azure-cli.md)

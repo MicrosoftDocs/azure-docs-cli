@@ -319,10 +319,8 @@ The example restores `$ErrorActionPreference` to its default value.
 
 For more information about PowerShell error handling, see [Everything you wanted to know about exceptions](/powershell/scripting/learn/deep-dives/everything-about-exceptions).
 
-## Next steps
+## See also
 
-- [Specifying values in Azure CLI commands](azure-cli-variables.md)
-- [Query Azure CLI command output](query-azure-cli.md)
-- [Output formats for Azure CLI commands](format-output-azure-cli.md)
-- [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md)
-
+* [Learn to use Bash with Azure CLI](./azure-cli-learn-bash.md)
+* [Query Azure CLI command output](./query-azure-cli.md)
+* [Use variables in Azure CLI commands](./azure-cli-variables.md)
