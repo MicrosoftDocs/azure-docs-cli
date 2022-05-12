@@ -58,6 +58,7 @@ directCommands:
                   [--admin-username]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
+                  [--apiserver-subnet-id]
                   [--appgw-id]
                   [--appgw-name]
                   [--appgw-subnet-cidr]
@@ -73,9 +74,12 @@ directCommands:
                   [--cluster-autoscaler-profile]
                   [--cluster-snapshot-id]
                   [--crg-id]
+                  [--disable-disk-driver {false, true}]
+                  [--disable-file-driver {false, true}]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
+                  [--disable-snapshot-controller {false, true}]
                   [--dns-name-prefix]
                   [--dns-service-ip]
                   [--docker-bridge-address]
@@ -83,6 +87,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-apiserver-vnet-integration]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
@@ -166,6 +171,7 @@ directCommands:
                   [--workload-runtime {OCIContainer, WasmWasi}]
                   [--workspace-resource-id]
                   [--yes]
+                  [--zones {1, 2, 3}]
   examples:
   - summary: Create a Kubernetes cluster with an existing SSH public key.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --ssh-key-value /path/to/publickey
@@ -267,6 +273,9 @@ directCommands:
   - name: --api-server-authorized-ip-ranges
     summary: Comma-separated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
+  - name: --apiserver-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration).
+    description: ''
   - name: --appgw-id
     summary: Resource Id of an existing Application Gateway to use with AGIC. Use with ingress-azure addon.
     description: ''
@@ -313,6 +322,14 @@ directCommands:
   - name: --crg-id
     summary: The crg-id used to associate the new cluster with the existed Capacity Reservation Group resource.
     description: ''
+  - name: --disable-disk-driver
+    parameterValueGroup: false, true
+    summary: Disable AzureDisk CSI Driver.
+    description: ''
+  - name: --disable-file-driver
+    parameterValueGroup: false, true
+    summary: Disable AzureFile CSI Driver.
+    description: ''
   - name: --disable-local-accounts
     summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
     description: ''
@@ -321,6 +338,10 @@ directCommands:
     description: ''
   - name: --disable-rbac
     summary: Disable Kubernetes Role-Based Access Control.
+    description: ''
+  - name: --disable-snapshot-controller
+    parameterValueGroup: false, true
+    summary: Disable CSI Snapshot Controller.
     description: ''
   - name: --dns-name-prefix -p
     summary: Prefix for hostnames that are created. If not specified, generate a hostname using the managed cluster and resource group names.
@@ -355,6 +376,9 @@ directCommands:
           azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+    description: ''
+  - name: --enable-apiserver-vnet-integration
+    summary: Enable integration of user vnet with control plane apiserver pods.
     description: ''
   - name: --enable-azure-keyvault-kms
     summary: Enable Azure KeyVault Key Management Service.
@@ -545,9 +569,9 @@ directCommands:
   - name: --node-vm-size -s
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
-  - name: --node-zones --zones -z
+  - name: --node-zones
     parameterValueGroup: 1, 2, 3
-    summary: (--node-zones will be deprecated, use --zones) Space-separated list of availability zones where agent nodes will be placed.
+    summary: (--node-zones will be deprecated) Space-separated list of availability zones where agent nodes will be placed.
     description: ''
   - name: --nodepool-labels
     summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
@@ -648,6 +672,10 @@ directCommands:
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Space-separated list of availability zones where agent nodes will be placed.
+    description: ''
 - uid: az_aks_delete
   name: az aks delete
   summary: Delete a managed Kubernetes cluster.
@@ -672,7 +700,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --ignore-pod-disruption-budget
-    summary: Ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget.
+    summary: Ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. Default value is None.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -1094,6 +1122,7 @@ directCommands:
                   [--aad-tenant-id]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
+                  [--apiserver-subnet-id]
                   [--assign-identity]
                   [--assign-kubelet-identity]
                   [--attach-acr]
@@ -1104,17 +1133,23 @@ directCommands:
                   [--disable-ahub]
                   [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
+                  [--disable-disk-driver {false, true}]
+                  [--disable-file-driver {false, true}]
                   [--disable-local-accounts]
                   [--disable-pod-identity]
                   [--disable-pod-security-policy]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
+                  [--disable-snapshot-controller {false, true}]
                   [--disable-workload-identity {false, true}]
                   [--enable-aad]
                   [--enable-ahub]
+                  [--enable-apiserver-vnet-integration]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-disk-driver {false, true}]
+                  [--enable-file-driver {false, true}]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-oidc-issuer]
@@ -1123,6 +1158,7 @@ directCommands:
                   [--enable-pod-security-policy]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
+                  [--enable-snapshot-controller {false, true}]
                   [--enable-windows-gmsa]
                   [--enable-workload-identity {false, true}]
                   [--gmsa-dns-server]
@@ -1226,6 +1262,9 @@ directCommands:
   - name: --api-server-authorized-ip-ranges
     summary: Comma-separated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
+  - name: --apiserver-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration).
+    description: ''
   - name: --assign-identity
     summary: Specify an existing user assigned identity to manage cluster resource group.
     description: ''
@@ -1257,6 +1296,14 @@ directCommands:
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
+  - name: --disable-disk-driver
+    parameterValueGroup: false, true
+    summary: Disable AzureDisk CSI Driver.
+    description: ''
+  - name: --disable-file-driver
+    parameterValueGroup: false, true
+    summary: Disable AzureFile CSI Driver.
+    description: ''
   - name: --disable-local-accounts
     summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
     description: ''
@@ -1272,6 +1319,10 @@ directCommands:
   - name: --disable-secret-rotation
     summary: Disable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
+  - name: --disable-snapshot-controller
+    parameterValueGroup: false, true
+    summary: Disable CSI Snapshot Controller.
+    description: ''
   - name: --disable-workload-identity
     parameterValueGroup: false, true
     summary: (PREVIEW) Disable Workload Identity addon for cluster.
@@ -1282,6 +1333,9 @@ directCommands:
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
     description: ''
+  - name: --enable-apiserver-vnet-integration
+    summary: Enable integration of user vnet with control plane apiserver pods.
+    description: ''
   - name: --enable-azure-keyvault-kms
     summary: Enable Azure KeyVault Key Management Service.
     description: ''
@@ -1290,6 +1344,14 @@ directCommands:
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-disk-driver
+    parameterValueGroup: false, true
+    summary: Enable AzureDisk CSI Driver.
+    description: ''
+  - name: --enable-file-driver
+    parameterValueGroup: false, true
+    summary: Enable AzureFile CSI Driver.
     description: ''
   - name: --enable-local-accounts
     summary: (Preview) If set to true, will enable getting static credential for this cluster.
@@ -1314,6 +1376,10 @@ directCommands:
     description: ''
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
+    description: ''
+  - name: --enable-snapshot-controller
+    parameterValueGroup: false, true
+    summary: Enable Snapshot Controller.
     description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa on cluster.

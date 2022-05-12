@@ -55,6 +55,7 @@ directCommands:
                         [--tags]
                         [--vnet-subnet-id]
                         [--workload-runtime {OCIContainer, WasmWasi}]
+                        [--zones {1, 2, 3}]
   examples:
   - summary: Create a nodepool in an existing AKS cluster with ephemeral os enabled.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
@@ -173,12 +174,12 @@ directCommands:
   - name: --node-vm-size -s
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
-  - name: --node-zones --zones -z
+  - name: --node-zones
     parameterValueGroup: 1, 2, 3
-    summary: (will be deprecated, use --zones) Availability zones where agent nodes will be placed.
+    summary: (--node-zones will be deprecated) Space-separated list of availability zones where agent nodes will be placed.
     description: ''
   - name: --os-sku
-    summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
+    summary: The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019 or Windows2022 when os-type is Windows, the current default is Windows2019 if not set, and the default will be changed to Windows2022 after Windows2019 is deprecated.
     description: ''
   - name: --os-type
     summary: The OS Type. Linux or Windows.
@@ -216,6 +217,10 @@ directCommands:
     defaultValue: OCIContainer
     parameterValueGroup: OCIContainer, WasmWasi
     summary: Determines the type of workload a node can run. Defaults to OCIContainer.
+    description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Space-separated list of availability zones where agent nodes will be placed.
     description: ''
 - uid: az_aks_nodepool_delete
   name: az aks nodepool delete
