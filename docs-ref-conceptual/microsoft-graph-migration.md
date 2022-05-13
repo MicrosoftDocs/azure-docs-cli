@@ -20,6 +20,8 @@ Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migra
 
 For differences of the underlying API and output JSON breaking changes, please refer to [Property differences between Azure AD Graph and Microsoft Graph](/graph/migrate-azure-ad-graph-property-differences).
 
+For example, the most outstanding change is that the `objectId` property in the output JSON of a Graph object is replaced by `id`.
+
 Command argument and behavior breaking changes are listed below.
 
 ### `az ad app create`
