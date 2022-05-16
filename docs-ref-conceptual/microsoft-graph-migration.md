@@ -20,6 +20,8 @@ Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migra
 
 For differences of the underlying API and output JSON breaking changes, please refer to [Property differences between Azure AD Graph and Microsoft Graph](/graph/migrate-azure-ad-graph-property-differences).
 
+For example, the most outstanding change is that the `objectId` property in the output JSON of a Graph object is replaced by `id`.
+
 Command argument and behavior breaking changes are listed below.
 
 ### `az ad app create`
@@ -36,6 +38,7 @@ Command argument and behavior breaking changes are listed below.
 ### `az ad app permission grant`
 
 - Remove `--expires`
+- `--scope` no longer defaults to `user_impersonation` and is now required
 
 ### `az ad app credential reset`
 
@@ -53,7 +56,16 @@ Command argument and behavior breaking changes are listed below.
 
 ### `az ad sp credential reset`
 
+- Replace `--name` with `--id`
 - Remove `--password`. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
+
+### `az ad user create`
+
+- Replace `--force-change-password-next-login` with `--force-change-password-next-sign-in`
+
+### `az ad user update`
+
+- Replace `--force-change-password-next-login` with `--force-change-password-next-sign-in`
 
 ### `az ad group get-member-groups`
 
