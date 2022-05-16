@@ -56,7 +56,7 @@ Command argument and behavior breaking changes are listed below.
 
 ### `az ad sp credential reset`
 
-- Rename `--name` to `--id`
+- Replace `--name` with `--id`
 - Remove `--password`. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
 
 ### `az ad user create`
