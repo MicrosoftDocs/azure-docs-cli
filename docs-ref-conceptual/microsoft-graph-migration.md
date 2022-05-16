@@ -38,7 +38,7 @@ Command argument and behavior breaking changes are listed below.
 ### `az ad app permission grant`
 
 - Remove `--expires`
-- `--scope` doesn't default to `user_impersonation` anymore and is now required.
+- `--scope` no longer defaults to `user_impersonation` and is now required
 
 ### `az ad app credential reset`
 
