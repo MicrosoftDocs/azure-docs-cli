@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/14/2022
+ms.date: 05/17/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -30,7 +30,7 @@ You will be prompted to install an extension on first use.
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.32.0 | Provides a preview for upcoming AKS features | Preview | [0.5.69](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.35.0 | Provides a preview for upcoming AKS features | Preview | [0.5.71](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.15.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
 |[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.30.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
@@ -42,9 +42,9 @@ You will be prompted to install an extension on first use.
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/master/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/authV2/HISTORY.rst) |
 |[automation](https://github.com/Azure/azure-cli-extensions/tree/master/src/automation) | 2.13.0 | Microsoft Azure Command-Line Tools AutomationClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/automation/HISTORY.rst) |
 |[azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.0.74 | Additional commands for working with Azure Batch service | GA | [6.0.0](https://github.com/Azure/azure-batch-cli-extensions) |
-|[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.37.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
+|[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.25.0](https://github.com/Microsoft/azure-devops-cli-extension) |
-|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.13.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/azure-firewall/HISTORY.rst) |
+|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.14.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.24.1 | The Azure IoT extension for Azure CLI. | GA | [0.14.1](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
@@ -143,12 +143,12 @@ You will be prompted to install an extension on first use.
 |[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.25.0 | Provides a preview for upcoming storage features. | Preview | [0.8.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync) | 2.3.1 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync/HISTORY.rst) |
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.15.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
-|[subscription](https://github.com/Azure/azure-cli-extensions) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.4](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
-|[support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 2.0.81 | Microsoft Azure Command-Line Tools Support Extension | GA | [1.0.3](https://github.com/azure/azure-cli-extensions/tree/master/src/support/HISTORY.rst) |
+|[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
+|[support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 2.0.81 | Microsoft Azure Command-Line Tools Support Extension | GA | [1.0.3](https://github.com/azure/azure-cli-extensions/tree/master/src/support) |
 |[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights) | 2.11.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights/HISTORY.rst) |
 |[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.15.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | Preview | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) |
-|[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan) | 2.0.67 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Preview | [0.2.11](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-wan/HISTORY.rst) |
+|[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.15.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Preview | [0.2.12](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
 |[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [0.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.11.0 | Azure VMware Solution commands. | GA | [4.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
