@@ -15,12 +15,18 @@ directCommands:
   syntax: >-
     az containerapp ingress traffic set --name
                                         --resource-group
-                                        --traffic-weight
+                                        [--label-weight]
+                                        [--revision-weight]
+                                        [--traffic-weight]
   examples:
-  - summary: Route 100%% of a container app's traffic to its latest revision.
-    syntax: az containerapp ingress traffic set -n MyContainerapp -g MyResourceGroup --traffic-weight latest=100
+  - summary: Route 100% of a container app's traffic to its latest revision.
+    syntax: az containerapp ingress traffic set -n MyContainerapp -g MyResourceGroup --revision-weight latest=100
   - summary: Split a container app's traffic between two revisions.
-    syntax: az containerapp ingress traffic set -n MyContainerapp -g MyResourceGroup --traffic-weight latest=80 MyRevisionName=20
+    syntax: az containerapp ingress traffic set -n MyContainerapp -g MyResourceGroup --revision-weight latest=80 MyRevisionName=20
+  - summary: Split a container app's traffic between two labels.
+    syntax: az containerapp ingress traffic set -n MyContainerapp -g MyResourceGroup --label-weight myLabel=80 myLabel2=20
+  - summary: Split a container app's traffic between a label and a revision.
+    syntax: az containerapp ingress traffic set -n MyContainerapp -g MyResourceGroup --revision-weight latest=80 --label-weight myLabel=20
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -30,8 +36,14 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --traffic-weight
+  optionalParameters:
+  - name: --label-weight
+    summary: A list of label weight(s) for the container app. Space-separated values in 'label_name=weight' format.
+    description: ''
+  - name: --revision-weight
+    summary: A list of revision weight(s) for the container app. Space-separated values in 'revision_name=weight' format. For latest revision, use 'latest=weight'.
+    description: ''
+  - name: --traffic-weight
     summary: A list of revision weight(s) for the container app. Space-separated values in 'revision_name=weight' format. For latest revision, use 'latest=weight'.
     description: ''
 - uid: az_containerapp_ingress_traffic_show
