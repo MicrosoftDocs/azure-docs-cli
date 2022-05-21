@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/19/2022
+ms.date: 05/21/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -44,7 +44,7 @@ You will be prompted to install an extension on first use.
 |[azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.0.74 | Additional commands for working with Azure Batch service | GA | [6.0.0](https://github.com/Azure/azure-batch-cli-extensions) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.25.0](https://github.com/Microsoft/azure-devops-cli-extension) |
-|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.14.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
+|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.14.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.24.1 | The Azure IoT extension for Azure CLI. | GA | [0.14.1](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
@@ -93,7 +93,7 @@ You will be prompted to install an extension on first use.
 |[hack](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack) | 2.0.67 | Microsoft Azure Command-Line Tools Hack Extension | Preview | [0.4.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/hack/HISTORY.rst) |
 |[hardware-security-modules](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions) |
 |[healthbot](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot/HISTORY.rst) |
-|[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthcareapis) | 2.11.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [0.3.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthcareapis/HISTORY.rst) |
+|[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.15.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 2.3.0 | Microsoft Azure Command-Line Tools StorageCache Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache/HISTORY.rst) |
 |[image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/master/src/image-copy) | 2.0.24 | Support for copying managed vm images between regions | GA | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/image-copy/HISTORY.rst) |
 |[image-gallery](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery) | 2.3.0 | Support for Azure Image Gallery | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery/HISTORY.rst) |
@@ -111,7 +111,7 @@ You will be prompted to install an extension on first use.
 |[logic](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic) | 2.15.0 | Microsoft Azure Command-Line Tools LogicManagementClient Extension | Preview | [0.1.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic/HISTORY.rst) |
 |[logz](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz) | 2.15.0 | Microsoft Azure Command-Line Tools MicrosoftLogz Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz/HISTORY.rst) |
 |[maintenance](https://github.com/Azure/azure-cli-extensions/tree/master/src/maintenance) | 2.15.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Experimental | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/maintenance/HISTORY.rst) |
-|[managementpartner](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Support for Management Partner preview | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
+|[managementpartner](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Support for Management Partner preview | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/master/src/mesh) | 2.0.67 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [0.10.7](https://github.com/Azure/azure-cli-extensions/tree/master/src/mesh/HISTORY.rst) |
 |[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/master/src/mixed-reality) | 2.15.0 | Mixed Reality Azure CLI Extension. | Preview | [0.0.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/mixed-reality/HISTORY.rst) |
 |[ml](https://github.com/Azure/azure-cli-extensions/tree/master/src/machinelearningservices) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension | Preview | [2.3.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/machinelearningservices/HISTORY.rst) |
