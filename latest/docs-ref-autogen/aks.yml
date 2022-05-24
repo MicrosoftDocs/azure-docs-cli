@@ -47,6 +47,7 @@ directCommands:
     az aks check-acr --acr
                      --name
                      --resource-group
+                     [--node-name]
   examples:
   - summary: Validate the ACR is accessible from the AKS cluster.
     syntax: az aks check-acr --name MyManagedCluster --resource-group MyResourceGroup --acr myacr.azurecr.io
@@ -62,6 +63,10 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --node-name
+    summary: The name of a specific node to perform acr pull test checks. If not specified, it will be checked on a random node.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_create
@@ -91,6 +96,7 @@ directCommands:
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--ca-profile]
                   [--client-secret]
+                  [--defender-config]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
@@ -103,13 +109,13 @@ directCommands:
                   [--enable-ahub]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
                   [--enable-private-cluster]
-                  [--enable-rbac]
                   [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
                   [--enable-ultra-ssd]
@@ -126,7 +132,7 @@ directCommands:
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
-                  [--load-balancer-sku]
+                  [--load-balancer-sku {basic, standard}]
                   [--location]
                   [--max-count]
                   [--max-pods]
@@ -142,6 +148,7 @@ directCommands:
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
                   [--node-public-ip-prefix-id]
+                  [--node-resource-group]
                   [--node-vm-size]
                   [--nodepool-labels]
                   [--nodepool-name]
@@ -302,6 +309,9 @@ directCommands:
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
+  - name: --defender-config
+    summary: Path to JSON file containing Microsoft Defender profile configurations.
+    description: ''
   - name: --disable-local-accounts
     summary: If set to true, getting static credential will be disabled for this cluster.
     description: ''
@@ -352,6 +362,9 @@ directCommands:
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
+  - name: --enable-defender
+    summary: Enable Microsoft Defender security profile.
+    description: ''
   - name: --enable-encryption-at-host
     summary: Enable EncryptionAtHost, default value is false.
     description: ''
@@ -371,9 +384,6 @@ directCommands:
     description: ''
   - name: --enable-private-cluster
     summary: Enable private cluster.
-    description: ''
-  - name: --enable-rbac -r
-    summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
     description: ''
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
@@ -431,7 +441,8 @@ directCommands:
     summary: Load balancer outbound allocated ports.
     description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs.
   - name: --load-balancer-sku
-    summary: Azure Load Balancer SKU selection for your cluster. basic or standard.
+    parameterValueGroup: basic, standard
+    summary: Azure Load Balancer SKU selection for your cluster. basic or standard. Defaults to 'standard'.
     description: Select between Basic or Standard Azure Load Balancer SKU for your AKS cluster.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -485,6 +496,9 @@ directCommands:
     description: ''
   - name: --node-public-ip-prefix-id
     summary: Public IP prefix ID used to assign public IPs to VMSS nodes.
+    description: ''
+  - name: --node-resource-group
+    summary: The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
     description: ''
   - name: --node-vm-size -s
     summary: Size of Virtual Machines to create as Kubernetes nodes.
@@ -545,7 +559,7 @@ directCommands:
     summary: Enable a paid managed cluster service with a financially backed SLA.
     description: ''
   - name: --vm-set-type
-    summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet.
+    summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet. Defaults to 'VirtualMachineScaleSets'.
     description: ''
   - name: --vnet-subnet-id
     summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -677,7 +691,7 @@ directCommands:
   - summary: Enable Kubernetes addons. (autogenerated)
     syntax: az aks enable-addons --addons virtual-node --name MyManagedCluster --resource-group MyResourceGroup --subnet MySubnetName
   - summary: Enable ingress-appgw addon with subnet prefix.
-    syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons ingress-appgw --appgw-subnet-cidr 10.2.0.0/16 --appgw-name gateway
+    syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons ingress-appgw --appgw-subnet-cidr 10.225.0.0/16 --appgw-name gateway
   - summary: Enable open-service-mesh addon.
     syntax: az aks enable-addons --name MyManagedCluster --resource-group MyResourceGroup --addons open-service-mesh
   requiredParameters:
@@ -1114,13 +1128,16 @@ directCommands:
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
                   [--assign-identity]
+                  [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--ca-profile]
+                  [--defender-config]
                   [--detach-acr]
                   [--disable-ahub]
                   [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
+                  [--disable-defender]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
@@ -1128,6 +1145,7 @@ directCommands:
                   [--enable-ahub]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-defender]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-public-fqdn]
@@ -1225,6 +1243,9 @@ directCommands:
   - name: --assign-identity
     summary: Specify an existing user assigned identity to manage cluster resource group.
     description: ''
+  - name: --assign-kubelet-identity
+    summary: Update cluster's kubelet identity to an existing user assigned identity. Please note this operation will recreate all agent nodes in the cluster.
+    description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
     description: ''
@@ -1234,6 +1255,9 @@ directCommands:
     description: ''
   - name: --ca-profile --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
+  - name: --defender-config
+    summary: Path to JSON file containing Microsoft Defender profile configurations.
     description: ''
   - name: --detach-acr
     summary: Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -1246,6 +1270,9 @@ directCommands:
     description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
+    description: ''
+  - name: --disable-defender
+    summary: Disable defender profile.
     description: ''
   - name: --disable-local-accounts
     summary: If set to true, getting static credential will be disabled for this cluster.
@@ -1267,6 +1294,9 @@ directCommands:
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-defender
+    summary: Enable Microsoft Defender security profile.
     description: ''
   - name: --enable-local-accounts
     summary: If set to true, will enable getting static credential for this cluster.
@@ -1577,6 +1607,12 @@ commands:
 - az_aks_create
 - az_aks_delete
 - az_aks_disable-addons
+- az_aks_draft
+- az_aks_draft_create
+- az_aks_draft_generate-workflow
+- az_aks_draft_setup-gh
+- az_aks_draft_up
+- az_aks_draft_update
 - az_aks_egress-endpoints
 - az_aks_egress-endpoints_list
 - az_aks_enable-addons
@@ -1657,5 +1693,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/14/2022
+  ms.date: 05/18/2022
   description: Manage Azure Kubernetes Services.
