@@ -84,28 +84,37 @@ directCommands:
   summary: Invoke an endpoint.
   description: You can start batch inference run by invoking the endpoint with some data. For batch endpoints, invocation will trigger an asynchronous batch scoring job.
   syntax: >-
-    az ml batch-endpoint invoke --name
+    az ml batch-endpoint invoke --input
+                                --name
                                 --resource-group
                                 --workspace-name
                                 [--deployment-name]
-                                [--input-data]
-                                [--input-local-path]
-                                [--input-path]
+                                [--input-type]
                                 [--instance-count]
                                 [--job-name]
                                 [--mini-batch-size]
                                 [--output-path]
                                 [--set]
   examples:
-  - summary: Invoke a batch endpoint with input data from a registered Azure ML data asset (and override default deployment setting for mini_batch_size)
-    syntax: az ml batch-endpoint invoke --name my-batch-endpoint  --input-data azureml:my-dataset:1 --mini-batch-size 64 --resource-group my-resource-group --workspace-name my-workspace
-  - summary: Invoke a batch endpoint with input data from a storage URL
-    syntax: az ml batch-endpoint invoke --name my-batch-endpoint  --input-path folder:https://pipelinedata.blob.core.windows.net/sampledata/mnist --resource-group my-resource-group --workspace-name my-workspace
-  - summary: Invoke a batch endpoint with input data from local files
-    syntax: az ml batch-endpoint invoke --name my-batch-endpoint  --input-local-path ./mnist --resource-group my-resource-group --workspace-name my-workspace
-  - summary: Invoke a batch endpoint with a local directory as the input and output path and overwrite some batch deployment settings during endpoint invoke
-    syntax: az ml batch-endpoint invoke --name my-batch-endpoint  --input-local-path ./mnist --instance-count 2 --mini-batch-size 5 --output-path folder:azureml://datastores/workspaceblobstore/paths/tests/output --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input data from a registered Azure ML dataset asset and override default deployment setting for mini_batch_size
+    syntax: az ml batch-endpoint invoke --name my-batch-endpoint --input azureml:my-dataset:1 --mini-batch-size 64 --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input file from a public URI
+    syntax: az ml batch-endpoint invoke --name my-batch-endpoint --input-type uri_file --input https://pipelinedata.blob.core.windows.net/sampledata/mnist/0.png --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input file from a registered datastore
+    syntax: az ml batch-endpoint invoke --name my-batch-endpoint --input-type uri_file --input azureml://datastores/workspaceblobstore/paths/{path_to_data}/mnist/0.png --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input folder from a public URI
+    syntax: az ml batch-endpoint invoke --name my-batch-endpoint --input-type uri_folder --input https://pipelinedata.blob.core.windows.net/sampledata/mnist --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with input folder from a registered datastore
+    syntax: az ml batch-endpoint invoke --name my-batch-endpoint --input-type uri_folder --input azureml://datastores/workspaceblobstore/paths/{path_to_data}/mnist --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with files in a local folder
+    syntax: az ml batch-endpoint invoke --name my-batch-endpoint --input ./mnist_folder --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Invoke a batch endpoint with a local folder as the input and output path and overwrite some batch deployment settings during endpoint invoke
+    syntax: az ml batch-endpoint invoke --name my-batch-endpoint --input ./mnist_folder --instance-count 2 --mini-batch-size 5 --output-path azureml://datastores/workspaceblobstore/paths/tests/output --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
+  - isRequired: true
+    name: --input
+    summary: Reference to input data to use for batch inferencing. It can be a path on the datastore, public URI, a registered dataset, or a local folder path.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of the batch endpoint.
@@ -122,14 +131,8 @@ directCommands:
   - name: --deployment-name -d
     summary: Name of the deployment to target.
     description: ''
-  - name: --input-data
-    summary: Input data asset. Format should be azureml:<data-name>:<data-version>.
-    description: ''
-  - name: --input-local-path
-    summary: Local path to the input data. The file(s) will be uploaded and registered as an Azure ML data asset.
-    description: ''
-  - name: --input-path
-    summary: URL or path on the datastore where the input data is located.
+  - name: --input-type
+    summary: "Type of the input, specifying whether it's a file or a folder. Use this when you are using a path on datastore or public URI. Supported values: uri_folder, uri_file."
     description: ''
   - name: --instance-count -c
     summary: Number of instances the prediction will run on.

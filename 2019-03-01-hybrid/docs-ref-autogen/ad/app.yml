@@ -7,37 +7,40 @@ directCommands:
 - uid: az_ad_app_create
   name: az ad app create
   summary: Create a web application, web API or native application.
-  description: ''
+  description: For more detailed documentation, see https://docs.microsoft.com/graph/api/resources/application.
   syntax: >-
     az ad app create --display-name
                      [--app-roles]
-                     [--available-to-other-tenants {false, true}]
-                     [--credential-description]
+                     [--enable-access-token-issuance {false, true}]
+                     [--enable-id-token-issuance {false, true}]
                      [--end-date]
-                     [--homepage]
                      [--identifier-uris]
+                     [--is-fallback-public-client {false, true}]
+                     [--key-display-name]
                      [--key-type {AsymmetricX509Cert, Password, Symmetric}]
                      [--key-usage {Sign, Verify}]
                      [--key-value]
-                     [--native-app {false, true}]
-                     [--oauth2-allow-implicit-flow {false, true}]
                      [--optional-claims]
-                     [--password]
-                     [--reply-urls]
+                     [--public-client-redirect-uris]
                      [--required-resource-accesses]
+                     [--sign-in-audience {AzureADMultipleOrgs, AzureADMyOrg, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount}]
                      [--start-date]
+                     [--web-home-page-url]
+                     [--web-redirect-uris]
   examples:
-  - summary: Create a native application with delegated permission of "access the AAD directory as the signed-in user"
+  - summary: Create an application.
+    syntax: az ad app create --display-name mytestapp
+  - summary: Create an application that can fall back to public client with Microsoft Graph delegated permission Application.Read.All
     syntax: >-
-      az ad app create --display-name my-native --native-app --required-resource-accesses @manifest.json
+      az ad app create --display-name my-public --is-fallback-public-client --required-resource-accesses @manifest.json
 
       ("manifest.json" contains the following content)
 
       [{
-          "resourceAppId": "00000002-0000-0000-c000-000000000000",
+          "resourceAppId": "00000003-0000-0000-c000-000000000000",
           "resourceAccess": [
               {
-                  "id": "a42657d6-7f20-40e3-b6f0-cee03008a62a",
+                  "id": "c79f8feb-a9db-4090-85f9-90d820caa0eb",
                   "type": "Scope"
               }
          ]
@@ -67,14 +70,23 @@ directCommands:
           "idToken": [
               {
                   "name": "auth_time",
-                  "source": null,
                   "essential": false
               }
           ],
           "accessToken": [
               {
-                  "name": "email",
-                  "source": null,
+                  "name": "ipaddr",
+                  "essential": false
+              }
+          ],
+          "saml2Token": [
+              {
+                  "name": "upn",
+                  "essential": false
+              },
+              {
+                  "name": "extension_ab603c56068041afb2f6832e2a17e237_skypeId",
+                  "source": "user",
                   "essential": false
               }
           ]
@@ -86,23 +98,28 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --app-roles
-    summary: Declare the roles you want to associate with your application. Should be in manifest json format. See examples below for details.
+    summary: The collection of roles assigned to the application. With app role assignments, these roles can be assigned to users, groups, or service principals associated with other applications. Should be in manifest JSON format. See examples below for details.
     description: ''
-  - name: --available-to-other-tenants
+  - name: --enable-access-token-issuance
     parameterValueGroup: false, true
-    summary: The application can be used from any Azure AD tenants.
+    summary: Specifies whether this web application can request an access token using the OAuth 2.0 implicit flow.
     description: ''
-  - name: --credential-description
-    summary: The description of the password.
+  - name: --enable-id-token-issuance
+    parameterValueGroup: false, true
+    summary: Specifies whether this web application can request an ID token using the OAuth 2.0 implicit flow.
     description: ''
   - name: --end-date
-    summary: Date or datetime after which credentials expire(e.g. '2017-12-31T11:59:59+00:00' or '2017-12-31'). Default value is one year after current time.
-    description: ''
-  - name: --homepage
-    summary: The url where users can sign in and use your app.
+    summary: Date or datetime after which credentials expire (e.g. '2017-12-31T11:59:59+00:00' or '2017-12-31'). Default value is one year after current time.
     description: ''
   - name: --identifier-uris
-    summary: Space-separated unique URIs that Azure AD can use for this app.
+    summary: Space-separated values. Also known as App ID URI, this value is set when an application is used as a resource app. The identifierUris acts as the prefix for the scopes you'll reference in your API's code, and it must be globally unique. You can use the default value provided, which is in the form api://<application-client-id>, or specify a more readable URI like https://contoso.com/api.
+    description: ''
+  - name: --is-fallback-public-client
+    parameterValueGroup: false, true
+    summary: Specifies the fallback application type as public client, such as an installed application running on a mobile device. The default value is false which means the fallback application type is confidential client such as a web app.
+    description: ''
+  - name: --key-display-name
+    summary: Friendly name for the key.
     description: ''
   - name: --key-type
     defaultValue: AsymmetricX509Cert
@@ -117,28 +134,27 @@ directCommands:
   - name: --key-value
     summary: The value for the key credentials associated with the application.
     description: ''
-  - name: --native-app
-    parameterValueGroup: false, true
-    summary: An application which can be installed on a user's device or computer.
-    description: ''
-  - name: --oauth2-allow-implicit-flow
-    parameterValueGroup: false, true
-    summary: Whether to allow implicit grant flow for OAuth2.
-    description: ''
   - name: --optional-claims
-    summary: Declare the optional claims for the application. Should be in manifest json format. See examples below for details. Please reference https://docs.microsoft.com/azure/active-directory/develop/active-directory-optional-claims#optionalclaim-type for optional claim properties.
+    summary: Application developers can configure optional claims in their Azure AD applications to specify the claims that are sent to their application by the Microsoft security token service. For more information, see https://docs.microsoft.com/azure/active-directory/develop/active-directory-optional-claims. Should be in manifest JSON format. See examples below for details.
     description: ''
-  - name: --password
-    summary: App password, aka 'client secret'.
-    description: ''
-  - name: --reply-urls
-    summary: Space-separated URIs to which Azure AD will redirect in response to an OAuth 2.0 request. The value does not need to be a physical endpoint, but must be a valid URI.
+  - name: --public-client-redirect-uris
+    summary: Space-separated values. Specifies the URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent.
     description: ''
   - name: --required-resource-accesses
-    summary: Resource scopes and roles the application requires access to. Should be in manifest json format. See examples below for details.
+    summary: Specifies the resources that the application needs to access. This property also specifies the set of delegated permissions and application roles that it needs for each of those resources. This configuration of access to the required resources drives the consent experience. Should be in manifest JSON format. See examples below for details.
+    description: ''
+  - name: --sign-in-audience
+    parameterValueGroup: AzureADMultipleOrgs, AzureADMyOrg, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount
+    summary: Specifies the Microsoft accounts that are supported for the current application.
     description: ''
   - name: --start-date
-    summary: Date or datetime at which credentials become valid(e.g. '2017-01-01T01:00:00+00:00' or '2017-01-01'). Default value is current time.
+    summary: Date or datetime at which credentials become valid (e.g. '2017-01-01T01:00:00+00:00' or '2017-01-01'). Default value is current time.
+    description: ''
+  - name: --web-home-page-url
+    summary: Home page or landing page of the application.
+    description: ''
+  - name: --web-redirect-uris
+    summary: Space-separated values. Specifies the URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
 - uid: az_ad_app_delete
@@ -192,8 +208,12 @@ directCommands:
   description: ''
   syntax: az ad app show --id
   examples:
-  - summary: Get the details of an application. (autogenerated)
+  - summary: Get the details of an application with appId.
     syntax: az ad app show --id 00000000-0000-0000-0000-000000000000
+  - summary: Get the details of an application with id.
+    syntax: az ad app show --id 00000000-0000-0000-0000-000000000000
+  - summary: Get the details of an application with identifier URI.
+    syntax: az ad app show --id api://myapp
   requiredParameters:
   - isRequired: true
     name: --id
@@ -208,24 +228,26 @@ directCommands:
     az ad app update --id
                      [--add]
                      [--app-roles]
-                     [--available-to-other-tenants {false, true}]
-                     [--credential-description]
                      [--display-name]
+                     [--enable-access-token-issuance {false, true}]
+                     [--enable-id-token-issuance {false, true}]
                      [--end-date]
                      [--force-string]
-                     [--homepage]
                      [--identifier-uris]
+                     [--is-fallback-public-client {false, true}]
+                     [--key-display-name]
                      [--key-type {AsymmetricX509Cert, Password, Symmetric}]
                      [--key-usage {Sign, Verify}]
                      [--key-value]
-                     [--oauth2-allow-implicit-flow {false, true}]
                      [--optional-claims]
-                     [--password]
+                     [--public-client-redirect-uris]
                      [--remove]
-                     [--reply-urls]
                      [--required-resource-accesses]
                      [--set]
+                     [--sign-in-audience {AzureADMultipleOrgs, AzureADMyOrg, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount}]
                      [--start-date]
+                     [--web-home-page-url]
+                     [--web-redirect-uris]
   examples:
   - summary: update a native application with delegated permission of "access the AAD directory as the signed-in user"
     syntax: >-
@@ -267,14 +289,23 @@ directCommands:
           "idToken": [
               {
                   "name": "auth_time",
-                  "source": null,
                   "essential": false
               }
           ],
           "accessToken": [
               {
-                  "name": "email",
-                  "source": null,
+                  "name": "ipaddr",
+                  "essential": false
+              }
+          ],
+          "saml2Token": [
+              {
+                  "name": "upn",
+                  "essential": false
+              },
+              {
+                  "name": "extension_ab603c56068041afb2f6832e2a17e237_skypeId",
+                  "source": "user",
                   "essential": false
               }
           ]
@@ -291,29 +322,34 @@ directCommands:
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --app-roles
-    summary: Declare the roles you want to associate with your application. Should be in manifest json format. See examples below for details.
-    description: ''
-  - name: --available-to-other-tenants
-    parameterValueGroup: false, true
-    summary: The application can be used from any Azure AD tenants.
-    description: ''
-  - name: --credential-description
-    summary: The description of the password.
+    summary: The collection of roles assigned to the application. With app role assignments, these roles can be assigned to users, groups, or service principals associated with other applications. Should be in manifest JSON format. See examples below for details.
     description: ''
   - name: --display-name
     summary: The display name of the application.
     description: ''
+  - name: --enable-access-token-issuance
+    parameterValueGroup: false, true
+    summary: Specifies whether this web application can request an access token using the OAuth 2.0 implicit flow.
+    description: ''
+  - name: --enable-id-token-issuance
+    parameterValueGroup: false, true
+    summary: Specifies whether this web application can request an ID token using the OAuth 2.0 implicit flow.
+    description: ''
   - name: --end-date
-    summary: Date or datetime after which credentials expire(e.g. '2017-12-31T11:59:59+00:00' or '2017-12-31'). Default value is one year after current time.
+    summary: Date or datetime after which credentials expire (e.g. '2017-12-31T11:59:59+00:00' or '2017-12-31'). Default value is one year after current time.
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
-  - name: --homepage
-    summary: The url where users can sign in and use your app.
-    description: ''
   - name: --identifier-uris
-    summary: Space-separated unique URIs that Azure AD can use for this app.
+    summary: Space-separated values. Also known as App ID URI, this value is set when an application is used as a resource app. The identifierUris acts as the prefix for the scopes you'll reference in your API's code, and it must be globally unique. You can use the default value provided, which is in the form api://<application-client-id>, or specify a more readable URI like https://contoso.com/api.
+    description: ''
+  - name: --is-fallback-public-client
+    parameterValueGroup: false, true
+    summary: Specifies the fallback application type as public client, such as an installed application running on a mobile device. The default value is false which means the fallback application type is confidential client such as a web app.
+    description: ''
+  - name: --key-display-name
+    summary: Friendly name for the key.
     description: ''
   - name: --key-type
     defaultValue: AsymmetricX509Cert
@@ -328,30 +364,33 @@ directCommands:
   - name: --key-value
     summary: The value for the key credentials associated with the application.
     description: ''
-  - name: --oauth2-allow-implicit-flow
-    parameterValueGroup: false, true
-    summary: Whether to allow implicit grant flow for OAuth2.
-    description: ''
   - name: --optional-claims
-    summary: Declare the optional claims for the application. Should be in manifest json format. See examples below for details. Please reference https://docs.microsoft.com/azure/active-directory/develop/active-directory-optional-claims#optionalclaim-type for optional claim properties.
+    summary: Application developers can configure optional claims in their Azure AD applications to specify the claims that are sent to their application by the Microsoft security token service. For more information, see https://docs.microsoft.com/azure/active-directory/develop/active-directory-optional-claims. Should be in manifest JSON format. See examples below for details.
     description: ''
-  - name: --password
-    summary: App password, aka 'client secret'.
+  - name: --public-client-redirect-uris
+    summary: Space-separated values. Specifies the URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
-  - name: --reply-urls
-    summary: Space-separated URIs to which Azure AD will redirect in response to an OAuth 2.0 request. The value does not need to be a physical endpoint, but must be a valid URI.
-    description: ''
   - name: --required-resource-accesses
-    summary: Resource scopes and roles the application requires access to. Should be in manifest json format. See examples below for details.
+    summary: Specifies the resources that the application needs to access. This property also specifies the set of delegated permissions and application roles that it needs for each of those resources. This configuration of access to the required resources drives the consent experience. Should be in manifest JSON format. See examples below for details.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --sign-in-audience
+    parameterValueGroup: AzureADMultipleOrgs, AzureADMyOrg, AzureADandPersonalMicrosoftAccount, PersonalMicrosoftAccount
+    summary: Specifies the Microsoft accounts that are supported for the current application.
+    description: ''
   - name: --start-date
-    summary: Date or datetime at which credentials become valid(e.g. '2017-01-01T01:00:00+00:00' or '2017-01-01'). Default value is current time.
+    summary: Date or datetime at which credentials become valid (e.g. '2017-01-01T01:00:00+00:00' or '2017-01-01'). Default value is current time.
+    description: ''
+  - name: --web-home-page-url
+    summary: Home page or landing page of the application.
+    description: ''
+  - name: --web-redirect-uris
+    summary: Space-separated values. Specifies the URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
 commands:
@@ -394,5 +433,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/09/2022
+  ms.date: 05/16/2022
   description: Manage applications with AAD Graph.
