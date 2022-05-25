@@ -28,7 +28,7 @@ A _tenant_ is the Azure Active Directory entity that encompasses a whole organiz
 
 ## Get the active subscription
 
-Most Azure CLI commands act within a subscription.  For optimum security, most Azure CLI commands no longer default the subscription to your current, active subscription.  You must now specify which subscription to work in by using the **subscription** or **scope** parameter in your command.
+Most Azure CLI commands act within a subscription.  For optimum security, most Azure CLI commands no longer default the subscription to your current, active subscription.  You must now specify the subscription to work in by using the **subscription** or **scope** parameter in your command.
 
 To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  See [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-dictionary-results) to learn the many output options for `az account`.
 
@@ -51,7 +51,7 @@ Subscriptions contain resource groups. An Azure resource group is a container th
 
 ## Change the active subscription
 
-Your subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the subscription ID or name you want to switch to.
+Azure subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the subscription ID or name you want to switch to.
 
 ```azurecli
 # change the active subscription using the subscription name
