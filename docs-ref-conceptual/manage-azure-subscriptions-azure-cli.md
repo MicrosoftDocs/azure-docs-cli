@@ -26,11 +26,11 @@ A _tenant_ is the Azure Active Directory entity that encompasses a whole organiz
 * To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 * To learn how to sign in to a specific tenant, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
 
-## Commands in an Azure subscription
+## Get the active subscription
 
-Many Azure CLI commands act within a subscription. You can always specify which subscription to work in by using the **subscription** parameter in your command. That parameter is optional. If you don't specify a subscription, the command uses your current, active subscription.
+Most Azure CLI commands act within a subscription.  For optimum security, most Azure CLI commands no longer default the subscription to your current, active subscription.  You must now specify which subscription to work in by using the **subscription** or **scope** parameter in your command.
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command:
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  See [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-dictionary-results) to learn the many output options for `az account`.
 
 ```azurecli
 # get the current default subscription using show
@@ -39,55 +39,30 @@ az account show --output table
 # get the current default subscription using list
 az account list --query "[?isDefault]"
 
-# get a list of subscriptions except for the default subscription
-az account list --query "[?isDefault == false]"
-
-# get the details of a specific subscription
-az account show --subscription MySubscriptionName
+# store the default subscription  in a variable
+subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
+echo $subscriptionId
 ```
 
 > [!TIP]
 > The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
-Subscriptions contain resource groups. An Azure resource group is a container that holds related resources for an Azure solution. If your command works with resources in your active subscription, you don't need to specify `--subscription`.
-
-This command creates a storage account in the specified resource group:
-
-```azurecli
-az storage account create --resource-group StorageGroups --name storage136 \
-    --location eastus --sku Standard_LRS
-```
-
-If the storage group isn't part of your current active subscription, this command fails.
-
-If necessary, change the active subscription, as described in the next section, or specify the subscription in the command:
-
-```azurecli
-az storage account create --resource-group StorageGroups --subscription "My Demos" \
-    --name storage136 --location eastus --sku Standard_LRS
-```
+Subscriptions contain resource groups. An Azure resource group is a container that holds related resources for an Azure solution. To learn how to manage resource groups, see [How to manage Azure resource groups with the Azure CLI](manage-azure-groups-azure-cli.md)
 
 ## Change the active subscription
 
-You can change your active subscription by using the [az account set](/cli/azure/account#az-account-set) command.
-
-Get a list of your subscriptions with the [az account list](/cli/azure/account#az-account-list) command:
+Your subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the subscription ID or name you want to switch to.
 
 ```azurecli
-az account list --output table
-```
-
-This command lists all the subscriptions you can access. Your active subscription is marked as `True` in the `IsDefault` column. If you don't see a subscription you expect, add the `--refresh` parameter to get the most current list of subscriptions.
-
-To switch to a different subscription, use [az account set](/cli/azure/account#az-account-set) with the subscription ID or name you want to switch to.
-
-```azurecli
+# change the active subscription using the subscription name
 az account set --subscription "My Demos"
+
+# change the active subscription using a variable
+subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
+az account set -s $subscriptionId
 ```
 
-Your subscriptions have both a name and an ID, which is a GUID. You can use either for these commands. If you use a name that includes spaces, use quotation marks.
-
-If you run the [az account list](/cli/azure/account#az_account_list) command again, the `IsDefault` column shows your current active subscription.
+If you change your active subscription to a subscription within another tenant, you have also just changed your active tenant.  See [Sign in with Azure CLI](authenticate-azure-cli#sign-in-with-a-different-tenant) to learn how to switch the active tenant directly using `az login`.  You can see the tenant ID associated with the active subscription by using the `az account show` command.
 
 ## Create Azure management groups
 
