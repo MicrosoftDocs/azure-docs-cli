@@ -180,7 +180,7 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure IoT Edge](../latest/docs-ref-autogen/iot/edge.yml) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
 |[Microsoft Defender for Cloud](/cli/azure/service-page/azure%20security%20center) |
 |[Microsoft Sentinel](/cli/azure/service-page/azure%20sentinel) |
-|[Azure SQL Database](./azure-cli-reference-for-sql.md#sql-database) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
+|[Azure SQL Database](./azure-cli-reference-for-sql.md) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
 |[Azure Stack HCI](../latest/docs-ref-autogen/stack-hci.yml) |
 
 ## Identity
