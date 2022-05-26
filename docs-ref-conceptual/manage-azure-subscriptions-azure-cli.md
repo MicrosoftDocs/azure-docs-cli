@@ -28,9 +28,9 @@ A _tenant_ is the Azure Active Directory entity that encompasses a whole organiz
 
 ## Get the active subscription
 
-Most Azure CLI commands act within a subscription.  For optimum security, most Azure CLI commands no longer default the subscription to your current, active subscription.  You must now specify the subscription to work in by using the **subscription** or **scope** parameter in your command.
+Most Azure CLI commands act within a subscription.  For optimum security, most Azure CLI commands no longer default the subscription to your current, active subscription.  You must now specify the subscription to work in by using the `--subscription` or `--scope` parameter in your command.
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  See [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-dictionary-results) to learn the many output options for `az account`.
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  See [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to learn how to work with multiple subscription values.
 
 ```azurecli
 # get the current default subscription using show
@@ -44,10 +44,12 @@ subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
 echo $subscriptionId
 ```
 
+Use [az account tenant list](/cli/azure/account/tenant) to get the active tenant ID.
+
 > [!TIP]
 > The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
-Subscriptions contain resource groups. An Azure resource group is a container that holds related resources for an Azure solution. To learn how to manage resource groups, see [How to manage Azure resource groups with the Azure CLI](manage-azure-groups-azure-cli.md)
+Subscriptions contain resource groups. An Azure resource group is a container that holds related resources for an Azure solution. To learn how to manage resource groups within your subscription, see [How to manage Azure resource groups with the Azure CLI](manage-azure-groups-azure-cli.md)
 
 ## Change the active subscription
 
@@ -57,9 +59,12 @@ Azure subscriptions have both a name and an ID.  You can switch to a different s
 # change the active subscription using the subscription name
 az account set --subscription "My Demos"
 
+# change the active subscription using the subscription ID
+az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
 # change the active subscription using a variable
 subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
-az account set -s $subscriptionId
+az account set --subscription $subscriptionId
 ```
 
 If you change your active subscription to a subscription within another tenant, you have also just changed your active tenant.  See [Sign in with Azure CLI](authenticate-azure-cli#sign-in-with-a-different-tenant) to learn how to switch the active tenant directly using `az login`.  You can see the tenant ID associated with the active subscription by using the `az account show` command.
