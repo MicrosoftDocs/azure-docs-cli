@@ -4,8 +4,8 @@ name: az dedicated-hsm
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **hardware-security-modules** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az dedicated-hsm** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Dedicated-hsm to create, update, list, show, and delete HSMs.
+  > This reference is part of the **hardware-security-modules** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az dedicated-hsm** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage dedicated hsm with hardware security modules.
 description: ''
 directCommands:
 - uid: az_dedicated-hsm_create
@@ -13,26 +13,28 @@ directCommands:
   summary: Create a dedicated HSM in the specified subscription.
   description: ''
   syntax: >-
-    az dedicated-hsm create --location
-                            --name
+    az dedicated-hsm create --name
                             --resource-group
-                            [--network-profile-network-interfaces]
+                            [--location]
+                            [--mgmt-network-interfaces]
+                            [--mgmt-network-subnet]
+                            [--network-interfaces]
                             [--no-wait]
-                            [--sku]
+                            [--sku {SafeNet Luna Network HSM A790, payShield10K_LMK1_CPS250, payShield10K_LMK1_CPS2500, payShield10K_LMK1_CPS60, payShield10K_LMK2_CPS250, payShield10K_LMK2_CPS2500, payShield10K_LMK2_CPS60}]
                             [--stamp-id]
                             [--subnet]
                             [--tags]
                             [--zones]
   examples:
-  - summary: Create a new dedicated HSM
-    syntax: az dedicated-hsm create -n "hsm1" -l "japanwest" -i private-ip-address="1.0.0.1" -s id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/hsm/subnets/hsm" --stamp-id "stamp1" --sku name="SafeNet Luna Network HSM A790" --tags Dept="hsm" Environment="dogfood" -g "hsm-group"
+  - summary: Create a new or update an existing dedicated HSM
+    syntax: az dedicated-hsm create --name "hsm1" --location "westus" --network-interfaces private-ip-address="1.0.0.1" --subnet id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01" --stamp-id "stamp01" --sku "SafeNet Luna Network HSM A790" --tags Dept="hsm" Environment="dogfood" --resource-group "hsm-group"
+  - summary: Create a new or update an existing payment HSM
+    syntax: az dedicated-hsm create --name "hsm1" --location "westus" --mgmt-network-interfaces private-ip-address="1.0.0.1" --mgmt-network-subnet id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01" --stamp-id "stamp01" --sku "payShield10K_LMK1_CPS60" --tags Dept="hsm" Environment="dogfood" --resource-group "hsm-group"
+  - summary: Create a new or update an existing payment HSM with management profile
+    syntax: az dedicated-hsm create --name "hsm1" --location "westus" --network-interfaces private-ip-address="1.0.0.2" --subnet id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01" --mgmt-network-interfaces private-ip-address="1.0.0.1" --mgmt-network-subnet id="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01" --stamp-id "stamp02" --sku "payShield10K_LMK1_CPS60" --tags Dept="hsm" Environment="dogfood" --resource-group "hsm-group"
   requiredParameters:
   - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
-    name: --name -n
+    name: --name
     summary: Name of the dedicated Hsm.
     description: ''
   - isRequired: true
@@ -40,21 +42,53 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --network-profile-network-interfaces -i
-    summary: 'Specifies a list of ip address from the specfied subnet for the network interfaces associated with the dedicated HSM. Expected value: -i private-ip-address=xx.'
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
+  - name: --mgmt-network-interfaces -m
+    summary: Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM.
+    description: >-
+      Usage: --mgmt-network-interfaces private-ip-address=XX
+
+
+      private-ip-address: Private Ip address of the interface
+
+
+      Multiple actions can be specified by using more than one --mgmt-network-interfaces argument.
+  - name: --mgmt-network-subnet
+    summary: Specifies the identifier of the subnet.
+    description: >-
+      Usage: --mgmt-network-subnet id=XX
+
+
+      id: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
+  - name: --network-interfaces -i
+    summary: Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM.
+    description: >-
+      Usage: --network-interfaces private-ip-address=XX
+
+
+      private-ip-address: Private Ip address of the interface
+
+
+      Multiple actions can be specified by using more than one --network-interfaces argument.
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --sku
-    summary: 'The HSM device SKU if a non-standard HSM is wanted (default is: SafeNet Luna Network HSM A790).'
+    parameterValueGroup: SafeNet Luna Network HSM A790, payShield10K_LMK1_CPS250, payShield10K_LMK1_CPS2500, payShield10K_LMK1_CPS60, payShield10K_LMK2_CPS250, payShield10K_LMK2_CPS2500, payShield10K_LMK2_CPS60
+    summary: SKU of the dedicated HSM.
     description: ''
   - name: --stamp-id
     summary: This field will be used when RP does not support Availability zones.
     description: ''
-  - name: --subnet -s
-    summary: 'Specifies the identifier of the subnet. Expected value: id=xx.'
-    description: ''
+  - name: --subnet
+    summary: Specifies the identifier of the subnet.
+    description: >-
+      Usage: --subnet id=XX
+
+
+      id: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -72,10 +106,10 @@ directCommands:
                             [--yes]
   examples:
   - summary: Delete a dedicated HSM
-    syntax: az dedicated-hsm delete -n "hsm1" -g "hsm-group"
+    syntax: az dedicated-hsm delete --name "hsm1" --resource-group "hsm-group"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --name
     summary: The name of the dedicated HSM to delete.
     description: ''
   - isRequired: true
@@ -91,13 +125,19 @@ directCommands:
     description: ''
 - uid: az_dedicated-hsm_list
   name: az dedicated-hsm list
-  summary: The List operation gets information about the dedicated HSMs associated with the subscription.
+  summary: The List operation gets information about the dedicated hsms associated with the subscription and within the specified resource group. And The List operation gets information about the dedicated HSMs associated with the subscription.
   description: ''
   syntax: >-
     az dedicated-hsm list [--resource-group]
                           [--top]
   examples:
+  - summary: List dedicated HSM devices in a resource group
+    syntax: az dedicated-hsm list --resource-group "hsm-group"
+  - summary: List dedicated HSM devices in a resource group including payment HSM
+    syntax: az dedicated-hsm list --resource-group "hsm-group"
   - summary: List dedicated HSM devices in a subscription
+    syntax: az dedicated-hsm list
+  - summary: List dedicated HSM devices in a subscription including payment HSM
     syntax: az dedicated-hsm list
   optionalParameters:
   - name: --resource-group -g
@@ -105,6 +145,25 @@ directCommands:
     description: ''
   - name: --top
     summary: Maximum number of results to return.
+    description: ''
+- uid: az_dedicated-hsm_list-outbound-network-dependency-endpoint
+  name: az dedicated-hsm list-outbound-network-dependency-endpoint
+  summary: Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
+  description: ''
+  syntax: >-
+    az dedicated-hsm list-outbound-network-dependency-endpoint --name
+                                                               --resource-group
+  examples:
+  - summary: List OutboundNetworkDependenciesEndpoints by Managed Cluster
+    syntax: az dedicated-hsm list-outbound-network-dependency-endpoint --name "hsm1" --resource-group "hsm-group"
+  requiredParameters:
+  - isRequired: true
+    name: --name
+    summary: The name of the dedicated HSM.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: az_dedicated-hsm_show
   name: az dedicated-hsm show
@@ -115,10 +174,14 @@ directCommands:
                           --resource-group
   examples:
   - summary: Get a dedicated HSM
-    syntax: az dedicated-hsm show -n "hsm1" -g "hsm-group"
+    syntax: az dedicated-hsm show --name "hsm1" --resource-group "hsm-group"
+  - summary: Get a payment HSM
+    syntax: az dedicated-hsm show --name "hsm1" --resource-group "hsm-group"
+  - summary: Get a payment HSM with 2018-10-31Preview api version
+    syntax: az dedicated-hsm show --name "hsm1" --resource-group "hsm-group"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --name
     summary: The name of the dedicated HSM.
     description: ''
   - isRequired: true
@@ -136,10 +199,12 @@ directCommands:
                             [--tags]
   examples:
   - summary: Update an existing dedicated HSM
-    syntax: az dedicated-hsm update -n "hsm1" --tags Dept="hsm" Environment="dogfood" Slice="A" -g "hsm-group"
+    syntax: az dedicated-hsm update --name "hsm1" --tags Dept="hsm" Environment="dogfood" Slice="A" --resource-group "hsm-group"
+  - summary: Update an existing payment HSM
+    syntax: az dedicated-hsm update --name "hsm1" --tags Dept="hsm" Environment="dogfood" Slice="A" --resource-group "hsm-group"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --name
     summary: Name of the dedicated HSM.
     description: ''
   - isRequired: true
@@ -155,7 +220,7 @@ directCommands:
     description: ''
 - uid: az_dedicated-hsm_wait
   name: az dedicated-hsm wait
-  summary: Waits for operation to complete.
+  summary: Place the CLI in a waiting state until a condition of the dedicated-hsm is met.
   description: ''
   syntax: >-
     az dedicated-hsm wait --name
@@ -168,8 +233,12 @@ directCommands:
                           [--timeout]
                           [--updated]
   examples:
-  - summary: Delete a dedicated HSM
-    syntax: az dedicated-hsm wait --created -g "hsm-group" --name "hsm1"
+  - summary: Pause executing next line of CLI script until the dedicated-hsm is successfully created.
+    syntax: az dedicated-hsm wait --name "hsm1" --resource-group "hsm-group" --created
+  - summary: Pause executing next line of CLI script until the dedicated-hsm is successfully updated.
+    syntax: az dedicated-hsm wait --name "hsm1" --resource-group "hsm-group" --updated
+  - summary: Pause executing next line of CLI script until the dedicated-hsm is successfully deleted.
+    syntax: az dedicated-hsm wait --name "hsm1" --resource-group "hsm-group" --deleted
   requiredParameters:
   - isRequired: true
     name: --name
@@ -207,6 +276,7 @@ commands:
 - az_dedicated-hsm_create
 - az_dedicated-hsm_delete
 - az_dedicated-hsm_list
+- az_dedicated-hsm_list-outbound-network-dependency-endpoint
 - az_dedicated-hsm_show
 - az_dedicated-hsm_update
 - az_dedicated-hsm_wait
@@ -228,4 +298,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Dedicated-hsm to create, update, list, show, and delete HSMs.
+  description: Manage dedicated hsm with hardware security modules.

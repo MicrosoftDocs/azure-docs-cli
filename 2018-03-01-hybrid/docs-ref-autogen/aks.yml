@@ -82,6 +82,7 @@ directCommands:
                   [--disable-snapshot-controller {false, true}]
                   [--dns-name-prefix]
                   [--dns-service-ip]
+                  [--dns-zone-resource-id]
                   [--docker-bridge-address]
                   [--edge-zone]
                   [--enable-aad]
@@ -349,6 +350,9 @@ directCommands:
   - name: --dns-service-ip
     summary: An IP address assigned to the Kubernetes DNS service.
     description: This address must be within the Kubernetes service address range specified by "--service-cidr". For example, 10.0.0.10.
+  - name: --dns-zone-resource-id
+    summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
+    description: ''
   - name: --docker-bridge-address
     summary: A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
     description: This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
@@ -374,6 +378,7 @@ directCommands:
           open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
           gitops                          - enable GitOps (PREVIEW).
           azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
+          web_application_routing         - enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
     description: ''
@@ -442,7 +447,7 @@ directCommands:
     description: ''
   - name: --enable-workload-identity
     parameterValueGroup: false, true
-    summary: (PREVIEW) Enable workload identity addon.
+    summary: Enable workload identity addon.
     description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
@@ -753,6 +758,7 @@ directCommands:
         open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
         gitops                          - enable GitOps (PREVIEW).
         azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
+        web_application_routing         - enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
   syntax: >-
     az aks enable-addons --addons
                          --name
@@ -763,6 +769,7 @@ directCommands:
                          [--appgw-subnet-id]
                          [--appgw-subnet-prefix]
                          [--appgw-watch-namespace]
+                         [--dns-zone-resource-id]
                          [--enable-msi-auth-for-monitoring {false, true}]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
@@ -808,6 +815,9 @@ directCommands:
     description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces. Use with ingress-azure addon.
+    description: ''
+  - name: --dns-zone-resource-id
+    summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
     description: ''
   - name: --enable-msi-auth-for-monitoring
     parameterValueGroup: false, true
@@ -1142,7 +1152,6 @@ directCommands:
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller {false, true}]
-                  [--disable-workload-identity {false, true}]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
@@ -1324,10 +1333,6 @@ directCommands:
     parameterValueGroup: false, true
     summary: Disable CSI Snapshot Controller.
     description: ''
-  - name: --disable-workload-identity
-    parameterValueGroup: false, true
-    summary: (PREVIEW) Disable Workload Identity addon for cluster.
-    description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
     description: ''
@@ -1387,7 +1392,7 @@ directCommands:
     description: ''
   - name: --enable-workload-identity
     parameterValueGroup: false, true
-    summary: (PREVIEW) Enable Workload Identity addon for cluster.
+    summary: Enable Workload Identity addon for cluster.
     description: ''
   - name: --gmsa-dns-server
     summary: Specify DNS server for Windows gmsa on cluster.
@@ -1678,6 +1683,9 @@ commands:
 - az_aks_snapshot_show
 - az_aks_start
 - az_aks_stop
+- az_aks_trustedaccess
+- az_aks_trustedaccess_role
+- az_aks_trustedaccess_role_list
 - az_aks_update
 - az_aks_upgrade
 - az_aks_use-dev-spaces
