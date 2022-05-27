@@ -4,7 +4,7 @@ description: Learn about Azure tenants, users, and subscriptions. Use Azure CLI 
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/19/2021
+ms.date: 05/27/2022
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azurecli
