@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 02/10/2022
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli references, reference types, reference status
 ---

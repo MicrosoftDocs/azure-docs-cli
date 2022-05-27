@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Azure resource groups, resource group in azure
 ---

@@ -7,7 +7,7 @@ ms.topic: reference
 ms.date: 09/21/2021
 ms.author: dbradish
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.reviewer: mohnader
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli references, azure network

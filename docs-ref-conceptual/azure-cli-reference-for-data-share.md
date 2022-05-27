@@ -5,7 +5,7 @@ services: data-share
 author: dbradish-microsoft
 manager: barbkess
 ms.service: data-share
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.topic: reference
 ms.date: 09/21/2021
 ms.author: dbradish

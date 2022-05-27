@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 05/24/2022
 ms.topic: article
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---

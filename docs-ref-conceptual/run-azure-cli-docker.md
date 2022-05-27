@@ -7,7 +7,7 @@ manager: yonzhan
 ms.date: 04/08/2022
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli docker, docker azure cli
 ---
