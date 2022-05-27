@@ -7,7 +7,7 @@ manager: yonzhan
 ms.date: 05/27/2022
 ms.topic: conceptual
 ms.service: azure-cli
-ms.tool: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login
 ---

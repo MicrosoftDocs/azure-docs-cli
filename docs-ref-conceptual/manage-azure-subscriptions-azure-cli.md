@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 05/27/2022
 ms.topic: conceptual
 ms.service: azure-cli
-ms.tool: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Azure subscriptions, manage azure subscriptions, azure management groups, azure cli set subscription, azure cli select subscription
 ---
