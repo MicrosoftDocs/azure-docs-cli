@@ -8,7 +8,7 @@ ms.date: 08/01/2021
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
-ms.tool: azure-cli
+ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure service management, azure services list, azure resources list
 ---
@@ -177,11 +177,11 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 |[Azure Arc](/cli/azure/service-page/azure%20arc) | [Delete Azure Arc data controller](/azure/azure-arc/data/uninstall-azure-arc-data-controller)
 |[Azure Database for PostgreSQL](/cli/azure/service-page/azure%20database%20for%20postgresql) | [Deploy a Django web app with PostgreSQL in Azure App Service](/azure/app-service/tutorial-python-postgresql-app?tabs=cmd%2Cclone&pivots=postgres-single-server)
 |[Azure DevOps](azure-cli-reference-for-devops.md) | See links in reference summary.
-|[Azure IoT Edge](/cli/azure/iot/edge) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
+|[Azure IoT Edge](../latest/docs-ref-autogen/iot/edge.yml) | [Deploy your first IoT Edge module to a virtual Linux device](/azure/iot-edge/quickstart-linux)
 |[Microsoft Defender for Cloud](/cli/azure/service-page/azure%20security%20center) |
 |[Microsoft Sentinel](/cli/azure/service-page/azure%20sentinel) |
-|[Azure SQL Database](/cli/azure/azure-cli-reference-for-sql#sql-database) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
-|[Azure Stack HCI](/cli/azure/stack-hci) |
+|[Azure SQL Database](./azure-cli-reference-for-sql.md) | [Restore a single database in Azure SQL Database to an earlier point in time](/azure/sql-database/scripts/sql-database-restore-database-cli)
+|[Azure Stack HCI](../latest/docs-ref-autogen/stack-hci.yml) |
 
 ## Identity
 
@@ -348,5 +348,4 @@ Azure DevOps technologies deliver innovation faster with simple, reliable tools 
 ## See also
 
 - [Get started with the Azure CLI](get-started-with-azure-cli.md)
-- [Command reference list for the Azure CLI](/cli/azure/reference-index)
-
+- [Command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
