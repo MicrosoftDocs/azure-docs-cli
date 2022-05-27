@@ -121,5 +121,6 @@ To learn more about managed identities for Azure resources, see [Configure manag
 
 ## See also
 
+* [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant)
 * [How-to change your active subscription](manage-azure-subscriptions-azure-cli.md#change-the-active-subscription)
 * [Learn to use Bash with the Azure CLI](azure/azure-cli-learn-bash.md)

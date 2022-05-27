@@ -20,17 +20,44 @@ For detailed information on subscriptions, billing, and cost management, see the
 
 ## Tenants, users, and subscriptions
 
-A _tenant_ is the Azure Active Directory entity that encompasses a whole organization. A tenant has one or more _subscription_ and _user_. A user is an individual and is associated with only one tenant, the organization that they belong to. Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _subscriptions_, which are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
+A _tenant_ is the Azure Active Directory entity that encompasses a whole organization. A tenant has one or more _subscriptions_ and _users_. Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _subscriptions_, but a user is only associated with a single tenant.  _Subscriptions_ are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
 
-* To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
-* To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
-* To learn how to sign in to a specific tenant, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
+To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
+
+## Get the active tenant
+
+Use [az account tenant list](/cli/azure/account/tenant) or [az account show](/cli/azure/account#az-account-show) to get the active tenant ID.
+```azurecli-interactive
+az account tenant list
+
+az account show
+```
+
+## Change the active tenant
+
+To switch tenants, you need to sign in as a user within the desired tenant.  Use [az login](/cli/azure/reference-index#az-login-examples) to change the active tenant and update the subscription list to which you belong.
+
+```azurecli-interactive
+# sign in as a different user
+az login --user <myAlias@myCompany.com> -password <myPassword>
+
+# sign in with a different tenant
+az login --tenant <myTenantID>
+```
+
+If your organization requires multi-factor authentication, you may receive this error when using `az login --user`:
+
+```output
+Due to a configuration change made by your administrator, or because you moved to a new location, you must use multi-factor authentication to access...
+```
+
+Using the alternative `az login --tenant` command will prompted you to open a HTTPS page and enter the code provided.  You can then use multi-factor authentication and successfully sign in.  To learn more about sign in options with the azure CLI, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
 
 ## Get the active subscription
 
-Most Azure CLI commands act within a subscription.  For optimum security, most Azure CLI commands no longer default the subscription to your current, active subscription.  You must now specify the subscription to work in by using the `--subscription` or `--scope` parameter in your command.
+Most Azure CLI commands act within a subscription.  For optimum security, Azure CLI commands no longer default the subscription ID to your current, active subscription.  You must now specify the subscription to work in by using the `--subscription` or `--scope` parameter in your command.
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  See [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to learn how to work with multiple subscription values.
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  See [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples using `az account show`.
 
 ```azurecli
 # get the current default subscription using show
@@ -43,8 +70,6 @@ az account list --query "[?isDefault]"
 subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
 echo $subscriptionId
 ```
-
-Use [az account tenant list](/cli/azure/account/tenant) to get the active tenant ID.
 
 > [!TIP]
 > The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
@@ -67,7 +92,13 @@ subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
 az account set --subscription $subscriptionId
 ```
 
-If you change your active subscription to a subscription within another tenant, you have also just changed your active tenant.  See [Sign in with Azure CLI](authenticate-azure-cli#sign-in-with-a-different-tenant) to learn how to switch the active tenant directly using `az login`.  You can see the tenant ID associated with the active subscription by using the `az account show` or [az account tenant list](/cli/azure/account/tenant) commands.
+You cannot change your active subscription to a subscription _within a different tenant_ using the `az account set` command.  You first must sign in as a user within the desire tenant.  If you do try and set your subscription to a subscription within a different tenant, you will receive this error:
+
+```output
+The subscription of 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' doesn't exist in cloud 'AzureCloud'.
+```
+
+To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 
 ## Create Azure management groups
 
