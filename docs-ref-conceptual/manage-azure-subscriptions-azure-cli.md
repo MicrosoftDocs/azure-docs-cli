@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Azure subscriptions, manage azure subscriptions, azure management groups, azure cli set subscription, azure cli select subscription
 ---
@@ -67,7 +67,7 @@ subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
 az account set --subscription $subscriptionId
 ```
 
-If you change your active subscription to a subscription within another tenant, you have also just changed your active tenant.  See [Sign in with Azure CLI](authenticate-azure-cli#sign-in-with-a-different-tenant) to learn how to switch the active tenant directly using `az login`.  You can see the tenant ID associated with the active subscription by using the `az account show` command.
+If you change your active subscription to a subscription within another tenant, you have also just changed your active tenant.  See [Sign in with Azure CLI](authenticate-azure-cli#sign-in-with-a-different-tenant) to learn how to switch the active tenant directly using `az login`.  You can see the tenant ID associated with the active subscription by using the `az account show` or [az account tenant list](/cli/azure/account/tenant) commands.
 
 ## Create Azure management groups
 

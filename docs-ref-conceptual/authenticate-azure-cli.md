@@ -4,10 +4,10 @@ description: Learn the different authentication types for your Azure CLI login â
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 09/10/2021
+ms.date: 05/27/2022
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login
 ---
@@ -118,3 +118,8 @@ az login --identity --username <client_id|object_id|resource_id>
 ```
 
 To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm) and [Use managed identities for Azure resources for sign in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
+
+## See also
+
+* [How-to change your active subscription](manage-azure-subscriptions-azure-cli.md#change-the-active-subscription)
+* [Learn to use Bash with the Azure CLI](azure/azure-cli-learn-bash.md)
