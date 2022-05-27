@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 9/21/2021
 ms.topic: overview
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.tool: azure-cli 
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: command line interface, azure cli, azure command line, azure command line interface, what is cli, azure cli examples
 ---

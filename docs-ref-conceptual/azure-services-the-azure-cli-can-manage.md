@@ -8,7 +8,7 @@ ms.date: 08/01/2021
 ms.topic: conceptual
 ms.prod: azure
 ms.technology: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure service management, azure services list, azure resources list
 ---

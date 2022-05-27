@@ -7,7 +7,7 @@ manager: yonzhan
 ms.prod: azure
 ms.date: 08/19/2021
 ms.topic: conceptual
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Install azure cli, azure cli download, cli for windows, install azure cli on windows, azure cli windows, install azure cli windows

@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 08/06/2020
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.tool: azure-cli 
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: manage extensions, microsoft extensions, install extensions, uninstall extensions, azure extensions, azure cli extensions
 ---
