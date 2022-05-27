@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 05/24/2022
 ms.topic: article
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
@@ -144,7 +144,7 @@ Version 2.37.0
 
 ### Role
 
-* [BREAKING CHANGE] `az az/role`: Migrate the underlying API of `az ad` and `az role` from AD Graph API to Microsoft Graph API. For more details, see [Microsoft Graph migration](./microsoft-graph-migration.md)
+* [BREAKING CHANGE] `az az/role`: Migrate the underlying API of `az ad` and `az role` from AD Graph API to Microsoft Graph API. For more details, see [Microsoft Graph migration](https://docs.microsoft.com/en-us/cli/azure/microsoft-graph-migration)
 
 ### Security
 
@@ -1303,7 +1303,7 @@ Version 2.28.0
 * Upgrade api-version for VM and VMSS from `2021-03-01` to `2021-04-01`
 * `az vmss create/update`: Support spot restore policy to VM scale sets
 * Add new examples for creating disk from share image gallery
-* `az vm image​ list/list-offers/list-skus/list-publishers/show`: Add new parameter ​`--edge-zone`​ to support querying the image under edge zone
+* `az vm image​ list/list-offers/list-skus/list-publishers/show`: Add new parameter ​`--edge-zone`​ to support querying the image under edge zone
 * Fix the issue caused by the lack of `os_type` when creating VM from shared gallery id
 * Update shared image gallery doc
 * `az capacity reservation`: Add new commands to manage capacity reservation
