@@ -57,9 +57,9 @@ Using the alternative `az login --tenant` command will prompted you to open a HT
 
 Most Azure CLI commands act within a subscription.  For optimum security, Azure CLI commands no longer default the subscription ID to your current, active subscription.  You must now specify the subscription to work in by using the `--subscription` or `--scope` parameter in your command.
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  See [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples using `az account show`.
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of `az account show`.
 
-```azurecli
+```azurecli-interactive
 # get the current default subscription using show
 az account show --output table
 
@@ -78,9 +78,9 @@ Subscriptions contain resource groups. An Azure resource group is a container th
 
 ## Change the active subscription
 
-Azure subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the subscription ID or name you want to switch to.
+Azure subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the desire subscription ID or name.
 
-```azurecli
+```azurecli-interactive
 # change the active subscription using the subscription name
 az account set --subscription "My Demos"
 
@@ -108,32 +108,32 @@ Use the [az account management-group](../latest/docs-ref-autogen/account/managem
 
 You can create a management group for several of your subscriptions by using the [az account management-group create](/cli/azure/account/management-group#az-account-management-group-create) command:
 
-```azurecli
+```azurecli-interactive
 az account management-group create --name Contoso01
 ```
 
 To see all your management groups, use the [az account management-group list](/cli/azure/account/management-group#az-account-management-group-list) command:
 
-```azurecli
+```azurecli-interactive
 az account management-group list
 ```
 
 Add subscriptions to your new group by using the [az account management-group subscription add](/cli/azure/account/management-group/subscription#az-account-management-group-subscription-add) command:
 
-```azurecli
+```azurecli-interactive
 az account management-group subscription add --name Contoso01 --subscription "My Demos"
 az account management-group subscription add --name Contoso01 --subscription "My Second Demos"
 ```
 
 To remove a subscription, use the [az account management-group subscription remove](/cli/azure/account/management-group/subscription#az-account-management-group-subscription-remove) command:
 
-```azurecli
+```azurecli-interactive
 az account management-group subscription remove --name Contoso01 --subscription "My Demos"
 ```
 
 To remove a management group, run the [az account management-group delete](/cli/azure/account/management-group#az-account-management-group-delete) command:
 
-```azurecli
+```azurecli-interactive
 az account management-group delete --name Contoso01
 ```
 
@@ -145,7 +145,7 @@ As an administrator, you may need to lock a subscription to prevent users from d
 
 In Azure CLI, use the [az account lock](../latest/docs-ref-autogen/account/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a subscription:
 
-```azurecli
+```azurecli-interactive
 az account lock create --name "Cannot delete subscription" --lock-type CanNotDelete
 ```
 
@@ -154,7 +154,7 @@ az account lock create --name "Cannot delete subscription" --lock-type CanNotDel
 
 To see the current locks on your subscription, use the [az account lock list](/cli/azure/account/lock#az-account-lock-list) command:
 
-```azurecli
+```azurecli-interactive
 az account lock list --output table
 ```
 
@@ -162,13 +162,13 @@ If you make an account read-only, the result resembles assigning permissions of 
 
 To see details for a lock, use the [az account lock show](/cli/azure/account/lock#az-account-lock-show) command:
 
-```azurecli
+```azurecli-interactive
 az account lock show --name "Cannot delete subscription"
 ```
 
 You can remove a lock by using the [az account lock delete](/cli/azure/account/lock#az-account-lock-delete) command:
 
-```azurecli
+```azurecli-interactive
 az account lock delete --name "Cannot delete subscription"
 ```
 
