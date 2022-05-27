@@ -57,7 +57,7 @@ Using the alternative `az login --tenant` command will prompted you to open a HT
 
 Most Azure CLI commands act within a subscription.  For optimum security, Azure CLI commands no longer default the subscription ID to your current, active subscription.  You must now specify the subscription to work in by using the `--subscription` or `--scope` parameter in your command.
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of `az account show`.
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of ways to use `az account show`.
 
 ```azurecli-interactive
 # get the current default subscription using show
@@ -78,7 +78,7 @@ Subscriptions contain resource groups. An Azure resource group is a container th
 
 ## Change the active subscription
 
-Azure subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the desire subscription ID or name.
+Azure subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the desired subscription ID or name.
 
 ```azurecli-interactive
 # change the active subscription using the subscription name
