@@ -7,7 +7,7 @@ manager: barbkess
 ms.prod: azure
 ms.date: 09/16/2021
 ms.topic: tutorial
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: persisted parameter tutorial

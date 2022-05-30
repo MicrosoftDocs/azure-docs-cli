@@ -6,6 +6,7 @@ ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: sample
 ms.date: 04/18/2022
+ms.tool: azure-cli
 ---
 # Learn to use Bash with the Azure CLI
 
