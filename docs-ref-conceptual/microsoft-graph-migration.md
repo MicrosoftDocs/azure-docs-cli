@@ -88,7 +88,9 @@ If you are not ready for the migration yet, such as lacking Microsoft Graph perm
 
 ### Graph command fails with `AADSTS50005` or `AADSTS53000`
 
-Your tenant may have Conditional Access policies that blocks using device code flow to access Microsoft Graph. In such case, use authorization code flow or service principal to sign in instead. For more information about signing in methods, please see [Sign in with Azure CLI](authenticate-azure-cli.md).
+Your tenant may have Conditional Access policies that block using device code flow to access Microsoft Graph. In such case, use authorization code flow or service principal to sign in instead. For more information about signing in methods, please see [Sign in with Azure CLI](authenticate-azure-cli.md).
+
+Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Access policies configured.
 
 ## Give feedback
 
