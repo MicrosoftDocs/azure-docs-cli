@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/07/2022
+ms.date: 06/08/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -135,18 +135,18 @@ You will be prompted to install an extension on first use.
 |[sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 2.0.46 | Additional commands for working with SAP HanaOnAzure instances. | GA | [0.6.5](https://github.com/Azure/azure-hanaonazure-cli-extension/HISTORY.rst) |
 |[scheduled-query](https://github.com/Azure/azure-cli-extensions) | 2.20.0 | Microsoft Azure Command-Line Tools Scheduled_query Extension | Preview | [0.5.0](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
 |[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
-|[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/sentinel) | 2.11.0 | Microsoft Azure Command-Line Tools SecurityInsights Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/sentinel/HISTORY.rst) |
-|[serial-console](https://github.com/Azure/azure-cli-extensions/tree/master/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/serialconsole/HISTORY.rst) |
-|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.30.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring/HISTORY.rst) |
-|[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.30.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud/HISTORY.rst) |
-|[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.4.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [1.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh/HISTORY.rst) |
+|[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/sentinel) | 2.11.0 | Microsoft Azure Command-Line Tools SecurityInsights Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/sentinel) |
+|[serial-console](https://github.com/Azure/azure-cli-extensions/tree/master/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/serialconsole) |
+|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.30.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
+|[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.30.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
+|[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.4.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [1.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
-|[storage-blob-preview](https://github.com/Azure/azure-cli-extensions) | 2.27.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Preview | [0.6.1](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
+|[storage-blob-preview](https://github.com/Azure/azure-cli-extensions) | 2.27.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Preview | [0.6.1](https://github.com/Azure/azure-cli-extensions) |
 |[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.25.0 | Provides a preview for upcoming storage features. | Preview | [0.8.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync) | 2.3.1 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync/HISTORY.rst) |
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.15.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
 |[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
-|[support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 2.0.81 | Microsoft Azure Command-Line Tools Support Extension | GA | [1.0.3](https://github.com/azure/azure-cli-extensions/tree/master/src/support/HISTORY.rst) |
+|[support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 2.0.81 | Microsoft Azure Command-Line Tools Support Extension | GA | [1.0.3](https://github.com/azure/azure-cli-extensions/tree/master/src/support) |
 |[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights) | 2.11.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights/HISTORY.rst) |
 |[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.15.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | Preview | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) |
