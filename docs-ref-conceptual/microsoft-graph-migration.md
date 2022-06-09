@@ -96,6 +96,6 @@ Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Acc
 
 You can find more information about the Microsoft Graph migration on https://github.com/Azure/azure-cli/issues/22580.
 
-## Feedback
+## Give feedback
 
 If you have any questions, please reply to https://github.com/Azure/azure-cli/issues/22580 or create a new issue with the [`az feedback`](/cli/azure/reference-index#az-feedback) command.
