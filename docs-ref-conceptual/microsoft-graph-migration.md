@@ -77,7 +77,7 @@ Command argument and behavior breaking changes are listed below.
 
 ## Known issues
 
-- Generic update arguments `--add`, `--set` and `--remove` currently don't work. You may use `az rest` to directly call Microsoft Graph API for non-supported properties.
+- Generic update arguments `--set`, `--add` and `--remove` are not guaranteed to work (due to the underlying infrastructure change). In case of generic update argument failure, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview) for non-supported properties. Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
 - Microsoft Graph related commands like `az ad` and `az role` will fail in Azure Stack environments which don't have Microsoft Graph support. Please use Azure CLI 2.36.0 or earlier versions for Azure Stack environments.
 
 ## Install a previous version
@@ -92,6 +92,10 @@ Your tenant may have Conditional Access policies that block using device code fl
 
 Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Access policies configured.
 
-## Give feedback
+## More information
 
-If you have any questions, please [send us your feedback](/cli/azure/get-started-with-azure-cli#give-feedback).
+You can find more information about the Microsoft Graph migration on https://github.com/Azure/azure-cli/issues/22580.
+
+## Feedback
+
+If you have any questions, please reply to https://github.com/Azure/azure-cli/issues/22580 or create a new issue with the [`az feedback`](/cli/azure/reference-index#az-feedback) command.
