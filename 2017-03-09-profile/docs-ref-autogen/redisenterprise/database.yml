@@ -18,6 +18,8 @@ directCommands:
                                        [--client-protocol {Encrypted, Plaintext}]
                                        [--clustering-policy {EnterpriseCluster, OSSCluster}]
                                        [--eviction-policy {AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL}]
+                                       [--group-nickname]
+                                       [--linked-databases]
                                        [--modules]
                                        [--no-wait]
                                        [--persistence]
@@ -46,6 +48,12 @@ directCommands:
   - name: --eviction-policy
     parameterValueGroup: AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL
     summary: Redis eviction policy - default is VolatileLRU.
+    description: ''
+  - name: --group-nickname
+    summary: Name for the group of linked database resources.
+    description: ''
+  - name: --linked-databases
+    summary: List of database resources to link with this database.
     description: ''
   - name: --modules
     summary: Optional set of redis modules to enable in this database - modules can only be added at creation time.
@@ -138,6 +146,35 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+- uid: az_redisenterprise_database_force-unlink
+  name: az redisenterprise database force-unlink
+  summary: Forcibly removes the link to the specified database resource.
+  description: ''
+  syntax: >-
+    az redisenterprise database force-unlink --cluster-name
+                                             --resource-group
+                                             --unlink-ids
+                                             [--no-wait]
+  examples:
+  - summary: How to unlink a database during a regional outage
+    syntax: az redisenterprise database force-unlink --cluster-name "cache1" --unlink-ids "/subscriptions/subid2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default" --resource-group "rg1"
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --unlink-ids
+    summary: The resource IDs of the database resources to be unlinked.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
 - uid: az_redisenterprise_database_import
   name: az redisenterprise database import
   summary: Import data into a Redis Enterprise database.
@@ -145,7 +182,7 @@ directCommands:
   syntax: >-
     az redisenterprise database import --cluster-name
                                        --resource-group
-                                       --sas-uri
+                                       --sas-uris
                                        [--no-wait]
   examples:
   - summary: Import data from a database file into a target Redis Enterprise database.
@@ -160,8 +197,8 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --sas-uri
-    summary: SAS URI for the target blob to import from.
+    name: --sas-uris
+    summary: SAS URIs for the target blobs to import from.
     description: ''
   optionalParameters:
   - name: --no-wait
@@ -263,6 +300,8 @@ directCommands:
                                        --resource-group
                                        [--client-protocol {Encrypted, Plaintext}]
                                        [--eviction-policy {AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL}]
+                                       [--group-nickname]
+                                       [--linked-databases]
                                        [--no-wait]
                                        [--persistence]
   examples:
@@ -285,6 +324,12 @@ directCommands:
   - name: --eviction-policy
     parameterValueGroup: AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL
     summary: Redis eviction policy.
+    description: ''
+  - name: --group-nickname
+    summary: Name for the group of linked database resources.
+    description: ''
+  - name: --linked-databases
+    summary: List of database resources to link with this database.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -363,6 +408,7 @@ commands:
 - az_redisenterprise_database_create
 - az_redisenterprise_database_delete
 - az_redisenterprise_database_export
+- az_redisenterprise_database_force-unlink
 - az_redisenterprise_database_import
 - az_redisenterprise_database_list
 - az_redisenterprise_database_list-keys
