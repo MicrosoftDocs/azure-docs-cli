@@ -57,12 +57,15 @@ If you prefer a step-by-step installation process, complete the following steps 
         sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
     ```
 
-3. <div id="set-release"/>Add the Azure CLI software repository:
+3. <div id="set-release"/>Add the official Azure CLI software repository and prioritize it:
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
         sudo tee /etc/apt/sources.list.d/azure-cli.list
+    echo 'Package: azure-cli
+    Pin: origin "packages.microsoft.com"
+    Pin-Priority: 1001' | sudo tee /etc/apt/preferences.d/azure-cli
     ```
 
 4. Update repository information and install the `azure-cli` package:
@@ -107,8 +110,15 @@ determine the package to install. If you know the code name of the Ubuntu or Deb
 Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future
 versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
 
-To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions
-use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
+To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `jammy` repository, and for Debian distributions use `bullseye`:
+
+```bash
+# Ubuntu
+AZ_REPO=jammy
+
+# Debian
+AZ_REPO=bullseye
+```
 
 ### Elementary OS (EOS) fails to install the Azure CLI
 
