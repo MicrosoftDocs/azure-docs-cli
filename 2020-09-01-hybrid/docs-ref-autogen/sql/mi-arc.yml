@@ -40,7 +40,7 @@ directCommands:
                          [--primary-dns-name]
                          [--primary-port-number]
                          [--readable-secondaries]
-                         [--replicas]
+                         [--replicas {1, 2, 3}]
                          [--resource-group]
                          [--retention-days]
                          [--service-annotations]
@@ -52,6 +52,7 @@ directCommands:
                          [--storage-class-datalogs]
                          [--storage-class-logs]
                          [--storage-labels]
+                         [--sync-secondary-to-commit {-1, 0, 1, 2}]
                          [--tier]
                          [--time-zone]
                          [--trace-flags]
@@ -154,7 +155,8 @@ directCommands:
     summary: Number of replicas to be made readable. Applies only to Business Critical tier.  Value must be between 0 and the number of replicas minus 1.
     description: ''
   - name: --replicas
-    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3', '2', '1' with default of '1'.
+    parameterValueGroup: 1, 2, 3
+    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purposes. Default is 1 replica for General Purpose, 3 replicas for Business Critical.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group in which the sqlmi resource should be added.
@@ -188,6 +190,11 @@ directCommands:
     description: ''
   - name: --storage-labels
     summary: Comma-separated list of labels to apply to all PVCs.
+    description: ''
+  - name: --sync-secondary-to-commit
+    defaultValue: "-1"
+    parameterValueGroup: -1, 0, 1, 2
+    summary: Number of secondary replicas that must be synchronized to commit. Setting this value to -1 will set the number of required synchronized secondaries to '(# of replicas - 1) / 2', rounded down.
     description: ''
   - name: --tier -t
     summary: 'The pricing tier for the instance. Allowed values: BusinessCritical (bc for short) or GeneralPurpose (gp for short). Default is GeneralPurpose. The price tier cannot be changed.'
@@ -452,12 +459,13 @@ directCommands:
                          [--path]
                          [--preferred-primary-replica]
                          [--readable-secondaries]
-                         [--replicas]
+                         [--replicas {1, 2, 3}]
                          [--resource-group]
                          [--retention-days]
                          [--service-annotations]
                          [--service-cert-secret]
                          [--service-labels]
+                         [--sync-secondary-to-commit {-1, 0, 1, 2}]
                          [--time-zone]
                          [--trace-flags]
                          [--use-k8s]
@@ -519,7 +527,8 @@ directCommands:
     summary: Number of replicas to be made readable. Applies only to Business Critical tier.  Value must be between 0 and the number of replicas minus 1.
     description: ''
   - name: --replicas
-    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3', '2', '1' with default of '1'.
+    parameterValueGroup: 1, 2, 3
+    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purposes.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group in which the sqlmi resource should be updated.
@@ -535,6 +544,10 @@ directCommands:
     description: ''
   - name: --service-labels
     summary: Comma-separated list of labels to apply to all external services.
+    description: ''
+  - name: --sync-secondary-to-commit
+    parameterValueGroup: -1, 0, 1, 2
+    summary: Number of secondary replicas that must be synchronized to commit. Setting this value to -1 will set the number of required synchronized secondaries to '(# of replicas - 1) / 2', rounded down.
     description: ''
   - name: --time-zone
     summary: The SQL Server time zone for the instance.
