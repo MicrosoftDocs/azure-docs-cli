@@ -96,6 +96,11 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 * `https://aka.ms/`
 * `https://azcliprod.blob.core.windows.net/`
 
+If you are upgrading the Azure CLI, your proxy will also need to allow the following two addresses:
+
+* `https://azcliextensionsync.blob.core.windows.net/`
+* `https://objects.githubusercontent.com/`
+
 ## Uninstall
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
