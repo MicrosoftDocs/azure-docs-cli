@@ -82,7 +82,7 @@ Command argument and behavior breaking changes are listed below.
 
 ## Install a previous version
 
-If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](/cli/azure/install-azure-cli) (except for Homebrew which doesn't support installing previous versions).
+If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](./install-azure-cli.md) (except for Homebrew which doesn't support installing previous versions).
 
 ## Troubleshooting
 
@@ -94,4 +94,4 @@ Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Acc
 
 ## Give feedback
 
-If you have any questions, please [send us your feedback](/cli/azure/get-started-with-azure-cli#give-feedback).
+If you have any questions, please [send us your feedback](./get-started-with-azure-cli.md#give-feedback).
