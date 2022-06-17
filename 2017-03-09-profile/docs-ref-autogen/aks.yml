@@ -63,17 +63,19 @@ directCommands:
                   [--appgw-name]
                   [--appgw-subnet-cidr]
                   [--appgw-subnet-id]
-                  [--appgw-subnet-prefix]
                   [--appgw-watch-namespace]
                   [--assign-identity]
                   [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--azure-keyvault-kms-key-id]
+                  [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
+                  [--azure-keyvault-kms-key-vault-resource-id]
+                  [--ca-profile]
                   [--client-secret]
-                  [--cluster-autoscaler-profile]
                   [--cluster-snapshot-id]
                   [--crg-id]
+                  [--defender-config]
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-local-accounts]
@@ -94,6 +96,7 @@ directCommands:
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-custom-ca-trust]
+                  [--enable-defender]
                   [--enable-encryption-at-host {false, true}]
                   [--enable-fips-image]
                   [--enable-keda]
@@ -105,11 +108,9 @@ directCommands:
                   [--enable-pod-identity-with-kubenet]
                   [--enable-pod-security-policy]
                   [--enable-private-cluster]
-                  [--enable-rbac]
                   [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
                   [--enable-ultra-ssd]
-                  [--enable-vmss]
                   [--enable-windows-gmsa]
                   [--enable-workload-identity {false, true}]
                   [--fqdn-subdomain]
@@ -294,9 +295,6 @@ directCommands:
   - name: --appgw-subnet-id
     summary: Resource Id of an existing Subnet used to deploy the Application Gateway. Use with ingress-azure addon.
     description: ''
-  - name: --appgw-subnet-prefix
-    summary: Subnet Prefix to use for a new subnet created to deploy the Application Gateway. Use with ingress-azure addon.
-    description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
     description: ''
@@ -316,17 +314,28 @@ directCommands:
   - name: --azure-keyvault-kms-key-id
     summary: Identifier of Azure Key Vault key.
     description: ''
+  - name: --azure-keyvault-kms-key-vault-network-access
+    defaultValue: Public
+    parameterValueGroup: Private, Public
+    summary: Network Access of Azure Key Vault.
+    description: Allowed values are "Public", "Private". If not set, defaults to type "Public". Requires --azure-keyvault-kms-key-id to be used.
+  - name: --azure-keyvault-kms-key-vault-resource-id
+    summary: Resource ID of Azure Key Vault.
+    description: ''
+  - name: --ca-profile --cluster-autoscaler-profile
+    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
-    description: ''
-  - name: --cluster-autoscaler-profile
-    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
   - name: --cluster-snapshot-id
     summary: The source cluster snapshot id is used to create new cluster.
     description: ''
   - name: --crg-id
     summary: The crg-id used to associate the new cluster with the existed Capacity Reservation Group resource.
+    description: ''
+  - name: --defender-config
+    summary: Path to JSON file containing Microsoft Defender profile configurations.
     description: ''
   - name: --disable-disk-driver
     summary: Disable AzureDisk CSI Driver.
@@ -403,6 +412,9 @@ directCommands:
   - name: --enable-custom-ca-trust
     summary: Enable Custom CA Trust on agent node pool.
     description: ''
+  - name: --enable-defender
+    summary: Enable Microsoft Defender security profile.
+    description: ''
   - name: --enable-encryption-at-host
     parameterValueGroup: false, true
     summary: Enable EncryptionAtHost on agent node pool.
@@ -439,9 +451,6 @@ directCommands:
   - name: --enable-private-cluster
     summary: Enable private cluster.
     description: ''
-  - name: --enable-rbac -r
-    summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
-    description: ''
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
@@ -450,9 +459,6 @@ directCommands:
     description: ''
   - name: --enable-ultra-ssd
     summary: Enable UltraSSD on agent node pool.
-    description: ''
-  - name: --enable-vmss
-    summary: To be deprecated. Use vm_set_type instead.
     description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa.
@@ -1155,11 +1161,15 @@ directCommands:
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
                   [--azure-keyvault-kms-key-id]
-                  [--cluster-autoscaler-profile]
+                  [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
+                  [--azure-keyvault-kms-key-vault-resource-id]
+                  [--ca-profile]
+                  [--defender-config]
                   [--detach-acr]
                   [--disable-ahub]
                   [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
+                  [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
                   [--disable-keda]
@@ -1176,6 +1186,7 @@ directCommands:
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
                   [--enable-keda]
@@ -1310,8 +1321,18 @@ directCommands:
   - name: --azure-keyvault-kms-key-id
     summary: Identifier of Azure Key Vault key.
     description: ''
-  - name: --cluster-autoscaler-profile
+  - name: --azure-keyvault-kms-key-vault-network-access
+    parameterValueGroup: Private, Public
+    summary: Network Access of Azure Key Vault.
+    description: Allowed values are "Public", "Private". If not set, defaults to type "Public". Requires --azure-keyvault-kms-key-id to be used.
+  - name: --azure-keyvault-kms-key-vault-resource-id
+    summary: Resource ID of Azure Key Vault.
+    description: ''
+  - name: --ca-profile --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
+  - name: --defender-config
+    summary: Path to JSON file containing Microsoft Defender profile configurations.
     description: ''
   - name: --detach-acr
     summary: Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -1324,6 +1345,9 @@ directCommands:
     description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
+    description: ''
+  - name: --disable-defender
+    summary: Disable defender profile.
     description: ''
   - name: --disable-disk-driver
     summary: Disable AzureDisk CSI Driver.
@@ -1373,6 +1397,9 @@ directCommands:
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-defender
+    summary: Enable Microsoft Defender security profile.
     description: ''
   - name: --enable-disk-driver
     summary: Enable AzureDisk CSI Driver.
