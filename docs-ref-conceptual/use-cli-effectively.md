@@ -74,36 +74,36 @@ For multi-value lists, consider the following options:
 
 1. If you need more controls on the result, use a "for" loop:
 
-  ```bash
-  #!/usr/bin/env bash
-  for vmList in $(az vm list --resource-group MyResourceGroup --show-details --query "[?powerState=='VM running'].id" --output tsv); do
-      echo stopping $vmList
-      az vm stop --ids $vmList
-      if [ $? -ne 0 ]; then
-          echo "Failed to stop $vmList"
-          exit 1
-      fi
-      echo $vmList stopped
-  done
-  ```
+    ```bash
+    #!/usr/bin/env bash
+    for vmList in $(az vm list --resource-group MyResourceGroup --show-details --query "[?powerState=='VM running'].id"   --output tsv); do
+        echo stopping $vmList
+        az vm stop --ids $vmList
+        if [ $? -ne 0 ]; then
+            echo "Failed to stop $vmList"
+            exit 1
+        fi
+        echo $vmList stopped
+    done
+    ```
 
 1. Alternatively, use `xargs` and consider using the `-P` flag to run the operations in parallel for improved performance:
 
-  ```azurecli
-  az vm list --resource-group MyResourceGroup --show-details \
-    --query "[?powerState=='VM stopped'].id" \
-    --output tsv | xargs -I {} -P 10 az vm start --ids "{}"
-  ```
+    ```azurecli
+    az vm list --resource-group MyResourceGroup --show-details \
+      --query "[?powerState=='VM stopped'].id" \
+      --output tsv | xargs -I {} -P 10 az vm start --ids "{}"
+    ```
 
 1. Finally, Azure CLI has built-in support to process commands with multiple `--ids` in parallel to achieve the same effect of xargs. Note that `@-` is used to get values from the pipe:
 
-   ```azurecli
-   az vm list --resource-group MyResourceGroup --show-details \
-    --query "[?powerState=='VM stopped'].id" \
-    --output tsv | az vm start --ids @-
-   ```
+    ```azurecli
+    az vm list --resource-group MyResourceGroup --show-details \
+      --query "[?powerState=='VM stopped'].id" \
+      --output tsv | az vm start --ids @-
+    ```
 
-For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash).
+For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
 
 ## Use quotation marks in parameters
 
@@ -120,13 +120,13 @@ To avoid unanticipated results, here are a few suggestions:
 
 - If you provide a parameter that contains whitespace, wrap it in quotation marks.
 
-- In Bash or PowerShell, both single and double quotes are interpreted. In Windows Command Prompt, only double quotes are interpreted. Single quotes are interpreted as a part of the value.
+- In Bash or PowerShell, both single and double quotes are interpreted correctly. In Windows Command Prompt, only double quotes are interpreted correctly -- single quotes are treated as part of the value.
 
 - If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. This is necessary when supplying inline JSON values.  For example, this JSON is correct in Bash: `'{"key": "value"}'`.
 
 - If your command will be run at a Windows Command Prompt, you must use double quotes.  If the value contains double quotes, you must escape it.  The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
 
-- Use Azure CLI's @<file> convention to load from a file and bypass the shell's interpretation mechanisms.
+- Use Azure CLI's `@<file>` convention to load from a file and bypass the shell's interpretation mechanisms.
   
   ```azurecli
   az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json  
@@ -146,6 +146,7 @@ To avoid unanticipated results, here are a few suggestions:
        `--parameterName firstValue secondValue`
     1. Quoted space-separated list
        `--parameterName "firstValue" "secondValue"`
+    
     This example is a string with a space in it.  It is not a space-separated list:
        `--parameterName "firstValue secondValue"`
 
@@ -163,7 +164,7 @@ To avoid unanticipated results, here are a few suggestions:
 
 - When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
-  ### [Bash](#tab/bash)
+### [Bash](#tab/bash)
 
   These three commands are correct and equivalent in Bash:
 
@@ -185,16 +186,7 @@ To avoid unanticipated results, here are a few suggestions:
   az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
   ```
 
-  ### [Cmd](#tab/cmd)
-
-  These two commands will work correctly in Windows Command Prompt:
-
-  ```azurecli
-  az version --query "\"azure-cli\""
-  az version --query \"azure-cli\"
-  ```
-
-  ### [PowerShell](#tab/powershell)
+### [PowerShell](#tab/powershell)
 
   These five commands will work correctly in PowerShell:
 
@@ -205,12 +197,21 @@ To avoid unanticipated results, here are a few suggestions:
   az --% version --query "\"azure-cli\""
   az --% version --query \"azure-cli\"
   ```
-  
-  ---
-  
-For more example comparisons of Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
 
-- The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag.  This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings.
+### [Cmd](#tab/cmd)
+
+  These two commands will work correctly in Windows Command Prompt:
+
+  ```azurecli
+  az version --query "\"azure-cli\""
+  az version --query \"azure-cli\"
+  ```
+  
+---
+  
+  For more example comparisons of Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
+
+- The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag.  This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
 
   ```bash
   # Correct
