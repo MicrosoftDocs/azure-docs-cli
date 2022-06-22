@@ -18,7 +18,6 @@ directCommands:
                                          [--rp-name]
                                          [--source-file-path]
                                          [--source-file-type {Directory, File}]
-                                         [--subscription]
                                          [--target-file-share]
                                          [--target-folder]
                                          [--target-storage-account]
@@ -60,9 +59,6 @@ directCommands:
     parameterValueGroup: Directory, File
     summary: Specify the source file type to be selected.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --target-file-share
     summary: Destination file share to which content will be restored.
     description: ''
@@ -88,7 +84,6 @@ directCommands:
                                              [--item-name]
                                              [--resource-group]
                                              [--rp-name]
-                                             [--subscription]
                                              [--target-file-share]
                                              [--target-folder]
                                              [--target-storage-account]
@@ -123,9 +118,6 @@ directCommands:
   - name: --rp-name -r
     summary: Name of the recovery point.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --target-file-share
     summary: Destination file share to which content will be restored.
     description: ''
@@ -149,7 +141,6 @@ directCommands:
                                       --vault-name
                                       [--rehydration-duration]
                                       [--rehydration-priority {High, Standard}]
-                                      [--subscription]
                                       [--use-secondary-region]
   examples:
   - summary: Restore backed up Azure Workloads in a Recovery services vault to another registered container or to the same container.
@@ -176,9 +167,6 @@ directCommands:
     parameterValueGroup: High, Standard
     summary: The type of priority to be maintained while rehydrating a recovery point.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --use-secondary-region
     summary: Use this flag to restore from a recoverypoint in secondary region.
     description: ''
@@ -200,11 +188,15 @@ directCommands:
                                     [--rehydration-priority {High, Standard}]
                                     [--resource-group]
                                     [--restore-as-unmanaged-disks {false, true}]
+                                    [--restore-mode {AlternateLocation, OriginalLocation}]
                                     [--restore-only-osdisk {false, true}]
                                     [--restore-to-staging-storage-account {false, true}]
                                     [--rp-name]
-                                    [--subscription]
                                     [--target-resource-group]
+                                    [--target-subnet-name]
+                                    [--target-vm-name]
+                                    [--target-vnet-name]
+                                    [--target-vnet-resource-group]
                                     [--target-zone {1, 2, 3}]
                                     [--use-secondary-region]
                                     [--vault-name]
@@ -253,6 +245,11 @@ directCommands:
     parameterValueGroup: false, true
     summary: Use this flag to specify to restore as unmanaged disks.
     description: ''
+  - name: --restore-mode
+    defaultValue: AlternateLocation
+    parameterValueGroup: AlternateLocation, OriginalLocation
+    summary: Specify the restore mode.
+    description: ''
   - name: --restore-only-osdisk
     parameterValueGroup: false, true
     summary: Use this flag to restore only OS disks of a backed up VM.
@@ -264,11 +261,20 @@ directCommands:
   - name: --rp-name -r
     summary: Name of the recovery point.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --target-resource-group -t
     summary: Use this to specify the target resource group in which the restored disks will be saved.
+    description: ''
+  - name: --target-subnet-name
+    summary: Name of the subnet in which the target VM should be created, in the case of Alternate Location restore a new VM.
+    description: ''
+  - name: --target-vm-name
+    summary: Name of the VM to which the data should be restored, in the case of Alternate Location restore to a new VM.
+    description: ''
+  - name: --target-vnet-name
+    summary: Name of the VNet in which the target VM should be created, in the case of Alternate Location restore to a new VM.
+    description: ''
+  - name: --target-vnet-resource-group
+    summary: Name of the resource group which contains the target VNet, in the case of Alternate Location restore to a new VM.
     description: ''
   - name: --target-zone
     parameterValueGroup: 1, 2, 3
@@ -302,9 +308,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2021
+  ms.date: 05/17/2022
   description: Restore backed up items from recovery points in a Recovery Services vault.

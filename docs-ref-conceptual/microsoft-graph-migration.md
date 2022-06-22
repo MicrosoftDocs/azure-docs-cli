@@ -4,7 +4,7 @@ description: Learn about the Microsoft Graph migration of Azure CLI.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 03/08/2022
+ms.date: 05/25/2022
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,11 +14,13 @@ keywords: microsoft graph, ms graph, active directory graph, ad graph
 
 # Microsoft Graph migration
 
-Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), Azure CLI will be migrated from AD Graph to Microsoft Graph.
+Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), the underlying Active Directory Graph API will be replaced by [Microsoft Graph API](/graph/api/overview) in Azure CLI 2.37.0.
 
 ## Breaking changes
 
 For differences of the underlying API and output JSON breaking changes, please refer to [Property differences between Azure AD Graph and Microsoft Graph](/graph/migrate-azure-ad-graph-property-differences).
+
+For example, the most outstanding change is that the `objectId` property in the output JSON of a Graph object is replaced by `id`.
 
 Command argument and behavior breaking changes are listed below.
 
@@ -36,6 +38,7 @@ Command argument and behavior breaking changes are listed below.
 ### `az ad app permission grant`
 
 - Remove `--expires`
+- `--scope` no longer defaults to `user_impersonation` and is now required
 
 ### `az ad app credential reset`
 
@@ -53,7 +56,16 @@ Command argument and behavior breaking changes are listed below.
 
 ### `az ad sp credential reset`
 
+- Replace `--name` with `--id`
 - Remove `--password`. Without specifying certificate arguments, Graph service creates a password for you (https://github.com/Azure/azure-cli/issues/20675)
+
+### `az ad user create`
+
+- Replace `--force-change-password-next-login` with `--force-change-password-next-sign-in`
+
+### `az ad user update`
+
+- Replace `--force-change-password-next-login` with `--force-change-password-next-sign-in`
 
 ### `az ad group get-member-groups`
 
@@ -65,77 +77,21 @@ Command argument and behavior breaking changes are listed below.
 
 ## Known issues
 
-- Generic update arguments `--add`, `--set` and `--remove` currently don't work
-- `az ad` and Microsoft Graph related commands like `az role` will fail in Azure Stack environments which don't have Microsoft Graph support
+- Generic update arguments `--add`, `--set` and `--remove` currently don't work. You may use `az rest` to directly call Microsoft Graph API for non-supported properties.
+- Microsoft Graph related commands like `az ad` and `az role` will fail in Azure Stack environments which don't have Microsoft Graph support. Please use Azure CLI 2.36.0 or earlier versions for Azure Stack environments.
 
-## Try Azure CLI beta with Microsoft Graph
+## Install a previous version
 
-Azure CLI is built on [Python](https://www.python.org/). The supported Python versions are 3.7, 3.8, 3.9, 3.10. On Windows, you will first need to [install Python](https://www.python.org/downloads/windows/).
+If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](./install-azure-cli.md) (except for Homebrew which doesn't support installing previous versions).
 
-Azure CLI beta can only be installed with `pip` from a Microsoft repository. Use `python` or `python3` to execute the following commands, depending on the Linux distribution or your installed Python version.
+## Troubleshooting
 
-To avoid overwriting your installed Azure CLI, we recommend installing the beta version in a [virtual environment](https://docs.python.org/3/tutorial/venv.html).
+### Graph command fails with `AADSTS50005` or `AADSTS53000`
 
-1. Create a virtual environment
+Your tenant may have Conditional Access policies that block using device code flow to access Microsoft Graph. In such cases, use authorization code flow or a service principal to sign in instead. For more information about sign in methods, please see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
-   Navigate to the folder where you want to create the virtual environment, then run:
+Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Access policies configured.
 
-   ```bash
-   python -m venv <env_name>
-   ```
+## Give feedback
 
-2. Activate the virtual environment
-
-   ### [Windows PowerShell](#tab/powershell)
-
-   ```powershell
-   . .\<env_name>\Scripts\Activate.ps1
-   ```
-
-   ### [Linux/macOS Bash](#tab/bash)
-
-   ```bash
-   . <env_name>/bin/activate
-   ```
-   ---
-   These commands can also be used to reactivate your virtual environment.
-
-3. Install Azure CLI beta
-
-   ```bash
-   python -m pip install --upgrade pip
-   pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ azure-cli
-   ```
-   You can now start using Azure CLI beta.
-
-4. If there is an update, you may upgrade Azure CLI beta
-
-   ```bash
-   pip install --extra-index-url https://azurecliprod.blob.core.windows.net/beta/simple/ --upgrade azure-cli
-   ```
-
-5. Deactivate the virtual environment
-
-   After you finish using Azure CLI beta, you can close the terminal window, or use the `deactivate` command.
-
-   ```bash
-   deactivate
-   ```
-
-## Uninstall Azure CLI beta
-
-To uninstall Azure CLI beta, delete the virtual environment folder.
-
-### [Windows PowerShell](#tab/powershell)
-
-```powershell
-Remove-Item -Force -Recurse <env_name>
-```
-
-### [Linux/macOS Bash](#tab/bash)
-
-```bash
-rm -rf <env_name>
-```
-
----
+If you have any questions, please [send us your feedback](./get-started-with-azure-cli.md#give-feedback).

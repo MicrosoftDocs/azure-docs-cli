@@ -23,7 +23,6 @@ directCommands:
                              [--location]
                              [--no-wait]
                              [--os-preference {Linux, Windows}]
-                             [--subscription]
                              [--virtual-ip-type {External, Internal}]
                              [--vnet-name]
                              [--zone-redundant {false, true}]
@@ -129,9 +128,6 @@ directCommands:
     parameterValueGroup: Linux, Windows
     summary: Determine if app service environment should start with Linux workers. Applies to ASEv2 only.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --virtual-ip-type
     defaultValue: Internal
     parameterValueGroup: External, Internal
@@ -147,14 +143,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_appservice_ase_create-inbound-services
   name: az appservice ase create-inbound-services
-  summary: Private DNS Zone for Internal ASEv2.
+  summary: Private DNS Zone for Internal (ILB) App Service Environments.
   description: ''
   syntax: >-
     az appservice ase create-inbound-services --name
                                               --resource-group
                                               --subnet
                                               [--skip-dns {false, true}]
-                                              [--subscription]
                                               [--vnet-name]
   examples:
   - summary: Create Private DNS Zone and A records.
@@ -172,15 +167,12 @@ directCommands:
     description: ''
   - isRequired: true
     name: --subnet
-    summary: Name or ID of existing subnet for inbound traffic to ASEv3.                    To create vnet and/or subnet use `az network vnet [subnet] create`.
+    summary: Name or ID of existing subnet for DNS Zone link.                    To create vnet and/or subnet use `az network vnet [subnet] create`.
     description: ''
   optionalParameters:
   - name: --skip-dns
     parameterValueGroup: false, true
     summary: Do not create Private DNS Zone and DNS records.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vnet-name
     summary: Name of the vNet. Mandatory if only subnet name is specified.
@@ -194,7 +186,6 @@ directCommands:
     az appservice ase delete --name
                              [--no-wait]
                              [--resource-group]
-                             [--subscription]
                              [--yes]
   examples:
   - summary: Delete app service environment.
@@ -211,9 +202,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -222,9 +210,7 @@ directCommands:
   name: az appservice ase list
   summary: List app service environments.
   description: ''
-  syntax: >-
-    az appservice ase list [--resource-group]
-                           [--subscription]
+  syntax: az appservice ase list [--resource-group]
   examples:
   - summary: List all app service environments in subscription.
     syntax: az appservice ase list
@@ -234,9 +220,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_appservice_ase_list-addresses
   name: az appservice ase list-addresses
@@ -245,7 +228,6 @@ directCommands:
   syntax: >-
     az appservice ase list-addresses --name
                                      [--resource-group]
-                                     [--subscription]
   examples:
   - summary: List VIPs for an app service environments.
     syntax: az appservice ase list-addresses --name MyAseName
@@ -258,9 +240,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_appservice_ase_list-plans
   name: az appservice ase list-plans
@@ -269,7 +248,6 @@ directCommands:
   syntax: >-
     az appservice ase list-plans --name
                                  [--resource-group]
-                                 [--subscription]
   examples:
   - summary: List app service plans for an app service environments.
     syntax: az appservice ase list-plans --name MyAseName
@@ -282,9 +260,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_appservice_ase_show
   name: az appservice ase show
@@ -293,7 +268,6 @@ directCommands:
   syntax: >-
     az appservice ase show --name
                            [--resource-group]
-                           [--subscription]
   examples:
   - summary: Show app service environment.
     syntax: az appservice ase show --name MyAseName
@@ -305,9 +279,6 @@ directCommands:
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_appservice_ase_update
@@ -321,7 +292,6 @@ directCommands:
                              [--front-end-sku {I1, I2, I3}]
                              [--no-wait]
                              [--resource-group]
-                             [--subscription]
   examples:
   - summary: Update app service environment v2 with medium front-ends and scale factor of 10.
     syntax: >-
@@ -352,9 +322,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 commands:
 - az_appservice_ase_create
@@ -378,9 +345,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/11/2022
+  ms.date: 04/13/2022
   description: Manage App Service Environments.

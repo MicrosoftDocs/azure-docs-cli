@@ -3,7 +3,7 @@ title: Azure CLI references for Azure IoT | Microsoft Docs
 description: Find Azure CLI core and extension reference commands to manage Azure IoT. With over 100 different commands available, you can work effectively with Azure IoT from a command line.
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.topic: reference
 ms.date: 09/21/2021
 ms.author: dbradish
@@ -32,21 +32,21 @@ List of Azure CLI references that can be used to manage Azure IoT, reference typ
 
 | Reference | Core or extension | Description
 |-|-|-|
-| [az iot](/cli/azure/iot) | Both  | All available Azure CLI core commands for Azure IoT.
-| [az iot central](/cli/azure/iot/central) | Both | Manage IoT Central assets.
-| [az iot device](/cli/azure/iot/device) | Extension | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| [az iot dps](/cli/azure/iot/dps) | Both | Manage Azure IoT Hub Device Provisioning Service.
-| [az dt](/cli/azure/dt) | Extension | Manage Azure Digital Twins solutions & infrastructure.
-| [az iot edge](/cli/azure/iot/edge) | Extension | Manage IoT solutions on the Edge.
-| [az iot hub](/cli/azure/iot/hub) | Both | Manage Azure IoT Hub infrastructure.
-| [az iot product](/cli/azure/iot/product) | Extension | Manage device testing for product certification.
+| [az iot](../latest/docs-ref-autogen/iot.yml) | Both  | All available Azure CLI core commands for Azure IoT.
+| [az iot central](../latest/docs-ref-autogen/iot/central.yml) | Both | Manage IoT Central assets.
+| [az iot device](../latest/docs-ref-autogen/iot/device.yml) | Extension | Leverage device-to-cloud and cloud-to-device messaging capabilities.
+| [az iot dps](../latest/docs-ref-autogen/iot/dps.yml) | Both | Manage Azure IoT Hub Device Provisioning Service.
+| [az dt](../latest/docs-ref-autogen/dt.yml) | Extension | Manage Azure Digital Twins solutions & infrastructure.
+| [az iot edge](../latest/docs-ref-autogen/iot/edge.yml) | Extension | Manage IoT solutions on the Edge.
+| [az iot hub](../latest/docs-ref-autogen/iot/hub.yml) | Both | Manage Azure IoT Hub infrastructure.
+| [az iot product](../latest/docs-ref-autogen/iot/product.yml) | Extension | Manage device testing for product certification.
 
 ## Additional Azure CLI commands for Azure services used by IoT
 
 | Reference | Type | Description
 |-|-|-|
-| [az maps](/cli/azure/maps) | core | Manage Azure Maps.
-| [az tsi](/cli/azure/tsi) | extension | Manage Azure Time Series Insights.
+| [az maps](../latest/docs-ref-autogen/maps.yml) | core | Manage Azure Maps.
+| [az tsi](../latest/docs-ref-autogen/tsi.yml) | extension | Manage Azure Time Series Insights.
 
 ## Popular IoT articles using the Azure CLI
 
@@ -83,6 +83,6 @@ az iot hub create --resource-group MyResourceGroup --name MyIotHub --location we
 
 ## See also
 
-- [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
-
-- Discover additional [core](/cli/azure/reference-index) and [extension](./azure-cli-extensions-list.md) references in the Azure CLI documentation.
+* [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
+* Discover additional [reference commands](../latest/docs-ref-autogen/reference-index.yml) and [available extensions](./azure-cli-extensions-list.md) in the Azure CLI documentation.
+* [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)

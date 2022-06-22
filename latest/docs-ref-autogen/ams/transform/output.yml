@@ -13,6 +13,8 @@ directCommands:
                                 [--account-name]
                                 [--audio-analysis-mode]
                                 [--audio-language]
+                                [--blur-type]
+                                [--face-detector-mode]
                                 [--ids]
                                 [--insights-to-extract {AllInsights, AudioInsightsOnly, VideoInsightsOnly}]
                                 [--name]
@@ -20,7 +22,6 @@ directCommands:
                                 [--relative-priority {High, Low, Normal}]
                                 [--resolution]
                                 [--resource-group]
-                                [--subscription]
                                 [--video-analysis-mode]
   examples:
   - summary: Add an output with a custom Standard Encoder preset from a JSON file.
@@ -41,6 +42,12 @@ directCommands:
     description: ''
   - name: --audio-language
     summary: 'The language for the audio payload in the input using the BCP-47 format of "language tag-region" (e.g: en-US). If not specified, automatic language detection would be employed. This feature currently supports English, Chinese, French, German, Italian, Japanese, Spanish, Russian, and Portuguese. The automatic detection works best with audio recordings with clearly discernable speech. If automatic detection fails to find the language, transcription would fallback to English. Allowed values: en-US, en-GB, es-ES, es-MX, fr-FR, it-IT, ja-JP, pt-BR, zh-CN, de-DE, ar-EG, ru-RU, hi-IN.'
+    description: ''
+  - name: --blur-type
+    summary: 'Allowed values: Box, Low, Med, High, Black.'
+    description: ''
+  - name: --face-detector-mode
+    summary: 'This mode provides the ability to choose between the following settings: 1) Analyze - For detection only.This mode generates a metadata JSON file marking appearances of faces throughout the video.Where possible, appearances of the same person are assigned the same ID. 2) Combined - Additionally redacts(blurs) detected faces. 3) Redact - This enables a 2-pass process, allowing for selective redaction of a subset of detected faces.It takes in the metadata file from a prior analyze pass, along with the source video, and a user-selected subset of IDs that require redaction. Allowed values: Analyze, Redact, Combined.'
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -66,9 +73,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --video-analysis-mode
     summary: 'Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen. Allowed values: Standard, Basic.'
     description: ''
@@ -83,7 +87,6 @@ directCommands:
                                    [--ids]
                                    [--name]
                                    [--resource-group]
-                                   [--subscription]
   examples:
   - summary: Remove the output element at the index specified with --output-index argument.
     syntax: az ams transform output remove -a myAmsAccount -n transformName -g myResourceGroup --output-index 1
@@ -105,9 +108,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/ams/_help.py
 commands:
 - az_ams_transform_output_add
@@ -125,9 +125,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/24/2021
+  ms.date: 04/21/2022
   description: Manage transform outputs for an Azure Media Services account.

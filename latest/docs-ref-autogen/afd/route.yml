@@ -19,13 +19,15 @@ directCommands:
                         --supported-protocols {Http, Https}
                         [--content-types-to-compress]
                         [--custom-domains]
+                        [--enable-caching {false, true}]
                         [--enable-compression {false, true}]
+                        [--enabled-state {Disabled, Enabled}]
                         [--link-to-default-domain {Disabled, Enabled}]
                         [--origin-path]
                         [--patterns-to-match]
-                        [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                        [--query-parameters]
+                        [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
                         [--rule-sets]
-                        [--subscription]
   examples:
   - summary: Creates a route to assoicate the endpoint's default domain with an origin group for all HTTPS requests.
     syntax: az afd route create -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --https-redirect False --origin-group og001 --supported-protocols Https --link-to-default-domain Enabled --forwarding-protocol MatchRequest
@@ -76,29 +78,39 @@ directCommands:
   - name: --custom-domains
     summary: Custom domains referenced by this endpoint.
     description: ''
+  - name: --enable-caching
+    parameterValueGroup: false, true
+    summary: Indicates whether caching is enanbled on that route.
+    description: ''
   - name: --enable-compression
     parameterValueGroup: false, true
     summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
     description: ''
+  - name: --enabled-state
+    defaultValue: Enabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to enable this route.
+    description: ''
   - name: --link-to-default-domain
+    defaultValue: Disabled
     parameterValueGroup: Disabled, Enabled
     summary: Whether this route will be linked to the default endpoint domain.
     description: ''
   - name: --origin-path
-    summary: A directory path on the origin that AFD can use to retrieve content from. E.g, "/img/\*".
+    summary: A directory path on the origin that Azure Front Door can use to retrieve content from.
     description: ''
   - name: --patterns-to-match
     summary: The route patterns of the rule.
     description: ''
+  - name: --query-parameters
+    summary: Query parameters to include or exclude.
+    description: ''
   - name: --query-string-caching-behavior
-    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
+    parameterValueGroup: IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString
     summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --rule-sets
     summary: Collection of ID or name of rule set referenced by the route.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_afd_route_delete
   name: az afd route delete
@@ -110,7 +122,6 @@ directCommands:
                         [--profile-name]
                         [--resource-group]
                         [--route-name]
-                        [--subscription]
                         [--yes]
   examples:
   - summary: Delete a route named route1.
@@ -131,9 +142,6 @@ directCommands:
   - name: --route-name
     summary: Name of the route.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -145,7 +153,6 @@ directCommands:
     az afd route list --endpoint-name
                       --profile-name
                       --resource-group
-                      [--subscription]
   examples:
   - summary: List all the routes within the specified endpoint.
     syntax: az afd route list -g group --profile-name profile --endpoint-name endpoint1
@@ -162,10 +169,6 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_afd_route_show
   name: az afd route show
   summary: Show route details.
@@ -176,7 +179,6 @@ directCommands:
                       [--profile-name]
                       [--resource-group]
                       [--route-name]
-                      [--subscription]
   examples:
   - summary: show details of the route named route1.
     syntax: az afd route show -g group --profile-name profile  --endpoint-name endpoint1 --route-name route1
@@ -196,9 +198,6 @@ directCommands:
   - name: --route-name
     summary: Name of the route.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_afd_route_update
   name: az afd route update
   summary: Update an existing route within the specified endpoint.
@@ -206,7 +205,9 @@ directCommands:
   syntax: >-
     az afd route update [--content-types-to-compress]
                         [--custom-domains]
+                        [--enable-caching {false, true}]
                         [--enable-compression {false, true}]
+                        [--enabled-state {Disabled, Enabled}]
                         [--endpoint-name]
                         [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
                         [--https-redirect {Disabled, Enabled}]
@@ -216,11 +217,11 @@ directCommands:
                         [--origin-path]
                         [--patterns-to-match]
                         [--profile-name]
-                        [--query-string-caching-behavior {BypassCaching, IgnoreQueryString, NotSet, UseQueryString}]
+                        [--query-parameters]
+                        [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
                         [--resource-group]
                         [--route-name]
                         [--rule-sets]
-                        [--subscription]
                         [--supported-protocols {Http, Https}]
   examples:
   - summary: Update a route to accept both Http and Https requests and redirect all trafic to use Https.
@@ -236,9 +237,17 @@ directCommands:
   - name: --custom-domains
     summary: Custom domains referenced by this endpoint.
     description: ''
+  - name: --enable-caching
+    parameterValueGroup: false, true
+    summary: Indicates whether caching is enanbled on that route.
+    description: ''
   - name: --enable-compression
     parameterValueGroup: false, true
     summary: Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    description: ''
+  - name: --enabled-state
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether to enable this route.
     description: ''
   - name: --endpoint-name
     summary: Name of the endpoint.
@@ -262,7 +271,7 @@ directCommands:
     summary: Name or ID of the origin group to be associated with.
     description: ''
   - name: --origin-path
-    summary: A directory path on the origin that AFD can use to retrieve content from. E.g, "/img/\*".
+    summary: A directory path on the origin that Azure Front Door can use to retrieve content from.
     description: ''
   - name: --patterns-to-match
     summary: The route patterns of the rule.
@@ -270,8 +279,11 @@ directCommands:
   - name: --profile-name
     summary: Name of the CDN profile which is unique within the resource group.
     description: ''
+  - name: --query-parameters
+    summary: Query parameters to include or exclude.
+    description: ''
   - name: --query-string-caching-behavior
-    parameterValueGroup: BypassCaching, IgnoreQueryString, NotSet, UseQueryString
+    parameterValueGroup: IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString
     summary: Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
     description: ''
   - name: --resource-group -g
@@ -282,9 +294,6 @@ directCommands:
     description: ''
   - name: --rule-sets
     summary: Collection of ID or name of rule set referenced by the route.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --supported-protocols
     parameterValueGroup: Http, Https
@@ -309,6 +318,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

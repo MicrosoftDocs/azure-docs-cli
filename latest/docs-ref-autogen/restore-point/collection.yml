@@ -13,7 +13,6 @@ directCommands:
                                        --resource-group
                                        --source-id
                                        [--location]
-                                       [--subscription]
                                        [--tags]
   examples:
   - summary: Create or update a restore point collection.
@@ -35,9 +34,6 @@ directCommands:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -49,7 +45,6 @@ directCommands:
     az restore-point collection delete --collection-name
                                        --resource-group
                                        [--no-wait]
-                                       [--subscription]
                                        [--yes]
   requiredParameters:
   - isRequired: true
@@ -64,9 +59,6 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -74,9 +66,7 @@ directCommands:
   name: az restore-point collection list
   summary: Get the list of restore point collections in a resource group.
   description: ''
-  syntax: >-
-    az restore-point collection list --resource-group
-                                     [--subscription]
+  syntax: az restore-point collection list --resource-group
   examples:
   - summary: Get the list of restore point collections in a resource group.
     syntax: az restore-point collection list --resource-group "myResourceGroup"
@@ -85,22 +75,14 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_restore-point_collection_list-all
   name: az restore-point collection list-all
   summary: Get the list of restore point collections in the subscription. Use nextLink property in the response to get the next page of restore point collections. Do this till nextLink is not null to fetch all the restore point collections.
   description: ''
-  syntax: az restore-point collection list-all [--subscription]
+  syntax: az restore-point collection list-all
   examples:
   - summary: Get the list of restore point collections in a subscription
     syntax: az restore-point collection list-all
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_restore-point_collection_show
   name: az restore-point collection show
   summary: Get the restore point collection.
@@ -108,7 +90,8 @@ directCommands:
   syntax: >-
     az restore-point collection show --collection-name
                                      --resource-group
-                                     [--subscription]
+                                     [--expand]
+                                     [--restore-points]
   examples:
   - summary: Get a restore point collection (but not the restore points contained in the restore point collection)
     syntax: az restore-point collection show --resource-group "myResourceGroup" --collection-name "myRpc"
@@ -124,8 +107,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --restore-points
+    summary: Show all contained restore points in the restore point collection.
     description: ''
 - uid: az_restore-point_collection_update
   name: az restore-point collection update
@@ -134,7 +120,6 @@ directCommands:
   syntax: >-
     az restore-point collection update --collection-name
                                        --resource-group
-                                       [--subscription]
                                        [--tags]
   requiredParameters:
   - isRequired: true
@@ -146,9 +131,6 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -165,7 +147,6 @@ directCommands:
                                      [--exists]
                                      [--expand]
                                      [--interval]
-                                     [--subscription]
                                      [--timeout]
                                      [--updated]
   examples:
@@ -194,14 +175,11 @@ directCommands:
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
-    summary: The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection.
+    summary: The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. Default value is None.
     description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -231,6 +209,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

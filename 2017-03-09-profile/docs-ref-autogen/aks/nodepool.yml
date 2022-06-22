@@ -4,7 +4,7 @@ name: az aks nodepool
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **aks-preview** extension for the Azure CLI  (version 2.32.0 or higher).  The extension will automatically install the first time you run an **az aks nodepool** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **aks-preview** extension for the Azure CLI  (version 2.35.0 or higher).  The extension will automatically install the first time you run an **az aks nodepool** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage node pools in managed Kubernetes cluster.
 description: ''
 directCommands:
@@ -19,6 +19,7 @@ directCommands:
                         [--aks-custom-headers]
                         [--crg-id]
                         [--enable-cluster-autoscaler]
+                        [--enable-custom-ca-trust]
                         [--enable-encryption-at-host]
                         [--enable-fips-image]
                         [--enable-node-public-ip]
@@ -39,12 +40,12 @@ directCommands:
                         [--no-wait]
                         [--node-count]
                         [--node-osdisk-size]
-                        [--node-osdisk-type]
+                        [--node-osdisk-type {Ephemeral, Managed}]
                         [--node-public-ip-prefix-id]
                         [--node-taints]
                         [--node-vm-size]
                         [--node-zones {1, 2, 3}]
-                        [--os-sku]
+                        [--os-sku {CBLMariner, Ubuntu, Windows2019, Windows2022}]
                         [--os-type]
                         [--pod-subnet-id]
                         [--ppg]
@@ -55,6 +56,7 @@ directCommands:
                         [--tags]
                         [--vnet-subnet-id]
                         [--workload-runtime {OCIContainer, WasmWasi}]
+                        [--zones {1, 2, 3}]
   examples:
   - summary: Create a nodepool in an existing AKS cluster with ephemeral os enabled.
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --node-osdisk-type Ephemeral --node-osdisk-size 48
@@ -76,7 +78,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -92,6 +94,9 @@ directCommands:
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
+    description: ''
+  - name: --enable-custom-ca-trust
+    summary: Enable Custom CA Trust on agent node pool.
     description: ''
   - name: --enable-encryption-at-host
     summary: Enable EncryptionAtHost on agent node pool.
@@ -131,7 +136,7 @@ directCommands:
     summary: OS configurations for Linux agent nodes.
     description: ''
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
     description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
@@ -143,7 +148,7 @@ directCommands:
     summary: Path to a file containing the desired message of the day. Only valid for linux nodes. Will be written to /etc/motd.
     description: ''
   - name: --min-count
-    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
     description: ''
   - name: --mode
     defaultValue: User
@@ -161,6 +166,7 @@ directCommands:
     summary: Size in GB of the OS disk for each node in the agent pool. Minimum 30 GB.
     description: ''
   - name: --node-osdisk-type
+    parameterValueGroup: Ephemeral, Managed
     summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
     description: ''
   - name: --node-public-ip-prefix-id
@@ -172,12 +178,13 @@ directCommands:
   - name: --node-vm-size -s
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
-  - name: --node-zones --zones -z
+  - name: --node-zones
     parameterValueGroup: 1, 2, 3
-    summary: (will be deprecated, use --zones) Availability zones where agent nodes will be placed.
+    summary: (--node-zones will be deprecated) Space-separated list of availability zones where agent nodes will be placed.
     description: ''
   - name: --os-sku
-    summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
+    parameterValueGroup: CBLMariner, Ubuntu, Windows2019, Windows2022
+    summary: The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019 or Windows2022 when os-type is Windows, the current default is Windows2019 if not set, and the default will be changed to Windows2022 after Windows2019 is deprecated.
     description: ''
   - name: --os-type
     summary: The OS Type. Linux or Windows.
@@ -216,6 +223,10 @@ directCommands:
     parameterValueGroup: OCIContainer, WasmWasi
     summary: Determines the type of workload a node can run. Defaults to OCIContainer.
     description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Space-separated list of availability zones where agent nodes will be placed.
+    description: ''
 - uid: az_aks_nodepool_delete
   name: az aks nodepool delete
   summary: Delete the agent pool in the managed Kubernetes cluster.
@@ -224,14 +235,18 @@ directCommands:
     az aks nodepool delete --cluster-name
                            --name
                            --resource-group
+                           [--ignore-pod-disruption-budget]
                            [--no-wait]
+  examples:
+  - summary: Delete an agent pool with ignore-pod-disruption-budget
+    syntax: az aks nodepool delete --resource-group MyResourceGroup --cluster-name MyManagedCluster --name nodepool1 --ignore-pod-disruption-budget=true
   requiredParameters:
   - isRequired: true
     name: --cluster-name
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -239,6 +254,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --ignore-pod-disruption-budget -i
+    summary: (PREVIEW) ignore-pod-disruption-budget deletes an existing nodepool without considering Pod Disruption Budget.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -298,7 +316,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -327,7 +345,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -402,14 +420,17 @@ directCommands:
     description: ''
 - uid: az_aks_nodepool_update
   name: az aks nodepool update
-  summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
-  description: ''
+  summary: Update a node pool properties.
+  description: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.  When called with no optional arguments this attempts to move the cluster to its goal state without changing the current cluster configuration. This can be used to move out of a non succeeded state.
   syntax: >-
     az aks nodepool update --cluster-name
                            --name
                            --resource-group
+                           [--aks-custom-headers]
+                           [--dcat]
                            [--disable-cluster-autoscaler]
                            [--enable-cluster-autoscaler]
+                           [--enable-custom-ca-trust]
                            [--labels]
                            [--max-count]
                            [--max-surge]
@@ -421,6 +442,8 @@ directCommands:
                            [--tags]
                            [--update-cluster-autoscaler]
   examples:
+  - summary: Reconcile the nodepool back to its current state.
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
   - summary: Enable cluster-autoscaler within node count range [1,5]
     syntax: az aks nodepool update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
   - summary: Disable cluster-autoscaler for an existing cluster
@@ -435,7 +458,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -443,23 +466,32 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
+  - name: --dcat --disable-custom-ca-trust
+    summary: Disable Custom CA Trust on agent node pool.
+    description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
+  - name: --enable-custom-ca-trust
+    summary: Enable Custom CA Trust on agent node pool.
+    description: ''
   - name: --labels
     summary: The node labels for the node pool. See https://aka.ms/node-labels for syntax of labels.
     description: ''
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
     description: ''
   - name: --max-surge
     summary: Extra nodes used to speed upgrade. When specified, it represents the number or percent used, eg. 5 or 33%.
     description: ''
   - name: --min-count
-    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
     description: ''
   - name: --mode
     parameterValueGroup: System, User
@@ -501,7 +533,7 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --nodepool-name -n
     summary: The node pool name.
     description: ''
   - isRequired: true
@@ -534,6 +566,11 @@ commands:
 - az_aks_nodepool_list
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
+- az_aks_nodepool_snapshot
+- az_aks_nodepool_snapshot_create
+- az_aks_nodepool_snapshot_delete
+- az_aks_nodepool_snapshot_list
+- az_aks_nodepool_snapshot_show
 - az_aks_nodepool_start
 - az_aks_nodepool_stop
 - az_aks_nodepool_update
@@ -551,6 +588,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

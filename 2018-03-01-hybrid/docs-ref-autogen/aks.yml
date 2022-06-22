@@ -4,7 +4,7 @@ name: az aks
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **aks-preview** extension for the Azure CLI  (version 2.32.0 or higher).  The extension will automatically install the first time you run an **az aks** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **aks-preview** extension for the Azure CLI  (version 2.35.0 or higher).  The extension will automatically install the first time you run an **az aks** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure Kubernetes Services.
 description: ''
 directCommands:
@@ -58,33 +58,48 @@ directCommands:
                   [--admin-username]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
+                  [--apiserver-subnet-id]
                   [--appgw-id]
                   [--appgw-name]
                   [--appgw-subnet-cidr]
                   [--appgw-subnet-id]
-                  [--appgw-subnet-prefix]
                   [--appgw-watch-namespace]
                   [--assign-identity]
                   [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
+                  [--azure-keyvault-kms-key-id]
+                  [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
+                  [--azure-keyvault-kms-key-vault-resource-id]
+                  [--ca-profile]
                   [--client-secret]
-                  [--cluster-autoscaler-profile]
+                  [--cluster-snapshot-id]
                   [--crg-id]
+                  [--defender-config]
+                  [--disable-disk-driver]
+                  [--disable-file-driver]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
+                  [--disable-snapshot-controller]
+                  [--disk-driver-version {v1, v2}]
                   [--dns-name-prefix]
                   [--dns-service-ip]
+                  [--dns-zone-resource-id]
                   [--docker-bridge-address]
                   [--edge-zone]
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-apiserver-vnet-integration]
+                  [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-custom-ca-trust]
+                  [--enable-defender]
                   [--enable-encryption-at-host {false, true}]
                   [--enable-fips-image]
+                  [--enable-keda]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
@@ -93,12 +108,11 @@ directCommands:
                   [--enable-pod-identity-with-kubenet]
                   [--enable-pod-security-policy]
                   [--enable-private-cluster]
-                  [--enable-rbac]
                   [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
                   [--enable-ultra-ssd]
-                  [--enable-vmss]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity {false, true}]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
@@ -116,7 +130,7 @@ directCommands:
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
-                  [--load-balancer-sku]
+                  [--load-balancer-sku {basic, standard}]
                   [--location]
                   [--max-count]
                   [--max-pods]
@@ -131,7 +145,7 @@ directCommands:
                   [--node-count]
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
-                  [--node-osdisk-type]
+                  [--node-osdisk-type {Ephemeral, Managed}]
                   [--node-public-ip-prefix-id]
                   [--node-resource-group]
                   [--node-vm-size]
@@ -139,7 +153,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
-                  [--os-sku]
+                  [--os-sku {CBLMariner, Ubuntu, Windows2019, Windows2022}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
@@ -162,6 +176,7 @@ directCommands:
                   [--workload-runtime {OCIContainer, WasmWasi}]
                   [--workspace-resource-id]
                   [--yes]
+                  [--zones {1, 2, 3}]
   examples:
   - summary: Create a Kubernetes cluster with an existing SSH public key.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --ssh-key-value /path/to/publickey
@@ -215,14 +230,18 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa
   - summary: Create a kubernetes cluster with enabling Windows gmsa but without setting DNS server in the vnet used by the cluster.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
-  - summary: create a kubernetes cluster with a snapshot id.
+  - summary: create a kubernetes cluster with a nodepool snapshot id.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
+  - summary: create a kubernetes cluster with a cluster snapshot id.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
   - summary: create a kubernetes cluster with a Capacity Reservation Group(CRG) ID.
     syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.9 --node-vm-size VMSize --assign-identity CRG-RG-ID --enable-managed-identity --crg-id "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
   - summary: create a kubernetes cluster with support of hostgroup id.
     syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.13 --location westus2 --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
   - summary: Create a kubernetes cluster with no CNI installed.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
+  - summary: Create a kubernetes cluster with Custom CA Trust enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -261,6 +280,9 @@ directCommands:
   - name: --api-server-authorized-ip-ranges
     summary: Comma-separated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
+  - name: --apiserver-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration).
+    description: ''
   - name: --appgw-id
     summary: Resource Id of an existing Application Gateway to use with AGIC. Use with ingress-azure addon.
     description: ''
@@ -272,9 +294,6 @@ directCommands:
     description: ''
   - name: --appgw-subnet-id
     summary: Resource Id of an existing Subnet used to deploy the Application Gateway. Use with ingress-azure addon.
-    description: ''
-  - name: --appgw-subnet-prefix
-    summary: Subnet Prefix to use for a new subnet created to deploy the Application Gateway. Use with ingress-azure addon.
     description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
@@ -292,14 +311,37 @@ directCommands:
     parameterValueGroup: node-image, none, patch, rapid, stable
     summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch, node-image or none, none means disable autoupgrade.
     description: ''
+  - name: --azure-keyvault-kms-key-id
+    summary: Identifier of Azure Key Vault key.
+    description: ''
+  - name: --azure-keyvault-kms-key-vault-network-access
+    defaultValue: Public
+    parameterValueGroup: Private, Public
+    summary: Network Access of Azure Key Vault.
+    description: Allowed values are "Public", "Private". If not set, defaults to type "Public". Requires --azure-keyvault-kms-key-id to be used.
+  - name: --azure-keyvault-kms-key-vault-resource-id
+    summary: Resource ID of Azure Key Vault.
+    description: ''
+  - name: --ca-profile --cluster-autoscaler-profile
+    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
-  - name: --cluster-autoscaler-profile
-    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+  - name: --cluster-snapshot-id
+    summary: The source cluster snapshot id is used to create new cluster.
     description: ''
   - name: --crg-id
     summary: The crg-id used to associate the new cluster with the existed Capacity Reservation Group resource.
+    description: ''
+  - name: --defender-config
+    summary: Path to JSON file containing Microsoft Defender profile configurations.
+    description: ''
+  - name: --disable-disk-driver
+    summary: Disable AzureDisk CSI Driver.
+    description: ''
+  - name: --disable-file-driver
+    summary: Disable AzureFile CSI Driver.
     description: ''
   - name: --disable-local-accounts
     summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
@@ -310,12 +352,22 @@ directCommands:
   - name: --disable-rbac
     summary: Disable Kubernetes Role-Based Access Control.
     description: ''
+  - name: --disable-snapshot-controller
+    summary: Disable CSI Snapshot Controller.
+    description: ''
+  - name: --disk-driver-version
+    parameterValueGroup: v1, v2
+    summary: Specify AzureDisk CSI Driver version.
+    description: ''
   - name: --dns-name-prefix -p
     summary: Prefix for hostnames that are created. If not specified, generate a hostname using the managed cluster and resource group names.
     description: ''
   - name: --dns-service-ip
     summary: An IP address assigned to the Kubernetes DNS service.
     description: This address must be within the Kubernetes service address range specified by "--service-cidr". For example, 10.0.0.10.
+  - name: --dns-zone-resource-id
+    summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
+    description: ''
   - name: --docker-bridge-address
     summary: A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
     description: This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
@@ -341,8 +393,15 @@ directCommands:
           open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
           gitops                          - enable GitOps (PREVIEW).
           azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
+          web_application_routing         - enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+    description: ''
+  - name: --enable-apiserver-vnet-integration
+    summary: Enable integration of user vnet with control plane apiserver pods.
+    description: ''
+  - name: --enable-azure-keyvault-kms
+    summary: Enable Azure KeyVault Key Management Service.
     description: ''
   - name: --enable-azure-rbac
     summary: Enable Azure RBAC to control authorization checks on cluster.
@@ -350,12 +409,21 @@ directCommands:
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
+  - name: --enable-custom-ca-trust
+    summary: Enable Custom CA Trust on agent node pool.
+    description: ''
+  - name: --enable-defender
+    summary: Enable Microsoft Defender security profile.
+    description: ''
   - name: --enable-encryption-at-host
     parameterValueGroup: false, true
     summary: Enable EncryptionAtHost on agent node pool.
     description: ''
   - name: --enable-fips-image
     summary: Use FIPS-enabled OS on agent nodes.
+    description: ''
+  - name: --enable-keda
+    summary: Enable KEDA workload auto-scaler.
     description: ''
   - name: --enable-managed-identity
     defaultValue: "1"
@@ -383,9 +451,6 @@ directCommands:
   - name: --enable-private-cluster
     summary: Enable private cluster.
     description: ''
-  - name: --enable-rbac -r
-    summary: 'Enable Kubernetes Role-Based Access Control. Default: enabled.'
-    description: ''
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
@@ -395,11 +460,12 @@ directCommands:
   - name: --enable-ultra-ssd
     summary: Enable UltraSSD on agent node pool.
     description: ''
-  - name: --enable-vmss
-    summary: To be deprecated. Use vm_set_type instead.
-    description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa.
+    description: ''
+  - name: --enable-workload-identity
+    parameterValueGroup: false, true
+    summary: Enable workload identity addon.
     description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
@@ -461,13 +527,14 @@ directCommands:
     summary: Load balancer outbound allocated ports.
     description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs. Please specify a value in the range of [0, 64000] that is a multiple of 8.
   - name: --load-balancer-sku
+    parameterValueGroup: basic, standard
     summary: Azure Load Balancer SKU selection for your cluster. basic or standard.
     description: Select between Basic or Standard Azure Load Balancer SKU for your AKS cluster.
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
@@ -476,7 +543,7 @@ directCommands:
     summary: Path to a file containing the desired message of the day. Only valid for linux nodes. Will be written to /etc/motd.
     description: ''
   - name: --min-count
-    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --nat-gateway-idle-timeout
     summary: NAT gateway idle timeout in minutes.
@@ -506,13 +573,14 @@ directCommands:
     defaultValue: "3"
     summary: Number of nodes in the Kubernetes node pool. It is required when --enable-cluster-autoscaler specified. After creating a cluster, you can change the size of its node pool with `az aks scale`.
     description: ''
-  - name: --node-osdisk-diskencryptionset-id
-    summary: ResourceId of the disk encryption set to use for enabling encryption at rest.
+  - name: --node-osdisk-diskencryptionset-id -d
+    summary: ResourceId of the disk encryption set to use for enabling encryption at rest on agent node os disk.
     description: ''
   - name: --node-osdisk-size
     summary: Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
     description: ''
   - name: --node-osdisk-type
+    parameterValueGroup: Ephemeral, Managed
     summary: OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
     description: ''
   - name: --node-public-ip-prefix-id
@@ -524,9 +592,9 @@ directCommands:
   - name: --node-vm-size -s
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
-  - name: --node-zones --zones -z
+  - name: --node-zones
     parameterValueGroup: 1, 2, 3
-    summary: (--node-zones will be deprecated, use --zones) Space-separated list of availability zones where agent nodes will be placed.
+    summary: (--node-zones will be deprecated) Space-separated list of availability zones where agent nodes will be placed.
     description: ''
   - name: --nodepool-labels
     summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
@@ -539,6 +607,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --os-sku
+    parameterValueGroup: CBLMariner, Ubuntu, Windows2019, Windows2022
     summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --outbound-type
@@ -576,7 +645,7 @@ directCommands:
     summary: Skip role assignment for subnet (advanced networking).
     description: If specified, please make sure your service principal has the access to your subnet.
   - name: --snapshot-id
-    summary: The source snapshot id used to create this cluster.
+    summary: The source nodepool snapshot id used to create this cluster.
     description: ''
   - name: --ssh-key-value
     defaultValue: ~\.ssh\id_rsa.pub
@@ -627,6 +696,10 @@ directCommands:
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
+  - name: --zones -z
+    parameterValueGroup: 1, 2, 3
+    summary: Space-separated list of availability zones where agent nodes will be placed.
+    description: ''
 - uid: az_aks_delete
   name: az aks delete
   summary: Delete a managed Kubernetes cluster.
@@ -634,6 +707,7 @@ directCommands:
   syntax: >-
     az aks delete --name
                   --resource-group
+                  [--ignore-pod-disruption-budget]
                   [--no-wait]
                   [--yes]
   examples:
@@ -649,6 +723,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --ignore-pod-disruption-budget
+    summary: Ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. Default value is None.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -699,6 +776,7 @@ directCommands:
         open-service-mesh               - enable Open Service Mesh addon (PREVIEW).
         gitops                          - enable GitOps (PREVIEW).
         azure-keyvault-secrets-provider - enable Azure Keyvault Secrets Provider addon (PREVIEW).
+        web_application_routing         - enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
   syntax: >-
     az aks enable-addons --addons
                          --name
@@ -709,6 +787,7 @@ directCommands:
                          [--appgw-subnet-id]
                          [--appgw-subnet-prefix]
                          [--appgw-watch-namespace]
+                         [--dns-zone-resource-id]
                          [--enable-msi-auth-for-monitoring {false, true}]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
@@ -755,6 +834,9 @@ directCommands:
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces. Use with ingress-azure addon.
     description: ''
+  - name: --dns-zone-resource-id
+    summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
+    description: ''
   - name: --enable-msi-auth-for-monitoring
     parameterValueGroup: false, true
     summary: Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
@@ -787,6 +869,7 @@ directCommands:
                            [--admin]
                            [--context]
                            [--file]
+                           [--format {azure, exec}]
                            [--overwrite-existing]
                            [--public-fqdn]
                            [--user]
@@ -812,6 +895,10 @@ directCommands:
   - name: --file -f
     defaultValue: ~/.kube/config
     summary: Kubernetes configuration file to update. Use "-" to print YAML to stdout instead.
+    description: ''
+  - name: --format
+    parameterValueGroup: azure, exec
+    summary: Specify the format of the returned credential. Available values are ["exec", "azure"]. Only take effect when requesting clusterUser credential of AAD clusters.
     description: ''
   - name: --overwrite-existing
     summary: Overwrite any existing cluster entry with the same name.
@@ -887,6 +974,7 @@ directCommands:
                    [--container-logs]
                    [--kube-objects]
                    [--node-logs]
+                   [--node-logs-windows]
                    [--sas-token]
                    [--storage-account]
   examples:
@@ -929,7 +1017,10 @@ directCommands:
 
       for example, kube-system/deployment/tunnelfront.
   - name: --node-logs
-    summary: The list of node logs to collect. For example, /var/log/cloud-init.log.
+    summary: The list of node logs to collect for Linux nodes. For example, /var/log/cloud-init.log.
+    description: ''
+  - name: --node-logs-windows
+    summary: The list of node logs to collect for Windows nodes. For example, C:AzureDataCustomDataSetupScript.log.
     description: ''
   - name: --sas-token
     summary: The SAS token with writable permission for the storage account.
@@ -1055,8 +1146,8 @@ directCommands:
     description: ''
 - uid: az_aks_update
   name: az aks update
-  summary: Update a managed Kubernetes cluster properties, such as enable/disable cluster-autoscaler.
-  description: ''
+  summary: Update the properties of a managed Kubernetes cluster.
+  description: Update the properties of a managed Kubernetes cluster. Can be used for example to enable/disable cluster-autoscaler.  When called with no optional arguments this attempts to move the cluster to its goal state without changing the current cluster configuration. This can be used to move out of a non succeeded state.
   syntax: >-
     az aks update --name
                   --resource-group
@@ -1064,23 +1155,41 @@ directCommands:
                   [--aad-tenant-id]
                   [--aks-custom-headers]
                   [--api-server-authorized-ip-ranges]
+                  [--apiserver-subnet-id]
                   [--assign-identity]
+                  [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
-                  [--cluster-autoscaler-profile]
+                  [--azure-keyvault-kms-key-id]
+                  [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
+                  [--azure-keyvault-kms-key-vault-resource-id]
+                  [--ca-profile]
+                  [--defender-config]
                   [--detach-acr]
                   [--disable-ahub]
                   [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
+                  [--disable-defender]
+                  [--disable-disk-driver]
+                  [--disable-file-driver]
+                  [--disable-keda]
                   [--disable-local-accounts]
                   [--disable-pod-identity]
                   [--disable-pod-security-policy]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
+                  [--disable-snapshot-controller]
+                  [--disk-driver-version {v1, v2}]
                   [--enable-aad]
                   [--enable-ahub]
+                  [--enable-apiserver-vnet-integration]
+                  [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
+                  [--enable-defender]
+                  [--enable-disk-driver]
+                  [--enable-file-driver]
+                  [--enable-keda]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-oidc-issuer]
@@ -1089,7 +1198,9 @@ directCommands:
                   [--enable-pod-security-policy]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
+                  [--enable-snapshot-controller]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity {false, true}]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--http-proxy-config]
@@ -1113,6 +1224,8 @@ directCommands:
                   [--windows-admin-password]
                   [--yes]
   examples:
+  - summary: Reconcile the cluster back to its current state.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster
   - summary: Enable cluster-autoscaler within node count range [1,5]
     syntax: az aks update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n MyManagedCluster
   - summary: Disable cluster-autoscaler for an existing cluster
@@ -1189,8 +1302,14 @@ directCommands:
   - name: --api-server-authorized-ip-ranges
     summary: Comma-separated list of authorized apiserver IP ranges. Set to "" to allow all traffic on a previously restricted cluster. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
     description: ''
+  - name: --apiserver-subnet-id
+    summary: The ID of a subnet in an existing VNet into which to assign control plane apiserver pods(requires --enable-apiserver-vnet-integration).
+    description: ''
   - name: --assign-identity
-    summary: (PREVIEW) Specify an existing user assigned identity to manage cluster resource group.
+    summary: Specify an existing user assigned identity to manage cluster resource group.
+    description: ''
+  - name: --assign-kubelet-identity
+    summary: Update cluster's kubelet identity to an existing user assigned identity. Note, this operation will recreate all agent node in the cluster.
     description: ''
   - name: --attach-acr
     summary: Grant the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -1199,8 +1318,21 @@ directCommands:
     parameterValueGroup: node-image, none, patch, rapid, stable
     summary: Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch, node-image or none, none means disable autoupgrade.
     description: ''
-  - name: --cluster-autoscaler-profile
+  - name: --azure-keyvault-kms-key-id
+    summary: Identifier of Azure Key Vault key.
+    description: ''
+  - name: --azure-keyvault-kms-key-vault-network-access
+    parameterValueGroup: Private, Public
+    summary: Network Access of Azure Key Vault.
+    description: Allowed values are "Public", "Private". If not set, defaults to type "Public". Requires --azure-keyvault-kms-key-id to be used.
+  - name: --azure-keyvault-kms-key-vault-resource-id
+    summary: Resource ID of Azure Key Vault.
+    description: ''
+  - name: --ca-profile --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
+  - name: --defender-config
+    summary: Path to JSON file containing Microsoft Defender profile configurations.
     description: ''
   - name: --detach-acr
     summary: Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
@@ -1213,6 +1345,18 @@ directCommands:
     description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
+    description: ''
+  - name: --disable-defender
+    summary: Disable defender profile.
+    description: ''
+  - name: --disable-disk-driver
+    summary: Disable AzureDisk CSI Driver.
+    description: ''
+  - name: --disable-file-driver
+    summary: Disable AzureFile CSI Driver.
+    description: ''
+  - name: --disable-keda
+    summary: Disable KEDA workload auto-scaler.
     description: ''
   - name: --disable-local-accounts
     summary: (Preview) If set to true, getting static credential will be disabled for this cluster.
@@ -1229,11 +1373,24 @@ directCommands:
   - name: --disable-secret-rotation
     summary: Disable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
+  - name: --disable-snapshot-controller
+    summary: Disable CSI Snapshot Controller.
+    description: ''
+  - name: --disk-driver-version
+    parameterValueGroup: v1, v2
+    summary: Specify AzureDisk CSI Driver version.
+    description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
     description: ''
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+    description: ''
+  - name: --enable-apiserver-vnet-integration
+    summary: Enable integration of user vnet with control plane apiserver pods.
+    description: ''
+  - name: --enable-azure-keyvault-kms
+    summary: Enable Azure KeyVault Key Management Service.
     description: ''
   - name: --enable-azure-rbac
     summary: Enable Azure RBAC to control authorization checks on cluster.
@@ -1241,11 +1398,23 @@ directCommands:
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
+  - name: --enable-defender
+    summary: Enable Microsoft Defender security profile.
+    description: ''
+  - name: --enable-disk-driver
+    summary: Enable AzureDisk CSI Driver.
+    description: ''
+  - name: --enable-file-driver
+    summary: Enable AzureFile CSI Driver.
+    description: ''
+  - name: --enable-keda
+    summary: Enable KEDA workload auto-scaler.
+    description: ''
   - name: --enable-local-accounts
     summary: (Preview) If set to true, will enable getting static credential for this cluster.
     description: ''
   - name: --enable-managed-identity
-    summary: (PREVIEW) Update current cluster to managed identity to manage cluster resource group.
+    summary: Update current cluster to managed identity to manage cluster resource group.
     description: ''
   - name: --enable-oidc-issuer
     summary: (PREVIEW) Enable OIDC issuer.
@@ -1265,8 +1434,15 @@ directCommands:
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
     description: ''
+  - name: --enable-snapshot-controller
+    summary: Enable Snapshot Controller.
+    description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa on cluster.
+    description: ''
+  - name: --enable-workload-identity
+    parameterValueGroup: false, true
+    summary: Enable Workload Identity addon for cluster.
     description: ''
   - name: --gmsa-dns-server
     summary: Specify DNS server for Windows gmsa on cluster.
@@ -1302,10 +1478,10 @@ directCommands:
     summary: Load balancer outbound allocated ports.
     description: Desired static number of outbound ports per VM in the load balancer backend pool. By default, set to 0 which uses the default allocation based on the number of VMs. Please specify a value in the range of [0, 64000] that is a multiple of 8.
   - name: --max-count
-    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --min-count
-    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 100].
+    summary: Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --nat-gateway-idle-timeout
     summary: NAT gateway idle timeout in minutes.
@@ -1502,6 +1678,12 @@ commands:
 - az_aks_create
 - az_aks_delete
 - az_aks_disable-addons
+- az_aks_draft
+- az_aks_draft_create
+- az_aks_draft_generate-workflow
+- az_aks_draft_setup-gh
+- az_aks_draft_up
+- az_aks_draft_update
 - az_aks_egress-endpoints
 - az_aks_egress-endpoints_list
 - az_aks_enable-addons
@@ -1523,6 +1705,11 @@ commands:
 - az_aks_nodepool_list
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
+- az_aks_nodepool_snapshot
+- az_aks_nodepool_snapshot_create
+- az_aks_nodepool_snapshot_delete
+- az_aks_nodepool_snapshot_list
+- az_aks_nodepool_snapshot_show
 - az_aks_nodepool_start
 - az_aks_nodepool_stop
 - az_aks_nodepool_update
@@ -1546,6 +1733,15 @@ commands:
 - az_aks_snapshot_show
 - az_aks_start
 - az_aks_stop
+- az_aks_trustedaccess
+- az_aks_trustedaccess_role
+- az_aks_trustedaccess_role_list
+- az_aks_trustedaccess_rolebinding
+- az_aks_trustedaccess_rolebinding_create
+- az_aks_trustedaccess_rolebinding_delete
+- az_aks_trustedaccess_rolebinding_list
+- az_aks_trustedaccess_rolebinding_show
+- az_aks_trustedaccess_rolebinding_update
 - az_aks_update
 - az_aks_upgrade
 - az_aks_use-dev-spaces
@@ -1563,6 +1759,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

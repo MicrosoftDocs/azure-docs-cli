@@ -14,6 +14,8 @@ directCommands:
   description: To set the password of the SQL managed instance, set the environment variable AZDATA_PASSWORD.
   syntax: >-
     az sql mi-arc create --name
+                         [--ad-account-name]
+                         [--ad-connector-name]
                          [--admin-login-secret]
                          [--agent-enabled]
                          [--annotations]
@@ -25,6 +27,7 @@ directCommands:
                          [--custom-location]
                          [--dev]
                          [--k8s-namespace]
+                         [--keytab-secret]
                          [--labels]
                          [--language]
                          [--license-type]
@@ -34,8 +37,10 @@ directCommands:
                          [--no-external-endpoint]
                          [--no-wait]
                          [--path]
+                         [--primary-dns-name]
+                         [--primary-port-number]
                          [--readable-secondaries]
-                         [--replicas]
+                         [--replicas {1, 2, 3}]
                          [--resource-group]
                          [--retention-days]
                          [--service-annotations]
@@ -47,6 +52,7 @@ directCommands:
                          [--storage-class-datalogs]
                          [--storage-class-logs]
                          [--storage-labels]
+                         [--sync-secondary-to-commit {-1, 0, 1, 2}]
                          [--tier]
                          [--time-zone]
                          [--trace-flags]
@@ -62,12 +68,20 @@ directCommands:
     syntax: az sql mi-arc create -n sqlmi2 --replicas 3  --k8s-namespace namespace --use-k8s
   - summary: Create a directly connected SQL managed instance.
     syntax: az sql mi-arc create --name name --resource-group group  --location location --subscription subscription   --custom-location custom-location
+  - summary: Create an indirectly connected SQL managed instance with Active Directory authentication.
+    syntax: az sql mi-arc create --name contososqlmi --k8s-namespace arc --ad-connector-name arcadc --ad-account-name arcuser --keytab-secret arcuser-keytab-secret --primary-dns-name contososqlmi-primary.contoso.local --primary-port-number 8143 --use-k8s
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the SQL managed instance.
     description: ''
   optionalParameters:
+  - name: --ad-account-name
+    summary: The Active Directory account name for this Arc-enabled SQL Managed Instance. This account needs to be created prior to the deployment of this instance.
+    description: ''
+  - name: --ad-connector-name
+    summary: The name of the Active Directory Connector. This parameter indicates an intent to deploy with AD support.
+    description: ''
   - name: --admin-login-secret
     summary: Name of the Kubernetes secret to generate that hosts or will host user admin login account credential.
     description: ''
@@ -101,6 +115,9 @@ directCommands:
   - name: --k8s-namespace -k
     summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
+  - name: --keytab-secret
+    summary: The name of the Kubernetes secret that contains the keytab file for this Arc-enabled SQL Managed Instance.
+    description: ''
   - name: --labels
     summary: Comma-separated list of labels of the SQL managed instance.
     description: ''
@@ -128,11 +145,18 @@ directCommands:
   - name: --path
     summary: The path to the azext_arcdata file for the SQL managed instance json file.
     description: ''
+  - name: --primary-dns-name
+    summary: The primary service DNS name exposed to the end-users to connect to this Arc-enabled SQL Managed Instance (e.g. sqlinstancename.contoso.com).
+    description: ''
+  - name: --primary-port-number
+    summary: The port number on which the primary DNS service is exposed to the end-users (e.g. 31433).
+    description: ''
   - name: --readable-secondaries
     summary: Number of replicas to be made readable. Applies only to Business Critical tier.  Value must be between 0 and the number of replicas minus 1.
     description: ''
   - name: --replicas
-    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3', '2', '1' with default of '1'.
+    parameterValueGroup: 1, 2, 3
+    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purposes. Default is 1 replica for General Purpose, 3 replicas for Business Critical.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group in which the sqlmi resource should be added.
@@ -166,6 +190,11 @@ directCommands:
     description: ''
   - name: --storage-labels
     summary: Comma-separated list of labels to apply to all PVCs.
+    description: ''
+  - name: --sync-secondary-to-commit
+    defaultValue: "-1"
+    parameterValueGroup: -1, 0, 1, 2
+    summary: Number of secondary replicas that must be synchronized to commit. Setting this value to -1 will set the number of required synchronized secondaries to '(# of replicas - 1) / 2', rounded down.
     description: ''
   - name: --tier -t
     summary: 'The pricing tier for the instance. Allowed values: BusinessCritical (bc for short) or GeneralPurpose (gp for short). Default is GeneralPurpose. The price tier cannot be changed.'
@@ -421,6 +450,7 @@ directCommands:
                          [--cores-limit]
                          [--cores-request]
                          [--k8s-namespace]
+                         [--keytab-secret]
                          [--labels]
                          [--license-type]
                          [--memory-limit]
@@ -429,12 +459,13 @@ directCommands:
                          [--path]
                          [--preferred-primary-replica]
                          [--readable-secondaries]
-                         [--replicas]
+                         [--replicas {1, 2, 3}]
                          [--resource-group]
                          [--retention-days]
                          [--service-annotations]
                          [--service-cert-secret]
                          [--service-labels]
+                         [--sync-secondary-to-commit {-1, 0, 1, 2}]
                          [--time-zone]
                          [--trace-flags]
                          [--use-k8s]
@@ -468,6 +499,9 @@ directCommands:
   - name: --k8s-namespace -k
     summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
+  - name: --keytab-secret
+    summary: The name of the Kubernetes secret that contains the keytab file for this Arc-enabled SQL Managed Instance.
+    description: ''
   - name: --labels
     summary: Comma-separated list of labels of the SQL managed instance.
     description: ''
@@ -493,7 +527,8 @@ directCommands:
     summary: Number of replicas to be made readable. Applies only to Business Critical tier.  Value must be between 0 and the number of replicas minus 1.
     description: ''
   - name: --replicas
-    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purpose. Allowed values are '3', '2', '1' with default of '1'.
+    parameterValueGroup: 1, 2, 3
+    summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purposes.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group in which the sqlmi resource should be updated.
@@ -509,6 +544,10 @@ directCommands:
     description: ''
   - name: --service-labels
     summary: Comma-separated list of labels to apply to all external services.
+    description: ''
+  - name: --sync-secondary-to-commit
+    parameterValueGroup: -1, 0, 1, 2
+    summary: Number of secondary replicas that must be synchronized to commit. Setting this value to -1 will set the number of required synchronized secondaries to '(# of replicas - 1) / 2', rounded down.
     description: ''
   - name: --time-zone
     summary: The SQL Server time zone for the instance.
@@ -580,11 +619,6 @@ commands:
 - az_sql_mi-arc_config_remove
 - az_sql_mi-arc_config_replace
 - az_sql_mi-arc_create
-- az_sql_mi-arc_dag
-- az_sql_mi-arc_dag_create
-- az_sql_mi-arc_dag_delete
-- az_sql_mi-arc_dag_show
-- az_sql_mi-arc_dag_update
 - az_sql_mi-arc_delete
 - az_sql_mi-arc_edit
 - az_sql_mi-arc_endpoint
@@ -607,6 +641,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

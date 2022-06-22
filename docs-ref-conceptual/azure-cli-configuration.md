@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 08/01/2021 
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: environment variables, configuration file, configuration settings, user configuration, azure cli variables, azure cli configuration, cli configuration
 ---
@@ -42,6 +42,12 @@ As an example, here's how you would set the default resource group and location 
 
 ```azurecli-interactive
 az config set defaults.location=westus2 defaults.group=MyResourceGroup
+```
+
+The following command turns off the survey links while executing the Azure CLI commands:
+
+```azurecli-interactive
+az config set output.show_survey_link=no
 ```
 
 ## CLI configuration file
@@ -117,5 +123,5 @@ When you provide a default value, that argument is no longer required by any com
 
 ## See also
 
-- [How-to work with Azure CLI parameter persist](param-persist-howto.md)
-- [Tutorial: Use parameter persist with sequential Azure CLI commands](param-persist-tutorial.md)
+- [How-to work with Azure CLI persisted parameters](param-persist-howto.md)
+- [Tutorial: Use persisted parameters with sequential Azure CLI commands](param-persist-tutorial.md)

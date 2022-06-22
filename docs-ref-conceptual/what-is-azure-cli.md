@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 9/21/2021
 ms.topic: overview
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: command line interface, azure cli, azure command line, azure command line interface, what is cli, azure cli examples
 ---
@@ -23,9 +23,15 @@ You can install the Azure CLI locally on Linux, Mac, or Windows computers. It ca
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
+## Data collection
+
+Azure CLI collects telemetry data by default. Microsoft aggregates collected data to identify patterns of usage to identify common issues and to improve the experience of Azure CLI. Microsoft Azure CLI does not collect any private or personal data. For example, the usage data helps identify issues such as commands with low success and helps prioritize our work.
+
+While we appreciate the insights this data provides, we also understand that not everyone wants to send usage data. You can disable data collection with the `az config set core.collect_telemetry=false` command. You can also read our [privacy statement](https://privacy.microsoft.com/privacystatement) to learn more.
+
 ## Prepare your environment
 
-Before running Azure CLI commands, you need to setup your environment.  
+Before running Azure CLI commands, you need to setup your environment.
 
 [!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment-no-header.md)]
 
@@ -48,7 +54,7 @@ Now, how easy was that?!  See [Manage subscriptions with Azure CLI](manage-azure
 
 ## Role assignment syntax example
 
-Another common use of the Azure CLI is managing role assignments. 
+Another common use of the Azure CLI is managing role assignments.
 
 ```azurecli
 az role assignment create --assignee servicePrincipalName --role Reader --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
@@ -68,7 +74,7 @@ See [Create an Azure service principal with the Azure CLI](create-an-azure-servi
 
 ## See Also
 
-- [Get started with the Azure CLI](get-started-with-azure-cli.md)
-- [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
-- [Full command reference list for the Azure CLI](/cli/azure/reference-index)
-- [Azure resources that the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
+* [Get started with the Azure CLI](./get-started-with-azure-cli.md)
+* [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
+* [Azure resources that the Azure CLI can manage](./azure-services-the-azure-cli-can-manage.md)
+* [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)

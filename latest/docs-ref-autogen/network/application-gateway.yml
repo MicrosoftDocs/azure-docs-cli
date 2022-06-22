@@ -20,7 +20,7 @@ directCommands:
                                           [--frontend-port]
                                           [--http-settings-cookie-based-affinity {Disabled, Enabled}]
                                           [--http-settings-port]
-                                          [--http-settings-protocol {Http, Https}]
+                                          [--http-settings-protocol {Http, Https, Tcp, Tls}]
                                           [--http2 {Disabled, Enabled}]
                                           [--identity]
                                           [--key-vault-secret-id]
@@ -28,6 +28,7 @@ directCommands:
                                           [--max-capacity]
                                           [--min-capacity]
                                           [--no-wait]
+                                          [--priority]
                                           [--private-ip-address]
                                           [--private-link-ip-address]
                                           [--private-link-primary {false, true}]
@@ -43,7 +44,6 @@ directCommands:
                                           [--ssl-profile-id]
                                           [--subnet]
                                           [--subnet-address-prefix]
-                                          [--subscription]
                                           [--tags]
                                           [--trusted-client-cert]
                                           [--validate]
@@ -102,7 +102,7 @@ directCommands:
     description: ''
   - name: --http-settings-protocol
     defaultValue: Http
-    parameterValueGroup: Http, Https
+    parameterValueGroup: Http, Https, Tcp, Tls
     summary: The HTTP settings protocol.
     description: ''
   - name: --http2
@@ -126,6 +126,9 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --priority
+    summary: Priority of the request routing rule. Supported SKU tiers are Standard_v2, WAF_v2.
     description: ''
   - name: --private-ip-address
     summary: Static private IP address to use.
@@ -203,9 +206,6 @@ directCommands:
     defaultValue: 10.0.0.0/24
     summary: The CIDR prefix to use when creating a new subnet.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -248,7 +248,6 @@ directCommands:
                                           [--name]
                                           [--no-wait]
                                           [--resource-group]
-                                          [--subscription]
   examples:
   - summary: Delete an application gateway.
     syntax: az network application-gateway delete -g MyResourceGroup -n MyAppGateway
@@ -265,26 +264,18 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_list
   name: az network application-gateway list
   summary: List application gateways.
   description: ''
-  syntax: >-
-    az network application-gateway list [--resource-group]
-                                        [--subscription]
+  syntax: az network application-gateway list [--resource-group]
   examples:
   - summary: List application gateways.
     syntax: az network application-gateway list -g MyResourceGroup
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_show
@@ -295,7 +286,6 @@ directCommands:
     az network application-gateway show [--ids]
                                         [--name]
                                         [--resource-group]
-                                        [--subscription]
   examples:
   - summary: Get the details of an application gateway.
     syntax: az network application-gateway show -g MyResourceGroup -n MyAppGateway
@@ -308,9 +298,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_show-backend-health
@@ -328,9 +315,8 @@ directCommands:
                                                        [--match-status-codes]
                                                        [--name]
                                                        [--path]
-                                                       [--protocol {Http, Https}]
+                                                       [--protocol {Http, Https, Tcp, Tls}]
                                                        [--resource-group]
-                                                       [--subscription]
                                                        [--timeout]
   examples:
   - summary: Show backend health of an application gateway.
@@ -370,14 +356,11 @@ directCommands:
     summary: The relative path of the probe. Valid paths start from "/".
     description: ''
   - name: --protocol
-    parameterValueGroup: Http, Https
+    parameterValueGroup: Http, Https, Tcp, Tls
     summary: The HTTP settings protocol.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     summary: The probe timeout in seconds.
@@ -391,7 +374,6 @@ directCommands:
     az network application-gateway start [--ids]
                                          [--name]
                                          [--resource-group]
-                                         [--subscription]
   examples:
   - summary: Start an application gateway.
     syntax: az network application-gateway start -g MyResourceGroup -n MyAppGateway
@@ -405,9 +387,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_stop
   name: az network application-gateway stop
@@ -417,7 +396,6 @@ directCommands:
     az network application-gateway stop [--ids]
                                         [--name]
                                         [--resource-group]
-                                        [--subscription]
   examples:
   - summary: Stop an application gateway.
     syntax: az network application-gateway stop -g MyResourceGroup -n MyAppGateway
@@ -430,9 +408,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_update
@@ -454,7 +429,6 @@ directCommands:
                                           [--resource-group]
                                           [--set]
                                           [--sku {Standard_Large, Standard_Medium, Standard_Small, Standard_v2, WAF_Large, WAF_Medium, WAF_v2}]
-                                          [--subscription]
                                           [--tags]
   examples:
   - summary: Update an application gateway. (autogenerated)
@@ -504,9 +478,6 @@ directCommands:
     parameterValueGroup: Standard_Large, Standard_Medium, Standard_Small, Standard_v2, WAF_Large, WAF_Medium, WAF_v2
     summary: The name of the SKU.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -524,7 +495,6 @@ directCommands:
                                         [--interval]
                                         [--name]
                                         [--resource-group]
-                                        [--subscription]
                                         [--timeout]
                                         [--updated]
   examples:
@@ -555,9 +525,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -617,6 +584,12 @@ commands:
 - az_network_application-gateway_identity_remove
 - az_network_application-gateway_identity_show
 - az_network_application-gateway_list
+- az_network_application-gateway_listener
+- az_network_application-gateway_listener_create
+- az_network_application-gateway_listener_delete
+- az_network_application-gateway_listener_list
+- az_network_application-gateway_listener_show
+- az_network_application-gateway_listener_update
 - az_network_application-gateway_private-link
 - az_network_application-gateway_private-link_add
 - az_network_application-gateway_private-link_ip-config
@@ -668,12 +641,24 @@ commands:
 - az_network_application-gateway_root-cert_list
 - az_network_application-gateway_root-cert_show
 - az_network_application-gateway_root-cert_update
+- az_network_application-gateway_routing-rule
+- az_network_application-gateway_routing-rule_create
+- az_network_application-gateway_routing-rule_delete
+- az_network_application-gateway_routing-rule_list
+- az_network_application-gateway_routing-rule_show
+- az_network_application-gateway_routing-rule_update
 - az_network_application-gateway_rule
 - az_network_application-gateway_rule_create
 - az_network_application-gateway_rule_delete
 - az_network_application-gateway_rule_list
 - az_network_application-gateway_rule_show
 - az_network_application-gateway_rule_update
+- az_network_application-gateway_settings
+- az_network_application-gateway_settings_create
+- az_network_application-gateway_settings_delete
+- az_network_application-gateway_settings_list
+- az_network_application-gateway_settings_show
+- az_network_application-gateway_settings_update
 - az_network_application-gateway_show
 - az_network_application-gateway_show-backend-health
 - az_network_application-gateway_ssl-cert
@@ -759,9 +744,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/23/2022
+  ms.date: 05/19/2022
   description: To learn more about Application Gateway, visit https://docs.microsoft.com/azure/application-gateway/application-gateway-create-gateway-cli.

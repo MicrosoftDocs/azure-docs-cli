@@ -4,8 +4,8 @@ name: az stack-hci cluster
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **stack-hci** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az stack-hci cluster** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands to manage stack-hci cluster.
+  > This reference is part of the **stack-hci** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az stack-hci cluster** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage cluster with stack hci.
 description: ''
 directCommands:
 - uid: az_stack-hci_cluster_create
@@ -13,22 +13,26 @@ directCommands:
   summary: Create an HCI cluster.
   description: ''
   syntax: >-
-    az stack-hci cluster create --aad-client-id
-                                --name
+    az stack-hci cluster create --cluster-name
                                 --resource-group
+                                [--aad-client-id]
                                 [--aad-tenant-id]
+                                [--created-at]
+                                [--created-by]
+                                [--created-by-type {Application, Key, ManagedIdentity, User}]
+                                [--desired-properties]
+                                [--endpoint]
+                                [--last-modified-at]
+                                [--last-modified-by]
+                                [--last-modified-by-type {Application, Key, ManagedIdentity, User}]
                                 [--location]
                                 [--tags]
   examples:
-  - summary: Create an HCI cluster
-    syntax: az stack-hci cluster create --location "East US" --aad-client-id "24a6e53d-04e5-44d2-b7cc-1b732a847dfc" --aad-tenant-id "7e589cc1-a8b6-4dff-91bd-5ec0fa18db94" --name "myCluster" --resource-group "test-rg"
+  - summary: Create cluster
+    syntax: az stack-hci cluster create --location "East US" --aad-client-id "24a6e53d-04e5-44d2-b7cc-1b732a847dfc" --aad-tenant-id "7e589cc1-a8b6-4dff-91bd-5ec0fa18db94" --endpoint "https://98294836-31be-4668-aeae-698667faf99b.waconazure.com" --name "myCluster" --resource-group "test-rg"
   requiredParameters:
   - isRequired: true
-    name: --aad-client-id
-    summary: App ID of cluster AAD identity.
-    description: ''
-  - isRequired: true
-    name: --name -n
+    name: --cluster-name --name -n
     summary: The name of the cluster.
     description: ''
   - isRequired: true
@@ -36,8 +40,43 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aad-client-id
+    summary: App id of cluster AAD identity.
+    description: ''
   - name: --aad-tenant-id
-    summary: Tenant ID of cluster AAD identity. Default is the current tenant ID.
+    summary: Tenant id of cluster AAD identity.
+    description: ''
+  - name: --created-at
+    summary: The timestamp of resource creation (UTC).
+    description: ''
+  - name: --created-by
+    summary: The identity that created the resource.
+    description: ''
+  - name: --created-by-type
+    parameterValueGroup: Application, Key, ManagedIdentity, User
+    summary: The type of identity that created the resource.
+    description: ''
+  - name: --desired-properties
+    summary: Desired properties of the cluster.
+    description: >-
+      Usage: --desired-properties windows-server-subscription=XX diagnostic-level=XX
+
+
+      windows-server-subscription: Desired state of Windows Server Subscription.
+
+      diagnostic-level: Desired level of diagnostic data emitted by the cluster.
+  - name: --endpoint
+    summary: Endpoint configured for management from the Azure portal.
+    description: ''
+  - name: --last-modified-at
+    summary: The timestamp of resource last modification (UTC).
+    description: ''
+  - name: --last-modified-by
+    summary: The identity that last modified the resource.
+    description: ''
+  - name: --last-modified-by-type
+    parameterValueGroup: Application, Key, ManagedIdentity, User
+    summary: The type of identity that last modified the resource.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -50,15 +89,15 @@ directCommands:
   summary: Delete an HCI cluster.
   description: ''
   syntax: >-
-    az stack-hci cluster delete --name
+    az stack-hci cluster delete --cluster-name
                                 --resource-group
                                 [--yes]
   examples:
-  - summary: Delete an HCI cluster
+  - summary: Delete cluster
     syntax: az stack-hci cluster delete --name "myCluster" --resource-group "test-rg"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name --name -n
     summary: The name of the cluster.
     description: ''
   - isRequired: true
@@ -71,12 +110,14 @@ directCommands:
     description: ''
 - uid: az_stack-hci_cluster_list
   name: az stack-hci cluster list
-  summary: List all HCI clusters in a subscription.
+  summary: List all HCI clusters in a resource group. And List all HCI clusters in a subscription.
   description: ''
   syntax: az stack-hci cluster list [--resource-group]
   examples:
-  - summary: List all HCI clusters in a resource group
+  - summary: List clusters in a given resource group
     syntax: az stack-hci cluster list --resource-group "test-rg"
+  - summary: List clusters in a given subscription
+    syntax: az stack-hci cluster list
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -86,14 +127,14 @@ directCommands:
   summary: Get HCI cluster.
   description: ''
   syntax: >-
-    az stack-hci cluster show --name
+    az stack-hci cluster show --cluster-name
                               --resource-group
   examples:
-  - summary: Get a HCI cluster
+  - summary: Get cluster
     syntax: az stack-hci cluster show --name "myCluster" --resource-group "test-rg"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name --name -n
     summary: The name of the cluster.
     description: ''
   - isRequired: true
@@ -105,15 +146,19 @@ directCommands:
   summary: Update an HCI cluster.
   description: ''
   syntax: >-
-    az stack-hci cluster update --name
+    az stack-hci cluster update --cluster-name
                                 --resource-group
+                                [--aad-client-id]
+                                [--aad-tenant-id]
+                                [--desired-properties]
+                                [--endpoint]
                                 [--tags]
   examples:
-  - summary: Update an HCI cluster
-    syntax: az stack-hci cluster update --tags tag1="value1" tag2="value2" --name "myCluster" --resource-group "test-rg"
+  - summary: Update cluster
+    syntax: az stack-hci cluster update --endpoint "https://98294836-31be-4668-aeae-698667faf99b.waconazure.com" --desired-properties diagnostic-level="Basic" windows-server-subscription="Enabled" --tags tag1="value1" tag2="value2" --name "myCluster" --resource-group "test-rg"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --cluster-name --name -n
     summary: The name of the cluster.
     description: ''
   - isRequired: true
@@ -121,6 +166,24 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aad-client-id
+    summary: App id of cluster AAD identity.
+    description: ''
+  - name: --aad-tenant-id
+    summary: Tenant id of cluster AAD identity.
+    description: ''
+  - name: --desired-properties
+    summary: Desired properties of the cluster.
+    description: >-
+      Usage: --desired-properties windows-server-subscription=XX diagnostic-level=XX
+
+
+      windows-server-subscription: Desired state of Windows Server Subscription.
+
+      diagnostic-level: Desired level of diagnostic data emitted by the cluster.
+  - name: --endpoint
+    summary: Endpoint configured for management from the Azure portal.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -143,7 +206,9 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage stack-hci cluster.
+  description: Manage cluster with stack hci.

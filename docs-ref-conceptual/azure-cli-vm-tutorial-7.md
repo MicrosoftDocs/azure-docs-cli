@@ -5,7 +5,7 @@ ms.date: 11/12/2021
 ms.author: dbradish
 author: dbradish-microsoft
 manager: barbkess
-ms.devlang: azure-cli
+ms.tool: azure-cli
 ms.topic: tutorial
 ms.prod: azure
 ms.technology: azure-cli
@@ -43,8 +43,9 @@ ways for you to get in touch.
 
 For more information on the CLI features that were shown in the tutorial see:
 
-* [Output formats for Azure CLI commands](format-output-azure-cli.md)
-* [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
+* [Output formats for Azure CLI commands](./format-output-azure-cli.md)
+* [How to query Azure CLI command output](./query-azure-cli.md)
+* [How to use variables in Azure CLI commands](./azure-cli-variables.md)
 
 For more information on virtual networks and virtual machines see:
 

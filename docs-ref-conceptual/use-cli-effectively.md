@@ -7,13 +7,14 @@ manager: barbkess
 ms.date: 10/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 ---
 
 # How to use Azure CLI effectively
 
 Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First learn how to [choose the right environment](/cli/azure/choose-the-right-azure-command-line-tool#different-shell-environments) and [install the Azure CLI](/cli/azure/install-azure-cli).  Then use this article to discover useful tips on how to avoid common pitfalls and effectively use the Azure CLI.
+
 
 To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](/cli/azure/reference-index).
 
@@ -50,6 +51,7 @@ Three common output formats are used with Azure CLI commands:
     ```
 
     To learn more complex options for the `--query` parameter including script variations for Bash, PowerShell and Cmd, see [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
+
 
 For more information about these and other formats, see [Output formats for Azure CLI commands](format-output-azure-cli.md).
 
@@ -103,31 +105,31 @@ Finally, Azure CLI has built-in support to process commands with multiple `--ids
 
 When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, you need to understand how they differ.
 
-* Bash. [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
-* PowerShell. [About Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
-* Windows Command Prompt. [How-to: Escape Characters, Delimiters and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
+- Bash. [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
+- PowerShell. [About Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
+- Windows Command Prompt. [How-to: Escape Characters, Delimiters and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
 
 > [!NOTE]
 > Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 If you provide a parameter that contains whitespace, wrap it in quotation marks. Keep the following tips in mind:
 
-* In Bash or PowerShell, both single and double quotes are interpreted. In Windows Command Prompt, only double quotes are interpreted. Single quotes are interpreted as a part of the value.
+- In Bash or PowerShell, both single and double quotes are interpreted. In Windows Command Prompt, only double quotes are interpreted. Single quotes are interpreted as a part of the value.
 
-* For Bash-only commands, use single quotes to simplify inline JSON. For example, this JSON is correct in Bash: `'{"key": "value"}'`. In Windows Command Prompt, the equivalent is: `"{\"key\": \"value\"}"`
+- For Bash-only commands, use single quotes to simplify inline JSON. For example, this JSON is correct in Bash: `'{"key": "value"}'`. In Windows Command Prompt, the equivalent is: `"{\"key\": \"value\"}"`
 
-* Some Azure CLI commands take a list of space separated values. If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`.
+- Some Azure CLI commands take a list of space separated values. If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`.
 
-* Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
+- Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
 
-* There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. Instead, you can enclose the value in single or double quotes `"`/`"`.
+- There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. Instead, you can enclose the value in single or double quotes `"`/`"`.
 
   ```azurecli
   `@parameters.json
   '@parameters.json'
   ```
 
-* When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
+- When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
   These three commands are equivalent in Bash:
 
@@ -189,13 +191,13 @@ If you're using Azure CLI over a proxy server, it may cause the following error:
 | OS                     | Default certificate authority bundle                                                  |
 |----------------------- |-------------------------------------------------------------------------------------- |
 | Windows                | C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem |
-| Ubuntu/Debian Linux    | /opt/az/lib/python3.6/site-packages/certifi/cacert.pem                                |
-| CentOS/RHEL/SUSE Linux | /usr/lib64/az/lib/python3.6/site-packages/certifi/cacert.pem                          |
-| macOS                  | /usr/local/Cellar/azure-cli/2.33.1/libexec/lib/python3.10/site-packages/certifi/cacert.pem|
+| Ubuntu/Debian Linux    | /opt/az/lib/python<version>/site-packages/certifi/cacert.pem                                |
+| CentOS/RHEL/SUSE Linux | /usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem                          |
+| macOS                  | /usr/local/Cellar/azure-cli/\<cliversion\>/libexec/lib/python<version>/site-packages/certifi/cacert.pem|
 
 Append the proxy server's certificate to this file or copy the contents to another certificate file, then set `REQUESTS_CA_BUNDLE` to it. You might also need to set the `HTTP_PROXY` or `HTTPS_PROXY` environment variables.
 
-Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/azure-sdk-configure-proxy?tabs=bash).
+Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
 
 ## Concurrent builds
 
@@ -215,9 +217,9 @@ To simplify the command, consider using a JSON string. For example, to attach a 
 
 ```azurecli
 az vm update --resource-group VMResources --name virtual-machine-01 \
---add storageProfile.dataDisks "{\"createOption\": \"Attach\", \"managedDisk\": 
-   {\"id\": 
-   \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yg/providers/Microsoft.Compute/disks/yg-disk\"}, 
+--add storageProfile.dataDisks "{\"createOption\": \"Attach\", \"managedDisk\":
+   {\"id\":
+   \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yg/providers/Microsoft.Compute/disks/yg-disk\"},
    \"lun\": 1}"
 ```
 
@@ -225,7 +227,7 @@ az vm update --resource-group VMResources --name virtual-machine-01 \
 
 A service you want to work with may not have Azure CLI support. You can use the [az resource](/cli/azure/resource) commands to work with these resources.
 
-If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az-deployment-group-create). For working examples, see [Azure Quickstart Templates](/resources/templates/).
+If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az-deployment-group-create). For working examples, see [Azure Quickstart Templates](https://azure.microsoft.com/resources/templates/).
 
 ## REST API commands (az rest)
 
@@ -261,7 +263,7 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 az vm stop --ids %vm_ids% :: CLI stops all VMs in parallel
 ```
 
-Use this Windows PowerShell script for saving IDs to variables:
+Use this PowerShell script for saving IDs to variables:
 
 ```powershell
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
@@ -281,7 +283,7 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 )
 ```
 
-Use this Windows PowerShell script to loop through a list:
+Use this PowerShell script to loop through a list:
 
 ```powershell
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
@@ -307,7 +309,7 @@ An alternative is to use the `$?` automatic variable. This variable contains the
 The follow example shows how this automatic variable can work for error handling:
 
 ```powershell
-az group create --name MyResourceGroup 
+az group create --name MyResourceGroup
 if ($? -eq $false) {
     Write-Error "Error creating resource group."
 }
@@ -320,7 +322,7 @@ If you want to use the `try` and `catch` keywords, you can use `throw` to create
 ```powershell
 $ErrorActionPreference = "Stop"
 try {
-    az group create --name MyResourceGroup 
+    az group create --name MyResourceGroup
     if ($? -eq $false) {
         throw 'Group create failed.'
     }
@@ -339,9 +341,8 @@ The example restores `$ErrorActionPreference` to its default value.
 
 For more information about PowerShell error handling, see [Everything you wanted to know about exceptions](/powershell/scripting/learn/deep-dives/everything-about-exceptions).
 
-## Next steps
+## See also
 
-* [Specifying values in Azure CLI commands](azure-cli-variables.md)
-* [Query Azure CLI command output](query-azure-cli.md)
-* [Output formats for Azure CLI commands](format-output-azure-cli.md)
-* [Use Azure subscriptions with Azure CLI](manage-azure-subscriptions-azure-cli.md)
+* [Learn to use Bash with Azure CLI](./azure-cli-learn-bash.md)
+* [Query Azure CLI command output](./query-azure-cli.md)
+* [Use variables in Azure CLI commands](./azure-cli-variables.md)

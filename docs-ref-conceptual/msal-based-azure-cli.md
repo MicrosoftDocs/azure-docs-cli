@@ -7,7 +7,7 @@ manager: yonzhan
 ms.date: 10/28/2021
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: msal, msal-based azure cli
 ---

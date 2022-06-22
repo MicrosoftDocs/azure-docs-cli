@@ -22,6 +22,8 @@ directCommands:
     syntax: az datamigration get-assessment --connection-string "Data Source=LabServer.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\AssessmentOutput" --overwrite
   - summary: Run SQL Assessment on given SQL Server using assessment config file.
     syntax: az datamigration get-assessment --config-file-path "C:\Users\user\document\config.json"
+  - summary: Run SQL Assessment on multiple SQL Servers in one call using connection string.
+    syntax: az datamigration get-assessment --connection-string "Data Source=LabServer1.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" "Data Source=LabServer2.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\AssessmentOutput" --overwrite
   optionalParameters:
   - name: --config-file-path
     summary: Path of the ConfigFile.
@@ -55,7 +57,7 @@ directCommands:
                                             [--target-sql-instance]
   examples:
   - summary: Get SKU recommendation for given SQL Server using command line.
-    syntax: az datamigration get-sku-recommendation --output-folder "C:\PerfCollectionOutput" --database-allow-list AdventureWorks, AdventureWorks2 --display-result --overwrite
+    syntax: az datamigration get-sku-recommendation --output-folder "C:\PerfCollectionOutput" --database-allow-list AdventureWorks1 AdventureWorks2 --display-result --overwrite
   - summary: Get SKU recommendation for given SQL Server using assessment config file.
     syntax: az datamigration get-sku-recommendation --config-file-path "C:\Users\user\document\config.json"
   optionalParameters:
@@ -108,15 +110,20 @@ directCommands:
   syntax: >-
     az datamigration performance-data-collection [--config-file-path]
                                                  [--connection-string]
-                                                 [--number-of-interation]
+                                                 [--number-of-iteration]
                                                  [--output-folder]
                                                  [--perf-query-interval]
                                                  [--static-query-interval]
+                                                 [--time]
   examples:
   - summary: Collect performance data of a given SQL Server using connection string.
-    syntax: az datamigration performance-data-collection --connection-string "Data Source=LabServer.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\PerfCollectionOutput" --number-of-interation 5 --perf-query-interval 10 --static-query-interval 60
+    syntax: az datamigration performance-data-collection --connection-string "Data Source=LabServer.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\PerfCollectionOutput" --number-of-iteration 5 --perf-query-interval 10 --static-query-interval 60
+  - summary: Collect performance data of multiple SQL Servers in one call using connection string.
+    syntax: az datamigration performance-data-collection --connection-string "Data Source=LabServer1.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" "Data Source=LabServer2.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\PerfCollectionOutput" --number-of-iteration 5 --perf-query-interval 10 --static-query-interval 60
   - summary: Collect performance data of a given SQL Server using assessment config file.
     syntax: az datamigration performance-data-collection --config-file-path "C:\Users\user\document\config.json"
+  - summary: Collect performance data of a given SQL Server by specifying a time limit. If the time limit specified is before the complition of a iteration cycle, the process will end without saving the last cycle performance data.
+    syntax: az datamigration performance-data-collection --connection-string "Data Source=LabServer.database.net;Initial Catalog=master;Integrated Security=False;User Id=User;Password=password" --output-folder "C:\PerfCollectionOutput" --number-of-iteration 5 --perf-query-interval 10 --static-query-interval 60 --time 60
   optionalParameters:
   - name: --config-file-path
     summary: Path of the ConfigFile.
@@ -124,7 +131,7 @@ directCommands:
   - name: --connection-string
     summary: SQL Server Connection Strings.
     description: ''
-  - name: --number-of-interation
+  - name: --number-of-iteration
     defaultValue: "20"
     summary: 'Number of iterations of performance data collection to perform before persisting to file. For example, with default values, performance data will be persisted every 30 seconds \* 20 iterations = 10 minutes. Minimum: 2.'
     description: ''
@@ -139,24 +146,33 @@ directCommands:
     defaultValue: "3600"
     summary: Interval at which to query and persist static configuration data, in seconds.
     description: ''
+  - name: --time
+    summary: Time after which the command execution automatically stops, in seconds. If this parameter is not specified manual intervention will be required to stop the command execution.
+    description: ''
 - uid: az_datamigration_register-integration-runtime
   name: az datamigration register-integration-runtime
   summary: Register Database Migration Service on Integration Runtime.
   description: ''
   syntax: >-
     az datamigration register-integration-runtime --auth-key
+                                                  [--installed-ir-path]
                                                   [--ir-path]
   examples:
   - summary: Register Sql Migration Service on Self Hosted Integration Runtime.
     syntax: az datamigration register-integration-runtime --auth-key "IR@00000-0000000-000000-aaaaa-bbbb-cccc"
   - summary: Install Integration Runtime and register a Sql Migration Service on it.
     syntax: az datamigration register-integration-runtime --auth-key "IR@00000-0000000-000000-aaaaa-bbbb-cccc" --ir-path "C:\Users\user\Downloads\IntegrationRuntime.msi"
+  - summary: Read the Integration Runtime from given installation location.
+    syntax: az datamigration register-integration-runtime --auth-key "IR@00000-0000000-000000-aaaaa-bbbb-cccc" --installed-ir-path "D:\My Softwares\Microsoft Integration Runtime\5.0"
   requiredParameters:
   - isRequired: true
     name: --auth-key
     summary: AuthKey of SQL Migration Service.
     description: ''
   optionalParameters:
+  - name: --installed-ir-path
+    summary: 'Version folder path in the Integration Runtime installed location. This can be provided when IR is installed but the command is failing to read it. Format: "<Parent-folder-path>Microsoft Integration Runtime<Version>".'
+    description: ''
   - name: --ir-path
     summary: Path of Integration Runtime MSI.
     description: ''
@@ -165,6 +181,12 @@ commands:
 - az_datamigration_get-sku-recommendation
 - az_datamigration_performance-data-collection
 - az_datamigration_register-integration-runtime
+- az_datamigration_sql-db
+- az_datamigration_sql-db_cancel
+- az_datamigration_sql-db_create
+- az_datamigration_sql-db_delete
+- az_datamigration_sql-db_show
+- az_datamigration_sql-db_wait
 - az_datamigration_sql-managed-instance
 - az_datamigration_sql-managed-instance_cancel
 - az_datamigration_sql-managed-instance_create
@@ -202,6 +224,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

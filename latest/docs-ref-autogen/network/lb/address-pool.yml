@@ -12,9 +12,10 @@ directCommands:
     az network lb address-pool create --lb-name
                                       --name
                                       --resource-group
+                                      [--admin-state {Down, Drain, None, Up}]
                                       [--backend-address]
                                       [--backend-addresses-config-file]
-                                      [--subscription]
+                                      [--drain-period]
                                       [--vnet]
   examples:
   - summary: Create an address pool.
@@ -37,6 +38,10 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --admin-state
+    parameterValueGroup: Down, Drain, None, Up
+    summary: Administrative state which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections.
+    description: ''
   - name: --backend-address
     summary: Backend addresses information for backend address pool. If it's used, --vnet is required or subnet is required.
     description: >-
@@ -85,8 +90,8 @@ directCommands:
           "ipAddress": "10.0.0.7"
         }
       ].
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --drain-period
+    summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
     description: ''
   - name: --vnet
     summary: Name or Id of the virtual network applied to all backend addresses.
@@ -100,7 +105,6 @@ directCommands:
     az network lb address-pool delete --lb-name
                                       --name
                                       --resource-group
-                                      [--subscription]
   examples:
   - summary: Delete an address pool.
     syntax: az network lb address-pool delete -g MyResourceGroup --lb-name MyLb -n MyAddressPool
@@ -117,10 +121,6 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address-pool_list
   name: az network lb address-pool list
@@ -129,7 +129,6 @@ directCommands:
   syntax: >-
     az network lb address-pool list --lb-name
                                     --resource-group
-                                    [--subscription]
   examples:
   - summary: List address pools.
     syntax: az network lb address-pool list -g MyResourceGroup --lb-name MyLb -o table
@@ -142,10 +141,6 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address-pool_show
   name: az network lb address-pool show
@@ -155,7 +150,6 @@ directCommands:
     az network lb address-pool show --lb-name
                                     --name
                                     --resource-group
-                                    [--subscription]
   examples:
   - summary: Get the details of an address pool.
     syntax: az network lb address-pool show -g MyResourceGroup --lb-name MyLb -n MyAddressPool
@@ -172,10 +166,6 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address-pool_update
   name: az network lb address-pool update
@@ -186,12 +176,13 @@ directCommands:
                                       --name
                                       --resource-group
                                       [--add]
+                                      [--admin-state {Down, Drain, None, Up}]
                                       [--backend-address]
                                       [--backend-addresses-config-file]
+                                      [--drain-period]
                                       [--force-string]
                                       [--remove]
                                       [--set]
-                                      [--subscription]
                                       [--vnet]
   examples:
   - summary: Update an address pool with several backend addresses using key-value arguments.
@@ -213,6 +204,10 @@ directCommands:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --admin-state
+    parameterValueGroup: Down, Drain, None, Up
+    summary: Administrative state which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections.
+    description: ''
   - name: --backend-address
     summary: Backend addresses information for backend address pool. If it's used, --vnet is required or subnet is required.
     description: >-
@@ -261,6 +256,9 @@ directCommands:
           "ipAddress": "10.0.0.7"
         }
       ].
+  - name: --drain-period
+    summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
+    description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
@@ -269,9 +267,6 @@ directCommands:
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vnet
     summary: Name or Id of the virtual network applied to all backend addresses.
@@ -305,9 +300,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/23/2022
+  ms.date: 05/19/2022
   description: Manage address pools of a load balancer.

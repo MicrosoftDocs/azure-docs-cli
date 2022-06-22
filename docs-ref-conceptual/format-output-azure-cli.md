@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 11/11/2021
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli
+ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli commands 
 ---
@@ -218,4 +218,7 @@ What default output format would you like?
 Please enter a choice [1]:
 ```
 
-To learn more about configuring your environment, see [Azure CLI configuration](./azure-cli-configuration.md).
+## See also
+
+* [Azure CLI configuration](./azure-cli-configuration.md)
+* [How to query Azure CLI command output](./query-azure-cli.md)

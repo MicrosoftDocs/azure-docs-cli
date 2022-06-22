@@ -6,14 +6,16 @@ description: ''
 directCommands:
 - uid: az_identity_create
   name: az identity create
-  summary: Create or update an identity in the specified subscription and resource group.
+  summary: Create Identities.
   description: ''
   syntax: >-
     az identity create --name
                        --resource-group
                        [--location]
-                       [--subscription]
                        [--tags]
+  examples:
+  - summary: Create an identity.
+    syntax: az identity create --name MyIdentity --resource-group MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -27,9 +29,6 @@ directCommands:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -42,7 +41,6 @@ directCommands:
     az identity delete [--ids]
                        [--name]
                        [--resource-group]
-                       [--subscription]
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -53,33 +51,60 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/identity/_help.py
 - uid: az_identity_list
   name: az identity list
   summary: List Managed Identities.
   description: ''
-  syntax: >-
-    az identity list [--resource-group]
-                     [--subscription]
+  syntax: az identity list [--resource-group]
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/identity/_help.py
 - uid: az_identity_list-operations
   name: az identity list-operations
   summary: Lists available operations for the Managed Identity provider.
   description: ''
-  syntax: az identity list-operations [--subscription]
+  syntax: az identity list-operations
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/identity/_help.py
+- uid: az_identity_list-resources
+  name: az identity list-resources
+  summary: Lists the associated resources for this identity.
+  description: ''
+  syntax: >-
+    az identity list-resources [--filter]
+                               [--ids]
+                               [--name]
+                               [--orderby]
+                               [--resource-group]
+                               [--skip]
+                               [--skiptoken]
+                               [--top]
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --filter
+    summary: OData filter expression to apply to the query. Default value is None.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the identity resource.
+    description: ''
+  - name: --orderby
+    summary: OData orderBy expression to apply to the query. Default value is None.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --skip
+    summary: Number of records to skip. Default value is None.
+    description: ''
+  - name: --skiptoken
+    summary: A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. Default value is None.
+    description: ''
+  - name: --top
+    summary: Number of records to return. Default value is None.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/identity/_help.py
 - uid: az_identity_show
@@ -90,7 +115,6 @@ directCommands:
     az identity show [--ids]
                      [--name]
                      [--resource-group]
-                     [--subscription]
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -101,15 +125,13 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/identity/_help.py
 commands:
 - az_identity_create
 - az_identity_delete
 - az_identity_list
 - az_identity_list-operations
+- az_identity_list-resources
 - az_identity_show
 globalParameters:
 - name: --debug
@@ -124,9 +146,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/14/2022
+  ms.date: 03/31/2022
   description: Managed Identities.

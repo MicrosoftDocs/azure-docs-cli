@@ -10,10 +10,10 @@ directCommands:
   description: ''
   syntax: >-
     az bicep build --file
+                   [--no-restore]
                    [--outdir]
                    [--outfile]
                    [--stdout]
-                   [--subscription]
   examples:
   - summary: Build a Bicep file.
     syntax: az bicep build --file {bicep_file}
@@ -23,12 +23,17 @@ directCommands:
     syntax: az bicep build --file {bicep_file} --outdir {out_dir}
   - summary: Build a Bicep file and save the result to the specified file.
     syntax: az bicep build --file {bicep_file} --outfile {out_file}
+  - summary: Build a Bicep file without restoring external modules.
+    syntax: az bicep build --file {bicep_file} --no-restore
   requiredParameters:
   - isRequired: true
     name: --file -f
     summary: The path to the Bicep file to build in the file system.
     description: ''
   optionalParameters:
+  - name: --no-restore
+    summary: When set, builds the bicep file without restoring external modules.
+    description: ''
   - name: --outdir
     summary: When set, saves the output at the specified directory.
     description: ''
@@ -38,35 +43,33 @@ directCommands:
   - name: --stdout
     summary: When set, prints all output to stdout instead of corresponding files.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_bicep_decompile
   name: az bicep decompile
   summary: Attempt to decompile an ARM template file to a Bicep file.
   description: ''
   syntax: >-
     az bicep decompile --file
-                       [--subscription]
+                       [--force]
   examples:
   - summary: Decompile an ARM template file.
     syntax: az bicep decompile --file {json_template_file}
+  - summary: Decompile an ARM template file and overwrite existing Bicep file.
+    syntax: az bicep decompile --file {json_template_file} --force
   requiredParameters:
   - isRequired: true
     name: --file -f
     summary: The path to the ARM template to decompile in the file system.
     description: ''
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --force
+    summary: Allows overwriting the output file if it exists.
     description: ''
 - uid: az_bicep_install
   name: az bicep install
   summary: Install Bicep CLI.
   description: ''
   syntax: >-
-    az bicep install [--subscription]
-                     [--target-platform {linux-musl-x64, linux-x64, osx-x64, win-x64}]
+    az bicep install [--target-platform {linux-musl-x64, linux-x64, osx-x64, win-x64}]
                      [--version]
   examples:
   - summary: Install Bicep CLI.
@@ -76,9 +79,6 @@ directCommands:
   - summary: Install Bicep CLI and specify the target platform.
     syntax: az bicep install --target-platform linux-x64
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --target-platform -t
     parameterValueGroup: linux-musl-x64, linux-x64, osx-x64, win-x64
     summary: The platform the Bicep CLI will be running on. Set this to skip automatic platform detection if it does not work properly.
@@ -90,11 +90,7 @@ directCommands:
   name: az bicep list-versions
   summary: List out all available versions of Bicep CLI.
   description: ''
-  syntax: az bicep list-versions [--subscription]
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+  syntax: az bicep list-versions
 - uid: az_bicep_publish
   name: az bicep publish
   summary: Publish a bicep file to a remote module registry.
@@ -102,7 +98,6 @@ directCommands:
   syntax: >-
     az bicep publish --file
                      --target
-                     [--subscription]
   examples:
   - summary: Publish a bicep file.
     syntax: az bicep publish --file {bicep_file} --target "br:{registry}/{module_path}:{tag}"
@@ -115,35 +110,43 @@ directCommands:
     name: --target -t
     summary: The target location where the Bicep module will be published.
     description: ''
+- uid: az_bicep_restore
+  name: az bicep restore
+  summary: Restore external modules for a bicep file.
+  description: ''
+  syntax: >-
+    az bicep restore --file
+                     [--force]
+  examples:
+  - summary: Retore external modules.
+    syntax: az bicep restore --file {bicep_file}
+  - summary: Retore external modules and overwrite cached external modules.
+    syntax: az bicep restore --file {bicep_file} --force
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: The path to the Bicep file to restore external modules for.
+    description: ''
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --force
+    summary: Allows overwriting the cached external modules.
     description: ''
 - uid: az_bicep_uninstall
   name: az bicep uninstall
   summary: Uninstall Bicep CLI.
   description: ''
-  syntax: az bicep uninstall [--subscription]
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+  syntax: az bicep uninstall
 - uid: az_bicep_upgrade
   name: az bicep upgrade
   summary: Upgrade Bicep CLI to the latest version.
   description: ''
-  syntax: >-
-    az bicep upgrade [--subscription]
-                     [--target-platform {linux-musl-x64, linux-x64, osx-x64, win-x64}]
+  syntax: az bicep upgrade [--target-platform {linux-musl-x64, linux-x64, osx-x64, win-x64}]
   examples:
   - summary: Upgrade Bicep CLI.
     syntax: az bicep upgrade
   - summary: Upgrade Bicep CLI and specify the target platform.
     syntax: az bicep upgrade --target-platform linux-x64
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --target-platform -t
     parameterValueGroup: linux-musl-x64, linux-x64, osx-x64, win-x64
     summary: The platform the Bicep CLI will be running on. Set this to skip automatic platform detection if it does not work properly.
@@ -152,17 +155,14 @@ directCommands:
   name: az bicep version
   summary: Show the installed version of Bicep CLI.
   description: ''
-  syntax: az bicep version [--subscription]
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+  syntax: az bicep version
 commands:
 - az_bicep_build
 - az_bicep_decompile
 - az_bicep_install
 - az_bicep_list-versions
 - az_bicep_publish
+- az_bicep_restore
 - az_bicep_uninstall
 - az_bicep_upgrade
 - az_bicep_version
@@ -179,6 +179,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

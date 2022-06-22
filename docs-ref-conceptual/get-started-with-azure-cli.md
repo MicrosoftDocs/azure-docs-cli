@@ -7,7 +7,7 @@ manager: barbkess
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.service: azure-cli
-ms.devlang: azurecli 
+ms.tool: azure-cli 
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
@@ -48,13 +48,13 @@ This table lists some common commands used in the CLI and links to their referen
 
 | Resource type | Azure CLI command group |
 |---------------|-------------------------|
-| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](/cli/azure/group) |
-| [Virtual machines](/azure/virtual-machines) | [az vm](/cli/azure/vm) |
-| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](/cli/azure/storage/account) |
-| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](/cli/azure/keyvault) |
-| [Web applications](/azure/app-service) | [az webapp](/cli/azure/webapp) |
-| [SQL databases](/azure/sql-database) | [az sql server](/cli/azure/sql/server) |
-| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](/cli/azure/cosmosdb) |
+| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](../latest/docs-ref-autogen/group.yml) |
+| [Virtual machines](/azure/virtual-machines) | [az vm](../latest/docs-ref-autogen/vm.yml) |
+| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](../latest/docs-ref-autogen/storage/account.yml) |
+| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](../latest/docs-ref-autogen/keyvault.yml) |
+| [Web applications](/azure/app-service) | [az webapp](../latest/docs-ref-autogen/webapp.yml) |
+| [SQL databases](/azure/sql-database) | [az sql server](../latest/docs-ref-autogen/sql/server.yml) |
+| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](../latest/docs-ref-autogen/cosmosdb.yml) |
 
 ## Finding commands
 
@@ -132,5 +132,7 @@ az feedback
 
 ## See also
 
-* [Services the Azure CLI can manage](azure-services-the-azure-cli-can-manage.md)
-* [Full command reference list for the Azure CLI](/cli/azure/reference-index)
+* [Choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
+* [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
+* [Services the Azure CLI can manage](./azure-services-the-azure-cli-can-manage.md)
+* [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)

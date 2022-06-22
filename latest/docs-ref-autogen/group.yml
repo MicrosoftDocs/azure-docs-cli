@@ -12,7 +12,6 @@ directCommands:
     az group create --location
                     --name
                     [--managed-by]
-                    [--subscription]
                     [--tags]
   examples:
   - summary: Create a new resource group in the West US region.
@@ -30,9 +29,6 @@ directCommands:
   - name: --managed-by
     summary: The ID of the resource that manages this resource group.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -43,27 +39,26 @@ directCommands:
   description: ''
   syntax: >-
     az group delete --name
-                    [--force-deletion-types]
+                    [--force-deletion-types {Microsoft.Compute/virtualMachineScaleSets, Microsoft.Compute/virtualMachines}]
                     [--no-wait]
-                    [--subscription]
                     [--yes]
   examples:
   - summary: Delete a resource group.
     syntax: az group delete -n MyResourceGroup
+  - summary: Force delete all the Virtual Machines in a resource group.
+    syntax: az group delete -n MyResourceGroup --force-deletion-types Microsoft.Compute/virtualMachines
   requiredParameters:
   - isRequired: true
     name: --name --resource-group -g -n
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --force-deletion-types
-    summary: 'The resource types you want to force delete. Currently, only the following is supported: forceDeletionTypes=Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets.'
+  - name: --force-deletion-types -f
+    parameterValueGroup: Microsoft.Compute/virtualMachineScaleSets, Microsoft.Compute/virtualMachines
+    summary: The resource types you want to force delete.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -73,9 +68,7 @@ directCommands:
   name: az group exists
   summary: Check if a resource group exists.
   description: ''
-  syntax: >-
-    az group exists --name
-                    [--subscription]
+  syntax: az group exists --name
   examples:
   - summary: Check if 'MyResourceGroup' exists.
     syntax: az group exists -n MyResourceGroup
@@ -83,10 +76,6 @@ directCommands:
   - isRequired: true
     name: --name --resource-group -g -n
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_export
@@ -100,7 +89,6 @@ directCommands:
                     [--resource-ids]
                     [--skip-all-params]
                     [--skip-resource-name-params]
-                    [--subscription]
   requiredParameters:
   - isRequired: true
     name: --name --resource-group -g -n
@@ -122,24 +110,16 @@ directCommands:
   - name: --skip-resource-name-params
     summary: Export template and skip resource name parameterization.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_list
   name: az group list
   summary: List resource groups.
   description: ''
-  syntax: >-
-    az group list [--subscription]
-                  [--tag]
+  syntax: az group list [--tag]
   examples:
   - summary: List all resource groups located in the West US region.
     syntax: az group list --query "[?location=='westus']"
   optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tag
     summary: A single tag in 'key[=value]' format. Use "" to clear existing tags.
     description: ''
@@ -148,17 +128,11 @@ directCommands:
   name: az group show
   summary: Gets a resource group.
   description: ''
-  syntax: >-
-    az group show --name
-                  [--subscription]
+  syntax: az group show --name
   requiredParameters:
   - isRequired: true
     name: --name --resource-group -g -n
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/resource/_help.py
 - uid: az_group_update
@@ -171,7 +145,6 @@ directCommands:
                     [--force-string]
                     [--remove]
                     [--set]
-                    [--subscription]
                     [--tags]
   examples:
   - summary: Update a resource group. (autogenerated)
@@ -194,9 +167,6 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -212,7 +182,6 @@ directCommands:
                   [--deleted]
                   [--exists]
                   [--interval]
-                  [--subscription]
                   [--timeout]
                   [--updated]
   examples:
@@ -241,9 +210,6 @@ directCommands:
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -293,9 +259,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/22/2022
+  ms.date: 05/20/2022
   description: Manage resource groups and template deployments.

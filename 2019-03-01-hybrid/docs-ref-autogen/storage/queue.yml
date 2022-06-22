@@ -6,7 +6,7 @@ description: ''
 directCommands:
 - uid: az_storage_queue_create
   name: az storage queue create
-  summary: Creates a queue under the given account.
+  summary: Create a queue under the given account.
   description: ''
   syntax: >-
     az storage queue create --name
@@ -17,8 +17,10 @@ directCommands:
                             [--fail-on-exist]
                             [--metadata]
                             [--sas-token]
-                            [--subscription]
                             [--timeout]
+  examples:
+  - summary: Create a queue under the given account with metadata.
+    syntax: az storage queue create -n myqueue --metadata key1=value1 key2=value2 --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -47,17 +49,14 @@ directCommands:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_delete
   name: az storage queue delete
-  summary: Deletes the specified queue and any messages it contains.
-  description: When a queue is successfully deleted, it is immediately marked for deletion  and is no longer accessible to clients. The queue is later removed from  the Queue service during garbage collection.  Note that deleting a queue is likely to take at least 40 seconds to complete.  If an operation is attempted against the queue while it was being deleted,  an AzureConflictHttpError will be thrown.
+  summary: Delete the specified queue and any messages it contains.
+  description: ''
   syntax: >-
     az storage queue delete --name
                             [--account-key]
@@ -66,8 +65,10 @@ directCommands:
                             [--connection-string]
                             [--fail-not-exist]
                             [--sas-token]
-                            [--subscription]
                             [--timeout]
+  examples:
+  - summary: Delete the specified queue, throw an exception if the queue doesn't exist.
+    syntax: az storage queue delete -n myqueue --fail-not-exist --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -93,16 +94,13 @@ directCommands:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_exists
   name: az storage queue exists
-  summary: Returns a boolean indicating whether the queue exists.
+  summary: Return a boolean indicating whether the queue exists.
   description: ''
   syntax: >-
     az storage queue exists --name
@@ -111,8 +109,10 @@ directCommands:
                             [--auth-mode {key, login}]
                             [--connection-string]
                             [--sas-token]
-                            [--subscription]
                             [--timeout]
+  examples:
+  - summary: Check whether the queue exists.
+    syntax: az storage queue exists -n myqueue --account-name mystorageaccount
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -135,17 +135,14 @@ directCommands:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_generate-sas
   name: az storage queue generate-sas
-  summary: Generates a shared access signature for the queue.
-  description: Use the returned signature with the sas_token parameter of QueueService.
+  summary: Generate a shared access signature for the queue.Use the returned signature with the sas_token parameter of QueueService.
+  description: ''
   syntax: >-
     az storage queue generate-sas --name
                                   [--account-key]
@@ -159,7 +156,17 @@ directCommands:
                                   [--policy-name]
                                   [--sas-token]
                                   [--start]
-                                  [--subscription]
+  examples:
+  - summary: Generate a sas token for the queue with read-only permissions.
+    syntax: >-
+      end=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+
+      az storage queue generate-sas -n myqueue --account-name mystorageaccount --permissions r --expiry $end --https-only
+  - summary: Generate a sas token for the queue with ip range specified.
+    syntax: >-
+      end=`date -u -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+
+      az storage queue generate-sas -n myqueue --account-name mystorageaccount --ip "176.134.171.0-176.134.171.255" --permissions r --expiry $end --https-only
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -180,7 +187,7 @@ directCommands:
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
   - name: --expiry
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --id that specifies this value.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --policy-name that specifies this value.
     description: ''
   - name: --https-only
     summary: Only permit requests made with the HTTPS protocol. If omitted, requests from both the HTTP and HTTPS protocol are permitted.
@@ -189,7 +196,7 @@ directCommands:
     summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
     description: ''
   - name: --permissions
-    summary: 'The permissions the SAS grants. Allowed values: (a)dd (p)rocess (r)ead (u)pdate (a)dd (p)rocess (r)ead (u)pdate. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
+    summary: 'The permissions the SAS grants. Allowed values: (a)dd (a)dd (p)rocess (p)rocess (r)ead (r)ead (u)pdate (u)pdate. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
     description: ''
   - name: --policy-name
     summary: The name of a stored access policy within the share's ACL.
@@ -198,10 +205,7 @@ directCommands:
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   - name: --start
-    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --id that specifies this value. Defaults to the time of the request.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Do not use if a stored access policy is referenced with --policy-name that specifies this value. Defaults to the time of the request.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_list
@@ -218,7 +222,6 @@ directCommands:
                           [--num-results]
                           [--prefix]
                           [--sas-token]
-                          [--subscription]
                           [--timeout]
   examples:
   - summary: List queues whose names begin with 'myprefix' under the storage account 'mystorageaccount'(account name)
@@ -252,25 +255,24 @@ directCommands:
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_queue_stats
   name: az storage queue stats
-  summary: Retrieves statistics related to replication for the Queue service.
-  description: It is  only available when read-access geo-redundant replication is enabled for  the storage account.  With geo-redundant replication, Azure Storage maintains your data durable  in two locations. In both locations, Azure Storage constantly maintains  multiple healthy replicas of your data. The location where you read,  create, update, or delete data is the primary storage account location.  The primary location exists in the region you choose at the time you  create an account via the Azure Management Azure classic portal, for  example, North Central US. The location to which your data is replicated  is the secondary location. The secondary location is automatically  determined based on the location of the primary; it is in a second data  center that resides in the same region as the primary location. Read-only  access is available from the secondary location, if read-access geo-redundant  replication is enabled for your storage account.
+  summary: Retrieve statistics related to replication for the Queue service. It is only available when read-access geo-redundant replication is enabled for the storage account.
+  description: ''
   syntax: >-
     az storage queue stats [--account-key]
                            [--account-name]
                            [--auth-mode {key, login}]
                            [--connection-string]
                            [--sas-token]
-                           [--subscription]
                            [--timeout]
+  examples:
+  - summary: Show statistics related to replication for the Queue service.
+    syntax: az storage queue stats --account-name mystorageaccount
   optionalParameters:
   - name: --account-key
     summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
@@ -287,9 +289,6 @@ directCommands:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -324,9 +323,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/25/2022
+  ms.date: 05/19/2022
   description: Manage storage queues.

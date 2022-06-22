@@ -23,9 +23,8 @@ directCommands:
                                         [--identity-type {None, SystemAssigned}]
                                         [--initial-cassandra-admin-password]
                                         [--no-wait]
-                                        [--repair-enabled]
+                                        [--repair-enabled {false, true}]
                                         [--restore-from-backup-id]
-                                        [--subscription]
                                         [--tags]
   examples:
   - summary: Create a Managed Cassandra Cluster in a given Subscription and ResourceGroup. Either a cassandra admin password or external seed needs are required.
@@ -93,13 +92,11 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --repair-enabled
+    parameterValueGroup: false, true
     summary: Enables automatic repair.
     description: ''
   - name: --restore-from-backup-id
     summary: The resource id of a backup. If provided on create, the backup will be used to prepopulate the cluster. The cluster data center count and node counts must match the backup.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -112,7 +109,6 @@ directCommands:
     az managed-cassandra cluster deallocate --cluster-name
                                             --resource-group
                                             [--no-wait]
-                                            [--subscription]
   examples:
   - summary: This command deallocates this cluster.
     syntax: az managed-cassandra cluster deallocate --resource-group MyResourceGroup --cluster-name MyCluster
@@ -129,9 +125,6 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_managed-cassandra_cluster_delete
   name: az managed-cassandra cluster delete
   summary: Deletes a Managed Cassandra Cluster.
@@ -140,7 +133,6 @@ directCommands:
     az managed-cassandra cluster delete --cluster-name
                                         --resource-group
                                         [--no-wait]
-                                        [--subscription]
                                         [--yes]
   examples:
   - summary: Deletes a Managed Cassandra Cluster in the given Subscription and ResourceGroup.
@@ -158,9 +150,6 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
     description: ''
@@ -177,7 +166,6 @@ directCommands:
                                                 [--cassandra-stop-start {false, true}]
                                                 [--no-wait]
                                                 [--readwrite {false, true}]
-                                                [--subscription]
   examples:
   - summary: This command runs nodetool with these arguments in a host node of the cluster.
     syntax: az managed-cassandra cluster invoke-command --resource-group MyResourceGroup --cluster-name MyCluster --host "10.0.1.12" --command-name "nodetool" --arguments arg1="value1" arg2="value2" arg3="value3"
@@ -213,16 +201,11 @@ directCommands:
     parameterValueGroup: false, true
     summary: If true, allows the command to \*write\* to the cassandra directory, otherwise read-only.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_managed-cassandra_cluster_list
   name: az managed-cassandra cluster list
   summary: List the Managed Cassandra Clusters in a ResourceGroup and Subscription. If the ResourceGroup is not specified all the clusters in this Subscription are returned.
   description: ''
-  syntax: >-
-    az managed-cassandra cluster list [--resource-group]
-                                      [--subscription]
+  syntax: az managed-cassandra cluster list [--resource-group]
   examples:
   - summary: List all Managed Cassandra Clusters in a given Subscription and ResourceGroup.
     syntax: az managed-cassandra cluster list --resource-group MyResourceGroup
@@ -232,9 +215,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_managed-cassandra_cluster_show
   name: az managed-cassandra cluster show
   summary: Get a Managed Cassandra Cluster Resource.
@@ -242,7 +222,6 @@ directCommands:
   syntax: >-
     az managed-cassandra cluster show --cluster-name
                                       --resource-group
-                                      [--subscription]
   examples:
   - summary: Gets a Managed Cassandra Cluster Resource. ProvisioningState tells the state of this cluster. If the cluster doesnot exist a NotFound response is returned.
     syntax: az managed-cassandra cluster show --resource-group MyResourceGroup --cluster-name MyCluster
@@ -255,10 +234,6 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_managed-cassandra_cluster_start
   name: az managed-cassandra cluster start
   summary: Start the Managed Cassandra Cluster and Associated Data Centers. Start will start the host virtual machine of this cluster with reserved data disk. This won't do anything on an already running cluster. Use Deallocate to deallocate the cluster.
@@ -267,7 +242,6 @@ directCommands:
     az managed-cassandra cluster start --cluster-name
                                        --resource-group
                                        [--no-wait]
-                                       [--subscription]
   examples:
   - summary: This command starts this cluster.
     syntax: az managed-cassandra cluster start --resource-group MyResourceGroup --cluster-name MyCluster
@@ -284,9 +258,6 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_managed-cassandra_cluster_status
   name: az managed-cassandra cluster status
   summary: Gets the CPU, memory, and disk usage statistics for each Cassandra node in a cluster.
@@ -294,7 +265,6 @@ directCommands:
   syntax: >-
     az managed-cassandra cluster status --cluster-name
                                         --resource-group
-                                        [--subscription]
   examples:
   - summary: Gets the CPU, memory, and disk usage statistics for each Cassandra node in a cluster.
     syntax: az managed-cassandra cluster status --resource-group MyResourceGroup --cluster-name MyCluster
@@ -306,10 +276,6 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_managed-cassandra_cluster_update
   name: az managed-cassandra cluster update
@@ -326,8 +292,7 @@ directCommands:
                                         [--hours-between-backups]
                                         [--identity-type {None, SystemAssigned}]
                                         [--no-wait]
-                                        [--repair-enabled]
-                                        [--subscription]
+                                        [--repair-enabled {false, true}]
                                         [--tags]
   examples:
   - summary: Update External Seed Nodes of a given cluster.
@@ -371,10 +336,8 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --repair-enabled
+    parameterValueGroup: false, true
     summary: Enables automatic repair.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -405,6 +368,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

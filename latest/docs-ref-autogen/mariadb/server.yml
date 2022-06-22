@@ -17,13 +17,13 @@ directCommands:
                              [--geo-redundant-backup {Disabled, Enabled}]
                              [--infrastructure-encryption {Disabled, Enabled}]
                              [--location]
+                             [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
                              [--name]
                              [--public]
                              [--resource-group]
                              [--sku-name]
                              [--ssl-enforcement {Disabled, Enabled}]
                              [--storage-size]
-                             [--subscription]
                              [--tags]
                              [--version]
   examples:
@@ -42,7 +42,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: unhappybobcat4
+    defaultValue: brokenpeacock3
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --assign-identity
@@ -67,6 +67,10 @@ directCommands:
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
+  - name: --minimal-tls-version
+    parameterValueGroup: TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled
+    summary: Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
+    description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
@@ -88,9 +92,6 @@ directCommands:
     defaultValue: "51200"
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -105,7 +106,6 @@ directCommands:
     az mariadb server delete [--ids]
                              [--name]
                              [--resource-group]
-                             [--subscription]
                              [--yes]
   examples:
   - summary: Delete a server.
@@ -119,9 +119,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -140,7 +137,6 @@ directCommands:
                                  [--no-wait]
                                  [--resource-group]
                                  [--sku-name]
-                                 [--subscription]
   examples:
   - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2.
     syntax: az mariadb server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
@@ -182,16 +178,11 @@ directCommands:
   - name: --sku-name
     summary: 'The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_list
   name: az mariadb server list
   summary: List available servers.
   description: ''
-  syntax: >-
-    az mariadb server list [--resource-group]
-                           [--subscription]
+  syntax: az mariadb server list [--resource-group]
   examples:
   - summary: List all MariaDB servers in a subscription.
     syntax: az mariadb server list
@@ -201,16 +192,11 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_list-skus
   name: az mariadb server list-skus
   summary: List available sku's in the given region.
   description: ''
-  syntax: >-
-    az mariadb server list-skus --location
-                                [--subscription]
+  syntax: az mariadb server list-skus --location
   examples:
   - summary: List available sku's in the given region.
     syntax: az mariadb server list-skus -l eastus
@@ -218,10 +204,6 @@ directCommands:
   - isRequired: true
     name: --location -l
     summary: The name of the location.
-    description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_mariadb_server_restart
   name: az mariadb server restart
@@ -231,7 +213,6 @@ directCommands:
     az mariadb server restart [--ids]
                               [--name]
                               [--resource-group]
-                              [--subscription]
   examples:
   - summary: Restart a server.
     syntax: az mariadb server restart -g testgroup -n testsvr
@@ -245,9 +226,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_restore
   name: az mariadb server restore
   summary: Restore a server from backup.
@@ -259,7 +237,6 @@ directCommands:
                               [--name]
                               [--no-wait]
                               [--resource-group]
-                              [--subscription]
   examples:
   - summary: Restore 'testsvr' to a specific point-in-time as a new server 'testsvrnew'.
     syntax: az mariadb server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
@@ -290,9 +267,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_show
   name: az mariadb server show
   summary: Get the details of a server.
@@ -301,7 +275,6 @@ directCommands:
     az mariadb server show [--ids]
                            [--name]
                            [--resource-group]
-                           [--subscription]
   examples:
   - summary: Get the details of a server. (autogenerated)
     syntax: az mariadb server show --name MyServer --resource-group MyResourceGroup
@@ -315,9 +288,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_show-connection-string
   name: az mariadb server show-connection-string
   summary: Show the connection strings for a MariaDB server database.
@@ -328,7 +298,6 @@ directCommands:
                                              [--database-name]
                                              [--ids]
                                              [--server-name]
-                                             [--subscription]
   examples:
   - summary: Show connection strings for cmd and programming languages.
     syntax: az mariadb server show-connection-string -s testServer -u username -p password -d databasename
@@ -352,9 +321,6 @@ directCommands:
     defaultValue: '{server}'
     summary: Name of the server.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_start
   name: az mariadb server start
   summary: Start a stopped server.
@@ -363,7 +329,6 @@ directCommands:
     az mariadb server start [--ids]
                             [--name]
                             [--resource-group]
-                            [--subscription]
   examples:
   - summary: Start a stopped server. (autogenerated)
     syntax: az mariadb server start --name testsvr --resource-group testgroup --subscription MySubscription
@@ -377,9 +342,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_stop
   name: az mariadb server stop
   summary: Stop a running server.
@@ -388,7 +350,6 @@ directCommands:
     az mariadb server stop [--ids]
                            [--name]
                            [--resource-group]
-                           [--subscription]
   examples:
   - summary: Stop a running server. (autogenerated)
     syntax: az mariadb server stop --name testsvr --resource-group testgroup --subscription MySubscription
@@ -402,9 +363,6 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
 - uid: az_mariadb_server_update
   name: az mariadb server update
   summary: Update a server.
@@ -417,6 +375,7 @@ directCommands:
                              [--backup-retention]
                              [--force-string]
                              [--ids]
+                             [--minimal-tls-version {TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled}]
                              [--name]
                              [--public]
                              [--remove]
@@ -425,7 +384,6 @@ directCommands:
                              [--sku-name]
                              [--ssl-enforcement {Disabled, Enabled}]
                              [--storage-size]
-                             [--subscription]
                              [--tags]
   examples:
   - summary: Update a server's sku.
@@ -459,6 +417,10 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --minimal-tls-version
+    parameterValueGroup: TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled
+    summary: Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
+    description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
@@ -484,9 +446,6 @@ directCommands:
   - name: --storage-size
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 51200.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -501,7 +460,6 @@ directCommands:
                            [--interval]
                            [--name]
                            [--resource-group]
-                           [--subscription]
                            [--timeout]
   optionalParameters:
   - name: --custom
@@ -522,9 +480,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -584,6 +539,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

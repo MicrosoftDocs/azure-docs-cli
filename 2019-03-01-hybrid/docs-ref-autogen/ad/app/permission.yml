@@ -11,27 +11,24 @@ directCommands:
     Invoking "az ad app permission grant" is needed to activate it.
 
 
-    To get available permissions of the resource app, run `az ad sp show --id <resource-appId>`. For example, to get available permissions for Graph API:
-      - Azure Active Directory Graph: `az ad sp show --id 00000002-0000-0000-c000-000000000000`
-      - Microsoft Graph: `az ad sp show --id 00000003-0000-0000-c000-000000000000`
-    Application permissions under the `appRoles` property correspond to `Role` in --api-permissions. Delegated permissions under the `oauth2Permissions` property correspond to `Scope` in --api-permissions.
+    To get available permissions of the resource app, run `az ad sp show --id <resource-appId>`. For example, to get available permissions for Microsoft Graph API, run `az ad sp show --id 00000003-0000-0000-c000-000000000000`. Application permissions under the `appRoles` property correspond to `Role` in --api-permissions. Delegated permissions under the `oauth2Permissions` property correspond to `Scope` in --api-permissions.
   syntax: >-
     az ad app permission add --api
                              --api-permissions
                              --id
   examples:
-  - summary: Add Azure Active Directory Graph delegated permission User.Read (Sign in and read user profile).
-    syntax: az ad app permission add --id eeba0b46-78e5-4a1a-a1aa-cafe6c123456 --api 00000002-0000-0000-c000-000000000000 --api-permissions 311a71cc-e848-46a1-bdf8-97ff7156d8e6=Scope
-  - summary: Add Azure Active Directory Graph application permission Application.ReadWrite.All (Read and write all applications).
-    syntax: az ad app permission add --id eeba0b46-78e5-4a1a-a1aa-cafe6c123456 --api 00000002-0000-0000-c000-000000000000 --api-permissions 1cda74f2-2616-4834-b122-5cb1b07f8a59=Role
+  - summary: Add Microsoft Graph delegated permission User.Read (Sign in and read user profile).
+    syntax: az ad app permission add --id {appId} --api 00000003-0000-0000-c000-000000000000 --api-permissions e1fe6dd8-ba31-4d61-89e7-88639da4683d=Scope
+  - summary: Add Microsoft Graph application permission Application.ReadWrite.All (Read and write all applications).
+    syntax: az ad app permission add --id {appId} --api 00000003-0000-0000-c000-000000000000 --api-permissions 1bfefb4e-e0b5-418b-a88f-73c46d2cc8e9=Role
   requiredParameters:
   - isRequired: true
     name: --api
-    summary: Specify `RequiredResourceAccess.resourceAppId` - The unique identifier for the resource that the application requires access to. This should be equal to the appId declared on the target resource application.
+    summary: RequiredResourceAccess.resourceAppId - The unique identifier for the resource that the application requires access to. This should be equal to the appId declared on the target resource application.
     description: ''
   - isRequired: true
     name: --api-permissions
-    summary: Specify `ResourceAccess.id` - The unique identifier for one of the OAuth2Permission or AppRole instances that the resource application exposes. Space-separated list of `<resource-access-id>=<type>`.
+    summary: 'Space-separated list of {id}={type}. {id} is resourceAccess.id - The unique identifier for one of the oauth2PermissionScopes or appRole instances that the resource application exposes. {type} is resourceAccess.type - Specifies whether the id property references an oauth2PermissionScopes or an appRole. The possible values are: Scope (for OAuth 2.0 permission scopes) or Role (for app roles).'
     description: ''
   - isRequired: true
     name: --id
@@ -68,7 +65,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --api
-    summary: Specify `RequiredResourceAccess.resourceAppId` - The unique identifier for the resource that the application requires access to. This should be equal to the appId declared on the target resource application.
+    summary: RequiredResourceAccess.resourceAppId - The unique identifier for the resource that the application requires access to. This should be equal to the appId declared on the target resource application.
     description: ''
   - isRequired: true
     name: --id
@@ -87,40 +84,35 @@ directCommands:
 
     For Application permissions, please use "ad app permission admin-consent".
   syntax: >-
-    az ad app permission grant --api
-                               --id
+    az ad app permission grant --api,
+                               --id,
+                               --scope
                                [--consent-type {AllPrincipals, Principal}]
-                               [--expires]
                                [--principal-id]
-                               [--scope]
   examples:
   - summary: Grant a native application with permissions to access an existing API with TTL of 2 years
-    syntax: az ad app permission grant --id e042ec79-34cd-498f-9d9f-1234234 --api a0322f79-57df-498f-9d9f-12678 --expires 2
+    syntax: az ad app permission grant --id e042ec79-34cd-498f-9d9f-1234234 --api a0322f79-57df-498f-9d9f-12678 --scope Directory.Read.All
   requiredParameters:
   - isRequired: true
-    name: --api
-    summary: Specify `RequiredResourceAccess.resourceAppId` - The unique identifier for the resource that the application requires access to. This should be equal to the appId declared on the target resource application.
+    name: --api, --resource-id
+    summary: The id of the resource service principal to which access is authorized. This identifies the API which the client is authorized to attempt to call on behalf of a signed-in user.
     description: ''
   - isRequired: true
-    name: --id
-    summary: Identifier uri, application id, or object id.
+    name: --id, --client-id
+    summary: The id of the client service principal for the application which is authorized to act on behalf of a signed-in user when accessing an API.
+    description: ''
+  - isRequired: true
+    name: --scope
+    summary: A space-separated list of the claim values for delegated permissions which should be included in access tokens for the resource application (the API). For example, openid User.Read GroupMember.Read.All. Each claim value should match the value field of one of the delegated permissions defined by the API, listed in the oauth2PermissionScopes property of the resource service principal.
     description: ''
   optionalParameters:
   - name: --consent-type
     defaultValue: AllPrincipals
     parameterValueGroup: AllPrincipals, Principal
-    summary: Indicates if consent was provided by the administrator (on behalf of the organization) or by an individual.
-    description: ''
-  - name: --expires
-    defaultValue: "1"
-    summary: Expiry date for the permissions in years. e.g. 1, 2 or "never".
+    summary: Indicates whether authorization is granted for the client application to impersonate all users or only a specific user. 'AllPrincipals' indicates authorization to impersonate all users. 'Principal' indicates authorization to impersonate a specific user. Consent on behalf of all users can be granted by an administrator. Non-admin users may be authorized to consent on behalf of themselves in some cases, for some delegated permissions.
     description: ''
   - name: --principal-id
-    summary: If --consent-type is "Principal", this argument specifies the object of the user that granted consent and applies only for that user.
-    description: ''
-  - name: --scope
-    defaultValue: user_impersonation
-    summary: Specifies the value of the scope claim that the resource application should expect in the OAuth 2.0 access token, e.g. User.Read.
+    summary: The id of the user on behalf of whom the client is authorized to access the resource, when consentType is 'Principal'. If consentType is 'AllPrincipals' this value is null. Required when consentType is 'Principal'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/role/_help.py
 - uid: az_ad_app_permission_list
@@ -180,9 +172,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/17/2022
+  ms.date: 05/16/2022
   description: Manage an application's OAuth2 permissions.

@@ -8,65 +8,21 @@ extensionInformation: >-
 summary: Manage Azure ML data assets.
 description: Azure ML data assets are references to file(s) in your storage services or public URLs along with any corresponding metadata. They are not copies of your data. You can use these data assets to access relevant data during model training and mount or download the referenced data to your compute target.
 directCommands:
-- uid: az_ml_data_create
-  name: az ml data create
-  summary: Create a data asset.
-  description: >-
-    Data assets can be defined from files on your local machine or as references to files in cloud storage. The created data asset will be tracked in the workspace under the specified name and version.
-
-
-    To create a data asset from file(s) on your local machine, specify the 'local_path' field in your YAML config. Azure ML will upload these file(s) to the blob container that backs the workspace's default datastore (named 'workspaceblobstore'). The created data asset will then point to that uploaded data.
-
-
-    To create a data asset that references file(s) in cloud storage, specify the 'datastore' that corresponds to the storage service and the 'path' to the file(s) in storage in your YAML config.
-
-
-    You can also create a data asset directly from a storage URL or public URL. To do so, specify the URL to the 'path' field in your YAML config.
+- uid: az_ml_data_archive
+  name: az ml data archive
+  summary: Archive a data asset.
+  description: Archiving an data asset will hide it by default from list queries (`az ml data list`). You can still continue to reference and use an archived data asset in your workflows. You can archive either an data asset container or a specific data asset version. Archiving an data asset container will archive all versions of the data asset under that given name. You can restore an archived data asset using `az ml data restore`. If the entire data asset container is archived, you cannot restore individual versions of the data asset - you will need to restore the data asset container.
   syntax: >-
-    az ml data create --resource-group
-                      --workspace-name
-                      [--datastore-name]
-                      [--file]
-                      [--name]
-                      [--set]
-                      [--version]
+    az ml data archive --name
+                       --resource-group
+                       --workspace-name
+                       [--label]
+                       [--version]
   examples:
-  - summary: Create a data asset from a YAML specification file
-    syntax: az ml data create --file data.yml --resource-group my-resource-group --workspace-name my-workspace
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
-  optionalParameters:
-  - name: --datastore-name -z
-    summary: Name of the datastore to upload the data to.
-    description: ''
-  - name: --file -f
-    summary: Local path to the YAML file containing the Azure ML data specification.
-    description: ''
-  - name: --name -n
-    summary: Name of the data asset.
-    description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --version -v
-    summary: Version of the data asset.
-    description: ''
-- uid: az_ml_data_delete
-  name: az ml data delete
-  summary: Delete a data asset.
-  description: ''
-  syntax: >-
-    az ml data delete --name
-                      --resource-group
-                      --version
-                      --workspace-name
+  - summary: Archive an data asset container (archives all versions of that data asset)
+    syntax: az ml data archive --name my-env --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Archive a specific data asset version
+    syntax: az ml data archive --name my-env --version 1 --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -77,12 +33,80 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --version -v
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --label -l
+    summary: Label of the data asset.
+    description: ''
+  - name: --version -v
     summary: Version of the data asset.
+    description: ''
+- uid: az_ml_data_create
+  name: az ml data create
+  summary: Create a data asset.
+  description: >-
+    Data assets can be defined from files on your local machine or as references to files in cloud storage. The created data asset will be tracked in the workspace under the specified name and version.
+
+
+    To create a data asset from file(s) on your local machine, specify the 'path' field in your YAML config. Azure ML will upload these file(s) to the blob container that backs the workspace's default datastore (named 'workspaceblobstore'). The created data asset will then point to that uploaded data.
+
+
+    To create a data asset that references file(s) in cloud storage, specify the 'path' to the file(s) in storage in your YAML config.
+
+
+    You can also create a data asset directly from a storage URL or public URL. To do so, specify the URL to the 'path' field in your YAML config.
+  syntax: >-
+    az ml data create --resource-group
+                      --workspace-name
+                      [--description]
+                      [--file]
+                      [--name]
+                      [--path]
+                      [--set]
+                      [--skip-validation]
+                      [--type {mltable, uri_file, uri_folder}]
+                      [--version]
+  examples:
+  - summary: Create a data asset from a YAML specification file
+    syntax: az ml data create --file data.yml --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create a data asset without using a YAML specification file
+    syntax: az ml data create --name my-data --version 1 --path ./my-data.csv --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --description -d
+    summary: Description of the data asset.
+    description: ''
+  - name: --file -f
+    summary: 'Local path to the YAML file containing the Azure ML data specification. The YAML reference docs for data can be found at: https://aka.ms/ml-cli-v2-data-yaml-reference.'
+    description: ''
+  - name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - name: --path -p
+    summary: Path to the data asset, can be local or remote.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --skip-validation
+    summary: Skip validation of MLTable metadata when type is MLTable.
+    description: ''
+  - name: --type -t
+    parameterValueGroup: mltable, uri_file, uri_folder
+    summary: Type of the data asset.
+    description: ''
+  - name: --version -v
+    summary: Version of the data asset.
     description: ''
 - uid: az_ml_data_list
   name: az ml data list
@@ -91,6 +115,8 @@ directCommands:
   syntax: >-
     az ml data list --resource-group
                     --workspace-name
+                    [--archived-only]
+                    [--include-archived]
                     [--max-results]
                     [--name]
   examples:
@@ -110,11 +136,52 @@ directCommands:
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
+  - name: --archived-only
+    summary: List archived data assets only.
+    description: ''
+  - name: --include-archived
+    summary: List archived data assets and active data assets.
+    description: ''
   - name: --max-results -r
     summary: Max number of results to return.
     description: ''
   - name: --name -n
     summary: Name of the data asset. If provided, all the data versions under this name will be returned.
+    description: ''
+- uid: az_ml_data_restore
+  name: az ml data restore
+  summary: Restore an archived data asset.
+  description: When an archived data asset is restored, it will no longer be hidden from list queries (`az ml data list`). If an entire data asset container is archived, you can restore that archived container. This will restore all versions of the data asset under that given name. You cannot restore only a specific data asset version if the entire data asset container is archived - you will need to restore the entire container. If only an individual data asset version was archived, you can restore that specific version.
+  syntax: >-
+    az ml data restore --name
+                       --resource-group
+                       --workspace-name
+                       [--label]
+                       [--version]
+  examples:
+  - summary: Restore an archived data asset container (restores all versions of that data asset)
+    syntax: az ml data restore --name my-env --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Restore a specific archived data asset version
+    syntax: az ml data restore --name my-env --version 1 --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --label -l
+    summary: Label of the data asset.
+    description: ''
+  - name: --version -v
+    summary: Version of the data asset.
     description: ''
 - uid: az_ml_data_show
   name: az ml data show
@@ -123,11 +190,46 @@ directCommands:
   syntax: >-
     az ml data show --name
                     --resource-group
-                    --version
                     --workspace-name
+                    [--label]
+                    [--version]
   examples:
   - summary: Show details for a data asset with the specified name and version
     syntax: az ml data show --name my-data --version 1 --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --label -l
+    summary: Label of the data asset.
+    description: ''
+  - name: --version -v
+    summary: Version of the data asset.
+    description: ''
+- uid: az_ml_data_update
+  name: az ml data update
+  summary: Update a data asset.
+  description: Only the 'description' and 'tags' properties can be updated.
+  syntax: >-
+    az ml data update --name
+                      --resource-group
+                      --version
+                      --workspace-name
+                      [--add]
+                      [--force-string]
+                      [--label]
+                      [--remove]
+                      [--set]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -145,28 +247,6 @@ directCommands:
     name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
-- uid: az_ml_data_update
-  name: az ml data update
-  summary: Update a data asset.
-  description: Only the 'description' and 'tags' properties can be updated.
-  syntax: >-
-    az ml data update --resource-group
-                      --workspace-name
-                      [--add]
-                      [--force-string]
-                      [--name]
-                      [--remove]
-                      [--set]
-                      [--version]
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -174,8 +254,8 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
-  - name: --name -n
-    summary: Name of the data asset.
+  - name: --label -l
+    summary: Label of the data asset.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -183,13 +263,11 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
-  - name: --version -v
-    summary: Version of the data asset.
-    description: ''
 commands:
+- az_ml_data_archive
 - az_ml_data_create
-- az_ml_data_delete
 - az_ml_data_list
+- az_ml_data_restore
 - az_ml_data_show
 - az_ml_data_update
 globalParameters:
@@ -205,6 +283,8 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:

@@ -10,7 +10,7 @@ ms.custom: devx-track-azurecli
 ## Overview
 
 For Linux distributions with `dnf` such as RHEL, Fedora, or CentOS, there's a package
-for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24 and higher, CentOS 7 and CentOS 8.
+for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24 and higher, CentOS 7 and CentOS Stream 8.
 
 [!INCLUDE [current-version](current-version.md)]
 
@@ -28,7 +28,13 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
    ```
 
-2. Create local `azure-cli` repository information.
+2. For RHEL 8 or CentOS Stream 8, add `packages-microsoft-com-prod` repository:
+
+   ```bash
+   sudo dnf install -y https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm
+   ```
+
+   For RHEL 7 or CentOS 7, add `azure-cli` repository:
 
    ```bash
    echo -e "[azure-cli]
@@ -47,7 +53,7 @@ for the Azure CLI. This package has been tested with RHEL 7.7, RHEL 8, Fedora 24
 
 ## Install specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](/cli/azure/release-notes-azure-cli).
+You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
 1. To view available versions with command:
 

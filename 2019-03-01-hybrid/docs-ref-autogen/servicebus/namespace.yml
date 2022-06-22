@@ -18,8 +18,8 @@ directCommands:
                                    [--mi-system-assigned {false, true}]
                                    [--mi-user-assigned]
                                    [--sku {Basic, Premium, Standard}]
-                                   [--subscription]
                                    [--tags]
+                                   [--zone-redundant {false, true}]
   examples:
   - summary: Create a Service Bus Namespace.
     syntax: az servicebus namespace create --resource-group myresourcegroup --name mynamespace --location westus --tags tag1=value1 tag2=value2 --sku Standard
@@ -60,11 +60,12 @@ directCommands:
     parameterValueGroup: Basic, Premium, Standard
     summary: Namespace SKU.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --zone-redundant
+    parameterValueGroup: false, true
+    summary: Enabling this property creates a ServiceBus Zone Redundant Namespace in regions supported availability zones.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_namespace_delete
@@ -75,7 +76,6 @@ directCommands:
     az servicebus namespace delete [--ids]
                                    [--name]
                                    [--resource-group]
-                                   [--subscription]
   examples:
   - summary: Deletes the Service Bus Namespace
     syntax: az servicebus namespace delete --resource-group myresourcegroup --name mynamespace
@@ -89,17 +89,12 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_namespace_exists
   name: az servicebus namespace exists
   summary: Check for the availability of the given name for the Namespace.
   description: ''
-  syntax: >-
-    az servicebus namespace exists --name
-                                   [--subscription]
+  syntax: az servicebus namespace exists --name
   examples:
   - summary: check for the availability of mynamespace for the Namespace
     syntax: az servicebus namespace exists --name mynamespace
@@ -108,18 +103,12 @@ directCommands:
     name: --name -n
     summary: Namespace name. Name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number.
     description: ''
-  optionalParameters:
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_namespace_list
   name: az servicebus namespace list
   summary: List the Service Bus Namespaces.
   description: ''
-  syntax: >-
-    az servicebus namespace list [--resource-group]
-                                 [--subscription]
+  syntax: az servicebus namespace list [--resource-group]
   examples:
   - summary: Get the Service Bus Namespaces by resource group
     syntax: az servicebus namespace list --resource-group myresourcegroup
@@ -128,9 +117,6 @@ directCommands:
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_namespace_show
@@ -141,7 +127,6 @@ directCommands:
     az servicebus namespace show [--ids]
                                  [--name]
                                  [--resource-group]
-                                 [--subscription]
   examples:
   - summary: shows the Namespace details.
     syntax: az servicebus namespace show --resource-group myresourcegroup --name mynamespace
@@ -154,9 +139,6 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_namespace_update
@@ -174,7 +156,6 @@ directCommands:
                                    [--resource-group]
                                    [--set]
                                    [--sku {Basic, Premium, Standard}]
-                                   [--subscription]
                                    [--tags]
   examples:
   - summary: Updates a Service Bus Namespace.
@@ -214,9 +195,6 @@ directCommands:
     parameterValueGroup: Basic, Premium, Standard
     summary: Namespace SKU.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -245,6 +223,14 @@ commands:
 - az_servicebus_namespace_network-rule_add
 - az_servicebus_namespace_network-rule_list
 - az_servicebus_namespace_network-rule_remove
+- az_servicebus_namespace_private-endpoint-connection
+- az_servicebus_namespace_private-endpoint-connection_approve
+- az_servicebus_namespace_private-endpoint-connection_delete
+- az_servicebus_namespace_private-endpoint-connection_list
+- az_servicebus_namespace_private-endpoint-connection_reject
+- az_servicebus_namespace_private-endpoint-connection_show
+- az_servicebus_namespace_private-link-resource
+- az_servicebus_namespace_private-link-resource_show
 - az_servicebus_namespace_show
 - az_servicebus_namespace_update
 globalParameters:
@@ -260,9 +246,11 @@ globalParameters:
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/23/2022
+  ms.date: 05/17/2022
   description: Manage Azure Service Bus Namespace.
