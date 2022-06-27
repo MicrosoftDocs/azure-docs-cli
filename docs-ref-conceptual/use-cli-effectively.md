@@ -146,7 +146,7 @@ To avoid unanticipated results, here are a few suggestions:
        `--parameterName firstValue secondValue`
     1. Quoted space-separated list
        `--parameterName "firstValue" "secondValue"`
-    
+
     This example is a string with a space in it.  It is not a space-separated list:
        `--parameterName "firstValue secondValue"`
 
@@ -164,7 +164,7 @@ To avoid unanticipated results, here are a few suggestions:
 
 - When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
-### [Bash](#tab/bash)
+  ### [Bash](#tab/bash)
 
   These three commands are correct and equivalent in Bash:
 
@@ -186,7 +186,7 @@ To avoid unanticipated results, here are a few suggestions:
   az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
   ```
 
-### [PowerShell](#tab/powershell)
+  ### [PowerShell](#tab/powershell)
 
   These five commands will work correctly in PowerShell:
 
@@ -198,7 +198,7 @@ To avoid unanticipated results, here are a few suggestions:
   az --% version --query \"azure-cli\"
   ```
 
-### [Cmd](#tab/cmd)
+  ### [Cmd](#tab/cmd)
 
   These two commands will work correctly in Windows Command Prompt:
 
@@ -207,7 +207,7 @@ To avoid unanticipated results, here are a few suggestions:
   az version --query \"azure-cli\"
   ```
   
----
+  ---
   
   For more example comparisons of Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
 
