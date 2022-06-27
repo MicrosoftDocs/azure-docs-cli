@@ -347,4 +347,8 @@ $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?power
 az vm stop --ids $vm_ids # CLI stops all VMs in parallel
 ```
 
+### [Cmd](#tab/cmd)
+
+Say something here.
+
 ---
