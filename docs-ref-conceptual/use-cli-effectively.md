@@ -347,6 +347,10 @@ $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?power
 az vm stop --ids $vm_ids # CLI stops all VMs in parallel
 ```
 
+### [Cmd](#tab/cmd)
+
+Say something here.
+
 ---
 
 Use these scripts to loop through a list:
@@ -373,6 +377,10 @@ foreach ($vm_id in $vm_ids) {
     az vm stop --ids $vm_id
 }
 ```
+
+### [Cmd](#tab/cmd)
+
+Say something here
 
 ---
 
