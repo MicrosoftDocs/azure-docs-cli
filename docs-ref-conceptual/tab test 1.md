@@ -322,3 +322,29 @@ az rest --method PATCH \
 ```
 
 When using `--uri-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
+
+## Scripts
+
+Use these scripts to save IDs to variables:
+
+### [Bash](#tab/bash)
+
+```console
+ECHO OFF
+SETLOCAL
+FOR /F "tokens=* USEBACKQ" %%F IN (
+   `az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv`
+) DO (
+    SET "vm_ids=%%F %vm_ids%"  :: construct the id list
+)
+az vm stop --ids %vm_ids% :: CLI stops all VMs in parallel
+```
+
+### [PowerShell](#tab/powershell)
+
+```powershell
+$vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
+az vm stop --ids $vm_ids # CLI stops all VMs in parallel
+```
+
+---
