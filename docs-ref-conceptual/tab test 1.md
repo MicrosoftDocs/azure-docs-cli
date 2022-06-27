@@ -277,3 +277,48 @@ Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PR
 ## Concurrent builds
 
 If you run Azure CLI on a build machine where multiple jobs can be run in parallel, access tokens might be shared between two build jobs run as the same OS user.  To avoid mix ups, set `AZURE_CONFIG_DIR` to a directory where the access tokens are stored.
+
+## Generic update parameters
+
+Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az-vm-update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
+
+The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az-vm-show).
+
+```azurecli
+az vm show --resource-group VMResources --name virtual-machine-01
+```
+
+To simplify the command, consider using a JSON string. For example, to attach a new data disk to a virtual machine, use the following value:
+
+```azurecli
+az vm update --resource-group VMResources --name virtual-machine-01 \
+--add storageProfile.dataDisks "{\"createOption\": \"Attach\", \"managedDisk\":
+   {\"id\":
+   \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yg/providers/Microsoft.Compute/disks/yg-disk\"}, 
+   \"lun\": 1}"
+```
+
+## Generic resource commands (az resource)
+
+A service you want to work with may not have Azure CLI support. You can use the [az resource](../latest/docs-ref-autogen/resource.yml) commands to work with these resources.
+
+If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az-deployment-group-create). For working examples, see [Azure Quickstart Templates](https://azure.microsoft.com/resources/templates/).
+
+## REST API commands (az rest)
+
+If generic update parameters and [az resource](../latest/docs-ref-autogen/resource.yml) don't meet your needs, you can use the [az rest](/cli/azure/reference-index#az-rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
+
+This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
+
+```azurecli
+# Get the application
+az rest --method GET \
+    --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001'
+
+# Update `redirectUris` for `web` property
+az rest --method PATCH \
+    --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001' \
+    --body '{"web":{"redirectUris":["https://myapp.com"]}}'
+```
+
+When using `--uri-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
