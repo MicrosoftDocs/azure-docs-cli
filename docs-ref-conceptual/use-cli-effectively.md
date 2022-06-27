@@ -327,7 +327,7 @@ When using `--uri-parameters` for requests in the form of OData, please make sur
 
 Use these scripts to save IDs to variables:
 
-### [Bash](#tab/bash)
+### [Bash](#tab/bash2)
 
 ```console
 ECHO OFF
@@ -340,22 +340,18 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 az vm stop --ids %vm_ids% :: CLI stops all VMs in parallel
 ```
 
-### [PowerShell](#tab/powershell)
+### [PowerShell](#tab/powershell2)
 
 ```powershell
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
 az vm stop --ids $vm_ids # CLI stops all VMs in parallel
 ```
 
-### [Cmd](#tab/cmd)
-
-Say something here.
-
 ---
 
 Use these scripts to loop through a list:
 
-### [Bash](#tab/bash)
+### [Bash](#tab/bash2)
 
 ```console
 ECHO OFF
@@ -368,7 +364,7 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 )
 ```
 
-### [PowerShell](#tab/powershell)
+### [PowerShell](#tab/powershell2)
 
 ```powershell
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
@@ -377,10 +373,6 @@ foreach ($vm_id in $vm_ids) {
     az vm stop --ids $vm_id
 }
 ```
-
-### [Cmd](#tab/cmd)
-
-Say something here
 
 ---
 
