@@ -11,7 +11,7 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 ---
 
-# How to use Azure CLI effectively
+# Tips for using the Azure CLI successfully
 
 Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First learn how to [choose the right environment](/cli/azure/choose-the-right-azure-command-line-tool#different-shell-environments) and [install](/cli/azure/install-azure-cli) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and effectively use the Azure CLI.  [Script](#scripts) examples for Windows batch and PowerShell are provided at the end of the article.
 
@@ -162,7 +162,7 @@ To avoid unanticipated results, here are a few suggestions:
   --parameterName @parameters.json
   ```
 
-- When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
+- When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.  
 
   ### [Bash](#tab/bash)
 
@@ -186,6 +186,8 @@ To avoid unanticipated results, here are a few suggestions:
   az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
   ```
 
+  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
+
   ### [PowerShell](#tab/powershell)
 
   These five commands will work correctly in PowerShell:
@@ -198,6 +200,8 @@ To avoid unanticipated results, here are a few suggestions:
   az --% version --query \"azure-cli\"
   ```
 
+  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
+
   ### [Cmd](#tab/cmd)
 
   These two commands will work correctly in Windows Command Prompt:
@@ -207,9 +211,9 @@ To avoid unanticipated results, here are a few suggestions:
   az version --query \"azure-cli\"
   ```
   
+  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
+
   ---
-  
-  For more example comparisons of Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
 
 - The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag.  This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
 
@@ -384,7 +388,7 @@ foreach ($vm_id in $vm_ids) {
 
 ---
 
-For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
+For more examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
 
 ## Error handling for Azure CLI in PowerShell
 
