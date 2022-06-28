@@ -1,6 +1,6 @@
 ---
-title: Use Azure CLI effectively | Microsoft Docs
-description: Learn tips for using Azure CLI effectively, such as output formats, passing parameter values, and quoting rules for different shells.
+title: Tips for using the Azure CLI successfully | Microsoft Docs
+description: Learn tips for using Azure CLI successfully, such as output formats, passing parameter values, and quoting rules for different shells.
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
@@ -335,7 +335,9 @@ az rest --method PATCH \
 
 When using `--uri-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
 
-## Scripts
+## Script examples
+
+Here are examples for using variables and looping through a list when working with Azure Virtual Machines.  For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).  
 
 Use these scripts to save IDs to variables:
 
@@ -387,8 +389,6 @@ foreach ($vm_id in $vm_ids) {
 ```
 
 ---
-
-For more examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
 
 ## Error handling for Azure CLI in PowerShell
 
