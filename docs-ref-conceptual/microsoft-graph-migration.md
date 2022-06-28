@@ -24,7 +24,7 @@ For example, the most outstanding change is that the `objectId` property in the 
 
 Command argument and behavior breaking changes are listed below.
 
-### `az ad app create`
+### `az ad app create/update`
 
 - Split `--reply-urls` into `--web-redirect-uris` and `--public-client-redirect-uris`
 - Replace `--homepage` with `--web-home-page-url`
