@@ -261,7 +261,7 @@ After both IDs are created, you can use the console again.
 
 ## Work behind a proxy
 
-If you're using Azure CLI over a proxy server, it may cause the following error: `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. To address this error, set the environment variable `REQUESTS_CA_BUNDLE` to the path of certificate authority bundle certificate file in PEM format.
+If you're using Azure CLI over a proxy server that uses self-signed certificates, the Python [requests library](https://github.com/kennethreitz/requests) used by the Azure CLI may cause the following error: `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. To address this error, set the environment variable `REQUESTS_CA_BUNDLE` to the path of CA bundle certificate file in PEM format.
 
 | OS                     | Default certificate authority bundle                                                  |
 |----------------------- |-------------------------------------------------------------------------------------- |
@@ -270,7 +270,15 @@ If you're using Azure CLI over a proxy server, it may cause the following error:
 | CentOS/RHEL/SUSE Linux | /usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem                          |
 | macOS                  | /usr/local/Cellar/azure-cli/\<cliversion\>/libexec/lib/python<version>/site-packages/certifi/cacert.pem|
 
-Append the proxy server's certificate to this file or copy the contents to another certificate file, then set `REQUESTS_CA_BUNDLE` to it. You might also need to set the `HTTP_PROXY` or `HTTPS_PROXY` environment variables.
+Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file.  Then set `REQUESTS_CA_BUNDLE` to the new file location.  Here is an example:
+
+    ```console
+    <Original cacert.pem>
+
+    -----BEGIN CERTIFICATE-----
+    <Your proxy's certificate here>
+    -----END CERTIFICATE-----
+    ```
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
 
@@ -376,7 +384,7 @@ foreach ($vm_id in $vm_ids) {
 
 ---
 
-For more script examples for Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md).
+For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
 
 ## Error handling for Azure CLI in PowerShell
 
