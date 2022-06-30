@@ -4,8 +4,8 @@ name: az iot device
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.24.1 or higher).  The extension will automatically install the first time you run an **az iot device** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Leverage device-to-cloud and cloud-to-device messaging capabilities.
+  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.30.0 or higher).  The extension will automatically install the first time you run an **az iot device** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Leverage device simulation and other device-centric operations such as device-to-cloud or cloud-to-device messaging capabilities.
 description: ''
 directCommands:
 - uid: az_iot_device_send-d2c-message
@@ -15,20 +15,27 @@ directCommands:
 
     The command supports sending messages with application and system properties.
 
-
-    Note: The command only works for symmetric key auth (SAS) based devices.
+    Note: If using x509 authentication methods, the certificate and key files (and passphrase if needed) must be provided.
   description: ''
   syntax: >-
     az iot device send-d2c-message --device-id
+                                   [--certificate-file-path]
                                    [--da]
                                    [--hub-name]
+                                   [--key]
+                                   [--key-file-path]
                                    [--login]
                                    [--mc]
+                                   [--pass]
                                    [--properties]
                                    [--resource-group]
   examples:
   - summary: Basic usage
     syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id}
+  - summary: Basic usage for device with x509 authentication
+    syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --cp {certificate_file_path} --kp {key_file_path}
+  - summary: Basic usage for device with x509 authentication in which the key file has a passphrase
+    syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --cp {certificate_file_path} --kp {key_file_path} --pass {passphrase}
   - summary: Basic usage with custom data
     syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --data {message_body}
   - summary: Send application properties
@@ -41,6 +48,9 @@ directCommands:
     summary: Target Device.
     description: ''
   optionalParameters:
+  - name: --certificate-file-path --cp
+    summary: Path to certificate file.
+    description: ''
   - name: --da --data
     defaultValue: Ping from Az CLI IoT Extension
     summary: Message body.
@@ -48,12 +58,21 @@ directCommands:
   - name: --hub-name -n
     summary: IoT Hub name. Required if --login is not provided.
     description: ''
+  - name: --key --symmetric-key
+    summary: Symmetric key to use for the device. If the symmetric key and other device authentication arguments are provided, symmetric key takes priority.
+    description: ''
+  - name: --key-file-path --kp
+    summary: Path to key file.
+    description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
     description: ''
   - name: --mc --msg-count
     defaultValue: "1"
     summary: Number of device messages to send to IoT Hub.
+    description: ''
+  - name: --pass --passphrase
+    summary: Passphrase for key file.
     description: ''
   - name: --properties --props -p
     summary: 'Message property bag in key-value pairs with the following format: a=b;c=d. For mqtt messaging - you are able to send system properties using $.<name>=value. For instance $.cid=12345 sets the system correlation Id property. Other system property identifier examples include $.ct for content type, $.mid for message Id and $.ce for content encoding.'
@@ -66,7 +85,6 @@ directCommands:
   summary: >-
     Simulate a device in an Azure IoT Hub.
 
-
     While the device simulation is running, the device will automatically receive
 
     and acknowledge cloud-to-device (c2d) messages. For mqtt simulation, all c2d messages will
@@ -77,24 +95,26 @@ directCommands:
 
     method invocation which can be acknowledged by a response status code and response payload.
 
-
-    Note: MQTT simulation is only supported for symmetric key auth (SAS) based devices.
-
-
     Note: The command by default will set content-type to application/json and content-encoding
 
     to utf-8. This can be overriden.
+
+    Note: If using x509 authentication methods, the certificate and key files (and passphrase if needed) must be provided.
   description: ''
   syntax: >-
     az iot device simulate --device-id
+                           [--certificate-file-path]
                            [--da]
                            [--hub-name]
                            [--init-reported-properties]
+                           [--key]
+                           [--key-file-path]
                            [--login]
                            [--mc]
                            [--method-response-code]
                            [--method-response-payload]
                            [--mi]
+                           [--pass]
                            [--properties]
                            [--proto {http, mqtt}]
                            [--receive-settle {abandon, complete, reject}]
@@ -102,6 +122,10 @@ directCommands:
   examples:
   - summary: Basic usage (mqtt)
     syntax: az iot device simulate -n {iothub_name} -d {device_id}
+  - summary: Basic usage for device with x509 authentication (mqtt)
+    syntax: az iot device simulate -n {iothub_name} -d {device_id} --cp {certificate_file_path} --kp {key_file_path}
+  - summary: Basic usage for device with x509 authentication (mqtt) in which the key file has a passphrase
+    syntax: az iot device simulate -n {iothub_name} -d {device_id} --cp {certificate_file_path} --kp {key_file_path} --pass {passphrase}
   - summary: Send mixed properties (mqtt)
     syntax: az iot device simulate -n {iothub_name} -d {device_id} --properties "myprop=myvalue;$.ct=application/json"
   - summary: Send direct method response status code and direct method response payload as raw json (mqtt only)
@@ -128,6 +152,9 @@ directCommands:
     summary: Target Device.
     description: ''
   optionalParameters:
+  - name: --certificate-file-path --cp
+    summary: Path to certificate file.
+    description: ''
   - name: --da --data
     defaultValue: Ping from Az CLI IoT Extension
     summary: Message body.
@@ -137,6 +164,12 @@ directCommands:
     description: ''
   - name: --init-reported-properties --irp
     summary: Initial state of twin reported properties for the target device when the simulator is run. Optional param, only supported for mqtt.
+    description: ''
+  - name: --key --symmetric-key
+    summary: Symmetric key to use for the device. If the symmetric key and other device authentication arguments are provided, symmetric key takes priority.
+    description: ''
+  - name: --key-file-path --kp
+    summary: Path to key file.
     description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
@@ -154,6 +187,9 @@ directCommands:
   - name: --mi --msg-interval
     defaultValue: "3"
     summary: Delay in seconds between device-to-cloud messages.
+    description: ''
+  - name: --pass --passphrase
+    summary: Passphrase for key file.
     description: ''
   - name: --properties --props -p
     summary: 'Message property bag in key-value pairs with the following format: a=b;c=d. For mqtt messaging - you are able to send system properties using $.<name>=value. For instance $.cid=12345 sets the system correlation Id property. Other system property identifier examples include $.ct for content type, $.mid for message Id and $.ce for content encoding.  For http messaging - application properties are sent using iothub-app-<name>=value, for instance iothub-app-myprop=myvalue. System properties are generally prefixed with iothub-<name> like iothub-correlationid but there are exceptions such as content-type and content-encoding.'
@@ -213,6 +249,8 @@ commands:
 - az_iot_device_c2d-message_receive
 - az_iot_device_c2d-message_reject
 - az_iot_device_c2d-message_send
+- az_iot_device_registration
+- az_iot_device_registration_create
 - az_iot_device_send-d2c-message
 - az_iot_device_simulate
 - az_iot_device_upload-file
@@ -234,4 +272,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Leverage device-to-cloud and cloud-to-device messaging capabilities.
+  description: Leverage device simulation and other device-centric operations such as device-to-cloud or cloud-to-device messaging capabilities.
