@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 
 # Tips for using the Azure CLI successfully
 
-Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First [choose the right environment](/cli/azure/choose-the-right-azure-command-line-tool#different-shell-environments) and [install](/cli/azure/install-azure-cli) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
+Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First [choose the right command-line tool](/cli/azure/choose-the-right-azure-command-line-tool#different-shell-environments) and [install](/cli/azure/install-azure-cli) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
 
 To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](../latest/docs-ref-autogen/reference-index.yml).
 
