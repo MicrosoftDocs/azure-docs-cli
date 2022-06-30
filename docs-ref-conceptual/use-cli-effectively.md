@@ -1,5 +1,5 @@
 ---
-title: Tips for working with the Azure CLI | Microsoft Docs
+title: Tips for using the Azure CLI | Microsoft Docs
 description: Learn tips for using Azure CLI successfully, such as output formats, passing parameter values, and quoting rules for different shells.
 author: dbradish-microsoft
 ms.author: dbradish
@@ -11,9 +11,9 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 ---
 
-# Tips for working with the Azure CLI
+# Tips for using the Azure CLI successfully
 
-Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First learn how to [choose the right environment](/cli/azure/choose-the-right-azure-command-line-tool#different-shell-environments) and [install](/cli/azure/install-azure-cli) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and effectively use the Azure CLI.  [Script examples](#script-examples) for Windows batch and PowerShell are provided at the end of the article.
+Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First [choose the right environment](/cli/azure/choose-the-right-azure-command-line-tool#different-shell-environments) and [install](/cli/azure/install-azure-cli) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
 
 To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](../latest/docs-ref-autogen/reference-index.yml).
 
