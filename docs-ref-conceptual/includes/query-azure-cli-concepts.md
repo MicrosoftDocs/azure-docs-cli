@@ -310,7 +310,7 @@ az account list --query "[?!isDefault].name"
 az account list --query "[?isDefault == ``false``].name"
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the 50 in the command above. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be taken into consideration. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the value `false` in the command above. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be taken into consideration. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
