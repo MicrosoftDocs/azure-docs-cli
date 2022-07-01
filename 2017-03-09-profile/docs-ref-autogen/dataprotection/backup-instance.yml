@@ -119,6 +119,7 @@ directCommands:
                                                  --policy-id
                                                  [--secret-store-type {AzureKeyVault}]
                                                  [--secret-store-uri]
+                                                 [--snapshot-resource-group-name]
   examples:
   - summary: Initialize backup instance request for Azure Disk
     syntax: az dataprotection backup-instance initialize --datasource-type AzureDisk -l southeastasia --policy-id {disk_policy_id} --datasource-id {disk_id}
@@ -147,6 +148,9 @@ directCommands:
     description: ''
   - name: --secret-store-uri
     summary: Specify the secret store uri to use for authentication.
+    description: ''
+  - name: --snapshot-resource-group-name --snapshot-rg
+    summary: Name of the resource group in which the backup snapshots should be stored.
     description: ''
 - uid: az_dataprotection_backup-instance_list
   name: az dataprotection backup-instance list
@@ -316,6 +320,56 @@ directCommands:
   optionalParameters:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+- uid: az_dataprotection_backup-instance_update-msi-permissions
+  name: az dataprotection backup-instance update-msi-permissions
+  summary: Assign the required permissions needed to successfully enable backup for the datasource.
+  description: ''
+  syntax: >-
+    az dataprotection backup-instance update-msi-permissions --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk}
+                                                             --operation {Backup}
+                                                             --permissions-scope {Resource, ResourceGroup, Subscription}
+                                                             --resource-group
+                                                             --vault-name
+                                                             [--backup-instance]
+                                                             [--keyvault-id]
+                                                             [--yes]
+  examples:
+  - summary: Assign the required permissions needed to successfully enable backup for the datasource.
+    syntax: az dataprotection backup-instance update-msi-permissions --backup-instance backup_inst.json --resource-group samarth_resource_group --vault-name samarthbackupvault --datasource-type AzureDisk --operation Backup --permissions-scope ResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --datasource-type
+    parameterValueGroup: AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk
+    summary: Specify the datasource type of the resource to be backed up.
+    description: ''
+  - isRequired: true
+    name: --operation
+    parameterValueGroup: Backup
+    summary: List of possible operations.
+    description: ''
+  - isRequired: true
+    name: --permissions-scope
+    parameterValueGroup: Resource, ResourceGroup, Subscription
+    summary: Scope for assigning permissions to the backup vault.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --vault-name
+    summary: Name of the vault.
+    description: ''
+  optionalParameters:
+  - name: --backup-instance
+    summary: 'Request body for operation Expected value: json-string/@json-file. Required when --operation is Backup.'
+    description: ''
+  - name: --keyvault-id
+    summary: ARM id of the key vault. Required when --datasource-type is AzureDatabaseForPostgreSQL.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_dataprotection_backup-instance_update-policy
   name: az dataprotection backup-instance update-policy
@@ -487,6 +541,7 @@ commands:
 - az_dataprotection_backup-instance_show
 - az_dataprotection_backup-instance_stop-protection
 - az_dataprotection_backup-instance_suspend-backup
+- az_dataprotection_backup-instance_update-msi-permissions
 - az_dataprotection_backup-instance_update-policy
 - az_dataprotection_backup-instance_validate-for-backup
 - az_dataprotection_backup-instance_validate-for-restore
