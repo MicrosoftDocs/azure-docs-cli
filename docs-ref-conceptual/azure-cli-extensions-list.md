@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/30/2022
+ms.date: 07/01/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -61,7 +61,7 @@ You will be prompted to install an extension on first use.
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
 |[containerapp](https://github.com/Azure/azure-cli-extensions) | 2.37.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.7](https://github.com/Azure/azure-cli-extensions) |
-|[containerapp-compose](https://github.com/azure/azure-cli-extensions/tree/main/src/containerapp-compose) | 2.15.0 | Microsoft Azure Command-Line Tools Container Apps Preview Extension | Preview | [0.1.0](https://github.com/azure/azure-cli-extensions/tree/main/src/containerapp-compose/HISTORY.rst) |
+|[containerapp-compose](https://github.com/azure/azure-cli-extensions/tree/main/src/containerapp-compose) | 2.15.0 | Microsoft Azure Command-Line Tools Container Apps Preview Extension | Preview | [0.2.0](https://github.com/azure/azure-cli-extensions/tree/main/src/containerapp-compose/HISTORY.rst) |
 |[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.17.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.3.1 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
@@ -106,7 +106,7 @@ You will be prompted to install an extension on first use.
 |[ip-group](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools IpGroup Extension | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions) |
 |[k8s-configuration](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration) | 2.15.0 | Microsoft Azure Command-Line Tools K8s-configuration Extension | GA | [1.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration/HISTORY.rst) |
 |[k8s-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension) | 2.24.0 | Microsoft Azure Command-Line Tools K8s-extension Extension | GA | [1.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension/HISTORY.rst) |
-|[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) |
+|[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration/HISTORY.rst) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
 |[log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 2.0.0 | Support for Azure Log Analytics query capabilities. | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics/HISTORY.rst) |
 |[log-analytics-solution](https://github.com/Azure/azure-cli-extensions) | 2.3.0 | Support for Azure Log Analytics Solution | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/HISTORY.rst) |
@@ -127,7 +127,7 @@ You will be prompted to install an extension on first use.
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/master/src/powerbidedicated) | 2.0.67 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/powerbidedicated/HISTORY.rst) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/master/src/providerhub) | 2.15.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/providerhub/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
-|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.23.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
+|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.23.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [0.16.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.15.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
 |[redisenterprise](https://github.com/Azure/azure-cli-extensions/tree/master/src/redisenterprise) | 2.15.0 | Microsoft Azure Command-Line Tools RedisEnterpriseManagementClient Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/redisenterprise/HISTORY.rst) |
