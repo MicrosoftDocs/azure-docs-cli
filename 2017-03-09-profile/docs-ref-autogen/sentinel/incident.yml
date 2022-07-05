@@ -4,8 +4,8 @@ name: az sentinel incident
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **sentinel** extension for the Azure CLI  (version 2.11.0 or higher).  The extension will automatically install the first time you run an **az sentinel incident** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Sentinel incident.
+  > This reference is part of the **sentinel** extension for the Azure CLI  (version 2.37.0 or higher).  The extension will automatically install the first time you run an **az sentinel incident** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage incident with sentinel.
 description: ''
 directCommands:
 - uid: az_sentinel_incident_create
@@ -25,15 +25,14 @@ directCommands:
                                 [--labels]
                                 [--last-activity-time-utc]
                                 [--owner]
+                                [--provider-incident-id]
+                                [--provider-name]
                                 [--severity {High, Informational, Low, Medium}]
                                 [--status {Active, Closed, New}]
                                 [--title]
-  examples:
-  - summary: Creates or updates an incident.
-    syntax: az sentinel incident create --etag "{etag}" --description "This is a demo incident" --classification "FalsePositive" --classification-comment "Not a malicious activity" --classification-reason "IncorrectAlertLogic" --first-activity-time-utc "2019-01-01T13:00:30Z" --last-activity-time-utc "2019-01-01T13:05:30Z" --owner object-id="{oid}" --severity "High" --status "Closed" --title "My incident" --incident-id "{id}" --resource-group "myRg" --workspace-name "myWorkspace"
   requiredParameters:
   - isRequired: true
-    name: --incident-id
+    name: --incident-id --name -n
     summary: Incident ID.
     description: ''
   - isRequired: true
@@ -41,7 +40,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --workspace-name
+    name: --workspace-name -w
     summary: The name of the workspace.
     description: ''
   optionalParameters:
@@ -66,31 +65,20 @@ directCommands:
     summary: The time of the first activity in the incident.
     description: ''
   - name: --labels
-    summary: List of labels relevant to this incident.
-    description: >-
-      Usage: --labels label-name=XX
-
-
-      label-name: Required. The name of the label
-
-
-      Multiple actions can be specified by using more than one --labels argument.
+    summary: List of labels relevant to this incident  Shorthand syntax supported. Try `??` to show more.
+    description: ''
   - name: --last-activity-time-utc
     summary: The time of the last activity in the incident.
     description: ''
   - name: --owner
-    summary: Describes a user that the incident is assigned to.
-    description: >-
-      Usage: --owner email=XX assigned-to=XX object-id=XX user-principal-name=XX
-
-
-      email: The email of the user the incident is assigned to.
-
-      assigned-to: The name of the user the incident is assigned to.
-
-      object-id: The object id of the user the incident is assigned to.
-
-      user-principal-name: The user principal name of the user the incident is assigned to.
+    summary: Describes a user that the incident is assigned to  Shorthand syntax supported. Try `??` to show more.
+    description: ''
+  - name: --provider-incident-id
+    summary: The incident ID assigned by the incident provider.
+    description: ''
+  - name: --provider-name
+    summary: The name of the source provider that generated the incident.
+    description: ''
   - name: --severity
     parameterValueGroup: High, Informational, Low, Medium
     summary: The severity of the incident.
@@ -102,18 +90,18 @@ directCommands:
   - name: --title
     summary: The title of the incident.
     description: ''
-- uid: az_sentinel_incident_delete
-  name: az sentinel incident delete
-  summary: Delete the incident.
+- uid: az_sentinel_incident_create-team
+  name: az sentinel incident create-team
+  summary: Create a Microsoft team to investigate the incident by sharing information and insights between participants.
   description: ''
   syntax: >-
-    az sentinel incident delete --incident-id
-                                --resource-group
-                                --workspace-name
-                                [--yes]
-  examples:
-  - summary: Delete an incident.
-    syntax: az sentinel incident delete --incident-id "{id}" --resource-group "myRg" --workspace-name "myWorkspace"
+    az sentinel incident create-team --incident-id
+                                     --resource-group
+                                     --team-name
+                                     --workspace-name
+                                     [--group-ids]
+                                     [--member-ids]
+                                     [--team-description]
   requiredParameters:
   - isRequired: true
     name: --incident-id
@@ -124,7 +112,43 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --workspace-name
+    name: --team-name
+    summary: The name of the team.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: The name of the workspace.
+    description: ''
+  optionalParameters:
+  - name: --group-ids
+    summary: List of group IDs to add their members to the team  Shorthand syntax supported. Try `??` to show more.
+    description: ''
+  - name: --member-ids
+    summary: List of member IDs to add to the team  Shorthand syntax supported. Try `??` to show more.
+    description: ''
+  - name: --team-description
+    summary: The description of the team.
+    description: ''
+- uid: az_sentinel_incident_delete
+  name: az sentinel incident delete
+  summary: Delete the incident.
+  description: ''
+  syntax: >-
+    az sentinel incident delete --incident-id
+                                --resource-group
+                                --workspace-name
+                                [--yes]
+  requiredParameters:
+  - isRequired: true
+    name: --incident-id --name -n
+    summary: Incident ID.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
     summary: The name of the workspace.
     description: ''
   optionalParameters:
@@ -133,7 +157,7 @@ directCommands:
     description: ''
 - uid: az_sentinel_incident_list
   name: az sentinel incident list
-  summary: Gets all incidents.
+  summary: Get all incidents.
   description: ''
   syntax: >-
     az sentinel incident list --resource-group
@@ -142,16 +166,13 @@ directCommands:
                               [--orderby]
                               [--skip-token]
                               [--top]
-  examples:
-  - summary: Get all incidents.
-    syntax: az sentinel incident list --orderby "properties/createdTimeUtc desc" --top 1 --resource-group "myRg" --workspace-name "myWorkspace"
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --workspace-name
+    name: --workspace-name -w
     summary: The name of the workspace.
     description: ''
   optionalParameters:
@@ -167,17 +188,14 @@ directCommands:
   - name: --top
     summary: Returns only the first n results. Optional.
     description: ''
-- uid: az_sentinel_incident_show
-  name: az sentinel incident show
-  summary: Gets an incident.
+- uid: az_sentinel_incident_list-alert
+  name: az sentinel incident list-alert
+  summary: Get all incident alerts.
   description: ''
   syntax: >-
-    az sentinel incident show --incident-id
-                              --resource-group
-                              --workspace-name
-  examples:
-  - summary: Get an incident.
-    syntax: az sentinel incident show --incident-id "{id}" --resource-group "myRg" --workspace-name "myWorkspace"
+    az sentinel incident list-alert --incident-id
+                                    --resource-group
+                                    --workspace-name
   requiredParameters:
   - isRequired: true
     name: --incident-id
@@ -188,7 +206,100 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --workspace-name
+    name: --workspace-name -w
+    summary: The name of the workspace.
+    description: ''
+- uid: az_sentinel_incident_list-bookmark
+  name: az sentinel incident list-bookmark
+  summary: Get all incident bookmarks.
+  description: ''
+  syntax: >-
+    az sentinel incident list-bookmark --incident-id
+                                       --resource-group
+                                       --workspace-name
+  requiredParameters:
+  - isRequired: true
+    name: --incident-id
+    summary: Incident ID.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: The name of the workspace.
+    description: ''
+- uid: az_sentinel_incident_list-entity
+  name: az sentinel incident list-entity
+  summary: Get all incident related entities.
+  description: ''
+  syntax: >-
+    az sentinel incident list-entity --incident-id
+                                     --resource-group
+                                     --workspace-name
+  requiredParameters:
+  - isRequired: true
+    name: --incident-id
+    summary: Incident ID.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: The name of the workspace.
+    description: ''
+- uid: az_sentinel_incident_run-playbook
+  name: az sentinel incident run-playbook
+  summary: Trigger playbook on a specific incident.
+  description: ''
+  syntax: >-
+    az sentinel incident run-playbook --incident-identifier
+                                      --resource-group
+                                      --workspace-name
+                                      [--logic-apps-resource-id]
+                                      [--tenant-id]
+  requiredParameters:
+  - isRequired: true
+    name: --incident-identifier
+    summary: Identifier of incident.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: The name of the workspace.
+    description: ''
+  optionalParameters:
+  - name: --logic-apps-resource-id
+    summary: Resource ID of logic apps.
+    description: ''
+  - name: --tenant-id
+    summary: ID of tenant.
+    description: ''
+- uid: az_sentinel_incident_show
+  name: az sentinel incident show
+  summary: Get an incident.
+  description: ''
+  syntax: >-
+    az sentinel incident show --incident-id
+                              --resource-group
+                              --workspace-name
+  requiredParameters:
+  - isRequired: true
+    name: --incident-id --name -n
+    summary: Incident ID.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
     summary: The name of the workspace.
     description: ''
 - uid: az_sentinel_incident_update
@@ -208,12 +319,14 @@ directCommands:
                                 [--labels]
                                 [--last-activity-time-utc]
                                 [--owner]
+                                [--provider-incident-id]
+                                [--provider-name]
                                 [--severity {High, Informational, Low, Medium}]
                                 [--status {Active, Closed, New}]
                                 [--title]
   requiredParameters:
   - isRequired: true
-    name: --incident-id
+    name: --incident-id --name -n
     summary: Incident ID.
     description: ''
   - isRequired: true
@@ -221,7 +334,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --workspace-name
+    name: --workspace-name -w
     summary: The name of the workspace.
     description: ''
   optionalParameters:
@@ -246,31 +359,20 @@ directCommands:
     summary: The time of the first activity in the incident.
     description: ''
   - name: --labels
-    summary: List of labels relevant to this incident.
-    description: >-
-      Usage: --labels label-name=XX
-
-
-      label-name: Required. The name of the label
-
-
-      Multiple actions can be specified by using more than one --labels argument.
+    summary: List of labels relevant to this incident  Shorthand syntax supported. Try `??` to show more.
+    description: ''
   - name: --last-activity-time-utc
     summary: The time of the last activity in the incident.
     description: ''
   - name: --owner
-    summary: Describes a user that the incident is assigned to.
-    description: >-
-      Usage: --owner email=XX assigned-to=XX object-id=XX user-principal-name=XX
-
-
-      email: The email of the user the incident is assigned to.
-
-      assigned-to: The name of the user the incident is assigned to.
-
-      object-id: The object id of the user the incident is assigned to.
-
-      user-principal-name: The user principal name of the user the incident is assigned to.
+    summary: Describes a user that the incident is assigned to  Shorthand syntax supported. Try `??` to show more.
+    description: ''
+  - name: --provider-incident-id
+    summary: The incident ID assigned by the incident provider.
+    description: ''
+  - name: --provider-name
+    summary: The name of the source provider that generated the incident.
+    description: ''
   - name: --severity
     parameterValueGroup: High, Informational, Low, Medium
     summary: The severity of the incident.
@@ -283,9 +385,26 @@ directCommands:
     summary: The title of the incident.
     description: ''
 commands:
+- az_sentinel_incident_comment
+- az_sentinel_incident_comment_create
+- az_sentinel_incident_comment_delete
+- az_sentinel_incident_comment_list
+- az_sentinel_incident_comment_show
+- az_sentinel_incident_comment_update
 - az_sentinel_incident_create
+- az_sentinel_incident_create-team
 - az_sentinel_incident_delete
 - az_sentinel_incident_list
+- az_sentinel_incident_list-alert
+- az_sentinel_incident_list-bookmark
+- az_sentinel_incident_list-entity
+- az_sentinel_incident_relation
+- az_sentinel_incident_relation_create
+- az_sentinel_incident_relation_delete
+- az_sentinel_incident_relation_list
+- az_sentinel_incident_relation_show
+- az_sentinel_incident_relation_update
+- az_sentinel_incident_run-playbook
 - az_sentinel_incident_show
 - az_sentinel_incident_update
 globalParameters:
@@ -306,4 +425,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Sentinel incident.
+  description: Manage incident with sentinel.
