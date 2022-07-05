@@ -13,14 +13,25 @@ directCommands:
                                   --name
                                   --resource-group
                                   [--auto-rotation {false, true}]
-                                  [--encryption-type {EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}]
+                                  [--encryption-type {ConfidentialVmEncryptedWithCustomerKey, EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}]
+                                  [--federated-client-id]
                                   [--location]
+                                  [--mi-system-assigned {false, true}]
+                                  [--mi-user-assigned]
                                   [--no-wait]
                                   [--source-vault]
                                   [--tags]
   examples:
   - summary: Create a disk encryption set.
     syntax: az disk-encryption-set create --resource-group MyResourceGroup --name MyDiskEncryptionSet --key-url MyKey --source-vault MyVault
+  - summary: Create a disk encryption set with a system assigned identity.
+    syntax: az disk-encryption-set create --resource-group MyResourceGroup --name MyDiskEncryptionSet --key-url MyKey --source-vault MyVault --mi-system-assigned
+  - summary: Create a disk encryption set with a user assigned identity.
+    syntax: az disk-encryption-set create --resource-group MyResourceGroup --name MyDiskEncryptionSet --key-url MyKey --source-vault MyVault --mi-user-assigned myAssignedId
+  - summary: Create a disk encryption set with system assigned identity and a user assigned identity.
+    syntax: az disk-encryption-set create --resource-group MyResourceGroup --name MyDiskEncryptionSet --key-url MyKey --source-vault MyVault --mi-system-assigned --mi-user-assigned myAssignedId
+  - summary: Create a disk encryption set with multi-tenant application client id to access key vault in a different tenant.
+    syntax: az disk-encryption-set create --resource-group MyResourceGroup --name MyDiskEncryptionSet --key-url MyKey --source-vault MyVault --federated-client-id myFederatedClientId
   - summary: Create a disk encryption set that supports double encryption.
     syntax: az disk-encryption-set create --resource-group MyResourceGroup --name MyDiskEncryptionSet --key-url MyKey --source-vault MyVault --encryption-type EncryptionAtRestWithPlatformAndCustomerKeys
   requiredParameters:
@@ -42,11 +53,21 @@ directCommands:
     summary: Enable automatic rotation of keys.
     description: ''
   - name: --encryption-type
-    parameterValueGroup: EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey
-    summary: 'The type of key used to encrypt the data of the disk. EncryptionAtRestWithPlatformKey: Disk is encrypted at rest with Platform managed key. It is the default encryption type. EncryptionAtRestWithCustomerKey: Disk is encrypted at rest with Customer managed key that can be changed and revoked by a customer. EncryptionAtRestWithPlatformAndCustomerKeys: Disk is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed.'
+    parameterValueGroup: ConfidentialVmEncryptedWithCustomerKey, EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey
+    summary: 'The type of key used to encrypt the data of the disk. EncryptionAtRestWithPlatformKey: Disk is encrypted at rest with Platform managed key. It is the default encryption type. EncryptionAtRestWithCustomerKey: Disk is encrypted at rest with Customer managed key that can be changed and revoked by a customer. EncryptionAtRestWithPlatformAndCustomerKeys: Disk is encrypted at rest with 2 layers of encryption. One of the keys is Customer managed and the other key is Platform managed. ConfidentialVmEncryptedWithCustomerKey: An additional encryption type accepted for confidential VM. Disk is encrypted at rest with Customer managed key.'
+    description: ''
+  - name: --federated-client-id
+    summary: The federated client id used in cross tenant scenario.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --mi-system-assigned
+    parameterValueGroup: false, true
+    summary: Provide this flag to use system assigned identity. Check out help for more examples.
+    description: ''
+  - name: --mi-user-assigned
+    summary: User Assigned Identity ids to be used for disk encryption set. Check out help for more examples.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -133,6 +154,7 @@ directCommands:
   syntax: >-
     az disk-encryption-set update [--add]
                                   [--auto-rotation {false, true}]
+                                  [--federated-client-id]
                                   [--force-string]
                                   [--ids]
                                   [--key-url]
@@ -144,6 +166,10 @@ directCommands:
   examples:
   - summary: Update a disk encryption set. (autogenerated)
     syntax: az disk-encryption-set update --name MyDiskEncryptionSet --resource-group MyResourceGroup --key-url MyKey --source-vault MyVault
+  - summary: Update multi-tenant application client id of a disk encryption set.
+    syntax: az disk-encryption-set update --name MyDiskEncryptionSet --resource-group MyResourceGroup --key-url MyKey --source-vault MyVault --federated-client-id myFederatedClientId
+  - summary: Clear multi-tenant application client id of a disk encryption set.
+    syntax: az disk-encryption-set update --name MyDiskEncryptionSet --resource-group MyResourceGroup --key-url MyKey --source-vault MyVault --federated-client-id None
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -151,6 +177,9 @@ directCommands:
   - name: --auto-rotation --enable-auto-key-rotation
     parameterValueGroup: false, true
     summary: Enable automatic rotation of keys.
+    description: ''
+  - name: --federated-client-id
+    summary: The federated client id used in cross tenant scenario.
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
@@ -179,6 +208,10 @@ directCommands:
 commands:
 - az_disk-encryption-set_create
 - az_disk-encryption-set_delete
+- az_disk-encryption-set_identity
+- az_disk-encryption-set_identity_assign
+- az_disk-encryption-set_identity_remove
+- az_disk-encryption-set_identity_show
 - az_disk-encryption-set_list
 - az_disk-encryption-set_list-associated-resources
 - az_disk-encryption-set_show

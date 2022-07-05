@@ -6,7 +6,7 @@ description: ''
 directCommands:
 - uid: az_storage_file_delete
   name: az storage file delete
-  summary: Marks the specified file for deletion.
+  summary: Mark the specified file for deletion.
   description: The file is later deleted during garbage collection.
   syntax: >-
     az storage file delete --path
@@ -90,8 +90,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_file_download
   name: az storage file download
-  summary: Downloads a file to a file path, with automatic chunking and progress notifications.
-  description: Returns an instance of File with properties and metadata.
+  summary: Download a file to a file path, with automatic chunking and progress notifications.
+  description: Return an instance of File with properties and metadata.
   syntax: >-
     az storage file download --path
                              --share-name
@@ -271,7 +271,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_file_generate-sas
   name: az storage file generate-sas
-  summary: Generates a shared access signature for the file.
+  summary: Generate a shared access signature for the file.
   description: ''
   syntax: >-
     az storage file generate-sas --path
@@ -344,7 +344,7 @@ directCommands:
     summary: Specifies the IP address or range of IP addresses from which to accept requests. Supports only IPv4 style addresses.
     description: ''
   - name: --permissions
-    summary: 'The permissions the SAS grants. Allowed values: (c)reate (c)reate (d)elete (d)elete (r)ead (r)ead (w)rite (w)rite. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
+    summary: 'The permissions the SAS grants. Allowed values: (c)reate (d)elete (r)ead (w)rite. Do not use if a stored access policy is referenced with --id that specifies this value. Can be combined.'
     description: ''
   - name: --policy-name
     summary: The name of a stored access policy within the container's ACL.
@@ -416,7 +416,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_file_resize
   name: az storage file resize
-  summary: Resizes a file to the specified size.
+  summary: Resize a file to the specified size.
   description: If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared.
   syntax: >-
     az storage file resize --path
@@ -438,7 +438,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --size
-    summary: The length to resize the file to.
+    summary: Size to resize file to (in bytes).
     description: ''
   optionalParameters:
   - name: --account-key
@@ -459,8 +459,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_file_show
   name: az storage file show
-  summary: Returns all user-defined metadata, standard HTTP properties, and system properties for the file.
-  description: Returns an instance of File with FileProperties and a metadata dict.
+  summary: Return all user-defined metadata, standard HTTP properties, and system properties for the file.
+  description: ''
   syntax: >-
     az storage file show --path
                          --share-name
@@ -470,6 +470,9 @@ directCommands:
                          [--sas-token]
                          [--snapshot]
                          [--timeout]
+  examples:
+  - summary: Show properties of file in file share.
+    syntax: az storage file show -p dir/a.txt -s sharename --account-name myadlsaccount --account-key 0000-0000
   requiredParameters:
   - isRequired: true
     name: --path -p
@@ -501,7 +504,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_file_update
   name: az storage file update
-  summary: Sets system properties on the file.
+  summary: Set system properties on the file.
   description: If one property is set for the content_settings, all properties will be overriden.
   syntax: >-
     az storage file update --path
@@ -516,8 +519,12 @@ directCommands:
                            [--content-language]
                            [--content-md5]
                            [--content-type]
+                           [--file-endpoint]
                            [--sas-token]
                            [--timeout]
+  examples:
+  - summary: Set system properties on the file.
+    syntax: az storage file update -p dir/a.txt -s sharename --account-name myadlsaccount --account-key 0000-0000 --content-type test/type
   requiredParameters:
   - isRequired: true
     name: --path -p
@@ -529,7 +536,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    summary: 'Storage account key. Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
     summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
@@ -559,8 +566,11 @@ directCommands:
   - name: --content-type
     summary: The content MIME type.
     description: ''
+  - name: --file-endpoint
+    summary: 'Storage data service endpoint. Must be used in conjunction with either storage account key or a SAS token. You can find each service primary endpoint with `az storage account show`. Environment variable: AZURE_STORAGE_SERVICE_ENDPOINT.'
+    description: ''
   - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   - name: --timeout
     summary: Request timeout in seconds. Applies to each call to the service.
@@ -764,7 +774,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --path -p
-    summary: The path to the file within the file share.
+    summary: The path to the file/directory within the file share.
     description: ''
   - isRequired: true
     name: --share-name -s
@@ -829,5 +839,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/19/2022
+  ms.date: 06/16/2022
   description: Manage file shares that use the SMB 3.0 protocol.
