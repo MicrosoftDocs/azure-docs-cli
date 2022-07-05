@@ -24,7 +24,7 @@ For example, the most outstanding change is that the `objectId` property in the 
 
 Command argument and behavior breaking changes are listed below.
 
-### `az ad app create`
+### `az ad app create/update`
 
 - Split `--reply-urls` into `--web-redirect-uris` and `--public-client-redirect-uris`
 - Replace `--homepage` with `--web-home-page-url`
@@ -82,7 +82,7 @@ Command argument and behavior breaking changes are listed below.
 
 ## Install a previous version
 
-If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](/cli/azure/install-azure-cli) (except for Homebrew which doesn't support installing previous versions).
+If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](./install-azure-cli.md) (except for Homebrew which doesn't support installing previous versions).
 
 ## Troubleshooting
 

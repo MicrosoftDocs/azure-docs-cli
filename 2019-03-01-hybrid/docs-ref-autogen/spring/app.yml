@@ -107,16 +107,23 @@ directCommands:
                          --service
                          [--assign-endpoint {false, true}]
                          [--assign-identity {false, true}]
+                         [--assign-public-endpoint {false, true}]
                          [--cpu]
                          [--disable-probe {false, true}]
+                         [--enable-liveness-probe {false, true}]
                          [--enable-persistent-storage {false, true}]
+                         [--enable-readiness-probe {false, true}]
+                         [--enable-startup-probe {false, true}]
                          [--env]
                          [--instance-count]
                          [--jvm-options]
+                         [--liveness-probe-config]
                          [--loaded-public-certificate-file]
                          [--memory]
                          [--persistent-storage]
+                         [--readiness-probe-config]
                          [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--startup-probe-config]
                          [--system-assigned {false, true}]
                          [--user-assigned]
   examples:
@@ -146,6 +153,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Enable system-assigned managed identity.
     description: ''
+  - name: --assign-public-endpoint
+    parameterValueGroup: false, true
+    summary: If true, assign endpoint URL which could be accessed out of virtual network for vnet injection instance app.
+    description: ''
   - name: --cpu
     defaultValue: "1"
     summary: CPU resource quantity. Should be 500m or number of CPU cores.
@@ -154,9 +165,21 @@ directCommands:
     parameterValueGroup: false, true
     summary: If true, disable the liveness and readiness probe.
     description: ''
+  - name: --enable-liveness-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the liveness probe of the app instance.
+    description: ''
   - name: --enable-persistent-storage --enable-ps
     parameterValueGroup: false, true
     summary: If true, mount a 50G (Standard Pricing tier) or 1G (Basic Pricing tier) disk with default path.
+    description: ''
+  - name: --enable-readiness-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the readiness probe of the app instance.
+    description: ''
+  - name: --enable-startup-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the startup probe of the app instance.
     description: ''
   - name: --env
     summary: Space-separated environment variables in 'key[=value]' format.
@@ -168,6 +191,9 @@ directCommands:
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
     description: ''
+  - name: --liveness-probe-config
+    summary: A json file path indicates the liveness probe config.
+    description: ''
   - name: --loaded-public-certificate-file -f
     summary: A json file path indicates the certificates which would be loaded to app.
     description: ''
@@ -178,9 +204,15 @@ directCommands:
   - name: --persistent-storage
     summary: A json file path for the persistent storages to be mounted to the app.
     description: ''
+  - name: --readiness-probe-config
+    summary: A json file path indicates the readiness probe config.
+    description: ''
   - name: --runtime-version
     parameterValueGroup: Java_11, Java_17, Java_8, NetCore_31
     summary: Runtime version of used language.
+    description: ''
+  - name: --startup-probe-config
+    summary: A json file path indicates the startup probe config.
     description: ''
   - name: --system-assigned
     parameterValueGroup: false, true
@@ -219,7 +251,9 @@ directCommands:
                          --resource-group
                          --service
                          [--artifact-path]
+                         [--build-cpu]
                          [--build-env]
+                         [--build-memory]
                          [--builder]
                          [--config-file-patterns]
                          [--container-args]
@@ -229,14 +263,20 @@ directCommands:
                          [--deployment]
                          [--disable-probe {false, true}]
                          [--disable-validation {false, true}]
+                         [--enable-liveness-probe {false, true}]
+                         [--enable-readiness-probe {false, true}]
+                         [--enable-startup-probe {false, true}]
                          [--env]
                          [--jvm-options]
+                         [--liveness-probe-config]
                          [--main-entry]
                          [--no-wait]
+                         [--readiness-probe-config]
                          [--registry-password]
                          [--registry-username]
                          [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
                          [--source-path]
+                         [--startup-probe-config]
                          [--target-module]
                          [--version]
   examples:
@@ -269,8 +309,16 @@ directCommands:
   - name: --artifact-path
     summary: Deploy the specified pre-built artifact (jar or netcore zip).
     description: ''
+  - name: --build-cpu
+    defaultValue: "1"
+    summary: CPU resource quantity. Should be 500m or number of CPU cores.
+    description: ''
   - name: --build-env
     summary: Space-separated environment variables in 'key[=value]' format.
+    description: ''
+  - name: --build-memory
+    defaultValue: 2Gi
+    summary: 'Memory resource quantity. Should be 512Mi or #Gi, e.g., 1Gi, 3Gi.'
     description: ''
   - name: --builder
     defaultValue: default
@@ -303,17 +351,35 @@ directCommands:
     parameterValueGroup: false, true
     summary: If true, disable jar validation.
     description: ''
+  - name: --enable-liveness-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the liveness probe of the app instance.
+    description: ''
+  - name: --enable-readiness-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the readiness probe of the app instance.
+    description: ''
+  - name: --enable-startup-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the startup probe of the app instance.
+    description: ''
   - name: --env
     summary: Space-separated environment variables in 'key[=value]' format.
     description: ''
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
     description: ''
+  - name: --liveness-probe-config
+    summary: A json file path indicates the liveness probe config.
+    description: ''
   - name: --main-entry -m
     summary: A string containing the path to the .NET executable relative to zip root.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --readiness-probe-config
+    summary: A json file path indicates the readiness probe config.
     description: ''
   - name: --registry-password
     summary: The password of the container registry.
@@ -327,6 +393,9 @@ directCommands:
     description: ''
   - name: --source-path
     summary: Deploy the specified source folder. The folder will be packed into tar, uploaded, and built using kpack. Default to the current folder if no value provided.
+    description: ''
+  - name: --startup-probe-config
+    summary: A json file path indicates the startup probe config.
     description: ''
   - name: --target-module
     summary: Child module to be deployed, required for multiple jar packages built from source code.
@@ -661,19 +730,26 @@ directCommands:
                          --resource-group
                          --service
                          [--assign-endpoint {false, true}]
+                         [--assign-public-endpoint {false, true}]
                          [--config-file-patterns]
                          [--deployment]
                          [--disable-probe {false, true}]
                          [--enable-ingress-to-app-tls {false, true}]
+                         [--enable-liveness-probe {false, true}]
                          [--enable-persistent-storage {false, true}]
+                         [--enable-readiness-probe {false, true}]
+                         [--enable-startup-probe {false, true}]
                          [--env]
                          [--https-only {false, true}]
                          [--jvm-options]
+                         [--liveness-probe-config]
                          [--loaded-public-certificate-file]
                          [--main-entry]
                          [--no-wait]
                          [--persistent-storage]
+                         [--readiness-probe-config]
                          [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--startup-probe-config]
   examples:
   - summary: Add an environment variable for the app.
     syntax: az spring app update -n MyApp -s MyCluster -g MyResourceGroup --env foo=bar
@@ -695,6 +771,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: If true, assign endpoint URL for direct access.
     description: ''
+  - name: --assign-public-endpoint
+    parameterValueGroup: false, true
+    summary: If true, assign endpoint URL which could be accessed out of virtual network for vnet injection instance app.
+    description: ''
   - name: --config-file-patterns
     summary: (Enterprise Tier Only) Config file patterns separated with ',' to decide which patterns of Application Configuration Service will be used. Use '""' to clear existing configurations.
     description: ''
@@ -709,9 +789,21 @@ directCommands:
     parameterValueGroup: false, true
     summary: If true, enable ingress to app tls.
     description: ''
+  - name: --enable-liveness-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the liveness probe of the app instance.
+    description: ''
   - name: --enable-persistent-storage --enable-ps
     parameterValueGroup: false, true
     summary: If true, mount a 50G (Standard Pricing tier) or 1G (Basic Pricing tier) disk with default path.
+    description: ''
+  - name: --enable-readiness-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the readiness probe of the app instance.
+    description: ''
+  - name: --enable-startup-probe
+    parameterValueGroup: false, true
+    summary: If false, will disable the startup probe of the app instance.
     description: ''
   - name: --env
     summary: Space-separated environment variables in 'key[=value]' format.
@@ -722,6 +814,9 @@ directCommands:
     description: ''
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
+    description: ''
+  - name: --liveness-probe-config
+    summary: A json file path indicates the liveness probe config.
     description: ''
   - name: --loaded-public-certificate-file -f
     summary: A json file path indicates the certificates which would be loaded to app.
@@ -735,9 +830,15 @@ directCommands:
   - name: --persistent-storage
     summary: A json file path for the persistent storages to be mounted to the app.
     description: ''
+  - name: --readiness-probe-config
+    summary: A json file path indicates the readiness probe config.
+    description: ''
   - name: --runtime-version
     parameterValueGroup: Java_11, Java_17, Java_8, NetCore_31
     summary: Runtime version of used language.
+    description: ''
+  - name: --startup-probe-config
+    summary: A json file path indicates the startup probe config.
     description: ''
 commands:
 - az_spring_app_append-loaded-public-certificate

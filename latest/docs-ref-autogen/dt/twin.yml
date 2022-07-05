@@ -4,7 +4,7 @@ name: az dt twin
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.24.1 or higher).  The extension will automatically install the first time you run an **az dt twin** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.30.0 or higher).  The extension will automatically install the first time you run an **az dt twin** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage and configure the digital twins of a Digital Twins instance.
 description: ''
 directCommands:
@@ -124,7 +124,7 @@ directCommands:
 - uid: az_dt_twin_query
   name: az dt twin query
   summary: Query the digital twins of an instance. Allows traversing relationships and filtering by property values.
-  description: ''
+  description: In many twin queries, the `$` character is used to reference the `$dtId` property of a twin. In bash-like shells or powershell the `$` character has functional meaning and must be escaped as part of the query input. Please review the Digital Twins CLI concepts document https://docs.microsoft.com/en-us/azure/digital-twins/concepts-cli for more information.
   syntax: >-
     az dt twin query --dt-name
                      --query-command
@@ -135,6 +135,10 @@ directCommands:
     syntax: az dt twin query -n {instance_or_hostname} -q "select * from digitaltwins" --show-cost
   - summary: Query by model and project all attributes.
     syntax: az dt twin query -n {instance_or_hostname} -q "select * from digitaltwins T where IS_OF_MODEL(T, 'dtmi:com:example:Room;2')"
+  - summary: Query leveraging `$dtId` with bash compatible syntax
+    syntax: az dt twin query -n {instance_or_hostname} --query-command "SELECT * FROM DigitalTwins T Where T.\$dtId = 'room0'"
+  - summary: Query leveraging `$dtId` with powershell compatible syntax
+    syntax: az dt twin query -n {instance_or_hostname} --query-command "SELECT * FROM DigitalTwins T Where T.`$dtId = 'room0'"
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n

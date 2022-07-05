@@ -44,6 +44,12 @@ As an example, here's how you would set the default resource group and location 
 az config set defaults.location=westus2 defaults.group=MyResourceGroup
 ```
 
+The following command turns off the survey links while executing the Azure CLI commands:
+
+```azurecli-interactive
+az config set output.show_survey_link=no
+```
+
 ## CLI configuration file
 
 The CLI configuration file contains other settings that are used for managing CLI behavior. The configuration file itself is located
