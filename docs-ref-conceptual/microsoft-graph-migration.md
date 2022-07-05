@@ -77,7 +77,7 @@ Command argument and behavior breaking changes are listed below.
 
 ## Known issues
 
-- Generic update arguments `--set`, `--add` and `--remove` are not guaranteed to work (due to the underlying infrastructure change). In case of generic update argument failure, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview) for non-supported properties. Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
+- Regarding generic update arguments, the only supported operation is using `--set` on the root level of a Graph object. Using `--add`, `--remove` or `--set` on sub-levels currently doesn't work (due to the underlying infrastructure change). For unsupported scenarios, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview). Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
 - Microsoft Graph related commands like `az ad` and `az role` will fail in Azure Stack environments which don't have Microsoft Graph support. Please use Azure CLI 2.36.0 or earlier versions for Azure Stack environments.
 
 ## Install a previous version
