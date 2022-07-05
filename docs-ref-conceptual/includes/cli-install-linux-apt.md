@@ -2,7 +2,7 @@
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/29/2020
+ms.date: 07/05/2022
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -13,7 +13,7 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 | Distribution | Version |
 |:-------------|:--------|
-| Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 21.10 (Impish Indri), 22.04 (Jammy Jellyfish) |
+| Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
 | Debian       | 10 (Buster), 11 (Bullseye) |
 
 > [!WARNING]
