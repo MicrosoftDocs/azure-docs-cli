@@ -41,6 +41,7 @@ directCommands:
                    [--tags]
                    [--tier]
                    [--upload-size-bytes]
+                   [--upload-type {Upload, UploadWithSecurityData}]
                    [--zone {1, 2, 3}]
   examples:
   - summary: Create a managed disk by importing from a blob uri.
@@ -55,10 +56,14 @@ directCommands:
     syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --location eastus2 --zone 1
   - summary: Create a disk from image.
     syntax: az disk create -g MyResourceGroup -n MyDisk --image-reference Canonical:UbuntuServer:18.04-LTS:18.04.202002180
-  - summary: Create a disk from the OS Disk of a gallery image version
+  - summary: Create a disk from the OS Disk of a compute gallery image version
     syntax: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0
-  - summary: Create a disk from the OS Disk of the latest version in a gallery image
+  - summary: Create a disk from the OS Disk of the latest version in a compute gallery image
     syntax: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
+  - summary: Create a disk from the OS Disk of a shared gallery image version
+    syntax: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /SharedGalleries/sharedGalleryUniqueName/Images/imageName/Versions/1.0.0
+  - summary: Create a disk from the OS Disk of a community gallery image version
+    syntax: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /CommunityGalleries/communityGalleryPublicGalleryName/Images/imageName/Versions/1.0.0
   - summary: Create a disk from the Data Disk of a gallery image
     syntax: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0 --gallery-image-reference-lun 0
   - summary: Create a disk with total number of IOPS and total throughput (MBps) limitation.
@@ -67,6 +72,12 @@ directCommands:
     syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 256 --max-shares 2 -l centraluseuap
   - summary: Create a disk and associate it with a disk access resource.
     syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --network-access-policy AllowPrivate --disk-access MyDiskAccessID
+  - summary: Create a disk from the blob URI for VM guest state VHD.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --security-data-uri GuestStateDiskVhdUri --security-type TrustedLaunch --hyper-v-generation V2
+  - summary: Create a standard disk for uploading blobs.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --upload-type Upload
+  - summary: Create an OS disk for uploading along with VM guest state.
+    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --upload-type UploadWithSecurityData --security-type TrustedLaunch --hyper-v-generation V2
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -105,10 +116,10 @@ directCommands:
     description: ''
   - name: --for-upload
     parameterValueGroup: false, true
-    summary: Create the disk for uploading blobs later on through storage commands. Run "az disk grant-access --access-level Write" to retrieve the disk's SAS token.
+    summary: Create the disk for uploading blobs. Replaced by "--upload-type Upload".
     description: ''
   - name: --gallery-image-reference
-    summary: ID of the Compute Gallery image version from which to create a disk.
+    summary: ID of the Compute, Shared or Community Gallery image version from which to create a disk. For details about valid format, please refer to the help sample.
     description: ''
   - name: --gallery-image-reference-lun
     summary: If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null.
@@ -166,6 +177,10 @@ directCommands:
   - name: --upload-size-bytes
     summary: 'The size (in bytes) of the contents of the upload including the VHD footer. Min value: 20972032. Max value: 35183298347520.'
     description: ''
+  - name: --upload-type
+    parameterValueGroup: Upload, UploadWithSecurityData
+    summary: Create the disk for upload scenario. 'Upload' is for Standard disk only upload. 'UploadWithSecurityData' is for OS Disk upload along with VM Guest State. Please note the 'UploadWithSecurityData' is not valid for data disk upload, it only to be used for OS Disk upload at present.
+    description: ''
   - name: --zone
     parameterValueGroup: 1, 2, 3
     summary: Availability zone into which to provision the resource.
@@ -212,6 +227,8 @@ directCommands:
   examples:
   - summary: Grant a resource read access to a managed disk. (autogenerated)
     syntax: az disk grant-access --access-level Read --duration-in-seconds 3600 --name MyManagedDisk --resource-group MyResourceGroup
+  - summary: Grant a resource read access to a disk to generate access SAS and security data access SAS
+    syntax: az disk grant-access --access-level Read --duration-in-seconds 3600 --name MyDisk --resource-group MyResourceGroup --secure-vm-guest-state-sas
   requiredParameters:
   - isRequired: true
     name: --duration-in-seconds

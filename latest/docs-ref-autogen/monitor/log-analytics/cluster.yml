@@ -54,28 +54,30 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_cluster_delete
   name: az monitor log-analytics cluster delete
-  summary: Delete a cluster instance.
+  summary: Deletes a cluster instance.
   description: ''
   syntax: >-
-    az monitor log-analytics cluster delete --name
-                                            --resource-group
-                                            [--no-wait]
+    az monitor log-analytics cluster delete [--cluster-name]
+                                            [--ids]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--resource-group]
                                             [--yes]
   examples:
   - summary: Delete a cluster instance.
     syntax: az monitor log-analytics cluster delete -g MyResourceGroup -n MyCluster
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the Log Analytics cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -83,13 +85,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_cluster_list
   name: az monitor log-analytics cluster list
-  summary: Gets all cluster instances in a resource group or in current subscription.
+  summary: List all cluster instances in a resource group or in current subscription.
   description: ''
   syntax: az monitor log-analytics cluster list [--resource-group]
   examples:
-  - summary: Gets all cluster instances in a resource group.
+  - summary: List all cluster instances in a resource group.
     syntax: az monitor log-analytics cluster list -g MyResourceGroup
-  - summary: Gets all cluster instances in current subscription.
+  - summary: List all cluster instances in current subscription.
     syntax: az monitor log-analytics cluster list
   optionalParameters:
   - name: --resource-group -g
@@ -101,52 +103,58 @@ directCommands:
   summary: Show the properties of a cluster instance.
   description: ''
   syntax: >-
-    az monitor log-analytics cluster show --name
-                                          --resource-group
+    az monitor log-analytics cluster show [--cluster-name]
+                                          [--ids]
+                                          [--resource-group]
   examples:
   - summary: Show the properties of a cluster instance.
     syntax: az monitor log-analytics cluster show -g MyResourceGroup -n MyCluster
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the Log Analytics cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_cluster_update
   name: az monitor log-analytics cluster update
-  summary: Update a cluster instance.
-  description: ''
+  summary: Create or update a Log Analytics cluster.
+  description: Update a cluster instance.
   syntax: >-
-    az monitor log-analytics cluster update --name
-                                            --resource-group
+    az monitor log-analytics cluster update [--billing-type {Cluster, Workspaces}]
+                                            [--cluster-name]
+                                            [--ids]
                                             [--key-name]
+                                            [--key-rsa-size]
                                             [--key-vault-uri]
                                             [--key-version]
-                                            [--no-wait]
-                                            [--sku-capacity]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--resource-group]
+                                            [--sku-capacity {1000, 2000, 500, 5000}]
                                             [--tags]
   examples:
   - summary: Update a cluster instance.
-    syntax: >-
-      az monitor log-analytics cluster update -g MyResourceGroup -n MyCluster \
-        --key-vault-uri https://myvault.vault.azure.net/ --key-name my-key \
-        --key-version fe0adcedd8014aed9c22e9aefb81a1ds --sku-capacity 1000
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+    syntax: az monitor log-analytics cluster update -g MyResourceGroup -n MyCluster --key-vault-uri https://myvault.vault.azure.net/ --key-name my-key --key-version fe0adcedd8014aed9c22e9aefb81a1ds --sku-capacity 1000
+  optionalParameters:
+  - name: --billing-type
+    parameterValueGroup: Cluster, Workspaces
+    summary: The cluster's billing type.
+    description: ''
+  - name: --cluster-name --name -n
     summary: The name of the Log Analytics cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --key-name
     summary: The name of the key associated with the Log Analytics cluster.
+    description: ''
+  - name: --key-rsa-size
+    summary: Selected key minimum required size.
     description: ''
   - name: --key-vault-uri
     summary: The Key Vault uri which holds the key associated with the Log Analytics cluster.
@@ -155,13 +163,18 @@ directCommands:
     summary: The version of the key associated with the Log Analytics cluster.
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --sku-capacity
-    summary: The capacity of the SKU. It must be in the range of 1000-2000 per day and must be in multiples of 100. If you want to increase the limit, please contact LAIngestionRate@microsoft.com. It can be decreased only after 31 days.
+    parameterValueGroup: 1000, 2000, 500, 5000
+    summary: The capacity of the SKU. It can be decreased only after 31 days.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags.  Shorthand syntax supported. Try `??` to show more.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_cluster_wait
@@ -241,5 +254,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/18/2022
+  ms.date: 06/27/2022
   description: Manage Azure log analytics cluster.
