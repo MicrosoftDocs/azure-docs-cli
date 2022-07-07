@@ -107,8 +107,19 @@ determine the package to install. If you know the code name of the Ubuntu or Deb
 Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future
 versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
 
-To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions use the `bionic` repository, and for Debian distributions
-use `stretch`. Distributions released before Ubuntu Trusty and Debian Wheezy are not supported.
+To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions, use the latest `jammy` repository:
+
+```bash
+AZ_REPO="jammy"
+```
+
+For Debian distributions, use the latest `bullseye` repository:
+
+```bash
+AZ_REPO="bullseye"
+```
+
+Distributions released before Ubuntu Bionic and Debian Buster are not supported.
 
 ### Elementary OS (EOS) fails to install the Azure CLI
 

@@ -211,7 +211,7 @@ Version 2.38.0
 
 ### Synapse
 
-* `az synapse sql create`: Add parameter `--collation`
+* `az synapse sql pool create`: Add parameter `--collation`
 * `az synapse link-connection`: New command group to support synapse link connections
 
 ## May 24, 2022
