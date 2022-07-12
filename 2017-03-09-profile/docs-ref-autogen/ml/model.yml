@@ -46,10 +46,9 @@ directCommands:
 - uid: az_ml_model_create
   name: az ml model create
   summary: Create a model.
-  description: Models can be created from a local file or directory. The created model will be tracked in the workspace under the specified name and version.
+  description: Models can be created from a local file, local directory, datastore or job outputs. The created model will be tracked in the workspace under the specified name and version.
   syntax: >-
     az ml model create --resource-group
-                       --workspace-name
                        [--description]
                        [--file]
                        [--name]
@@ -58,19 +57,22 @@ directCommands:
                        [--tags]
                        [--type]
                        [--version]
+                       [--workspace-name]
   examples:
   - summary: Create a model from a YAML specification file
     syntax: az ml model create --file model.yml --resource-group my-resource-group --workspace-name my-workspace
   - summary: Create a model from a local folder using command options
     syntax: az ml model create --name my-model --version 1 --path ./my-model --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create a model using mlflow run URI format 'runs:/<run-id>/<path-to-model-relative-to-the-root-of-the-artifact-location>' and command options
+    syntax: az ml model create --name my-model --version 1 --path runs:/c42d2507-4953-4a7c-a4c1-2b5bfe0ac64e/model/ --type mlflow_model --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create a model from a named job output using azureml job URI format 'azureml://jobs/<job-name>/outputs/<named-output>/paths/<path-to-model-relative-to-the-named-output-location>' and command options. The default named output is artifacts
+    syntax: az ml model create --name my-model --version 1 --path azureml://jobs/c42d2507-4953-4a7c-a4c1-2b5bfe0ac64e/outputs/artifacts/paths/model/ --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create a model from a datastore 'azureml://datastores/<datastore-name>/paths/<path-to-model-relative-to-the-root-of-the-datastore-location>' using command options
+    syntax: az ml model create --name my-model --version 1 --path azureml://datastores/myblobstore/paths/models/cifar10/cifar.pt --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
   - name: --description
@@ -96,6 +98,9 @@ directCommands:
     description: ''
   - name: --version -v
     summary: Version of the model.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_model_download
   name: az ml model download
@@ -139,11 +144,11 @@ directCommands:
   description: ''
   syntax: >-
     az ml model list --resource-group
-                     --workspace-name
                      [--archived-only]
                      [--include-archived]
                      [--max-results]
                      [--name]
+                     [--workspace-name]
   examples:
   - summary: List all the models in a workspace
     syntax: az ml model list --resource-group my-resource-group --workspace-name my-workspace
@@ -155,10 +160,6 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
   - name: --archived-only
@@ -172,6 +173,9 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the model. If provided, all the model versions under this name will be returned.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_model_restore
   name: az ml model restore
@@ -215,9 +219,9 @@ directCommands:
   syntax: >-
     az ml model show --name
                      --resource-group
-                     --workspace-name
                      [--label]
                      [--version]
+                     [--workspace-name]
   examples:
   - summary: Show details for a model with the specified name and version
     syntax: az ml model show --name my-model --version 1 --resource-group my-resource-group --workspace-name my-workspace
@@ -230,16 +234,15 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
   optionalParameters:
   - name: --label -l
     summary: Label of the model.
     description: ''
   - name: --version -v
     summary: Version of the model.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_model_update
   name: az ml model update
@@ -248,13 +251,13 @@ directCommands:
   syntax: >-
     az ml model update --name
                        --resource-group
-                       --workspace-name
                        [--add]
                        [--force-string]
                        [--label]
                        [--remove]
                        [--set]
                        [--version]
+                       [--workspace-name]
   examples:
   - summary: Update a model's flavors
     syntax: az ml model update --name my-model --version 1 --set flavors.python_function.python_version=3.8 --resource-group my-resource-group --workspace-name my-workspace
@@ -266,10 +269,6 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
   optionalParameters:
   - name: --add
@@ -289,6 +288,9 @@ directCommands:
     description: ''
   - name: --version -v
     summary: Version of the model.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 commands:
 - az_ml_model_archive
