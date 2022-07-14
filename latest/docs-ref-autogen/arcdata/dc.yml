@@ -11,7 +11,7 @@ directCommands:
 - uid: az_arcdata_dc_create
   name: az arcdata dc create
   summary: Create data controller.
-  description: Create data controller - kube config is required on your system along with credentials for the monitoring dashboards provided by the following environment variables - AZDATA_LOGSUI_USERNAME and AZDATA_LOGSUI_PASSWORD for Logs Dashboard, and AZDATA_METRICSUI_USERNAME and AZDATA_METRICSUI_PASSWORD for Metrics Dashboard. Alternatively AZDATA_USERNAME and AZDATA_PASSWORD will be used as a fallback if either sets of environment variables are missing.
+  description: Create data controller - kube config is required on your system along with credentials for the monitoring dashboards provided by the following environment variables - AZDATA_LOGSUI_USERNAME and AZDATA_LOGSUI_PASSWORD for Logs Dashboard, and AZDATA_METRICSUI_USERNAME and AZDATA_METRICSUI_PASSWORD for Metrics Dashboard. Alternatively AZDATA_USERNAME and AZDATA_PASSWORD will be used as a fallback if either sets of environment variables are missing. For direct mode, the optional environment variables are also possible - WORKSPACE_ID for Log Analytics Workspace ID and WORKSPACE_SHARED_KEY for the Log Analytics Primary Key.
   syntax: >-
     az arcdata dc create --connectivity-mode
                          --name
@@ -234,8 +234,10 @@ directCommands:
                          [--resource-group]
                          [--use-k8s]
   examples:
-  - summary: Data controller update.
-    syntax: az arcdata dc update --auto-upload-logs true --auto-upload-metrics true --name dc-name --resource-group resource-group
+  - summary: Directly connected data controller update enable auto-upload-logs
+    syntax: az arcdata dc update --auto-upload-logs true --name dc-name --resource-group resource-group
+  - summary: Directly connected data controller update enable auto-upload-metrics
+    syntax: az arcdata dc update --auto-upload-metrics true --name dc-name --resource-group resource-group
   optionalParameters:
   - name: --auto-upload-logs
     parameterValueGroup: false, true
@@ -246,7 +248,7 @@ directCommands:
     summary: Enable auto upload metrics.
     description: ''
   - name: --desired-version -v
-    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest.
+    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest valid version.
     description: ''
   - name: --k8s-namespace -k
     summary: '[Required] The Kubernetes namespace with a deployed data controller.'
@@ -297,7 +299,7 @@ directCommands:
     syntax: az arcdata dc upgrade --k8s-namespace namespace --use-k8s
   optionalParameters:
   - name: --desired-version -v
-    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest.
+    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest valid version.
     description: ''
   - name: --dry-run -d
     summary: Indicates which instance would be upgraded but does not actually upgrade the instances.
@@ -315,7 +317,7 @@ directCommands:
     summary: The Azure resource group in which the data controller resource should be added.
     description: ''
   - name: --target
-    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest.
+    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest valid version.
     description: ''
   - name: --use-k8s
     summary: Upgrade data controller using local Kubernetes APIs.

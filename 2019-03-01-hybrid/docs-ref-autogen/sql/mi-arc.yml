@@ -43,6 +43,8 @@ directCommands:
                          [--replicas {1, 2, 3}]
                          [--resource-group]
                          [--retention-days]
+                         [--secondary-dns-name]
+                         [--secondary-port-number]
                          [--service-annotations]
                          [--service-cert-secret]
                          [--service-labels]
@@ -51,6 +53,7 @@ directCommands:
                          [--storage-class-data]
                          [--storage-class-datalogs]
                          [--storage-class-logs]
+                         [--storage-class-orchestrator-logs]
                          [--storage-labels]
                          [--sync-secondary-to-commit {-1, 0, 1, 2}]
                          [--tier]
@@ -61,6 +64,7 @@ directCommands:
                          [--volume-size-data]
                          [--volume-size-datalogs]
                          [--volume-size-logs]
+                         [--volume-size-orchestrator-logs]
   examples:
   - summary: Create an indirectly connected SQL managed instance.
     syntax: az sql mi-arc create -n sqlmi1 --k8s-namespace namespace --use-k8s
@@ -149,7 +153,7 @@ directCommands:
     summary: The primary service DNS name exposed to the end-users to connect to this Arc-enabled SQL Managed Instance (e.g. sqlinstancename.contoso.com).
     description: ''
   - name: --primary-port-number
-    summary: The port number on which the primary DNS service is exposed to the end-users (e.g. 31433).
+    summary: The port number on which the primary service is exposed to the end-users (e.g. 31433).
     description: ''
   - name: --readable-secondaries
     summary: Number of replicas to be made readable. Applies only to Business Critical tier.  Value must be between 0 and the number of replicas minus 1.
@@ -163,6 +167,12 @@ directCommands:
     description: ''
   - name: --retention-days
     summary: Backup retention period, specified in days. Allowed values are 0 to 35. Default is 7. Setting the retention period to 0 will turn off automatic backups for all the databases on the SQL managed instance and any prior backups will be deleted.
+    description: ''
+  - name: --secondary-dns-name
+    summary: The secondary service DNS name exposed to the end-users to connect to this Arc-enabled SQL Managed Instance (e.g. sqlinstancename2.contoso.com).
+    description: ''
+  - name: --secondary-port-number
+    summary: The port number on which the secondary service is exposed to the end-users (e.g. 31434).
     description: ''
   - name: --service-annotations
     summary: Comma-separated list of annotations to apply to all external services.
@@ -187,6 +197,9 @@ directCommands:
     description: ''
   - name: --storage-class-logs
     summary: The storage class to be used for logs (/var/log). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
+    description: ''
+  - name: --storage-class-orchestrator-logs
+    summary: The storage class to be used for orchestrator logs (/var/log). If no value is specified, then no storage class will be specified, which will result in Kubernetes using the default storage class.
     description: ''
   - name: --storage-labels
     summary: Comma-separated list of labels to apply to all PVCs.
@@ -219,6 +232,9 @@ directCommands:
     description: ''
   - name: --volume-size-logs
     summary: The size of the storage volume to be used for logs as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
+    description: ''
+  - name: --volume-size-orchestrator-logs
+    summary: The size of the storage volume to be used for orchestrator logs as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
     description: ''
 - uid: az_sql_mi-arc_delete
   name: az sql mi-arc delete
@@ -277,6 +293,7 @@ directCommands:
                        [--service-labels]
                        [--tag-name]
                        [--tag-value]
+                       [--tier]
                        [--time-zone]
                        [--trace-flags]
                        [--use-k8s]
@@ -345,6 +362,9 @@ directCommands:
     description: ''
   - name: --tag-value
     summary: The tag value of the SQL managed instance.
+    description: ''
+  - name: --tier -t
+    summary: 'The pricing tier for the instance. Allowed values: BusinessCritical (bc for short) or GeneralPurpose (gp for short). Default is GeneralPurpose. The price tier cannot be changed.'
     description: ''
   - name: --time-zone
     summary: The SQL Server time zone for the instance.
@@ -466,6 +486,7 @@ directCommands:
                          [--service-cert-secret]
                          [--service-labels]
                          [--sync-secondary-to-commit {-1, 0, 1, 2}]
+                         [--tier]
                          [--time-zone]
                          [--trace-flags]
                          [--use-k8s]
@@ -549,6 +570,9 @@ directCommands:
     parameterValueGroup: -1, 0, 1, 2
     summary: Number of secondary replicas that must be synchronized to commit. Setting this value to -1 will set the number of required synchronized secondaries to '(# of replicas - 1) / 2', rounded down.
     description: ''
+  - name: --tier -t
+    summary: 'The pricing tier for the instance. Allowed values: BusinessCritical (bc for short) or GeneralPurpose (gp for short). Default is GeneralPurpose. The price tier cannot be changed.'
+    description: ''
   - name: --time-zone
     summary: The SQL Server time zone for the instance.
     description: ''
@@ -579,7 +603,7 @@ directCommands:
     syntax: az sql mi-arc upgrade -n sqlmi1 -k arc --desired-version v1.1.0 --use-k8s
   optionalParameters:
   - name: --desired-version -v
-    summary: Desired version to upgrade to. Optional if no version specified, the data controller version will be used.
+    summary: The latest valid version to upgrade to. Optional, if no version is specified, the data controller version will be used.
     description: ''
   - name: --dry-run -d
     summary: Indicates which instance would be upgraded but does not actually upgrade the instances.
@@ -606,7 +630,7 @@ directCommands:
     summary: The Azure resource group in which the sqlmi resource should be added.
     description: ''
   - name: --target
-    summary: Desired version to upgrade to. Optional if no version specified, the data controller version will be used.
+    summary: The latest valid version to upgrade to. Optional, if no version is specified, the data controller version will be used.
     description: ''
   - name: --use-k8s
     summary: Create SQL managed instance using local Kubernetes APIs.
