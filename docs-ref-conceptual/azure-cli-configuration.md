@@ -13,19 +13,27 @@ keywords: environment variables, configuration file, configuration settings, use
 ---
 # Azure CLI configuration
 
-The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values. The CLI offers a convenience command for managing some defaults, `az config`. Other values can be set in a configuration file or with environment variables. This article provides further information on these user configuration settings and how to configure the Azure CLI.
+The Azure CLI allows for user configuration for settings such as logging, data collection, and default argument values. The CLI offers a convenience command for managing some defaults, `az config`, and an interactive option through `az init`.     Other values can be set in a configuration file or with environment variables. This article provides further information on these user configuration settings and how to configure the Azure CLI.
 
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
 1. Command-line parameters
 1. Parameter persisted values set with `az config param-persist`
 1. Environment variables
-1. Values in the configuration file set with `az config`
+1. Values in the configuration file set with `az config` or `az init`
 
-## CLI configuration with az config
+## Configure settings using az init
 
-You set defaults for the CLI with the [az config set](/cli/azure/config#az-config-set) command.
-This command takes a space-separated list of `key=value` pairs as an argument. The provided values are used by the CLI in place of required arguments.
+The easiest way to set Azure CLI configurations is to use the interactive [az init](/cli/azure/reference-index#az-init) command.  Choose a common configuration like "interaction" or "automation", or opt to walk through individual configurations.  What is especially helpful with this approach is `az init` provides reasons why you might want to choose one configuration option over another.
+
+```azurecli-interactive
+az init
+```
+
+## Configure settings using az config
+
+You can set defaults for the CLI with the [az config set](/cli/azure/config#az-config-set) command.
+This command takes a space-separated list of `key=value` pairs as an argument. The provided values are used by the Azure CLI in place of required arguments.
 
 The following table contains a list of available configuration keys.
 
