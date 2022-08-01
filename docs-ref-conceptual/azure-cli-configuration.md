@@ -24,7 +24,7 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 
 ## Configure settings using az init
 
-The easiest way to set Azure CLI configurations is to use the interactive [az init](/cli/azure/reference-index#az-init) command.  This command groups common configurations into scenarios like "interaction" and "automation".  Using a question-answer format, `az inti` steps you through selecting each configuration option.  What is especially helpful with this approach is `az init` provides reasons why you might want to choose one configuration answer over another.
+The easiest way to set Azure CLI configurations is to use the interactive [az init](/cli/azure/reference-index#az-init) command.  You can choose a common configuration like "interaction" or "automation", or you can opt to walk-through individual configurations.  What is especially helpful with this approach is `az init` provides reasons why you might want to choose one configuration option over another.
 
 ```azurecli-interactive
 az init
