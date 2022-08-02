@@ -94,6 +94,9 @@ directCommands:
                   [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
+                  [--azure-keyvault-kms-key-id]
+                  [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
+                  [--azure-keyvault-kms-key-vault-resource-id]
                   [--ca-profile]
                   [--client-secret]
                   [--defender-config]
@@ -107,6 +110,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-defender]
@@ -124,6 +128,8 @@ directCommands:
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
+                  [--host-group-id]
+                  [--http-proxy-config]
                   [--kubelet-config]
                   [--kubernetes-version]
                   [--linux-os-config]
@@ -139,7 +145,7 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
-                  [--network-plugin {azure, kubenet}]
+                  [--network-plugin {azure, kubenet, none}]
                   [--network-policy]
                   [--no-ssh-key]
                   [--no-wait]
@@ -237,6 +243,10 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --load-balancer-sku Standard --network-plugin azure --windows-admin-username azure --windows-admin-password 'replacePassword1234$' --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   - summary: create a kubernetes cluster with a snapshot id.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --kubernetes-version 1.20.9 --snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/snapshots/mysnapshot1"
+  - summary: create a kubernetes cluster with support of hostgroup id.
+    syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.13 --location westus2 --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
+  - summary: Create a kubernetes cluster with no CNI installed.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -303,6 +313,16 @@ directCommands:
     parameterValueGroup: node-image, none, patch, rapid, stable
     summary: Specify the upgrade channel for autoupgrade.
     description: ''
+  - name: --azure-keyvault-kms-key-id
+    summary: Identifier of Azure Key Vault key.
+    description: ''
+  - name: --azure-keyvault-kms-key-vault-network-access
+    parameterValueGroup: Private, Public
+    summary: Network Access of Azure Key Vault.
+    description: Allowed values are "Public", "Private". If not set, defaults to type "Public". Requires --azure-keyvault-kms-key-id to be used.
+  - name: --azure-keyvault-kms-key-vault-resource-id
+    summary: Resource ID of Azure Key Vault.
+    description: ''
   - name: --ca-profile --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
@@ -355,6 +375,9 @@ directCommands:
           - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+    description: ''
+  - name: --enable-azure-keyvault-kms
+    summary: Enable Azure KeyVault Key Management Service.
     description: ''
   - name: --enable-azure-rbac
     summary: Enable Azure RBAC to control authorization checks on cluster.
@@ -415,6 +438,12 @@ directCommands:
       You do not need to set this if you have set DNS server in the VNET used by the cluster.
 
       You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --host-group-id
+    summary: The fully qualified dedicated host group id used to provision agent node pool.
+    description: ''
+  - name: --http-proxy-config
+    summary: HTTP Proxy configuration for this cluster.
+    description: ''
   - name: --kubelet-config
     summary: Path to JSON file containing Kubelet configurations for agent nodes. https://aka.ms/aks/custom-node-config.
     description: ''
@@ -452,7 +481,7 @@ directCommands:
     description: ''
   - name: --max-pods -m
     summary: The maximum number of pods deployable to a node.
-    description: If not specified, defaults to 110, or 30 for advanced networking configurations.
+    description: If not specified, defaults based on network-plugin. 30 for "azure", 110 for "kubenet", or 250 for "none".
   - name: --min-count
     summary: Minimum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
@@ -463,9 +492,9 @@ directCommands:
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
   - name: --network-plugin
-    parameterValueGroup: azure, kubenet
+    parameterValueGroup: azure, kubenet, none
     summary: The Kubernetes network plugin to use.
-    description: Specify "azure" for advanced networking configurations. Defaults to "kubenet".
+    description: Specify "azure" for routable pod IPs from VNET, "kubenet" for non-routable pod IPs with an overlay network, or "none" for no networking configured. Defaults to "kubenet".
   - name: --network-policy
     summary: The Kubernetes network policy to use.
     description: >-
@@ -1135,10 +1164,14 @@ directCommands:
                   [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
+                  [--azure-keyvault-kms-key-id]
+                  [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
+                  [--azure-keyvault-kms-key-vault-resource-id]
                   [--ca-profile]
                   [--defender-config]
                   [--detach-acr]
                   [--disable-ahub]
+                  [--disable-azure-keyvault-kms]
                   [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
                   [--disable-defender]
@@ -1147,6 +1180,7 @@ directCommands:
                   [--disable-secret-rotation]
                   [--enable-aad]
                   [--enable-ahub]
+                  [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-defender]
@@ -1157,6 +1191,7 @@ directCommands:
                   [--enable-windows-gmsa]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
+                  [--http-proxy-config]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-outbound-ip-prefixes]
@@ -1257,6 +1292,16 @@ directCommands:
     parameterValueGroup: node-image, none, patch, rapid, stable
     summary: Specify the upgrade channel for autoupgrade.
     description: ''
+  - name: --azure-keyvault-kms-key-id
+    summary: Identifier of Azure Key Vault key.
+    description: ''
+  - name: --azure-keyvault-kms-key-vault-network-access
+    parameterValueGroup: Private, Public
+    summary: Network Access of Azure Key Vault.
+    description: Allowed values are "Public", "Private". If not set, defaults to type "Public". Requires --azure-keyvault-kms-key-id to be used.
+  - name: --azure-keyvault-kms-key-vault-resource-id
+    summary: Resource ID of Azure Key Vault.
+    description: ''
   - name: --ca-profile --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
@@ -1268,6 +1313,9 @@ directCommands:
     description: ''
   - name: --disable-ahub
     summary: Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
+    description: ''
+  - name: --disable-azure-keyvault-kms
+    summary: Disable Azure KeyVault Key Management Service.
     description: ''
   - name: --disable-azure-rbac
     summary: Disable Azure RBAC to control authorization checks on cluster.
@@ -1292,6 +1340,9 @@ directCommands:
     description: ''
   - name: --enable-ahub
     summary: Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+    description: ''
+  - name: --enable-azure-keyvault-kms
+    summary: Enable Azure KeyVault Key Management Service.
     description: ''
   - name: --enable-azure-rbac
     summary: Enable Azure RBAC to control authorization checks on cluster.
@@ -1329,6 +1380,9 @@ directCommands:
       You do not need to set this if you have set DNS server in the VNET used by the cluster.
 
       You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --http-proxy-config
+    summary: HTTP Proxy configuration for this cluster.
+    description: ''
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
     description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 100].
@@ -1704,5 +1758,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/29/2022
+  ms.date: 07/28/2022
   description: Manage Azure Kubernetes Services.
