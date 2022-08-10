@@ -31,7 +31,6 @@ directCommands:
                          [--labels]
                          [--language]
                          [--license-type]
-                         [--location]
                          [--memory-limit]
                          [--memory-request]
                          [--no-external-endpoint]
@@ -66,13 +65,13 @@ directCommands:
                          [--volume-size-logs]
                          [--volume-size-orchestrator-logs]
   examples:
-  - summary: Create an indirectly connected SQL managed instance.
-    syntax: az sql mi-arc create -n sqlmi1 --k8s-namespace namespace --use-k8s
-  - summary: Create an indirectly connected SQL managed instance with 3 replicas in HA scenario.
-    syntax: az sql mi-arc create -n sqlmi2 --replicas 3  --k8s-namespace namespace --use-k8s
-  - summary: Create a directly connected SQL managed instance.
-    syntax: az sql mi-arc create --name name --resource-group group  --location location --subscription subscription   --custom-location custom-location
-  - summary: Create an indirectly connected SQL managed instance with Active Directory authentication.
+  - summary: Create a SQL managed instance through the Kubernetes API.
+    syntax: az sql mi-arc create -n sqlmi1 --k8s-namespace arc --use-k8s
+  - summary: Create a SQL managed instance with 3 replicas in HA scenario through the Kubernetes API.
+    syntax: az sql mi-arc create -n sqlmi2 --replicas 3 --k8s-namespace arc --use-k8s
+  - summary: Create a SQL managed instance through Azure Resource Manager (ARM).
+    syntax: az sql mi-arc create --name sqlmi3 --resource-group rg-name --custom-location arc-cl
+  - summary: Create a SQL managed instance with Active Directory authentication through the Kubernetes API.
     syntax: az sql mi-arc create --name contososqlmi --k8s-namespace arc --ad-connector-name arcadc --ad-account-name arcuser --keytab-secret arcuser-keytab-secret --primary-dns-name contososqlmi-primary.contoso.local --primary-port-number 8143 --use-k8s
   requiredParameters:
   - isRequired: true
@@ -131,9 +130,6 @@ directCommands:
   - name: --license-type -l
     summary: 'The license type to apply for this managed instance Allowed values are: BasePrice, LicenseIncluded, DisasterRecovery.Default is LicenseIncluded. The license type can be changed..'
     description: ''
-  - name: --location
-    summary: The Azure location in which the sqlmi metadata will be stored (e.g. eastus).
-    description: ''
   - name: --memory-limit -m
     summary: 'The limit of the capacity of the managed instance as an integer number followed by Gi (gigabytes). Example: 4Gi.'
     description: ''
@@ -163,7 +159,7 @@ directCommands:
     summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purposes. Default is 1 replica for General Purpose, 3 replicas for Business Critical.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the sqlmi resource should be added.
+    summary: The Azure resource group to which the Arc-enabled SQL Managed Instance should be added.
     description: ''
   - name: --retention-days
     summary: Backup retention period, specified in days. Allowed values are 0 to 35. Default is 7. Setting the retention period to 0 will turn off automatic backups for all the databases on the SQL managed instance and any prior backups will be deleted.
@@ -247,8 +243,10 @@ directCommands:
                          [--resource-group]
                          [--use-k8s]
   examples:
-  - summary: Delete a SQL managed instance using default namespace.
-    syntax: az sql mi-arc delete --name sqlmi1 --use-k8s
+  - summary: Delete a SQL managed instance through the Kubernetes API.
+    syntax: az sql mi-arc delete --name sqlmi1 --k8s-namespace arc --use-k8s
+  - summary: Delete a SQL managed instance through Azure Resource Manager (ARM).
+    syntax: az sql mi-arc delete --name sqlmi1 --resource-group rg-name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -262,10 +260,10 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the sqlmi resource should be deleted.
+    summary: The Azure resource group in which the Arc-enabled SQL Managed Instance exists.
     description: ''
   - name: --use-k8s
-    summary: Create SQL managed instance using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_edit
   name: az sql mi-arc edit
@@ -346,7 +344,7 @@ directCommands:
     summary: The path to the azext_arcdata file for the SQL managed instance json file.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the sqlmi resource should be added.
+    summary: The Azure resource group in which the Arc-enabled SQL Managed Instance exists.
     description: ''
   - name: --retention-days
     summary: Backup retention period, specified in days. Allowed values are 0 to 35. Default is 7. Setting the retention period to 0 will turn off automatic backups for all the databases on the SQL managed instance and any prior backups will be deleted.
@@ -373,7 +371,7 @@ directCommands:
     summary: Comma separated list of traceflags. No flags by default.
     description: ''
   - name: --use-k8s
-    summary: Create SQL managed instance using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_get-mirroring-cert
   name: az sql mi-arc get-mirroring-cert
@@ -401,28 +399,32 @@ directCommands:
     summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
   - name: --use-k8s
-    summary: Create SQL managed instance using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_list
   name: az sql mi-arc list
   summary: List SQL managed instances.
   description: ''
   syntax: >-
-    az sql mi-arc list [--k8s-namespace]
+    az sql mi-arc list [--custom-location]
+                       [--k8s-namespace]
                        [--resource-group]
                        [--use-k8s]
   examples:
   - summary: List SQL managed instances.
     syntax: az sql mi-arc list --use-k8s
   optionalParameters:
+  - name: --custom-location
+    summary: The custom location in which the Arc-enabled SQL Managed Instances are deployed. If not specified, all instances in the resource group will be listed.
+    description: ''
   - name: --k8s-namespace -k
-    summary: Namespace where the SQL managed instance is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    summary: The Kubernetes namespace containing the Arc-enabled SQL Managed Instances. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the sqlmi resource should be listed.
+    summary: The Azure resource group containing the Arc-enabled SQL Managed Instances.
     description: ''
   - name: --use-k8s
-    summary: Create SQL managed instance using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_show
   name: az sql mi-arc show
@@ -435,10 +437,10 @@ directCommands:
                        [--resource-group]
                        [--use-k8s]
   examples:
-  - summary: Show the details of an indirect connected SQL managed instance.
-    syntax: az sql mi-arc show --name sqlmi1 --k8s-namespace namespace --use-k8s
-  - summary: Show the details of a directly connected SQL managed instance.
-    syntax: az sql mi-arc show --name sqlmi1 --resource-group resource-group
+  - summary: Show the details of a SQL Managed Instance using the Kubernetes API.
+    syntax: az sql mi-arc show --name sqlmi1 --k8s-namespace arc --use-k8s
+  - summary: Show the details of a SQL Managed Instance by querying Azure Resource Manager (ARM).
+    syntax: az sql mi-arc show --name sqlmi1 --resource-group rg-name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -452,10 +454,10 @@ directCommands:
     summary: A path where the full specification for the SQL managed instance should be written. If omitted, the specification will be written to standard output.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the sqlmi resource should be shown.
+    summary: The Azure resource group in which the Arc-enabled SQL Managed Instance exists.
     description: ''
   - name: --use-k8s
-    summary: Create SQL managed instance using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_update
   name: az sql mi-arc update
@@ -552,7 +554,7 @@ directCommands:
     summary: This option specifies the number of SQL Managed Instance replicas that will be deployed in your Kubernetes cluster for high availability purposes.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the sqlmi resource should be updated.
+    summary: The Azure resource group in which the Arc-enabled SQL Managed Instance exists.
     description: ''
   - name: --retention-days
     summary: Backup retention period, specified in days. Allowed values are 0 to 35. Default is 7. Setting the retention period to 0 will turn off automatic backups for all the databases on the SQL managed instance and any prior backups will be deleted.
@@ -580,7 +582,7 @@ directCommands:
     summary: Comma separated list of traceflags. No flags by default.
     description: ''
   - name: --use-k8s
-    summary: Create SQL managed instance using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_mi-arc_upgrade
   name: az sql mi-arc upgrade
@@ -627,13 +629,13 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the sqlmi resource should be added.
+    summary: The Azure resource group in which the target Arc-enabled SQL Managed Instance exists.
     description: ''
   - name: --target
     summary: The latest valid version to upgrade to. Optional, if no version is specified, the data controller version will be used.
     description: ''
   - name: --use-k8s
-    summary: Create SQL managed instance using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 commands:
 - az_sql_mi-arc_config
