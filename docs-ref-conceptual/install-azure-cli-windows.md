@@ -42,7 +42,7 @@ To download the MSI installer for specific version, change the version segment i
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
-### Powershell Command
+### Powershell
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
@@ -65,8 +65,10 @@ To install specific version, replace the `-Uri` argument with `https://azcliprod
 ### Azure CLI Command (for update only)
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
 
-# [Windows Package Manager (winget)](#tab/winget)
-You can use the `winget` command to install Azure CLI.
+### winget
+
+You can also use `winget` to install and manage updates for Azure CLI.
+
 > [!NOTE]
 > winget is available by default in Windows 11 and modern versions of Windows 10. However, it may not be installed in older versions of Windows. See the [winget documentation](/windows/package-manager/winget/) for installation instructions.
 
