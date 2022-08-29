@@ -32,11 +32,12 @@ List of Azure CLI references that can be used to manage Azure IoT, reference typ
 
 | Reference | Core or extension | Description
 |-|-|-|
+| [az dt](../latest/docs-ref-autogen/dt.yml) | Extension | Manage Azure Digital Twins solutions & infrastructure.
 | [az iot](../latest/docs-ref-autogen/iot.yml) | Both  | All available Azure CLI core commands for Azure IoT.
 | [az iot central](../latest/docs-ref-autogen/iot/central.yml) | Both | Manage IoT Central assets.
 | [az iot device](../latest/docs-ref-autogen/iot/device.yml) | Extension | Leverage device-to-cloud and cloud-to-device messaging capabilities.
+| [az iot device-update](../latest/docs-ref-autogen/iot/device-update.yml) | Extension | Manage Device Update for IoT Hub infrastructure.
 | [az iot dps](../latest/docs-ref-autogen/iot/dps.yml) | Both | Manage Azure IoT Hub Device Provisioning Service.
-| [az dt](../latest/docs-ref-autogen/dt.yml) | Extension | Manage Azure Digital Twins solutions & infrastructure.
 | [az iot edge](../latest/docs-ref-autogen/iot/edge.yml) | Extension | Manage IoT solutions on the Edge.
 | [az iot hub](../latest/docs-ref-autogen/iot/hub.yml) | Both | Manage Azure IoT Hub infrastructure.
 | [az iot product](../latest/docs-ref-autogen/iot/product.yml) | Extension | Manage device testing for product certification.
