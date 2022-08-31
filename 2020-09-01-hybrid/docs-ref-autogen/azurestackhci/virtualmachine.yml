@@ -15,6 +15,9 @@ directCommands:
   syntax: >-
     az azurestackhci virtualmachine create --name
                                            --resource-group
+                                           [--admin-password]
+                                           [--admin-username]
+                                           [--computer-name]
                                            [--extended-location]
                                            [--hardware-profile]
                                            [--image-reference]
@@ -23,16 +26,16 @@ directCommands:
                                            [--network-profile]
                                            [--nic-id]
                                            [--os-profile]
-                                           [--provisioning-state]
+                                           [--provision-vm-agent {false, true}]
                                            [--security-profile]
-                                           [--status]
+                                           [--ssh-public-keys]
                                            [--storage-profile]
                                            [--tags]
                                            [--vm-size]
                                            [--windows-configuration]
   examples:
   - summary: PutVirtualMachine
-    syntax: az azurestackhci virtualmachine create --resource-group "test-rg" --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --hardware-profile vm-size="Default" --network-profile network-interfaces={"id":"test-nic"} --os-profile "{\"adminPassword\":\"password\",\"adminUsername\":\"localadmin\",\"computerName\":\"luamaster\"}" --storage-profile "{\"imageReference\":{\"name\":\"test-gallery-image\"}}" --name "test-vm"
+    syntax: az azurestackhci virtualmachine create --resource-group "test-rg" --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocatio n/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --hardware-profile vm-size="Default" --nic-id "test-nic" --computer-name "test-machine" --admin-username xxx --admin-password xxx --ssh-public-keys /path/to/public_key.pub --provision-vm-agent true --image-reference "test-gallery-image" --name "test-vm"
   requiredParameters:
   - isRequired: true
     name: --name
@@ -43,6 +46,15 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --admin-password
+    summary: AdminPassword - Administrator Password.
+    description: ''
+  - name: --admin-username
+    summary: AdminUsername - Administrator Username.
+    description: ''
+  - name: --computer-name
+    summary: Name of the Computer.
+    description: ''
   - name: --extended-location
     summary: ''
     description: >-
@@ -72,31 +84,28 @@ directCommands:
     description: ''
   - name: --linux-configuration
     summary: LinuxConfiguration - Specifies the security settings for the virtual machine.
-    description: 'Usage: --linux-configuration enable-tpm=XX.'
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --network-profile
     summary: NetworkProfile - describes the network configuration the virtual machine.
-    description: >-
-      Usage: --network-profile network-interfaces=XX
-
-
-      network-interfaces: NetworkInterfaces - list of network interfaces to be attached to the virtual machine.
+    description: ''
   - name: --nic-id
     summary: NicID - Network Interface id to attach to the virtual machine.
     description: ''
   - name: --os-profile
     summary: 'OsProfile - describes the configuration of the operating system and sets login data Expected value: json-string/@json-file.'
     description: ''
-  - name: --provisioning-state
-    summary: Provisioning State.
+  - name: --provision-vm-agent
+    parameterValueGroup: false, true
+    summary: Whether to provision Management agent.
     description: ''
   - name: --security-profile
     summary: SecurityProfile - Specifies the security settings for the virtual machine.
     description: 'Usage: --security-profile enable-tpm=XX.'
-  - name: --status
-    summary: 'MOCVirtualMachineStatus defines the observed state of MOCVirtualMachine Expected value: json-string/@json-file.'
+  - name: --ssh-public-keys
+    summary: Path to SSH public keys.
     description: ''
   - name: --storage-profile
     summary: 'StorageProfile - contains information about the disks and storage information for the virtual machine Expected value: json-string/@json-file.'
