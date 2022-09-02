@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 08/02/2022
+ms.date: 09/06/2022
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,148 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## September 06, 2022
+
+Version 2.40.0
+
+### ACR
+
+* `az acr config authentication-as-arm show`: Add new command to support showing the configured 'Azure AD authenticate as ARM' policy
+* `az acr config authentication-as-arm update`: Add new command to support updating 'Azure AD authenticate as ARM' policy
+* `az acr config soft-delete show`: Add new command to show soft-delete policy
+* `az acr config soft-delete update`: Add new command to update soft-delete policy
+* `az acr repository list-deleted`: Add new command to list deleted repositories
+* `az acr manifest list-deleted`: Add new command to list deleted manifests
+* `az acr manifest list-deleted-tags`: Add new command to list deleted tags
+* `az acr manifest restore`: Add new command to restore deleted manifests and tags
+* `az acr network-rule`: Deprecate params `--subnet` and `--vnet-name`
+* `acr config`: Fix bug in some commands that would in certain circumstances attempt to pull a nonexistent model from SDK
+
+### AKS
+
+* Fix #23468: `az aks nodepool wait` crashes with error "'Namespace' object has no attribute 'nodepool_name'"
+* `az aks check-acr`: Append acr suffix to option `--acr` acording to cloud env
+* `az aks`: Add `--gpu-instance-profile` for Nvidia multi-instan…
+* `az aks update`: Update without args prompts to reconcile
+* `az aks create/update`: Add new parameters `--enable-disk-driver` and `--disable-disk-driver` to enable/disable AzureDisk CSI Driver. When creating new cluster, AzureDisk CSI Driver is enabled by default.
+* `az aks create/update`: Add new parameters `--enable-file-driver` and `--disable-file-driver` to enable/disable AzureFile CSI Driver. When creating new cluster, AzureFile CSI Driver is enabled by default.
+* `az aks create/update`: Add new parameters `--enable-snapshot-controller` and `--disable-snapshot-controller` to enable/disable CSI Snapshot Controller. When creating new cluster, CSI Snapshot Controller is enabled by default.
+* `az aks nodepool add`: Add option `Windows2019`, `Windows2022` to `--os-sku` parameter
+* Fix #23653: `az aks create`: Fix the CrashLoopBackOff issue when set `--network-policy` to 'Calico'
+
+### App Service
+
+* Fix #23417: `az functionapp github-actions add`: Fix the functionapp github actions on java
+* `az functionapp list-runtimes`: Add linuxFxVersion to output
+* `az webapp up`: Show status during deployment for linux apps
+* `az webapp deployment source config-zip`: Show status during deployment for linux apps
+* `az logicapp deployment`: Add a new command group to support managing logic app deployments
+* `az logicapp scale`: Add a new command to support scaling a logic app
+* `az logicapp config`: Add a new command group to support configuring a logic app
+* `az logicapp update`: Add a new command to support updating a logic app
+
+### ARM
+
+* `az bicep`: Use `AZURE_CLI_DISABLE_CONNECTION_VERIFICATION` when checking Bicep CLI versions
+
+### Backup
+
+* `az backup vault create/backup-properties set`: Add support for Alert Settings
+* Fix #23655: `az backup restore restore-disks`: Support storage account being in a different resource group
+
+### Batch
+
+* Fix #23445: `az batch pool supported-images list`: Fix the `NoneType object has no attribute startswith` bug for getting supported images list
+
+### Compute
+
+* `az vm run-command invoke`: Add new parameters `--no-wait` to support not waiting for the long running operation to finish
+* Fix #23194: `sig image-version create`: Fix the `Parameter tags must be of type dict` error when `--tags` parameter is passed as `key=value` pairs
+* Fix #23540: `az ppg create`: Fix the `Parameter tags must be of type dict` error when `--tags` parameter is passed as `key=value` pairs
+* `az sig update`: Add parameters to support updating gallery from private to community
+* `az sig share reset`: Update gallery from community to private
+* `az vm/vmss create`: `--enable-vtpm` is set to `True` by default when the `--security-type` used by the VM/VMSS creation is `TrustedLaunch`
+* Fix #23341: `az vm list-skus`: Fix filtering out VM sizes that are available regionally when they are restricted in all zones
+* `az vm run-command show/list`: Add validation and refine help message for parameter combination
+* `az identity federated-credential`: Add subgroup to support managing federated identity credentials of existing user assigned identities
+
+### Cosmos DB
+
+* `az cosmos db service`: Add service support for cosmosDB
+* `az cosmosdb gremlin graph`: Add analyticalStorageTTL property to sql containers
+
+### Feedback
+
+* `az survey`: New command for CLI survey
+
+### Monitor
+
+* `az monitor action-group test-notifications create`: Add new command
+* `az monitor metric alert`: Support metric namespace with dash
+* `az monitor action-group create`: Add optional parameter `--location`
+
+### NetAppFiles
+
+* `az netappfiles volume create`: Add optional parameter `--kv-private-endpoint-id`
+* `az netappfiles volume-group create`: Add optional parameter `--kv-private-endpoint-id`
+* `az netappfiles volume update`: Add optional parameter `--cool-access`
+* `az netappfiles volume update`: Add optional parameter `--coolness-period`
+* `az netappfiles pool update`: Add optional parameter `--cool-access`
+
+### Network
+
+* `az network application-gateway create`: Support rule priority field provided as part of configuration
+* `az network private-endpoint-connection`: Add `Microsoft.OpenEnergyPlatform/energyServices` provider
+* Fix #22594: `az network bastion create`: Add no wait support for bastion create
+* Fix #23525: `az network bastion create/update`: Add missing arguments and update command
+* `az network watcher packet-capture create`: Add VMSS support in packet capture
+
+### Packaging
+
+* Build RPM for RHEL 9 and CentOS Stream 9
+
+### RDBMS
+
+* `az mysql flexible-server upgrade`: Add major version upgrade for MySQL flexible server
+* `az mysql/postgres flexible-server backup`: Add backup commands for flexible servers
+* `az postgres flexible-server create/update`: Add `SameZone` for HA in PostgreSQL flexible server
+* `az mysql flexible-server create/update/restore/geo-restore/replica`: Add BYOK for MySQL Flexible Server
+* `az mysql flexible-server identity/ad-admin`: User Identity and AAD Admin for MySQL flexible server
+
+### Security
+
+* `az security security-solutions-reference-data`: Add new command group
+* `az security security-solutions`: Add new command group
+
+### Service Bus
+
+* `az servicebus namespace create/update`: Support specifying `--min-tls`
+* `az servicebus namespace network-rule update`: Support updating network rules for given namespace
+
+### Service Connector
+
+* `az spring connection`: Update description after spring app renames
+
+### SignalR
+
+* `az signalr custom-domain`: Support custom domain
+* `az signalr custom-certificate`: Support custom certificate
+
+### SQL
+
+* `az sql mi endpoint-cert`: New command group to manage endpoint certificates
+* `az sql mi partner-cert`: New command group to manage partner certificates
+* `az sql mi link`: New command group to manage instance link
+
+### Storage
+
+* `az storage fs file set-expiry`: New command to support setting expiry for files in ADLS Gen2 file system
+* `az storage account create/update`: Add `--enable-files-aadkerb` to support AAD Kerberos authentication for Azure Files
+* `az storage account local-user`: New command group to manage identities when using SFTP
+* `az storage account create/update`: Add `--enable-sftp` and `--enable-local-user` to support SSH File Transfer Protocol
+* `az storage fs create`: Support encryption scope
+* `az storage fs directory/fs generate-sas`: Support generating SAS token with specified encryption scope
 
 ## August 02, 2022
 
