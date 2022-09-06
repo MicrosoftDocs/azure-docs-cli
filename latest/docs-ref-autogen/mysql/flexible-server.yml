@@ -54,11 +54,15 @@ directCommands:
     az mysql flexible-server create [--address-prefixes]
                                     [--admin-password]
                                     [--admin-user]
+                                    [--backup-identity]
+                                    [--backup-key]
                                     [--backup-retention]
                                     [--database-name]
                                     [--geo-redundant-backup {Disabled, Enabled}]
                                     [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
+                                    [--identity]
                                     [--iops]
+                                    [--key]
                                     [--location]
                                     [--name]
                                     [--private-dns-zone]
@@ -129,6 +133,80 @@ directCommands:
          --name testserver --location testLocation \
         --subnet /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
         --private-dns-zone /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.mysql.database.azure.com
+  - summary: Create a MySQL flexible server with data encryption.
+    syntax: >-
+      # create keyvault
+
+      az keyvault create -g testGroup -n testVault --location testLocation --enable-soft-delete true --enable-purge-protection true
+
+
+      # create key in keyvault
+
+      az keyvault key create --name testKey -p software --vault-name testVault
+
+
+      # create identity
+
+      az identity create -g testGroup --name testIdentity --location testLocation
+
+
+      # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
+
+      az keyvault set-policy -g testGroup -n testVault --object-id '<principalID of testIdentity>' --key-permissions wrapKey unwrapKey get list
+
+
+      # create flexible server with data encryption enabled
+
+      az mysql flexible-server create -g testGroup -n testServer --location testLocation \
+        --key '<key identifier of testKey>' --identity testIdentity
+  - summary: Create a MySQL flexible server with geo redundant backup and data encryption.
+    syntax: >-
+      # create keyvault
+
+      az keyvault create -g testGroup -n testVault --location testLocation --enable-soft-delete true --enable-purge-protection true
+
+
+      # create key in keyvault
+
+      az keyvault key create --name testKey -p software --vault-name testVault
+
+
+      # create identity
+
+      az identity create -g testGroup --name testIdentity --location testLocation
+
+
+      # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
+
+      az keyvault set-policy -g testGroup -n testVault --object-id '<principalID of testIdentity>' --key-permissions wrapKey unwrapKey get list
+
+
+      # create backup keyvault
+
+      az keyvault create -g testGroup -n testBackupVault --location testBackupLocation --enable-soft-delete true --enable-purge-protection true
+
+
+      # create backup key in backup keyvault
+
+      az keyvault key create --name testBackupKey -p software --vault-name testBackupVault
+
+
+      # create backup identity
+
+      az identity create -g testGroup --name testBackupIdentity --location testBackupLocation
+
+
+      # add testBackupIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testBackupVault
+
+      az keyvault set-policy -g testGroup -n testBackupVault --object-id '<principalID of testBackupIdentity>' --key-permissions wrapKey unwrapKey get list
+
+
+      # create flexible server with geo redundant backup and data encryption enabled
+
+      az mysql flexible-server create -g testGroup -n testServer --location testLocation \
+        --geo-redundant-backup Enabled \
+        --key '<key identifier of testKey>' --identity testIdentity \
+        --backup-key '<key identifier of testBackupKey>' --backup-identity testBackupIdentity
   optionalParameters:
   - name: --address-prefixes
     summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
@@ -137,8 +215,14 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: typicalmare5
+    defaultValue: ashamedostrich9
     summary: Administrator username for the server. Once set, it cannot be changed.
+    description: ''
+  - name: --backup-identity
+    summary: The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
+    description: ''
+  - name: --backup-key
+    summary: The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
     description: ''
   - name: --backup-retention
     defaultValue: "7"
@@ -157,8 +241,14 @@ directCommands:
     parameterValueGroup: Disabled, Enabled, SameZone, ZoneRedundant
     summary: Enable (ZoneRedundant or SameZone) or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time.
     description: ''
+  - name: --identity
+    summary: The name or resource ID of the user assigned identity for data encryption.
+    description: ''
   - name: --iops
     summary: Number of IOPS to be allocated for this server. You will get certain amount of free IOPS based on compute and storage provisioned. The default value for IOPS is free IOPS. To learn more about IOPS based on compute and storage, refer to IOPS in Azure Database for MySQL Flexible Server.
+    description: ''
+  - name: --key
+    summary: The resource ID of the primary keyvault key for data encryption.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -177,7 +267,7 @@ directCommands:
     description: ''
   - name: --sku-name
     defaultValue: Standard_B1ms
-    summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_D4s_v3.'
+    summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.'
     description: ''
   - name: --standby-zone
     summary: The availability zone information of the standby server when high availability is enabled.
@@ -474,7 +564,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: 2022-09-05T13:29:53+00:00
+    defaultValue: 2022-09-06T03:13:32+00:00
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
     description: ''
   - name: --subnet
@@ -595,11 +685,16 @@ directCommands:
   syntax: >-
     az mysql flexible-server update [--add]
                                     [--admin-password]
+                                    [--backup-identity]
+                                    [--backup-key]
                                     [--backup-retention]
+                                    [--disable-data-encryption {false, true}]
                                     [--force-string]
                                     [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
+                                    [--identity]
                                     [--ids]
                                     [--iops]
+                                    [--key]
                                     [--maintenance-window]
                                     [--name]
                                     [--remove]
@@ -617,6 +712,17 @@ directCommands:
     syntax: az mysql flexible-server update --sku-name Standard_D4ds_v4 --tier GeneralPurpose
   - summary: Update a flexible server's tags.
     syntax: az mysql flexible-server update --resource-group testGroup --name testserver --tags "k1=v1" "k2=v2"
+  - summary: Set or change key and identity for data encryption.
+    syntax: >-
+      az mysql flexible-server update --resource-group testGroup --name testserver \
+        --key '<key identifier of newKey>' --identity newIdentity
+  - summary: Set or change key, identity, backup key and backup identity for data encryption with geo redundant backup.
+    syntax: >-
+      az mysql flexible-server update --resource-group testGroup --name testserver \
+        --key '<key identifier of newKey>' --identity newIdentity \
+        --backup-key '<key identifier of newBackupKey>' --backup-identity newBackupIdentity
+  - summary: Disable data encryption for flexible server.
+    syntax: az mysql flexible-server update --resource-group testGroup --name testserver --disable-data-encryption
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -624,8 +730,18 @@ directCommands:
   - name: --admin-password -p
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
+  - name: --backup-identity
+    summary: The name or resource ID of the geo backup user identity for data encryption. The identity needs to be in the same region as the backup region.
+    description: ''
+  - name: --backup-key
+    summary: The resource ID of the geo backup keyvault key for data encryption. The key needs to be in the same region as the backup region.
+    description: ''
   - name: --backup-retention
     summary: The number of days a backup is retained. Range of 1 to 35 days. Default is 7 days.
+    description: ''
+  - name: --disable-data-encryption
+    parameterValueGroup: false, true
+    summary: Disable data encryption by removing key(s).
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
@@ -634,11 +750,17 @@ directCommands:
     parameterValueGroup: Disabled, Enabled, SameZone, ZoneRedundant
     summary: Enable (ZoneRedundant or SameZone) or disable high availability feature. Default value is Disabled. High availability can only be set during flexible server create time.
     description: ''
+  - name: --identity
+    summary: The name or resource ID of the user assigned identity for data encryption.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --iops
     summary: Number of IOPS to be allocated for this server. You will get certain amount of free IOPS based on compute and storage provisioned. The default value for IOPS is free IOPS. To learn more about IOPS based on compute and storage, refer to IOPS in Azure Database for MySQL Flexible Server.
+    description: ''
+  - name: --key
+    summary: The resource ID of the primary keyvault key for data encryption.
     description: ''
   - name: --maintenance-window
     summary: 'Period of time (UTC) designated for maintenance. Examples: "Sun:23:30" to schedule on Sunday, 11:30pm UTC. To set back to default pass in "Disabled".'
@@ -659,7 +781,7 @@ directCommands:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku-name
-    summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_D4s_v3.'
+    summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.'
     description: ''
   - name: --standby-zone
     summary: The availability zone information of the standby server when high availability is enabled.
@@ -676,6 +798,46 @@ directCommands:
     description: ''
   - name: --tier
     summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, Memory Optimized.'
+    description: ''
+- uid: az_mysql_flexible-server_upgrade
+  name: az mysql flexible-server upgrade
+  summary: Upgrade the major version of a flexible server.
+  description: ''
+  syntax: >-
+    az mysql flexible-server upgrade --version {8}
+                                     [--ids]
+                                     [--name]
+                                     [--resource-group]
+                                     [--yes]
+  examples:
+  - summary: Upgrade server 'testsvr' to MySQL major version 8.
+    syntax: >-
+      # make sure that sql_mode only contains values allowed in new version, for example:
+
+      az mysql flexible-server parameter set -g testgroup -s testsvr -n sql_mode \
+        -v "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO"
+
+      # upgrade server to MySQL major version 8.
+
+      az mysql flexible-server upgrade -g testgroup -n testsvr -v 8
+  requiredParameters:
+  - isRequired: true
+    name: --version -v
+    parameterValueGroup: "8"
+    summary: Server major version.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_mysql_flexible-server_wait
   name: az mysql flexible-server wait
@@ -729,6 +891,16 @@ directCommands:
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
+- az_mysql_flexible-server_ad-admin
+- az_mysql_flexible-server_ad-admin_create
+- az_mysql_flexible-server_ad-admin_delete
+- az_mysql_flexible-server_ad-admin_list
+- az_mysql_flexible-server_ad-admin_show
+- az_mysql_flexible-server_ad-admin_wait
+- az_mysql_flexible-server_backup
+- az_mysql_flexible-server_backup_create
+- az_mysql_flexible-server_backup_list
+- az_mysql_flexible-server_backup_show
 - az_mysql_flexible-server_connect
 - az_mysql_flexible-server_create
 - az_mysql_flexible-server_db
@@ -748,6 +920,11 @@ commands:
 - az_mysql_flexible-server_firewall-rule_show
 - az_mysql_flexible-server_firewall-rule_update
 - az_mysql_flexible-server_geo-restore
+- az_mysql_flexible-server_identity
+- az_mysql_flexible-server_identity_assign
+- az_mysql_flexible-server_identity_list
+- az_mysql_flexible-server_identity_remove
+- az_mysql_flexible-server_identity_show
 - az_mysql_flexible-server_list
 - az_mysql_flexible-server_list-skus
 - az_mysql_flexible-server_parameter
@@ -768,6 +945,7 @@ commands:
 - az_mysql_flexible-server_start
 - az_mysql_flexible-server_stop
 - az_mysql_flexible-server_update
+- az_mysql_flexible-server_upgrade
 - az_mysql_flexible-server_wait
 globalParameters:
 - name: --debug
