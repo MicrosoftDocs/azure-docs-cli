@@ -100,9 +100,12 @@ directCommands:
                   [--ca-profile]
                   [--client-secret]
                   [--defender-config]
+                  [--disable-disk-driver]
+                  [--disable-file-driver]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-rbac]
+                  [--disable-snapshot-controller]
                   [--dns-name-prefix]
                   [--dns-service-ip]
                   [--docker-bridge-address]
@@ -128,6 +131,7 @@ directCommands:
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
+                  [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--host-group-id]
                   [--http-proxy-config]
                   [--kubelet-config]
@@ -159,7 +163,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
-                  [--os-sku {CBLMariner, Ubuntu}]
+                  [--os-sku {CBLMariner, Ubuntu, Windows2019, Windows2022}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-subnet-id]
@@ -332,6 +336,12 @@ directCommands:
   - name: --defender-config
     summary: Path to JSON file containing Microsoft Defender profile configurations.
     description: ''
+  - name: --disable-disk-driver
+    summary: Disable AzureDisk CSI Driver.
+    description: ''
+  - name: --disable-file-driver
+    summary: Disable AzureFile CSI Driver.
+    description: ''
   - name: --disable-local-accounts
     summary: If set to true, getting static credential will be disabled for this cluster.
     description: ''
@@ -340,6 +350,9 @@ directCommands:
     description: ''
   - name: --disable-rbac
     summary: Disable Kubernetes Role-Based Access Control.
+    description: ''
+  - name: --disable-snapshot-controller
+    summary: Disable CSI Snapshot Controller.
     description: ''
   - name: --dns-name-prefix -p
     summary: Prefix for hostnames that are created. If not specified, generate a hostname using the managed cluster and resource group names.
@@ -438,6 +451,10 @@ directCommands:
       You do not need to set this if you have set DNS server in the VNET used by the cluster.
 
       You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
+  - name: --gpu-instance-profile
+    parameterValueGroup: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
+    summary: GPU instance profile to partition multi-gpu Nvidia GPUs.
+    description: ''
   - name: --host-group-id
     summary: The fully qualified dedicated host group id used to provision agent node pool.
     description: ''
@@ -543,7 +560,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --os-sku
-    parameterValueGroup: CBLMariner, Ubuntu
+    parameterValueGroup: CBLMariner, Ubuntu, Windows2019, Windows2022
     summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --outbound-type
@@ -998,6 +1015,34 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
+- uid: az_aks_operation-abort
+  name: az aks operation-abort
+  summary: Abort last running operation on managed cluster.
+  description: ''
+  syntax: >-
+    az aks operation-abort --name
+                           --resource-group
+                           [--aks-custom-headers]
+                           [--no-wait]
+  examples:
+  - summary: Abort operation on managed cluster
+    syntax: az aks operation-abort -g myResourceGroup -n myAKSCluster
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the managed cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
 - uid: az_aks_remove-dev-spaces
   name: az aks remove-dev-spaces
   summary: Remove Azure Dev Spaces from a managed Kubernetes cluster.
@@ -1151,7 +1196,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_update
   name: az aks update
-  summary: Update a managed Kubernetes cluster.
+  summary: Update a managed Kubernetes cluster. When called with no optional arguments this attempts to move the cluster to its goal state without changing the current cluster configuration. This can be used to move out of a non succeeded state.
   description: ''
   syntax: >-
     az aks update --name
@@ -1175,19 +1220,25 @@ directCommands:
                   [--disable-azure-rbac]
                   [--disable-cluster-autoscaler]
                   [--disable-defender]
+                  [--disable-disk-driver]
+                  [--disable-file-driver]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
+                  [--disable-snapshot-controller]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-cluster-autoscaler]
                   [--enable-defender]
+                  [--enable-disk-driver]
+                  [--enable-file-driver]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
+                  [--enable-snapshot-controller]
                   [--enable-windows-gmsa]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
@@ -1211,6 +1262,8 @@ directCommands:
                   [--windows-admin-password]
                   [--yes]
   examples:
+  - summary: Reconcile the cluster back to its current state.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster
   - summary: Update a kubernetes cluster with standard SKU load balancer to use two AKS created IPs for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IPs for the load balancer outbound connection usage.
@@ -1326,6 +1379,12 @@ directCommands:
   - name: --disable-defender
     summary: Disable defender profile.
     description: ''
+  - name: --disable-disk-driver
+    summary: Disable AzureDisk CSI Driver.
+    description: ''
+  - name: --disable-file-driver
+    summary: Disable AzureFile CSI Driver.
+    description: ''
   - name: --disable-local-accounts
     summary: If set to true, getting static credential will be disabled for this cluster.
     description: ''
@@ -1334,6 +1393,9 @@ directCommands:
     description: ''
   - name: --disable-secret-rotation
     summary: Disable secret rotation. Use with azure-keyvault-secrets-provider addon.
+    description: ''
+  - name: --disable-snapshot-controller
+    summary: Disable CSI Snapshot Controller.
     description: ''
   - name: --enable-aad
     summary: Enable managed AAD feature for cluster.
@@ -1353,6 +1415,12 @@ directCommands:
   - name: --enable-defender
     summary: Enable Microsoft Defender security profile.
     description: ''
+  - name: --enable-disk-driver
+    summary: Enable AzureDisk CSI Driver.
+    description: ''
+  - name: --enable-file-driver
+    summary: Enable AzureFile CSI Driver.
+    description: ''
   - name: --enable-local-accounts
     summary: If set to true, will enable getting static credential for this cluster.
     description: ''
@@ -1364,6 +1432,9 @@ directCommands:
     description: ''
   - name: --enable-secret-rotation
     summary: Enable secret rotation. Use with azure-keyvault-secrets-provider addon.
+    description: ''
+  - name: --enable-snapshot-controller
+    summary: Enable Snapshot Controller.
     description: ''
   - name: --enable-windows-gmsa
     summary: Enable Windows gmsa on cluster.
@@ -1693,6 +1764,7 @@ commands:
 - az_aks_nodepool_delete
 - az_aks_nodepool_get-upgrades
 - az_aks_nodepool_list
+- az_aks_nodepool_operation-abort
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
 - az_aks_nodepool_snapshot
@@ -1706,6 +1778,7 @@ commands:
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
 - az_aks_nodepool_wait
+- az_aks_operation-abort
 - az_aks_pod-identity
 - az_aks_pod-identity_add
 - az_aks_pod-identity_delete
@@ -1760,5 +1833,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/28/2022
+  ms.date: 08/30/2022
   description: Manage Azure Kubernetes Services.

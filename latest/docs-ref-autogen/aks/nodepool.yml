@@ -19,6 +19,7 @@ directCommands:
                         [--enable-node-public-ip]
                         [--enable-ultra-ssd]
                         [--eviction-policy {Deallocate, Delete}]
+                        [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                         [--host-group-id]
                         [--kubelet-config]
                         [--kubernetes-version]
@@ -36,7 +37,7 @@ directCommands:
                         [--node-public-ip-prefix-id]
                         [--node-taints]
                         [--node-vm-size]
-                        [--os-sku {CBLMariner, Ubuntu}]
+                        [--os-sku {CBLMariner, Ubuntu, Windows2019, Windows2022}]
                         [--os-type]
                         [--pod-subnet-id]
                         [--ppg]
@@ -99,6 +100,10 @@ directCommands:
     parameterValueGroup: Deallocate, Delete
     summary: The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
     description: ''
+  - name: --gpu-instance-profile
+    parameterValueGroup: MIG1g, MIG2g, MIG3g, MIG4g, MIG7g
+    summary: GPU instance profile to partition multi-gpu Nvidia GPUs.
+    description: ''
   - name: --host-group-id
     summary: The fully qualified dedicated host group id used to provision agent node pool.
     description: ''
@@ -156,8 +161,8 @@ directCommands:
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --os-sku
-    parameterValueGroup: CBLMariner, Ubuntu
-    summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner for Linux. Windows2022 for Windows Server 2022.
+    parameterValueGroup: CBLMariner, Ubuntu, Windows2019, Windows2022
+    summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner for Linux. Windows2019 or Windows2022 for Windows.
     description: ''
   - name: --os-type
     summary: The OS Type. Linux or Windows.
@@ -265,6 +270,39 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
+- uid: az_aks_nodepool_operation-abort
+  name: az aks nodepool operation-abort
+  summary: Abort last running operation on nodepool.
+  description: ''
+  syntax: >-
+    az aks nodepool operation-abort --cluster-name
+                                    --nodepool-name
+                                    --resource-group
+                                    [--aks-custom-headers]
+                                    [--no-wait]
+  examples:
+  - summary: Abort operation on agent pool
+    syntax: az aks nodepool operation-abort -g myResourceGroup --nodepool-name nodepool1 --cluster-name myAKSCluster
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: The cluster name.
+    description: ''
+  - isRequired: true
+    name: --nodepool-name
+    summary: Agent pool name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
 - uid: az_aks_nodepool_scale
   name: az aks nodepool scale
   summary: Scale the node pool in a managed Kubernetes cluster.
@@ -389,8 +427,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_nodepool_update
   name: az aks nodepool update
-  summary: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count.
-  description: ''
+  summary: Update a node pool properties.
+  description: Update a node pool to enable/disable cluster-autoscaler or change min-count or max-count. When called with no optional arguments this attempts to move the node pool to its goal state without changing the current node pool configuration. This can be used to move out of a non succeeded state.
   syntax: >-
     az aks nodepool update --cluster-name
                            --name
@@ -409,6 +447,8 @@ directCommands:
                            [--tags]
                            [--update-cluster-autoscaler]
   examples:
+  - summary: Reconcile the nodepool back to its current state.
+    syntax: az aks nodepool update -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
   - summary: Enable cluster-autoscaler within node count range [1,5]
     syntax: az aks nodepool update --enable-cluster-autoscaler --min-count 1 --max-count 5 -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster
   - summary: Disable cluster-autoscaler for an existing cluster
@@ -458,7 +498,7 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --node-taints
-    summary: The node taints for the node pool.
+    summary: The node taints for the node pool. You can update the existing node taint of a nodepool or create a new node taint for a nodepool.
     description: ''
   - name: --scale-down-mode
     parameterValueGroup: Deallocate, Delete
@@ -579,6 +619,7 @@ commands:
 - az_aks_nodepool_delete
 - az_aks_nodepool_get-upgrades
 - az_aks_nodepool_list
+- az_aks_nodepool_operation-abort
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
 - az_aks_nodepool_snapshot
@@ -611,5 +652,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/28/2022
+  ms.date: 08/30/2022
   description: Commands to manage node pools in Kubernetes kubernetes cluster.
