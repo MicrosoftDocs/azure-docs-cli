@@ -10,9 +10,8 @@ directCommands:
   description: ''
   syntax: >-
     az mysql flexible-server server-logs download --name
-                                                  [--ids]
-                                                  [--resource-group]
-                                                  [--server-name]
+                                                  --resource-group
+                                                  --server-name
   examples:
   - summary: Download log files f1 and f2 to the current directory from the server 'testsvr'.
     syntax: az mysql flexible-server server-logs download -g testgroup -s testsvr -n f1.log f2.log
@@ -21,27 +20,24 @@ directCommands:
     name: --name -n
     summary: Space-separated list of log filenames on the server to download.
     description: ''
-  optionalParameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --server-name -s
-    summary: Name of the Server.
+  - isRequired: true
+    name: --server-name -s
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
 - uid: az_mysql_flexible-server_server-logs_list
   name: az mysql flexible-server server-logs list
   summary: List log files for a server.
   description: ''
   syntax: >-
-    az mysql flexible-server server-logs list [--file-last-written]
+    az mysql flexible-server server-logs list --resource-group
+                                              --server-name
+                                              [--file-last-written]
                                               [--filename-contains]
-                                              [--ids]
                                               [--max-file-size]
-                                              [--resource-group]
-                                              [--server-name]
   examples:
   - summary: List log files for 'testsvr' modified in the last 72 hours (default value).
     syntax: az mysql flexible-server server-logs list -g testgroup -s testsvr
@@ -49,6 +45,15 @@ directCommands:
     syntax: az mysql flexible-server server-logs list -g testgroup -s testsvr --file-last-written 10
   - summary: List log files for 'testsvr' less than 30Kb in size.
     syntax: az mysql flexible-server server-logs list -g testgroup -s testsvr --max-file-size 30
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --server-name -s
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
   optionalParameters:
   - name: --file-last-written
     defaultValue: "72"
@@ -57,17 +62,8 @@ directCommands:
   - name: --filename-contains
     summary: The pattern that file name should match.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
   - name: --max-file-size
     summary: The file size limitation to filter files.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --server-name -s
-    summary: Name of the Server.
     description: ''
 commands:
 - az_mysql_flexible-server_server-logs_download
