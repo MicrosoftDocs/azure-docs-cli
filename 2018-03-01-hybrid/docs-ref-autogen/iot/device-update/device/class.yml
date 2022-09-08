@@ -11,7 +11,7 @@ directCommands:
 - uid: az_iot_device-update_device_class_delete
   name: az iot device-update device class delete
   summary: Delete a device class or device class subgroup.
-  description: Device classes are created automatically when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by device class subgroups. If all device class subgroups for a target device class are deleted then the device class itself can also be deleted to remove the records from the system and to stop checking the compatibility of the device class with new updates. If a device is ever reconnected its device class will be re-created if it does not exist.
+  description: Device classes are automatically created when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by device class subgroups. If all device class subgroups for a target device class are deleted then the device class itself can also be deleted to remove the records from the system and to stop checking the compatibility of the device class with new updates. If a device is ever reconnected its device class will be re-created if it does not exist.
   syntax: >-
     az iot device-update device class delete --account
                                              --cid
@@ -29,22 +29,22 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --account -n
-    summary: Device Update account name.
+    summary: Device Update account name. You can configure the default account name using `az config set defaults.adu_account=<name>`.
     description: ''
   - isRequired: true
     name: --cid --class-id
-    summary: Device class Id.
+    summary: Device class Id. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
     description: ''
   - isRequired: true
     name: --instance -i
-    summary: Device Update instance name.
+    summary: Device Update instance name.You can configure the default instance name using `az config set defaults.adu_instance=<name>`.
     description: ''
   optionalParameters:
   - name: --gid --group-id
-    summary: Device group Id.
+    summary: Device group Id. This is created from the value of the ADUGroup tag in the connected IoT Hub's device/module twin or $default for devices with no tag.
     description: ''
   - name: --resource-group -g
-    summary: Device Update account resource group name. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group=<name>`.
     description: ''
   - name: --yes -y
     parameterValueGroup: false, true
@@ -63,28 +63,30 @@ directCommands:
   examples:
   - summary: List device classes within an instance.
     syntax: az iot device-update device class list -n {account_name} -i {instance_name}
+  - summary: List instance device classes filtered by friendly name.
+    syntax: az iot device-update device class list -n {account_name} -i {instance_name} --filter "friendlyName eq 'my-favorite-class'"
   - summary: List device class subgroups for the group.
     syntax: az iot device-update device class list -n {account_name} -i {instance_name} --group-id {device_group_id}
-  - summary: List device class subgroups for the group, filtered by compatProperties/manufacturer
+  - summary: List device class subgroups for the group, filtered by compatProperties/manufacturer.
     syntax: az iot device-update device class list -n {account_name} -i {instance_name} --group-id {device_group_id} --filter "compatProperties/manufacturer eq 'Contoso'"
   requiredParameters:
   - isRequired: true
     name: --account -n
-    summary: Device Update account name.
+    summary: Device Update account name. You can configure the default account name using `az config set defaults.adu_account=<name>`.
     description: ''
   - isRequired: true
     name: --instance -i
-    summary: Device Update instance name.
+    summary: Device Update instance name.You can configure the default instance name using `az config set defaults.adu_instance=<name>`.
     description: ''
   optionalParameters:
   - name: --filter
-    summary: Filters device class subgroups based on device class compat property names and values. For example "compatProperties/manufacturer eq 'Contoso'". --group-id is required to use --filter.
+    summary: If provided with --group-id, supports filtering based on device class compat property names and values. For example "compatProperties/manufacturer eq 'Contoso'". Otherwise supports filtering by class friendly name.
     description: ''
   - name: --gid --group-id
-    summary: Device group Id.
+    summary: Device group Id. This is created from the value of the ADUGroup tag in the connected IoT Hub's device/module twin or $default for devices with no tag.
     description: ''
   - name: --resource-group -g
-    summary: Device Update account resource group name. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group=<name>`.
     description: ''
 - uid: az_iot_device-update_device_class_show
   name: az iot device-update device class show
@@ -113,30 +115,30 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --account -n
-    summary: Device Update account name.
+    summary: Device Update account name. You can configure the default account name using `az config set defaults.adu_account=<name>`.
     description: ''
   - isRequired: true
     name: --cid --class-id
-    summary: Device class Id.
+    summary: Device class Id. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
     description: ''
   - isRequired: true
     name: --instance -i
-    summary: Device Update instance name.
+    summary: Device Update instance name.You can configure the default instance name using `az config set defaults.adu_instance=<name>`.
     description: ''
   optionalParameters:
   - name: --best-update
     parameterValueGroup: false, true
-    summary: Flag indicating the command should fetch the best available update for the device class subgroup including a count of how many devices need the update. Group Id is required for this flag. A best update is the lastest update that meets all compatibility specifications of a device class.
+    summary: Flag indicating the command should fetch the best available update for the device class subgroup including a count of how many devices need the update. Group Id is required for this flag. A best update is the latest update that meets all compatibility specifications of a device class.
     description: ''
   - name: --gid --group-id
-    summary: Device group Id.
+    summary: Device group Id. This is created from the value of the ADUGroup tag in the connected IoT Hub's device/module twin or $default for devices with no tag.
     description: ''
   - name: --installable-updates
     parameterValueGroup: false, true
     summary: Flag indicating the command should fetch installable updates for the device class.
     description: ''
   - name: --resource-group -g
-    summary: Device Update account resource group name. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group=<name>`.
     description: ''
   - name: --update-compliance
     parameterValueGroup: false, true
@@ -158,22 +160,22 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --account -n
-    summary: Device Update account name.
+    summary: Device Update account name. You can configure the default account name using `az config set defaults.adu_account=<name>`.
     description: ''
   - isRequired: true
     name: --cid --class-id
-    summary: Device class Id.
+    summary: Device class Id. This is generated from the model Id and the compat properties reported by the device update agent in the Device Update PnP interface in IoT Hub. It is a hex-encoded SHA1 hash.
     description: ''
   - isRequired: true
     name: --instance -i
-    summary: Device Update instance name.
+    summary: Device Update instance name.You can configure the default instance name using `az config set defaults.adu_instance=<name>`.
     description: ''
   optionalParameters:
   - name: --friendly-name
-    summary: Friendly name associated with the device class.
+    summary: The device class friendly name. The friendly name must be 1 - 100 characters and supports alphanumeric, dot and dash values.
     description: ''
   - name: --resource-group -g
-    summary: Device Update account resource group name. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Device Update account resource group name. You can configure the default group using `az config set defaults.adu_group=<name>`.
     description: ''
 commands:
 - az_iot_device-update_device_class_delete
