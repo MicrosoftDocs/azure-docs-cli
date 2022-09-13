@@ -30,7 +30,13 @@ For Linux distributions with `dnf` such as RHEL 8 or CentOS Stream 8, there are 
    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
    ```
 
-2. For RHEL 8 or CentOS Stream 8, add `packages-microsoft-com-prod` repository:
+2. For RHEL 9 or CentOS Stream 9, add `packages-microsoft-com-prod` repository:
+
+   ```bash
+   sudo dnf install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
+   ```
+
+   For RHEL 8 or CentOS Stream 8, add `packages-microsoft-com-prod` repository:
 
    ```bash
    sudo dnf install -y https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm
