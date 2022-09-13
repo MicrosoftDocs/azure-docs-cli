@@ -20,6 +20,7 @@ directCommands:
                                 [--data-vhds-uris]
                                 [--end-of-life-date]
                                 [--exclude-from-latest {false, true}]
+                                [--image-version]
                                 [--location]
                                 [--managed-image]
                                 [--no-wait]
@@ -31,6 +32,7 @@ directCommands:
                                 [--tags]
                                 [--target-region-encryption]
                                 [--target-regions]
+                                [--virtual-machine]
   examples:
   - summary: Add a new image version from a virtual machine
     syntax: >-
@@ -40,7 +42,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
   - summary: Add a new image version from a managed image
     syntax: >-
       az sig image-version create --resource-group MyResourceGroup \
@@ -58,7 +60,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/galleries/MyGallery/images/MyImageDefinition/versions/1.0.0
+      --image-version /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/galleries/MyGallery/images/MyImageDefinition/versions/1.0.0
   - summary: Add a new image version from a managed disk
     syntax: >-
       az sig image-version create --resource-group MyResourceGroup \
@@ -167,7 +169,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --target-regions westus=2=standard eastus \
 
@@ -182,7 +184,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --no-wait
   - summary: Add a new image version but remove it from consideration as latest version in its image definition
@@ -193,7 +195,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --exclude-from-latest true
   - summary: Add a new image version and set its end-of-life date. The image version can still be used to create a virtual machine after its end-of-life date.
@@ -204,7 +206,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --end-of-life-date 2024-08-02T00:00:00+00:00
   requiredParameters:
@@ -247,6 +249,9 @@ directCommands:
     parameterValueGroup: false, true
     summary: The flag means that if it is set to true, people deploying VMs with version omitted will not use this version.
     description: ''
+  - name: --image-version
+    summary: Resource id of gallery image version source.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
@@ -280,6 +285,9 @@ directCommands:
     description: ''
   - name: --target-regions
     summary: Space-separated list of regions and their replica counts. Use `<region>[=<replica count>][=<storage account type>]` to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
+    description: ''
+  - name: --virtual-machine
+    summary: Resource id of VM source.
     description: ''
 - uid: az_sig_image-version_delete
   name: az sig image-version delete

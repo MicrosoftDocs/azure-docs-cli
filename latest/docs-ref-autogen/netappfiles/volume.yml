@@ -39,9 +39,11 @@ directCommands:
                                  [--kerberos5i-rw]
                                  [--kerberos5p-r]
                                  [--kerberos5p-rw]
+                                 [--kv-private-endpoint-id]
                                  [--ldap-enabled {false, true}]
                                  [--location]
                                  [--network-features]
+                                 [--no-wait]
                                  [--policy-enforced {false, true}]
                                  [--protocol-types]
                                  [--remote-volume-resource-id]
@@ -62,9 +64,12 @@ directCommands:
                                  [--unix-read-write {false, true}]
                                  [--vault-id]
                                  [--volume-type]
+                                 [--zones]
   examples:
   - summary: Create an ANF volume
     syntax: az netappfiles volume create -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname -l westus2 --service-level premium --usage-threshold 100 --file-path "unique-file-path" --vnet myvnet --subnet mysubnet --protocol-types NFSv3 NFSv4.1
+  - summary: Create an ANF volume with zones (Availability Zone) specified
+    syntax: az netappfiles volume create -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname -l westus2 --service-level premium --usage-threshold 100 --file-path "unique-file-path" --vnet myvnet --subnet mysubnet --protocol-types NFSv3 --zones zone1
   requiredParameters:
   - isRequired: true
     name: --account-name -a
@@ -92,7 +97,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --vnet
-    summary: The ARM Id or name of the vnet for the volume.
+    summary: Name or Resource ID of the vnet. If you want to use a vnet in other resource group or subscription, please provide the Resource ID instead of the name of the vnet.
     description: ''
   optionalParameters:
   - name: --allowed-clients
@@ -169,6 +174,9 @@ directCommands:
   - name: --kerberos5p-rw
     summary: Kerberos5p Read and write access.
     description: ''
+  - name: --kv-private-endpoint-id
+    summary: The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+    description: ''
   - name: --ldap-enabled
     parameterValueGroup: false, true
     summary: Specifies whether LDAP is enabled or not for a given NFS volume.
@@ -178,6 +186,9 @@ directCommands:
     description: ''
   - name: --network-features
     summary: Basic network, or Standard features available to the volume. Possible values are Basic and Standard. Default value is Basic.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --policy-enforced
     parameterValueGroup: false, true
@@ -221,7 +232,7 @@ directCommands:
     description: ''
   - name: --subnet
     defaultValue: default
-    summary: The ARM Id or name of the delegated subnet for the vnet. If omitted 'default' will be used.
+    summary: The name of the subnet for the volume.
     description: ''
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
@@ -246,6 +257,9 @@ directCommands:
   - name: --volume-type
     summary: Whether the volume should be a data protection volume ("DataProtection"), empty if this is not a data protection volume.
     description: ''
+  - name: --zones
+    summary: Availability Zone.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_volume_delete
   name: az netappfiles volume delete
@@ -256,6 +270,7 @@ directCommands:
                                  [--force-delete {false, true}]
                                  [--ids]
                                  [--name]
+                                 [--no-wait]
                                  [--pool-name]
                                  [--resource-group]
   examples:
@@ -275,8 +290,45 @@ directCommands:
   - name: --name --volume-name -n -v
     summary: The name of the ANF volume.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --pool-name -p
     summary: The name of the ANF pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_volume_finalize-relocation
+  name: az netappfiles volume finalize-relocation
+  summary: Finalizes the relocation of the Azure NetApp Files (ANF) volume and cleans up the old volume.
+  description: ''
+  syntax: >-
+    az netappfiles volume finalize-relocation [--account-name]
+                                              [--ids]
+                                              [--name]
+                                              [--no-wait]
+                                              [--pool-name]
+                                              [--resource-group]
+  examples:
+  - summary: Finalizes the relocation of the volume and cleans up the old volume
+    syntax: az netappfiles volume finalize-relocation -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname
+  optionalParameters:
+  - name: --account-name -a
+    summary: Name of the ANF account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --volume-name -n -v
+    summary: Name of the ANF volume.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --pool-name -p
+    summary: Name of the ANF pool.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -316,6 +368,7 @@ directCommands:
                                       [--account-name]
                                       [--ids]
                                       [--name]
+                                      [--no-wait]
                                       [--pool-name]
                                       [--resource-group]
   examples:
@@ -336,8 +389,79 @@ directCommands:
   - name: --name --volume-name -n -v
     summary: The name of the ANF volume.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --pool-name -p
     summary: The name of the ANF pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_volume_relocate
+  name: az netappfiles volume relocate
+  summary: Relocates an Azure NetApp Files (ANF) volume to a new stamp.
+  description: ''
+  syntax: >-
+    az netappfiles volume relocate [--account-name]
+                                   [--ids]
+                                   [--name]
+                                   [--no-wait]
+                                   [--pool-name]
+                                   [--resource-group]
+  examples:
+  - summary: Relocates volume to a new stamp
+    syntax: az netappfiles volume relocate -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname
+  optionalParameters:
+  - name: --account-name -a
+    summary: Name of the ANF account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --volume-name -n -v
+    summary: Name of the ANF volume.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --pool-name -p
+    summary: Name of the ANF pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_volume_reset-cifs-pw
+  name: az netappfiles volume reset-cifs-pw
+  summary: Reset CIFS password from an Azure NetApp Files (ANF) volume.
+  description: ''
+  syntax: >-
+    az netappfiles volume reset-cifs-pw [--account-name]
+                                        [--ids]
+                                        [--name]
+                                        [--no-wait]
+                                        [--pool-name]
+                                        [--resource-group]
+  examples:
+  - summary: Reset the CIFS password from volume
+    syntax: az netappfiles volume reset-cifs-pw -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname
+  optionalParameters:
+  - name: --account-name -a
+    summary: Name of the ANF account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --volume-name -n -v
+    summary: Name of the ANF volume.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --pool-name -p
+    summary: Name of the ANF pool.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -353,6 +477,7 @@ directCommands:
                                  --pool-name
                                  --resource-group
                                  --snapshot-id
+                                 [--no-wait]
   examples:
   - summary: Revert a volume to one of its snapshots.
     syntax: az netappfiles volume revert -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --snapshot-id 9760acf5-4638-11e7-9bdb-020073ca3333
@@ -376,6 +501,48 @@ directCommands:
   - isRequired: true
     name: --snapshot-id -s
     summary: SnapshotId of the snapshot. UUID v4 used to identify the Snapshot, example "9760acf5-4638-11e7-9bdb-020073ca3333".
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_volume_revert-relocation
+  name: az netappfiles volume revert-relocation
+  summary: Reverts the Azure NetApp Files (ANF) volume relocation process, cleans up the new volume and starts using the former-existing volume.
+  description: ''
+  syntax: >-
+    az netappfiles volume revert-relocation [--account-name]
+                                            [--ids]
+                                            [--name]
+                                            [--no-wait]
+                                            [--pool-name]
+                                            [--resource-group]
+                                            [--yes]
+  examples:
+  - summary: Reverts the volume relocation process, cleans up the new volume and starts using the former-existing volume
+    syntax: az netappfiles volume revert-relocation -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname
+  optionalParameters:
+  - name: --account-name -a
+    summary: Name of the ANF account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --volume-name -n -v
+    summary: Name of the ANF volume.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --pool-name -p
+    summary: Name of the ANF pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_volume_show
@@ -417,12 +584,15 @@ directCommands:
                                  [--add]
                                  [--backup-enabled {false, true}]
                                  [--backup-policy-id]
+                                 [--cool-access {false, true}]
+                                 [--coolness-period]
                                  [--default-group-quota]
                                  [--default-user-quota]
                                  [--force-string]
                                  [--ids]
                                  [--is-def-quota-enabled {false, true}]
                                  [--name]
+                                 [--no-wait]
                                  [--policy-enforced {false, true}]
                                  [--pool-name]
                                  [--remove]
@@ -452,6 +622,13 @@ directCommands:
   - name: --backup-policy-id
     summary: Backup Policy Resource ID.
     description: ''
+  - name: --cool-access
+    parameterValueGroup: false, true
+    summary: If enabled (true) the pool can contain cool Access enabled volumes.
+    description: ''
+  - name: --coolness-period
+    summary: Specifies the number of days after which data that is not accessed by clients will be tiered.
+    description: ''
   - name: --default-group-quota
     summary: Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
     description: ''
@@ -470,6 +647,9 @@ directCommands:
     description: ''
   - name: --name --volume-name -n -v
     summary: The name of the ANF volume.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --policy-enforced
     parameterValueGroup: false, true
@@ -510,6 +690,63 @@ directCommands:
     summary: Vault Resource ID.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_volume_wait
+  name: az netappfiles volume wait
+  summary: Wait for a volume operation.
+  description: ''
+  syntax: >-
+    az netappfiles volume wait [--account-name]
+                               [--created]
+                               [--custom]
+                               [--deleted]
+                               [--exists]
+                               [--ids]
+                               [--interval]
+                               [--name]
+                               [--pool-name]
+                               [--resource-group]
+                               [--timeout]
+                               [--updated]
+  optionalParameters:
+  - name: --account-name -a
+    summary: Name of the ANF account.
+    description: ''
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name --volume-name -n -v
+    summary: Name of the ANF volume.
+    description: ''
+  - name: --pool-name -p
+    summary: Name of the ANF pool.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 commands:
 - az_netappfiles_volume_backup
 - az_netappfiles_volume_backup_create
@@ -519,24 +756,33 @@ commands:
 - az_netappfiles_volume_backup_show
 - az_netappfiles_volume_backup_status
 - az_netappfiles_volume_backup_update
+- az_netappfiles_volume_backup_wait
 - az_netappfiles_volume_create
 - az_netappfiles_volume_delete
 - az_netappfiles_volume_export-policy
 - az_netappfiles_volume_export-policy_add
 - az_netappfiles_volume_export-policy_list
 - az_netappfiles_volume_export-policy_remove
+- az_netappfiles_volume_export-policy_wait
+- az_netappfiles_volume_finalize-relocation
 - az_netappfiles_volume_list
 - az_netappfiles_volume_pool-change
+- az_netappfiles_volume_relocate
 - az_netappfiles_volume_replication
 - az_netappfiles_volume_replication_approve
+- az_netappfiles_volume_replication_list
 - az_netappfiles_volume_replication_re-initialize
 - az_netappfiles_volume_replication_remove
 - az_netappfiles_volume_replication_resume
 - az_netappfiles_volume_replication_status
 - az_netappfiles_volume_replication_suspend
+- az_netappfiles_volume_replication_wait
+- az_netappfiles_volume_reset-cifs-pw
 - az_netappfiles_volume_revert
+- az_netappfiles_volume_revert-relocation
 - az_netappfiles_volume_show
 - az_netappfiles_volume_update
+- az_netappfiles_volume_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -556,5 +802,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/05/2022
+  ms.date: 08/15/2022
   description: Manage Azure NetApp Files (ANF) Volume Resources.

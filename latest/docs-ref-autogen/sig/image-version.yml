@@ -20,6 +20,7 @@ directCommands:
                                 [--data-vhds-uris]
                                 [--end-of-life-date]
                                 [--exclude-from-latest {false, true}]
+                                [--image-version]
                                 [--location]
                                 [--managed-image]
                                 [--no-wait]
@@ -33,6 +34,7 @@ directCommands:
                                 [--target-region-cvm-encryption]
                                 [--target-region-encryption]
                                 [--target-regions]
+                                [--virtual-machine]
   examples:
   - summary: Add a new image version from a virtual machine
     syntax: >-
@@ -42,7 +44,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM
   - summary: Add a new image version from a managed image
     syntax: >-
       az sig image-version create --resource-group MyResourceGroup \
@@ -60,7 +62,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/galleries/MyGallery/images/MyImageDefinition/versions/1.0.0
+      --image-version /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/galleries/MyGallery/images/MyImageDefinition/versions/1.0.0
   - summary: Add a new image version from a managed disk
     syntax: >-
       az sig image-version create --resource-group MyResourceGroup \
@@ -169,7 +171,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --target-regions westus=2=standard eastus \
 
@@ -184,7 +186,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --no-wait
   - summary: Add a new image version but remove it from consideration as latest version in its image definition
@@ -195,7 +197,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --exclude-from-latest true
   - summary: Add a new image version and set its end-of-life date. The image version can still be used to create a virtual machine after its end-of-life date.
@@ -206,7 +208,7 @@ directCommands:
 
       --gallery-image-version 1.0.0 \
 
-      --managed-image /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
 
       --end-of-life-date 2024-08-02T00:00:00+00:00
   requiredParameters:
@@ -249,6 +251,9 @@ directCommands:
     parameterValueGroup: false, true
     summary: The flag means that if it is set to true, people deploying VMs with version omitted will not use this version.
     description: ''
+  - name: --image-version
+    summary: Resource id of gallery image version source.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
@@ -289,6 +294,9 @@ directCommands:
     description: ''
   - name: --target-regions
     summary: Space-separated list of regions and their replica counts. Use `<region>[=<replica count>][=<storage account type>]` to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.
+    description: ''
+  - name: --virtual-machine
+    summary: Resource id of VM source.
     description: ''
 - uid: az_sig_image-version_delete
   name: az sig image-version delete
@@ -339,13 +347,14 @@ directCommands:
     description: ''
 - uid: az_sig_image-version_list-community
   name: az sig image-version list-community
-  summary: List VM Image Versions in a gallery community (preview).
-  description: List VM Image Versions in a gallery community (private preview feature, please contact community image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+  summary: List VM Image Versions in a gallery community.
+  description: List VM Image Versions in a gallery community.
   syntax: >-
-    az sig image-version list-community --gallery-image-definition
-                                        --location
-                                        --public-gallery-name
+    az sig image-version list-community [--gallery-image-definition]
+                                        [--ids]
+                                        [--location]
                                         [--marker]
+                                        [--public-gallery-name]
                                         [--show-next-marker]
   examples:
   - summary: List an image versions in a gallery community.
@@ -353,30 +362,29 @@ directCommands:
       az sig image-version list-community --public-gallery-name publicGalleryName \
 
       --gallery-image-definition MyImage --location myLocation
-  requiredParameters:
-  - isRequired: true
-    name: --gallery-image-definition -i
+  optionalParameters:
+  - name: --gallery-image-definition -i
     summary: The name of the community gallery image definition from which the image versions are to be listed.
     description: ''
-  - isRequired: true
-    name: --location -l
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --public-gallery-name
-    summary: The public name of community gallery.
-    description: ''
-  optionalParameters:
   - name: --marker
     summary: A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    description: ''
+  - name: --public-gallery-name
+    summary: The public name of community gallery.
     description: ''
   - name: --show-next-marker
     summary: Show nextMarker in result when specified.
     description: ''
 - uid: az_sig_image-version_list-shared
   name: az sig image-version list-shared
-  summary: List VM Image Versions in a gallery shared directly to your subscription or tenant (preview).
-  description: List VM Image Versions in a gallery shared directly to your subscription or tenant  (private preview feature, please contact shared image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+  summary: List VM Image Versions in a gallery shared directly to your subscription or tenant.
+  description: List VM Image Versions in a gallery shared directly to your subscription or tenant.
   syntax: >-
     az sig image-version list-shared [--gallery-image-definition]
                                      [--gallery-unique-name]
@@ -452,40 +460,34 @@ directCommands:
     description: ''
 - uid: az_sig_image-version_show-community
   name: az sig image-version show-community
-  summary: Get an image version in a gallery community (preview).
-  description: Get an image version in a gallery community (private preview feature, please contact community image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+  summary: Get a community gallery image version.
+  description: ''
   syntax: >-
-    az sig image-version show-community --gallery-image-definition
-                                        --gallery-image-version
-                                        --location
-                                        --public-gallery-name
-  examples:
-  - summary: Get an image version in a gallery community in the given location.
-    syntax: >-
-      az sig image-version show-community --public-gallery-name publicGalleryName \
-
-      --gallery-image-definition MyImage --gallery-image-version 1.0.0 --location myLocation
-  requiredParameters:
-  - isRequired: true
-    name: --gallery-image-definition -i
+    az sig image-version show-community [--gallery-image-definition]
+                                        [--gallery-image-version]
+                                        [--ids]
+                                        [--location]
+                                        [--public-gallery-name]
+  optionalParameters:
+  - name: --gallery-image-definition -i
     summary: The name of the community gallery image definition from which the image versions are to be listed.
     description: ''
-  - isRequired: true
-    name: --gallery-image-version -e
+  - name: --gallery-image-version -e
     summary: 'The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: <MajorVersion>.<MinorVersion>.<Patch>.'
     description: ''
-  - isRequired: true
-    name: --location -l
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --public-gallery-name
+  - name: --public-gallery-name
     summary: The public name of community gallery.
     description: ''
 - uid: az_sig_image-version_show-shared
   name: az sig image-version show-shared
-  summary: Get an image version in a gallery shared directly to your subscription or tenant (preview).
-  description: Get an image version in a gallery shared directly to your subscription or tenant  (private preview feature, please contact shared image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+  summary: Get an image version in a gallery shared directly to your subscription or tenant.
+  description: Get an image version in a gallery shared directly to your subscription or tenant.
   syntax: >-
     az sig image-version show-shared [--gallery-image-definition]
                                      [--gallery-image-version]

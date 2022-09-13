@@ -24,7 +24,7 @@ For example, the most outstanding change is that the `objectId` property in the 
 
 Command argument and behavior breaking changes are listed below.
 
-### `az ad app create`
+### `az ad app create/update`
 
 - Split `--reply-urls` into `--web-redirect-uris` and `--public-client-redirect-uris`
 - Replace `--homepage` with `--web-home-page-url`
@@ -77,12 +77,12 @@ Command argument and behavior breaking changes are listed below.
 
 ## Known issues
 
-- Generic update arguments `--add`, `--set` and `--remove` currently don't work. You may use `az rest` to directly call Microsoft Graph API for non-supported properties.
+- Regarding generic update arguments, the only supported operation is using `--set` on the root level of a Graph object. Using `--add`, `--remove` or `--set` on sub-levels currently doesn't work (due to the underlying infrastructure change). For unsupported scenarios, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview). Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
 - Microsoft Graph related commands like `az ad` and `az role` will fail in Azure Stack environments which don't have Microsoft Graph support. Please use Azure CLI 2.36.0 or earlier versions for Azure Stack environments.
 
 ## Install a previous version
 
-If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](/cli/azure/install-azure-cli) (except for Homebrew which doesn't support installing previous versions).
+If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](./install-azure-cli.md) (except for Homebrew which doesn't support installing previous versions).
 
 ## Troubleshooting
 
@@ -92,6 +92,10 @@ Your tenant may have Conditional Access policies that block using device code fl
 
 Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Access policies configured.
 
+## More information
+
+You can find more information about the Microsoft Graph migration on https://github.com/Azure/azure-cli/issues/22580.
+
 ## Give feedback
 
-If you have any questions, please [send us your feedback](/cli/azure/get-started-with-azure-cli#give-feedback).
+If you have any questions, please reply to https://github.com/Azure/azure-cli/issues/22580 or create a new issue with the [`az feedback`](/cli/azure/reference-index#az-feedback) command.

@@ -6,8 +6,8 @@ description: ''
 directCommands:
 - uid: az_storage_file_copy_cancel
   name: az storage file copy cancel
-  summary: Aborts a pending copy_file operation, and leaves a destination file  with zero length and full metadata.
-  description: ''
+  summary: Abort an ongoing copy operation.
+  description: This will leave a destination file with zero length and full metadata. This will raise an error if the copy operation has already ended.
   syntax: >-
     az storage file copy cancel --copy-id
                                 --destination-path
@@ -20,7 +20,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --copy-id
-    summary: Copy identifier provided in the copy.id of the original copy_file operation.
+    summary: The copy operation to abort. This can be either an ID, or an instance of FileProperties.
     description: ''
   - isRequired: true
     name: --destination-path -p
@@ -57,6 +57,7 @@ directCommands:
                                [--account-key]
                                [--account-name]
                                [--connection-string]
+                               [--file-endpoint]
                                [--file-snapshot]
                                [--metadata]
                                [--sas-token]
@@ -88,13 +89,16 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --account-key
-    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    summary: 'Storage account key. Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_KEY.'
     description: ''
   - name: --account-name
     summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --file-endpoint
+    summary: 'Storage data service endpoint. Must be used in conjunction with either storage account key or a SAS token. You can find each service primary endpoint with `az storage account show`. Environment variable: AZURE_STORAGE_SERVICE_ENDPOINT.'
     description: ''
   - name: --file-snapshot
     summary: The file snapshot for the source storage account.
@@ -103,7 +107,7 @@ directCommands:
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
   - name: --sas-token
-    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   - name: --source-account-key
     summary: The storage account key of the source blob.
@@ -235,5 +239,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/19/2022
+  ms.date: 08/24/2022
   description: Manage file copy operations.

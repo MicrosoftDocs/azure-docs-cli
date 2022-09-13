@@ -236,7 +236,7 @@ directCommands:
     summary: 'Target connection string. This bypasses the IoT Hub registry and generates the SAS token directly from the supplied symmetric key without further validation. All other command parameters aside from duration will be ignored. Supported connection string types: Iot Hub, Device, Module.'
     description: ''
   - name: --device-id -d
-    summary: Target Device.
+    summary: Target Device Id.
     description: ''
   - name: --du --duration
     defaultValue: "3600"
@@ -254,7 +254,7 @@ directCommands:
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
     description: ''
   - name: --module-id -m
-    summary: Target Module.
+    summary: Target Module Id.
     description: ''
   - name: --pn --policy-name
     defaultValue: iothubowner
@@ -282,7 +282,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --device-id -d
-    summary: Target Device.
+    summary: Target Device Id.
     description: ''
   - isRequired: true
     name: --method-name --mn
@@ -309,7 +309,7 @@ directCommands:
     description: ''
   - name: --timeout --to
     defaultValue: "30"
-    summary: Maximum number of seconds to wait for device method result.
+    summary: Maximum number of seconds to wait for the device method result.
     description: ''
 - uid: az_iot_hub_invoke-module-method
   name: az iot hub invoke-module-method
@@ -331,7 +331,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --device-id -d
-    summary: Target Device.
+    summary: Target Device Id.
     description: ''
   - isRequired: true
     name: --method-name --mn
@@ -339,7 +339,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --module-id -m
-    summary: Target Module.
+    summary: Target Module Id.
     description: ''
   optionalParameters:
   - name: --auth-type
@@ -362,7 +362,7 @@ directCommands:
     description: ''
   - name: --timeout --to
     defaultValue: "30"
-    summary: Maximum number of seconds to wait for device method result.
+    summary: Maximum number of seconds to wait for the module method result.
     description: ''
 - uid: az_iot_hub_list
   name: az iot hub list
@@ -431,8 +431,6 @@ directCommands:
   name: az iot hub monitor-events
   summary: Monitor device telemetry & messages sent to an IoT Hub.
   description: >-
-    EXPERIMENTAL requires Python 3.5+
-
     This command relies on and may install dependent Cython package (uamqp) upon first execution.
 
     https://github.com/Azure/azure-uamqp-python.
@@ -445,6 +443,7 @@ directCommands:
                               [--hub-name]
                               [--interface]
                               [--login]
+                              [--mc]
                               [--module-id]
                               [--properties {all, anno, app, sys}]
                               [--repair {false, true}]
@@ -472,6 +471,8 @@ directCommands:
     syntax: az iot hub monitor-events -n {iothub_name} --props all
   - summary: Receive all messages and parse message payload as JSON
     syntax: az iot hub monitor-events -n {iothub_name} --content-type application/json
+  - summary: Receive the specified number of messages from hub and then shut down.
+    syntax: az iot hub monitor-events -n {iothub_name} --message-count {message_count}
   optionalParameters:
   - name: --cg --consumer-group -c
     defaultValue: $Default
@@ -481,7 +482,7 @@ directCommands:
     summary: Specify the Content-Type of the message payload to automatically format the output to that type.
     description: ''
   - name: --device-id -d
-    summary: Target Device.
+    summary: Target Device Id.
     description: ''
   - name: --device-query -q
     summary: Specify a custom query to filter devices.
@@ -498,8 +499,11 @@ directCommands:
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
     description: ''
+  - name: --mc --message-count
+    summary: Number of telemetry messages to capture before the monitor is terminated. If not specified, monitor keeps running until meeting the timeout threshold of not receiving messages from hub.
+    description: ''
   - name: --module-id -m
-    summary: Target Module.
+    summary: Target Module Id.
     description: ''
   - name: --properties --props -p
     parameterValueGroup: all, anno, app, sys
@@ -518,14 +522,12 @@ directCommands:
     description: ''
   - name: --yes -y
     parameterValueGroup: false, true
-    summary: 'Skip user prompts. Indicates acceptance of dependency installation (if required). Used primarily for automation scenarios. Default: false.'
+    summary: 'Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.'
     description: ''
 - uid: az_iot_hub_monitor-feedback
   name: az iot hub monitor-feedback
   summary: Monitor feedback sent by devices to acknowledge cloud-to-device (C2D) messages.
   description: >-
-    EXPERIMENTAL requires Python 3.4+
-
     This command relies on and may install dependent Cython package (uamqp) upon first execution.
 
     https://github.com/Azure/azure-uamqp-python.
@@ -554,7 +556,7 @@ directCommands:
     summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
     description: ''
   - name: --device-id -d
-    summary: Target Device.
+    summary: Target Device Id.
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name. Required if --login is not provided.
@@ -574,7 +576,7 @@ directCommands:
     description: ''
   - name: --yes -y
     parameterValueGroup: false, true
-    summary: 'Skip user prompts. Indicates acceptance of dependency installation (if required). Used primarily for automation scenarios. Default: false.'
+    summary: 'Skip user prompts. Indicates acceptance of action. Used primarily for automation scenarios. Default: false.'
     description: ''
 - uid: az_iot_hub_query
   name: az iot hub query
@@ -1014,5 +1016,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/20/2022
+  ms.date: 08/30/2022
   description: Manage Azure IoT hubs.

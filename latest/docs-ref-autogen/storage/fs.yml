@@ -15,7 +15,9 @@ directCommands:
                          [--auth-mode {key, login}]
                          [--blob-endpoint]
                          [--connection-string]
+                         [--default-encryption-scope]
                          [--metadata]
+                         [--prevent-encryption-scope-override {false, true}]
                          [--public-access {file, filesystem, off}]
                          [--sas-token]
                          [--timeout]
@@ -48,8 +50,15 @@ directCommands:
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
     description: ''
+  - name: --default-encryption-scope -d
+    summary: Specify the default encryption scope to set on the file system and use for all future writes.
+    description: ''
   - name: --metadata
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    description: ''
+  - name: --prevent-encryption-scope-override -p
+    parameterValueGroup: false, true
+    summary: If true, prevents any request from specifying a different encryption scope than the scope set on the file system. Default value is false.
     description: ''
   - name: --public-access
     parameterValueGroup: file, filesystem, off
@@ -173,6 +182,7 @@ directCommands:
                                [--content-encoding]
                                [--content-language]
                                [--content-type]
+                               [--encryption-scope]
                                [--expiry]
                                [--full-uri]
                                [--https-only]
@@ -225,6 +235,9 @@ directCommands:
     description: ''
   - name: --content-type
     summary: Response header value for Content-Type when resource is accessedusing this shared access signature.
+    description: ''
+  - name: --encryption-scope
+    summary: Specify the encryption scope for a request made so that all write operations will be service encrypted.
     description: ''
   - name: --expiry
     summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes invalid. Do not use if a stored access policy is referenced with --policy-name that specifies this value.
@@ -485,6 +498,7 @@ commands:
 - az_storage_fs_file_metadata_show
 - az_storage_fs_file_metadata_update
 - az_storage_fs_file_move
+- az_storage_fs_file_set-expiry
 - az_storage_fs_file_show
 - az_storage_fs_file_upload
 - az_storage_fs_generate-sas
@@ -517,5 +531,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/19/2022
+  ms.date: 08/24/2022
   description: Manage file systems in Azure Data Lake Storage Gen2 account.

@@ -16,23 +16,31 @@ directCommands:
     az network firewall create --name
                                --resource-group
                                [--allow-active-ftp {false, true}]
+                               [--conf-name]
                                [--count]
                                [--dns-servers]
                                [--enable-dns-proxy {false, true}]
+                               [--fat-flow-logging {false, true}]
                                [--firewall-policy]
                                [--location]
+                               [--m-conf-name]
+                               [--m-public-ip]
                                [--private-ranges]
+                               [--public-ip]
                                [--sku {AZFW_Hub, AZFW_VNet}]
                                [--tags]
                                [--threat-intel-mode {Alert, Deny, Off}]
                                [--tier {Basic, Premium, Standard}]
                                [--vhub]
+                               [--vnet-name]
                                [--zones {1, 2, 3}]
   examples:
   - summary: Create a Azure firewall with private ranges
     syntax: az network firewall create -g MyResourceGroup -n MyFirewall --private-ranges 10.0.0.0 10.0.0.0/16 IANAPrivateRanges
   - summary: Create a Virtual WAN Secure Hub Firewall
     syntax: az network firewall create -g MyResourceGroup -n MyFirewall --sku AZFW_Hub --tier Standard --virtual-hub MyVirtualHub1 --public-ip-count 1
+  - summary: Create a Basic SKU Firewall with Management IP Configuration
+    syntax: az network firewall create -g MyResourceGroup -n MyFirewall --sku AZFW_VNet --tier Basic --vnet-name MyVNet --conf-name MyIpConfig --m-conf-name MyManagementIpConfig --m-public-ip MyPublicIp
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -47,6 +55,9 @@ directCommands:
     parameterValueGroup: false, true
     summary: Allow Active FTP. By default it is false. It's only allowed for azure firewall on virtual network.
     description: ''
+  - name: --conf-name
+    summary: Name of the IP configuration.
+    description: ''
   - name: --count --public-ip-count
     summary: Number of Public IP Address associated with azure firewall. It's used to add public ip addresses into this firewall.
     description: ''
@@ -57,14 +68,27 @@ directCommands:
     parameterValueGroup: false, true
     summary: Enable DNS Proxy.
     description: ''
+  - name: --fat-flow-logging
+    parameterValueGroup: false, true
+    summary: Identify fat flows. By default it is false.
+    description: ''
   - name: --firewall-policy --policy
     summary: Name or ID of the firewallPolicy associated with this azure firewall.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
+  - name: --m-conf-name
+    summary: Name of the management IP configuration.
+    description: ''
+  - name: --m-public-ip
+    summary: Name or ID of the public IP to use for management IP configuration.
+    description: ''
   - name: --private-ranges
     summary: Space-separated list of SNAT private range. Validate values are single Ip, Ip prefixes or a single special value "IANAPrivateRanges".
+    description: ''
+  - name: --public-ip
+    summary: Name or ID of the public IP to use.
     description: ''
   - name: --sku
     parameterValueGroup: AZFW_Hub, AZFW_VNet
@@ -84,6 +108,9 @@ directCommands:
     description: ''
   - name: --vhub --virtual-hub
     summary: Name or ID of the virtualHub to which the firewall belongs.
+    description: ''
+  - name: --vnet-name
+    summary: The virtual network (VNet) name. It should contain one subnet called "AzureFirewallSubnet".
     description: ''
   - name: --zones -z
     parameterValueGroup: 1, 2, 3
@@ -147,6 +174,7 @@ directCommands:
                                [--count]
                                [--dns-servers]
                                [--enable-dns-proxy {false, true}]
+                               [--fat-flow-logging {false, true}]
                                [--firewall-policy]
                                [--force-string]
                                [--private-ranges]
@@ -183,6 +211,10 @@ directCommands:
   - name: --enable-dns-proxy
     parameterValueGroup: false, true
     summary: Enable DNS Proxy.
+    description: ''
+  - name: --fat-flow-logging
+    parameterValueGroup: false, true
+    summary: Identify fat flows. By default it is false.
     description: ''
   - name: --firewall-policy --policy
     summary: Name or ID of the firewallPolicy associated with this azure firewall.

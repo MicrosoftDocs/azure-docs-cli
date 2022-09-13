@@ -14,7 +14,7 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-configuration flux create --cluster-name
-                                     --cluster-type {connectedClusters, managedClusters}
+                                     --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                      --name
                                      --resource-group
                                      --url
@@ -23,6 +23,7 @@ directCommands:
                                      [--bucket-insecure {false, true}]
                                      [--bucket-name]
                                      [--bucket-secret-key]
+                                     [--cluster-resource-provider]
                                      [--commit]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
@@ -75,8 +76,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc connected clusters or AKS managed clusters.
+    parameterValueGroup: connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
     description: ''
   - isRequired: true
     name: --name -n
@@ -106,6 +107,9 @@ directCommands:
     description: ''
   - name: --bucket-secret-key
     summary: Secret Key used to authenticate with the bucket.
+    description: ''
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.
@@ -179,9 +183,10 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-configuration flux delete --cluster-name
-                                     --cluster-type {connectedClusters, managedClusters}
+                                     --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                      --name
                                      --resource-group
+                                     [--cluster-resource-provider]
                                      [--force {false, true}]
                                      [--no-wait]
                                      [--yes]
@@ -198,8 +203,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc connected clusters or AKS managed clusters.
+    parameterValueGroup: connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
     description: ''
   - isRequired: true
     name: --name -n
@@ -210,6 +215,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
+    description: ''
   - name: --force
     parameterValueGroup: false, true
     summary: Force delete the flux configuration from the cluster.
@@ -226,8 +234,9 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-configuration flux list --cluster-name
-                                   --cluster-type {connectedClusters, managedClusters}
+                                   --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                    --resource-group
+                                   [--cluster-resource-provider]
   examples:
   - summary: List Flux v2 Kubernetes configurations on a cluster
     syntax: >-
@@ -241,12 +250,16 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc connected clusters or AKS managed clusters.
+    parameterValueGroup: connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
 - uid: az_k8s-configuration_flux_show
   name: az k8s-configuration flux show
@@ -254,9 +267,10 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-configuration flux show --cluster-name
-                                   --cluster-type {connectedClusters, managedClusters}
+                                   --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                    --name
                                    --resource-group
+                                   [--cluster-resource-provider]
   examples:
   - summary: Show details of a Flux v2 Kubernetes configuration
     syntax: >-
@@ -270,8 +284,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc connected clusters or AKS managed clusters.
+    parameterValueGroup: connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
     description: ''
   - isRequired: true
     name: --name -n
@@ -281,13 +295,17 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
+    description: ''
 - uid: az_k8s-configuration_flux_update
   name: az k8s-configuration flux update
   summary: Update a Flux v2 Kubernetes configuration.
   description: ''
   syntax: >-
     az k8s-configuration flux update --cluster-name
-                                     --cluster-type {connectedClusters, managedClusters}
+                                     --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                      --name
                                      --resource-group
                                      [--branch]
@@ -295,6 +313,7 @@ directCommands:
                                      [--bucket-insecure {false, true}]
                                      [--bucket-name]
                                      [--bucket-secret-key]
+                                     [--cluster-resource-provider]
                                      [--commit]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
@@ -339,8 +358,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: connectedClusters, managedClusters
-    summary: Specify Arc connected clusters or AKS managed clusters.
+    parameterValueGroup: connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc connected clusters or AKS managed clusters or provisioned clusters.
     description: ''
   - isRequired: true
     name: --name -n
@@ -366,6 +385,9 @@ directCommands:
     description: ''
   - name: --bucket-secret-key
     summary: Secret Key used to authenticate with the bucket.
+    description: ''
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.

@@ -23,7 +23,7 @@ directCommands:
     az storage account create --name
                               --resource-group
                               [--access-tier {Cool, Hot, Premium}]
-                              [--account-type {Computer, User}]
+                              [--account-type]
                               [--action]
                               [--allow-append {false, true}]
                               [--allow-blob-public-access {false, true}]
@@ -41,10 +41,13 @@ directCommands:
                               [--edge-zone]
                               [--enable-alw {false, true}]
                               [--enable-files-aadds {false, true}]
+                              [--enable-files-aadkerb {false, true}]
                               [--enable-files-adds {false, true}]
                               [--enable-hierarchical-namespace {false, true}]
                               [--enable-large-file-share]
+                              [--enable-local-user {false, true}]
                               [--enable-nfs-v3 {false, true}]
+                              [--enable-sftp {false, true}]
                               [--encryption-key-name]
                               [--encryption-key-source {Microsoft.Keyvault, Microsoft.Storage}]
                               [--encryption-key-type-for-queue {Account, Service}]
@@ -95,7 +98,6 @@ directCommands:
     summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
     description: ''
   - name: --account-type
-    parameterValueGroup: Computer, User
     summary: Specify the Active Directory account type for Azure Storage.
     description: ''
   - name: --action
@@ -159,6 +161,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: Enable Azure Active Directory Domain Services authentication for Azure Files.
     description: ''
+  - name: --enable-files-aadkerb
+    parameterValueGroup: false, true
+    summary: Enable Azure Files Active Directory Domain Service Kerberos Authentication for the storage account.
+    description: ''
   - name: --enable-files-adds
     parameterValueGroup: false, true
     summary: Enable Azure Files Active Directory Domain Service Authentication for storage account. When --enable-files-adds is set to true, Azure Active Directory Properties arguments must be provided.
@@ -170,9 +176,17 @@ directCommands:
   - name: --enable-large-file-share
     summary: Enable the capability to support large file shares with more than 5 TiB capacity for storage account.Once the property is enabled, the feature cannot be disabled. Currently only supported for LRS and ZRS replication types, hence account conversions to geo-redundant accounts would not be possible. For more information, please refer to https://go.microsoft.com/fwlink/?linkid=2086047.
     description: ''
+  - name: --enable-local-user
+    parameterValueGroup: false, true
+    summary: Enable local user features.
+    description: ''
   - name: --enable-nfs-v3
     parameterValueGroup: false, true
     summary: NFS 3.0 protocol support enabled if sets to true.
+    description: ''
+  - name: --enable-sftp
+    parameterValueGroup: false, true
+    summary: Enable Secure File Transfer Protocol.
     description: ''
   - name: --encryption-key-name
     summary: The name of the KeyVault key.
@@ -361,7 +375,6 @@ directCommands:
                                     --services
                                     [--account-key]
                                     [--account-name]
-                                    [--auth-mode {key, login}]
                                     [--blob-endpoint]
                                     [--connection-string]
                                     [--encryption-scope]
@@ -405,10 +418,6 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Storage account name. Must be used in conjunction with either storage account key or a SAS token. Environment Variable: AZURE_STORAGE_ACCOUNT.'
-    description: ''
-  - name: --auth-mode
-    parameterValueGroup: key, login
-    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
     description: ''
   - name: --blob-endpoint
     summary: 'Storage data service endpoint. Must be used in conjunction with either storage account key or a SAS token. You can find each service primary endpoint with `az storage account show`. Environment variable: AZURE_STORAGE_SERVICE_ENDPOINT.'
@@ -487,7 +496,7 @@ directCommands:
     syntax: az storage account show -g MyResourceGroup -n MyStorageAccount
   optionalParameters:
   - name: --expand
-    summary: May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus.
+    summary: May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. Default value is None.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -575,7 +584,7 @@ directCommands:
   description: ''
   syntax: >-
     az storage account update [--access-tier {Cool, Hot, Premium}]
-                              [--account-type {Computer, User}]
+                              [--account-type]
                               [--add]
                               [--allow-append {false, true}]
                               [--allow-blob-public-access {false, true}]
@@ -591,8 +600,11 @@ directCommands:
                               [--domain-name]
                               [--domain-sid]
                               [--enable-files-aadds {false, true}]
+                              [--enable-files-aadkerb {false, true}]
                               [--enable-files-adds {false, true}]
                               [--enable-large-file-share]
+                              [--enable-local-user {false, true}]
+                              [--enable-sftp {false, true}]
                               [--encryption-key-name]
                               [--encryption-key-source {Microsoft.Keyvault, Microsoft.Storage}]
                               [--encryption-key-vault]
@@ -632,7 +644,6 @@ directCommands:
     summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
     description: ''
   - name: --account-type
-    parameterValueGroup: Computer, User
     summary: Specify the Active Directory account type for Azure Storage.
     description: ''
   - name: --add
@@ -688,12 +699,24 @@ directCommands:
     parameterValueGroup: false, true
     summary: Enable Azure Active Directory Domain Services authentication for Azure Files.
     description: ''
+  - name: --enable-files-aadkerb
+    parameterValueGroup: false, true
+    summary: Enable Azure Files Active Directory Domain Service Kerberos Authentication for the storage account.
+    description: ''
   - name: --enable-files-adds
     parameterValueGroup: false, true
     summary: Enable Azure Files Active Directory Domain Service Authentication for storage account. When --enable-files-adds is set to true, Azure Active Directory Properties arguments must be provided.
     description: ''
   - name: --enable-large-file-share
     summary: Enable the capability to support large file shares with more than 5 TiB capacity for storage account.Once the property is enabled, the feature cannot be disabled. Currently only supported for LRS and ZRS replication types, hence account conversions to geo-redundant accounts would not be possible. For more information, please refer to https://go.microsoft.com/fwlink/?linkid=2086047.
+    description: ''
+  - name: --enable-local-user
+    parameterValueGroup: false, true
+    summary: Enable local user features.
+    description: ''
+  - name: --enable-sftp
+    parameterValueGroup: false, true
+    summary: Enable Secure File Transfer Protocol.
     description: ''
   - name: --encryption-key-name
     summary: The name of the KeyVault key.
@@ -887,5 +910,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/19/2022
+  ms.date: 08/24/2022
   description: Manage storage accounts.

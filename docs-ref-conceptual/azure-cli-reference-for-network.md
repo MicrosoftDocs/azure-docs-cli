@@ -84,7 +84,7 @@ See [az network](../latest/docs-ref-autogen/network.yml) for an alphabetic list 
 | Subgroup | Reference | Use | Is extension
 |-|-|-|-|
 | ASG | [az asg](../latest/docs-ref-autogen/network/asg.yml) | Manage application security groups. |
-| Bastion | [az network bastion](../latest/docs-ref-autogen/network/bastion.yml) | Manage Azure bastion hosts. |
+| Bastion | [az network bastion](../latest/docs-ref-autogen/network/bastion.yml) | Manage Azure Bastion hosts. |
 | DDoS | [az network ddos-protection](../latest/docs-ref-autogen/network/ddos-protection.yml) | Manage DDoS Protection Plans. |
 | Firewall | [az network firewall](../latest/docs-ref-autogen/network/firewall.yml) | Manage and configure Azure Firewalls. | yes
 | Firewall | [az network security-partner-provider](../latest/docs-ref-autogen/network/security-partner-provider.yml) | Manage Azure security partner providers. |

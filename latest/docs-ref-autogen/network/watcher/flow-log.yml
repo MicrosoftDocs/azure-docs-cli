@@ -69,22 +69,37 @@ directCommands:
   syntax: >-
     az network watcher flow-log create --location
                                        --name
-                                       --nsg
                                        [--enabled {false, true}]
                                        [--format {JSON}]
                                        [--interval]
                                        [--log-version]
+                                       [--nic]
+                                       [--nsg]
                                        [--resource-group]
                                        [--retention]
                                        [--storage-account]
+                                       [--subnet]
                                        [--tags]
                                        [--traffic-analytics {false, true}]
+                                       [--vnet]
                                        [--workspace]
   examples:
   - summary: Create a flow log with Network Security Group name
     syntax: az network watcher flow-log create --location westus --resource-group MyResourceGroup --name MyFlowLog --nsg MyNetworkSecurityGroupName --storage-account account
+  - summary: Create a flow log with VNet name
+    syntax: az network watcher flow-log create --location westus --resource-group MyResourceGroup --name MyFlowLog --vnet MyVNetName --storage-account account
+  - summary: Create a flow log with Subnet name
+    syntax: az network watcher flow-log create --location westus --resource-group MyResourceGroup --name MyFlowLog --vnet MyVNetName --subnet MySubnetName --storage-account account
+  - summary: Create a flow log with NIC name
+    syntax: az network watcher flow-log create --location westus --resource-group MyResourceGroup --name MyFlowLog --nic MyNICName --storage-account account
   - summary: Create a flow log with Network Security Group ID (could be in other resource group)
     syntax: az network watcher flow-log create --location westus --name MyFlowLog --nsg MyNetworkSecurityGroupID --storage-account account
+  - summary: Create a flow log with Virtual Network ID (could be in other resource group)
+    syntax: az network watcher flow-log create --location westus --name MyFlowLog --vnet MyVNetID --storage-account account
+  - summary: Create a flow log with Subnet ID (could be in other resource group)
+    syntax: az network watcher flow-log create --location westus --name MyFlowLog --subnet SubnetID --storage-account account
+  - summary: Create a flow log with Network Interface ID (could be in other resource group)
+    syntax: az network watcher flow-log create --location westus --name MyFlowLog --nic MyNetworkInterfaceID --storage-account account
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -93,10 +108,6 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: The name of the flow logger.
-    description: ''
-  - isRequired: true
-    name: --nsg
-    summary: Name or ID of the network security group.
     description: ''
   optionalParameters:
   - name: --enabled
@@ -115,6 +126,12 @@ directCommands:
   - name: --log-version
     summary: Version (revision) of the flow log.
     description: ''
+  - name: --nic
+    summary: Name or ID of the Network Interface (NIC) Resource.
+    description: ''
+  - name: --nsg
+    summary: Name or ID of the network security group.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -124,12 +141,18 @@ directCommands:
   - name: --storage-account
     summary: Name or ID of the storage account in which to save the flow logs. Must be in the same region of flow log.
     description: ''
+  - name: --subnet
+    summary: Name or ID of Subnet.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --traffic-analytics
     parameterValueGroup: false, true
     summary: Enable traffic analytics. Defaults to true if `--workspace` is provided.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of the Virtual Network Resource.
     description: ''
   - name: --workspace
     summary: Name or ID of a Log Analytics workspace. Must be in the same region of flow log.
@@ -210,14 +233,17 @@ directCommands:
                                        [--format {JSON}]
                                        [--interval]
                                        [--log-version]
+                                       [--nic]
                                        [--nsg]
                                        [--remove]
                                        [--resource-group]
                                        [--retention]
                                        [--set]
                                        [--storage-account]
+                                       [--subnet]
                                        [--tags]
                                        [--traffic-analytics {false, true}]
+                                       [--vnet]
                                        [--workspace]
   examples:
   - summary: Update storage account with name to let resource group identify the storage account and network watcher
@@ -226,6 +252,12 @@ directCommands:
     syntax: az network watcher flow-log update --location westus --resource-group MyResourceGroup --name MyFlowLog --storage-account accountid
   - summary: Update Network Security Group on another resource group
     syntax: az network watcher flow-log update --location westus --resource-group MyAnotherResourceGroup --name MyFlowLog --nsg MyNSG
+  - summary: Update Virtual Network on another resource group
+    syntax: az network watcher flow-log update --location westus --resource-group MyAnotherResourceGroup --name MyFlowLog --vnet MyVNet
+  - summary: Update Subnet on another resource group
+    syntax: az network watcher flow-log update --location westus --resource-group MyAnotherResourceGroup --name MyFlowLog --vnet MyVNet --subnet MySubnet
+  - summary: Update Network Interface on another resource group
+    syntax: az network watcher flow-log update --location westus --resource-group MyAnotherResourceGroup --name MyFlowLog --nic MyNIC
   - summary: Update Workspace on another resource group
     syntax: az network watcher flow-log update --location westus --resource-group MyAnotherResourceGroup --name MyFlowLog --workspace MyAnotherLogAnalyticWorkspace
   requiredParameters:
@@ -260,6 +292,9 @@ directCommands:
   - name: --log-version
     summary: Version (revision) of the flow log.
     description: ''
+  - name: --nic
+    summary: Name or ID of the Network Interface (NIC) Resource.
+    description: ''
   - name: --nsg
     summary: Name or ID of the network security group.
     description: ''
@@ -278,12 +313,18 @@ directCommands:
   - name: --storage-account
     summary: Name or ID of the storage account in which to save the flow logs. Must be in the same region of flow log.
     description: ''
+  - name: --subnet
+    summary: Name or ID of Subnet.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --traffic-analytics
     parameterValueGroup: false, true
     summary: Enable traffic analytics. Defaults to true if `--workspace` is provided.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of the Virtual Network Resource.
     description: ''
   - name: --workspace
     summary: Name or ID of a Log Analytics workspace. Must be in the same region of flow log.
@@ -315,5 +356,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/19/2022
+  ms.date: 09/02/2022
   description: For more information about configuring flow logs visit https://docs.microsoft.com/azure/network-watcher/network-watcher-nsg-flow-logging-cli.

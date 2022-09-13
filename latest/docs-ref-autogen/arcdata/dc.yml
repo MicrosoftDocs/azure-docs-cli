@@ -11,7 +11,7 @@ directCommands:
 - uid: az_arcdata_dc_create
   name: az arcdata dc create
   summary: Create data controller.
-  description: Create data controller - kube config is required on your system along with credentials for the monitoring dashboards provided by the following environment variables - AZDATA_LOGSUI_USERNAME and AZDATA_LOGSUI_PASSWORD for Logs Dashboard, and AZDATA_METRICSUI_USERNAME and AZDATA_METRICSUI_PASSWORD for Metrics Dashboard. Alternatively AZDATA_USERNAME and AZDATA_PASSWORD will be used as a fallback if either sets of environment variables are missing.
+  description: Create data controller - kube config is required on your system along with credentials for the monitoring dashboards provided by the following environment variables - AZDATA_LOGSUI_USERNAME and AZDATA_LOGSUI_PASSWORD for Logs Dashboard, and AZDATA_METRICSUI_USERNAME and AZDATA_METRICSUI_PASSWORD for Metrics Dashboard. Alternatively AZDATA_USERNAME and AZDATA_PASSWORD will be used as a fallback if either sets of environment variables are missing. When using ARM-targeted arguments, the following optional environment variables are also possible - WORKSPACE_ID for Log Analytics Workspace ID and WORKSPACE_SHARED_KEY for the Log Analytics Primary Key.
   syntax: >-
     az arcdata dc create --connectivity-mode
                          --name
@@ -39,10 +39,12 @@ directCommands:
                          [--storage-labels]
                          [--use-k8s]
   examples:
-  - summary: Deploy an indirectly connected data controller.
-    syntax: az arcdata dc create --name name --k8s-namespace namespace --connectivity-mode indirect --resource-group group  --location location --subscription subscription --use-k8s
-  - summary: Deploy a directly connected data controller.
-    syntax: az arcdata dc create --name name  --connectivity-mode direct --resource-group group  --location location --subscription subscription  --custom-location custom-location
+  - summary: Deploy an Arc data controller through the Kubernetes API (indirect connectivity mode only).
+    syntax: az arcdata dc create --name dc-name --k8s-namespace arc --connectivity-mode indirect --resource-group rg-name  --location eastasia --subscription subscription --use-k8s
+  - summary: Deploy an Arc data controller through Azure Resource Manager (direct connectivity mode only).
+    syntax: az arcdata dc create --name dc-name  --connectivity-mode direct --resource-group rg-name --location eastasia --subscription subscription  --custom-location arc-cl
+  - summary: Deploy an Arc data controller to a given Arc-enabled Kubernetes cluster through ARM (direct connectivity mode only). This command will deploy the Arc data services extension and custom location if they do not exist already.
+    syntax: az arcdata dc create --name dc-name --subscription subscription --resource-group rg-name  --cluster-name arc-cluster --connectivity-mode direct --custom-location arc-cl
   requiredParameters:
   - isRequired: true
     name: --connectivity-mode
@@ -69,10 +71,10 @@ directCommands:
     summary: Enable auto upload metrics.
     description: ''
   - name: --cluster-name
-    summary: '[Required] Name of the Kubernetes cluster.'
+    summary: Name of the Kubernetes cluster.
     description: ''
   - name: --custom-location
-    summary: '[Required] The name of the custom location.'
+    summary: The name of the custom location.
     description: ''
   - name: --infrastructure
     summary: "The infrastructure on which the data controller will be running on. Allowed values: ['aws', 'gcp', 'azure', 'alibaba', 'onpremises', 'other', 'auto']."
@@ -123,7 +125,7 @@ directCommands:
     summary: Comma-separated list of labels to apply to all PVCs created by the data controller.
     description: ''
   - name: --use-k8s
-    summary: '[Required] Create data controller using local Kubernetes APIs.'
+    summary: Create data controller using local Kubernetes APIs.
     description: ''
 - uid: az_arcdata_dc_delete
   name: az arcdata dc delete
@@ -138,10 +140,10 @@ directCommands:
                          [--use-k8s]
                          [--yes]
   examples:
-  - summary: Delete an indirect connected data controller.
-    syntax: az arcdata dc delete --name name --k8s-namespace namespace --use-k8s
-  - summary: Delete a directly connected data controller.
-    syntax: az arcdata dc delete --name name --resource-group resource-group
+  - summary: Delete a data controller through the Kubernetes API.
+    syntax: az arcdata dc delete --name dc-name --k8s-namespace arc --use-k8s
+  - summary: Delete a data controller through Azure Resource Manager (ARM).
+    syntax: az arcdata dc delete --name dc-name --resource-group rg-name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -152,16 +154,16 @@ directCommands:
     summary: Force delete data controller and all of its data services.
     description: ''
   - name: --k8s-namespace -k
-    summary: '[Required] The Kubernetes namespace in which the data controller exists.'
+    summary: The Kubernetes namespace in which the data controller exists.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the data controller resource should be added.
+    summary: The Azure resource group in which the data controller exists.
     description: ''
   - name: --use-k8s
-    summary: Create data controller using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
   - name: --yes -y
     summary: Delete data controller without confirmation prompt.
@@ -218,7 +220,7 @@ directCommands:
 - uid: az_arcdata_dc_update
   name: az arcdata dc update
   summary: Update data controller.
-  description: Updates the datacontroller to enable/disable auto uploading logs and metrics.
+  description: Updates the datacontroller to enable/disable auto-uploading logs and metrics.
   syntax: >-
     az arcdata dc update [--auto-upload-logs {false, true}]
                          [--auto-upload-metrics {false, true}]
@@ -234,8 +236,10 @@ directCommands:
                          [--resource-group]
                          [--use-k8s]
   examples:
-  - summary: Data controller update.
-    syntax: az arcdata dc update --auto-upload-logs true --auto-upload-metrics true --name dc-name --resource-group resource-group
+  - summary: Enable auto-uploading of logs through Azure Resource Manager (ARM).
+    syntax: az arcdata dc update --auto-upload-logs true --name dc-name --resource-group rg-name
+  - summary: Enable auto-uploading of metrics through ARM.
+    syntax: az arcdata dc update --auto-upload-metrics true --name dc-name --resource-group rg-name
   optionalParameters:
   - name: --auto-upload-logs
     parameterValueGroup: false, true
@@ -246,10 +250,10 @@ directCommands:
     summary: Enable auto upload metrics.
     description: ''
   - name: --desired-version -v
-    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest.
+    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest valid version.
     description: ''
   - name: --k8s-namespace -k
-    summary: '[Required] The Kubernetes namespace with a deployed data controller.'
+    summary: The Kubernetes namespace with a deployed data controller.
     description: ''
   - name: --maintenance-duration
     summary: Duration of the default maintenance window.
@@ -265,7 +269,7 @@ directCommands:
     summary: Date time of the start of the first default maintenance window.
     description: ''
   - name: --maintenance-time-zone
-    summary: Timezone used to calculate maintenance window.
+    summary: Timezone used to calculate the default maintenance window.
     description: ''
   - name: --name -n
     summary: Data controller name.
@@ -274,10 +278,10 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: The Azure resource group in which the data controller exists.
     description: ''
   - name: --use-k8s
-    summary: Create data controller using local Kubernetes APIs.
+    summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_arcdata_dc_upgrade
   name: az arcdata dc upgrade
@@ -294,10 +298,10 @@ directCommands:
                           [--use-k8s]
   examples:
   - summary: Data controller upgrade.
-    syntax: az arcdata dc upgrade --k8s-namespace namespace --use-k8s
+    syntax: az arcdata dc upgrade --k8s-namespace arc --use-k8s
   optionalParameters:
   - name: --desired-version -v
-    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest.
+    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest valid version.
     description: ''
   - name: --dry-run -d
     summary: Indicates which instance would be upgraded but does not actually upgrade the instances.
@@ -306,16 +310,16 @@ directCommands:
     summary: The Kubernetes namespace in which the data controller exists.
     description: ''
   - name: --name -n
-    summary: The name for the data controller.
+    summary: The name of the data controller.
     description: ''
   - name: --no-wait
     summary: If given, the command will start the upgrade, but will not wait for the entire upgrade to complete. Upgrade will continue in the background.
     description: ''
   - name: --resource-group -g
-    summary: The Azure resource group in which the data controller resource should be added.
+    summary: The Azure resource group in which the data controller exists.
     description: ''
   - name: --target
-    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest.
+    summary: The desired version tag to which the data controller will be upgraded, or empty to use the latest valid version.
     description: ''
   - name: --use-k8s
     summary: Upgrade data controller using local Kubernetes APIs.
