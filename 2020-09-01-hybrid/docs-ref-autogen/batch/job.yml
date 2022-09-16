@@ -4,7 +4,7 @@ name: az batch job
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-batch-cli-extensions** extension for the Azure CLI  (version 2.0.74 or higher).  The extension will automatically install the first time you run an **az batch job** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-batch-cli-extensions** extension for the Azure CLI  (version 2.30.0 or higher).  The extension will automatically install the first time you run an **az batch job** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Batch jobs.
 description: ''
 directCommands:
@@ -16,6 +16,7 @@ directCommands:
     az batch job create [--account-endpoint]
                         [--account-key]
                         [--account-name]
+                        [--allow-task-preemption]
                         [--id]
                         [--job-manager-task-command-line]
                         [--job-manager-task-environment-settings]
@@ -24,10 +25,12 @@ directCommands:
                         [--job-max-task-retry-count]
                         [--job-max-wall-clock-time]
                         [--json-file]
+                        [--max-parallel-tasks]
                         [--metadata]
                         [--parameters]
                         [--pool-id]
                         [--priority]
+                        [--required-slots]
                         [--resource-group]
                         [--template]
                         [--uses-task-dependencies]
@@ -40,6 +43,9 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'The Batch account name. Alternatively, set by environment variable: AZURE_BATCH_ACCOUNT.'
+    description: ''
+  - name: --allow-task-preemption
+    summary: Whether Tasks in this job can be preempted by other high priority jobs. If the value is set to True, other high priority jobs submitted to the system will take precedence and will be able requeue tasks from this job. You can update a job's allowTaskPreemption after it has been created using the update job API.
     description: ''
   - name: --id
     summary: Required. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two IDs within an Account that differ only by case).
@@ -63,10 +69,13 @@ directCommands:
     summary: The maximum elapsed time that the job may run, measured from the time the job is created. If the job does not complete within the time limit, the Batch service terminates it and any tasks that are still running. In this case, the termination reason will be MaxWallClockTimeExpiry. If this property is not specified, there is no time limit on how long the job may run. Expected format is an ISO-8601 duration.
     description: ''
   - name: --json-file
-    summary: The file containing the job to create in JSON format, if this parameter is specified, all other parameters are ignored.
+    summary: A file containing the job specification in JSON (formatted to match the respective REST API body). If this parameter is specified, all 'Job Arguments' are ignored.
+    description: ''
+  - name: --max-parallel-tasks
+    summary: "The maximum number of tasks that can be executed in parallel for the job. The value of maxParallelTasks must be -1 or greater than 0 if specified. If not specified, the default value is -1, which means there's no limit to the number of tasks that can be run at once. You can update a job's maxParallelTasks after it has been created using the update job API. Default value: -1 ."
     description: ''
   - name: --metadata
-    summary: A list of name-value pairs associated with the job as metadata. The Batch service does not assign any meaning to metadata; it is solely for the use of user code. Space separated values in 'key=value' format.
+    summary: The Batch service does not assign any meaning to metadata; it is solely for the use of user code.
     description: ''
   - name: --parameters
     summary: Parameter values for a Batch job JSON template file. Can only be used with --template.
@@ -76,6 +85,9 @@ directCommands:
     description: ''
   - name: --priority
     summary: The priority of the Job. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0.
+    description: ''
+  - name: --required-slots
+    summary: The number of scheduling slots that the Task requires to run. The default is 1. A Task can only be scheduled to run on a compute node if the node has enough free scheduling slots available. For multi-instance Tasks, this property is not supported and must not be specified.
     description: ''
   - name: --resource-group
     summary: The resource group of the Batch account.
