@@ -98,3 +98,16 @@ The following parameters will be deprecated in 2.41.0. Please use `az eventhubs 
 
 - `--identity` will be deprecated. Please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead.
 - `-default-action` and `--enable-trusted-service-access` will be deprecated. Please use `az eventhubs namespace network-rule update` instead
+
+## Az.Compute
+
+### `az vm create`
+- Make the default value of  `--enable-secure-boot` to True for Trusted Launch VM, so as to lower the bar of entry even further and provide customers the full set of Trusted Launch features by default.
+
+### `az vmss create`
+- Make the default value of  `--enable-secure-boot` to True for Trusted Launch VMSS, so as to lower the bar of entry even further and provide customers the full set of Trusted Launch features by default.
+
+
+
+[comment]: # (As of right now, we should follow PowerShell's example and list the breaking changes by Service alphabetically and list each afected command. Delete this comment after reading.)
+>>>>>>> Stashed changes
