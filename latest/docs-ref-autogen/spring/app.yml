@@ -4,7 +4,7 @@ name: az spring app
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **spring** extension for the Azure CLI  (version 2.30.0 or higher).  The extension will automatically install the first time you run an **az spring app** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **spring** extension for the Azure CLI  (version 2.38.0 or higher).  The extension will automatically install the first time you run an **az spring app** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage apps in Azure Spring Apps.
 description: ''
 directCommands:
@@ -108,6 +108,7 @@ directCommands:
                          [--assign-endpoint {false, true}]
                          [--assign-identity {false, true}]
                          [--assign-public-endpoint {false, true}]
+                         [--backend-protocol {Default, GRPC}]
                          [--cpu]
                          [--disable-probe {false, true}]
                          [--enable-liveness-probe {false, true}]
@@ -116,6 +117,8 @@ directCommands:
                          [--enable-startup-probe {false, true}]
                          [--env]
                          [--grace-period]
+                         [--ingress-read-timeout]
+                         [--ingress-send-timeout]
                          [--instance-count]
                          [--jvm-options]
                          [--liveness-probe-config]
@@ -124,6 +127,8 @@ directCommands:
                          [--persistent-storage]
                          [--readiness-probe-config]
                          [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--session-affinity {Cookie, None}]
+                         [--session-max-age]
                          [--startup-probe-config]
                          [--system-assigned {false, true}]
                          [--user-assigned]
@@ -158,6 +163,10 @@ directCommands:
     parameterValueGroup: false, true
     summary: If true, assign endpoint URL which could be accessed out of virtual network for vnet injection instance app.
     description: ''
+  - name: --backend-protocol
+    parameterValueGroup: Default, GRPC
+    summary: Ingress backend protocol of app.
+    description: ''
   - name: --cpu
     defaultValue: "1"
     summary: CPU resource quantity. Should be 500m or number of CPU cores.
@@ -188,6 +197,12 @@ directCommands:
   - name: --grace-period --termination-grace-period-seconds
     summary: Optional duration in seconds the app instance needs to terminate gracefully.
     description: ''
+  - name: --ingress-read-timeout
+    summary: Ingress read timeout value in seconds. Default 300, minimum is 1, maximum is 1800.
+    description: ''
+  - name: --ingress-send-timeout
+    summary: Ingress send timeout value in seconds. Default 60, minimum is 1, maximum is 1800.
+    description: ''
   - name: --instance-count
     defaultValue: "1"
     summary: Number of instance.
@@ -214,6 +229,13 @@ directCommands:
   - name: --runtime-version
     parameterValueGroup: Java_11, Java_17, Java_8, NetCore_31
     summary: Runtime version of used language.
+    description: ''
+  - name: --session-affinity
+    parameterValueGroup: Cookie, None
+    summary: Ingress session afiinity of app.
+    description: ''
+  - name: --session-max-age
+    summary: Time until the cookie expires. Minimum is 1 second, maximum is 7 days. If set to 0, the expiration period is equal to the browser session period.
     description: ''
   - name: --startup-probe-config
     summary: A json file path indicates the startup probe config.
@@ -739,6 +761,7 @@ directCommands:
                          --service
                          [--assign-endpoint {false, true}]
                          [--assign-public-endpoint {false, true}]
+                         [--backend-protocol {Default, GRPC}]
                          [--config-file-patterns]
                          [--deployment]
                          [--disable-probe {false, true}]
@@ -750,6 +773,8 @@ directCommands:
                          [--env]
                          [--grace-period]
                          [--https-only {false, true}]
+                         [--ingress-read-timeout]
+                         [--ingress-send-timeout]
                          [--jvm-options]
                          [--liveness-probe-config]
                          [--loaded-public-certificate-file]
@@ -758,6 +783,8 @@ directCommands:
                          [--persistent-storage]
                          [--readiness-probe-config]
                          [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--session-affinity {Cookie, None}]
+                         [--session-max-age]
                          [--startup-probe-config]
   examples:
   - summary: Add an environment variable for the app.
@@ -783,6 +810,10 @@ directCommands:
   - name: --assign-public-endpoint
     parameterValueGroup: false, true
     summary: If true, assign endpoint URL which could be accessed out of virtual network for vnet injection instance app.
+    description: ''
+  - name: --backend-protocol
+    parameterValueGroup: Default, GRPC
+    summary: Ingress backend protocol of app.
     description: ''
   - name: --config-file-patterns
     summary: (Enterprise Tier Only) Config file patterns separated with ',' to decide which patterns of Application Configuration Service will be used. Use '""' to clear existing configurations.
@@ -824,6 +855,12 @@ directCommands:
     parameterValueGroup: false, true
     summary: If true, access app via https.
     description: ''
+  - name: --ingress-read-timeout
+    summary: Ingress read timeout value in seconds. Default 300, minimum is 1, maximum is 1800.
+    description: ''
+  - name: --ingress-send-timeout
+    summary: Ingress send timeout value in seconds. Default 60, minimum is 1, maximum is 1800.
+    description: ''
   - name: --jvm-options
     summary: "A string containing jvm options, use '=' instead of ' ' for this argument to avoid bash parse error, eg: --jvm-options='-Xms1024m -Xmx2048m'."
     description: ''
@@ -848,6 +885,13 @@ directCommands:
   - name: --runtime-version
     parameterValueGroup: Java_11, Java_17, Java_8, NetCore_31
     summary: Runtime version of used language.
+    description: ''
+  - name: --session-affinity
+    parameterValueGroup: Cookie, None
+    summary: Ingress session afiinity of app.
+    description: ''
+  - name: --session-max-age
+    summary: Time until the cookie expires. Minimum is 1 second, maximum is 7 days. If set to 0, the expiration period is equal to the browser session period.
     description: ''
   - name: --startup-probe-config
     summary: A json file path indicates the startup probe config.
