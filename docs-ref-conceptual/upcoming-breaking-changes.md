@@ -3,7 +3,7 @@ title: Upcoming Breaking Changes – Azure CLI | Microsoft Docs
 description: Learn about breaking changes coming to Azure CLI in the next breaking change release
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
+manager: mkluck
 ms.date: 08/22/2022
 ms.topic: article
 ms.service: azure-cli
@@ -18,30 +18,25 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 
 ### `az acs`
 
-- This deprecated command group will be removed. For the recommended action, please refer to this doc [azure-container-service-will-retire](https://azure.microsoft.com/en-us/updates/azure-container-service-will-retire-on-january-31-2020/)
-  
+- The `acs` command group has been deprecated and as of 2.41.0, `acs` will be removed. For more information, please refer to [this doc](https://azure.microsoft.com/updates/azure-container-service-will-retire-on-january-31-2020/)
   
 ## Az.AppConfiguration
 
 ### `az appconfig kv import`
 
-- Add validations to JSON file imports to ensure that only valid JSON objects are imports. Other JSON primitives will now be rejected. 
+- Validations will be added to JSON file imports to ensure that only valid JSON objects are imported. Other JSON primitives will be rejected. 
 
 ### `az appconfig kv export`
 
-- Add validations to JSON file imports to ensure that only valid JSON objects are imports. Other JSON primitives will now be rejected. 
-
+- Validations will be added to JSON file imports to ensure that only valid JSON objects are imported. Other JSON primitives will be rejected. 
 
 ## Az.AppService
 
 ### `az logicapp create`
 
-- Parameter breaking-change will happen to the parameter sets
-  - `--consumption-plan-location`
-  - `--os-type`
-    They will be deprecated (waiting for the server team to provide more information) 
-    Removing `--os-type` and `--consumption-plan-location` parameters that are unsupported on Logic Apps Standard
+`--consumption-plan-location` and `--os-type` parameter will be deprecated. 
 
+#TODO: Need to make sure this is all the information about this? Are the suggested replacements? Will these be completely removed? 
 
 ## Az.KeyVault
 
@@ -49,7 +44,6 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 
 - Parameter breaking-change will happen to the parameter sets
   - `--enable-soft-delete` will be deprecated, all keyvault will be created with soft delete enabled
-
 
 ## Az.Network
 
@@ -64,54 +58,43 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 
 - Deprecate classic connection monitor creation, please use the new connection monitor
 
-
 ## Az.Monitor
 
 ### `az monitor diagnostic-settings list`
 
 - Drop value property in output, return a list instead of a dict
 
-
 ## Az.ServiceBus
 
 ### `az servicebus namespace create`
+
+`--default-action` will be deprecated. Please use `az servicebus namespace network-rule update`
+
 ### `az servicebus namespace update`
 
-- Parameter breaking-change will happen to the parameter sets
-  - `--default-action` will be deprecated, please use `az servicebus namespace network-rule update`
+`--default-action` will be deprecated. Please use `az servicebus namespace network-rule update`
 
 ### `az servicebus migration`
 
-- Parameter breaking-change will happen to all parameter sets
-  - `--config-name` will be deprecated, no replacement any more
-
+`--config-name` will be deprecated. There is no replacement for this command.
 
 ## Az.EventHub
 
 ### `az eventhubs namespace update`
 
-- Parameter breaking-change will happen to all parameter sets
-  -  `--key-source`
-  -  `--key-name`
-  -  `--key-vault-uri`
-  -  `--key-version`
-  They will be deprecated, please use `az eventhubs namespace encryption` to manage keys
+The following parameters will be deprecated in 2.41.0. Please use `az eventhubs namespace encryption` to manage keys
+
+-  `--key-source`
+-  `--key-name`
+-  `--key-vault-uri`
+-  `--key-version`
 
 ### `az eventhubs namespace create`
+
+- `--identity` will be deprecated, please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead
+- `-default-action` and `--enable-trusted-service-access` will be deprecated, please use `az eventhubs namespace network-rule update` instead
+
 ### `az eventhubs namespace update`
 
-- Parameter breaking-change will happen to all parameter sets
-  - `--identity` will be deprecated, please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead
-  - `-default-action` and `--enable-trusted-service-access` will be deprecated, please use `az eventhubs namespace network-rule update` instead
-
-
-
-
-
-
-
-
-
-
-
-[comment]: # (As of right now, we should follow PowerShell's example and list the breaking changes by Service alphabetically and list each afected command. Delete this comment after reading.)
+- `--identity` will be deprecated. Please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead.
+- `-default-action` and `--enable-trusted-service-access` will be deprecated. Please use `az eventhubs namespace network-rule update` instead
