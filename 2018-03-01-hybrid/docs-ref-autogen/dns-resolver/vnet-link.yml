@@ -4,7 +4,7 @@ name: az dns-resolver vnet-link
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **dns-resolver** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az dns-resolver vnet-link** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dns-resolver** extension for the Azure CLI  (version 2.39.0 or higher).  The extension will automatically install the first time you run an **az dns-resolver vnet-link** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage vnet link with dns resolver.
 description: ''
 directCommands:
@@ -13,18 +13,22 @@ directCommands:
   summary: Create a virtual network link to a DNS forwarding ruleset.
   description: ''
   syntax: >-
-    az dns-resolver vnet-link create --name
+    az dns-resolver vnet-link create --id
+                                     --name
                                      --resource-group
                                      --ruleset-name
-                                     [--id]
                                      [--if-match]
                                      [--if-none-match]
                                      [--metadata]
-                                     [--no-wait]
+                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Upsert virtual network link to a DNS forwarding ruleset
-    syntax: az dns-resolver vnet-link create --ruleset-name "sampleDnsForwardingRuleset" --metadata additionalProp1="value1" --id "/subscriptions/0403cfa9-9659-4f33-9f30-1f191c51d111/resourceGroups/sampleVnetResourceGroupName/providers/Microsoft.Network/virtualNetworks/sampleVirtualNetwork" --resource-group "sampleResourceGroup" --name "sampleVirtualNetworkLink"
+    syntax: az dns-resolver vnet-link create --ruleset-name "sampleDnsForwardingRuleset" --metadata additionalProp1="value1" --id "/subscriptions/0403cfa9-9659-4f33-9f30-1f191c51d111/resourceG roups/sampleVnetResourceGroupName/providers/Microsoft.Network/virtualNetworks/sampleVirtualN etwork" --resource-group "sampleResourceGroup" --name "sampleVirtualNetworkLink"
   requiredParameters:
+  - isRequired: true
+    name: --id
+    summary: Resource ID.
+    description: ''
   - isRequired: true
     name: --name --virtual-network-link-name -n
     summary: The name of the virtual network link.
@@ -38,9 +42,6 @@ directCommands:
     summary: The name of the DNS forwarding ruleset.
     description: ''
   optionalParameters:
-  - name: --id
-    summary: Resource ID.
-    description: ''
   - name: --if-match
     summary: ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes.
     description: ''
@@ -48,9 +49,10 @@ directCommands:
     summary: Set to '\*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored.
     description: ''
   - name: --metadata
-    summary: 'Metadata attached to the virtual network link. Expect value: KEY1=VALUE1 KEY2=VALUE2 ...'
+    summary: 'Metadata attached to the forwarding rule. Expect value: KEY1=VALUE1 KEY2=VALUE2 ...  Shorthand syntax supported. Try `??` to show more.'
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
 - uid: az_dns-resolver_vnet-link_delete
@@ -62,11 +64,11 @@ directCommands:
                                      --resource-group
                                      --ruleset-name
                                      [--if-match]
-                                     [--no-wait]
+                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--yes]
   examples:
   - summary: Delete virtual network link to a DNS forwarding ruleset
-    syntax: az dns-resolver vnet-link delete --ruleset-name "sampleDnsForwardingRuleset" --resource-group "sampleResourceGroup" --name "sampleVirtualNetworkLink"
+    syntax: az dns-resolver vnet-link delete --ruleset-name "sampleDnsForwardingRuleset" --resource- group "sampleResourceGroup" --name "sampleVirtualNetworkLink"
   requiredParameters:
   - isRequired: true
     name: --name --virtual-network-link-name -n
@@ -85,6 +87,7 @@ directCommands:
     summary: ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes.
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --yes -y
@@ -146,9 +149,13 @@ directCommands:
     az dns-resolver vnet-link update --name
                                      --resource-group
                                      --ruleset-name
+                                     [--add]
+                                     [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--if-match]
                                      [--metadata]
-                                     [--no-wait]
+                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--remove]
+                                     [--set]
   examples:
   - summary: Update virtual network link to a DNS forwarding ruleset
     syntax: az dns-resolver vnet-link update --ruleset-name "sampleDnsForwardingRuleset" --metadata additionalProp1="value1" --resource-group "sampleResourceGroup" --name "sampleVirtualNetworkLink"
@@ -166,18 +173,32 @@ directCommands:
     summary: The name of the DNS forwarding ruleset.
     description: ''
   optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
   - name: --if-match
     summary: ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes.
     description: ''
   - name: --metadata
-    summary: 'Metadata attached to the virtual network link. Expect value: KEY1=VALUE1 KEY2=VALUE2 ...'
+    summary: 'Metadata attached to the forwarding rule. Expect value: KEY1=VALUE1 KEY2=VALUE2 ...  Shorthand syntax supported. Try `??` to show more.'
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
 - uid: az_dns-resolver_vnet-link_wait
   name: az dns-resolver vnet-link wait
-  summary: Place the CLI in a waiting state until a condition of the dns-resolver vnet-link is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az dns-resolver vnet-link wait --name
@@ -190,13 +211,6 @@ directCommands:
                                    [--interval]
                                    [--timeout]
                                    [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the dns-resolver vnet-link is successfully created.
-    syntax: az dns-resolver vnet-link wait --ruleset-name "sampleDnsForwardingRuleset" --resource-group "sampleResourceGroup" --name "sampleVirtualNetworkLink" --created
-  - summary: Pause executing next line of CLI script until the dns-resolver vnet-link is successfully updated.
-    syntax: az dns-resolver vnet-link wait --ruleset-name "sampleDnsForwardingRuleset" --resource-group "sampleResourceGroup" --name "sampleVirtualNetworkLink" --updated
-  - summary: Pause executing next line of CLI script until the dns-resolver vnet-link is successfully deleted.
-    syntax: az dns-resolver vnet-link wait --ruleset-name "sampleDnsForwardingRuleset" --resource-group "sampleResourceGroup" --name "sampleVirtualNetworkLink" --deleted
   requiredParameters:
   - isRequired: true
     name: --name --virtual-network-link-name -n
