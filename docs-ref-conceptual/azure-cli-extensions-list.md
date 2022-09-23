@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/20/2022
+ms.date: 09/23/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -25,7 +25,7 @@ You will be prompted to install an extension on first use.
 
 | Extension | Required Minimum CLI Version | Description | Status | Release Notes |
 |----|-----------------|-------------|---------|---------------|
-|[account](https://github.com/Azure/azure-cli-extensions/tree/main/src/account) | 2.3.1 | Microsoft Azure Command-Line Tools SubscriptionClient Extension | GA | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/account/HISTORY.rst) |
+|[account](https://github.com/Azure/azure-cli-extensions/tree/main/src/account) | 2.38.0 | Microsoft Azure Command-Line Tools SubscriptionClient Extension | GA | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/account/HISTORY.rst) |
 |[acrtransfer](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrtransfer) | 2.0.67 | Microsoft Azure Command-Line Tools Acrtransfer Extension | Preview | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/acrtransfer/HISTORY.rst) |
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
@@ -62,7 +62,7 @@ You will be prompted to install an extension on first use.
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
 |[containerapp](https://github.com/Azure/azure-cli-extensions) | 2.37.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.11](https://github.com/Azure/azure-cli-extensions) |
 |[containerapp-compose](https://github.com/azure/azure-cli-extensions/tree/main/src/containerapp-compose) | 2.15.0 | Microsoft Azure Command-Line Tools Container Apps Preview Extension | Preview | [0.2.2](https://github.com/azure/azure-cli-extensions/tree/main/src/containerapp-compose/HISTORY.rst) |
-|[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.18.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
+|[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.18.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.3.1 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
 |[custom-providers](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers) | 2.3.1 | Microsoft Azure Command-Line Tools Custom Providers Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers/HISTORY.rst) |
@@ -81,7 +81,7 @@ You will be prompted to install an extension on first use.
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[dnc](https://github.com/Azure/azure-cli-extensions/tree/master/src/dnc) | 2.15.0 | Microsoft Azure Command-Line Tools DNC Extension | Preview | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/dnc/HISTORY.rst) |
-|[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.15.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
+|[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.39.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
 |[elastic](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic) | 2.15.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic/HISTORY.rst) |
 |[enterprise-edge](https://github.com/Azure/azure-cli-extensions/tree/master/src/enterprise-edge) | 2.29.0 | Support for Static Webapp-Azure Front Door Integration (aka Static Webapp Enterprise Edge) | Preview | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/enterprise-edge/HISTORY.rst) |
@@ -141,7 +141,7 @@ You will be prompted to install an extension on first use.
 |[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole/HISTORY.rst) |
-|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.38.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring/HISTORY.rst) |
+|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.38.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.1.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring/HISTORY.rst) |
 |[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.30.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud/HISTORY.rst) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.4.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [1.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh/HISTORY.rst) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [0.1.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
