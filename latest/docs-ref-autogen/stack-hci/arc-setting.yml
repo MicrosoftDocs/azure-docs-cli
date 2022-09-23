@@ -16,6 +16,11 @@ directCommands:
     az stack-hci arc-setting create --arc-setting-name
                                     --cluster-name
                                     --resource-group
+                                    [--arc-application-client-id]
+                                    [--arc-application-object-id]
+                                    [--arc-application-tenant-id]
+                                    [--arc-service-principal-object-id]
+                                    [--connectivity-properties]
                                     [--created-at]
                                     [--created-by]
                                     [--created-by-type {Application, Key, ManagedIdentity, User}]
@@ -40,6 +45,21 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --arc-application-client-id
+    summary: App id of arc AAD identity.
+    description: ''
+  - name: --arc-application-object-id
+    summary: Object id of arc AAD identity.
+    description: ''
+  - name: --arc-application-tenant-id
+    summary: Tenant id of arc AAD identity.
+    description: ''
+  - name: --arc-service-principal-object-id
+    summary: Object id of arc AAD service principal.
+    description: ''
+  - name: --connectivity-properties
+    summary: 'Contains connectivity related configuration for ARC resources Expected value: json-string/json-file/@json-file.'
+    description: ''
   - name: --created-at
     summary: The timestamp of resource creation (UTC).
     description: ''
@@ -62,6 +82,35 @@ directCommands:
   - name: --last-modified-by-type
     parameterValueGroup: Application, Key, ManagedIdentity, User
     summary: The type of identity that last modified the resource.
+    description: ''
+- uid: az_stack-hci_arc-setting_create-identity
+  name: az stack-hci arc-setting create-identity
+  summary: Create Aad identity for arc settings.
+  description: ''
+  syntax: >-
+    az stack-hci arc-setting create-identity --arc-setting-name
+                                             --cluster-name
+                                             --resource-group
+                                             [--no-wait]
+  examples:
+  - summary: Create Arc Identity
+    syntax: az stack-hci arc-setting create-identity --name "default" --cluster-name "myCluster" --resource-group "test-rg"
+  requiredParameters:
+  - isRequired: true
+    name: --arc-setting-name --name -n
+    summary: The name of the proxy resource holding details of HCI ArcSetting information.
+    description: ''
+  - isRequired: true
+    name: --cluster-name
+    summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
 - uid: az_stack-hci_arc-setting_delete
   name: az stack-hci arc-setting delete
@@ -95,6 +144,30 @@ directCommands:
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_stack-hci_arc-setting_generate-password
+  name: az stack-hci arc-setting generate-password
+  summary: Generate password for arc settings.
+  description: ''
+  syntax: >-
+    az stack-hci arc-setting generate-password --arc-setting-name
+                                               --cluster-name
+                                               --resource-group
+  examples:
+  - summary: Generate Password
+    syntax: az stack-hci arc-setting generate-password --name "default" --cluster-name "myCluster" --resource-group "test-rg"
+  requiredParameters:
+  - isRequired: true
+    name: --arc-setting-name --name -n
+    summary: The name of the proxy resource holding details of HCI ArcSetting information.
+    description: ''
+  - isRequired: true
+    name: --cluster-name
+    summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: az_stack-hci_arc-setting_list
   name: az stack-hci arc-setting list
@@ -139,6 +212,39 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_stack-hci_arc-setting_update
+  name: az stack-hci arc-setting update
+  summary: Update ArcSettings for HCI cluster.
+  description: ''
+  syntax: >-
+    az stack-hci arc-setting update --arc-setting-name
+                                    --cluster-name
+                                    --resource-group
+                                    [--connectivity-properties]
+                                    [--tags]
+  examples:
+  - summary: Patch ArcSetting
+    syntax: az stack-hci arc-setting update --connectivity-properties "{\"enabled\":true}" --name "default" --cluster-name "myCluster" --resource-group "test-rg"
+  requiredParameters:
+  - isRequired: true
+    name: --arc-setting-name --name -n
+    summary: The name of the proxy resource holding details of HCI ArcSetting information.
+    description: ''
+  - isRequired: true
+    name: --cluster-name
+    summary: The name of the cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --connectivity-properties
+    summary: 'Contains connectivity related configuration for ARC resources Expected value: json-string/json-file/@json-file.'
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
 - uid: az_stack-hci_arc-setting_wait
   name: az stack-hci arc-setting wait
   summary: Place the CLI in a waiting state until a condition of the stack-hci arc-setting is met.
@@ -157,6 +263,8 @@ directCommands:
   examples:
   - summary: Pause executing next line of CLI script until the stack-hci arc-setting is successfully deleted.
     syntax: az stack-hci arc-setting wait --name "default" --cluster-name "myCluster" --resource-group "test-rg" --deleted
+  - summary: Pause executing next line of CLI script until the stack-hci arc-setting is successfully created.
+    syntax: az stack-hci arc-setting wait --name "default" --cluster-name "myCluster" --resource-group "test-rg" --created
   requiredParameters:
   - isRequired: true
     name: --arc-setting-name --name -n
@@ -196,9 +304,12 @@ directCommands:
     description: ''
 commands:
 - az_stack-hci_arc-setting_create
+- az_stack-hci_arc-setting_create-identity
 - az_stack-hci_arc-setting_delete
+- az_stack-hci_arc-setting_generate-password
 - az_stack-hci_arc-setting_list
 - az_stack-hci_arc-setting_show
+- az_stack-hci_arc-setting_update
 - az_stack-hci_arc-setting_wait
 globalParameters:
 - name: --debug

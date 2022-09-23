@@ -201,6 +201,92 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_cosmosdb_sql_container_redistribute-partition-throughput
+  name: az cosmosdb sql container redistribute-partition-throughput
+  summary: Redistributes the partition throughput of a sql container.
+  description: ''
+  syntax: >-
+    az cosmosdb sql container redistribute-partition-throughput --account-name
+                                                                --database-name
+                                                                --name
+                                                                --resource-group
+                                                                [--evenly-distribute {false, true}]
+                                                                [--source-partition-info]
+                                                                [--target-partition-info]
+  examples:
+  - summary: Evenly distributes the partition throughput for a sql container among all physical partitions
+    syntax: az cosmosdb sql container redistribute-partition-throughput --account-name account_name --database-name db_name --name container_name  --resource-group rg_name --evenly-distribute
+  - summary: Redistributes the partition throughput for a sql container from source partitions to target partitions
+    syntax: az cosmosdb sql container redistribute-partition-throughput --account-name account_name --database-name db_name --name container_name  --resource-group rg_name --target-partition-info 8=1200 6=1200]' --source-partition-info 9]'
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Name of the CosmosDB database account.
+    description: ''
+  - isRequired: true
+    name: --database-name -d
+    summary: Name of the CosmosDB database name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the CosmosDB collection.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --evenly-distribute
+    parameterValueGroup: false, true
+    summary: Switch to distribute throughput equally among all physical partitions.
+    description: ''
+  - name: --source-partition-info
+    summary: 'Space separated source physical partition ids eg: 1 2.'
+    description: ''
+  - name: --target-partition-info
+    summary: 'Information about desired target physical partition throughput eg: 0=1200 1=1200.'
+    description: ''
+- uid: az_cosmosdb_sql_container_retrieve-partition-throughput
+  name: az cosmosdb sql container retrieve-partition-throughput
+  summary: Retrieve  the partition throughput of a sql container.
+  description: ''
+  syntax: >-
+    az cosmosdb sql container retrieve-partition-throughput --account-name
+                                                            --database-name
+                                                            --name
+                                                            --resource-group
+                                                            [--all-partitions {false, true}]
+                                                            [--physical-partition-ids]
+  examples:
+  - summary: Retrieve container container_name's throughput for specific physical partitions
+    syntax: az cosmosdb sql container retrieve-partition-throughput --account-name account_name --database-name db_name --name container_name  --resource-group rg_name --physical-partition-ids 8 9
+  - summary: Retrieve container container_name's throughput for all physical partitions
+    syntax: az cosmosdb sql container retrieve-partition-throughput --account-name account_name --database-name db_name --name container_name  --resource-group rg_name --all-partitions
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Name of the CosmosDB database account.
+    description: ''
+  - isRequired: true
+    name: --database-name -d
+    summary: Name of the CosmosDB database name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the CosmosDB container.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --all-partitions
+    parameterValueGroup: false, true
+    summary: Switch to retrieve throughput for all physical partitions.
+    description: ''
+  - name: --physical-partition-ids -p
+    summary: Space separated list of physical partition ids.
+    description: ''
 - uid: az_cosmosdb_sql_container_show
   name: az cosmosdb sql container show
   summary: Show the details of a SQL container under an Azure Cosmos DB SQL database.
@@ -274,6 +360,8 @@ commands:
 - az_cosmosdb_sql_container_exists
 - az_cosmosdb_sql_container_list
 - az_cosmosdb_sql_container_merge
+- az_cosmosdb_sql_container_redistribute-partition-throughput
+- az_cosmosdb_sql_container_retrieve-partition-throughput
 - az_cosmosdb_sql_container_show
 - az_cosmosdb_sql_container_throughput
 - az_cosmosdb_sql_container_throughput_migrate
@@ -299,5 +387,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/09/2022
+  ms.date: 08/29/2022
   description: Manage Azure Cosmos DB SQL containers.

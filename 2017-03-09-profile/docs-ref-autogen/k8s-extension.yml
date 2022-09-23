@@ -14,11 +14,12 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-extension create --cluster-name
-                            --cluster-type {appliances, connectedClusters, managedClusters}
+                            --cluster-type {appliances, connectedClusters, managedClusters, provisionedClusters}
                             --extension-type
                             --name
                             --resource-group
                             [--auto-upgrade {false, true}]
+                            [--cluster-resource-provider]
                             [--config]
                             [--config-file]
                             [--config-protected]
@@ -39,8 +40,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: appliances, connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters or Arc appliances.
+    parameterValueGroup: appliances, connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc clusters or AKS managed clusters or Arc appliances or provisionedClusters.
     description: ''
   - isRequired: true
     name: --extension-type
@@ -58,6 +59,9 @@ directCommands:
   - name: --auto-upgrade --auto-upgrade-minor-version
     parameterValueGroup: false, true
     summary: Automatically upgrade minor version of the extension instance.
+    description: ''
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
   - name: --config --config-settings --configuration-settings
     summary: Configuration Settings as key=value pair.  Repeat parameter for each setting.
@@ -96,9 +100,10 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-extension delete --cluster-name
-                            --cluster-type {appliances, connectedClusters, managedClusters}
+                            --cluster-type {appliances, connectedClusters, managedClusters, provisionedClusters}
                             --name
                             --resource-group
+                            [--cluster-resource-provider]
                             [--force]
                             [--no-wait]
                             [--yes]
@@ -112,8 +117,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: appliances, connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters or Arc appliances.
+    parameterValueGroup: appliances, connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc clusters or AKS managed clusters or Arc appliances or provisionedClusters.
     description: ''
   - isRequired: true
     name: --name -n
@@ -124,6 +129,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
+    description: ''
   - name: --force
     summary: Specify whether to force delete the extension from the cluster.
     description: ''
@@ -139,8 +147,9 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-extension list --cluster-name
-                          --cluster-type {appliances, connectedClusters, managedClusters}
+                          --cluster-type {appliances, connectedClusters, managedClusters, provisionedClusters}
                           --resource-group
+                          [--cluster-resource-provider]
   examples:
   - summary: List all Kubernetes Extensions on a cluster
     syntax: az k8s-extension list --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters
@@ -151,12 +160,16 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: appliances, connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters or Arc appliances.
+    parameterValueGroup: appliances, connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc clusters or AKS managed clusters or Arc appliances or provisionedClusters.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
 - uid: az_k8s-extension_show
   name: az k8s-extension show
@@ -164,9 +177,10 @@ directCommands:
   description: ''
   syntax: >-
     az k8s-extension show --cluster-name
-                          --cluster-type {appliances, connectedClusters, managedClusters}
+                          --cluster-type {appliances, connectedClusters, managedClusters, provisionedClusters}
                           --name
                           --resource-group
+                          [--cluster-resource-provider]
   examples:
   - summary: Show details of a Kubernetes Extension
     syntax: az k8s-extension show --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension
@@ -177,8 +191,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: appliances, connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters or Arc appliances.
+    parameterValueGroup: appliances, connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc clusters or AKS managed clusters or Arc appliances or provisionedClusters.
     description: ''
   - isRequired: true
     name: --name -n
@@ -188,16 +202,21 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
+    description: ''
 - uid: az_k8s-extension_update
   name: az k8s-extension update
   summary: Update mutable properties of a Kubernetes Extension.
   description: For update to ConfigSettings and ConfigProtectedSettings, please refer to documentation of the cluster extension service to check update to these properties is supported before updating these properties.
   syntax: >-
     az k8s-extension update --cluster-name
-                            --cluster-type {appliances, connectedClusters, managedClusters}
+                            --cluster-type {appliances, connectedClusters, managedClusters, provisionedClusters}
                             --name
                             --resource-group
                             [--auto-upgrade {false, true}]
+                            [--cluster-resource-provider]
                             [--config]
                             [--config-file]
                             [--config-protected]
@@ -216,8 +235,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cluster-type -t
-    parameterValueGroup: appliances, connectedClusters, managedClusters
-    summary: Specify Arc clusters or AKS managed clusters or Arc appliances.
+    parameterValueGroup: appliances, connectedClusters, managedClusters, provisionedClusters
+    summary: Specify Arc clusters or AKS managed clusters or Arc appliances or provisionedClusters.
     description: ''
   - isRequired: true
     name: --name -n
@@ -231,6 +250,9 @@ directCommands:
   - name: --auto-upgrade --auto-upgrade-minor-version
     parameterValueGroup: false, true
     summary: Automatically upgrade minor version of the extension instance.
+    description: ''
+  - name: --cluster-resource-provider --cluster-rp
+    summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
   - name: --config --config-settings --configuration-settings
     summary: Configuration Settings as key=value pair.  Repeat parameter for each setting.
@@ -259,6 +281,11 @@ directCommands:
 commands:
 - az_k8s-extension_create
 - az_k8s-extension_delete
+- az_k8s-extension_extension-types
+- az_k8s-extension_extension-types_list
+- az_k8s-extension_extension-types_list-by-location
+- az_k8s-extension_extension-types_list-versions
+- az_k8s-extension_extension-types_show
 - az_k8s-extension_list
 - az_k8s-extension_show
 - az_k8s-extension_update

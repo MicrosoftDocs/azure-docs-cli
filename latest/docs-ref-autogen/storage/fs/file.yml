@@ -133,7 +133,7 @@ directCommands:
     summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
     description: ''
   - name: --permissions
-    summary: POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. For more information, please refer to https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-access-control#levels-of-permission.
+    summary: POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read (4), write (2), or execute (1) permission. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. The sticky bit is also supported and in symbolic notation, its represented either by the letter t or T in the final character-place depending on whether the execution bit for the others category is set or unset respectively (e.g. rwxrw-rw- with sticky bit is represented as rwxrw-rwT. A rwxrw-rwx with sticky bit is represented as rwxrw-rwt), absence of t or T indicates sticky bit not set. In 4-digit octal notation, its represented by 1st digit (e.g. 1766 represents rwxrw-rw- with sticky bit and 0766 represents rwxrw-rw- without sticky bit). For more information, please refer to https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-access-control#levels-of-permission.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -466,6 +466,63 @@ directCommands:
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_fs_file_set-expiry
+  name: az storage fs file set-expiry
+  summary: Sets the time a file will expire and be deleted.
+  description: ''
+  syntax: >-
+    az storage fs file set-expiry --expiry-options {Absolute, NeverExpire, RelativeToCreation, RelativeToNow}
+                                  --file-system
+                                  --path
+                                  [--account-key]
+                                  [--account-name]
+                                  [--auth-mode {key, login}]
+                                  [--blob-endpoint]
+                                  [--connection-string]
+                                  [--expires-on]
+                                  [--sas-token]
+                                  [--timeout]
+  requiredParameters:
+  - isRequired: true
+    name: --expiry-options
+    parameterValueGroup: Absolute, NeverExpire, RelativeToCreation, RelativeToNow
+    summary: Required. Indicates mode of the expiry time.
+    description: ''
+  - isRequired: true
+    name: --file-system -f
+    summary: File system name (i.e. container name).
+    description: ''
+  - isRequired: true
+    name: --path -p
+    summary: The file path in a file system.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --blob-endpoint
+    summary: 'Storage data service endpoint. Must be used in conjunction with either storage account key or a SAS token. You can find each service primary endpoint with `az storage account show`. Environment variable: AZURE_STORAGE_SERVICE_ENDPOINT.'
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --expires-on
+    summary: The time to set the file to expiry. When expiry_options is RelativeTo\*, expires_on should be an int in milliseconds. If the type of expires_on is datetime, it should be in UTC time.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_fs_file_show
   name: az storage fs file show
   summary: Show properties of file in ADLS Gen2 file system.
@@ -618,7 +675,7 @@ directCommands:
     summary: Overwrite an existing file when specified.
     description: ''
   - name: --permissions
-    summary: POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. For more information, please refer to https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-access-control#levels-of-permission.
+    summary: POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read (4), write (2), or execute (1) permission. Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported. The sticky bit is also supported and in symbolic notation, its represented either by the letter t or T in the final character-place depending on whether the execution bit for the others category is set or unset respectively (e.g. rwxrw-rw- with sticky bit is represented as rwxrw-rwT. A rwxrw-rwx with sticky bit is represented as rwxrw-rwt), absence of t or T indicates sticky bit not set. In 4-digit octal notation, its represented by 1st digit (e.g. 1766 represents rwxrw-rw- with sticky bit and 0766 represents rwxrw-rw- without sticky bit). For more information, please refer to https://docs.microsoft.com/azure/storage/blobs/data-lake-storage-access-control#levels-of-permission.
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
@@ -641,6 +698,7 @@ commands:
 - az_storage_fs_file_metadata_show
 - az_storage_fs_file_metadata_update
 - az_storage_fs_file_move
+- az_storage_fs_file_set-expiry
 - az_storage_fs_file_show
 - az_storage_fs_file_upload
 globalParameters:
@@ -662,5 +720,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/16/2022
+  ms.date: 08/24/2022
   description: Manage files in Azure Data Lake Storage Gen2 account.

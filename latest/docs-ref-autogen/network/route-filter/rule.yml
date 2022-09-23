@@ -2,35 +2,24 @@
 uid: az_network_route-filter_rule
 name: az network route-filter rule
 summary: Manage rules in a route filter.
-description: To learn more about route filters with Microsoft peering with ExpressRoute, visit https://docs.microsoft.com/azure/expressroute/how-to-routefilter-cli.
+description: ''
 directCommands:
 - uid: az_network_route-filter_rule_create
   name: az network route-filter rule create
   summary: Create a rule in a route filter.
   description: ''
   syntax: >-
-    az network route-filter rule create --access {Allow, Deny}
-                                        --communities
-                                        --filter-name
+    az network route-filter rule create --filter-name
                                         --name
                                         --resource-group
+                                        [--access {Allow, Deny}]
+                                        [--communities]
                                         [--location]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Create a rule in a route filter to allow Dynamics 365.
-    syntax: >-
-      az network route-filter rule create -g MyResourceGroup --filter-name MyRouteFilter \
-          -n MyRouteFilterRule --communities 12076:5040 --access Allow
+    syntax: az network route-filter rule create -g MyResourceGroup --filter-name MyRouteFilter -n MyRouteFilterRule --communities 12076:5040 --access Allow
   requiredParameters:
-  - isRequired: true
-    name: --access
-    parameterValueGroup: Allow, Deny
-    summary: The access type of the rule.
-    description: ''
-  - isRequired: true
-    name: --communities
-    summary: Space-separated list of border gateway protocol (BGP) community values to filter on.
-    description: ''
-    valueFrom: az network route-filter rule list-service-communities
   - isRequired: true
     name: --filter-name
     summary: Name of the route filter.
@@ -44,8 +33,19 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --access
+    parameterValueGroup: Allow, Deny
+    summary: 'The access type of the rule.  Allowed values: Allow, Deny.'
+    description: ''
+  - name: --communities
+    summary: 'Space-separated list of border gateway protocol (BGP) community values to filter on.  Values from: az network route-filter rule list-service-communities.  Shorthand syntax supported. Try `??` to show more.'
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_route-filter_rule_delete
@@ -56,6 +56,7 @@ directCommands:
     az network route-filter rule delete [--filter-name]
                                         [--ids]
                                         [--name]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--resource-group]
   examples:
   - summary: Delete a rule from a route filter.
@@ -69,6 +70,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the route filter rule.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -103,9 +108,7 @@ directCommands:
   - summary: Gets all the available BGP service communities.
     syntax: az network route-filter rule list-service-communities -o table
   - summary: Get the community value for Exchange.
-    syntax: >-
-      az network route-filter rule list-service-communities \
-          --query '[].bgpCommunities[?communityName==`Exchange`].[communityValue][][]' -o tsv
+    syntax: az network route-filter rule list-service-communities --query '[].bgpCommunities[?communityName==`Exchange`].[communityValue][][]' -o tsv
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_route-filter_rule_show
   name: az network route-filter rule show
@@ -140,17 +143,16 @@ directCommands:
   syntax: >-
     az network route-filter rule update [--add]
                                         [--filter-name]
-                                        [--force-string]
+                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--ids]
                                         [--name]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--remove]
                                         [--resource-group]
                                         [--set]
   examples:
   - summary: Update a rule in a route filter to add Exchange to rule list.
-    syntax: >-
-      az network route-filter rule update -g MyResourceGroup --filter-name MyRouteFilter \
-          -n MyRouteFilterRule --add communities='12076:5010'
+    syntax: az network route-filter rule update -g MyResourceGroup --filter-name MyRouteFilter -n MyRouteFilterRule --add communities='12076:5010'
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -159,6 +161,7 @@ directCommands:
     summary: Name of the route filter.
     description: ''
   - name: --force-string
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -166,6 +169,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the route filter rule.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -177,6 +184,59 @@ directCommands:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_route-filter_rule_wait
+  name: az network route-filter rule wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network route-filter rule wait [--created]
+                                      [--custom]
+                                      [--deleted]
+                                      [--exists]
+                                      [--filter-name]
+                                      [--ids]
+                                      [--interval]
+                                      [--name]
+                                      [--resource-group]
+                                      [--timeout]
+                                      [--updated]
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --filter-name
+    summary: Name of the route filter.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: Name of the route filter rule.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
 - az_network_route-filter_rule_create
 - az_network_route-filter_rule_delete
@@ -184,6 +244,7 @@ commands:
 - az_network_route-filter_rule_list-service-communities
 - az_network_route-filter_rule_show
 - az_network_route-filter_rule_update
+- az_network_route-filter_rule_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -203,5 +264,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/13/2022
-  description: To learn more about route filters with Microsoft peering with ExpressRoute, visit https://docs.microsoft.com/azure/expressroute/how-to-routefilter-cli.
+  ms.date: 09/02/2022
+  description: Manage rules in a route filter.

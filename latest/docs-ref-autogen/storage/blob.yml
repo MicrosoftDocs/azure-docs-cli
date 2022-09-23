@@ -199,6 +199,7 @@ directCommands:
                              [--name]
                              [--no-progress]
                              [--open-mode]
+                             [--overwrite {false, true}]
                              [--sas-token]
                              [--snapshot]
                              [--start-range]
@@ -269,6 +270,11 @@ directCommands:
     defaultValue: wb
     summary: Mode to use when opening the file. Note that specifying append only open_mode prevents parallel download. So, max_connections must be set to 1 if this open_mode is used.
     description: ''
+  - name: --overwrite
+    defaultValue: "1"
+    parameterValueGroup: false, true
+    summary: Overwrite an existing file when specified. Default value is true.
+    description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
     description: ''
@@ -306,6 +312,7 @@ directCommands:
                                    [--dryrun]
                                    [--max-connections]
                                    [--no-progress]
+                                   [--overwrite {false, true}]
                                    [--pattern]
                                    [--sas-token]
   examples:
@@ -352,6 +359,10 @@ directCommands:
     description: ''
   - name: --no-progress
     summary: Include this flag to disable progress reporting for the command.
+    description: ''
+  - name: --overwrite
+    parameterValueGroup: false, true
+    summary: Overwrite an existing file when specified. Default value is false.
     description: ''
   - name: --pattern
     summary: The pattern used for globbing files or blobs in the source. The supported patterns are '\*', '?', '[seq]', and '[!seq]'. For more information, please refer to https://docs.python.org/3.7/library/fnmatch.html.
@@ -1367,6 +1378,7 @@ directCommands:
                            [--no-progress]
                            [--overwrite {false, true}]
                            [--sas-token]
+                           [--socket-timeout]
                            [--tags]
                            [--tags-condition]
                            [--tier]
@@ -1474,6 +1486,9 @@ directCommands:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --socket-timeout
+    summary: The socket timeout(secs), used by the service to regulate data flow.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -1797,5 +1812,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/16/2022
+  ms.date: 08/24/2022
   description: 'Please specify one of the following authentication parameters for your commands: --auth-mode, --account-key, --connection-string, --sas-token. You also can use corresponding environment variables to store your authentication credentials, e.g. AZURE_STORAGE_KEY, AZURE_STORAGE_CONNECTION_STRING and AZURE_STORAGE_SAS_TOKEN.'

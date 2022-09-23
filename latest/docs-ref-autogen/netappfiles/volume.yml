@@ -39,6 +39,7 @@ directCommands:
                                  [--kerberos5i-rw]
                                  [--kerberos5p-r]
                                  [--kerberos5p-rw]
+                                 [--kv-private-endpoint-id]
                                  [--ldap-enabled {false, true}]
                                  [--location]
                                  [--network-features]
@@ -67,6 +68,8 @@ directCommands:
   examples:
   - summary: Create an ANF volume
     syntax: az netappfiles volume create -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname -l westus2 --service-level premium --usage-threshold 100 --file-path "unique-file-path" --vnet myvnet --subnet mysubnet --protocol-types NFSv3 NFSv4.1
+  - summary: Create an ANF volume with zones (Availability Zone) specified
+    syntax: az netappfiles volume create -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname -l westus2 --service-level premium --usage-threshold 100 --file-path "unique-file-path" --vnet myvnet --subnet mysubnet --protocol-types NFSv3 --zones zone1
   requiredParameters:
   - isRequired: true
     name: --account-name -a
@@ -94,7 +97,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --vnet
-    summary: The ARM Id or name of the vnet for the volume.
+    summary: Name or Resource ID of the vnet. If you want to use a vnet in other resource group or subscription, please provide the Resource ID instead of the name of the vnet.
     description: ''
   optionalParameters:
   - name: --allowed-clients
@@ -171,6 +174,9 @@ directCommands:
   - name: --kerberos5p-rw
     summary: Kerberos5p Read and write access.
     description: ''
+  - name: --kv-private-endpoint-id
+    summary: The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+    description: ''
   - name: --ldap-enabled
     parameterValueGroup: false, true
     summary: Specifies whether LDAP is enabled or not for a given NFS volume.
@@ -226,7 +232,7 @@ directCommands:
     description: ''
   - name: --subnet
     defaultValue: default
-    summary: The ARM Id or name of the delegated subnet for the vnet. If omitted 'default' will be used.
+    summary: The name of the subnet for the volume.
     description: ''
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
@@ -578,6 +584,8 @@ directCommands:
                                  [--add]
                                  [--backup-enabled {false, true}]
                                  [--backup-policy-id]
+                                 [--cool-access {false, true}]
+                                 [--coolness-period]
                                  [--default-group-quota]
                                  [--default-user-quota]
                                  [--force-string]
@@ -613,6 +621,13 @@ directCommands:
     description: ''
   - name: --backup-policy-id
     summary: Backup Policy Resource ID.
+    description: ''
+  - name: --cool-access
+    parameterValueGroup: false, true
+    summary: If enabled (true) the pool can contain cool Access enabled volumes.
+    description: ''
+  - name: --coolness-period
+    summary: Specifies the number of days after which data that is not accessed by clients will be tiered.
     description: ''
   - name: --default-group-quota
     summary: Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
@@ -787,5 +802,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/27/2022
+  ms.date: 08/15/2022
   description: Manage Azure NetApp Files (ANF) Volume Resources.

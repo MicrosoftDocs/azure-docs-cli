@@ -27,11 +27,14 @@ for the list of supported package managers or how to install manually under WSL.
 
 The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.
 
+> [!Note]
+> After the installation is complete, you will need to close and reopen any active terminal window to use the Azure CLI.
+
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
 ### Latest version
 
-Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, click the "Yes" box. After the installation is complete, you will need to close and reopen any active Windows Command Prompt or PowerShell windows to use the Azure CLI.
+Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, click the "Yes" box.
 
 > [!div class="nextstepaction"]
 > [Latest release of the Azure CLI](https://aka.ms/installazurecliwindows)
@@ -40,9 +43,9 @@ Download and install the latest release of the Azure CLI. When the installer ask
 
 To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
-# [Microsoft Installer (MSI) with Command](#tab/azure-powershell)
+# [Microsoft Installer (MSI) with Command](#tab/powershell)
 
-### Powershell Command
+### Powershell
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
@@ -59,11 +62,24 @@ This will download and install the latest version of the Azure CLI for Windows. 
 
 To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
-> [!Note]
-> After the installation is complete, you will need to reopen PowerShell to use the Azure CLI.
-
 ### Azure CLI Command (for update only)
+
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
+
+# [Windows Package Manager](#tab/winget)
+
+### winget
+
+You can also use `winget`, Microsoft's Package manager for Windows, to install and manage updates for Azure CLI.
+
+> [!NOTE]
+> winget is available by default in Windows 11 and modern versions of Windows 10. However, it may not be installed in older versions of Windows. See the [winget documentation](/windows/package-manager/winget/) for installation instructions.
+
+   ```PowerShell
+   winget install -e --id Microsoft.AzureCLI
+   ```
+
+The `-e` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, simply add a `-v <version>` with your desired version to the command.
 
 ---
 
@@ -111,7 +127,7 @@ Once on this screen type __Azure CLI__ into the program search bar. The program 
 
 ## Remove data
 
-If you don't plan to reinstall Azure CLI, remove its data from `C:\Users\<username>\.azure`.
+If you don't plan to reinstall Azure CLI, remove its data from `C:\Users\<username>\.azure\msal_token_cache.bin` or `C:\Users\<username>\.azure\msal_token_cache.json`.
 
 ## Next Steps
 

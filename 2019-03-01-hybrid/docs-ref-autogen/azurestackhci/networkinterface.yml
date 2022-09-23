@@ -16,16 +16,18 @@ directCommands:
     az azurestackhci networkinterface create --name
                                              --resource-group
                                              [--extended-location]
+                                             [--gateway]
+                                             [--ip-address]
+                                             [--ip-allocation-method]
                                              [--ip-configurations]
                                              [--location]
                                              [--mac-address]
-                                             [--provisioning-state]
-                                             [--status]
+                                             [--prefix-length]
                                              [--subnet-id]
                                              [--tags]
   examples:
-  - summary: PutNetworkInterface
-    syntax: az azurestackhci networkinterface create --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --ip-configurations "[{\"name\":\"ipconfig-sample\",\"properties\":{\"subnet\":{\"id\":\"test-vnet\"}}}]" --name "test-nic" --resource-group "test-rg"
+  - summary: Without ip configurations provided
+    syntax: az azurestackhci networkinterface create --resource-group "test-rg" --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --subnet-id "test-vnet" --gateway "sample_gateway" --prefix-length 16 --ip-address "10.0.0.0" --ip-allocation-method "Static" --name "test-nic"
   requiredParameters:
   - isRequired: true
     name: --name
@@ -45,6 +47,15 @@ directCommands:
       type: The extended location type.
 
       name: The extended location name.
+  - name: --gateway
+    summary: Gateway for network interface.
+    description: 'Usage: --gateway "sample-gateway".'
+  - name: --ip-address
+    summary: Ip_address - Private IP address of the IP configuration.
+    description: 'Usage: --ip-address "1.2.3.4".'
+  - name: --ip-allocation-method
+    summary: Ip_allocation_method - The private IP address allocation method.
+    description: 'Usage: --ip-allocation-method "Static/Dynamic".'
   - name: --ip-configurations
     summary: 'IPConfigurations - A list of IPConfigurations of the network interface. Expected value: json-string/@json-file.'
     description: ''
@@ -54,15 +65,12 @@ directCommands:
   - name: --mac-address
     summary: MacAddress - The MAC address of the network interface.
     description: ''
-  - name: --provisioning-state
-    summary: Provisioning State.
-    description: ''
-  - name: --status
-    summary: 'MOCNetworkInterfaceStatus defines the observed state of MOCNetworkInterface Expected value: json-string/@json-file.'
-    description: ''
+  - name: --prefix-length
+    summary: Prefix_length for network interface.
+    description: 'Usage: --prefix-length 16.'
   - name: --subnet-id
     summary: ID of the subnet or network to create the network interface on.
-    description: ''
+    description: 'Usage: --subnet-id "test-vnet".'
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''

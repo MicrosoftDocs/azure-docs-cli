@@ -2,7 +2,7 @@
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 09/29/2020
+ms.date: 07/05/2022
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -13,14 +13,14 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 | Distribution | Version |
 |:-------------|:--------|
-| Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 21.10 (Impish Indri), 22.04 (Jammy Jellyfish) |
+| Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
 | Debian       | 10 (Buster), 11 (Bullseye) |
 
 > [!WARNING]
-> Starting from Azure CLI 2.37.0, no DEB packages will be released for Ubuntu 16.04 (Xenial Xerus) and Debian 9 (Stretch). You may continue to use historical versions of Azure CLI on these systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
+> You may continue to use historical versions of Azure CLI on old systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
 
 > [!WARNING]
-> Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.
+> Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  See [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove) for more information on `apt remove`.
 >
 > The `azure-cli` deb package does not support ARM64 architecture.
 

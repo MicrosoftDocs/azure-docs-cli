@@ -10,9 +10,9 @@ directCommands:
   description: ''
   syntax: >-
     az eventgrid event-subscription create --name
+                                           [--aad-tenant-id]
                                            [--advanced-filter]
                                            [--azure-active-directory-application-id-or-uri]
-                                           [--azure-active-directory-tenant-id]
                                            [--deadletter-endpoint]
                                            [--deadletter-identity {systemassigned}]
                                            [--deadletter-identity-endpoint]
@@ -22,7 +22,7 @@ directCommands:
                                            [--delivery-identity-endpoint-type {azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook}]
                                            [--enable-advanced-filtering-on-arrays {false, true}]
                                            [--endpoint]
-                                           [--endpoint-type {azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook}]
+                                           [--endpoint-type]
                                            [--event-delivery-schema {cloudeventschemav1_0, custominputschema, eventgridschema}]
                                            [--event-ttl]
                                            [--expiration-date]
@@ -160,6 +160,9 @@ directCommands:
     summary: Name of the event subscription.
     description: ''
   optionalParameters:
+  - name: --aad-tenant-id --azure-active-directory-tenant-id
+    summary: The Azure Active Directory Tenant Id to get the access token that will be included as the bearer token in delivery requests. Applicable only for webhook as a destination.
+    description: ''
   - name: --advanced-filter
     summary: An advanced filter enables filtering of events based on a specific event property.
     description: >-
@@ -207,9 +210,6 @@ directCommands:
   - name: --azure-active-directory-application-id-or-uri
     summary: The Azure Active Directory Application Id or Uri to get the access token that will be included as the bearer token in delivery requests. Applicable only for webhook as a destination.
     description: ''
-  - name: --azure-active-directory-tenant-id
-    summary: The Azure Active Directory Tenant Id to get the access token that will be included as the bearer token in delivery requests. Applicable only for webhook as a destination.
-    description: ''
   - name: --deadletter-endpoint
     summary: The Azure resource ID of an Azure Storage blob container destination where EventGrid should deadletter undeliverable events for this event subscription.
     description: 'Example: --deadletter-endpoint /subscriptions/{SubID}/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/sa1/blobServices/default/containers/containerName.'
@@ -254,7 +254,6 @@ directCommands:
     description: ''
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: ''
   - name: --event-delivery-schema
@@ -534,7 +533,7 @@ directCommands:
                                            [--delivery-identity-endpoint-type {azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook}]
                                            [--enable-advanced-filtering-on-arrays {false, true}]
                                            [--endpoint]
-                                           [--endpoint-type {azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook}]
+                                           [--endpoint-type]
                                            [--force-string]
                                            [--included-event-types]
                                            [--labels]
@@ -685,7 +684,6 @@ directCommands:
     description: ''
   - name: --endpoint-type
     defaultValue: webhook
-    parameterValueGroup: azurefunction, eventhub, hybridconnection, servicebusqueue, servicebustopic, storagequeue, webhook
     summary: The type of the destination endpoint.
     description: ''
   - name: --force-string
@@ -754,5 +752,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/01/2021
+  ms.date: 07/20/2022
   description: Manage event subscriptions for an Event Grid topic, domain, domain topic, Azure subscription, resource group or for any other Azure resource that supports event notifications.

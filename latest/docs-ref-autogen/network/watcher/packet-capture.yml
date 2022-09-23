@@ -11,14 +11,18 @@ directCommands:
   syntax: >-
     az network watcher packet-capture create --name
                                              --resource-group
-                                             --vm
                                              [--capture-limit]
                                              [--capture-size]
+                                             [--exclude]
                                              [--file-path]
                                              [--filters]
+                                             [--include]
                                              [--storage-account]
                                              [--storage-path]
+                                             [--target]
+                                             [--target-type {AzureVM, AzureVMSS}]
                                              [--time-limit]
+                                             [--vm]
   examples:
   - summary: Create a packet capture session on a VM.
     syntax: az network watcher packet-capture create -g MyResourceGroup -n MyPacketCaptureName --vm MyVm --storage-account MyStorageAccount
@@ -47,6 +51,18 @@ directCommands:
               { \
                   "protocol":"UDP" \
               }]'
+  - summary: Create a packet capture session on a VMSS.
+    syntax: >-
+      az network watcher packet-capture create -g MyResourceGroup -n MyPacketCaptureName --vm MyVmVMSS \
+          --storage-account MyStorageAccount --target-type "AzureVMSS"
+  - summary: Create a packet capture session on a VMSS with including particular instances.
+    syntax: >-
+      az network watcher packet-capture create -g MyResourceGroup -n MyPacketCaptureName --target MyVmVMSS \
+          --storage-account MyStorageAccount --target-type "AzureVMSS" --include "0" "1"
+  - summary: Create a packet capture session on a VMSS with excluding particular instances.
+    syntax: >-
+      az network watcher packet-capture create -g MyResourceGroup -n MyPacketCaptureName --vm MyVmVMSS \
+          --storage-account MyStorageAccount --target-type "AzureVMSS" --exclude "0" "1"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -56,10 +72,6 @@ directCommands:
     name: --resource-group -g
     summary: Name of the resource group the target VM is in.
     description: ''
-  - isRequired: true
-    name: --vm
-    summary: Name or ID of the VM to target.
-    description: ''
   optionalParameters:
   - name: --capture-limit
     summary: The maximum size in bytes of the capture output.
@@ -67,11 +79,17 @@ directCommands:
   - name: --capture-size
     summary: Number of bytes captured per packet. Excess bytes are truncated.
     description: ''
+  - name: --exclude
+    summary: Space-separated list of VMSS Instances to exclude in Packet capture.
+    description: ''
   - name: --file-path
     summary: Local path on the targeted VM at which to save the packet capture. For Linux VMs, the path must start with /var/captures.
     description: ''
   - name: --filters
     summary: JSON encoded list of packet filters. Use `@{path}` to load from file.
+    description: ''
+  - name: --include
+    summary: Space-separated list of VMSS Instances to include in Packet capture like 0 1 2.
     description: ''
   - name: --storage-account
     summary: Name or ID of a storage account to save the packet capture to.
@@ -79,8 +97,18 @@ directCommands:
   - name: --storage-path
     summary: Fully qualified URI of an existing storage container in which to store the capture file.
     description: If not specified, the container 'network-watcher-logs' will be created if it does not exist and the capture file will be stored there.
+  - name: --target
+    summary: Name or ID of the Target Resource. If TargetType is AzureVMSS, then target field is mandatory.
+    description: ''
+  - name: --target-type
+    parameterValueGroup: AzureVM, AzureVMSS
+    summary: Resource type of Target. Only AzureVM and AzureVMSS are supported now. Default Value is AzureVM.
+    description: ''
   - name: --time-limit
     summary: Maximum duration of the capture session in seconds.
+    description: ''
+  - name: --vm
+    summary: Name or ID of the VM to target.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_packet-capture_delete
@@ -207,5 +235,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/13/2022
+  ms.date: 09/02/2022
   description: These commands require that both Azure Network Watcher is enabled for the VMs region and that AzureNetworkWatcherExtension is enabled on the VM. For more information visit https://docs.microsoft.com/azure/network-watcher/network-watcher-packet-capture-manage-cli.
