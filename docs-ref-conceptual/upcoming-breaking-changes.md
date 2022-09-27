@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli updates, azure cli notes, azure cli versions, azure cli breaking changes
 ---
 
-# Upcoming breaking changes in Azure PowerShell
+# Upcoming breaking changes in Azure CLI
 
 ## Az.AKS
 
