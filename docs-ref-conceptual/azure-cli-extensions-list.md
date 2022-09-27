@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/24/2022
+ms.date: 09/27/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -53,7 +53,7 @@ You will be prompted to install an extension on first use.
 |[change-analysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis) | 2.37.0 | Microsoft Azure Command-Line Tools ChangeAnalysis Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis/HISTORY.rst) |
 |[cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 2.13.0 | Translate ARM template to executable Azure CLI scripts. | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) |
 |[cloud-service](https://github.com/Azure/azure-cli-extensions/tree/master/src/cloudservice) | 2.15.0 | Microsoft Azure Command-Line Tools ComputeManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cloudservice/HISTORY.rst) |
-|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.15.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.2.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
+|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.15.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.30.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.3.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
