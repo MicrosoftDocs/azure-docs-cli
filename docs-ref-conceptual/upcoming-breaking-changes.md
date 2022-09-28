@@ -20,7 +20,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 
 - The `acs` command group has been deprecated and as of 2.41.0, `acs` will be removed. For more information, please refer to [this doc](https://azure.microsoft.com/updates/azure-container-service-will-retire-on-january-31-2020/)
   
-## appconfig
+## App Config
 
 ### `az appconfig kv export`
 
