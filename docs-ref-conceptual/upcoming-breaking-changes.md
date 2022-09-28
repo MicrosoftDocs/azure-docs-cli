@@ -37,8 +37,6 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 - Parameter breaking-change will happen to the parameter sets
   - `--consumption-plan-location` and `--os-type` parameter will be deprecated. 
 
-#TODO: Need to make sure this is all the information about this? Are the suggested replacements? Will these be completely removed?
-
 ## Compute
 
 ### `az vm create`
