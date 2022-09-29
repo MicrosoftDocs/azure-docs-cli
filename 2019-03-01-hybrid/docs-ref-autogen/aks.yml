@@ -1224,6 +1224,7 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--ca-profile]
+                  [--cluster-snapshot-id]
                   [--defender-config]
                   [--detach-acr]
                   [--disable-ahub]
@@ -1354,6 +1355,8 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa
   - summary: Enable Windows gmsa for a kubernetes cluster without setting DNS server in the vnet used by the cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
+  - summary: Update a existing managed cluster to a managed cluster snapshot.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1404,6 +1407,9 @@ directCommands:
     description: ''
   - name: --ca-profile --cluster-autoscaler-profile
     summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    description: ''
+  - name: --cluster-snapshot-id
+    summary: The source cluster snapshot id is used to update existing cluster.
     description: ''
   - name: --defender-config
     summary: Path to JSON file containing Microsoft Defender profile configurations.
@@ -1650,11 +1656,15 @@ directCommands:
     az aks upgrade --name
                    --resource-group
                    [--aks-custom-headers]
+                   [--cluster-snapshot-id]
                    [--control-plane-only]
                    [--kubernetes-version]
                    [--no-wait]
                    [--node-image-only]
                    [--yes]
+  examples:
+  - summary: Upgrade a existing managed cluster to a managed cluster snapshot.
+    syntax: az aks upgrade -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1667,6 +1677,9 @@ directCommands:
   optionalParameters:
   - name: --aks-custom-headers
     summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
+  - name: --cluster-snapshot-id
+    summary: The source cluster snapshot id is used to upgrade existing cluster.
     description: ''
   - name: --control-plane-only
     summary: Upgrade the cluster control plane only. If not specified, control plane AND all node pools will be upgraded.
