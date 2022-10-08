@@ -52,8 +52,7 @@ directCommands:
 
     The created environment will be tracked in the workspace under the specified name and version.
   syntax: >-
-    az ml environment create --resource-group
-                             [--build-context]
+    az ml environment create [--build-context]
                              [--conda-file]
                              [--datastore]
                              [--description]
@@ -62,6 +61,8 @@ directCommands:
                              [--image]
                              [--name]
                              [--os-type]
+                             [--registry-name]
+                             [--resource-group]
                              [--set]
                              [--tags]
                              [--version]
@@ -75,11 +76,8 @@ directCommands:
     syntax: az ml environment create --name my-env --version 1 --file my_env.yml  --build-context envs/context/ --dockerfile-path Dockerfile --resource-group my-resource-group --workspace-name my-workspace
   - summary: Create an environment from a conda specification
     syntax: az ml environment create --name my-env --version 1 --file my_env.yml  --conda-file conda_dep.yml --image mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04 --resource-group my-resource-group --workspace-name my-workspace
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+  - summary: Create an environment in registry from a YAML specification file
+    syntax: az ml environment create --file my_env.yml --registry-name my-registry-name --resource-group my-resource-group
   optionalParameters:
   - name: --build-context -b
     summary: Local path to the directory to use as a Docker build context. --build-context/-b and --image/-i are mutually exclusive arguments.
@@ -109,6 +107,12 @@ directCommands:
   - name: --os-type
     summary: 'Type of operating system. Allowed values: linux, windows. Default: linux.'
     description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
     description: ''
@@ -126,11 +130,12 @@ directCommands:
   summary: List environments in a workspace.
   description: ''
   syntax: >-
-    az ml environment list --resource-group
-                           [--archived-only]
+    az ml environment list [--archived-only]
                            [--include-archived]
                            [--max-results]
                            [--name]
+                           [--registry-name]
+                           [--resource-group]
                            [--workspace-name]
   examples:
   - summary: List all the environments in a workspace
@@ -139,11 +144,10 @@ directCommands:
     syntax: az ml environment list --name my-env --resource-group my-resource-group --workspace-name my-workspace
   - summary: List all the environments in a workspace using --query argument to execute a JMESPath query on the results of commands.
     syntax: az ml environment list --query "[].{Name:name}"  --output table --resource-group my-resource-group --workspace-name my-workspace
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+  - summary: List all the environments in a registry
+    syntax: az ml environment list --registry-name my-registry-name --resource-group my-resource-group
+  - summary: List all the environment versions for the specified name in a registry
+    syntax: az ml environment list --name my-env --registry-name my-registry-name --resource-group my-resource-group
   optionalParameters:
   - name: --archived-only
     summary: List archived environments only.
@@ -156,6 +160,12 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the environment. If provided, all the environment versions under this name will be returned.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
@@ -201,25 +211,30 @@ directCommands:
   description: ''
   syntax: >-
     az ml environment show --name
-                           --resource-group
                            [--label]
+                           [--registry-name]
+                           [--resource-group]
                            [--version]
                            [--workspace-name]
   examples:
   - summary: Show details for an environment with the specified name and version
     syntax: az ml environment show --name my-env --version 1 --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Show details for an environment in registry with the specified name and version
+    syntax: az ml environment show --name my-env --version 1 --registry-name my-registry-name --resource-group my-resource-group
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the environment.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --label -l
     summary: Label of the environment.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --version -v
     summary: Version of the environment.
@@ -232,24 +247,28 @@ directCommands:
   summary: Update an environment.
   description: Only the 'description' and 'tags' properties can be updated.
   syntax: >-
-    az ml environment update --name
-                             --resource-group
+    az ml environment update --label
+                             --name
+                             --version
                              [--add]
                              [--force-string]
-                             [--label]
                              [--registry-name]
                              [--remove]
+                             [--resource-group]
                              [--set]
-                             [--version]
                              [--workspace-name]
   requiredParameters:
+  - isRequired: true
+    name: --label -l
+    summary: Label of the environment.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: Name of the environment.
     description: ''
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --version -v
+    summary: Version of the environment.
     description: ''
   optionalParameters:
   - name: --add
@@ -258,20 +277,17 @@ directCommands:
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
-  - name: --label -l
-    summary: Label of the environment.
-    description: ''
   - name: --registry-name
-    summary: This will interact with the registry provided name, not use workspace.
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --version -v
-    summary: Version of the environment.
     description: ''
   - name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.

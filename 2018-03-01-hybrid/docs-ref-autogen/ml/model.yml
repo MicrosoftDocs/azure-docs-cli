@@ -48,12 +48,14 @@ directCommands:
   summary: Create a model.
   description: Models can be created from a local file, local directory, datastore or job outputs. The created model will be tracked in the workspace under the specified name and version.
   syntax: >-
-    az ml model create --resource-group
-                       [--datastore]
+    az ml model create [--datastore]
                        [--description]
                        [--file]
                        [--name]
+                       [--no-wait]
                        [--path]
+                       [--registry-name]
+                       [--resource-group]
                        [--set]
                        [--tags]
                        [--type]
@@ -70,11 +72,6 @@ directCommands:
     syntax: az ml model create --name my-model --version 1 --path azureml://jobs/c42d2507-4953-4a7c-a4c1-2b5bfe0ac64e/outputs/artifacts/paths/model/ --resource-group my-resource-group --workspace-name my-workspace
   - summary: Create a model from a datastore 'azureml://datastores/<datastore-name>/paths/<path-to-model-relative-to-the-root-of-the-datastore-location>' using command options
     syntax: az ml model create --name my-model --version 1 --path azureml://datastores/myblobstore/paths/models/cifar10/cifar.pt --resource-group my-resource-group --workspace-name my-workspace
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --datastore
     summary: The datastore to upload the local artifact to.
@@ -88,8 +85,17 @@ directCommands:
   - name: --name -n
     summary: Name of the model.
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --path -p
     summary: Path to the model file(s). This can be either a local or a remote location. If specified, --name/-n and --version/-v must also be provided.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
@@ -112,10 +118,11 @@ directCommands:
   description: The files will be downloaded into a folder named after the model's name.
   syntax: >-
     az ml model download --name
-                         --resource-group
                          --version
                          --workspace-name
                          [--download-path]
+                         [--registry-name]
+                         [--resource-group]
   examples:
   - summary: Download a model with the specified name and version
     syntax: az ml model download --name my-model --version 1 --resource-group my-resource-group --workspace-name my-workspace
@@ -125,10 +132,6 @@ directCommands:
   - isRequired: true
     name: --name -n
     summary: Name of the model.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --version -v
@@ -142,16 +145,23 @@ directCommands:
   - name: --download-path -p
     summary: Path to download the model files, defaults to the current working directory.
     description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_ml_model_list
   name: az ml model list
   summary: List models in a workspace.
   description: ''
   syntax: >-
-    az ml model list --resource-group
-                     [--archived-only]
+    az ml model list [--archived-only]
                      [--include-archived]
                      [--max-results]
                      [--name]
+                     [--registry-name]
+                     [--resource-group]
                      [--workspace-name]
   examples:
   - summary: List all the models in a workspace
@@ -160,11 +170,6 @@ directCommands:
     syntax: az ml model list --name my-model --resource-group my-resource-group --workspace-name my-workspace
   - summary: List all the models in a workspace using --query argument to execute a JMESPath query on the results of commands.
     syntax: az ml model list --query "[].{Name:name}"  --output table --resource-group my-resource-group --workspace-name my-workspace
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --archived-only
     summary: List archived models only.
@@ -177,6 +182,12 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the model. If provided, all the model versions under this name will be returned.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
@@ -222,8 +233,9 @@ directCommands:
   description: ''
   syntax: >-
     az ml model show --name
-                     --resource-group
                      [--label]
+                     [--registry-name]
+                     [--resource-group]
                      [--version]
                      [--workspace-name]
   examples:
@@ -234,13 +246,15 @@ directCommands:
     name: --name -n
     summary: Name of the model.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --label -l
     summary: Label of the model.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --version -v
     summary: Version of the model.
