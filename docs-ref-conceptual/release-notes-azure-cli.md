@@ -18,6 +18,14 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 Version 2.41.0
 
+* Support Continuous Access Evaluation
+* PREVIEW: Support Web Account Manager (WAM) login on Windows. To opt in, run `az config set core.allow_broker=true`
+* Revert #23514: Rename entry script `az.ps1` to `azps.ps1`
+* `aaz`: Support `yaml` file as value for compound arguments
+* `aaz`: Fix recursion depth exceeded for to_serialized_data of AAZObject
+* `aaz`: Support customized life cycle callback functions for `AAZCommand`
+* `aaz`: Fix two AAZObjects or AAZDicts comparison
+
 ### ACS
 
 * [BREAKING CHANGE] `az acs`: Remove the deprecated command group
