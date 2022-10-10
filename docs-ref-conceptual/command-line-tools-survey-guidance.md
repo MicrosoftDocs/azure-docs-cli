@@ -1,6 +1,7 @@
 ---
 title: Azure command line tools survey guidance
 description: This article contains guidance about the Azure command line tools survey.
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 09/06/2022
