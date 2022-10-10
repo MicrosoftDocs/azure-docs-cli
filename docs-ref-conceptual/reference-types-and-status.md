@@ -1,9 +1,9 @@
 ---
 title: Reference types, status and support levels – Azure CLI | Microsoft Docs
 description: Learn about the Azure CLI reference types, statuses and support levels
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
 ms.date: 02/10/2022
 ms.topic: conceptual
 ms.service: azure-cli

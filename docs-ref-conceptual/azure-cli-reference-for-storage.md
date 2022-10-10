@@ -1,12 +1,12 @@
 ---
 title: Azure CLI references for Azure Storage | Microsoft Docs
 description: Find Azure CLI core and extension reference commands to manage Azure Storage.  Follow links to popular articles to learn how to use the Azure CLI for Azure Storage.
+manager: mkluck
 author: dbradish-microsoft
-manager: barbkess
+ms.author: dbradish
 ms.tool: azure-cli
 ms.topic: reference
 ms.date: 09/21/2021
-ms.author: dbradish
 ms.service: azure-cli
 ms.reviewer: robb
 ms.custom: devx-track-azurecli, seo-azure-cli
