@@ -18,6 +18,8 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 Version 2.41.0
 
+### Core
+
 * Support Continuous Access Evaluation
 * PREVIEW: Support Web Account Manager (WAM) login on Windows. To opt in, run `az config set core.allow_broker=true`
 * Revert #23514: Rename entry script `az.ps1` to `azps.ps1`
