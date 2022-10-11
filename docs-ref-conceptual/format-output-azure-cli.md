@@ -1,9 +1,9 @@
 ---
 title: Output formats - Azure CLI | Microsoft Docs
 description: The Azure CLI offers various output formats such as JSON and YAML. Learn how to format the output of Azure CLI commands to tables, lists or json.
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
 ms.date: 11/11/2021
 ms.topic: conceptual
 ms.service: azure-cli

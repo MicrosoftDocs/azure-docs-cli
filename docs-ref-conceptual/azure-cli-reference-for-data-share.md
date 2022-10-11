@@ -1,15 +1,15 @@
 ---
 title: Azure CLI references for Azure Data Share | Microsoft Docs
 description: Find Azure CLI core and extension reference commands to manage Azure Data Share. With 65 different commands available, you can work effectively with Data Share from a command line.
-services: data-share
+manager: mkluck
 author: dbradish-microsoft
-manager: barbkess
+ms.author: dbradish
 ms.service: data-share
 ms.tool: azure-cli
 ms.topic: reference
 ms.date: 09/21/2021
-ms.author: dbradish
 ms.custom: devx-track-azurecli, seo-azure-cli
+services: data-share
 keywords: azure cli references, azure data share cli
 ---
 

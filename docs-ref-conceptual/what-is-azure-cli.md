@@ -1,9 +1,9 @@
 ---
 title: What is the Azure CLI? | Microsoft Docs
 description: The Azure Command-Line Interface (CLI) is a command-line tool designed to create and manage Azure resources available in Windows, macOS, Linux, and Docker containers.
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
 ms.date: 9/21/2021
 ms.topic: overview
 ms.service: azure-cli

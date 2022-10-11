@@ -10,7 +10,7 @@ description: ''
 directCommands:
 - uid: az_containerapp_logs_show
   name: az containerapp logs show
-  summary: Show past logs and/or print logs in real time (with the --follow parameter). Note that the logs are only taken from one revision, replica, and container.
+  summary: Show past logs and/or print logs in real time (with the --follow parameter). Note that the logs are only taken from one revision, replica, and container (for non-system logs).
   description: ''
   syntax: >-
     az containerapp logs show --name
@@ -21,9 +21,12 @@ directCommands:
                               [--replica]
                               [--revision]
                               [--tail]
+                              [--type {console, system}]
   examples:
   - summary: Fetch the past 20 lines of logs from an app and return
     syntax: az containerapp logs show -n MyContainerapp -g MyResourceGroup
+  - summary: Fetch the past 20 lines of system logs from an app and return
+    syntax: az containerapp logs show -n MyContainerapp -g MyResourceGroup --type system
   - summary: Fetch 30 lines of past logs logs from an app and print logs as they come in
     syntax: az containerapp logs show -n MyContainerapp -g MyResourceGroup --follow --tail 30
   - summary: Fetch logs for a particular revision, replica, and container
@@ -59,6 +62,11 @@ directCommands:
   - name: --tail
     defaultValue: "20"
     summary: The number of past logs to print (0-300).
+    description: ''
+  - name: --type -t
+    defaultValue: console
+    parameterValueGroup: console, system
+    summary: Type of logs to stream.
     description: ''
 commands:
 - az_containerapp_logs_show
