@@ -2,14 +2,14 @@
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 04/29/2022
+ms.date: 10/12/2022
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
 ## Overview
 
-RPMs are released for [CBL-Mariner](https://github.com/microsoft/CBL-Mariner) 1.0 and 2.0.
+RPMs are released for [CBL-Mariner](https://github.com/microsoft/CBL-Mariner) 2.0.
 
 ## Install
 
