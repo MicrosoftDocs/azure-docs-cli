@@ -234,11 +234,75 @@ directCommands:
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+- uid: az_appconfig_feature_filter_update
+  name: az appconfig feature filter update
+  summary: Update a filter in a feature flag.
+  description: ''
+  syntax: >-
+    az appconfig feature filter update --filter-name
+                                       [--auth-mode {key, login}]
+                                       [--connection-string]
+                                       [--endpoint]
+                                       [--feature]
+                                       [--filter-parameters]
+                                       [--index]
+                                       [--key]
+                                       [--label]
+                                       [--name]
+                                       [--yes]
+  examples:
+  - summary: Update the filter for feature 'color' with label MyLabel with name 'MyFilter' and 2 parameters.
+    syntax: az appconfig feature filter update -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --filter-parameters Name=\"Value\" Name2=\"Value2\"
+  - summary: Update the filter at index 2 (zero-based index) for feature 'color' with label MyLabel with name 'MyFilter' and 2 parameters.
+    syntax: az appconfig feature filter update -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --filter-parameters Name=\"Value\" Name2=\"Value2\" --index 2
+  - summary: Update a filter for feature 'color' with label MyLabel and filter name 'MyFilter' with no parameters
+    syntax: az appconfig feature filter update -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter
+  - summary: Update the filter for feature 'color' with label MyLabel with name 'MyFilter' and array parameters.
+    syntax: az appconfig feature filter update -n MyAppConfiguration --feature color --label MyLabel --filter-name MyFilter --filter-parameters ArrayParam=[1,2,3]
+  requiredParameters:
+  - isRequired: true
+    name: --filter-name
+    summary: Name of the filter to be updated.
+    description: ''
+  optionalParameters:
+  - name: --auth-mode
+    parameterValueGroup: key, login
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://docs.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
+    description: ''
+  - name: --connection-string
+    summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --feature
+    summary: Name of the feature whose filter you want to update. If the feature flag key is different from the default key, provide the `--key` argument instead.
+    description: ''
+  - name: --filter-parameters
+    summary: Space-separated filter parameters in 'name[=value]' format. The value must be an escaped JSON string.
+    description: ''
+  - name: --index
+    summary: Zero-based index of the filter to be updated in case there are multiple instances with same filter name.
+    description: ''
+  - name: --key
+    summary: Key of the feature flag. Key must start with the ".appconfig.featureflag/" prefix. Key cannot contain the "%" character. If both key and feature arguments are provided, only key will be used. Default key is the reserved prefix ".appconfig.featureflag/" + feature name.
+    description: ''
+  - name: --label
+    summary: If no label specified, update the feature flag with null label by default.
+    description: ''
+  - name: --name -n
+    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
 commands:
 - az_appconfig_feature_filter_add
 - az_appconfig_feature_filter_delete
 - az_appconfig_feature_filter_list
 - az_appconfig_feature_filter_show
+- az_appconfig_feature_filter_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -258,5 +322,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/16/2022
+  ms.date: 10/10/2022
   description: Manage filters associated with feature flags stored in an App Configuration.

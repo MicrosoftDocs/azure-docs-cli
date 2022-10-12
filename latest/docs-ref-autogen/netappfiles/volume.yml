@@ -27,10 +27,11 @@ directCommands:
                                  [--coolness-period]
                                  [--default-group-quota]
                                  [--default-user-quota]
+                                 [--delete-base-snapshot {false, true}]
                                  [--enable-subvolumes]
                                  [--encryption-key-source]
                                  [--endpoint-type]
-                                 [--has-root-access]
+                                 [--has-root-access {false, true}]
                                  [--is-def-quota-enabled {false, true}]
                                  [--kerberos-enabled {false, true}]
                                  [--kerberos5-r]
@@ -51,6 +52,8 @@ directCommands:
                                  [--rule-index]
                                  [--security-style]
                                  [--service-level {Premium, Standard, Ultra}]
+                                 [--smb-access {Disabled, Enabled}]
+                                 [--smb-browsable {Disabled, Enabled}]
                                  [--smb-continuously-avl {false, true}]
                                  [--smb-encryption {false, true}]
                                  [--snapshot-dir-visible]
@@ -136,6 +139,10 @@ directCommands:
   - name: --default-user-quota
     summary: Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
     description: ''
+  - name: --delete-base-snapshot
+    parameterValueGroup: false, true
+    summary: If enabled (true) the snapshot the volume was created from will be automatically deleted after the volume create operation has finished.  Defaults to false.
+    description: ''
   - name: --enable-subvolumes
     summary: Flag indicating whether subvolume operations are enabled on the volume. Possible values are Enabled and Disabled. Default value is Disabled.
     description: ''
@@ -146,7 +153,8 @@ directCommands:
     summary: Whether the volume is source ("src") or destination ("dst").
     description: ''
   - name: --has-root-access
-    summary: Has root access to volume.
+    parameterValueGroup: false, true
+    summary: Has root access to volume. Possible values are True or False.
     description: ''
   - name: --is-def-quota-enabled
     parameterValueGroup: false, true
@@ -212,6 +220,14 @@ directCommands:
   - name: --service-level
     parameterValueGroup: Premium, Standard, Ultra
     summary: The service level.
+    description: ''
+  - name: --smb-access
+    parameterValueGroup: Disabled, Enabled
+    summary: Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
+    description: ''
+  - name: --smb-browsable
+    parameterValueGroup: Disabled, Enabled
+    summary: Enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume.
     description: ''
   - name: --smb-continuously-avl
     parameterValueGroup: false, true
@@ -405,6 +421,7 @@ directCommands:
   description: ''
   syntax: >-
     az netappfiles volume relocate [--account-name]
+                                   [--body]
                                    [--ids]
                                    [--name]
                                    [--no-wait]
@@ -416,6 +433,9 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: Name of the ANF account.
+    description: ''
+  - name: --body
+    summary: Relocate volume request. Is either a model type or a IO type. Default value is None.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -802,5 +822,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/15/2022
+  ms.date: 10/08/2022
   description: Manage Azure NetApp Files (ANF) Volume Resources.

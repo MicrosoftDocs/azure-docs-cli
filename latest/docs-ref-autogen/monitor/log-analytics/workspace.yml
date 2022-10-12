@@ -9,31 +9,32 @@ directCommands:
   summary: Create a workspace instance.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace create --resource-group
-                                              --workspace-name
-                                              [--capacity-reservation-level]
+    az monitor log-analytics workspace create --name
+                                              --resource-group
+                                              [--capacity-reservation-level {100, 1000, 200, 2000, 300, 400, 500, 5000}]
                                               [--ingestion-access {Disabled, Enabled}]
                                               [--location]
-                                              [--no-wait]
+                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                               [--query-access {Disabled, Enabled}]
                                               [--quota]
                                               [--retention-time]
-                                              [--sku]
+                                              [--sku {CapacityReservation, Free, LACluster, PerGB2018, PerNode, Premium, Standalone, Standard}]
                                               [--tags]
   examples:
   - summary: Create a workspace instance
     syntax: az monitor log-analytics workspace create -g MyResourceGroup -n MyWorkspace
   requiredParameters:
   - isRequired: true
+    name: --name --workspace-name -n
+    summary: Name of the Log Analytics Workspace.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --workspace-name -n
-    summary: Name of the Log Analytics Workspace.
-    description: ''
   optionalParameters:
   - name: --capacity-reservation-level --level
+    parameterValueGroup: 100, 1000, 200, 2000, 300, 400, 500, 5000
     summary: The capacity reservation level for this workspace, when CapacityReservation sku is selected. The maximum value is 1000 and must be in multiples of 100. If you want to increase the limit, please contact LAIngestionRate@microsoft.com.
     description: ''
   - name: --ingestion-access
@@ -41,9 +42,10 @@ directCommands:
     summary: The public network access type to access workspace ingestion.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    summary: The geo-location where the resource lives.
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --query-access
@@ -55,41 +57,50 @@ directCommands:
     description: ''
   - name: --retention-time
     defaultValue: "30"
-    summary: The workspace data retention in days.
+    summary: The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details.
     description: ''
-  - name: --sku
+  - name: --sku --sku-name
     defaultValue: PerGB2018
-    summary: 'The supported value: PerGB2018, CapacityReservation.'
+    parameterValueGroup: CapacityReservation, Free, LACluster, PerGB2018, PerNode, Premium, Standalone, Standard
+    summary: The name of the SKU.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_delete
   name: az monitor log-analytics workspace delete
-  summary: Delete a workspace instance.
-  description: ''
+  summary: Deletes a workspace resource.
+  description: The name is kept for 14 days and cannot be used for another workspace. To remove the workspace completely and release the name, use the --force flag.
   syntax: >-
-    az monitor log-analytics workspace delete --resource-group
-                                              --workspace-name
-                                              [--force {false, true}]
+    az monitor log-analytics workspace delete [--force {0, 1, f, false, n, no, t, true, y, yes}]
+                                              [--ids]
+                                              [--name]
+                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                              [--resource-group]
                                               [--yes]
   examples:
-  - summary: Delete a workspace instance. (autogenerated)
-    syntax: az monitor log-analytics workspace delete --force true --resource-group MyResourceGroup --workspace-name MyWorkspace
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -n
-    summary: Name of the Log Analytics Workspace.
-    description: ''
+  - summary: Soft delete a workspace instance.
+    syntax: az monitor log-analytics workspace delete --resource-group MyResourceGroup --workspace-name MyWorkspace
+  - summary: Completely delete a workspace instance.
+    syntax: az monitor log-analytics workspace delete --force --resource-group MyResourceGroup --workspace-name MyWorkspace
   optionalParameters:
   - name: --force -f
-    parameterValueGroup: false, true
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Deletes the workspace without the recovery option. A workspace that was deleted with this flag cannot be recovered.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --workspace-name -n
+    summary: Name of the Log Analytics Workspace.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -98,21 +109,24 @@ directCommands:
 - uid: az_monitor_log-analytics_workspace_get-schema
   name: az monitor log-analytics workspace get-schema
   summary: Get the schema for a given workspace.
-  description: 'Schema represents the internal structure of the workspace, which can be used during the query. For more information, visit: https://docs.microsoft.com/rest/api/loganalytics/workspaces%202015-03-20/getschema.'
+  description: >-
+    Schema represents the internal structure of the workspace, which can be used during the query.
+
+    For more information, visit: https://docs.microsoft.com/en-us/rest/api/loganalytics/workspace-schema/get.
   syntax: >-
-    az monitor log-analytics workspace get-schema --resource-group
-                                                  --workspace-name
+    az monitor log-analytics workspace get-schema --name
+                                                  --resource-group
   examples:
-  - summary: Get the schema for a given workspace. (autogenerated)
+  - summary: Get the schema for a given workspace.
     syntax: az monitor log-analytics workspace get-schema --resource-group MyResourceGroup --workspace-name MyWorkspace
   requiredParameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --name --workspace-name -n
+    summary: The name of the workspace.
     description: ''
   - isRequired: true
-    name: --workspace-name -n
-    summary: Name of the Log Analytics Workspace.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_get-shared-keys
@@ -120,19 +134,19 @@ directCommands:
   summary: Get the shared keys for a workspace.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace get-shared-keys --resource-group
-                                                       --workspace-name
+    az monitor log-analytics workspace get-shared-keys --name
+                                                       --resource-group
   examples:
-  - summary: Get the shared keys for a workspace. (autogenerated)
+  - summary: Get the shared keys for a workspace.
     syntax: az monitor log-analytics workspace get-shared-keys --resource-group MyResourceGroup --workspace-name MyWorkspace
   requiredParameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --name --workspace-name -n
+    summary: The name of the workspace.
     description: ''
   - isRequired: true
-    name: --workspace-name -n
-    summary: Name of the Log Analytics Workspace.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_list
@@ -163,19 +177,19 @@ directCommands:
   summary: Get a list of management groups connected to a workspace.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace list-management-groups --resource-group
-                                                              --workspace-name
+    az monitor log-analytics workspace list-management-groups --name
+                                                              --resource-group
   examples:
-  - summary: Get a list of management groups connected to a workspace. (autogenerated)
-    syntax: az monitor log-analytics workspace list-management-groups --resource-group MyResourceGroup --subscription mysubscription --workspace-name MyWorkspace
+  - summary: Get a list of management groups connected to a workspace.
+    syntax: az monitor log-analytics workspace list-management-groups --resource-group MyResourceGroup --workspace-name MyWorkspace
   requiredParameters:
+  - isRequired: true
+    name: --name --workspace-name -n
+    summary: The name of the workspace.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -n
-    summary: Name of the Log Analytics Workspace.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_list-usages
@@ -183,19 +197,19 @@ directCommands:
   summary: Get a list of usage metrics for a workspace.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace list-usages --resource-group
-                                                   --workspace-name
+    az monitor log-analytics workspace list-usages --name
+                                                   --resource-group
   examples:
-  - summary: Get a list of usage metrics for a workspace. (autogenerated)
-    syntax: az monitor log-analytics workspace list-usages --resource-group MyResourceGroup --subscription MySubscription --workspace-name MyWorkspace
+  - summary: Get a list of usage metrics for a workspace.
+    syntax: az monitor log-analytics workspace list-usages --resource-group MyResourceGroup --workspace-name MyWorkspace
   requiredParameters:
+  - isRequired: true
+    name: --name --workspace-name -n
+    summary: The name of the workspace.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -n
-    summary: Name of the Log Analytics Workspace.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_recover
@@ -227,19 +241,21 @@ directCommands:
   summary: Show a workspace instance.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace show --resource-group
-                                            --workspace-name
+    az monitor log-analytics workspace show [--ids]
+                                            [--name]
+                                            [--resource-group]
   examples:
-  - summary: Show a workspace instance. (autogenerated)
+  - summary: Show a workspace instance.
     syntax: az monitor log-analytics workspace show --resource-group MyResourceGroup --workspace-name MyWorkspace
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --workspace-name -n
+  - name: --name --workspace-name -n
     summary: Name of the Log Analytics Workspace.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_update
@@ -247,49 +263,54 @@ directCommands:
   summary: Update a workspace instance.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace update --resource-group
-                                              --workspace-name
-                                              [--add]
-                                              [--capacity-reservation-level]
+    az monitor log-analytics workspace update [--add]
+                                              [--capacity-reservation-level {100, 1000, 200, 2000, 300, 400, 500, 5000}]
                                               [--data-collection-rule]
-                                              [--force-string]
+                                              [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                              [--ids]
                                               [--ingestion-access {Disabled, Enabled}]
+                                              [--name]
+                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                               [--query-access {Disabled, Enabled}]
                                               [--quota]
                                               [--remove]
+                                              [--resource-group]
                                               [--retention-time]
                                               [--set]
                                               [--tags]
   examples:
-  - summary: Update a workspace instance. (autogenerated)
+  - summary: Update a workspace instance.
     syntax: az monitor log-analytics workspace update --resource-group myresourcegroup --retention-time 30 --workspace-name myworkspace
   - summary: Update the defaultDataCollectionRuleResourceId of the workspace
     syntax: az monitor log-analytics workspace update --resource-group myresourcegroup --workspace-name myworkspace --data-collection-rule "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}".
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -n
-    summary: Name of the Log Analytics Workspace.
-    description: ''
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --capacity-reservation-level --level
+    parameterValueGroup: 100, 1000, 200, 2000, 300, 400, 500, 5000
     summary: The capacity reservation level for this workspace, when CapacityReservation sku is selected. The maximum value is 1000 and must be in multiples of 100. If you want to increase the limit, please contact LAIngestionRate@microsoft.com.
     description: ''
   - name: --data-collection-rule
-    summary: The resource ID of the default Data Collection Rule to use for this workspace. Expected format is /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}.
+    summary: The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}.
     description: ''
   - name: --force-string
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --ingestion-access
     parameterValueGroup: Disabled, Enabled
     summary: The public network access type to access workspace ingestion.
+    description: ''
+  - name: --name --workspace-name -n
+    summary: Name of the Log Analytics Workspace.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --query-access
     parameterValueGroup: Disabled, Enabled
@@ -301,15 +322,66 @@ directCommands:
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --retention-time
-    defaultValue: "30"
-    summary: The workspace data retention in days.
+    summary: The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details.
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+- uid: az_monitor_log-analytics_workspace_wait
+  name: az monitor log-analytics workspace wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az monitor log-analytics workspace wait [--created]
+                                            [--custom]
+                                            [--deleted]
+                                            [--exists]
+                                            [--ids]
+                                            [--interval]
+                                            [--name]
+                                            [--resource-group]
+                                            [--timeout]
+                                            [--updated]
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name --workspace-name -n
+    summary: Name of the Log Analytics Workspace.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 commands:
@@ -366,6 +438,7 @@ commands:
 - az_monitor_log-analytics_workspace_table_update
 - az_monitor_log-analytics_workspace_table_wait
 - az_monitor_log-analytics_workspace_update
+- az_monitor_log-analytics_workspace_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -385,5 +458,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/08/2022
+  ms.date: 10/08/2022
   description: Manage Azure log analytics workspace.

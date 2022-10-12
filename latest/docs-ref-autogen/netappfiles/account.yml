@@ -12,9 +12,14 @@ directCommands:
     az netappfiles account create --account-name
                                   --resource-group
                                   [--encryption]
+                                  [--key-name]
+                                  [--key-source {Microsoft.KeyVault, Microsoft.NetApp}]
+                                  [--key-vault-uri]
+                                  [--keyvault-resource-id]
                                   [--location]
                                   [--no-wait]
                                   [--tags]
+                                  [--user-assigned-identity]
   examples:
   - summary: Create an ANF account
     syntax: az netappfiles account create -g mygroup --name myname -l location --tags testtag1=mytag1 testtag3=mytagg
@@ -29,7 +34,21 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --encryption
-    summary: Encryption settings.
+    summary: This argument will be deprecated, please use --key-source instead.
+    description: ''
+  - name: --key-name
+    summary: The name of KeyVault key.
+    description: ''
+  - name: --key-source
+    defaultValue: Microsoft.NetApp
+    parameterValueGroup: Microsoft.KeyVault, Microsoft.NetApp
+    summary: The encryption keySource (provider).
+    description: ''
+  - name: --key-vault-uri -v
+    summary: The Uri of KeyVault.
+    description: ''
+  - name: --keyvault-resource-id
+    summary: The resource ID of KeyVault.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -39,6 +58,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
+    description: ''
+  - name: --user-assigned-identity -u
+    summary: The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has UserAssigned. It should match key of identity.userAssignedIdentities.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_account_delete
@@ -147,11 +169,16 @@ directCommands:
                                   [--encryption]
                                   [--force-string]
                                   [--ids]
+                                  [--key-name]
+                                  [--key-source {Microsoft.KeyVault, Microsoft.NetApp}]
+                                  [--key-vault-uri]
+                                  [--keyvault-resource-id]
                                   [--no-wait]
                                   [--remove]
                                   [--resource-group]
                                   [--set]
                                   [--tags]
+                                  [--user-assigned-identity]
   examples:
   - summary: Update the tags of an ANF account
     syntax: az netappfiles account update -g mygroup --name myname --tags testtag2=mytagb
@@ -171,6 +198,19 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --key-name
+    summary: The name of KeyVault key.
+    description: ''
+  - name: --key-source
+    parameterValueGroup: Microsoft.KeyVault, Microsoft.NetApp
+    summary: The encryption keySource (provider).
+    description: ''
+  - name: --key-vault-uri -v
+    summary: The Uri of KeyVault.
+    description: ''
+  - name: --keyvault-resource-id
+    summary: The resource ID of KeyVault.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
@@ -185,6 +225,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
+    description: ''
+  - name: --user-assigned-identity -u
+    summary: The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has UserAssigned. It should match key of identity.userAssignedIdentities.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_account_wait
@@ -281,5 +324,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/15/2022
+  ms.date: 10/08/2022
   description: Manage Azure NetApp Files (ANF) Account Resources.
