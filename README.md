@@ -12,6 +12,7 @@ with different workflows:
 * To submit a change for _reference_ documentation (all other documentation), please make a pull request against
   [azure/azure-cli](https://github.com/azure/azure-cli). This reference is generated from the source code, and is also used in
   the command-line `-h` help.
+* test
 
 ## Microsoft Open Source Code of Conduct
 
