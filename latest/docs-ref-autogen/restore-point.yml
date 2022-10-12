@@ -12,12 +12,22 @@ directCommands:
     az restore-point create --collection-name
                             --name
                             --resource-group
+                            [--consistency-mode {ApplicationConsistent, CrashConsistent, FileSystemConsistent}]
                             [--exclude-disks]
                             [--no-wait]
                             [--source-restore-point]
   examples:
   - summary: Create a restore point
     syntax: az restore-point create --exclude-disks "/subscriptions/{subscription-id}/resourceGroups/myResour               ceGroup/providers/Microsoft.Compute/disks/disk123" --resource-group "myResourceGroup"                --collection-name "rpcName" --name "rpName"
+  - summary: Create a restore point with --consistency-mode CrashConsistent
+    syntax: >-
+      az vm create -n vm -g rg --image UbuntuLTS --tag EnableCrashConsistentRestorePoint=True
+
+
+      az restore-point collection create --source-id "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualMachines/myVM"                -g rg --collection-name "myRpc"
+
+
+      az restore-point create --exclude-disks "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"                --resource-group "myResourceGroup" --collection-name "rpcName" --name "rpName"
   requiredParameters:
   - isRequired: true
     name: --collection-name
@@ -32,10 +42,14 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --consistency-mode
+    parameterValueGroup: ApplicationConsistent, CrashConsistent, FileSystemConsistent
+    summary: Consistency mode of the restore point. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details.
+    description: ''
   - name: --exclude-disks
     summary: List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included.
     description: >-
-      Usage: --exclude-disks id=XX
+      Usage: --exclude-disks XX XX
 
       id: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
 
@@ -157,7 +171,7 @@ directCommands:
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
-    summary: The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. Default value is None.
+    summary: The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. "instanceView" Default value is None.
     description: ''
   - name: --interval
     defaultValue: "30"
