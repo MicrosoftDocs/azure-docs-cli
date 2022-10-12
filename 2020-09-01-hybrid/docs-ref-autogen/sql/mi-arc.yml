@@ -36,6 +36,7 @@ directCommands:
                          [--memory-request]
                          [--no-external-endpoint]
                          [--no-wait]
+                         [--orchestrator-replicas]
                          [--path]
                          [--primary-dns-name]
                          [--primary-port-number]
@@ -48,6 +49,7 @@ directCommands:
                          [--service-annotations]
                          [--service-cert-secret]
                          [--service-labels]
+                         [--service-type {LoadBalancer, NodePort}]
                          [--storage-annotations]
                          [--storage-class-backups]
                          [--storage-class-data]
@@ -146,6 +148,9 @@ directCommands:
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --orchestrator-replicas
+    summary: The number of high availability orchestrator replicas. Value must be between 1 and 3.
+    description: ''
   - name: --path
     summary: The path to the azext_arcdata file for the SQL managed instance json file.
     description: ''
@@ -182,6 +187,10 @@ directCommands:
     description: ''
   - name: --service-labels
     summary: Comma-separated list of labels to apply to all external services.
+    description: ''
+  - name: --service-type
+    parameterValueGroup: LoadBalancer, NodePort
+    summary: The type for the primary service.
     description: ''
   - name: --storage-annotations
     summary: Comma-separated list of annotations to apply to all PVCs.
@@ -430,6 +439,33 @@ directCommands:
   - name: --use-k8s
     summary: Use local Kubernetes APIs to perform this action.
     description: ''
+- uid: az_sql_mi-arc_reprovision-replica
+  name: az sql mi-arc reprovision-replica
+  summary: Reprovision a replica in a SQL managed instance.
+  description: ''
+  syntax: >-
+    az sql mi-arc reprovision-replica --name
+                                      [--k8s-namespace]
+                                      [--no-wait]
+                                      [--use-k8s]
+  examples:
+  - summary: Ex 1 - Reprovision replica 1 of SQL managed instance sqlmi1.
+    syntax: az sql mi-arc reprovision-replica -n sqlmi1-1 --use-k8s --k8s-namespace namespace
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the SQL managed instance replica to be reprovisioned.
+    description: ''
+  optionalParameters:
+  - name: --k8s-namespace -k
+    summary: Namespace where the SQL managed instance replica is deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --use-k8s
+    summary: Reprovision SQL managed instance replica using local Kubernetes APIs.
+    description: ''
 - uid: az_sql_mi-arc_show
   name: az sql mi-arc show
   summary: Show the details of a SQL managed instance.
@@ -483,6 +519,7 @@ directCommands:
                          [--memory-limit]
                          [--memory-request]
                          [--no-wait]
+                         [--orchestrator-replicas]
                          [--path]
                          [--preferred-primary-replica]
                          [--readable-secondaries]
@@ -547,6 +584,9 @@ directCommands:
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --orchestrator-replicas
+    summary: The number of high availability orchestrator replicas. Value must be between 1 and 3.
     description: ''
   - name: --path
     summary: The path to the azext_arcdata file for the SQL managed instance json file.
@@ -659,6 +699,7 @@ commands:
 - az_sql_mi-arc_endpoint_list
 - az_sql_mi-arc_get-mirroring-cert
 - az_sql_mi-arc_list
+- az_sql_mi-arc_reprovision-replica
 - az_sql_mi-arc_show
 - az_sql_mi-arc_update
 - az_sql_mi-arc_upgrade
