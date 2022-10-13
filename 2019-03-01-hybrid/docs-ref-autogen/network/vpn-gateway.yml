@@ -4,7 +4,7 @@ name: az network vpn-gateway
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **virtual-wan** extension for the Azure CLI  (version 2.39.0 or higher).  The extension will automatically install the first time you run an **az network vpn-gateway** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **virtual-wan** extension for the Azure CLI  (version 2.40.0 or higher).  The extension will automatically install the first time you run an **az network vpn-gateway** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage site-to-site VPN gateways.
 description: ''
 directCommands:
@@ -15,14 +15,17 @@ directCommands:
   syntax: >-
     az network vpn-gateway create --name
                                   --resource-group
-                                  --vhub
                                   [--asn]
                                   [--bgp-peering-address]
                                   [--location]
-                                  [--no-wait]
+                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--peer-weight]
                                   [--scale-unit]
                                   [--tags]
+                                  [--vhub]
+  examples:
+  - summary: Create a site-to-site VPN gateway.
+    syntax: az network vpn-gateway create -n MyVPNGateway -g MyRG --vhub MyVHub -l westus
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -31,10 +34,6 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --vhub
-    summary: Name or ID of a virtual hub.
     description: ''
   optionalParameters:
   - name: --asn
@@ -47,6 +46,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --peer-weight
@@ -56,7 +56,10 @@ directCommands:
     summary: The scale unit for this VPN gateway.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
+    description: ''
+  - name: --vhub
+    summary: Name or ID of a virtual hub.
     description: ''
 - uid: az_network_vpn-gateway_delete
   name: az network vpn-gateway delete
@@ -65,6 +68,10 @@ directCommands:
   syntax: >-
     az network vpn-gateway delete --name
                                   --resource-group
+                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+  examples:
+  - summary: Delete a site-to-site VPN gateway.
+    syntax: az network vpn-gateway delete -n MyVPNGateway -g MyRG
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -74,11 +81,19 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
 - uid: az_network_vpn-gateway_list
   name: az network vpn-gateway list
   summary: List site-to-site VPN gateways.
   description: ''
   syntax: az network vpn-gateway list [--resource-group]
+  examples:
+  - summary: List site-to-site VPN gateways.
+    syntax: az network vpn-gateway list -g MyRG
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -90,6 +105,9 @@ directCommands:
   syntax: >-
     az network vpn-gateway show --name
                                 --resource-group
+  examples:
+  - summary: Get the details of a site-to-site VPN gateway.
+    syntax: az network vpn-gateway show -n MyVPNGateway -g MyRG
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -109,14 +127,17 @@ directCommands:
                                   [--add]
                                   [--asn]
                                   [--bgp-peering-address]
-                                  [--force-string]
-                                  [--no-wait]
+                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--peer-weight]
                                   [--remove]
                                   [--scale-unit]
                                   [--set]
                                   [--tags]
                                   [--vhub]
+  examples:
+  - summary: Update settings of a site-to-site VPN gateway.
+    syntax: az network vpn-gateway create -g MyRG --vhub MyVHub --name MyVPNGateway --tags foo=bar
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -137,9 +158,11 @@ directCommands:
     summary: Peering address and BGP identifier of this BGP speaker.
     description: ''
   - name: --force-string
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --peer-weight
@@ -155,10 +178,57 @@ directCommands:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --vhub
     summary: Name or ID of a virtual hub.
+    description: ''
+- uid: az_network_vpn-gateway_wait
+  name: az network vpn-gateway wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network vpn-gateway wait --name
+                                --resource-group
+                                [--created]
+                                [--custom]
+                                [--deleted]
+                                [--exists]
+                                [--interval]
+                                [--timeout]
+                                [--updated]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the VPN gateway.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --created
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
 - az_network_vpn-gateway_connection
@@ -185,6 +255,7 @@ commands:
 - az_network_vpn-gateway_list
 - az_network_vpn-gateway_show
 - az_network_vpn-gateway_update
+- az_network_vpn-gateway_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
