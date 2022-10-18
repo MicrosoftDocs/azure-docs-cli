@@ -21,13 +21,13 @@ directCommands:
   summary: Create a new Azure Quantum workspace.
   description: ''
   syntax: >-
-    az quantum workspace create [--auto-accept]
-                                [--location]
+    az quantum workspace create --location
+                                --resource-group
+                                --storage-account
+                                --workspace-name
+                                [--auto-accept]
                                 [--provider-sku-list]
-                                [--resource-group]
                                 [--skip-role-assignment]
-                                [--storage-account]
-                                [--workspace-name]
   examples:
   - summary: Create a new Azure Quantum workspace with the providers that offer free credit.
     syntax: >-
@@ -40,45 +40,50 @@ directCommands:
 
       To display a list of available providers and their SKUs, use the following command:
           az quantum offerings list -l MyLocation -o table
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --storage-account -a
+    summary: Name of the storage account to be used by a quantum workspace.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
+    description: ''
   optionalParameters:
   - name: --auto-accept
     summary: If specified, provider terms are accepted without an interactive Y/N prompt.
     description: ''
-  - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
   - name: --provider-sku-list -r
     summary: Comma separated list of Provider/SKU pairs. Separate the Provider and SKU with a slash. Enclose the entire list in quotes. Values from `az quantum offerings list -l <location> -o table`.
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   - name: --skip-role-assignment
     summary: Skip the role assignment step for the quantum workspace in the storage account.
-    description: ''
-  - name: --storage-account -a
-    summary: Name of the storage account to be used by a quantum workspace.
-    description: ''
-  - name: --workspace-name -w
-    summary: Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
     description: ''
 - uid: az_quantum_workspace_delete
   name: az quantum workspace delete
   summary: Delete the given (or current) Azure Quantum workspace.
   description: ''
   syntax: >-
-    az quantum workspace delete [--resource-group]
-                                [--workspace-name]
+    az quantum workspace delete --resource-group
+                                --workspace-name
   examples:
-  - summary: Delete an Azure Quantum workspace by name and group.
+  - summary: Delete an Azure Quantum workspace by resource group and workspace name. If a default workspace has been set, the -g and -w parameters are not required.
     syntax: az quantum workspace delete -g MyResourceGroup -w MyWorkspace
-  - summary: Delete and clear the default Azure Quantum workspace (if one has been set).
-    syntax: az quantum workspace delete
-  optionalParameters:
-  - name: --resource-group -g
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --workspace-name -w
+  - isRequired: true
+    name: --workspace-name -w
     summary: Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
     description: ''
 - uid: az_quantum_workspace_list
@@ -109,22 +114,23 @@ directCommands:
   summary: List the quotas for the given (or current) Azure Quantum workspace.
   description: ''
   syntax: >-
-    az quantum workspace quotas [--location]
-                                [--resource-group]
-                                [--workspace-name]
+    az quantum workspace quotas --location
+                                --resource-group
+                                --workspace-name
   examples:
-  - summary: List the quota information of the default workspace if set.
-    syntax: az quantum workspace quotas
-  - summary: List the quota information of a specified Azure Quantum workspace.
+  - summary: List the quota information of a specified Azure Quantum workspace. If a default workspace has been set, the -g, -w, and -l parameters are not required.
     syntax: az quantum workspace quotas -g MyResourceGroup -w MyWorkspace -l MyLocation
-  optionalParameters:
-  - name: --location -l
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --workspace-name -w
+  - isRequired: true
+    name: --workspace-name -w
     summary: Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
     description: ''
 - uid: az_quantum_workspace_set
@@ -132,20 +138,23 @@ directCommands:
   summary: Select a default Azure Quantum workspace for future commands.
   description: ''
   syntax: >-
-    az quantum workspace set [--location]
-                             [--resource-group]
-                             [--workspace-name]
+    az quantum workspace set --location
+                             --resource-group
+                             --workspace-name
   examples:
   - summary: Set the default Azure Quantum workspace.
     syntax: az quantum workspace set -g MyResourceGroup -w MyWorkspace -l MyLocation
-  optionalParameters:
-  - name: --location -l
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --workspace-name -w
+  - isRequired: true
+    name: --workspace-name -w
     summary: Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
     description: ''
 - uid: az_quantum_workspace_show
