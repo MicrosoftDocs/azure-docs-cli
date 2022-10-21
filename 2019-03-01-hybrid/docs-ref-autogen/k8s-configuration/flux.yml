@@ -18,6 +18,7 @@ directCommands:
                                      --name
                                      --resource-group
                                      --url
+                                     [--account-key]
                                      [--branch]
                                      [--bucket-access-key]
                                      [--bucket-insecure {false, true}]
@@ -25,20 +26,29 @@ directCommands:
                                      [--bucket-secret-key]
                                      [--cluster-resource-provider]
                                      [--commit]
+                                     [--container-name]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
                                      [--interval]
-                                     [--kind {bucket, git}]
+                                     [--kind {azblob, bucket, git}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
                                      [--local-auth-ref]
+                                     [--managed-identity-client-id]
                                      [--namespace]
                                      [--no-wait]
+                                     [--sas-token]
                                      [--scope {cluster, namespace}]
                                      [--semver]
+                                     [--service-principal-client-certificate]
+                                     [--service-principal-client-certificate-password]
+                                     [--service-principal-client-certificate-send-chain]
+                                     [--service-principal-client-id]
+                                     [--service-principal-client-secret]
+                                     [--service-principal-tenant-id]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
                                      [--suspend {false, true}]
@@ -69,6 +79,19 @@ directCommands:
       --bucket-name my-bucket --kustomization name=my-kustomization \
 
       --bucket-access-key my-access-key --bucket-secret-key my-secret-key
+  - summary: Create a Kubernetes v2 Flux Configuration with Azure Blob Source Kind
+    syntax: >-
+      az k8s-configuration flux create --resource-group my-resource-group \
+
+      --cluster-name mycluster --cluster-type connectedClusters \
+
+      --name myconfig --scope cluster --namespace my-namespace \
+
+      --kind azblob --url https://mystorageaccount.blob.core.windows.net \
+
+      --container-name my-container --kustomization name=my-kustomization \
+
+      --account-key my-account-key
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -92,6 +115,9 @@ directCommands:
     summary: URL of the source to reconcile.
     description: ''
   optionalParameters:
+  - name: --account-key
+    summary: The Azure Blob Shared Key for authentication.
+    description: ''
   - name: --branch
     summary: Branch within the git source to reconcile with the cluster.
     description: ''
@@ -114,6 +140,9 @@ directCommands:
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.
     description: ''
+  - name: --container-name
+    summary: Name of the Azure Blob Storage container to sync.
+    description: ''
   - name: --https-ca-cert
     summary: Base64-encoded HTTPS CA certificate for TLS communication with private repository sync.
     description: ''
@@ -131,7 +160,7 @@ directCommands:
     description: ''
   - name: --kind
     defaultValue: git
-    parameterValueGroup: bucket, git
+    parameterValueGroup: azblob, bucket, git
     summary: Source kind to reconcile.
     description: ''
   - name: --known-hosts
@@ -146,12 +175,18 @@ directCommands:
   - name: --local-auth-ref --local-ref
     summary: Local reference to a kubernetes secret in the configuration namespace to use for communication to the source.
     description: ''
+  - name: --managed-identity-client-id --mi-client-id
+    summary: The client ID of the managed identity for authentication with Azure Blob.
+    description: ''
   - name: --namespace --ns
     defaultValue: default
     summary: Namespace to deploy the configuration.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --sas-token
+    summary: The Azure Blob SAS Token for authentication.
     description: ''
   - name: --scope -s
     defaultValue: cluster
@@ -160,6 +195,24 @@ directCommands:
     description: ''
   - name: --semver
     summary: Semver range within the git source to reconcile with the cluster.
+    description: ''
+  - name: --service-principal-client-certificate --sp-client-cert
+    summary: The Base64 encoded client certificate for authenticating a service principal with Azure Blob.
+    description: ''
+  - name: --service-principal-client-certificate-password --sp-cert-password
+    summary: The password for the client certificate used to authenticate a service principal with Azure Blob.
+    description: ''
+  - name: --service-principal-client-certificate-send-chain --sp-cert-send-chain
+    summary: Specify whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the client certificate.
+    description: ''
+  - name: --service-principal-client-id --sp-client-id
+    summary: The client ID for authenticating a service principal with Azure Blob, required for this authentication method.
+    description: ''
+  - name: --service-principal-client-secret --sp-client-secret
+    summary: The client secret for authenticating a service principal with Azure Blob.
+    description: ''
+  - name: --service-principal-tenant-id --sp-tenant-id
+    summary: The tenant ID for authenticating a service principal with Azure Blob, required for this authentication method.
     description: ''
   - name: --ssh-private-key
     summary: Base64-encoded private ssh key for private repository sync.
@@ -308,6 +361,7 @@ directCommands:
                                      --cluster-type {connectedClusters, managedClusters, provisionedClusters}
                                      --name
                                      --resource-group
+                                     [--account-key]
                                      [--branch]
                                      [--bucket-access-key]
                                      [--bucket-insecure {false, true}]
@@ -315,18 +369,27 @@ directCommands:
                                      [--bucket-secret-key]
                                      [--cluster-resource-provider]
                                      [--commit]
+                                     [--container-name]
                                      [--https-ca-cert]
                                      [--https-ca-cert-file]
                                      [--https-key]
                                      [--https-user]
                                      [--interval]
-                                     [--kind {bucket, git}]
+                                     [--kind {azblob, bucket, git}]
                                      [--known-hosts]
                                      [--known-hosts-file]
                                      [--kustomization]
                                      [--local-auth-ref]
+                                     [--managed-identity-client-id]
                                      [--no-wait]
+                                     [--sas-token]
                                      [--semver]
+                                     [--service-principal-client-certificate]
+                                     [--service-principal-client-certificate-password]
+                                     [--service-principal-client-certificate-send-chain]
+                                     [--service-principal-client-id]
+                                     [--service-principal-client-secret]
+                                     [--service-principal-tenant-id]
                                      [--ssh-private-key]
                                      [--ssh-private-key-file]
                                      [--suspend {false, true}]
@@ -344,13 +407,20 @@ directCommands:
       --url https://github.com/Azure/arc-k8s-demo --branch main \
 
       --kustomization name=my-kustomization path=./my/new-path
-  - summary: Update a Flux v2 Kubernetse configuration with Bucket Source Kind to connect insecurely
+  - summary: Update a Flux v2 Kubernetes configuration with Bucket Source Kind to connect insecurely
     syntax: >-
       az k8s-configuration flux update --resource-group my-resource-group \
 
       --cluster-name mycluster --cluster-type connectedClusters --name myconfig \
 
       --bucket-insecure
+  - summary: Update a Flux v2 Kubernetes configuration with Azure Blob Source Kind with another container name
+    syntax: >-
+      az k8s-configuration flux update --resource-group my-resource-group \
+
+      --cluster-name mycluster --cluster-type connectedClusters --name myconfig \
+
+      --container-name other-container
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -370,6 +440,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --account-key
+    summary: The Azure Blob Shared Key for authentication.
+    description: ''
   - name: --branch
     summary: Branch within the git source to reconcile with the cluster.
     description: ''
@@ -392,6 +465,9 @@ directCommands:
   - name: --commit
     summary: Commit within the git source to reconcile with the cluster.
     description: ''
+  - name: --container-name
+    summary: Name of the Azure Blob Storage container to sync.
+    description: ''
   - name: --https-ca-cert
     summary: Base64-encoded HTTPS CA certificate for TLS communication with private repository sync.
     description: ''
@@ -408,7 +484,7 @@ directCommands:
     summary: Time between reconciliations of the source on the cluster.
     description: ''
   - name: --kind
-    parameterValueGroup: bucket, git
+    parameterValueGroup: azblob, bucket, git
     summary: Source kind to reconcile.
     description: ''
   - name: --known-hosts
@@ -423,11 +499,35 @@ directCommands:
   - name: --local-auth-ref --local-ref
     summary: Local reference to a kubernetes secret in the configuration namespace to use for communication to the source.
     description: ''
+  - name: --managed-identity-client-id --mi-client-id
+    summary: The client ID of the managed identity for authentication with Azure Blob.
+    description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --sas-token
+    summary: The Azure Blob SAS Token for authentication.
+    description: ''
   - name: --semver
     summary: Semver range within the git source to reconcile with the cluster.
+    description: ''
+  - name: --service-principal-client-certificate --sp-client-cert
+    summary: The Base64 encoded client certificate for authenticating a service principal with Azure Blob.
+    description: ''
+  - name: --service-principal-client-certificate-password --sp-cert-password
+    summary: The password for the client certificate used to authenticate a service principal with Azure Blob.
+    description: ''
+  - name: --service-principal-client-certificate-send-chain --sp-cert-send-chain
+    summary: Specify whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the client certificate.
+    description: ''
+  - name: --service-principal-client-id --sp-client-id
+    summary: The client ID for authenticating a service principal with Azure Blob, required for this authentication method.
+    description: ''
+  - name: --service-principal-client-secret --sp-client-secret
+    summary: The client secret for authenticating a service principal with Azure Blob.
+    description: ''
+  - name: --service-principal-tenant-id --sp-tenant-id
+    summary: The tenant ID for authenticating a service principal with Azure Blob, required for this authentication method.
     description: ''
   - name: --ssh-private-key
     summary: Base64-encoded private ssh key for private repository sync.
