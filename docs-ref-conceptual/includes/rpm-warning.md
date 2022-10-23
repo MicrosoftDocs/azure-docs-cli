@@ -14,3 +14,8 @@ ms.topic: include
 > Be aware that Python 2 has reached the end of life on January 1, 2020, and will no longer receive
 > updates. Azure CLI has dropped support for Python 2.7 since version `2.1.0`. New versions no longer
 > guarantee to run with Python 2.7 correctly.
+> 
+> When installing Azure CLI on SAP systems, it is highly recommended to run it under a different user
+> than the provided SAP admin user that is setup due to different python modules and requirements for
+> that user which cannot be changed due to SAP own requirements for Python.
+
