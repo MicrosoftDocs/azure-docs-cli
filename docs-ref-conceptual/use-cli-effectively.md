@@ -276,13 +276,13 @@ If you're using Azure CLI over a proxy server that uses self-signed certificates
 
 Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file.  Then set `REQUESTS_CA_BUNDLE` to the new file location.  Here is an example:
 
-    ```console
-    <Original cacert.pem>
+```console
+<Original cacert.pem>
 
-    -----BEGIN CERTIFICATE-----
-    <Your proxy's certificate here>
-    -----END CERTIFICATE-----
-    ```
+-----BEGIN CERTIFICATE-----
+<Your proxy's certificate here>
+-----END CERTIFICATE-----
+```
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
 
