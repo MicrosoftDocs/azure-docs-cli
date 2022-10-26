@@ -1316,6 +1316,7 @@ directCommands:
                   [--no-uptime-sla]
                   [--no-wait]
                   [--nodepool-labels]
+                  [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--ssh-key-value]
@@ -1343,6 +1344,8 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ips <ip-resource-id-1,ip-resource-id-2>
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IP prefixes for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
+  - summary: Update a kubernetes cluster with new outbound type
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --outbound-type managedNATGateway
   - summary: Update a kubernetes cluster with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
   - summary: Update a kubernetes cluster of managedNATGateway outbound type with two outbound AKS managed IPs an idle flow timeout of 4 minutes
@@ -1661,6 +1664,10 @@ directCommands:
   - name: --nodepool-labels
     summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
     description: ''
+  - name: --outbound-type
+    parameterValueGroup: loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting
+    summary: How outbound traffic will be configured for a cluster.
+    description: This option will change the way how the outbound connections are managed in the AKS cluster. Default is loadbalancer, other available options are managedNATGateway, userassignedNATGateway, UDR.
   - name: --private-dns-zone
     summary: The private dns zone mode for private cluster.
     description: ''
