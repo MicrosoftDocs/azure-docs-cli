@@ -4,11 +4,10 @@ description: Learn how to use az config param-persist and persisted parameters w
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.prod: azure
+ms.service: azure-cli
 ms.date: 09/16/2021
 ms.topic: tutorial
 ms.tool: azure-cli
-ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: persisted parameter tutorial
 ---

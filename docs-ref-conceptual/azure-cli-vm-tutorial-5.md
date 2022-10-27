@@ -7,8 +7,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.tool: azure-cli
 ms.topic: tutorial
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: virtual machine in azure cli, set shell variables from cli output 
 ---
