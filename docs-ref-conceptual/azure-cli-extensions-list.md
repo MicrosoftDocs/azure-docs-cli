@@ -6,8 +6,7 @@ ms.author: jianzen
 manager: yonzhan,yungezz
 ms.date: 10/22/2022
 ms.topic: article
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azure-cli
 ms.custom: devx-track-azurecli
 keywords: az extension, azure cli extensions, azure extensions
