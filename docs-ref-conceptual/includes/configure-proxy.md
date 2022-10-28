@@ -4,8 +4,7 @@ ms.author: sttramer
 manager: carmonm
 ms.date: 05/28/2019
 ms.topic: include
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ---
 If you're unable to connect to an external resource due to a proxy, make sure that you've correctly set the `HTTP_PROXY` and `HTTPS_PROXY` variables in your shell. You will need to contact your system administrator
 to know what host(s) and port(s) to use for these proxies.
