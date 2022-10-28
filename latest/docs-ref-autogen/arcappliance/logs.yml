@@ -4,7 +4,7 @@ name: az arcappliance logs
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **arcappliance** extension for the Azure CLI  (version 2.39.0 or higher).  The extension will automatically install the first time you run an **az arcappliance logs** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **arcappliance** extension for the Azure CLI  (version 2.41.0 or higher).  The extension will automatically install the first time you run an **az arcappliance logs** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Command group for collecting logs for an Appliance cluster.
 description: ''
 directCommands:
@@ -13,20 +13,30 @@ directCommands:
   summary: Command to collect logs for an Appliance on Azure Stack HCI.
   description: ''
   syntax: >-
-    az arcappliance logs hci --kubeconfig
+    az arcappliance logs hci [--cloudagent]
                              [--ip]
+                             [--kubeconfig]
+                             [--loginconfigfile]
                              [--out-dir]
   examples:
-  - summary: Collect Appliance logs on HCI
-    syntax: az arcappliance logs hci --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --ip [OPTIONAL]
-  requiredParameters:
-  - isRequired: true
-    name: --kubeconfig
+  - summary: Collect Appliance logs on HCI using IP
+    syntax: az arcappliance logs hci --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL]
+  - summary: Collect Appliance logs on HCI using kubeconfig
+    syntax: az arcappliance logs hci --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL]
+  - summary: Collect Appliance logs using noninteractive feature on HCI using HCI credentials as parameters
+    syntax: az arcappliance logs hci --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --cloudagent [REQUIRED] --loginconfigfile [REQUIRED]
+  optionalParameters:
+  - name: --cloudagent
+    summary: FQDN or IP address of cloud agent service for Arc Resource Bridge.
+    description: ''
+  - name: --ip
+    summary: IP address assigned to the Arc Resource Bridge or the Appliance VM IP. You might be able to find this by searching for the VM in the private cloud or inside the kubeconfig file.
+    description: ''
+  - name: --kubeconfig
     summary: Path to kubeconfig output from deploy command.
     description: ''
-  optionalParameters:
-  - name: --ip
-    summary: In case of normal log collection failure, specify the ip address of virtual machine or kubernetes api server.
+  - name: --loginconfigfile
+    summary: File path for HCI login configuration.
     description: ''
   - name: --out-dir
     summary: Output directory where log files should be output, defaults to ./ (current directory).
@@ -36,20 +46,20 @@ directCommands:
   summary: Command to collect logs for Appliance on KubeVirt.
   description: ''
   syntax: >-
-    az arcappliance logs kubevirt --kubeconfig
-                                  [--ip]
+    az arcappliance logs kubevirt [--ip]
+                                  [--kubeconfig]
                                   [--out-dir]
   examples:
-  - summary: Collect Appliance logs on VMWare
-    syntax: az arcappliance logs kubevirt --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --ip [OPTIONAL]
-  requiredParameters:
-  - isRequired: true
-    name: --kubeconfig
-    summary: Path to kubeconfig output from deploy command.
-    description: ''
+  - summary: Collect Appliance logs on kubevirt using IP
+    syntax: az arcappliance logs kubevirt --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL]
+  - summary: Collect Appliance logs on kubevirt using kubeconfig
+    syntax: az arcappliance logs kubevirt --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL]
   optionalParameters:
   - name: --ip
-    summary: In case of normal log collection failure, specify the ip address of virtual machine or kubernetes api server.
+    summary: IP address assigned to the Arc Resource Bridge or the Appliance VM IP. You might be able to find this by searching for the VM in the private cloud or inside the kubeconfig file.
+    description: ''
+  - name: --kubeconfig
+    summary: Path to kubeconfig output from deploy command.
     description: ''
   - name: --out-dir
     summary: Output directory where log files should be output, defaults to ./ (current directory).
@@ -59,20 +69,20 @@ directCommands:
   summary: Command to collect logs for Arc Appliance on SCVMM.
   description: ''
   syntax: >-
-    az arcappliance logs scvmm --kubeconfig
-                               [--ip]
+    az arcappliance logs scvmm [--ip]
+                               [--kubeconfig]
                                [--out-dir]
   examples:
-  - summary: Collect Arc Appliance logs on SCVMM
-    syntax: az arcappliance logs scvmm --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --ip [OPTIONAL]
-  requiredParameters:
-  - isRequired: true
-    name: --kubeconfig
-    summary: Path to kubeconfig output from deploy command.
-    description: ''
+  - summary: Collect Arc Appliance logs on SCVMM using IP
+    syntax: az arcappliance logs scvmm --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL]
+  - summary: Collect Appliance logs on SCVMM using kubeconfig
+    syntax: az arcappliance logs scvmm --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL]
   optionalParameters:
   - name: --ip
-    summary: In case of normal log collection failure, specify the ip address of virtual machine or kubernetes api server.
+    summary: IP address assigned to the Arc Resource Bridge or the Appliance VM IP. You might be able to find this by searching for the VM in the private cloud or inside the kubeconfig file.
+    description: ''
+  - name: --kubeconfig
+    summary: Path to kubeconfig output from deploy command.
     description: ''
   - name: --out-dir
     summary: Output directory where log files should be output, defaults to ./ (current directory).
@@ -82,23 +92,37 @@ directCommands:
   summary: Command to collect logs for Appliance on VMware.
   description: ''
   syntax: >-
-    az arcappliance logs vmware --kubeconfig
+    az arcappliance logs vmware [--address]
                                 [--ip]
+                                [--kubeconfig]
                                 [--out-dir]
+                                [--password]
+                                [--username]
   examples:
-  - summary: Collect Appliance logs on VMWare
-    syntax: az arcappliance logs vmware --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --ip [OPTIONAL]
-  requiredParameters:
-  - isRequired: true
-    name: --kubeconfig
-    summary: Path to kubeconfig output from deploy command.
-    description: ''
+  - summary: Collect Appliance logs on VMware using IP
+    syntax: az arcappliance logs vmware --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL]
+  - summary: Collect Appliance logs on VMware using kubeconfig
+    syntax: az arcappliance logs vmware --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL]
+  - summary: Collect Appliance logs using noninteractive feature on VMware using vmware credentials parameters
+    syntax: az arcappliance logs vmware --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --address [REQUIRED] --username [REQUIRED] --password [REQUIRED]
   optionalParameters:
+  - name: --address
+    summary: 'FQDN or IP address for vCenter Server instance. Ex: 10.160.0.1.'
+    description: ''
   - name: --ip
-    summary: In case of normal log collection failure, specify the ip address of virtual machine or kubernetes api server.
+    summary: IP address assigned to the Arc Resource Bridge or the Appliance VM IP. You might be able to find this by searching for the VM in the private cloud or inside the kubeconfig file.
+    description: ''
+  - name: --kubeconfig
+    summary: Path to kubeconfig output from deploy command.
     description: ''
   - name: --out-dir
     summary: Output directory where log files should be output, defaults to ./ (current directory).
+    description: ''
+  - name: --password
+    summary: Password for vSphere account.
+    description: ''
+  - name: --username
+    summary: Username for vSphere account.
     description: ''
 commands:
 - az_arcappliance_logs_hci

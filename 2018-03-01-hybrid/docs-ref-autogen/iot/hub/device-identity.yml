@@ -4,7 +4,7 @@ name: az iot hub device-identity
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.30.0 or higher).  The extension will automatically install the first time you run an **az iot hub device-identity** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.32.0 or higher).  The extension will automatically install the first time you run an **az iot hub device-identity** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage IoT devices.
 description: ''
 directCommands:
@@ -144,37 +144,48 @@ directCommands:
     description: ''
 - uid: az_iot_hub_device-identity_export
   name: az iot hub device-identity export
-  summary: Export all device identities from an IoT Hub to an Azure Storage blob container. For inline blob container SAS uri input, please review the input rules of your environment.
+  summary: Export all device identities from an IoT Hub to an Azure Storage blob container. For inline blob container SAS uri input, please review the input rules of your environment. Storage account name and blob container name parameters can only be used when the storage account is in the same subscription as the input IoT Hub. The output blob containing device identities is a text file named 'devices.txt'. Permissions required - Either IoT Hub shared access policy supporting 'Registry Read & Registry Write' OR an entity with 'IoT Hub Data Contributor' role on the IoT Hub.
   description: For more information, see https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
   syntax: >-
-    az iot hub device-identity export --bcu
-                                      --hub-name
-                                      [--auth-type {identity, key}]
+    az iot hub device-identity export [--auth-type {key, login}]
+                                      [--bc]
+                                      [--bcu]
+                                      [--hub-name]
                                       [--identity]
                                       [--ik {false, true}]
+                                      [--login]
                                       [--resource-group]
+                                      [--sa]
+                                      [--sat {identity, key}]
   examples:
+  - summary: Export all device identities to a configured blob container and include device keys. The blob container name and storage account name are provided as parameters to the command.
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bc {blob_container_name} --sa {storage_account_name}
   - summary: Export all device identities to a configured blob container and include device keys. Uses an inline SAS uri example.
     syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices?sv=2019-02-02&st=2020-08-23T22%3A35%3A00Z&se=2020-08-24T22%3A35%3A00Z&sr=c&sp=rwd&sig=VrmJ5sQtW3kLzYg10VqmALGCp4vtYKSLNjZDDJBSh9s%3D'
   - summary: Export all device identities to a configured blob container using a file path which contains the SAS uri.
     syntax: az iot hub device-identity export -n {iothub_name} --bcu {sas_uri_filepath}
+  - summary: Export all device identities to a configured blob container and include device keys. Uses system assigned identity that has Storage Blob Data Contributor roles for the storage account. The blob container name and storage account name are provided as parameters to the command.
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bc {blob_container_name} --sa {storage_account_name} --identity [system]
   - summary: Export all device identities to a configured blob container and include device keys. Uses system assigned identity that has Storage Blob Data Contributor roles for the storage account. The blob container uri does not need the blob SAS token.
-    syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices' --auth-type identity --identity [system]
-  - summary: Export all device identities to a configured blob container and include device keys. Uses user assigned managed identity that has Storage Blob Data Contributor roles for the storage account and contributor for the IoT hub. The blob container uri does not need the blob SAS token.
-    syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices' --auth-type identity --identity {managed_identity_resource_id}
-  requiredParameters:
-  - isRequired: true
-    name: --bcu --blob-container-uri
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices' --identity [system]
+  - summary: Export all device identities to a configured blob container and include device keys. Uses user assigned managed identity that has Storage Blob Data Contributor role for the storage account. The blob container name and storage account name are provided as parameters to the command.
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bc {blob_container_name} --sa {storage_account_name} --identity {managed_identity_resource_id}
+  - summary: Export all device identities to a configured blob container and include device keys. Uses user assigned managed identity that has Storage Blob Data Contributor role for the storage account. The blob container uri does not need the blob SAS token.
+    syntax: az iot hub device-identity export -n {iothub_name} --ik --bcu 'https://mystorageaccount.blob.core.windows.net/devices' --identity {managed_identity_resource_id}
+  optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
+  - name: --bc --blob-container
+    summary: This blob container is used to output the status of the device identity import job and the results. Parameter is ignored when blob_container_uri is provided. Write, read and delete access is required for this blob container.
+    description: ''
+  - name: --bcu --blob-container-uri
     summary: 'Blob Shared Access Signature URI with write, read, and delete access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI is still required - but no SAS token is necessary. Input for this argument can be inline or from a file path.'
     description: ''
-  - isRequired: true
-    name: --hub-name -n
+  - name: --hub-name -n
     summary: IoT Hub name. Required if --login is not provided.
-    description: ''
-  optionalParameters:
-  - name: --auth-type --storage-authentication-type
-    parameterValueGroup: identity, key
-    summary: Authentication type for communicating with the storage container.
     description: ''
   - name: --identity
     summary: Managed identity type to determine if system assigned managed identity or user assigned managed identity is used. For system assigned managed identity, use [system]. For user assigned managed identity, provide the user assigned managed identity resource id. This identity requires a Storage Blob Data Contributor roles for the Storage Account.
@@ -183,57 +194,100 @@ directCommands:
     parameterValueGroup: false, true
     summary: If set, keys are exported normally. Otherwise, keys are set to null in export output.
     description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --sa --storage-account
+    summary: Name of Azure Storage account containing the output blob container.Parameter is ignored when blob_container_uri is provided. Write, read and delete access is required.
+    description: ''
+  - name: --sat --storage-authentication-type
+    parameterValueGroup: identity, key
+    summary: Authentication type for communicating with the storage container.
+    description: ''
 - uid: az_iot_hub_device-identity_import
   name: az iot hub device-identity import
-  summary: Import device identities to an IoT Hub from a blob. For inline blob container SAS uri input, please review the input rules of your environment.
+  summary: Import device identities to an IoT Hub from a blob. For inline blob container SAS uri input, please review the input rules of your environment. Storage account name and blob container name parameters can only be used when the storage account is in the same subscription as the input IoT Hub. The expected input file containing device identities should be named 'devices.txt'. The output log file 'importErrors.log' is empty when import is successful and contains error logs in case of import failure. Permissions required - Either IoT Hub shared access policy supporting 'Registry Read & Registry Write' OR an entity with 'IoT Hub Data Contributor' role on the IoT Hub.
   description: For more information, see https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities.
   syntax: >-
-    az iot hub device-identity import --hub-name
-                                      --ibcu
-                                      --obcu
-                                      [--auth-type {identity, key}]
+    az iot hub device-identity import [--auth-type {key, login}]
+                                      [--hub-name]
+                                      [--ibc]
+                                      [--ibcu]
                                       [--identity]
+                                      [--input-storage-account]
+                                      [--login]
+                                      [--obc]
+                                      [--obcu]
+                                      [--osa]
                                       [--resource-group]
+                                      [--sat {identity, key}]
   examples:
+  - summary: Import all device identities from a blob by providing command parameters for input blob container and storage account as well as output blob container and storage account.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibc {input_blob_container_name} --isa {input_storage_account_name} --obc {output_blob_container_name} --osa {output_storage_account_name}
   - summary: Import all device identities from a blob using an inline SAS uri.
     syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri}
   - summary: Import all device identities from a blob using a file path which contains SAS uri.
     syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri_filepath} --obcu {output_sas_uri_filepath}
+  - summary: Import all device identities from a blob using system assigned identity that has Storage Blob Data Contributor roles for both storage accounts. The input blob container and storage account as well as output blob container and storage account are provided as parameters to the command
+    syntax: az iot hub device-identity import -n {iothub_name} --ibc {input_blob_container_name} --isa {input_storage_account_name} --obc {output_blob_container_name} --osa {output_storage_account_name} --identity [system]
   - summary: Import all device identities from a blob using system assigned identity that has Storage Blob Data Contributor roles for both storage accounts. The blob container uri does not need the blob SAS token.
-    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri} --auth-type identity --identity [system]
-  - summary: Import all device identities from a blob using user assigned managed identity that has Storage Blob Data Contributor roles for both storage accounts and contributor for the IoT hub. The blob container uri does not need the blob SAS token.
-    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri} --auth-type identity --identity {managed_identity_resource_id}
-  requiredParameters:
-  - isRequired: true
-    name: --hub-name -n
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri} --identity [system]
+  - summary: Import all device identities from a blob using user assigned managed identity that has Storage Blob Data Contributor roles for both storage accounts. The input blob container and storage account as well as output blob container and storage account are provided as parameters to the command
+    syntax: az iot hub device-identity import -n {iothub_name} --ibc {input_blob_container_name} --isa {input_storage_account_name} --obc {output_blob_container_name} --osa {output_storage_account_name} --identity {managed_identity_resource_id}
+  - summary: Import all device identities from a blob using user assigned managed identity that has Storage Blob Data Contributor roles for both storage accounts. The blob container uri does not need the blob SAS token.
+    syntax: az iot hub device-identity import -n {iothub_name} --ibcu {input_sas_uri} --obcu {output_sas_uri} --identity {managed_identity_resource_id}
+  optionalParameters:
+  - name: --auth-type
+    defaultValue: key
+    parameterValueGroup: key, login
+    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+    description: ''
+  - name: --hub-name -n
     summary: IoT Hub name. Required if --login is not provided.
     description: ''
-  - isRequired: true
-    name: --ibcu --input-blob-container-uri
+  - name: --ibc --input-blob-container
+    summary: This blob container stores the file which defines operations to be performed on the identity registry. Parameter is ignored when input_blob_container_uri is provided. Read access is required for this blob container.
+    description: ''
+  - name: --ibcu --input-blob-container-uri
     summary: 'Blob Shared Access Signature URI with read access to a blob container. This blob contains the operations to be performed on the identity registry. Note: when using Identity-based authentication an https:// URI is still required - but no SAS token is necessary. Input for this argument can be inline or from a file path.'
-    description: ''
-  - isRequired: true
-    name: --obcu --output-blob-container-uri
-    summary: 'Blob Shared Access Signature URI with write access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI without the SAS token is still required. Input for this argument can be inline or from a file path.'
-    description: ''
-  optionalParameters:
-  - name: --auth-type --storage-authentication-type
-    parameterValueGroup: identity, key
-    summary: Authentication type for communicating with the storage container.
     description: ''
   - name: --identity
     summary: Managed identity type to determine if system assigned managed identity or user assigned managed identity is used. For system assigned managed identity, use [system]. For user assigned managed identity, provide the user assigned managed identity resource id. This identity requires a Storage Blob Data Contributor role for the target Storage Account and Contributor role for the IoT Hub.
     description: ''
+  - name: --input-storage-account --isa
+    summary: Name of Azure Storage account containing the input blob container.Only required when input_blob_container_uri is not provided. Read access is required.
+    description: ''
+  - name: --login -l
+    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
+    description: ''
+  - name: --obc --output-blob-container
+    summary: This blob container is used to output the status of the device identity import job and the results. Only required when input_blob_container_uri is not provided. Write access is required for this blob container.
+    description: ''
+  - name: --obcu --output-blob-container-uri
+    summary: 'Blob Shared Access Signature URI with write access to a blob container. This is used to output the status of the job and the results. Note: when using Identity-based authentication an https:// URI without the SAS token is still required. Input for this argument can be inline or from a file path.'
+    description: ''
+  - name: --osa --output-storage-account
+    summary: Name of Azure Storage account containing the output blob container.Parameter is ignored when output_blob_container_uri is provided. Write access is required.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --sat --storage-authentication-type
+    parameterValueGroup: identity, key
+    summary: Authentication type for communicating with the storage container.
     description: ''
 - uid: az_iot_hub_device-identity_list
   name: az iot hub device-identity list
   summary: List devices in an IoT Hub.
-  description: ''
+  description: >-
+    This command is an alias for `az iot hub device-twin list`, which is highly recommended over
+
+    this command. In the future, this `az iot hub device-identity list` command may be
+
+    altered or deprecated.
   syntax: >-
     az iot hub device-identity list [--auth-type {key, login}]
                                     [--edge-enabled {false, true}]
