@@ -2,27 +2,26 @@
 uid: az_monitor_log-analytics_workspace_linked-service
 name: az monitor log-analytics workspace linked-service
 summary: Manage linked service for log analytics workspace.
-description: Linked services is used to defined a relation from the workspace to another Azure resource. Log Analytics and Azure resources then leverage this connection in their operations. Example uses of Linked Services in Log Analytics workspace are Automation account and workspace association to CMK.
+description: Linked services is used to define a relation from the workspace to another Azure resource. Log Analytics and Azure resources then leverage this connection in their operations. Example uses of Linked Services in Log Analytics workspace are Automation account and workspace association to CMK.
 directCommands:
 - uid: az_monitor_log-analytics_workspace_linked-service_create
   name: az monitor log-analytics workspace linked-service create
   summary: Create a linked service.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace linked-service create --name
+    az monitor log-analytics workspace linked-service create --linked-service-name
                                                              --resource-group
                                                              --workspace-name
-                                                             [--no-wait]
+                                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                              [--resource-id]
+                                                             [--tags]
                                                              [--write-access-resource-id]
   examples:
   - summary: Create a linked service.
-    syntax: >-
-      az monitor log-analytics workspace linked-service create -g MyResourceGroup -n cluster \
-        --workspace-name MyWorkspace --write-access-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.OperationalInsights/clusters/MyCluster
+    syntax: az monitor log-analytics workspace linked-service create -g MyResourceGroup -n cluster --workspace-name MyWorkspace --write-access-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.OperationalInsights/clusters/MyCluster
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --linked-service-name --name -n
     summary: 'Name of the linkedServices resource. Supported values: cluster, automation.'
     description: ''
   - isRequired: true
@@ -31,14 +30,18 @@ directCommands:
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: Name of the Log Analytics Workspace.
+    summary: The name of the workspace.
     description: ''
   optionalParameters:
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-id
     summary: The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require read access.
+    description: ''
+  - name: --tags
+    summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --write-access-resource-id
     summary: The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require write access.
@@ -49,30 +52,31 @@ directCommands:
   summary: Delete a linked service.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace linked-service delete --name
-                                                             --resource-group
-                                                             --workspace-name
-                                                             [--no-wait]
+    az monitor log-analytics workspace linked-service delete [--ids]
+                                                             [--linked-service-name]
+                                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                             [--resource-group]
+                                                             [--workspace-name]
                                                              [--yes]
   examples:
   - summary: Delete a linked service.
     syntax: az monitor log-analytics workspace linked-service delete -g MyResourceGroup -n cluster --workspace-name MyWorkspace
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --linked-service-name --name -n
     summary: 'Name of the linkedServices resource. Supported values: cluster, automation.'
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --workspace-name
-    summary: Name of the Log Analytics Workspace.
-    description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --workspace-name
+    summary: The name of the workspace.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -80,13 +84,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_linked-service_list
   name: az monitor log-analytics workspace linked-service list
-  summary: Gets all the linked services in a workspace.
+  summary: Get all the linked services in a workspace.
   description: ''
   syntax: >-
     az monitor log-analytics workspace linked-service list --resource-group
                                                            --workspace-name
   examples:
-  - summary: Gets all the linked services in a workspace.
+  - summary: Get all the linked services in a workspace.
     syntax: az monitor log-analytics workspace linked-service list -g MyResourceGroup --workspace-name MyWorkspace
   requiredParameters:
   - isRequired: true
@@ -95,7 +99,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --workspace-name
-    summary: Name of the Log Analytics Workspace.
+    summary: The name of the workspace.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_linked-service_show
@@ -103,24 +107,25 @@ directCommands:
   summary: Show the properties of a linked service.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace linked-service show --name
-                                                           --resource-group
-                                                           --workspace-name
+    az monitor log-analytics workspace linked-service show [--ids]
+                                                           [--linked-service-name]
+                                                           [--resource-group]
+                                                           [--workspace-name]
   examples:
   - summary: Show the properties of a linked service.
     syntax: az monitor log-analytics workspace linked-service show -g MyResourceGroup -n cluster --workspace-name MyWorkspace
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --linked-service-name --name -n
     summary: 'Name of the linkedServices resource. Supported values: cluster, automation.'
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --workspace-name
-    summary: Name of the Log Analytics Workspace.
+  - name: --workspace-name
+    summary: The name of the workspace.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_linked-service_update
@@ -128,46 +133,44 @@ directCommands:
   summary: Update a linked service.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace linked-service update --name
-                                                             --resource-group
-                                                             --workspace-name
-                                                             [--add]
-                                                             [--force-string]
-                                                             [--no-wait]
+    az monitor log-analytics workspace linked-service update [--add]
+                                                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                             [--ids]
+                                                             [--linked-service-name]
+                                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                              [--remove]
+                                                             [--resource-group]
                                                              [--resource-id]
                                                              [--set]
+                                                             [--tags]
+                                                             [--workspace-name]
                                                              [--write-access-resource-id]
   examples:
   - summary: Update a linked service.
-    syntax: >-
-      az monitor log-analytics workspace linked-service update -g MyResourceGroup -n cluster \
-        --workspace-name MyWorkspace --write-access-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.OperationalInsights/clusters/MyCluster
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: 'Name of the linkedServices resource. Supported values: cluster, automation.'
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name
-    summary: Name of the Log Analytics Workspace.
-    description: ''
+    syntax: az monitor log-analytics workspace linked-service update -g MyResourceGroup -n cluster --workspace-name MyWorkspace --write-access-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyResourceGroup/providers/Microsoft.OperationalInsights/clusters/MyCluster
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --linked-service-name --name -n
+    summary: 'Name of the linkedServices resource. Supported values: cluster, automation.'
+    description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-id
     summary: The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require read access.
@@ -175,41 +178,32 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --tags
+    summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --workspace-name
+    summary: The name of the workspace.
+    description: ''
   - name: --write-access-resource-id
     summary: The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require write access.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-analytics_workspace_linked-service_wait
   name: az monitor log-analytics workspace linked-service wait
-  summary: Place the CLI in a waiting state until a condition of the linked service is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
-    az monitor log-analytics workspace linked-service wait --name
-                                                           --resource-group
-                                                           --workspace-name
-                                                           [--created]
+    az monitor log-analytics workspace linked-service wait [--created]
                                                            [--custom]
                                                            [--deleted]
                                                            [--exists]
+                                                           [--ids]
                                                            [--interval]
+                                                           [--linked-service-name]
+                                                           [--resource-group]
                                                            [--timeout]
                                                            [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the linked service is successfully provisioned.
-    syntax: az monitor log-analytics workspace linked-service wait -n cluster -g MyResourceGroup --workspace-name MyWorkspace --created
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: 'Name of the linkedServices resource. Supported values: cluster, automation.'
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name
-    summary: Name of the Log Analytics Workspace.
-    description: ''
+                                                           [--workspace-name]
   optionalParameters:
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
@@ -223,9 +217,18 @@ directCommands:
   - name: --exists
     summary: Wait until the resource exists.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --linked-service-name --name -n
+    summary: 'Name of the linkedServices resource. Supported values: cluster, automation.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -233,6 +236,9 @@ directCommands:
     description: ''
   - name: --updated
     summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --workspace-name
+    summary: The name of the workspace.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 commands:
@@ -261,5 +267,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/08/2022
-  description: Linked services is used to defined a relation from the workspace to another Azure resource. Log Analytics and Azure resources then leverage this connection in their operations. Example uses of Linked Services in Log Analytics workspace are Automation account and workspace association to CMK.
+  ms.date: 10/08/2022
+  description: Linked services is used to define a relation from the workspace to another Azure resource. Log Analytics and Azure resources then leverage this connection in their operations. Example uses of Linked Services in Log Analytics workspace are Automation account and workspace association to CMK.

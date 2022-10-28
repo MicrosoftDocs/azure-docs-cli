@@ -1,6 +1,7 @@
 ---
 title: Create Azure Support Tickets – Azure CLI | Microsoft Docs
 description: Learn how to use the Azure CLI az support commands to create, update, and manage Azure support requests.
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-supportability

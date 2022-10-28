@@ -33,6 +33,7 @@ directCommands:
                    [--data-disk-mbps]
                    [--data-disk-sizes-gb]
                    [--disable-overprovision]
+                   [--disk-controller-type]
                    [--dns-servers]
                    [--enable-agent {false, true}]
                    [--enable-auto-update {false, true}]
@@ -47,6 +48,7 @@ directCommands:
                    [--instance-count]
                    [--lb]
                    [--lb-nat-pool-name]
+                   [--lb-nat-rule-name]
                    [--lb-sku {Basic, Standard}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, Windows_Client, Windows_Server}]
                    [--location]
@@ -222,6 +224,9 @@ directCommands:
   - name: --disable-overprovision
     summary: Overprovision option (see https://azure.microsoft.com/documentation/articles/virtual-machine-scale-sets-overview/ for details).
     description: ''
+  - name: --disk-controller-type
+    summary: Specify the disk controller type configured for the VM or VMSS.
+    description: ''
   - name: --dns-servers
     summary: Space-separated IP addresses of DNS servers, e.g. 10.0.0.5 10.0.0.6.
     description: ''
@@ -271,6 +276,9 @@ directCommands:
     description: ''
   - name: --lb-nat-pool-name --nat-pool-name
     summary: Name to use for the NAT pool when creating a new load balancer.
+    description: ''
+  - name: --lb-nat-rule-name --nat-rule-name
+    summary: Name to use for the NAT rule v2 when creating a new load balancer. (NAT rule V2 is used to replace NAT pool).
     description: ''
   - name: --lb-sku
     parameterValueGroup: Basic, Standard
@@ -682,7 +690,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --vm-instance-i-ds
-    summary: A list of virtual machine instance IDs from the VM scale set. Default value is None.
+    summary: A list of virtual machine instance IDs from the VM scale set. Is either a model type or a IO type. Default value is None.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_reimage
@@ -854,7 +862,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --instance-id
-    summary: The instance ID of the virtual machine.
+    summary: The instance ID of the virtual machine. Required.
     description: ''
   - isRequired: true
     name: --name -n
@@ -936,6 +944,7 @@ directCommands:
   syntax: >-
     az vmss update [--add]
                    [--automatic-repairs-grace-period]
+                   [--disk-controller-type]
                    [--enable-automatic-repairs {false, true}]
                    [--enable-terminate-notification {false, true}]
                    [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
@@ -979,6 +988,9 @@ directCommands:
     description: ''
   - name: --automatic-repairs-grace-period
     summary: The amount of time (in minutes, between 30 and 90) for which automatic repairs are suspended due to a state change on VM.
+    description: ''
+  - name: --disk-controller-type
+    summary: Specify the disk controller type configured for the VM or VMSS.
     description: ''
   - name: --enable-automatic-repairs
     parameterValueGroup: false, true
@@ -1229,5 +1241,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/30/2022
+  ms.date: 09/28/2022
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

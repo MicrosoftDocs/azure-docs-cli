@@ -4,7 +4,7 @@ name: az connectedk8s
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **connectedk8s** extension for the Azure CLI  (version 2.30.0 or higher).  The extension will automatically install the first time you run an **az connectedk8s** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **connectedk8s** extension for the Azure CLI  (version 2.38.0 or higher).  The extension will automatically install the first time you run an **az connectedk8s** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage connected kubernetes clusters.
 description: ''
 directCommands:
@@ -15,10 +15,14 @@ directCommands:
   syntax: >-
     az connectedk8s connect --name
                             --resource-group
+                            [--azure-hybrid-benefit {False, NotApplicable, True}]
+                            [--container-log-path]
                             [--correlation-id]
+                            [--custom-ca-cert]
                             [--custom-locations-oid]
                             [--disable-auto-upgrade]
-                            [--distribution {aks, aks_engine, aks_management, aks_workload, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg}]
+                            [--distribution {aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
+                            [--distribution-version]
                             [--enable-private-link {false, true}]
                             [--infrastructure {auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server}]
                             [--kube-config]
@@ -27,11 +31,11 @@ directCommands:
                             [--no-wait]
                             [--onboarding-timeout]
                             [--pls-arm-id]
-                            [--proxy-cert]
                             [--proxy-http]
                             [--proxy-https]
                             [--proxy-skip-range]
                             [--tags]
+                            [--yes]
   examples:
   - summary: Onboard a connected kubernetes cluster with default kube config and kube context.
     syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName
@@ -57,8 +61,18 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --azure-hybrid-benefit
+    parameterValueGroup: False, NotApplicable, True
+    summary: Flag to enable/disable Azure Hybrid Benefit feature.
+    description: ''
+  - name: --container-log-path
+    summary: Override the default container log path to enable fluent-bit logging.
+    description: ''
   - name: --correlation-id
     summary: A guid that is used to internally track the source of cluster onboarding. Please do not modify it unless advised.
+    description: ''
+  - name: --custom-ca-cert --proxy-cert
+    summary: Path to the certificate file for proxy or custom Certificate Authority.
     description: ''
   - name: --custom-locations-oid
     summary: OID of 'custom-locations' app.
@@ -68,8 +82,11 @@ directCommands:
     description: ''
   - name: --distribution
     defaultValue: auto
-    parameterValueGroup: aks, aks_engine, aks_management, aks_workload, auto, capz, eks, generic, gke, k3s, kind, minikube, openshift, rancher_rke, tkg
+    parameterValueGroup: aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg
     summary: The Kubernetes distribution which will be running on this connected cluster.
+    description: ''
+  - name: --distribution-version
+    summary: The Kubernetes distribution version of the connected cluster.
     description: ''
   - name: --enable-private-link
     parameterValueGroup: false, true
@@ -99,9 +116,6 @@ directCommands:
   - name: --pls-arm-id --private-link-scope-resource-id
     summary: ARM resource id of the private link scope resource to which this connected cluster is associated.
     description: ''
-  - name: --proxy-cert
-    summary: Path to the certificate file for proxy.
-    description: ''
   - name: --proxy-http
     summary: Http proxy URL to be used.
     description: ''
@@ -113,6 +127,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_connectedk8s_delete
   name: az connectedk8s delete
@@ -369,14 +386,19 @@ directCommands:
     az connectedk8s update --name
                            --resource-group
                            [--auto-upgrade {false, true}]
+                           [--azure-hybrid-benefit {False, NotApplicable, True}]
+                           [--container-log-path]
+                           [--custom-ca-cert]
                            [--disable-proxy]
+                           [--distribution {aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
+                           [--distribution-version]
                            [--kube-config]
                            [--kube-context]
-                           [--proxy-cert]
                            [--proxy-http]
                            [--proxy-https]
                            [--proxy-skip-range]
                            [--tags]
+                           [--yes]
   examples:
   - summary: Update proxy values for the agents
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName  --proxy-cert /path/to/crt --proxy-https https://proxy-url --proxy-http http://proxy-url --proxy-skip-range excludedIP,excludedCIDR,exampleCIDRfollowed,10.0.0.0/24
@@ -398,17 +420,31 @@ directCommands:
     parameterValueGroup: false, true
     summary: Flag to enable/disable auto upgrade of arc agents. By default, auto upgrade of agents is enabled.
     description: ''
+  - name: --azure-hybrid-benefit
+    parameterValueGroup: False, NotApplicable, True
+    summary: Flag to enable/disable Azure Hybrid Benefit feature.
+    description: ''
+  - name: --container-log-path
+    summary: Override the default container log path to enable fluent-bit logging.
+    description: ''
+  - name: --custom-ca-cert --proxy-cert
+    summary: Path to the certificate file for proxy or custom Certificate Authority.
+    description: ''
   - name: --disable-proxy
     summary: Disables proxy settings for agents.
+    description: ''
+  - name: --distribution
+    parameterValueGroup: aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg
+    summary: The Kubernetes distribution which will be running on this connected cluster.
+    description: ''
+  - name: --distribution-version
+    summary: The Kubernetes distribution version of the connected cluster.
     description: ''
   - name: --kube-config
     summary: Path to the kube config file.
     description: ''
   - name: --kube-context
     summary: Kubconfig context from current machine.
-    description: ''
-  - name: --proxy-cert
-    summary: Path to the any additional certificate file (for proxy as well).
     description: ''
   - name: --proxy-http
     summary: Http proxy URL to be used.
@@ -421,6 +457,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_connectedk8s_upgrade
   name: az connectedk8s upgrade

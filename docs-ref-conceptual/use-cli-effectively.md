@@ -1,9 +1,9 @@
 ---
 title: Tips for using the Azure CLI | Microsoft Docs
 description: Learn tips for using Azure CLI successfully, such as output formats, passing parameter values, and quoting rules for different shells.
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
 ms.date: 10/01/2021
 ms.topic: conceptual
 ms.service: azure-cli
@@ -32,7 +32,7 @@ Three common output formats are used with Azure CLI commands:
     ```azurecli
     # command
     az vm show --resource-group myResourceGroup --name myVMname --query "{name: name, os:storageProfile.imageReference.offer}" --output table
-    
+
     # output
     Name    Os
     ------  ------------
@@ -64,7 +64,7 @@ If the value will be used more than once, assign it to a variable. Variables all
   echo $running_vm_ids
   ```
 
-If the value is used only once, consider piping.  
+If the value is used only once, consider piping.
 
   ```azurecli
   az vm list --query "[?powerState=='VM running'].name" --output tsv | grep my_vm
@@ -127,16 +127,16 @@ To avoid unanticipated results, here are a few suggestions:
 - If your command will be run at a Windows Command Prompt, you must use double quotes.  If the value contains double quotes, you must escape it.  The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
 
 - Use Azure CLI's `@<file>` convention to load from a file and bypass the shell's interpretation mechanisms.
-  
+
   ```azurecli
-  az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json  
+  az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
   ```
 
 - Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
 
-- Some Azure CLI commands take a list of space separated values. 
+- Some Azure CLI commands take a list of space separated values.
   - If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`.  For example:
-  
+
     ```azurecli
     az web app config app settings set --resource-group myResourceGroup --name myWebAppName --settings "client id=id1" "my name=john"
     ```
@@ -162,7 +162,7 @@ To avoid unanticipated results, here are a few suggestions:
   --parameterName @parameters.json
   ```
 
-- When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.  
+- When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
   ### [Bash](#tab/bash)
 
@@ -180,7 +180,7 @@ To avoid unanticipated results, here are a few suggestions:
   # Wrong, as the dash needs to be quoted in a JMESPath query
   az version --query azure-cli
   az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
-    
+
   # Wrong, as the dash needs to be quoted in a JMESPath query, but quotes are interpreted by Bash
   az version --query "azure-cli"
   az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
@@ -210,7 +210,7 @@ To avoid unanticipated results, here are a few suggestions:
   az version --query "\"azure-cli\""
   az version --query \"azure-cli\"
   ```
-  
+
   For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
 
   ---
@@ -232,7 +232,7 @@ To avoid unanticipated results, here are a few suggestions:
 
   # Wrong, as quotes are interpreted by Bash
   $ az {"key":"value"} --debug
-  Command arguments: ['{key:value}', '--debug']  
+  Command arguments: ['{key:value}', '--debug']
   ```
 
 ## Use hyphen characters in parameters
@@ -267,22 +267,22 @@ After both IDs are created, you can use the console again.
 
 If you're using Azure CLI over a proxy server that uses self-signed certificates, the Python [requests library](https://github.com/kennethreitz/requests) used by the Azure CLI may cause the following error: `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. To address this error, set the environment variable `REQUESTS_CA_BUNDLE` to the path of CA bundle certificate file in PEM format.
 
-| OS                     | Default certificate authority bundle                                                  |
-|----------------------- |-------------------------------------------------------------------------------------- |
-| Windows                | C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem |
-| Ubuntu/Debian Linux    | /opt/az/lib/python<version>/site-packages/certifi/cacert.pem                                |
-| CentOS/RHEL/SUSE Linux | /usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem                          |
-| macOS                  | /usr/local/Cellar/azure-cli/\<cliversion\>/libexec/lib/python<version>/site-packages/certifi/cacert.pem|
+| OS                     | Default certificate authority bundle                                                                      |
+|----------------------- |-----------------------------------------------------------------------------------------------------------|
+| Windows                | `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem`                   |
+| Ubuntu/Debian Linux    | `/opt/az/lib/python<version>/site-packages/certifi/cacert.pem`                                            |
+| CentOS/RHEL/SUSE Linux | `/usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem`                                      |
+| macOS                  | `/usr/local/Cellar/azure-cli/<cliversion>/libexec/lib/python<version>/site-packages/certifi/cacert.pem` |
 
 Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file.  Then set `REQUESTS_CA_BUNDLE` to the new file location.  Here is an example:
 
-    ```console
-    <Original cacert.pem>
+```console
+<Original cacert.pem>
 
-    -----BEGIN CERTIFICATE-----
-    <Your proxy's certificate here>
-    -----END CERTIFICATE-----
-    ```
+-----BEGIN CERTIFICATE-----
+<Your proxy's certificate here>
+-----END CERTIFICATE-----
+```
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
 
@@ -306,7 +306,7 @@ To simplify the command, consider using a JSON string. For example, to attach a 
 az vm update --resource-group VMResources --name virtual-machine-01 \
 --add storageProfile.dataDisks "{\"createOption\": \"Attach\", \"managedDisk\":
    {\"id\":
-   \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yg/providers/Microsoft.Compute/disks/yg-disk\"}, 
+   \"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/yg/providers/Microsoft.Compute/disks/yg-disk\"},
    \"lun\": 1}"
 ```
 
@@ -337,7 +337,7 @@ When using `--uri-parameters` for requests in the form of OData, please make sur
 
 ## Script examples
 
-Here are examples for using variables and looping through a list when working with Azure Virtual Machines.  For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).  
+Here are examples for using variables and looping through a list when working with Azure Virtual Machines.  For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
 
 Use these scripts to save IDs to variables:
 

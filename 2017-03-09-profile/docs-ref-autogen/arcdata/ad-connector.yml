@@ -23,6 +23,7 @@ directCommands:
                                    [--domain-service-account-secret]
                                    [--k8s-namespace]
                                    [--netbios-domain-name]
+                                   [--no-wait]
                                    [--ou-distinguished-name]
                                    [--prefer-k8s-dns]
                                    [--primary-ad-dc-hostname]
@@ -71,6 +72,9 @@ directCommands:
   - name: --netbios-domain-name
     summary: The NETBIOS name of the Active Directory domain (e.g. CONTOSO).
     description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --ou-distinguished-name
     summary: The distinguished name of the pre-created Organizational Unit (OU) in the Active Directory domain. (e.g. OU=arcou,DC=contoso,DC=com).
     description: ''
@@ -98,6 +102,7 @@ directCommands:
     az arcdata ad-connector delete --name
                                    [--data-controller-name]
                                    [--k8s-namespace]
+                                   [--no-wait]
                                    [--resource-group]
                                    [--use-k8s]
   examples:
@@ -115,10 +120,40 @@ directCommands:
     summary: The name of the Arc data controller associated with this Active Directory connector.
     description: ''
   - name: --k8s-namespace -k
-    summary: The Kubernetes namespace to deploy the Active Directory connector.
+    summary: The Kubernetes namespace containing the Active Directory connector.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group of the Arc data controller associated with this Active Directory connector.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
+- uid: az_arcdata_ad-connector_list
+  name: az arcdata ad-connector list
+  summary: List all Active Directory connectors.
+  description: ''
+  syntax: >-
+    az arcdata ad-connector list [--data-controller-name]
+                                 [--k8s-namespace]
+                                 [--resource-group]
+                                 [--use-k8s]
+  examples:
+  - summary: Ex 1 - List all Active Directory connectors in a given Kubernetes namespace using the Kubernetes API.
+    syntax: az arcdata ad-connector list --k8s-namespace arc --use-k8s
+  - summary: Ex 2 - List all Active Directory connectors associated with a given Arc data controller by querying Azure Resource Manager (ARM).
+    syntax: az arcdata ad-connector list --resource-group rg-name --data-controller-name dc-name
+  optionalParameters:
+  - name: --data-controller-name
+    summary: The name of the Arc data controller associated with the Active Directory connectors.
+    description: ''
+  - name: --k8s-namespace -k
+    summary: The Kubernetes namespace containing the Active Directory connectors.
+    description: ''
+  - name: --resource-group -g
+    summary: The Azure resource group containing the Active Directory connectors.
     description: ''
   - name: --use-k8s
     summary: Use local Kubernetes APIs to perform this action.
@@ -148,7 +183,7 @@ directCommands:
     summary: The name of the Arc data controller associated with this Active Directory connector.
     description: ''
   - name: --k8s-namespace -k
-    summary: The Kubernetes namespace to deploy the Active Directory connector.
+    summary: The Kubernetes namespace containing the Active Directory connector.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group of the Arc data controller associated with this Active Directory connector.
@@ -167,6 +202,7 @@ directCommands:
                                    [--domain-service-account-secret]
                                    [--k8s-namespace]
                                    [--nameserver-addresses]
+                                   [--no-wait]
                                    [--prefer-k8s-dns]
                                    [--primary-ad-dc-hostname]
                                    [--resource-group]
@@ -193,10 +229,13 @@ directCommands:
     summary: The name of the Kubernetes secret containing the credentials for the pre-created Active Directory account with permissions to create and manage accounts in the given OU.
     description: ''
   - name: --k8s-namespace -k
-    summary: The Kubernetes namespace to deploy the Active Directory connector.
+    summary: The Kubernetes namespace containing Active Directory connector.
     description: ''
   - name: --nameserver-addresses
     summary: List of Active Directory DNS server IP addresses separated by ',' (e.g. 10.10.10.11,10.10.10.12,10.10.10.13).
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --prefer-k8s-dns
     summary: Use Kubernetes DNS Server responses over the Active Directory DNS server responses for IP address lookup. Allowed values are 'true' or 'false'.
@@ -216,6 +255,7 @@ directCommands:
 commands:
 - az_arcdata_ad-connector_create
 - az_arcdata_ad-connector_delete
+- az_arcdata_ad-connector_list
 - az_arcdata_ad-connector_show
 - az_arcdata_ad-connector_update
 globalParameters:

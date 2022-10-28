@@ -1,9 +1,9 @@
 ---
 title: Alias extension - Azure CLI | Microsoft Docs
 description: The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Learn how to use the Azure CLI alias extension.
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
 ms.date: 9/21/2021
 ms.topic: conceptual
 ms.service: azure-cli

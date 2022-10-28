@@ -1,9 +1,9 @@
 ---
 title: JMESPath query command results with Azure CLI | Microsoft Docs
 description: The Azure CLI uses the --query argument to execute a JMESPath query on the results of commands. Learn how to use the features of JMESPath in this article.
+manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
 ms.date: 04/14/2022
 ms.topic: conceptual
 ms.service: azure-cli

@@ -37,6 +37,7 @@ directCommands:
                    [--data-disk-sizes-gb]
                    [--disable-integrity-monitoring]
                    [--disable-overprovision]
+                   [--disk-controller-type {NVMe, SCSI}]
                    [--dns-servers]
                    [--edge-zone]
                    [--enable-agent {false, true}]
@@ -56,6 +57,7 @@ directCommands:
                    [--instance-count]
                    [--lb]
                    [--lb-nat-pool-name]
+                   [--lb-nat-rule-name]
                    [--lb-sku {Basic, Gateway, Standard}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, Windows_Client, Windows_Server}]
                    [--location]
@@ -89,6 +91,8 @@ directCommands:
                    [--public-ip-address-allocation {dynamic, static}]
                    [--public-ip-address-dns-name]
                    [--public-ip-per-vm]
+                   [--regular-priority-count]
+                   [--regular-priority-percentage]
                    [--role]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
                    [--scope]
@@ -262,6 +266,10 @@ directCommands:
   - name: --disable-overprovision
     summary: Overprovision option (see https://azure.microsoft.com/documentation/articles/virtual-machine-scale-sets-overview/ for details).
     description: ''
+  - name: --disk-controller-type
+    parameterValueGroup: NVMe, SCSI
+    summary: Specify the disk controller type configured for the VM or VMSS.
+    description: ''
   - name: --dns-servers
     summary: Space-separated IP addresses of DNS servers, e.g. 10.0.0.5 10.0.0.6.
     description: ''
@@ -330,6 +338,9 @@ directCommands:
     description: ''
   - name: --lb-nat-pool-name --nat-pool-name
     summary: Name to use for the NAT pool when creating a new load balancer.
+    description: ''
+  - name: --lb-nat-rule-name --nat-rule-name
+    summary: Name to use for the NAT rule v2 when creating a new load balancer. (NAT rule V2 is used to replace NAT pool).
     description: ''
   - name: --lb-sku
     parameterValueGroup: Basic, Gateway, Standard
@@ -441,6 +452,12 @@ directCommands:
     description: ''
   - name: --public-ip-per-vm
     summary: Each VM instance will have a public ip. For security, you can use '--nsg' to apply appropriate rules.
+    description: ''
+  - name: --regular-priority-count
+    summary: The base number of regular priority VMs that will be created in this scale set as it scales out. Must be greater than 0.
+    description: ''
+  - name: --regular-priority-percentage
+    summary: The percentage of VM instances, after the base regular priority count has been reached, that are expected to use regular priority. Must be between 0 and 100.
     description: ''
   - name: --role
     summary: Role name or id the system assigned identity will have.
@@ -795,7 +812,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --vm-instance-i-ds
-    summary: A list of virtual machine instance IDs from the VM scale set. Default value is None.
+    summary: A list of virtual machine instance IDs from the VM scale set. Is either a model type or a IO type. Default value is None.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_reimage
@@ -971,7 +988,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --instance-id
-    summary: The instance ID of the virtual machine.
+    summary: The instance ID of the virtual machine. Required.
     description: ''
   - isRequired: true
     name: --name -n
@@ -1055,6 +1072,7 @@ directCommands:
                    [--automatic-repairs-action {Reimage, Replace, Restart}]
                    [--automatic-repairs-grace-period]
                    [--capacity-reservation-group]
+                   [--disk-controller-type {NVMe, SCSI}]
                    [--enable-automatic-repairs {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-secure-boot {false, true}]
@@ -1079,6 +1097,8 @@ directCommands:
                    [--priority {Low, Regular, Spot}]
                    [--protect-from-scale-in {false, true}]
                    [--protect-from-scale-set-actions {false, true}]
+                   [--regular-priority-count]
+                   [--regular-priority-percentage]
                    [--remove]
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
@@ -1118,6 +1138,10 @@ directCommands:
     description: ''
   - name: --capacity-reservation-group --crg
     summary: The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
+    description: ''
+  - name: --disk-controller-type
+    parameterValueGroup: NVMe, SCSI
+    summary: Specify the disk controller type configured for the VM or VMSS.
     description: ''
   - name: --enable-automatic-repairs
     parameterValueGroup: false, true
@@ -1202,6 +1226,12 @@ directCommands:
   - name: --protect-from-scale-set-actions
     parameterValueGroup: false, true
     summary: Protect the VM instance from scale set actions (including scale-in).
+    description: ''
+  - name: --regular-priority-count
+    summary: The base number of regular priority VMs that will be created in this scale set as it scales out. Must be greater than 0.
+    description: ''
+  - name: --regular-priority-percentage
+    summary: The percentage of VM instances, after the base regular priority count has been reached, that are expected to use regular priority. Must be between 0 and 100.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -1415,5 +1445,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/30/2022
+  ms.date: 09/28/2022
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).
