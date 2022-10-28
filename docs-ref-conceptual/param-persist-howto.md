@@ -4,11 +4,10 @@ description: Learn how to use the Azure Command-Line Interface (CLI) persisted p
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.prod: azure
+ms.service: azure-cli
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.tool: azure-cli
-ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure persisted parameters, persisted parameters
 ---
