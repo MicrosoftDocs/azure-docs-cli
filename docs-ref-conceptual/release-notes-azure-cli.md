@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/11/2022
+ms.date: 11/01/2022
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,102 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## November 01, 2022
+
+Version 2.42.0
+
+### ACR
+
+* `az acr task update`: Fix logic issue for updating encoded task
+
+### AKS
+
+* Fix #24188: `az aks list`: Fix pagination handling error `ContainerServiceClientConfiguration object has no attribute api_version` when there are many list results
+* Fix #24188: `az aks nodepool list`: Fix pagination handling error `ContainerServiceClientConfiguration object has no attribute api_version` when there are many list results
+* `az aks create/update`: Add new parameters `--enable-blob-driver` and `--disable-blob-driver` to enable/disable Blob CSI Driver
+* `az aks create/update`: Add new parameter `--enable-oidc-issuer` to support enabling oidc issuer feature
+* `az aks oidc-issuer rotate-signing-keys`: Add new command to support rotating oidc issuer service account signing keys
+
+### APIM
+
+* `az apim create/update`: Add `--public-network-access` to support specifying whether or not public endpoint access is allowed for this API management service
+* `az apim create/update`: Add `--disable-gateway` to support disabling gateway in the master region
+
+### App Config
+
+* `az appconfig`: Update raised errors in app config command module
+
+### App Service
+
+* Fix #23050: `az functionapp deployment source config-zip`: Fix the bug that zip deployment will fail if app settings contain any values of null
+
+### Backup
+
+* `az backup restore restore-disks`: Update Cross Zonal Restore behaviour for ZRS vaults and primary region CRR scenarios
+* `az backup job show`: Change subtask start/end time from minimum value to null for ongoing or yet-to-start operation
+
+### Compute
+
+* `az vm run-command create/update`: Change help messages and add examples for `--output-blob-uri` parameter to illustrate that `--output-blob-uri` must be SAS URI
+* Fix #24187: `az vm list`: Fix the AttributeError 'ComputeManagementClientConfiguration' object has no attribute 'api_version'
+* `az vm extension list`: Add new parameter `--ids` to support listing extensions by VM id
+* `az sig image-version create/update`: Add `--allow-replicated-location-deletion` to support removing gallery image version from replicated regions
+* Fix #24263: `az snapshot create`: Fix the KeyError 'IMPORT_ENUM' when creating snapshot from source blob uri
+* `az sig image-version update`: Support `excludeFromLatest` for `--add` parameter to exclude this image version when using the latest version of image definition
+* `az sig image-version update`: Support `safetyProfile.allowDeletionOfReplicatedLocations` for `--set` parameter to allow users to remove the gallery image version from replicated regions
+
+### HDInsight
+
+* [BREAKING CHANGE] `az hdinsight create`: Remove the enum value 1.0 and 1.1 from the `--minimal-tls-version`, HDInsight doesn't support TLS version which is less than 1.2 now.
+
+### IoT
+
+* `az iot hub create`: Enforce data residency property on hubs created in `qatarcentral`
+
+### NetAppFiles
+
+* `az netappfiles account renew-credentials`: Add `renew-credentials` command to renew identity credentials that are used to authenticate to key vault, for customer-managed key encryption
+
+### Network
+
+* `az network public-ip`: Add alias `--ddos-protection-mode` to `--protection-mode`
+* `az network custom-ip prefix`: Add parameters `--asn`, `--geo`, `--no-internet-advertise` and so on
+* Fix #21551: `az network nic ip-config update`: ASGs update with multiple IP configurations
+* Fix #24169: `az network application-gateway waf-policy managed-rule exclusion rule-set remove`: Remove exclusion with different matchers
+* Fix #24377: `az network public-ip create`: Derive Public IPs in different resource group from Public IP Prefix
+* `az network lb probe`: Support probe threshold via `--probe-threshold`
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres flexible-server migration show`: Remove `--level` parameter
+* [BREAKING CHANGE] `az postgres flexible-server migration delete`: Remove this command. Deleting a migration is not supported for now.
+* [BREAKING CHANGE] Change `az postgres flexible-server migration update --cutover` to `az postgres flexible-server migration update --cutover db1 db2 db3`
+* `az postgres flexible-server migration create`: Add `--migration-mode` to support offline and online(with CDC) migrations. Default mode when `--migration-mode` not passed will be offline.
+* Add `az postgres flexible-server migration update --cancel db1 db2 db3` to cancel a migration.
+
+### Resource
+
+* `az resource delete`: Add new parameter `--no-wait` to support not waiting the long-running operation to finish
+
+### Role
+
+* `az role assignment create`: Support bring-your-own role assignment name
+* `az role assignment delete`: If `--ids` is provided, ignore other arguments, instead of raising error
+
+### SQL
+
+* `az sql midb log-replay start`: Add `--storage-identity` parameter
+
+### Storage
+
+* `az storage account show-connection-string/keys renew`: Update options for `--key` parameter
+* `az storage account create/update`: GA `--key-vault-federated-client-id`
+
+### Synapse
+
+* `az synapse workspace create`: Add parameter `--managed-resource-group-name`
+* `az synapse spark pool`: Add parameter `--enable-dynamic-executor-allocation`
 
 ## October 11, 2022
 
