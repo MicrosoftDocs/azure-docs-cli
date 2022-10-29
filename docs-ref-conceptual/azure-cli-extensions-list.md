@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/28/2022
+ms.date: 10/29/2022
 ms.topic: article
 ms.prod: azure
 ms.technology: azure-cli
@@ -30,13 +30,13 @@ You will be prompted to install an extension on first use.
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.38.0 | Provides a preview for upcoming AKS features | Preview | [0.5.112](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.38.0 | Provides a preview for upcoming AKS features | Preview | [0.5.113](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.15.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
 |[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.38.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.0.79 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [0.1.16](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
-|[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.39.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | Preview | [0.2.27](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
+|[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.41.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | Preview | [0.2.28](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.4.7](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.11.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/master/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/authV2/HISTORY.rst) |
@@ -69,7 +69,7 @@ You will be prompted to install an extension on first use.
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/master/src/databox) | 2.3.1 | Microsoft Azure Command-Line Tools DataBox Extension | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/databox/HISTORY.rst) |
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/master/src/databricks) | 2.3.1 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.8.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog) | 2.17.0 | Microsoft Azure Command-Line Tools MicrosoftDatadogClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog/HISTORY.rst) |
-|[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
+|[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Experimental | [0.3.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
 |[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.15.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | Experimental | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
@@ -131,7 +131,6 @@ You will be prompted to install an extension on first use.
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/master/src/powerbidedicated) | 2.0.67 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/powerbidedicated/HISTORY.rst) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/master/src/providerhub) | 2.15.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/providerhub/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
-|[qbs](https://consensys.net/quorum/qbs/) | 2.39.0 | Support for Quorum Blockchain Service. | Preview | [0.1.0](https://consensys.net/quorum/qbs/) |
 |[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.23.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [0.17.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.15.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
