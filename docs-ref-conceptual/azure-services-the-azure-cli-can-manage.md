@@ -6,8 +6,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 08/01/2021
 ms.topic: conceptual
-ms.prod: azure
-ms.technology: azure-cli
+ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure service management, azure services list, azure resources list

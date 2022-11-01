@@ -4,11 +4,10 @@ description: To install the Azure CLI on Windows, you must use Powershell, or an
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.prod: azure
+ms.service: azure-cli
 ms.date: 08/19/2021
 ms.topic: conceptual
 ms.tool: azure-cli
-ms.technology: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: Install azure cli, azure cli download, cli for windows, install azure cli on windows, azure cli windows, install azure cli windows
 ---

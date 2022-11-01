@@ -2,19 +2,22 @@
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 11/24/2020
+ms.date: 10/12/2022
 ms.topic: include
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
+> [!WARNING]
+> Starting from Azure CLI 2.39.0 (released on 08/02/2022), no RPM packages will be released for openSUSE/SUSE. You may continue to use historical versions of Azure CLI on these systems, but there will be no updates or bugfixes. Consider using Azure CLI on other supported operating systems.
+>
+> openSUSE/SUSE community may distribute their own Azure CLI packages, which are not supported by Microsoft. If you encounter any openSUSE/SUSE-specific issues, please report to openSUSE/SUSE's bug database.
+
 ## Overview
 
 For Linux distributions with `zypper`, such as openSUSE or SLES, there's a package available
 for the Azure CLI. This package has been tested with openSUSE Leap 15.1, and SLES 15.
-
-[!INCLUDE [current-version](current-version.md)]
 
 [!INCLUDE [rpm-warning](rpm-warning.md)]
 

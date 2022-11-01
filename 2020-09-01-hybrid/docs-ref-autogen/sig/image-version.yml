@@ -461,7 +461,7 @@ directCommands:
       --gallery-image-version 1.0.0 \
 
       --target-regions westcentralus=2 eastus2
-  - summary: Replicate to an additional region. Optional, you can set the replica count for the region.
+  - summary: Replicate to an additional region. Optional, you can set the replica count for the region and exclude this image when using the latest version of the image definition.
     syntax: >-
       az sig image-version update --resource-group MyResourceGroup \
 
@@ -471,7 +471,7 @@ directCommands:
 
       --add publishingProfile.targetRegions name=westcentralus \
 
-      regionalReplicaCount=3
+      regionalReplicaCount=3 excludeFromLatest=true
   - summary: Change whether an image should be included in consideration for latest version in the image definition. Setting this value to true excludes the image from consideration and setting this value to false includes the image for consideration.
     syntax: >-
       az sig image-version update -g MyResourceGroup --gallery-name MyGallery \
@@ -486,6 +486,13 @@ directCommands:
       --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
 
       --set publishingProfile.endOfLifeDate=2024-08-02T00:00:00+00:00
+  - summary: Allow to remove the gallery image version from replicated regions.
+    syntax: >-
+      az sig image-version update -g MyResourceGroup --gallery-name MyGallery \
+
+      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
+
+      --set safetyProfile.allowDeletionOfReplicatedLocations=true
   requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i

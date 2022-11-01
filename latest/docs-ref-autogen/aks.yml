@@ -115,6 +115,7 @@ directCommands:
                   [--enable-ahub]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
+                  [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-defender]
                   [--enable-encryption-at-host]
@@ -122,6 +123,7 @@ directCommands:
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
+                  [--enable-oidc-issuer]
                   [--enable-private-cluster]
                   [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
@@ -395,6 +397,9 @@ directCommands:
   - name: --enable-azure-rbac
     summary: Enable Azure RBAC to control authorization checks on cluster.
     description: ''
+  - name: --enable-blob-driver
+    summary: Enable AzureBlob CSI Driver.
+    description: ''
   - name: --enable-cluster-autoscaler
     summary: Enable cluster autoscaler, default value is false.
     description: If specified, please make sure the kubernetes version is larger than 1.10.6.
@@ -417,6 +422,9 @@ directCommands:
     description: ''
   - name: --enable-node-public-ip
     summary: Enable VMSS node public IP.
+    description: ''
+  - name: --enable-oidc-issuer
+    summary: Enable OIDC issuer.
     description: ''
   - name: --enable-private-cluster
     summary: Enable private cluster.
@@ -640,7 +648,7 @@ directCommands:
     description: ''
   - name: --zones -z
     parameterValueGroup: 1, 2, 3
-    summary: Availability zones where agent nodes will be placed.
+    summary: Availability zones where agent nodes will be placed. Also, to install agent nodes to more than one zones you need to pass zone numbers (1,2 or 3) separated by blanks.  For example -  To have all 3 zones, you are expected to enter `--zones 1 2 3`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_delete
@@ -1218,6 +1226,7 @@ directCommands:
                   [--disable-ahub]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-rbac]
+                  [--disable-blob-driver]
                   [--disable-cluster-autoscaler]
                   [--disable-defender]
                   [--disable-disk-driver]
@@ -1230,12 +1239,14 @@ directCommands:
                   [--enable-ahub]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
+                  [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
+                  [--enable-oidc-issuer]
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
@@ -1268,7 +1279,7 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IPs for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ips <ip-resource-id-1,ip-resource-id-2>
-  - summary: Create a kubernetes cluster with a standard SKU load balancer, with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
+  - summary: Update a kubernetes cluster with a standard SKU load balancer, with two outbound AKS managed IPs an idle flow timeout of 5 minutes and 8000 allocated ports per machine
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-managed-outbound-ip-count 2 --load-balancer-idle-timeout 5 --load-balancer-outbound-ports 8000
   - summary: Update a kubernetes cluster with standard SKU load balancer to use the provided public IP prefixes for the load balancer outbound connection usage.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --load-balancer-outbound-ip-prefixes <ip-prefix-resource-id-1,ip-prefix-resource-id-2>
@@ -1373,6 +1384,9 @@ directCommands:
   - name: --disable-azure-rbac
     summary: Disable Azure RBAC to control authorization checks on cluster.
     description: ''
+  - name: --disable-blob-driver
+    summary: Disable AzureBlob CSI Driver.
+    description: ''
   - name: --disable-cluster-autoscaler -d
     summary: Disable cluster autoscaler.
     description: ''
@@ -1409,6 +1423,9 @@ directCommands:
   - name: --enable-azure-rbac
     summary: Enable Azure RBAC to control authorization checks on cluster.
     description: ''
+  - name: --enable-blob-driver
+    summary: Enable AzureBlob CSI Driver.
+    description: ''
   - name: --enable-cluster-autoscaler -e
     summary: Enable cluster autoscaler.
     description: ''
@@ -1426,6 +1443,9 @@ directCommands:
     description: ''
   - name: --enable-managed-identity
     summary: Update current cluster to use managed identity to manage cluster resource group.
+    description: ''
+  - name: --enable-oidc-issuer
+    summary: Enable OIDC issuer.
     description: ''
   - name: --enable-public-fqdn
     summary: Enable public fqdn feature for private cluster.
@@ -1778,6 +1798,8 @@ commands:
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
 - az_aks_nodepool_wait
+- az_aks_oidc-issuer
+- az_aks_oidc-issuer_rotate-signing-keys
 - az_aks_operation-abort
 - az_aks_pod-identity
 - az_aks_pod-identity_add
@@ -1833,5 +1855,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 09/26/2022
+  ms.date: 10/26/2022
   description: Manage Azure Kubernetes Services.

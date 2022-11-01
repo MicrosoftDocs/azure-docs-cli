@@ -11,14 +11,17 @@ directCommands:
   syntax: >-
     az network custom-ip prefix create --name
                                        --resource-group
+                                       [--asn]
                                        [--authorization-message]
                                        [--cidr]
                                        [--cip-prefix-parent]
+                                       [--express-route-advertise {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--geo {AFRI, APAC, AQ, EURO, GLOBAL, LATAM, ME, NAM, OCEANIA}]
                                        [--location]
-                                       [--no-wait]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--signed-message]
                                        [--tags]
-                                       [--zone {1, 2, 3}]
+                                       [--zone]
   examples:
   - summary: Create a custom IP prefix resource.
     syntax: az network custom-ip prefix create --location westus2 --name MyCustomIpPrefix --resource-group MyResourceGroup
@@ -32,6 +35,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --asn
+    summary: The ASN for CIDR advertising. Should be an integer as string.
+    description: ''
   - name: --authorization-message
     summary: Authorization message for WAN validation.
     description: ''
@@ -41,21 +47,29 @@ directCommands:
   - name: --cip-prefix-parent -c
     summary: The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix.
     description: ''
+  - name: --express-route-advertise --is-advertised
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Whether to do express route advertise.
+    description: ''
+  - name: --geo
+    parameterValueGroup: AFRI, APAC, AQ, EURO, GLOBAL, LATAM, ME, NAM, OCEANIA
+    summary: The Geo for CIDR advertising. Should be an Geo code.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --signed-message
     summary: Signed message for WAN validation.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --zone -z
-    parameterValueGroup: 1, 2, 3
-    summary: Space-separated list of availability zones into which to provision the resource.
+    summary: 'Space-separated list of availability zones into which to provision the resource.  Allowed values: 1, 2, 3.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_custom-ip_prefix_delete
@@ -65,6 +79,7 @@ directCommands:
   syntax: >-
     az network custom-ip prefix delete [--ids]
                                        [--name]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--resource-group]
   examples:
   - summary: Delete a custom IP prefix resource.
@@ -76,6 +91,10 @@ directCommands:
   - name: --name -n
     summary: The name of the custom IP prefix.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -85,6 +104,9 @@ directCommands:
   summary: List custom IP prefix resources.
   description: ''
   syntax: az network custom-ip prefix list [--resource-group]
+  examples:
+  - summary: List custom IP prefix resources.
+    syntax: az network custom-ip prefix list --resource-group MyResourceGroup
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -104,7 +126,7 @@ directCommands:
     syntax: az network custom-ip prefix show --name MyCustomIpPrefix --resource-group MyResourceGroup --subscription MySubscription
   optionalParameters:
   - name: --expand
-    summary: Expands referenced resources. Default value is None.
+    summary: Expand referenced resources. Default value is None.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -123,10 +145,11 @@ directCommands:
   syntax: >-
     az network custom-ip prefix update [--add]
                                        [--authorization-message]
-                                       [--force-string]
+                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--ids]
                                        [--name]
-                                       [--no-wait]
+                                       [--no-internet-advertise {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--remove]
                                        [--resource-group]
                                        [--set]
@@ -135,7 +158,7 @@ directCommands:
                                        [--tags]
   examples:
   - summary: Update a custom IP prefix resource.
-    syntax: az network custom-ip prefix update --name MyCustomIpPrefix --resource-group MyResourceGroup --tags foo=doo
+    syntax: az network custom-ip prefix update --name MyCustomIpPrefix --resource-group MyResourceGroup --tags foo=bar
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -144,6 +167,7 @@ directCommands:
     summary: Authorization message for WAN validation.
     description: ''
   - name: --force-string
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -152,7 +176,12 @@ directCommands:
   - name: --name -n
     summary: The name of the custom IP prefix.
     description: ''
+  - name: --no-internet-advertise
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
+    summary: Whether to Advertise the range to Internet.
+    description: ''
   - name: --no-wait
+    parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
@@ -172,12 +201,12 @@ directCommands:
     summary: Commissioned State of the custom ip prefix.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_custom-ip_prefix_wait
   name: az network custom-ip prefix wait
-  summary: Place the CLI in a waiting state until a condition of the custom ip prefix is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az network custom-ip prefix wait [--created]
@@ -191,9 +220,6 @@ directCommands:
                                      [--resource-group]
                                      [--timeout]
                                      [--updated]
-  examples:
-  - summary: Wait for custom ip prefix to return as created.
-    syntax: az network custom-ip prefix wait --name MyCustomIpPrefix --resource-group MyResourceGroup --created
   optionalParameters:
   - name: --created
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
@@ -208,7 +234,7 @@ directCommands:
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
-    summary: Expands referenced resources. Default value is None.
+    summary: Expand referenced resources. Default value is None.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -257,5 +283,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/08/2022
+  ms.date: 10/20/2022
   description: Manage custom IP prefix resources.
