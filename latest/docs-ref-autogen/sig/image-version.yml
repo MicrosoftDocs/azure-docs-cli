@@ -13,6 +13,7 @@ directCommands:
                                 --gallery-image-version
                                 --gallery-name
                                 --resource-group
+                                [--allow-replicated-location-deletion {false, true}]
                                 [--data-snapshot-luns]
                                 [--data-snapshots]
                                 [--data-vhds-luns]
@@ -229,6 +230,10 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --allow-replicated-location-deletion
+    parameterValueGroup: false, true
+    summary: Indicate whether or not removing this gallery image version from replicated regions is allowed.
+    description: ''
   - name: --data-snapshot-luns
     summary: Logical unit numbers (space-delimited) of data disk snapshots.
     description: ''
@@ -526,6 +531,7 @@ directCommands:
                                 --gallery-name
                                 --resource-group
                                 [--add]
+                                [--allow-replicated-location-deletion {false, true}]
                                 [--force-string]
                                 [--no-wait]
                                 [--remove]
@@ -542,7 +548,7 @@ directCommands:
       --gallery-image-version 1.0.0 \
 
       --target-regions westcentralus=2 eastus2
-  - summary: Replicate to an additional region. Optional, you can set the replica count for the region.
+  - summary: Replicate to an additional region. Optional, you can set the replica count for the region and exclude this image when using the latest version of the image definition.
     syntax: >-
       az sig image-version update --resource-group MyResourceGroup \
 
@@ -552,7 +558,7 @@ directCommands:
 
       --add publishingProfile.targetRegions name=westcentralus \
 
-      regionalReplicaCount=3
+      regionalReplicaCount=3 excludeFromLatest=true
   - summary: Change whether an image should be included in consideration for latest version in the image definition. Setting this value to true excludes the image from consideration and setting this value to false includes the image for consideration.
     syntax: >-
       az sig image-version update -g MyResourceGroup --gallery-name MyGallery \
@@ -567,6 +573,13 @@ directCommands:
       --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
 
       --set publishingProfile.endOfLifeDate=2024-08-02T00:00:00+00:00
+  - summary: Allow to remove the gallery image version from replicated regions.
+    syntax: >-
+      az sig image-version update -g MyResourceGroup --gallery-name MyGallery \
+
+      --gallery-image-definition MyImage --gallery-image-version 1.0.0 \
+
+      --set safetyProfile.allowDeletionOfReplicatedLocations=true
   requiredParameters:
   - isRequired: true
     name: --gallery-image-definition -i
@@ -587,6 +600,10 @@ directCommands:
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --allow-replicated-location-deletion
+    parameterValueGroup: false, true
+    summary: Indicate whether or not removing this gallery image version from replicated regions is allowed.
     description: ''
   - name: --force-string
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
