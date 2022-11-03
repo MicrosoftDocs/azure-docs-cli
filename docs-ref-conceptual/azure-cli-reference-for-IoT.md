@@ -36,7 +36,7 @@ List of Azure CLI references that can be used to manage Azure IoT, reference typ
 | [az iot](../latest/docs-ref-autogen/iot.yml) | Both  | All available Azure CLI core commands for Azure IoT.
 | [az iot central](../latest/docs-ref-autogen/iot/central.yml) | Both | Manage IoT Central assets.
 | [az iot device](../latest/docs-ref-autogen/iot/device.yml) | Extension | Leverage device-to-cloud and cloud-to-device messaging capabilities.
-| [az iot device-update](../latest/docs-ref-autogen/iot/device-update.yml) | Extension | Manage Device Update for IoT Hub infrastructure.
+| [az iot du](../latest/docs-ref-autogen/iot/du.yml) | Extension | Manage Device Update for IoT Hub infrastructure, updates, and deployments.
 | [az iot dps](../latest/docs-ref-autogen/iot/dps.yml) | Both | Manage Azure IoT Hub Device Provisioning Service.
 | [az iot edge](../latest/docs-ref-autogen/iot/edge.yml) | Extension | Manage IoT solutions on the Edge.
 | [az iot hub](../latest/docs-ref-autogen/iot/hub.yml) | Both | Manage Azure IoT Hub infrastructure.
@@ -54,10 +54,10 @@ List of Azure CLI references that can be used to manage Azure IoT, reference typ
 - [Create an IoT hub](/azure/iot-hub/iot-hub-create-using-cli)
 - [Manage IoT Central](/azure/iot-central/core/howto-manage-iot-central-from-cli)
 - [CLI-driven device tutorials using Azure RTOS](/azure/rtos/getting-started?branch=master)
-- [Use the IoT extension for Azure IoT Hub device management](/azure/iot-hub/iot-hub-device-management-iot-extension-azure-cli-2-0)
 - [Deploy and monitor IoT Edge modules at scale with the Azure CLI extension for IoT](/azure/iot-edge/how-to-deploy-cli-at-scale)
 - [Send telemetry from a device to an IoT hub and monitor it with the Azure CLI](/azure/iot-hub/quickstart-send-telemetry-cli)
-- [Use the Azure CLI to configure IoT Hub message routing](/azure/iot-hub/tutorial-routing-config-message-routing-cli)
+- [Use the Azure CLI to configure IoT Hub message routing](/azure/iot-hub/tutorial-routing?tabs=cli)
+- [Create a Device Update account and instance](/azure/iot-hub-device-update/create-device-update-account?tabs=cli)
 
 ## Azure CLI reference examples
 

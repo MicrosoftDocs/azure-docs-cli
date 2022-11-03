@@ -12,13 +12,13 @@ directCommands:
     az network public-ip create --name
                                 --resource-group
                                 [--allocation-method {Dynamic, Static}]
+                                [--ddos-protection-mode {Disabled, Enabled, VirtualNetworkInherited}]
                                 [--dns-name]
                                 [--edge-zone]
                                 [--idle-timeout]
                                 [--ip-address]
                                 [--ip-tags]
                                 [--location]
-                                [--protection-mode {Disabled, Enabled, VirtualNetworkInherited}]
                                 [--public-ip-prefix]
                                 [--reverse-fqdn]
                                 [--sku {Basic, Standard}]
@@ -47,6 +47,10 @@ directCommands:
     parameterValueGroup: Dynamic, Static
     summary: IP address allocation method.
     description: ''
+  - name: --ddos-protection-mode --protection-mode
+    parameterValueGroup: Disabled, Enabled, VirtualNetworkInherited
+    summary: The DDoS protection mode of the public IP.
+    description: ''
   - name: --dns-name
     summary: Globally unique DNS entry.
     description: ''
@@ -65,10 +69,6 @@ directCommands:
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - name: --protection-mode
-    parameterValueGroup: Disabled, Enabled, VirtualNetworkInherited
-    summary: The DDoS protection mode of the public IP.
     description: ''
   - name: --public-ip-prefix
     summary: Name or ID of a public IP prefix.
@@ -154,10 +154,10 @@ directCommands:
   - summary: Get information about a public IP resource.
     syntax: az network public-ip show -g MyResourceGroup -n MyIp
   - summary: Get the FQDN and IP address of a public IP resource.
-    syntax: 'az network public-ip show -g MyResourceGroup -n MyIp --query "{fqdn: dnsSettings.fqdn, address: ipAddress}"'
+    syntax: 'az network public-ip show -g MyResourceGroup -n MyIp --query "{fqdn: dnsSettings.fqdn,address: ipAddress}"'
   optionalParameters:
   - name: --expand
-    summary: Expand referenced resources. Default value is None.
+    summary: Expands referenced resources.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -176,6 +176,7 @@ directCommands:
   syntax: >-
     az network public-ip update [--add]
                                 [--allocation-method {Dynamic, Static}]
+                                [--ddos-protection-mode {Disabled, Enabled, VirtualNetworkInherited}]
                                 [--ddos-protection-plan]
                                 [--dns-name]
                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -184,7 +185,6 @@ directCommands:
                                 [--ip-tags]
                                 [--name]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                [--protection-mode {Disabled, Enabled, VirtualNetworkInherited}]
                                 [--public-ip-prefix]
                                 [--remove]
                                 [--resource-group]
@@ -203,6 +203,10 @@ directCommands:
   - name: --allocation-method
     parameterValueGroup: Dynamic, Static
     summary: IP address allocation method.
+    description: ''
+  - name: --ddos-protection-mode --protection-mode
+    parameterValueGroup: Disabled, Enabled, VirtualNetworkInherited
+    summary: The DDoS protection mode of the public IP.
     description: ''
   - name: --ddos-protection-plan
     summary: The DDoS protection plan associated with the public IP. Can only be set if ProtectionMode is Enabled.
@@ -229,10 +233,6 @@ directCommands:
   - name: --no-wait
     parameterValueGroup: 0, 1, f, false, n, no, t, true, y, yes
     summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --protection-mode
-    parameterValueGroup: Disabled, Enabled, VirtualNetworkInherited
-    summary: The DDoS protection mode of the public IP.
     description: ''
   - name: --public-ip-prefix
     summary: Name or ID of a public IP prefix.
@@ -271,6 +271,7 @@ directCommands:
                               [--custom]
                               [--deleted]
                               [--exists]
+                              [--expand]
                               [--ids]
                               [--interval]
                               [--name]
@@ -289,6 +290,9 @@ directCommands:
     description: ''
   - name: --exists
     summary: Wait until the resource exists.
+    description: ''
+  - name: --expand
+    summary: Expands referenced resources.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -343,5 +347,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/08/2022
+  ms.date: 10/20/2022
   description: To learn more about public IP addresses visit https://docs.microsoft.com/azure/virtual-network/virtual-network-public-ip-address.

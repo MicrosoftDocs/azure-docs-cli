@@ -178,7 +178,11 @@ directCommands:
   description: >-
     This command automatically authenticates using the logged-in credential: If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from AAD. The target resource of the token is derived from --url if --url starts with an endpoint from `az cloud show --query endpoints`. You may also use --resource for a custom resource.
 
+
     If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
+
+
+    For passing JSON in PowerShell, see https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md.
   syntax: >-
     az rest --uri
             [--body]
@@ -192,7 +196,20 @@ directCommands:
   - summary: Get Audit log through Microsoft Graph
     syntax: az rest --method get --url https://graph.microsoft.com/beta/auditLogs/directoryAudits
   - summary: Update a Azure Active Directory Graph User's display name
-    syntax: 'az rest --method patch --url "https://graph.microsoft.com/v1.0/users/johndoe@azuresdkteam.onmicrosoft.com" --body "{\"displayName\": \"jondoe2\"}"'
+    syntax: >-
+      (Bash or CMD)
+
+      az rest --method patch --url "https://graph.microsoft.com/v1.0/users/johndoe@azuresdkteam.onmicrosoft.com" --body "{\"displayName\": \"johndoe2\"}"
+
+
+      (Bash)
+
+      az rest --method patch --url "https://graph.microsoft.com/v1.0/users/johndoe@azuresdkteam.onmicrosoft.com" --body '{"displayName": "johndoe2"}'
+
+
+      (PowerShell)
+
+      az rest --method patch --url "https://graph.microsoft.com/v1.0/users/johndoe@azuresdkteam.onmicrosoft.com" --body '{\"displayName\": \"johndoe2\"}'
   - summary: Get a virtual machine
     syntax: az rest --method get --uri /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}?api-version=2019-03-01
   - summary: Create a public IP address from body.json file
@@ -320,6 +337,7 @@ commands:
 - az_dnc
 - az_dns-resolver
 - az_dt
+- az_dynatrace
 - az_edgeorder
 - az_elastic
 - az_elastic-san
