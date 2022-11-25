@@ -14,10 +14,12 @@ directCommands:
   description: ''
   syntax: >-
     az datamigration sql-db cancel --migration-operation-id
-                                   --resource-group
-                                   --sqldb-instance-name
-                                   --target-db-name
+                                   [--ids]
                                    [--no-wait]
+                                   [--resource-group]
+                                   [--sqldb-instance-name]
+                                   [--subscription]
+                                   [--target-db-name]
   examples:
   - summary: Stop ongoing migration for the database.
     syntax: az datamigration sql-db cancel --migration-operation-id "9a90bb84-e70f-46f7-b0ae-1aef5b3b9f07" --resource-group "testrg" --sqldb-instance-name "sqldbinstance" --target-db-name "db1"
@@ -26,21 +28,25 @@ directCommands:
     name: --migration-operation-id
     summary: ID tracking migration operation.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --sqldb-instance-name
+  - name: --sqldb-instance-name
     summary: Name of the target SQL Database Server.
     description: ''
-  - isRequired: true
-    name: --target-db-name
-    summary: The name of the target database.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --target-db-name
+    summary: The name of the target database.
     description: ''
 - uid: az_datamigration_sql-db_create
   name: az datamigration sql-db create
@@ -81,6 +87,7 @@ directCommands:
     summary: Resource Id of the Migration Service.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --scope
@@ -134,37 +141,43 @@ directCommands:
   summary: Delete an in-progress or completed database migration to SQL DB.
   description: ''
   syntax: >-
-    az datamigration sql-db delete --resource-group
-                                   --sqldb-instance-name
-                                   --target-db-name
-                                   [--force {false, true}]
+    az datamigration sql-db delete [--force {false, true}]
+                                   [--ids]
                                    [--no-wait]
+                                   [--resource-group]
+                                   [--sqldb-instance-name]
+                                   [--subscription]
+                                   [--target-db-name]
                                    [--yes]
   examples:
   - summary: Delete Database Migration resource.
     syntax: az datamigration sql-db delete --resource-group "testrg" --sqldb-instance-name "sqldbinstance" --target-db-name "db1"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --sqldb-instance-name
-    summary: Name of the target SQL Database Server.
-    description: ''
-  - isRequired: true
-    name: --target-db-name
-    summary: The name of the target database.
-    description: ''
   optionalParameters:
   - name: --force
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Optional force delete boolean. If this is provided as true, migration will be deleted even if active.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --sqldb-instance-name
+    summary: Name of the target SQL Database Server.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --target-db-name
+    summary: The name of the target database.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_datamigration_sql-db_show
@@ -172,51 +185,57 @@ directCommands:
   summary: Retrieve the specified database migration for a given SQL DB.
   description: ''
   syntax: >-
-    az datamigration sql-db show --resource-group
-                                 --sqldb-instance-name
-                                 --target-db-name
-                                 [--expand]
+    az datamigration sql-db show [--expand]
+                                 [--ids]
                                  [--migration-operation-id]
+                                 [--resource-group]
+                                 [--sqldb-instance-name]
+                                 [--subscription]
+                                 [--target-db-name]
   examples:
   - summary: Get Sql DB database Migration with the expand parameter.
     syntax: az datamigration sql-db show --expand "MigrationStatusDetails" --resource-group "testrg" --sqldb-instance-name "sqldbinstance" --target-db-name "db1"
   - summary: Get Sql DB database Migration without the expand parameter.
     syntax: az datamigration sql-db show --resource-group "testrg" --sqldb-instance-name "sqldbinstance" --target-db-name "db1"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --sqldb-instance-name
-    summary: Name of the target SQL Database Server.
-    description: ''
-  - isRequired: true
-    name: --target-db-name
-    summary: The name of the target database.
-    description: ''
   optionalParameters:
   - name: --expand
     summary: Complete migration details be included in the response.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --migration-operation-id
     summary: Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --sqldb-instance-name
+    summary: Name of the target SQL Database Server.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --target-db-name
+    summary: The name of the target database.
     description: ''
 - uid: az_datamigration_sql-db_wait
   name: az datamigration sql-db wait
   summary: Place the CLI in a waiting state until a condition of the datamigration sql-db is met.
   description: ''
   syntax: >-
-    az datamigration sql-db wait --resource-group
-                                 --sqldb-instance-name
-                                 --target-db-name
-                                 [--created]
+    az datamigration sql-db wait [--created]
                                  [--custom]
                                  [--deleted]
                                  [--exists]
                                  [--expand]
+                                 [--ids]
                                  [--interval]
                                  [--migration-operation-id]
+                                 [--resource-group]
+                                 [--sqldb-instance-name]
+                                 [--subscription]
+                                 [--target-db-name]
                                  [--timeout]
                                  [--updated]
   examples:
@@ -224,34 +243,27 @@ directCommands:
     syntax: az datamigration sql-db wait --resource-group "testrg" --sqldb-instance-name "sqldbinstance" --target-db-name "db1" --created
   - summary: Pause executing next line of CLI script until the datamigration sql-db is successfully deleted.
     syntax: az datamigration sql-db wait --resource-group "testrg" --sqldb-instance-name "sqldbinstance" --target-db-name "db1" --deleted
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --sqldb-instance-name
-    summary: Name of the target SQL Database Server.
-    description: ''
-  - isRequired: true
-    name: --target-db-name
-    summary: The name of the target database.
-    description: ''
   optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
     summary: Complete migration details be included in the response.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --interval
     defaultValue: "30"
@@ -260,11 +272,24 @@ directCommands:
   - name: --migration-operation-id
     summary: Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --sqldb-instance-name
+    summary: Name of the target SQL Database Server.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --target-db-name
+    summary: The name of the target database.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
@@ -281,8 +306,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

@@ -13,68 +13,54 @@ directCommands:
   summary: Add an IPSec policy to a site-to-site VPN gateway connection VPN site link.
   description: ''
   syntax: >-
-    az network vpn-gateway connection vpn-site-link-conn ipsec-policy add --connection-name
-                                                                          --dh-group {DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None}
-                                                                          --gateway-name
+    az network vpn-gateway connection vpn-site-link-conn ipsec-policy add --dh-group {DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None}
                                                                           --ike-encryption {AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES256}
                                                                           --ike-integrity {GCMAES128, GCMAES256, MD5, SHA1, SHA256, SHA384}
                                                                           --ipsec-encryption {AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES192, GCMAES256, None}
                                                                           --ipsec-integrity {GCMAES128, GCMAES192, GCMAES256, MD5, SHA1, SHA256}
-                                                                          --name
                                                                           --pfs-group {ECP256, ECP384, None, PFS1, PFS14, PFS2, PFS2048, PFS24, PFSMM}
-                                                                          --resource-group
                                                                           --sa-data-size
                                                                           --sa-lifetime
+                                                                          [--connection-name]
+                                                                          [--gateway-name]
+                                                                          [--ids]
+                                                                          [--name]
                                                                           [--no-wait]
+                                                                          [--resource-group]
+                                                                          [--subscription]
   examples:
   - summary: Add an IPSec policy to a site-to-site VPN gateway connection VPN site link
     syntax: az network vpn-gateway connection vpn-site-link-conn ipsec-policy add -g MyRG --connection-name MyConnection --gateway-name MyGateway -n MyVPNSiteLinkConn --ipsec-encryption AES256 --ipsec-integrity SHA256 --sa-lifetime 86471 --sa-data-size 429496 --ike-encryption AES256 --ike-integrity SHA384 --dh-group DHGroup14 --pfs-group PFS14
   requiredParameters:
   - isRequired: true
-    name: --connection-name
-    summary: Name of the VPN gateway connection.
-    description: ''
-  - isRequired: true
     name: --dh-group
-    parameterValueGroup: DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None
+    parameterValueGroup: "DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None"
     summary: DH Groups used in IKE Phase 1 for initial SA.
     description: ''
   - isRequired: true
-    name: --gateway-name
-    summary: Name of the VPN gateway.
-    description: ''
-  - isRequired: true
     name: --ike-encryption
-    parameterValueGroup: AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES256
+    parameterValueGroup: "AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES256"
     summary: IKE encryption algorithm (IKE phase 2).
     description: ''
   - isRequired: true
     name: --ike-integrity
-    parameterValueGroup: GCMAES128, GCMAES256, MD5, SHA1, SHA256, SHA384
+    parameterValueGroup: "GCMAES128, GCMAES256, MD5, SHA1, SHA256, SHA384"
     summary: IKE integrity algorithm (IKE phase 2).
     description: ''
   - isRequired: true
     name: --ipsec-encryption
-    parameterValueGroup: AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES192, GCMAES256, None
+    parameterValueGroup: "AES128, AES192, AES256, DES, DES3, GCMAES128, GCMAES192, GCMAES256, None"
     summary: IPSec encryption algorithm (IKE phase 1).
     description: ''
   - isRequired: true
     name: --ipsec-integrity
-    parameterValueGroup: GCMAES128, GCMAES192, GCMAES256, MD5, SHA1, SHA256
+    parameterValueGroup: "GCMAES128, GCMAES192, GCMAES256, MD5, SHA1, SHA256"
     summary: IPSec integrity algorithm (IKE phase 1).
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of the VPN site link connection.
-    description: ''
-  - isRequired: true
     name: --pfs-group
-    parameterValueGroup: ECP256, ECP384, None, PFS1, PFS14, PFS2, PFS2048, PFS24, PFSMM
+    parameterValueGroup: "ECP256, ECP384, None, PFS1, PFS14, PFS2, PFS2048, PFS24, PFSMM"
     summary: The Pfs Groups used in IKE Phase 2 for new child SA.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --sa-data-size
@@ -85,8 +71,27 @@ directCommands:
     summary: IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site-to-site VPN tunnel.
     description: ''
   optionalParameters:
+  - name: --connection-name
+    summary: Name of the VPN gateway connection.
+    description: ''
+  - name: --gateway-name
+    summary: Name of the VPN gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the VPN site link connection.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_network_vpn-gateway_connection_vpn-site-link-conn_ipsec-policy_list
   name: az network vpn-gateway connection vpn-site-link-conn ipsec-policy list
@@ -122,39 +127,44 @@ directCommands:
   summary: Remove an IPSec policy from a site-to-site VPN gateway connection VPN site link.
   description: ''
   syntax: >-
-    az network vpn-gateway connection vpn-site-link-conn ipsec-policy remove --connection-name
-                                                                             --gateway-name
-                                                                             --index
-                                                                             --name
-                                                                             --resource-group
+    az network vpn-gateway connection vpn-site-link-conn ipsec-policy remove --index
+                                                                             [--connection-name]
+                                                                             [--gateway-name]
+                                                                             [--ids]
+                                                                             [--name]
                                                                              [--no-wait]
+                                                                             [--resource-group]
+                                                                             [--subscription]
   examples:
   - summary: Remove an IPSec policy from a site-to-site VPN gateway connection VPN site link
     syntax: az network vpn-gateway connection vpn-site-link-conn ipsec-policy remove -g MyRG --connection-name MyConnection --gateway-name MyGateway -n MyVPNSiteLinkConn --index 1
   requiredParameters:
   - isRequired: true
-    name: --connection-name
-    summary: Name of the VPN gateway connection.
-    description: ''
-  - isRequired: true
-    name: --gateway-name
-    summary: Name of the VPN gateway.
-    description: ''
-  - isRequired: true
     name: --index
     summary: List index of the item (starting with 1).
     description: ''
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --connection-name
+    summary: Name of the VPN gateway connection.
+    description: ''
+  - name: --gateway-name
+    summary: Name of the VPN gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: Name of the VPN site link connection.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_network_vpn-gateway_connection_vpn-site-link-conn_ipsec-policy_add
@@ -168,8 +178,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

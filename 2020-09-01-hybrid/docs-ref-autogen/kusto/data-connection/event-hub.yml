@@ -50,18 +50,18 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --compression
-    parameterValueGroup: GZip, None
+    parameterValueGroup: "GZip, None"
     summary: The event hub messages compression type.
     description: ''
   - name: --consumer-group
     summary: The event hub consumer group.
     description: ''
   - name: --data-format
-    parameterValueGroup: APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE
+    parameterValueGroup: "APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE"
     summary: The data format of the message. Optionally the data format can be added to each message.
     description: ''
   - name: --database-routing
-    parameterValueGroup: Multi, Single
+    parameterValueGroup: "Multi, Single"
     summary: Indication for database routing information from the data connection, by default only database routing information is allowed.
     description: ''
   - name: --event-hub-resource-id
@@ -80,6 +80,7 @@ directCommands:
     summary: The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --table-name
@@ -90,40 +91,32 @@ directCommands:
   summary: Checks that the data connection parameters are valid.
   description: ''
   syntax: >-
-    az kusto data-connection event-hub data-connection-validation --cluster-name
-                                                                  --database-name
-                                                                  --resource-group
+    az kusto data-connection event-hub data-connection-validation [--cluster-name]
                                                                   [--compression {GZip, None}]
                                                                   [--consumer-group]
                                                                   [--data-connection-name]
                                                                   [--data-format {APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE}]
+                                                                  [--database-name]
                                                                   [--database-routing {Multi, Single}]
                                                                   [--event-hub-resource-id]
                                                                   [--event-system-properties]
+                                                                  [--ids]
                                                                   [--location]
                                                                   [--managed-identity]
                                                                   [--mapping-rule-name]
                                                                   [--no-wait]
+                                                                  [--resource-group]
+                                                                  [--subscription]
                                                                   [--table-name]
   examples:
   - summary: KustoDataConnectionValidation
     syntax: az kusto data-connection event-hub data-connection-validation --cluster-name "kustoclusterrptest4" --database-name "KustoDatabase8" --name "DataConnections8" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --managed-identity-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1" --resource-group "kustorptest"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name
+  optionalParameters:
+  - name: --cluster-name
     summary: The name of the Kusto cluster.
     description: ''
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database in the Kusto cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
   - name: --compression
-    parameterValueGroup: GZip, None
+    parameterValueGroup: "GZip, None"
     summary: The event hub messages compression type.
     description: ''
   - name: --consumer-group
@@ -133,11 +126,14 @@ directCommands:
     summary: The name of the data connection.
     description: ''
   - name: --data-format
-    parameterValueGroup: APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE
+    parameterValueGroup: "APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE"
     summary: The data format of the message. Optionally the data format can be added to each message.
     description: ''
+  - name: --database-name
+    summary: The name of the database in the Kusto cluster.
+    description: ''
   - name: --database-routing
-    parameterValueGroup: Multi, Single
+    parameterValueGroup: "Multi, Single"
     summary: Indication for database routing information from the data connection, by default only database routing information is allowed.
     description: ''
   - name: --event-hub-resource-id
@@ -145,6 +141,9 @@ directCommands:
     description: ''
   - name: --event-system-properties
     summary: System properties of the event hub.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -156,7 +155,14 @@ directCommands:
     summary: The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --table-name
     summary: The table where the data should be ingested. Optionally the table information can be added to each message.
@@ -166,55 +172,49 @@ directCommands:
   summary: Updates a data connection.
   description: ''
   syntax: >-
-    az kusto data-connection event-hub update --cluster-name
-                                              --data-connection-name
-                                              --database-name
-                                              --resource-group
+    az kusto data-connection event-hub update [--cluster-name]
                                               [--compression {GZip, None}]
                                               [--consumer-group]
+                                              [--data-connection-name]
                                               [--data-format {APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE}]
+                                              [--database-name]
                                               [--database-routing {Multi, Single}]
                                               [--event-hub-resource-id]
                                               [--event-system-properties]
+                                              [--ids]
                                               [--location]
                                               [--managed-identity]
                                               [--mapping-rule-name]
                                               [--no-wait]
+                                              [--resource-group]
+                                              [--subscription]
                                               [--table-name]
   examples:
   - summary: KustoDataConnectionsUpdate
     syntax: az kusto data-connection event-hub update --cluster-name "kustoclusterrptest4" --name "DataConnections8" --database-name "KustoDatabase8" --location "westus" --consumer-group "testConsumerGroup1" --event-hub-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1" --managed-identity-resource-id "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1" --resource-group "kustorptest"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name
+  optionalParameters:
+  - name: --cluster-name
     summary: The name of the Kusto cluster.
     description: ''
-  - isRequired: true
-    name: --data-connection-name --name -n
-    summary: The name of the data connection.
-    description: ''
-  - isRequired: true
-    name: --database-name
-    summary: The name of the database in the Kusto cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
   - name: --compression
-    parameterValueGroup: GZip, None
+    parameterValueGroup: "GZip, None"
     summary: The event hub messages compression type.
     description: ''
   - name: --consumer-group
     summary: The event hub consumer group.
     description: ''
+  - name: --data-connection-name --name -n
+    summary: The name of the data connection.
+    description: ''
   - name: --data-format
-    parameterValueGroup: APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE
+    parameterValueGroup: "APACHEAVRO, AVRO, CSV, JSON, MULTIJSON, ORC, PARQUET, PSV, RAW, SCSV, SINGLEJSON, SOHSV, TSV, TSVE, TXT, W3CLOGFILE"
     summary: The data format of the message. Optionally the data format can be added to each message.
     description: ''
+  - name: --database-name
+    summary: The name of the database in the Kusto cluster.
+    description: ''
   - name: --database-routing
-    parameterValueGroup: Multi, Single
+    parameterValueGroup: "Multi, Single"
     summary: Indication for database routing information from the data connection, by default only database routing information is allowed.
     description: ''
   - name: --event-hub-resource-id
@@ -222,6 +222,9 @@ directCommands:
     description: ''
   - name: --event-system-properties
     summary: System properties of the event hub.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -233,7 +236,14 @@ directCommands:
     summary: The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --table-name
     summary: The table where the data should be ingested. Optionally the table information can be added to each message.
@@ -250,8 +260,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

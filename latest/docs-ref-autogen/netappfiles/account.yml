@@ -40,8 +40,8 @@ directCommands:
     summary: The name of KeyVault key.
     description: ''
   - name: --key-source
-    defaultValue: Microsoft.NetApp
-    parameterValueGroup: Microsoft.KeyVault, Microsoft.NetApp
+    defaultValue: "Microsoft.NetApp"
+    parameterValueGroup: "Microsoft.KeyVault, Microsoft.NetApp"
     summary: The encryption keySource (provider).
     description: ''
   - name: --key-vault-uri -v
@@ -54,6 +54,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --tags
@@ -72,6 +73,7 @@ directCommands:
                                   [--ids]
                                   [--no-wait]
                                   [--resource-group]
+                                  [--subscription]
   examples:
   - summary: Delete an ANF account
     syntax: az netappfiles account delete -g mygroup --name myname
@@ -83,10 +85,14 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_account_list
@@ -111,6 +117,7 @@ directCommands:
                                              [--ids]
                                              [--no-wait]
                                              [--resource-group]
+                                             [--subscription]
   examples:
   - summary: Renew identity credentials for account
     syntax: az netappfiles account renew-credentials -g mygroup --account-name myaccname
@@ -122,10 +129,14 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_account_set
@@ -133,10 +144,12 @@ directCommands:
   summary: Sets the tags or the active directory details for a specified ANF account. Sets the active directory property to exactly what is provided. If none is provided then the active directory is removed, i.e. provide empty [].
   description: ''
   syntax: >-
-    az netappfiles account set --account-name
-                               --location
-                               --resource-group
+    az netappfiles account set --location
+                               [--account-name]
                                [--active-directories]
+                               [--ids]
+                               [--resource-group]
+                               [--subscription]
                                [--tags]
   examples:
   - summary: Update the tags and active directory of an ANF account
@@ -145,20 +158,24 @@ directCommands:
     syntax: az netappfiles account set -g group --account-name name --active-directories '[]' -l westus2
   requiredParameters:
   - isRequired: true
-    name: --account-name -a -n
-    summary: The name of the ANF account.
-    description: ''
-  - isRequired: true
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
+  - name: --account-name -a -n
+    summary: The name of the ANF account.
+    description: ''
   - name: --active-directories
     summary: An array of active directory (AD) settings in json format. Limitation one AD/subscription. Consists of the fields username (Username of Active Directory domain administrator), password (Plain text password of Active Directory domain administrator), domain (Name of the Active Directory domain), dns (Comma separated list of DNS server IP addresses for the Active Directory domain), smb_server_name (NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. Must be 10 characters or less), organizational_unit (The Organizational Unit (OU) within the Windows Active Directory).
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: A list of space separated tags to apply to the account.
@@ -171,6 +188,7 @@ directCommands:
     az netappfiles account show [--account-name]
                                 [--ids]
                                 [--resource-group]
+                                [--subscription]
   examples:
   - summary: Get an ANF account
     syntax: az netappfiles account show -g mygroup --name myname
@@ -183,6 +201,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_account_update
@@ -203,6 +224,7 @@ directCommands:
                                   [--remove]
                                   [--resource-group]
                                   [--set]
+                                  [--subscription]
                                   [--tags]
                                   [--user-assigned-identity]
   examples:
@@ -213,12 +235,14 @@ directCommands:
     summary: The name of the ANF account.
     description: ''
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --encryption
     summary: Encryption settings.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -228,7 +252,7 @@ directCommands:
     summary: The name of KeyVault key.
     description: ''
   - name: --key-source
-    parameterValueGroup: Microsoft.KeyVault, Microsoft.NetApp
+    parameterValueGroup: "Microsoft.KeyVault, Microsoft.NetApp"
     summary: The encryption keySource (provider).
     description: ''
   - name: --key-vault-uri -v
@@ -238,16 +262,22 @@ directCommands:
     summary: The resource ID of KeyVault.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: Space-separated tags in `key[=value]` format.
@@ -269,6 +299,7 @@ directCommands:
                                 [--ids]
                                 [--interval]
                                 [--resource-group]
+                                [--subscription]
                                 [--timeout]
                                 [--updated]
   optionalParameters:
@@ -276,15 +307,18 @@ directCommands:
     summary: Name of the ANF account.
     description: ''
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --ids
@@ -297,11 +331,15 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -340,8 +378,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -350,6 +388,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2022
   description: Manage Azure NetApp Files (ANF) Account Resources.

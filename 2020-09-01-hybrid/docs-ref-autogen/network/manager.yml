@@ -70,28 +70,35 @@ directCommands:
   summary: Deletes a network manager.
   description: ''
   syntax: >-
-    az network manager delete --name
-                              --resource-group
-                              [--force {false, true}]
+    az network manager delete [--force {false, true}]
+                              [--ids]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
                               [--yes]
   examples:
   - summary: Delete Azure Virtual Network Manager
     syntax: az network manager delete --name "testNetworkManager" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --name --network-manager-name -n
-    summary: The name of the network manager.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --force
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Deletes the resource even if it is part of a deployed configuration.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --network-manager-name -n
+    summary: The name of the network manager.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_network_manager_list
@@ -259,26 +266,20 @@ directCommands:
   description: ''
   syntax: >-
     az network manager post-commit --commit-type {Connectivity, SecurityAdmin}
-                                   --name
-                                   --resource-group
                                    --target-locations
                                    [--configuration-ids]
+                                   [--ids]
+                                   [--name]
+                                   [--resource-group]
+                                   [--subscription]
   examples:
   - summary: Post Azure Virtual Network Manager Commit
     syntax: az network manager post-commit --network-manager-name "testNetworkManager" --commit-type "SecurityAdmin" --configuration-ids "/subscriptions/subscriptionC/resourceGroups/resoureGroupSample/providers/Microsoft.Network/networkManagers/testNetworkManager/securityConfigurations/SampleSecurityConfig" --target-locations "eastus" --resource-group "resoureGroupSample"
   requiredParameters:
   - isRequired: true
     name: --commit-type
-    parameterValueGroup: Connectivity, SecurityAdmin
+    parameterValueGroup: "Connectivity, SecurityAdmin"
     summary: Commit Type.
-    description: ''
-  - isRequired: true
-    name: --name --network-manager-name -n
-    summary: The name of the network manager.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
     name: --target-locations
@@ -288,54 +289,66 @@ directCommands:
   - name: --configuration-ids
     summary: List of configuration ids.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --network-manager-name -n
+    summary: The name of the network manager.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_network_manager_show
   name: az network manager show
   summary: Gets the specified Network Manager.
   description: ''
   syntax: >-
-    az network manager show --name
-                            --resource-group
+    az network manager show [--ids]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
   examples:
   - summary: Get Azure Virtual Network Manager
     syntax: az network manager show --name "testNetworkManager" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --name --network-manager-name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --network-manager-name -n
     summary: The name of the network manager.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_network_manager_update
   name: az network manager update
   summary: Update a Network Manager.
   description: ''
   syntax: >-
-    az network manager update --name
-                              --resource-group
-                              [--add]
+    az network manager update [--add]
                               [--description]
                               [--display-name]
                               [--force-string]
                               [--id]
+                              [--ids]
                               [--location]
+                              [--name]
                               [--network-manager-scopes]
                               [--remove]
+                              [--resource-group]
                               [--scope-accesses]
                               [--set]
+                              [--subscription]
                               [--tags]
-  requiredParameters:
-  - isRequired: true
-    name: --name --network-manager-name -n
-    summary: The name of the network manager.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --description
@@ -345,13 +358,20 @@ directCommands:
     summary: A friendly name for the network manager.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --id
     summary: Resource ID.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --name --network-manager-name -n
+    summary: The name of the network manager.
     description: ''
   - name: --network-manager-scopes
     summary: Scope of Network Manager.
@@ -363,13 +383,21 @@ directCommands:
 
       subscriptions: List of subscriptions.
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --scope-accesses
     summary: 'Scope Access. Available value: SecurityAdmin, Connectivity.'
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -448,8 +476,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

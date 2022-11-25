@@ -36,7 +36,7 @@ directCommands:
     summary: 'These are the events that the RP should be messaged on. The message format is in the form {RP Namespace}/{Resource Type}/{action}. The availabe actions are: write, delete and move/action.'
     description: ''
   - name: --message-scope
-    parameterValueGroup: NotSpecified, RegisteredSubscriptions
+    parameterValueGroup: "NotSpecified, RegisteredSubscriptions"
     summary: Limits the messages that are sent to the RP. The default value is RegisteredSubscriptions. The available values are Global (all messages in Azure) and RegisteredSubscriptions (only messages in subscriptions registered by RP).
     description: ''
   - name: --notification-endpoints
@@ -48,7 +48,7 @@ directCommands:
 
       Multiple actions can be specified by using more than one --notification-endpoints argument.
   - name: --notification-mode
-    parameterValueGroup: EventHub, NotSpecified, WebHook
+    parameterValueGroup: "EventHub, NotSpecified, WebHook"
     summary: Determines how the notifications are sent to the RP. The two available modes are EventHub and Webhook.
     description: ''
 - uid: az_providerhub_notification-registration_delete
@@ -56,23 +56,29 @@ directCommands:
   summary: Deletes a notification registration.
   description: ''
   syntax: >-
-    az providerhub notification-registration delete --name
-                                                    --provider-namespace
+    az providerhub notification-registration delete [--ids]
+                                                    [--name]
+                                                    [--provider-namespace]
+                                                    [--subscription]
                                                     [--yes]
   examples:
   - summary: NotificationRegistrations_Delete
     syntax: az providerhub notification-registration delete --name "testNotificationRegistration" --provider-namespace "Microsoft.Contoso"
-  requiredParameters:
-  - isRequired: true
-    name: --name --notification-registration-name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --notification-registration-name -n
     summary: The notification registration.
     description: ''
-  - isRequired: true
-    name: --provider-namespace
+  - name: --provider-namespace
     summary: The name of the resource provider hosted within ProviderHub.
     description: ''
-  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_providerhub_notification-registration_list
@@ -93,19 +99,25 @@ directCommands:
   summary: Gets the notification registration details.
   description: ''
   syntax: >-
-    az providerhub notification-registration show --name
-                                                  --provider-namespace
+    az providerhub notification-registration show [--ids]
+                                                  [--name]
+                                                  [--provider-namespace]
+                                                  [--subscription]
   examples:
   - summary: NotificationRegistrations_Get
     syntax: az providerhub notification-registration show --name "testNotificationRegistration" --provider-namespace "Microsoft.Contoso"
-  requiredParameters:
-  - isRequired: true
-    name: --name --notification-registration-name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --notification-registration-name -n
     summary: The notification registration.
     description: ''
-  - isRequired: true
-    name: --provider-namespace
+  - name: --provider-namespace
     summary: The name of the resource provider hosted within ProviderHub.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_providerhub_notification-registration_create
@@ -120,8 +132,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

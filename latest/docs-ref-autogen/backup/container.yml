@@ -19,7 +19,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --backup-management-type
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload, MAB
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload, MAB"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
   - isRequired: true
@@ -33,6 +33,54 @@ directCommands:
   optionalParameters:
   - name: --use-secondary-region
     summary: Use this flag to list containers in secondary region.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
+- uid: az_backup_container_re-register
+  name: az backup container re-register
+  summary: Reset the registration details for a given container.
+  description: ''
+  syntax: >-
+    az backup container re-register --workload-type {MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase}
+                                    [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
+                                    [--container-name]
+                                    [--ids]
+                                    [--resource-group]
+                                    [--subscription]
+                                    [--vault-name]
+                                    [--yes]
+  examples:
+  - summary: Reset the registration details for a given container. To be used only in error scenarios as specified here (https://docs.microsoft.com/azure/backup/backup-sql-server-azure-troubleshoot#re-registration-failures). Understand the failure symptoms and causes before attempting re-registration.
+    syntax: az backup container re-register --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --workload-type MSSQL --backup-management-type AzureWorkload --yes
+  requiredParameters:
+  - isRequired: true
+    name: --workload-type
+    parameterValueGroup: "MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase"
+    summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
+    description: ''
+  optionalParameters:
+  - name: --backup-management-type
+    defaultValue: "AzureWorkload"
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload"
+    summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
+    description: ''
+  - name: --container-name -c
+    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vault-name -v
+    summary: Name of the Recovery services vault.
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
 - uid: az_backup_container_register
@@ -63,57 +111,14 @@ directCommands:
     description: ''
   - isRequired: true
     name: --workload-type
-    parameterValueGroup: MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase
+    parameterValueGroup: "MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   optionalParameters:
   - name: --backup-management-type
-    defaultValue: AzureWorkload
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
+    defaultValue: "AzureWorkload"
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
-- uid: az_backup_container_re-register
-  name: az backup container re-register
-  summary: Reset the registration details for a given container.
-  description: ''
-  syntax: >-
-    az backup container re-register --workload-type {MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase}
-                                    [--backup-management-type {AzureIaasVM, AzureStorage, AzureWorkload}]
-                                    [--container-name]
-                                    [--ids]
-                                    [--resource-group]
-                                    [--vault-name]
-                                    [--yes]
-  examples:
-  - summary: Reset the registration details for a given container. To be used only in error scenarios as specified here (https://docs.microsoft.com/azure/backup/backup-sql-server-azure-troubleshoot#re-registration-failures). Understand the failure symptoms and causes before attempting re-registration.
-    syntax: az backup container re-register --resource-group MyResourceGroup --vault-name MyVault --container-name MyContainer --workload-type MSSQL --backup-management-type AzureWorkload --yes
-  requiredParameters:
-  - isRequired: true
-    name: --workload-type
-    parameterValueGroup: MSSQL, SAPASE, SAPHANA, SAPHanaDatabase, SQLDataBase
-    summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
-    description: ''
-  optionalParameters:
-  - name: --backup-management-type
-    defaultValue: AzureWorkload
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
-    summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
-    description: ''
-  - name: --container-name -c
-    summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --vault-name -v
-    summary: Name of the Recovery services vault.
-    description: ''
-  - name: --yes -y
-    summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
 - uid: az_backup_container_show
@@ -125,6 +130,7 @@ directCommands:
                              [--ids]
                              [--name]
                              [--resource-group]
+                             [--subscription]
                              [--use-secondary-region]
                              [--vault-name]
   examples:
@@ -132,7 +138,7 @@ directCommands:
     syntax: az backup container show --name MyContainer --resource-group MyResourceGroup --vault-name MyVault
   optionalParameters:
   - name: --backup-management-type
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload, MAB
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload, MAB"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
   - name: --ids
@@ -143,6 +149,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --use-secondary-region
     summary: Use this flag to show container in secondary region.
@@ -160,6 +169,7 @@ directCommands:
                                    [--container-name]
                                    [--ids]
                                    [--resource-group]
+                                   [--subscription]
                                    [--vault-name]
                                    [--yes]
   examples:
@@ -167,7 +177,7 @@ directCommands:
     syntax: az backup container unregister --container-name MyContainer --resource-group MyResourceGroup --vault-name MyVault --backup-management-type AzureStorage
   optionalParameters:
   - name: --backup-management-type
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload, MAB
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload, MAB"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
   - name: --container-name -c
@@ -179,17 +189,21 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --vault-name -v
     summary: Name of the Recovery services vault.
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
 commands:
 - az_backup_container_list
-- az_backup_container_register
 - az_backup_container_re-register
+- az_backup_container_register
 - az_backup_container_show
 - az_backup_container_unregister
 globalParameters:
@@ -200,8 +214,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

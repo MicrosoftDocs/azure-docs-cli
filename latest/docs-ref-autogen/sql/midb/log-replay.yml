@@ -14,6 +14,7 @@ directCommands:
                                     [--managed-instance]
                                     [--name]
                                     [--resource-group]
+                                    [--subscription]
   examples:
   - summary: Complete log replay service.
     syntax: az sql midb log-replay complete -g mygroup --mi myinstance -n mymanageddb --last-backup-name "backup.bak"
@@ -33,6 +34,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_midb_log-replay_show
   name: az sql midb log-replay show
@@ -43,6 +47,7 @@ directCommands:
                                 [--managed-instance]
                                 [--name]
                                 [--resource-group]
+                                [--subscription]
   examples:
   - summary: Get status of the ongoing log replay service.
     syntax: az sql midb log-replay show -g mygroup --mi myinstance -n mymanageddb
@@ -58,6 +63,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_midb_log-replay_start
@@ -75,6 +83,7 @@ directCommands:
                                  [--no-wait]
                                  [--resource-group]
                                  [--si {ManagedIdentity, SharedAccessSignature}]
+                                 [--subscription]
   examples:
   - summary: Start Log Replay service with auto complete option.
     syntax: az sql midb log-replay start -g mygroup --mi myinstance -n mymanageddb -a --last-bn "backup.bak" --storage-uri "https://test.blob.core.windows.net/testing" --storage-sas "sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2023-12-02T00:09:14Z&st=2019-11-25T16:09:14Z&spr=https&sig=92kAe4QYmXaht%2Fgjocqwerqwer41s%3D"
@@ -91,6 +100,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --auto-complete -a
+    defaultValue: "False"
     summary: The flag that in usage with last_backup_name automatically completes log replay servise.
     description: ''
   - name: --ids
@@ -106,14 +116,18 @@ directCommands:
     summary: The name of the Azure SQL Managed Database.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --si --storage-identity
-    parameterValueGroup: ManagedIdentity, SharedAccessSignature
+    parameterValueGroup: "ManagedIdentity, SharedAccessSignature"
     summary: The storage container identity to use.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_midb_log-replay_stop
@@ -126,6 +140,7 @@ directCommands:
                                 [--name]
                                 [--no-wait]
                                 [--resource-group]
+                                [--subscription]
                                 [--yes]
   examples:
   - summary: Stop ongoing log replay service by deleting database.
@@ -141,12 +156,17 @@ directCommands:
     summary: The name of the Azure SQL Managed Database.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
@@ -164,6 +184,7 @@ directCommands:
                                 [--managed-instance]
                                 [--name]
                                 [--resource-group]
+                                [--subscription]
                                 [--timeout]
                                 [--updated]
   examples:
@@ -173,15 +194,18 @@ directCommands:
     syntax: az sql midb log-replay wait --deleted --resource-group mygroup --managed-instance myinstance --name mymanageddb
   optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --ids
@@ -200,11 +224,15 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
@@ -222,8 +250,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

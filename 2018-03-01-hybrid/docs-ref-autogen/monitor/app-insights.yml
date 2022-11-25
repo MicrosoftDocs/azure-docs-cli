@@ -14,11 +14,13 @@ directCommands:
   description: ''
   syntax: >-
     az monitor app-insights query --analytics-query
-                                  --apps
+                                  [--apps]
                                   [--end-time]
+                                  [--ids]
                                   [--offset]
                                   [--resource-group]
                                   [--start-time]
+                                  [--subscription]
   examples:
   - summary: Execute a simple query over past 1 hour and 30 minutes.
     syntax: az monitor app-insights query --app e292531c-eb03-4079-9bb0-fe6b56b99f8b --analytics-query 'requests | summarize count() by bin(timestamp, 1h)' --offset 1h30m
@@ -27,16 +29,18 @@ directCommands:
     name: --analytics-query
     summary: Query to execute over Application Insights data.
     description: ''
-  - isRequired: true
-    name: --apps -a
+  optionalParameters:
+  - name: --apps -a
     summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
     description: ''
-  optionalParameters:
   - name: --end-time
     summary: 'End of time range for current operation. Defaults to the current time. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --offset
-    defaultValue: 1h
+    defaultValue: "1h"
     summary: 'Time offset of the query range, in ##d##h format.'
     description: Can be used with either --start-time or --end-time. If used with --start-time, then the end time will be calculated by adding the offset. If used with --end-time (default), then the start time will be calculated by subtracting the offset. If --start-time and --end-time are provided, then --offset will be ignored.
   - name: --resource-group -g
@@ -44,6 +48,9 @@ directCommands:
     description: ''
   - name: --start-time
     summary: 'Start-time of time range for which to retrieve data. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_monitor_app-insights_api-key
@@ -92,8 +99,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

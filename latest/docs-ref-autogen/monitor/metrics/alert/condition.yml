@@ -23,13 +23,52 @@ directCommands:
                                               [--threshold]
   examples:
   - summary: Build a static condition.
-    syntax: "$dim1 = az monitor metrics alert dimension create -n dimName --op Include -v GetBlob PutBlob\n$dim2 = az monitor metrics alert dimension create -n Instance --op Exclude -v Get Put\n$condition = az monitor metrics alert condition create -t static \n\n--aggregation Count \n\n--metric \"CPU Percentage\" \n\n--op GreaterThan  \n\n--threshold 95 \n\n--dimension \"$dim1\" \"$dim2\""
+    syntax: >-
+      $dim1 = az monitor metrics alert dimension create -n dimName --op Include -v GetBlob PutBlob
+
+      $dim2 = az monitor metrics alert dimension create -n Instance --op Exclude -v Get Put
+
+      $condition = az monitor metrics alert condition create -t static 
+
+
+      --aggregation Count 
+
+
+      --metric "CPU Percentage" 
+
+
+      --op GreaterThan  
+
+
+      --threshold 95 
+
+
+      --dimension "$dim1" "$dim2"
   - summary: Build a dynamic condition.
-    syntax: "$condition = az monitor metrics alert condition create -t dynamic \n\n--aggregation Average \n\n--metric \"CPU Percentage\" \n\n--op GreaterOrLessThan \n\n--num-violations 4 \n\n--num-periods 4 \n\n--since 2020-11-02T12:11"
+    syntax: >-
+      $condition = az monitor metrics alert condition create -t dynamic 
+
+
+      --aggregation Average 
+
+
+      --metric "CPU Percentage" 
+
+
+      --op GreaterOrLessThan 
+
+
+      --num-violations 4 
+
+
+      --num-periods 4 
+
+
+      --since 2020-11-02T12:11
   requiredParameters:
   - isRequired: true
     name: --aggregation
-    parameterValueGroup: Average, Count, Maximum, Minimum, Total
+    parameterValueGroup: "Average, Count, Maximum, Minimum, Total"
     summary: Time aggregation.
     description: ''
   - isRequired: true
@@ -39,12 +78,12 @@ directCommands:
     valueFrom: az monitor metrics list-definitions
   - isRequired: true
     name: --op --operator
-    parameterValueGroup: Equals, GreaterOrLessThan, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual, NotEquals
+    parameterValueGroup: "Equals, GreaterOrLessThan, GreaterThan, GreaterThanOrEqual, LessThan, LessThanOrEqual, NotEquals"
     summary: Operator for static threshold can be 'Equals', 'NotEquals', 'GreaterThan', 'GreaterThanOrEqual', 'LessThan' or 'LessThanOrEqual'. Operator for dynamic threshold can be 'GreaterThan', 'LessThan', 'GreaterOrLessThan'.
     description: ''
   - isRequired: true
     name: --type -t
-    parameterValueGroup: dynamic, static
+    parameterValueGroup: "dynamic, static"
     summary: Type of condition threshold.
     description: ''
   optionalParameters:
@@ -61,15 +100,15 @@ directCommands:
     summary: 'The number of violations to trigger an dynamic alert. Range: 1-6. It should be less than or equal to --num-periods.'
     description: ''
   - name: --sensitivity
-    defaultValue: Medium
-    parameterValueGroup: High, Low, Medium
+    defaultValue: "Medium"
+    parameterValueGroup: "High, Low, Medium"
     summary: Alert sensitivity for dynamic threshold.
     description: ''
   - name: --since
     summary: 'The date from which to start learning the metric historical data and calculate the dynamic thresholds. Format: date (yyyy-mm-dd) time (hh:mm:ss.xxxxx) timezone (+/-hh:mm).'
     description: ''
   - name: --skip-metric-validation
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Cause the metric validation to be skipped. This allows to use a metric that has not been emitted yet.
     description: ''
   - name: --threshold
@@ -86,8 +125,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

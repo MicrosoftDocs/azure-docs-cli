@@ -13,6 +13,7 @@ directCommands:
                                  [--name]
                                  [--resource-group]
                                  [--server]
+                                 [--subscription]
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -25,6 +26,9 @@ directCommands:
     description: ''
   - name: --server -s
     summary: Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_threat-policy_update
@@ -48,6 +52,7 @@ directCommands:
                                    [--storage-account]
                                    [--storage-endpoint]
                                    [--storage-key]
+                                   [--subscription]
   examples:
   - summary: Enable by storage account name.
     syntax: >-
@@ -65,12 +70,13 @@ directCommands:
   - summary: Configure email recipients for a policy.
     syntax: >-
       az sql db threat-policy update -g mygroup -s myserver -n mydb \
-          --email-addresses me@examlee.comyou@example.com \
+          --email-addresses me@examlee.com you@example.com \
           --email-account-admins Enabled
   - summary: Disable a threat policy.
     syntax: az sql db threat-policy update -g mygroup -s myserver -n mydb --state Disabled
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --disabled-alerts
@@ -83,6 +89,7 @@ directCommands:
     summary: List of email addresses that alerts are sent to.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -92,6 +99,7 @@ directCommands:
     summary: Name of the Azure SQL Database.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
@@ -104,10 +112,11 @@ directCommands:
     summary: Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --state
-    parameterValueGroup: Disabled, Enabled, New
+    parameterValueGroup: "Disabled, Enabled, New"
     summary: Threat detection policy state.
     description: ''
   - name: --storage-account
@@ -118,6 +127,9 @@ directCommands:
     description: ''
   - name: --storage-key
     summary: Access key for the storage account.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
@@ -131,8 +143,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

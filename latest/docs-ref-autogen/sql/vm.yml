@@ -16,6 +16,7 @@ directCommands:
                            [--operator-acc-pwd]
                            [--resource-group]
                            [--service-acc-pwd]
+                           [--subscription]
   examples:
   - summary: Add SQL virtual machine to a group.
     syntax: az sql vm add-to-group -n sqlvm -g myresourcegroup --sqlvm-group sqlvmgroup --bootstrap-acc-pwd {bootstrappassword} --operator-acc-pwd {operatorpassword} --service-acc-pwd {servicepassword}
@@ -42,6 +43,9 @@ directCommands:
     description: ''
   - name: --service-acc-pwd -s
     summary: Password for the SQL service account provided in the SQL virtual machine group.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_vm_create
@@ -115,49 +119,51 @@ directCommands:
     summary: Password for encryption on backup.
     description: ''
   - name: --backup-schedule-type
-    parameterValueGroup: Automated, Manual
+    parameterValueGroup: "Automated, Manual"
     summary: Backup schedule type.
     description: ''
   - name: --backup-system-dbs
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Include system databases on backup.
     description: ''
   - name: --connectivity-type
-    parameterValueGroup: LOCAL, PRIVATE, PUBLIC
+    parameterValueGroup: "LOCAL, PRIVATE, PUBLIC"
     summary: SQL Server connectivity option.
     description: ''
   - name: --credential-name
     summary: Credential name.
     description: ''
   - name: --day-of-week
-    parameterValueGroup: Everyday, Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday
+    parameterValueGroup: "Everyday, Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday"
     summary: Day of week to apply the patch on.
     description: ''
   - name: --enable-auto-backup
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable autobackup on SQL virtual machine. If any backup settings provided, parameter automatically sets to true.
     description: ''
   - name: --enable-auto-patching
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable autopatching on SQL virtual machine. If any autopatching settings provided, parameter automatically sets to true.
     description: ''
   - name: --enable-encryption
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Enable encryption for backup on SQL virtual machine.
     description: ''
   - name: --enable-key-vault-credential
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable key vault credential setting. If any key vault settings provided, parameter automatically sets to true.
     description: ''
   - name: --enable-r-services
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable R services (SQL 2016 onwards).
     description: ''
   - name: --full-backup-duration
     summary: Duration of the time window of a given day during which full backups can take place. 1-23 hours.
     description: ''
   - name: --full-backup-frequency
-    parameterValueGroup: Daily, Weekly
+    parameterValueGroup: "Daily, Weekly"
     summary: Frequency of full backups. In both cases, full backups begin during the next scheduled time window.
     description: ''
   - name: --full-backup-start-hour
@@ -167,14 +173,14 @@ directCommands:
     summary: SQL image offer. Examples include SQL2008R2-WS2008, SQL2008-WS2008.
     description: ''
   - name: --image-sku
-    parameterValueGroup: Developer, Enterprise, Express, Standard, Web
+    parameterValueGroup: "Developer, Enterprise, Express, Standard, Web"
     summary: SQL image sku.
     description: ''
   - name: --key-vault
     summary: Azure Key Vault url.
     description: ''
   - name: --license-type -i
-    parameterValueGroup: AHUB, DR, PAYG
+    parameterValueGroup: "AHUB, DR, PAYG"
     summary: SQL Server license type.
     description: ''
   - name: --location -l
@@ -211,12 +217,12 @@ directCommands:
     summary: SQL Server sysadmin login to create.
     description: ''
   - name: --sql-mgmt-type
-    defaultValue: LightWeight
-    parameterValueGroup: Full, LightWeight, NoAgent
+    defaultValue: "LightWeight"
+    parameterValueGroup: "Full, LightWeight, NoAgent"
     summary: SQL Server management type. If NoAgent selected, please provide --image-sku and --offer-type.
     description: ''
   - name: --sql-workload-type
-    parameterValueGroup: DW, GENERAL, OLTP
+    parameterValueGroup: "DW, GENERAL, OLTP"
     summary: SQL Server workload type.
     description: ''
   - name: --storage-account
@@ -234,6 +240,7 @@ directCommands:
     az sql vm delete [--ids]
                      [--name]
                      [--resource-group]
+                     [--subscription]
                      [--yes]
   optionalParameters:
   - name: --ids
@@ -245,7 +252,11 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
@@ -267,6 +278,7 @@ directCommands:
     az sql vm remove-from-group [--ids]
                                 [--name]
                                 [--resource-group]
+                                [--subscription]
   examples:
   - summary: Remove SQL virtual machine from a group.
     syntax: az sql vm remove-from-group -n sqlvm -g myresourcegroup
@@ -280,6 +292,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_vm_show
   name: az sql vm show
@@ -290,10 +305,11 @@ directCommands:
                    [--ids]
                    [--name]
                    [--resource-group]
+                   [--subscription]
   optionalParameters:
   - name: --expand
-    parameterValueGroup: '*, AssessmentSettings, AutoBackupSettings, AutoPatchingSettings, KeyVaultCredentialSettings, ServerConfigurationsManagementSettings'
-    summary: Get the SQLIaaSExtension configuration settings. To view all settings, use \*. To select only a few, the settings must be space-separated.
+    parameterValueGroup: "*, AssessmentSettings, AutoBackupSettings, AutoPatchingSettings, KeyVaultCredentialSettings, ServerConfigurationsManagementSettings"
+    summary: Get the SQLIaaSExtension configuration settings. To view all settings, use *. To select only a few, the settings must be space-separated.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -304,6 +320,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_vm_start-assessment
   name: az sql vm start-assessment
@@ -313,6 +332,7 @@ directCommands:
     az sql vm start-assessment [--ids]
                                [--name]
                                [--resource-group]
+                               [--subscription]
   examples:
   - summary: Starts SQL best practice assessment.
     syntax: az sql vm start-assessment -n sqlvm -g myresourcegroup
@@ -325,6 +345,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_vm_update
@@ -373,6 +396,7 @@ directCommands:
                      [--sql-mgmt-type {Full}]
                      [--sql-workload-type {DW, GENERAL, OLTP}]
                      [--storage-account]
+                     [--subscription]
                      [--tags]
                      [--workspace-name]
                      [--workspace-rg]
@@ -410,81 +434,85 @@ directCommands:
     syntax: az sql vm update -n sqlvm -g myresourcegroup --enable-assessment true
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --am-day --assessment-day-of-week
-    parameterValueGroup: Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday
+    parameterValueGroup: "Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday"
     summary: Day of the week to run assessment.
     description: ''
   - name: --am-month-occ --assessment-monthly-occurrence
-    parameterValueGroup: -1, 1, 2, 3, 4
+    parameterValueGroup: "-1, 1, 2, 3, 4"
     summary: Occurrence of the DayOfWeek day within a month to schedule assessment. Supports values 1,2,3,4 and -1. Use -1 for last DayOfWeek day of the month (for example - last Tuesday of the month).
     description: ''
   - name: --am-schedule --enable-assessment-schedule
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable assessment Schedule. If any assessment schedule settings provided, parameter automatically sets to true.
     description: ''
   - name: --am-time --assessment-start-time-local
     summary: Time of the day in HH:mm format. Examples include 17:30, 05:13.
     description: ''
   - name: --am-week-int --assessment-weekly-interval
-    parameterValueGroup: 1, 2, 3, 4, 5, 6
+    parameterValueGroup: "1, 2, 3, 4, 5, 6"
     summary: Number of weeks to schedule between 2 assessment runs. Supports value from 1-6.
     description: ''
   - name: --backup-pwd
     summary: Password for encryption on backup.
     description: ''
   - name: --backup-schedule-type
-    parameterValueGroup: Automated, Manual
+    parameterValueGroup: "Automated, Manual"
     summary: Backup schedule type.
     description: ''
   - name: --backup-system-dbs
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Include system databases on backup.
     description: ''
   - name: --connectivity-type
-    parameterValueGroup: LOCAL, PRIVATE, PUBLIC
+    parameterValueGroup: "LOCAL, PRIVATE, PUBLIC"
     summary: SQL Server connectivity option.
     description: ''
   - name: --credential-name
     summary: Credential name.
     description: ''
   - name: --day-of-week
-    parameterValueGroup: Everyday, Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday
+    parameterValueGroup: "Everyday, Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday"
     summary: Day of week to apply the patch on.
     description: ''
   - name: --enable-assessment
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable assessment feature. If any assessment settings provided, parameter automatically sets to true.
     description: ''
   - name: --enable-auto-backup
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable autobackup on SQL virtual machine. If any backup settings provided, parameter automatically sets to true.
     description: ''
   - name: --enable-auto-patching
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable autopatching on SQL virtual machine. If any autopatching settings provided, parameter automatically sets to true.
     description: ''
   - name: --enable-encryption
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Enable encryption for backup on SQL virtual machine.
     description: ''
   - name: --enable-key-vault-credential
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable key vault credential setting. If any key vault settings provided, parameter automatically sets to true.
     description: ''
   - name: --enable-r-services
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable or disable R services (SQL 2016 onwards).
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --full-backup-duration
     summary: Duration of the time window of a given day during which full backups can take place. 1-23 hours.
     description: ''
   - name: --full-backup-frequency
-    parameterValueGroup: Daily, Weekly
+    parameterValueGroup: "Daily, Weekly"
     summary: Frequency of full backups. In both cases, full backups begin during the next scheduled time window.
     description: ''
   - name: --full-backup-start-hour
@@ -494,14 +522,14 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --image-sku
-    parameterValueGroup: Developer, Enterprise, Express, Standard, Web
+    parameterValueGroup: "Developer, Enterprise, Express, Standard, Web"
     summary: SQL image sku.
     description: ''
   - name: --key-vault
     summary: Azure Key Vault url.
     description: ''
   - name: --license-type -i
-    parameterValueGroup: AHUB, DR, PAYG
+    parameterValueGroup: "AHUB, DR, PAYG"
     summary: SQL Server license type.
     description: ''
   - name: --log-backup-frequency
@@ -520,6 +548,7 @@ directCommands:
     summary: SQL Server port.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
@@ -532,6 +561,7 @@ directCommands:
     summary: Storage account key where backup will be taken to.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sp-name
@@ -541,15 +571,18 @@ directCommands:
     summary: Service principal name secret to access key vault.
     description: ''
   - name: --sql-mgmt-type
-    parameterValueGroup: Full
+    parameterValueGroup: "Full"
     summary: SQL Server management type. Updates from LightWeight to Full.
     description: ''
   - name: --sql-workload-type
-    parameterValueGroup: DW, GENERAL, OLTP
+    parameterValueGroup: "DW, GENERAL, OLTP"
     summary: SQL Server workload type.
     description: ''
   - name: --storage-account
     summary: Storage account url where backup will be taken to.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -594,8 +627,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

@@ -13,38 +13,44 @@ directCommands:
   summary: Trigger adhoc backup.
   description: ''
   syntax: >-
-    az dataprotection backup-instance adhoc-backup --backup-instance-name
-                                                   --resource-group
-                                                   --rule-name
-                                                   --vault-name
+    az dataprotection backup-instance adhoc-backup --rule-name
+                                                   [--backup-instance-name]
+                                                   [--ids]
                                                    [--no-wait]
+                                                   [--resource-group]
                                                    [--retention-tag-override]
+                                                   [--subscription]
+                                                   [--vault-name]
   examples:
   - summary: Trigger Adhoc Backup
     syntax: az dataprotection backup-instance adhoc-backup --name "testInstance1" --rule-name "BackupWeekly" --retention-tag-override "yearly" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
   requiredParameters:
   - isRequired: true
-    name: --backup-instance-name --name -n
-    summary: The name of the backup instance.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --rule-name
     summary: Specify backup policy rule name.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
-    description: ''
   optionalParameters:
+  - name: --backup-instance-name --name -n
+    summary: The name of the backup instance.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --retention-tag-override
     summary: Specify retention override tag.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vault-name
+    summary: The name of the backup vault.
     description: ''
 - uid: az_dataprotection_backup-instance_create
   name: az dataprotection backup-instance create
@@ -73,6 +79,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
 - uid: az_dataprotection_backup-instance_delete
@@ -80,32 +87,38 @@ directCommands:
   summary: Delete a backup instance in a backup vault.
   description: ''
   syntax: >-
-    az dataprotection backup-instance delete --backup-instance-name
-                                             --resource-group
-                                             --vault-name
+    az dataprotection backup-instance delete [--backup-instance-name]
+                                             [--ids]
                                              [--no-wait]
+                                             [--resource-group]
+                                             [--subscription]
+                                             [--vault-name]
                                              [--yes]
   examples:
   - summary: Delete BackupInstance
     syntax: az dataprotection backup-instance delete --name "testInstance1" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
-  requiredParameters:
-  - isRequired: true
-    name: --backup-instance-name --name -n
+  optionalParameters:
+  - name: --backup-instance-name --name -n
     summary: The name of the backup instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
-    description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vault-name
+    summary: The name of the backup vault.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_dataprotection_backup-instance_initialize
@@ -135,7 +148,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
     summary: Specify the datasource type of the resource to be backed up.
     description: ''
   - isRequired: true
@@ -144,7 +157,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --secret-store-type
-    parameterValueGroup: AzureKeyVault
+    parameterValueGroup: "AzureKeyVault"
     summary: Specify the secret store type to use for authentication.
     description: ''
   - name: --secret-store-uri
@@ -194,7 +207,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
     summary: Specify the datasource type.
     description: ''
   optionalParameters:
@@ -202,7 +215,7 @@ directCommands:
     summary: Specify datasource id filter to apply.
     description: ''
   - name: --protection-status
-    parameterValueGroup: ProtectionConfigured, ProtectionError
+    parameterValueGroup: "ProtectionConfigured, ProtectionError"
     summary: Specify protection status.
     description: ''
   - name: --resource-groups
@@ -219,52 +232,62 @@ directCommands:
   summary: This operation will resume protection for a stopped backup instance.
   description: ''
   syntax: >-
-    az dataprotection backup-instance resume-protection --backup-instance-name
-                                                        --resource-group
-                                                        --vault-name
+    az dataprotection backup-instance resume-protection [--backup-instance-name]
+                                                        [--ids]
                                                         [--no-wait]
+                                                        [--resource-group]
+                                                        [--subscription]
+                                                        [--vault-name]
   examples:
   - summary: ResumeProtection
     syntax: az dataprotection backup-instance resume-protection --name "testbi" --resource-group "testrg" --vault-name "testvault"
-  requiredParameters:
-  - isRequired: true
-    name: --backup-instance-name --name -n
+  optionalParameters:
+  - name: --backup-instance-name --name -n
     summary: The name of the backup instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --vault-name
+    summary: The name of the backup vault.
     description: ''
 - uid: az_dataprotection_backup-instance_show
   name: az dataprotection backup-instance show
   summary: Gets a backup instance with name in a backup vault.
   description: ''
   syntax: >-
-    az dataprotection backup-instance show --backup-instance-name
-                                           --resource-group
-                                           --vault-name
+    az dataprotection backup-instance show [--backup-instance-name]
+                                           [--ids]
+                                           [--resource-group]
+                                           [--subscription]
+                                           [--vault-name]
   examples:
   - summary: Get BackupInstance
     syntax: az dataprotection backup-instance show --name "testInstance1" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
-  requiredParameters:
-  - isRequired: true
-    name: --backup-instance-name --name -n
+  optionalParameters:
+  - name: --backup-instance-name --name -n
     summary: The name of the backup instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --vault-name
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vault-name
     summary: The name of the backup vault.
     description: ''
 - uid: az_dataprotection_backup-instance_stop-protection
@@ -272,58 +295,68 @@ directCommands:
   summary: This operation will stop protection of a backup instance and data will be held forever.
   description: ''
   syntax: >-
-    az dataprotection backup-instance stop-protection --backup-instance-name
-                                                      --resource-group
-                                                      --vault-name
+    az dataprotection backup-instance stop-protection [--backup-instance-name]
+                                                      [--ids]
                                                       [--no-wait]
+                                                      [--resource-group]
+                                                      [--subscription]
+                                                      [--vault-name]
   examples:
   - summary: StopProtection
     syntax: az dataprotection backup-instance stop-protection --name "testbi" --resource-group "testrg" --vault-name "testvault"
-  requiredParameters:
-  - isRequired: true
-    name: --backup-instance-name --name -n
+  optionalParameters:
+  - name: --backup-instance-name --name -n
     summary: The name of the backup instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --vault-name
+    summary: The name of the backup vault.
     description: ''
 - uid: az_dataprotection_backup-instance_suspend-backup
   name: az dataprotection backup-instance suspend-backup
   summary: This operation will stop backups for backup instance.
   description: ''
   syntax: >-
-    az dataprotection backup-instance suspend-backup --backup-instance-name
-                                                     --resource-group
-                                                     --vault-name
+    az dataprotection backup-instance suspend-backup [--backup-instance-name]
+                                                     [--ids]
                                                      [--no-wait]
+                                                     [--resource-group]
+                                                     [--subscription]
+                                                     [--vault-name]
   examples:
   - summary: SuspendBackups
     syntax: az dataprotection backup-instance suspend-backup --name "testbi" --resource-group "testrg" --vault-name "testvault"
-  requiredParameters:
-  - isRequired: true
-    name: --backup-instance-name --name -n
+  optionalParameters:
+  - name: --backup-instance-name --name -n
     summary: The name of the backup instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --vault-name
+    summary: The name of the backup vault.
     description: ''
 - uid: az_dataprotection_backup-instance_update-msi-permissions
   name: az dataprotection backup-instance update-msi-permissions
@@ -344,17 +377,17 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
     summary: Specify the datasource type of the resource to be backed up.
     description: ''
   - isRequired: true
     name: --operation
-    parameterValueGroup: Backup
+    parameterValueGroup: "Backup"
     summary: List of possible operations.
     description: ''
   - isRequired: true
     name: --permissions-scope
-    parameterValueGroup: Resource, ResourceGroup, Subscription
+    parameterValueGroup: "Resource, ResourceGroup, Subscription"
     summary: Scope for assigning permissions to the backup vault.
     description: ''
   - isRequired: true
@@ -373,6 +406,7 @@ directCommands:
     summary: ARM id of the key vault. Required when --datasource-type is AzureDatabaseForPostgreSQL.
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_dataprotection_backup-instance_update-policy
@@ -407,6 +441,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
 - uid: az_dataprotection_backup-instance_validate-for-backup
@@ -415,9 +450,11 @@ directCommands:
   description: ''
   syntax: >-
     az dataprotection backup-instance validate-for-backup --backup-instance
-                                                          --resource-group
-                                                          --vault-name
+                                                          [--ids]
                                                           [--no-wait]
+                                                          [--resource-group]
+                                                          [--subscription]
+                                                          [--vault-name]
   examples:
   - summary: Validate for backup
     syntax: az dataprotection backup-instance validate-for-backup -g sarath-rg --vault-name sarath-vault --backup-instance backup_instance.json
@@ -426,108 +463,127 @@ directCommands:
     name: --backup-instance
     summary: 'Request body for operation Expected value: json-string/@json-file.'
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --vault-name
+    summary: The name of the backup vault.
     description: ''
 - uid: az_dataprotection_backup-instance_validate-for-restore
   name: az dataprotection backup-instance validate-for-restore
   summary: Validates if Restore can be triggered for a DataSource.
   description: ''
   syntax: >-
-    az dataprotection backup-instance validate-for-restore --backup-instance-name
-                                                           --resource-group
-                                                           --restore-request-object
-                                                           --vault-name
+    az dataprotection backup-instance validate-for-restore --restore-request-object
+                                                           [--backup-instance-name]
+                                                           [--ids]
                                                            [--no-wait]
+                                                           [--resource-group]
+                                                           [--subscription]
+                                                           [--vault-name]
   examples:
   - summary: Validate Restore
     syntax: az dataprotection backup-instance validate-for-restore --name "testInstance1" --restore-request-object "{\"objectType\":\"AzureBackupRecoveryPointBasedRestoreRequest\",\"recoveryPointId\":\"hardcodedRP\",\"restoreTargetInfo\":{\"datasourceAuthCredentials\":{\"objectType\":\"SecretStoreBasedAuthCredentials\",\"secretStoreResource\":{\"secretStoreType\":\"AzureKeyVault\",\"uri\":\"https://samplevault.vault.azure.net/secrets/credentials\"}},\"datasourceInfo\":{\"datasourceType\":\"Microsoft.DBforPostgreSQL/servers/databases\",\"objectType\":\"Datasource\",\"resourceID\":\"/subscriptions/f75d8d8b-6735-4697-82e1-1a7a3ff0d5d4/resourceGroups/viveksipgtest/providers/Microsoft.DBforPostgreSQL/servers/viveksipgtest/databases/targetdb\",\"resourceLocation\":\"\",\"resourceName\":\"targetdb\",\"resourceType\":\"Microsoft.DBforPostgreSQL/servers/databases\",\"resourceUri\":\"\"},\"datasourceSetInfo\":{\"datasourceType\":\"Microsoft.DBforPostgreSQL/servers/databases\",\"objectType\":\"DatasourceSet\",\"resourceID\":\"/subscriptions/f75d8d8b-6735-4697-82e1-1a7a3ff0d5d4/resourceGroups/viveksipgtest/providers/Microsoft.DBforPostgreSQL/servers/viveksipgtest\",\"resourceLocation\":\"\",\"resourceName\":\"viveksipgtest\",\"resourceType\":\"Microsoft.DBforPostgreSQL/servers\",\"resourceUri\":\"\"},\"objectType\":\"RestoreTargetInfo\",\"recoveryOption\":\"FailIfExists\",\"restoreLocation\":\"southeastasia\"},\"sourceDataStoreType\":\"VaultStore\",\"sourceResourceId\":\"/subscriptions/f75d8d8b-6735-4697-82e1-1a7a3ff0d5d4/resourceGroups/viveksipgtest/providers/Microsoft.DBforPostgreSQL/servers/viveksipgtest/databases/testdb\"}" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
   requiredParameters:
   - isRequired: true
-    name: --backup-instance-name --name -n
-    summary: The name of the backup instance.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --restore-request-object
     summary: 'Gets or sets the restore request object. Expected value: json-string/@json-file.'
     description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
-    description: ''
   optionalParameters:
+  - name: --backup-instance-name --name -n
+    summary: The name of the backup instance.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --vault-name
+    summary: The name of the backup vault.
     description: ''
 - uid: az_dataprotection_backup-instance_wait
   name: az dataprotection backup-instance wait
   summary: Place the CLI in a waiting state until a condition of the dataprotection backup-instance is met.
   description: ''
   syntax: >-
-    az dataprotection backup-instance wait --backup-instance-name
-                                           --resource-group
-                                           --vault-name
+    az dataprotection backup-instance wait [--backup-instance-name]
                                            [--created]
                                            [--custom]
                                            [--deleted]
                                            [--exists]
+                                           [--ids]
                                            [--interval]
+                                           [--resource-group]
+                                           [--subscription]
                                            [--timeout]
                                            [--updated]
+                                           [--vault-name]
   examples:
   - summary: Pause executing next line of CLI script until the dataprotection backup-instance is successfully created.
     syntax: az dataprotection backup-instance wait --name "testInstance1" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1" --created
   - summary: Pause executing next line of CLI script until the dataprotection backup-instance is successfully deleted.
     syntax: az dataprotection backup-instance wait --name "testInstance1" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1" --deleted
-  requiredParameters:
-  - isRequired: true
-    name: --backup-instance-name --name -n
+  optionalParameters:
+  - name: --backup-instance-name --name -n
     summary: The name of the backup instance.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --vault-name
-    summary: The name of the backup vault.
-    description: ''
-  optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --vault-name
+    summary: The name of the backup vault.
     description: ''
 commands:
 - az_dataprotection_backup-instance_adhoc-backup
@@ -558,8 +614,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

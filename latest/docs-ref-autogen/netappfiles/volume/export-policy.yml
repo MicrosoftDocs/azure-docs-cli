@@ -34,6 +34,7 @@ directCommands:
                                             [--resource-group]
                                             [--rule-index]
                                             [--set]
+                                            [--subscription]
   examples:
   - summary: Add an export policy rule for the ANF volume
     syntax: az netappfiles volume export-policy add -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --allowed-clients "1.2.3.0/24" --rule-index 2 --unix-read-only true --unix-read-write false --cifs false --nfsv3 true --nfsv41 false
@@ -44,27 +45,27 @@ directCommands:
     description: ''
   - isRequired: true
     name: --cifs
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indication that CIFS protocol is allowed.
     description: ''
   - isRequired: true
     name: --nfsv3
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indication that NFSv3 protocol is allowed.
     description: ''
   - isRequired: true
     name: --nfsv41
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indication that NFSv4.1 protocol is allowed.
     description: ''
   - isRequired: true
     name: --unix-read-only
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indication of read only access.
     description: ''
   - isRequired: true
     name: --unix-read-write
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indication of read and write access.
     description: ''
   optionalParameters:
@@ -72,16 +73,18 @@ directCommands:
     summary: The name of the ANF account.
     description: ''
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --chown-mode
-    summary: This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own.
+    summary: This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. Possible values include- Restricted, Unrestricted. Default value- Restricted.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --has-root-access
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Has root access to volume. Possible values are True or False.
     description: ''
   - name: --ids
@@ -109,12 +112,14 @@ directCommands:
     summary: The name of the ANF volume.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --pool-name -p
     summary: The name of the ANF pool.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
@@ -124,7 +129,11 @@ directCommands:
     summary: Order index. No number can be repeated. Max 6 rules.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_volume_export-policy_list
@@ -173,6 +182,7 @@ directCommands:
                                                [--remove]
                                                [--resource-group]
                                                [--set]
+                                               [--subscription]
   examples:
   - summary: Remove an export policy rule for an ANF volume
     syntax: az netappfiles volume export-policy remove -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --rule-index 4
@@ -186,9 +196,11 @@ directCommands:
     summary: The name of the ANF account.
     description: ''
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -198,19 +210,25 @@ directCommands:
     summary: The name of the ANF volume.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --pool-name -p
     summary: The name of the ANF pool.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 - uid: az_netappfiles_volume_export-policy_wait
@@ -228,6 +246,7 @@ directCommands:
                                              [--name]
                                              [--pool-name]
                                              [--resource-group]
+                                             [--subscription]
                                              [--timeout]
                                              [--updated]
   optionalParameters:
@@ -235,15 +254,18 @@ directCommands:
     summary: Name of the ANF account.
     description: ''
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --ids
@@ -262,11 +284,15 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -283,8 +309,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

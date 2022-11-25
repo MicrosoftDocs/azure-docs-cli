@@ -25,7 +25,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --protectable-item-type
-    parameterValueGroup: HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance
+    parameterValueGroup: "HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   - isRequired: true
@@ -42,7 +42,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --workload-type
-    parameterValueGroup: AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM
+    parameterValueGroup: "AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -72,7 +72,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --protectable-item-type
-    parameterValueGroup: HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance
+    parameterValueGroup: "HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   - isRequired: true
@@ -89,7 +89,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --workload-type
-    parameterValueGroup: AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM
+    parameterValueGroup: "AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -106,6 +106,7 @@ directCommands:
                                     [--item-name]
                                     [--resource-group]
                                     [--retain-until]
+                                    [--subscription]
                                     [--vault-name]
                                     [--workload-type {AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM}]
   examples:
@@ -113,7 +114,7 @@ directCommands:
     syntax: az backup protection backup-now --container-name MyContainer --item-name MyItem --resource-group MyResourceGroup --retain-until 01-02-2018 --vault-name MyVault --backup-management-type AzureIaasVM
   optionalParameters:
   - name: --backup-management-type
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
   - name: --backup-type
@@ -123,7 +124,8 @@ directCommands:
     summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
     description: ''
   - name: --enable-compression
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Option to enable compression.
     description: ''
   - name: --ids
@@ -138,11 +140,14 @@ directCommands:
   - name: --retain-until
     summary: The date until which this backed up copy will be available for retrieval, in UTC (d-m-Y). In case of VM and AzureFileShare a default value of 30 days is taken. For MSSQL workload, retain-until min value is 2 days and max value is 99 years for backup-type 'CopyOnlyFull'. For MSSQL and SAPHANA, retain-until min value is 45 days and max value is 99 years for backup-type 'Full'. For any other backup-type, retain-until value is overriden by Policy. If not specified, a default value of 30 days will be taken for backup-type 'CopyOnlyFull', and a value of 45 days for backup-type 'Full' and no default value for other backup types.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --vault-name -v
     summary: Name of the Recovery services vault.
     description: ''
   - name: --workload-type
-    parameterValueGroup: AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM
+    parameterValueGroup: "AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -179,6 +184,7 @@ directCommands:
                                  [--ids]
                                  [--item-name]
                                  [--resource-group]
+                                 [--subscription]
                                  [--tenant-id]
                                  [--vault-name]
                                  [--workload-type {AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM}]
@@ -188,14 +194,15 @@ directCommands:
     syntax: az backup protection disable --container-name MyContainer --backup-management-type AzureIaasVM --delete-backup-data false --item-name MyItem --resource-group MyResourceGroup --vault-name MyVault --yes
   optionalParameters:
   - name: --backup-management-type
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
   - name: --container-name -c
     summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
     description: ''
   - name: --delete-backup-data
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Option to delete existing backed up data in the Recovery services vault.
     description: ''
   - name: --ids
@@ -207,6 +214,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tenant-id
     summary: ID of the tenant if the Resource Guard protecting the vault exists in a different tenant.
     description: ''
@@ -214,10 +224,11 @@ directCommands:
     summary: Name of the Recovery services vault.
     description: ''
   - name: --workload-type
-    parameterValueGroup: AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM
+    parameterValueGroup: "AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -282,7 +293,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --protectable-item-type
-    parameterValueGroup: HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance
+    parameterValueGroup: "HANAInstance, SAPHanaDatabase, SAPHanaSystem, SQLAG, SQLDatabase, SQLInstance"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   - isRequired: true
@@ -299,7 +310,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --workload-type
-    parameterValueGroup: AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM
+    parameterValueGroup: "AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -344,14 +355,14 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --disk-list-setting
-    parameterValueGroup: exclude, include
+    parameterValueGroup: "exclude, include"
     summary: Option to decide whether to include or exclude the disk or reset any previous settings to default behavior.
     description: ''
   - name: --diskslist
     summary: List of disks to be excluded or included.
     description: ''
   - name: --exclude-all-data-disks
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Option to specify to backup OS disk only.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -366,6 +377,7 @@ directCommands:
                                 [--ids]
                                 [--item-name]
                                 [--resource-group]
+                                [--subscription]
                                 [--vault-name]
                                 [--workload-type {AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM}]
   examples:
@@ -378,7 +390,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --backup-management-type
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
   - name: --container-name -c
@@ -393,11 +405,14 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --vault-name -v
     summary: Name of the Recovery services vault.
     description: ''
   - name: --workload-type
-    parameterValueGroup: AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM
+    parameterValueGroup: "AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -411,6 +426,7 @@ directCommands:
                                   [--ids]
                                   [--item-name]
                                   [--resource-group]
+                                  [--subscription]
                                   [--vault-name]
                                   [--workload-type {AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM}]
   examples:
@@ -418,7 +434,7 @@ directCommands:
     syntax: az backup protection undelete --container-name MyContainer --item-name MyItem --resource-group MyResourceGroup --vault-name MyVault --backup-management-type AzureIaasVM --workload-type VM
   optionalParameters:
   - name: --backup-management-type
-    parameterValueGroup: AzureIaasVM, AzureStorage, AzureWorkload
+    parameterValueGroup: "AzureIaasVM, AzureStorage, AzureWorkload"
     summary: 'Specify the backup management type. Define how Azure Backup manages the backup of entities within the ARM resource. For eg: AzureWorkloads refers to workloads installed within Azure VMs, AzureStorage refers to entities within Storage account. Required only if friendly name is used as Container name.'
     description: ''
   - name: --container-name -c
@@ -433,11 +449,14 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --vault-name -v
     summary: Name of the Recovery services vault.
     description: ''
   - name: --workload-type
-    parameterValueGroup: AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM
+    parameterValueGroup: "AzureFileShare, MSSQL, SAPHANA, SAPHanaDatabase, SQLDataBase, VM"
     summary: Specify the type of applications within the Resource which should be discovered and protected by Azure Backup.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/backup/_help.py
@@ -453,6 +472,7 @@ directCommands:
                                        [--ids]
                                        [--item-name]
                                        [--resource-group]
+                                       [--subscription]
                                        [--vault-name]
   examples:
   - summary: Update disk exclusion settings associated with a backed up VM item.
@@ -462,14 +482,14 @@ directCommands:
     summary: Name of the backup container. Accepts 'Name' or 'FriendlyName' from the output of az backup container list command. If 'FriendlyName' is passed then BackupManagementType is required.
     description: ''
   - name: --disk-list-setting
-    parameterValueGroup: exclude, include, resetexclusionsettings
+    parameterValueGroup: "exclude, include, resetexclusionsettings"
     summary: Option to decide whether to include or exclude the disk or reset any previous settings to default behavior.
     description: ''
   - name: --diskslist
     summary: List of disks to be excluded or included.
     description: ''
   - name: --exclude-all-data-disks
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Option to specify to backup OS disk only.
     description: ''
   - name: --ids
@@ -480,6 +500,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vault-name -v
     summary: Name of the Recovery services vault.
@@ -505,8 +528,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

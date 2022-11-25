@@ -69,11 +69,12 @@ directCommands:
     description: 'Usage:   --action-groups ACTION_GROUP_NAME_OR_ID [NAME_OR_ID,...].'
   - name: --auto-mitigate
     defaultValue: "1"
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: The flag that indicates whether the alert should be automatically resolved or not. The default is true.
     description: ''
   - name: --check-ws-alerts-storage --cwas
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: The flag which indicates whether this scheduled query rule should be stored in the customer's storage.
     description: ''
   - name: --condition-query
@@ -86,11 +87,12 @@ directCommands:
     summary: Free-text description of the rule.
     description: ''
   - name: --disabled
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Disable the scheduled query.
     description: ''
   - name: --evaluation-frequency
-    defaultValue: 5m
+    defaultValue: "5m"
     summary: Frequency with which to evaluate the rule in "##h##m##s" format.
     description: ''
   - name: --location -l
@@ -104,7 +106,8 @@ directCommands:
     summary: Severity of the alert from 0 (critical) to 4 (verbose).
     description: ''
   - name: --skip-query-validation
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: The flag which indicates whether the provided query should be validated or not.
     description: ''
   - name: --tags
@@ -114,7 +117,7 @@ directCommands:
     summary: The resource type of the target resource(s) in scopes. This must be provided when scopes is resource group or subscription.
     description: ''
   - name: --window-size
-    defaultValue: 5m
+    defaultValue: "5m"
     summary: Time over which to aggregate metrics in "##h##m##s" format.
     description: ''
 - uid: az_monitor_scheduled-query_delete
@@ -122,20 +125,26 @@ directCommands:
   summary: Delete a scheduled query.
   description: ''
   syntax: >-
-    az monitor scheduled-query delete --name
-                                      --resource-group
+    az monitor scheduled-query delete [--ids]
+                                      [--name]
+                                      [--resource-group]
+                                      [--subscription]
                                       [--yes]
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: Name of the scheduled query rule.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_monitor_scheduled-query_list
@@ -152,25 +161,29 @@ directCommands:
   summary: Show detail of a scheduled query.
   description: ''
   syntax: >-
-    az monitor scheduled-query show --name
-                                    --resource-group
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+    az monitor scheduled-query show [--ids]
+                                    [--name]
+                                    [--resource-group]
+                                    [--subscription]
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: Name of the scheduled query rule.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_monitor_scheduled-query_update
   name: az monitor scheduled-query update
   summary: Update a scheduled query.
   description: ''
   syntax: >-
-    az monitor scheduled-query update --name
-                                      --resource-group
-                                      [--action-groups]
+    az monitor scheduled-query update [--action-groups]
                                       [--add]
                                       [--auto-mitigate {false, true}]
                                       [--check-ws-alerts-storage {false, true}]
@@ -181,36 +194,32 @@ directCommands:
                                       [--disabled {false, true}]
                                       [--evaluation-frequency]
                                       [--force-string]
+                                      [--ids]
                                       [--mad]
+                                      [--name]
                                       [--remove]
+                                      [--resource-group]
                                       [--set]
                                       [--severity]
                                       [--skip-query-validation {false, true}]
+                                      [--subscription]
                                       [--tags]
                                       [--target-resource-type]
                                       [--window-size]
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: Name of the scheduled query rule.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --action-groups
     summary: Action Group resource Ids to invoke when the alert fires.
     description: 'Usage:   --action-groups ACTION_GROUP_NAME_OR_ID [NAME_OR_ID,...].'
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --auto-mitigate
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: The flag that indicates whether the alert should be automatically resolved or not. The default is true.
     description: ''
   - name: --check-ws-alerts-storage --cwas
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: The flag which indicates whether this scheduled query rule should be stored in the customer's storage.
     description: ''
   - name: --condition
@@ -236,30 +245,45 @@ directCommands:
     summary: Free-text description of the rule.
     description: ''
   - name: --disabled
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Disable the scheduled query.
     description: ''
   - name: --evaluation-frequency
     summary: Frequency with which to evaluate the rule in "##h##m##s" format.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --mad --mute-actions-duration
     summary: Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired.
     description: ''
+  - name: --name -n
+    summary: Name of the scheduled query rule.
+    description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --severity
     summary: Severity of the alert from 0 (critical) to 4 (verbose).
     description: ''
   - name: --skip-query-validation
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: The flag which indicates whether the provided query should be validated or not.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -284,8 +308,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

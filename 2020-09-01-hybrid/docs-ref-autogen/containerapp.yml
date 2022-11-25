@@ -13,19 +13,25 @@ directCommands:
   summary: Open a containerapp in the browser, if possible.
   description: ''
   syntax: >-
-    az containerapp browse --name
-                           --resource-group
+    az containerapp browse [--ids]
+                           [--name]
+                           [--resource-group]
+                           [--subscription]
   examples:
   - summary: open a containerapp in the browser
     syntax: az containerapp browse -n MyContainerapp -g MyResourceGroup
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_containerapp_create
   name: az containerapp create
@@ -137,6 +143,7 @@ directCommands:
     summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
     description: ''
   - name: --dal --dapr-enable-api-logging
+    defaultValue: "False"
     summary: Enable API logging for the Dapr sidecar.
     description: ''
   - name: --dapr-app-id
@@ -146,7 +153,7 @@ directCommands:
     summary: The port Dapr uses to talk to the application.
     description: ''
   - name: --dapr-app-protocol
-    parameterValueGroup: grpc, http
+    parameterValueGroup: "grpc, http"
     summary: The protocol Dapr uses to talk to the application.
     description: ''
   - name: --dapr-http-max-request-size --dhmrs
@@ -156,11 +163,12 @@ directCommands:
     summary: Dapr max size of http header read buffer in KB to handle when sending multi-KB headers..
     description: ''
   - name: --dapr-log-level
-    parameterValueGroup: debug, error, info, warn
+    parameterValueGroup: "debug, error, info, warn"
     summary: Set the log level for the Dapr sidecar.
     description: ''
   - name: --enable-dapr
-    parameterValueGroup: false, true
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Boolean indicating if the Dapr side car is enabled.
     description: ''
   - name: --env-vars
@@ -176,7 +184,7 @@ directCommands:
     summary: Container image, e.g. publisher/image-name:tag.
     description: ''
   - name: --ingress
-    parameterValueGroup: external, internal
+    parameterValueGroup: "external, internal"
     summary: The ingress type.
     description: ''
   - name: --max-replicas
@@ -189,6 +197,7 @@ directCommands:
     summary: The minimum number of replicas.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --registry-identity
@@ -207,8 +216,8 @@ directCommands:
     summary: User friendly suffix that is appended to the revision name.
     description: ''
   - name: --revisions-mode
-    defaultValue: single
-    parameterValueGroup: multiple, single
+    defaultValue: "single"
+    parameterValueGroup: "multiple, single"
     summary: The active revisions mode for the container app.
     description: ''
   - name: --scale-rule-auth --sra
@@ -230,6 +239,7 @@ directCommands:
     summary: A list of secret(s) for the container app. Space-separated values in 'key=value' format.
     description: ''
   - name: --system-assigned
+    defaultValue: "False"
     summary: Boolean indicating whether to assign system-assigned identity.
     description: ''
   - name: --tags
@@ -239,8 +249,8 @@ directCommands:
     summary: The application port used for ingress traffic.
     description: ''
   - name: --transport
-    defaultValue: auto
-    parameterValueGroup: auto, http, http2, tcp
+    defaultValue: "auto"
+    parameterValueGroup: "auto, http, http2, tcp"
     summary: The transport protocol used for ingress traffic.
     description: ''
   - name: --user-assigned
@@ -254,27 +264,34 @@ directCommands:
   summary: Delete a container app.
   description: ''
   syntax: >-
-    az containerapp delete --name
-                           --resource-group
+    az containerapp delete [--ids]
+                           [--name]
                            [--no-wait]
+                           [--resource-group]
+                           [--subscription]
                            [--yes]
   examples:
   - summary: Delete a container app.
     syntax: az containerapp delete -g MyResourceGroup -n MyContainerapp
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_containerapp_exec
@@ -306,7 +323,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --command
-    defaultValue: sh
+    defaultValue: "sh"
     summary: The startup command (bash, zsh, sh, etc.).
     description: ''
   - name: --container
@@ -342,24 +359,30 @@ directCommands:
   summary: Show details of a container app.
   description: ''
   syntax: >-
-    az containerapp show --name
-                         --resource-group
+    az containerapp show [--ids]
+                         [--name]
+                         [--resource-group]
                          [--show-secrets]
+                         [--subscription]
   examples:
   - summary: Show the details of a container app.
     syntax: az containerapp show -n MyContainerapp -g MyResourceGroup
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
   - name: --show-secrets
+    defaultValue: "False"
     summary: Show Containerapp secrets.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_containerapp_up
   name: az containerapp up
@@ -407,6 +430,7 @@ directCommands:
     summary: The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
     description: ''
   - name: --browse
+    defaultValue: "False"
     summary: Open the app in a web browser after creation and deployment, if possible.
     description: ''
   - name: --context-path
@@ -422,7 +446,7 @@ directCommands:
     summary: Container image, e.g. publisher/image-name:tag.
     description: ''
   - name: --ingress
-    parameterValueGroup: external, internal
+    parameterValueGroup: "external, internal"
     summary: The ingress type.
     description: ''
   - name: --location -l
@@ -472,20 +496,21 @@ directCommands:
   summary: Update a container app. In multiple revisions mode, create a new revision based on the latest revision.
   description: ''
   syntax: >-
-    az containerapp update --name
-                           --resource-group
-                           [--args]
+    az containerapp update [--args]
                            [--command]
                            [--container-name]
                            [--cpu]
+                           [--ids]
                            [--image]
                            [--max-replicas]
                            [--memory]
                            [--min-replicas]
+                           [--name]
                            [--no-wait]
                            [--remove-all-env-vars]
                            [--remove-env-vars]
                            [--replace-env-vars]
+                           [--resource-group]
                            [--revision-suffix]
                            [--scale-rule-auth]
                            [--scale-rule-http-concurrency]
@@ -493,6 +518,7 @@ directCommands:
                            [--scale-rule-name]
                            [--scale-rule-type]
                            [--set-env-vars]
+                           [--subscription]
                            [--tags]
                            [--yaml]
   examples:
@@ -517,15 +543,6 @@ directCommands:
           --scale-rule-type my-custom-type \
           --scale-rule-metadata key=value key2=value2 \
           --scale-rule-auth triggerparam=secretref triggerparam=secretref
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --args
     summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
@@ -539,6 +556,9 @@ directCommands:
   - name: --cpu
     summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --image -i
     summary: Container image, e.g. publisher/image-name:tag.
     description: ''
@@ -551,10 +571,15 @@ directCommands:
   - name: --min-replicas
     summary: The minimum number of replicas.
     description: ''
+  - name: --name -n
+    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove-all-env-vars
+    defaultValue: "False"
     summary: Remove all environment variable(s) from container..
     description: ''
   - name: --remove-env-vars
@@ -562,6 +587,9 @@ directCommands:
     description: ''
   - name: --replace-env-vars
     summary: Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --revision-suffix
     summary: User friendly suffix that is appended to the revision name.
@@ -583,6 +611,9 @@ directCommands:
     description: ''
   - name: --set-env-vars
     summary: Add or update environment variable(s) in container. Existing environmentenvironment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -712,8 +743,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

@@ -43,16 +43,18 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --associate-public-ip
+    defaultValue: "False"
     summary: Option to create repair vm with public ip.
     description: ''
   - name: --copy-disk-name
     summary: Name of OS disk copy.
     description: ''
   - name: --distro
-    defaultValue: ubuntu
+    defaultValue: "ubuntu"
     summary: Option to create repair vm from a specific linux distro (rhel7|rhel8|suse12|ubuntu20|centos7|oracle7).
     description: ''
   - name: --enable-nested
+    defaultValue: "False"
     summary: Enable nested hyperv.
     description: ''
   - name: --repair-group-name
@@ -68,9 +70,11 @@ directCommands:
     summary: Name of repair VM.
     description: ''
   - name: --unlock-encrypted-vm
+    defaultValue: "False"
     summary: Option to auto-unlock encrypted VMs using current subscription auth.
     description: ''
   - name: --yes
+    defaultValue: "False"
     summary: Option to skip prompt for associating public ip and confirm yes to it in no Tty mode.
     description: ''
 - uid: az_vm_repair_list-scripts
@@ -96,8 +100,10 @@ directCommands:
   summary: Reset the network interface stack on the VM guest OS. https://docs.microsoft.com/en-us/troubleshoot/azure/virtual-machines/reset-network-interface.
   description: ''
   syntax: >-
-    az vm repair reset-nic --name
-                           --resource-group
+    az vm repair reset-nic [--ids]
+                           [--name]
+                           [--resource-group]
+                           [--subscription]
                            [--yes]
   examples:
   - summary: Reset the VM guest NIC. Specify VM resource group and name.
@@ -106,17 +112,21 @@ directCommands:
     syntax: az vm repair reset-nic -g MyResourceGroup -n MyVM --subscription mySub --verbose
   - summary: Reset the VM guest NIC and auto-start the VM if it is not in running state.
     syntax: az vm repair reset-nic -g MyResourceGroup -n MyVM --yes --verbose
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes
+    defaultValue: "False"
     summary: Do not prompt for confirmation to start VM if it is not running.
     description: ''
 - uid: az_vm_repair_restore
@@ -124,33 +134,39 @@ directCommands:
   summary: Replace source VM's OS disk with data disk from repair VM.
   description: ''
   syntax: >-
-    az vm repair restore --name
-                         --resource-group
-                         [--disk-name]
+    az vm repair restore [--disk-name]
+                         [--ids]
+                         [--name]
                          [--repair-vm-id]
+                         [--resource-group]
+                         [--subscription]
                          [--yes]
   examples:
   - summary: Restore from the repair VM, command will auto-search for repair-vm
     syntax: az vm repair restore -g MyResourceGroup -n MyVM --verbose
   - summary: Restore from the repair VM, specify the disk to restore
     syntax: az vm repair restore -g MyResourceGroup -n MyVM --disk-name MyDiskCopy --verbose
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --disk-name
     summary: Name of fixed data disk. Defaults to the first data disk in the repair VM.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
+    description: ''
   - name: --repair-vm-id
     summary: Repair VM resource id.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes
+    defaultValue: "False"
     summary: Deletes the repair resources without confirmation.
     description: ''
 - uid: az_vm_repair_run
@@ -158,14 +174,16 @@ directCommands:
   summary: Run verified scripts from GitHub on a VM. 'az vm repair list-scripts' to view available scripts.
   description: ''
   syntax: >-
-    az vm repair run --name
-                     --resource-group
-                     [--custom-script-file]
+    az vm repair run [--custom-script-file]
+                     [--ids]
+                     [--name]
                      [--parameters]
                      [--preview]
                      [--repair-vm-id]
+                     [--resource-group]
                      [--run-id]
                      [--run-on-repair]
+                     [--subscription]
   examples:
   - summary: Run the script with <run-id> directly on the VM.
     syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --run-id win-hello-world --verbose
@@ -177,18 +195,15 @@ directCommands:
     syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --custom-script-file ./file.ps1 --verbose
   - summary: Run unverified script from your fork of https://github.com/Azure/repair-script-library
     syntax: az vm repair run -g MyResourceGroup -n MySourceWinVM --preview "https://github.com/haagha/repair-script-library/blob/master/map.json" --run-id test
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --custom-script-file
     summary: Custom script file to run on VM. Script should be PowerShell for windows, Bash for Linux.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --parameters
     summary: Space-separated parameters in the format of '[name=]value'. Positional for bash scripts.
@@ -199,11 +214,18 @@ directCommands:
   - name: --repair-vm-id
     summary: Repair VM resource id.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --run-id
     summary: Unique run id for run scripts.
     description: ''
   - name: --run-on-repair
+    defaultValue: "False"
     summary: Script will be run on the linked repair VM.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_vm_repair_create
@@ -219,8 +241,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
