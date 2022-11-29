@@ -206,5 +206,16 @@ To see a list of installed extension for the Azure CLI, enter `az` at your termi
 ## See also
 
 * [How to use the Azure CLI effectively - Work behind a proxy](/cli/azure/use-cli-effectively&tabs=bash%2Cbash2#work-behind-a-proxy)
+* [Work with existing on-premises proxy servers](/azure/active-directory/app-proxy/application-proxy-configure-connectors-with-proxy-servers)
+* [Azure Firewall threat intelligence configuration - Allowlist addresses](/azure/firewall-manager/threat-intelligence-settings#allowlist-addresses)
+* Azure IP ranges and Service Tags
+  [Public Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
+  [US Government Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57063)
+  [Germany Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57064)
+  [China Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57062)
+
+omit these related links
+* [Use the Azure PowerShell module behind a proxy](/powershell/azure/az-powershell-proxy)
 * [Allow the Azure portal URLs on your firewall or proxy server](/azure/azure-portal/azure-portal-safelist-urls?tabs=public-cloud)
 * [Allowed IP addresses and domain URLs for Azure DevOps Services](/azure/devops/organizations/security/allow-list-ip-url)
+* [Access Azure Key Vault behind a firewall](/azure/key-vault/general/access-behind-firewall)
