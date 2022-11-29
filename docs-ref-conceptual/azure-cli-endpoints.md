@@ -14,7 +14,7 @@ If your organization is secured with a firewall or proxy server, you must add ce
 
 ## Azure CLI endpoints for proxy bypass
 
-The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  To allow network traffic to these endpoints to bypass restrictions, select your cloud, then add the list of URLs to your proxy server or firewall. We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
+The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
 ### [Public Cloud](#tab/azure-cloud)
 
@@ -200,8 +200,7 @@ Azure CLI extensions are optional and installed separately.  All extensions inst
 To see a list of installed extension for the Azure CLI, enter `az` at your terminal command prompt and press **enter**.  To see a list of available extensions see [Available Azure CLI extensions](/cli/azure/azure-cli-extensions-list).
 
 ## Engineering questions
-1. What about **pypi.org** and **files.pythonhosted.org**?  According to the customer request, they had to allow these two URLs, but they aren't in the above lists.
-1. 
+1. What about **pypi.org** and **files.pythonhosted.org**?  According to the customer request for installing the `connectedk8s` extension, they had to allow these two URLs.  I only see **files.pythonhosted.org** under `image-copy-extension`. **pypi.org** isn't in any list.
 
 ## See also
 
