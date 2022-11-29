@@ -20,8 +20,8 @@ The following tables provide lists of the endpoints and suffixes used by the Azu
 
 ### Endpoints
 
-|-|-|
 |Endpoint group | Endpoint
+|-|-|
 management | https://management.core.windows.net/
 resource_manager | https://management.azure.com/
 sql_management | https://management.core.windows.net:8443/
@@ -44,8 +44,8 @@ portal | https://portal.azure.com
 
 ### Endpoint suffixes
 
-|-|-|
 |Suffix name | Suffix
+|-|-|
 storage_endpoint | *.core.windows.net
 storage_sync_endpoint | *.afs.azure.net
 keyvault_dns | *.vault.azure.net
@@ -64,8 +64,8 @@ attestation_endpoint | *.attest.azure.net
 
 ### Endpoints
 
-|-|-|
 |Endpoint group | Endpoint
+|-|-|
 management | https://management.core.usgovcloudapi.net/
 resource_manager | https://management.usgovcloudapi.net/
 sql_management | https://management.core.usgovcloudapi.net:8443/
@@ -86,8 +86,8 @@ portal | https://portal.azure.us
 
 ### Endpoint suffixes
 
-|-|-|
 |Suffix name | Suffix
+|-|-|
 storage_endpoint | *.core.usgovcloudapi.net
 storage_sync_endpoint | *.afs.azure.us
 keyvault_dns | *.vault.usgovcloudapi.net
@@ -103,8 +103,8 @@ synapse_analytics_endpoint | *.dev.azuresynapse.usgovcloudapi.net'
 
 ### Endpoints
 
-|-|-|
 |Endpoint group | Endpoint
+|-|-|
 management | https://management.core.chinacloudapi.cn/
 resource_manager | https://management.chinacloudapi.cn
 sql_management | https://management.core.chinacloudapi.cn:8443/
@@ -125,8 +125,8 @@ portal | https://portal.azure.cn
 
 ### Endpoint suffixes
 
-|-|-|
 |Suffix name | Suffix
+|-|-|
 storage_endpoint | *.core.chinacloudapi.cn
 keyvault_dns | *.vault.azure.cn
 mhsm_dns | *.managedhsm.azure.cn
@@ -141,8 +141,8 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 ### Endpoints
 
-|-|-|
 |Endpoint group | Endpoint
+|-|-|
 management | https://management.core.cloudapi.de/
 resource_manager | https://management.microsoftazure.de
 sql_management | https://management.core.cloudapi.de:8443/
@@ -159,8 +159,8 @@ portal | https://portal.microsoftazure.de
 
 ### Endpoint suffixes
 
-|-|-|
 |Suffix name | Suffix
+|-|-|
 storage_endpoint | *.core.cloudapi.de
 keyvault_dns | *.vault.microsoftazure.de
 mhsm_dns | *.managedhsm.microsoftazure.de
@@ -175,8 +175,8 @@ mariadb_server_endpoint | *.mariadb.database.cloudapi.de
 
 Azure CLI extensions are optional and installed separately.  All extensions install with endpoint **azcliprod.blob.core.windows.net** with the following exceptions:
 
-|-|-|
 |Extension name | Endpoint
+|-|-|
 | arcappliance | arcplatformcliextprod.blob.core.windows.net
 | customlocation |
 | arcdata | azurearcdatacli.blob.core.windows.net
