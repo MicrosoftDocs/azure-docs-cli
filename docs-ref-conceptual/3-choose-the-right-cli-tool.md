@@ -57,13 +57,13 @@ The Azure CLI, Azure PowerShell, Bicep and Terraform have many similarities, but
 | Capability | Azure CLI | Azure PowerShell | Bicep | Terraform
 |-|-|-|-|-|
 |Imperative IaC | yes | yes | yes | |
-|Declarative IaC | | | yes | yes|
+|Declarative IaC | | | | yes|
 |Azure-native | yes | yes | yes| |
 |Cloud-agnostic | | | | yes
 |Can run in Windows, macOS and Linux shells| yes | yes | yes | yes
 |Is a command-line tool | yes | yes | | |
 |Can execute a script from a command-line | yes | yes | yes | yes
-|Can authenticate with ...(?) | yes | yes | yes | yes
+|Uses [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python) as the underlying authentication library | yes | yes | yes | yes
 |Can authenticate with ...(?) | yes | yes | | |
 |Can create, edit and delete Azure Storage resources | yes | yes | yes | yes
 |Can `do something else` | | | yes | yes
@@ -88,15 +88,19 @@ Azure CLI and Azure PowerShell are command-line tools that enable you to create 
 
 * Cross-platform command-line interface, installable on Windows, macOS, Linux
 * Runs in Windows PowerShell, Cmd, or Bash and other Unix shells.
+* Is based on Python
 * Defaults to outputting a JSON string. Other format options can be found on the [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
+* Allows you to query for command output using [JMESPath query syntax](/azure/query-azure-cli).
+* Supports asynchronous operations
 
 **Azure PowerShell**
 
 * Cross-platform PowerShell module, runs on Windows, macOS, Linux
 * Requires Windows PowerShell or PowerShell
+* Is based on the .NET Standard
 * Defaults to outputting objects. To learn more about formatting in PowerShell, read the [Using Format Commands to Change Output View](/powershell/scripting/samples/using-format-commands-to-change-output-view).
 
-### Different shell environments
+#### Different shell environments
 
 |Shell Environment|Azure CLI|Azure PowerShell|
 |---|:---:|:---:|
@@ -115,17 +119,18 @@ Azure PowerShell is set of cmdlets packaged as a PowerShell module named `Az`; n
 
 Windows PowerShell is the standard scripting shell that comes preinstalled with most Windows operating systems. PowerShell is a stand-alone installation that uses .NET Core as it's run time, allowing it to be installed on macOS, Linux, and Windows.
 
-**Key points:**
+**Additional points:**
 
 * AzureRM is a PowerShell module that is still referenced for Azure administration with PowerShell. However, it has been replaced by Azure PowerShell and has an official retirement date of February 29 2024.  If you're using AzureRM, you can [migrate Azure PowerShell from AzureRM to Az](/powershell/azure/migrate-from-azurerm-to-az).
 
-* Feature parity for Azure services doesn't always exist between Azure CLI and Azure PowerShell although the Azure CLI now supports xxx Azure services.  Azure PowerShell supports yyy Azure services with more Azure services or features added at each bi-monthly publish.
+* Feature parity for Azure services doesn't always exist between Azure CLI and Azure PowerShell.  Azure CLI currently supports xxx Azure services.  Azure PowerShell supports yyy Azure services.  Both tools continue to add Azure services and features at each bi-monthly release.
 
 # [Bicep vs Terraform](#tab/bicep-terrafrom)
 
 Say something here
-
-
+Say something here
+Say something here
+Say something here
 
 ---
 
@@ -142,15 +147,12 @@ Cloud Shell is accessible in a web browser and has integrations for [Windows Ter
 > [!NOTE]
 > Azure Cloud Shell may not always _immediately reflect_ the most recent Azure PowerShell and Azure CLI releases as the publishing schedule for all three tools is different.  However, Azure Cloud Shell is generally thought to always contain the most recent versions of both tools.
 
-## Which Azure command-line tool is right for you?
+## Which Azure automation tool is right for you?
 
 When picking the right tool, consider your past experience and current work environment.
 
 Azure CLI syntax is similar to that of Bash scripting. If you work primarily with Linux systems, Azure CLI feels more natural.
 
-Azure PowerShell is a PowerShell module. If you work primarily with Windows systems, Azure PowerShell is a natural fit. Commands follow a verb-noun naming scheme and
-data is returned as objects.
+Azure PowerShell is a PowerShell module. If you work primarily with Windows systems, Azure PowerShell is a natural fit. Commands follow a verb-noun naming scheme and data is returned as objects.
 
-Choose the tool that uses your experience and shortens your learning curve. Take advantage of [Microsoft learning](/training/paths/manage-resources-in-azure) to become proficient at managing Azure at the command line.
-
-With that said, being open-minded will only improve your abilities. Use a different tool when it makes sense.
+Choose the tool that uses your experience and shortens your learning curve. Being open-minded will only improve your abilities. Use a different tool when it makes sense.
