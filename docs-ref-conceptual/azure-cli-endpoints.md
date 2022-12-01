@@ -9,7 +9,9 @@ ms.topic: conceptual
 ms.date: 11/14/2022
 ms.tool: azure-cli
 ---
+
 # Overview
+
 If your organization is secured with a firewall or proxy server, you must add certain internet protocol (IP) addresses and domain uniform resource locators (URLs) to the **allowlist** prior to installing the Azure CLI.
 
 ## Azure CLI endpoints for proxy bypass
