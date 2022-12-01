@@ -73,27 +73,28 @@ The Azure CLI, Azure PowerShell, Bicep and Terraform have many similarities, but
 > [!NOTE]
 > Azure management tools are continually adding the ability to work with more and more Azure services.
 > This learning unit is focusing on Azure Storage.  To see a list of Azure services each tool can
-> manage, see **Azure Services the [Azure CLI]()/cli/azure/azure-services-the-azure-cli-can-manage, [Azure PowerShell](), [Bicep]() and [Terraform]() Can Manage**.
+> manage, see **Azure Services the** [Azure CLI](/cli/azure/azure-services-the-azure-cli-can-manage), [Azure PowerShell](), [Bicep]() and [Terraform]() **Can Manage**.
 
 Take a deeper look at each tool.  What features of the Azure CLI vs Azure PowerShell, Bicep vs Terraform, make
-one or more a good fit for managing Azure Storage?
+one or more a good fit in your environment?
 
 # [Azure CLI vs Azure PowerShell](#tab/cli-ps)
 
 ### Azure CLI vs Azure PowerShell
 
-Azure CLI and Azure PowerShell are command-line tools that enable you to create and manage Azure resources. Both are cross-platform, installable
-on Windows, macOS, and Linux.
+Azure CLI and Azure PowerShell are command-line tools that enable you to create and manage Azure resources. Both are cross-platform, installable on Windows, macOS, and Linux.  
 
 **Azure CLI**
 
 * Cross-platform command-line interface, installable on Windows, macOS, Linux
 * Runs in Windows PowerShell, Cmd, or Bash and other Unix shells.
+* Defaults to outputting a JSON string. Other format options can be found on the [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
 
 **Azure PowerShell**
 
 * Cross-platform PowerShell module, runs on Windows, macOS, Linux
 * Requires Windows PowerShell or PowerShell
+* Defaults to outputting objects. To learn more about formatting in PowerShell, read the [Using Format Commands to Change Output View](/powershell/scripting/samples/using-format-commands-to-change-output-view).
 
 ### Different shell environments
 
@@ -116,9 +117,9 @@ Windows PowerShell is the standard scripting shell that comes preinstalled with 
 
 **Key points:**
 
-* AzureRM is a PowerShell module that is still referenced for Azure administration with PowerShell. However, it has been replaced by Azure PowerShell and has an official retirement date of February 29 2024.
+* AzureRM is a PowerShell module that is still referenced for Azure administration with PowerShell. However, it has been replaced by Azure PowerShell and has an official retirement date of February 29 2024.  If you're using AzureRM, you can [migrate Azure PowerShell from AzureRM to Az](/powershell/azure/migrate-from-azurerm-to-az).
 
-If you're using AzureRM, you can [migrate Azure PowerShell from AzureRM to Az](/powershell/azure/migrate-from-azurerm-to-az).
+* Feature parity for Azure services doesn't always exist between Azure CLI and Azure PowerShell although the Azure CLI now supports xxx Azure services.  Azure PowerShell supports yyy Azure services with more Azure services or features added at each bi-monthly publish.
 
 # [Bicep vs Terraform](#tab/bicep-terrafrom)
 
@@ -153,64 +154,3 @@ data is returned as objects.
 Choose the tool that uses your experience and shortens your learning curve. Take advantage of [Microsoft learning](/training/paths/manage-resources-in-azure) to become proficient at managing Azure at the command line.
 
 With that said, being open-minded will only improve your abilities. Use a different tool when it makes sense.
-
-**Key points:**
-
-* Feature parity for Azure services doesn't always exist between Azure CLI and Azure PowerShell.
-
-## Azure CLI vs Azure PowerShell: Side-by-side Command Comparison
-
-Sign in, Subscription, and Location Commands:
-
-|Command|Azure CLI|Azure PowerShell|
-|---|---|---|
-|Sign in with Web Browser|az login|Connect-AzAccount|
-|Get available subscriptions|az account list|Get-AzSubscription|
-|Set Subscription|az account set –-subscription \<SubscriptionId>|Set-AzContext -Subscription \<SubscriptionID>|
-|List Azure Locations|az account list-locations|Get-AzLocation|
-
----
-
-Find Versions, Get Help, and View Command Help:
-
-|Command|Azure CLI|Azure PowerShell|
-|---|---|---|
-|Find Version|az --version|Get-InstalledModule -Name Az|
-|Get Help|az --help|Get-Help|
-|View Command Help|az vm --help|Get-Help -Name New-AzVM
-
----
-
-Create a Resource Group, VM, and Storage Account:
-
-|Command|Azure CLI|Azure PowerShell|
-| --- | --- | --- |
-| Create Resource Group | az group create --name \<ResourceGroupName> --location eastus |New-AzResourceGroup -Name \<ResourceGroupName> -Location eastus
-| Create Azure Virtual Machine | az vm create --resource-group myResourceGroup --name myVM --image UbuntuLTS --admin-username azureuser --admin-password '\<Password>' |  New-AzVM -ResourceGroupName \<ResourceGroupName> -Name myVM -Image UbuntuLTS -Credential (Get-Credential) |
-| Create Azure Storage Account | az storage account create --name \<StorageAccountName> --resource-group \<ResourceGroupName> --location eastus --sku Standard_LRS --kind StorageV2 | New-AzStorageAccount -Name \<StorageAccountName> -ResourceGroupName \<ResourceGroupName> -Location eastus -SkuName Standard_LRS -Kind StorageV2
-
----
-
-Manage Azure Virtual Machines:
-
-|Command|Azure CLI|Azure PowerShell|
-| --- | --- | --- |
-|List VM|az vm list|Get-AzVM
-|Restart VM|az vm restart --name myVM --resource-group \<ResourceGroupName>|Restart-AzVM -Name myVM -ResourceGroupName \<ResourceGroupName>
-|Stop VM|az vm stop --name myVM --resource-group \<ResourceGroupName>|Stop-AzVM -Name myVM -ResourceGroupName \<ResourceGroupName>
-|Stop & Deallocate VM| az vm deallocate --name myVM --resource-group \<ResourceGroupName>|Stop-AzVM -Name myVM -ResourceGroupName \<ResourceGroupName>
-|Start VM| az vm start --name myVM --resource-group \<ResourceGroupName>|Start-AzVM -Name myVM -ResourceGroupName \<ResourceGroupName>
-|Delete VM|az vm delete --name myVM --resource-group \<ResourceGroupName>|Remove-AzVM -Name myVM -ResourceGroupName \<ResourceGroupName>|
-
-Select Properties and Change Output Formats:
-
-|Command|Azure CLI|Azure PowerShell|
-| --- | --- | --- |
-|Show all subscription information|az account list --all|Get-AzSubscription \| Select-Object -Property *|
-|Output as a Table|az account list -o table| Get-AzSubscription \| Format-Table|
-|Output as JSON|az account show|Get-AzSubscription \| ConvertTo-Json|
-
-**Key points:**
-
-* Azure CLI defaults to outputting a JSON string. Other format options can be found on the [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli).
-* Azure PowerShell defaults to outputting objects. To learn more about formatting in PowerShell, read the [Using Format Commands to Change Output View](/powershell/scripting/samples/using-format-commands-to-change-output-view).
