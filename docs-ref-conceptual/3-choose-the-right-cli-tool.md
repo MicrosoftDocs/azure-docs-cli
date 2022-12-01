@@ -56,22 +56,22 @@ The Azure CLI, Azure PowerShell, Bicep and Terraform have many similarities, but
 
 | Capability | Azure CLI | Azure PowerShell | Bicep | Terraform
 |-|-|-|-|-|
-|Imperative IaC | yes | yes | yes |
+|Imperative IaC | yes | yes | yes | |
 |Declarative IaC | | | yes | yes|
 |Azure-native | yes | yes | yes| |
 |Cloud-agnostic | | | | yes
 |Can run in Windows, macOS and Linux shells| yes | yes | yes | yes
-|Is a command-line tool | yes | yes | |
+|Is a command-line tool | yes | yes | | |
 |Can execute a script from a command-line | yes | yes | yes | yes
 |Can authenticate with ...(?) | yes | yes | yes | yes
-|Can authenticate with ...(?) | yes | yes | |
+|Can authenticate with ...(?) | yes | yes | | |
 |Can create, edit and delete Azure Storage resources | yes | yes | yes | yes
 |Can `do something else` | | | yes | yes
-|Can `do something else` | yes | yes | |
+|Can `do something else` | yes | yes | | |
 |Can `do something else` | yes | yes | yes | yes
 
 > [!NOTE]
-> Azure management tools are continually adding the ability to work with more and more Azure tools.
+> Azure management tools are continually adding the ability to work with more and more Azure services.
 > This learning unit is focusing on Azure Storage.  To see a list of Azure services each tool can
 > manage, see **Azure Services the [Azure CLI]()/cli/azure/azure-services-the-azure-cli-can-manage, [Azure PowerShell](), [Bicep]() and [Terraform]() Can Manage**.
 
