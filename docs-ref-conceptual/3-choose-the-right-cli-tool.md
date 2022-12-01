@@ -38,7 +38,7 @@ Bicep provides concise syntax, reliable type safety, and support for code reuse.
 
 [Hashicorp Terraform](https://www.terraform.io/) is an open-source IaC (Infrastructure-as-Code) tool for provisioning and managing cloud infrastructure. It codifies infrastructure in configuration files that describe the desired state for your topology. Terraform enables the management of any infrastructure - such as public clouds, private clouds, and SaaS services - by using [Terraform providers](https://www.terraform.io/language/providers).  
 
-### Terraform providers for Azure infrastructure
+#### Terraform providers for Azure infrastructure
 
 There are several Terraform providers that enable the management of Azure infrastructure:
 
@@ -52,10 +52,10 @@ There are several Terraform providers that enable the management of Azure infras
 
 ## How do the tools compare?
 
-The Azure CLI, Azure PowerShell, Bicep and Terraform have many similarities, but they also offer distinct advantages.  Since you are tasked with managing Azure Storage, which tool capabilities ?
+The Azure CLI, Azure PowerShell, Bicep and Terraform have many similarities, but they also offer distinct advantages.  Since you are tasked with managing Azure Storage, which tool capabilities give the highest advantage in your environment?
 
-|-|-|-|-|-|
 | Capability | Azure CLI | Azure PowerShell | Bicep | Terraform
+|-|-|-|-|-|
 |Imperative IaC | yes | yes | yes |
 |Declarative IaC | | | yes | yes|
 |Azure-native | yes | yes | yes| |
