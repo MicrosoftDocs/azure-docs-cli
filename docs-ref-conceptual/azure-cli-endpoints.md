@@ -199,10 +199,7 @@ Azure CLI extensions are optional and installed separately.  All extensions inst
 | ml | azuremlsdktestpypi.blob.core.windows.net
 | qbs | qbsazcliextension.blob.core.windows.net
 
-To see a list of installed extension for the Azure CLI, enter `az` at your terminal command prompt and press **enter**.  To see a list of available extensions see [Available Azure CLI extensions](/cli/azure/azure-cli-extensions-list).
-
-## Engineering questions
-1. What about **pypi.org** and **files.pythonhosted.org**?  According to the customer request for installing the `connectedk8s` extension, they had to allow these two URLs.  I only see **files.pythonhosted.org** under `image-copy-extension`. **pypi.org** isn't in any list.
+Two additional URLs used during installation to download Python packages and tools are **pypi.org** and **files.pythonhosted.org**.
 
 ## See also
 
@@ -210,13 +207,7 @@ To see a list of installed extension for the Azure CLI, enter `az` at your termi
 - [Work with existing on-premises proxy servers](/azure/active-directory/app-proxy/application-proxy-configure-connectors-with-proxy-servers)
 - [Azure Firewall threat intelligence configuration - Allowlist addresses](/azure/firewall-manager/threat-intelligence-settings#allowlist-addresses)
 - Azure IP ranges and Service Tags
-  [Public Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
-  [US Government Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57063)
-  [Germany Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57064)
-  [China Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57062)
-
-omit these related links
-- [Use the Azure PowerShell module behind a proxy](/powershell/azure/az-powershell-proxy)
-- [Allow the Azure portal URLs on your firewall or proxy server](/azure/azure-portal/azure-portal-safelist-urls?tabs=public-cloud)
-- [Allowed IP addresses and domain URLs for Azure DevOps Services](/azure/devops/organizations/security/allow-list-ip-url)
-- [Access Azure Key Vault behind a firewall](/azure/key-vault/general/access-behind-firewall)
+  - [Public Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
+  - [US Government Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57063)
+  - [Germany Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57064)
+  - [China Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57062)
