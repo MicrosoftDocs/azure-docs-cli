@@ -18,6 +18,14 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 Version 2.43.0
 
+### Core
+* `aaz`: Fix `has_value` function for list, dict and object arg types (#24625)
+* `aaz`: Support argument preview and experimental (#24637)
+* `aaz`: Add registered property for `AAZBaseArg` (#24640)
+* `aaz`: Add aazlist and aazdict args transform help functions (#24690)
+* `aaz`: Support camel case key in `AAZObjectType` (#24771)
+* Disable removing and updating system extension in Cloud Shell (#24361)
+
 ### AKS
 
 * `az aks enable-addons`: Add `--enable-syslog` parameter to monitoring addon
