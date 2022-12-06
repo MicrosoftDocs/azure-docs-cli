@@ -68,6 +68,7 @@ directCommands:
                      [--image-offer]
                      [--image-sku {Developer, Enterprise, Express, Standard, Web}]
                      [--key-vault]
+                     [--least-privilege-mode {Enabled}]
                      [--license-type {AHUB, DR, PAYG}]
                      [--location]
                      [--log-backup-frequency]
@@ -91,6 +92,8 @@ directCommands:
     syntax: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type DR
   - summary: Create a SQL virtual machine with specific sku type and license type.
     syntax: az sql vm create -n sqlvm -g myresourcegroup -l eastus --image-sku Enterprise --license-type AHUB
+  - summary: Create a SQL virtual machine with least privilege mode enabled.
+    syntax: az sql vm create -n sqlvm -g myresourcegroup -l eastus --least-privilege-mode Enabled --sql-mgmt-type Full
   - summary: Create a SQL virtual machine with NoAgent type, only valid for EOS SQL 2008 and SQL 2008 R2.
     syntax: az sql vm create -n sqlvm -g myresourcegroup -l eastus --license-type AHUB --sql-mgmt-type NoAgent --image-sku Enterprise --image-offer SQL2008-WS2008R2
   - summary: Enable R services in SQL2016 onwards.
@@ -172,6 +175,10 @@ directCommands:
     description: ''
   - name: --key-vault
     summary: Azure Key Vault url.
+    description: ''
+  - name: --least-privilege-mode
+    parameterValueGroup: Enabled
+    summary: SQL IaaS Agent Least Privilege Mode. Updates from sysadmin to specific permissions used per feature.
     description: ''
   - name: --license-type -i
     parameterValueGroup: AHUB, DR, PAYG
@@ -357,6 +364,7 @@ directCommands:
                      [--ids]
                      [--image-sku {Developer, Enterprise, Express, Standard, Web}]
                      [--key-vault]
+                     [--least-privilege-mode {Enabled}]
                      [--license-type {AHUB, DR, PAYG}]
                      [--log-backup-frequency]
                      [--maintenance-window-duration]
@@ -385,7 +393,9 @@ directCommands:
   - summary: Update a SQL virtual machine with specific sku type.
     syntax: az sql vm update -n sqlvm -g myresourcegroup --image-sku Enterprise
   - summary: Update a SQL virtual machine manageability from LightWeight to Full.
-    syntax: az sql vm update -n sqlvm -g myresourcegroup --sql-mgmt-type Full --yes
+    syntax: az sql vm update -n sqlvm -g myresourcegroup --sql-mgmt-type Full
+  - summary: Update a SQL virtual machine to least privilege mode.
+    syntax: az sql vm update -n sqlvm -g myresourcegroup --least-privilege-mode Enabled --sql-mgmt-type Full
   - summary: Update SQL virtual machine auto backup settings.
     syntax: az sql vm update -n sqlvm -g myresourcegroup --backup-schedule-type manual --full-backup-frequency Weekly --full-backup-start-hour 2 --full-backup-duration 2 --sa-key {storageKey} --storage-account 'https://storageacc.blob.core.windows.net/' --retention-period 30 --log-backup-frequency 60
   - summary: Disable SQL virtual machine auto backup settings.
@@ -500,6 +510,10 @@ directCommands:
   - name: --key-vault
     summary: Azure Key Vault url.
     description: ''
+  - name: --least-privilege-mode
+    parameterValueGroup: Enabled
+    summary: SQL IaaS Agent Least Privilege Mode. Updates from sysadmin to specific permissions used per feature.
+    description: ''
   - name: --license-type -i
     parameterValueGroup: AHUB, DR, PAYG
     summary: SQL Server license type.
@@ -605,5 +619,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/29/2022
+  ms.date: 12/02/2022
   description: Manage SQL virtual machines.

@@ -37,7 +37,7 @@ directCommands:
                         [--node-public-ip-prefix-id]
                         [--node-taints]
                         [--node-vm-size]
-                        [--os-sku {CBLMariner, Ubuntu, Windows2019, Windows2022}]
+                        [--os-sku {CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
                         [--os-type]
                         [--pod-subnet-id]
                         [--ppg]
@@ -161,7 +161,7 @@ directCommands:
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --os-sku
-    parameterValueGroup: CBLMariner, Ubuntu, Windows2019, Windows2022
+    parameterValueGroup: CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022
     summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner for Linux. Windows2019 or Windows2022 for Windows.
     description: ''
   - name: --os-type
@@ -234,7 +234,7 @@ directCommands:
   description: ''
   syntax: >-
     az aks nodepool get-upgrades --cluster-name
-                                 --nodepool-name
+                                 --name
                                  --resource-group
   examples:
   - summary: Get the available upgrade versions for an agent pool of the managed Kubernetes cluster.
@@ -245,8 +245,8 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --nodepool-name
-    summary: Name of the node pool.
+    name: --name --nodepool-name -n
+    summary: The node pool name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -363,7 +363,7 @@ directCommands:
   description: ''
   syntax: >-
     az aks nodepool start --cluster-name
-                          --nodepool-name
+                          --name
                           --resource-group
                           [--aks-custom-headers]
                           [--no-wait]
@@ -376,8 +376,8 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --nodepool-name
-    summary: Agent pool name.
+    name: --name --nodepool-name -n
+    summary: The node pool name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -397,7 +397,7 @@ directCommands:
   description: ''
   syntax: >-
     az aks nodepool stop --cluster-name
-                         --nodepool-name
+                         --name
                          --resource-group
                          [--aks-custom-headers]
                          [--no-wait]
@@ -410,8 +410,8 @@ directCommands:
     summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --nodepool-name
-    summary: Agent pool name.
+    name: --name --nodepool-name -n
+    summary: The node pool name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -563,7 +563,7 @@ directCommands:
   summary: Wait for a node pool to reach a desired state.
   description: If an operation on a node pool was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
   syntax: >-
-    az aks nodepool wait --agent-pool-name
+    az aks nodepool wait --cluster-name
                          --name
                          --resource-group
                          [--created]
@@ -575,15 +575,15 @@ directCommands:
                          [--updated]
   examples:
   - summary: Wait for a node pool to reach a desired state, polling every minute for up to thirty minutes.
-    syntax: az aks nodepool wait --created --interval 60 --name MyManagedCluster --resource-group MyResourceGroup --nodepool-name MyNodePool --timeout 1800
+    syntax: az aks nodepool wait --created --interval 60 --cluster-name MyManagedCluster --resource-group MyResourceGroup --nodepool-name MyNodePool --timeout 1800
   requiredParameters:
   - isRequired: true
-    name: --agent-pool-name --nodepool-name
-    summary: The node pool name.
+    name: --cluster-name
+    summary: The cluster name.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Name of the managed cluster.
+    name: --name --nodepool-name -n
+    summary: The node pool name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -652,5 +652,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2022
+  ms.date: 11/29/2022
   description: Commands to manage node pools in Kubernetes kubernetes cluster.
