@@ -47,7 +47,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --sku
-    parameterValueGroup: EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50
+    parameterValueGroup: "EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50"
     summary: The type of RedisEnterprise cluster to deploy.
     description: ''
   optionalParameters:
@@ -55,15 +55,15 @@ directCommands:
     summary: The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs.
     description: ''
   - name: --client-protocol
-    parameterValueGroup: Encrypted, Plaintext
+    parameterValueGroup: "Encrypted, Plaintext"
     summary: Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted.
     description: ''
   - name: --clustering-policy
-    parameterValueGroup: EnterpriseCluster, OSSCluster
+    parameterValueGroup: "EnterpriseCluster, OSSCluster"
     summary: Clustering policy - default is OSSCluster. Specified at create time.
     description: ''
   - name: --eviction-policy
-    parameterValueGroup: AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL
+    parameterValueGroup: "AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL"
     summary: Redis eviction policy - default is VolatileLRU.
     description: ''
   - name: --group-nickname
@@ -76,7 +76,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --minimum-tls-version
-    parameterValueGroup: 1.0, 1.1, 1.2
+    parameterValueGroup: "1.0, 1.1, 1.2"
     summary: The minimum TLS version for the cluster to support.
     description: ''
   - name: --modules
@@ -92,9 +92,11 @@ directCommands:
 
       Multiple actions can be specified by using more than one --modules argument.
   - name: --no-database
+    defaultValue: "False"
     summary: 'Advanced. Do not automatically create a default database. Warning: the cache will not be usable until you create a database.'
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --persistence
@@ -127,27 +129,34 @@ directCommands:
   summary: Delete a Redis Enterprise cache.
   description: ''
   syntax: >-
-    az redisenterprise delete --cluster-name
-                              --resource-group
+    az redisenterprise delete [--cluster-name]
+                              [--ids]
                               [--no-wait]
+                              [--resource-group]
+                              [--subscription]
                               [--yes]
   examples:
   - summary: Delete a Redis Enterprise cache.
     syntax: az redisenterprise delete --cluster-name "cache1" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the RedisEnterprise cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_redisenterprise_list
@@ -169,58 +178,70 @@ directCommands:
   summary: Get information about a Redis Enterprise cache.
   description: ''
   syntax: >-
-    az redisenterprise show --cluster-name
-                            --resource-group
+    az redisenterprise show [--cluster-name]
+                            [--ids]
+                            [--resource-group]
+                            [--subscription]
   examples:
   - summary: Get information about a Redis Enterprise cache.
     syntax: az redisenterprise show --cluster-name "cache1" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the RedisEnterprise cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_redisenterprise_update
   name: az redisenterprise update
   summary: Update an existing Redis Enterprise cache cluster.
   description: ''
   syntax: >-
-    az redisenterprise update --cluster-name
-                              --resource-group
-                              [--capacity]
+    az redisenterprise update [--capacity]
+                              [--cluster-name]
+                              [--ids]
                               [--minimum-tls-version {1.0, 1.1, 1.2}]
                               [--no-wait]
+                              [--resource-group]
                               [--sku {EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50}]
+                              [--subscription]
                               [--tags]
   examples:
   - summary: Update an existing Redis Enterprise cache cluster.
     syntax: az redisenterprise update --cluster-name "cache1" --minimum-tls-version "1.2" --sku "EnterpriseFlash_F300" --capacity 9 --tags tag1="value1" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
-    summary: The name of the RedisEnterprise cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --capacity
     summary: The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs.
     description: ''
+  - name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --minimum-tls-version
-    parameterValueGroup: 1.0, 1.1, 1.2
+    parameterValueGroup: "1.0, 1.1, 1.2"
     summary: The minimum TLS version for the cluster to support.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --sku
-    parameterValueGroup: EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50
+    parameterValueGroup: "EnterpriseFlash_F1500, EnterpriseFlash_F300, EnterpriseFlash_F700, Enterprise_E10, Enterprise_E100, Enterprise_E20, Enterprise_E50"
     summary: The type of RedisEnterprise cluster to deploy.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -230,13 +251,15 @@ directCommands:
   summary: Place the CLI in a waiting state until a condition of the Redis Enterprise cache cluster is met.
   description: ''
   syntax: >-
-    az redisenterprise wait --cluster-name
-                            --resource-group
+    az redisenterprise wait [--cluster-name]
                             [--created]
                             [--custom]
                             [--deleted]
                             [--exists]
+                            [--ids]
                             [--interval]
+                            [--resource-group]
+                            [--subscription]
                             [--timeout]
                             [--updated]
   examples:
@@ -246,37 +269,44 @@ directCommands:
     syntax: az redisenterprise wait --cluster-name "cache1" --resource-group "rg1" --updated
   - summary: Pause executing next line of CLI script until the Redis Enterprise cache is successfully deleted.
     syntax: az redisenterprise wait --cluster-name "cache1" --resource-group "rg1" --deleted
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the RedisEnterprise cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
@@ -308,8 +338,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

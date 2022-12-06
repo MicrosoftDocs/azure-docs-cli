@@ -231,7 +231,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --allow-replicated-location-deletion
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicate whether or not removing this gallery image version from replicated regions is allowed.
     description: ''
   - name: --data-snapshot-luns
@@ -253,7 +253,7 @@ directCommands:
     summary: The end of life date, e.g. '2020-12-31'.
     description: ''
   - name: --exclude-from-latest
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: The flag means that if it is set to true, people deploying VMs with version omitted will not use this version.
     description: ''
   - name: --image-version
@@ -266,6 +266,7 @@ directCommands:
     summary: Image name(if in the same resource group) or resource id.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --os-snapshot
@@ -281,11 +282,11 @@ directCommands:
     summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
     description: ''
   - name: --replication-mode
-    parameterValueGroup: Full, Shallow
+    parameterValueGroup: "Full, Shallow"
     summary: Optional parameter which specifies the mode to be used for replication. This property is not updatable.
     description: ''
   - name: --storage-account-type
-    parameterValueGroup: Premium_LRS, Standard_LRS, Standard_ZRS
+    parameterValueGroup: "Premium_LRS, Standard_LRS, Standard_ZRS"
     summary: The default storage account type to be used per region. To set regional storage account types, use --target-regions.
     description: ''
   - name: --tags
@@ -361,6 +362,7 @@ directCommands:
                                         [--marker]
                                         [--public-gallery-name]
                                         [--show-next-marker]
+                                        [--subscription]
   examples:
   - summary: List an image versions in a gallery community.
     syntax: >-
@@ -386,6 +388,9 @@ directCommands:
   - name: --show-next-marker
     summary: Show nextMarker in result when specified.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_sig_image-version_list-shared
   name: az sig image-version list-shared
   summary: List VM Image Versions in a gallery shared directly to your subscription or tenant.
@@ -398,6 +403,7 @@ directCommands:
                                      [--marker]
                                      [--shared-to {tenant}]
                                      [--show-next-marker]
+                                     [--subscription]
   examples:
   - summary: List image versions in a gallery shared directly to your subscription in the given location and image definition.
     syntax: >-
@@ -426,11 +432,14 @@ directCommands:
     summary: A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
     description: ''
   - name: --shared-to
-    parameterValueGroup: tenant
+    parameterValueGroup: "tenant"
     summary: The query parameter to decide what shared galleries to fetch when doing listing operations. If not specified, list by subscription id.
     description: ''
   - name: --show-next-marker
     summary: Show nextMarker in result when specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image-version_show
   name: az sig image-version show
@@ -473,6 +482,7 @@ directCommands:
                                         [--ids]
                                         [--location]
                                         [--public-gallery-name]
+                                        [--subscription]
   optionalParameters:
   - name: --gallery-image-definition -i
     summary: The name of the community gallery image definition from which the image versions are to be listed.
@@ -489,6 +499,9 @@ directCommands:
   - name: --public-gallery-name
     summary: The public name of community gallery.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_sig_image-version_show-shared
   name: az sig image-version show-shared
   summary: Get an image version in a gallery shared directly to your subscription or tenant.
@@ -499,6 +512,7 @@ directCommands:
                                      [--gallery-unique-name]
                                      [--ids]
                                      [--location]
+                                     [--subscription]
   examples:
   - summary: Get an image version in a gallery shared directly to your subscription or tenant in the given location.
     syntax: >-
@@ -520,6 +534,9 @@ directCommands:
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image-version_update
   name: az sig image-version update
@@ -599,25 +616,30 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --allow-replicated-location-deletion
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicate whether or not removing this gallery image version from replicated regions is allowed.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --replica-count
     summary: The default number of replicas to be created per region. To set regional replication counts, use --target-regions.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --target-regions
@@ -674,15 +696,18 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
@@ -697,6 +722,7 @@ directCommands:
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
@@ -718,8 +744,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -728,4 +754,5 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   description: Manage shared gallery image version with VM.

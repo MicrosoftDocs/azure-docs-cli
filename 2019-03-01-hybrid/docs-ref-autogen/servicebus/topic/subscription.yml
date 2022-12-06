@@ -56,22 +56,22 @@ directCommands:
     summary: Indicates the Client ID of the application that created the client-affine subscription.
     description: ''
   - name: --dead-letter-on-filter-exceptions
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allow dead lettering when filter evaluation exceptions occur.
     description: ''
   - name: --default-message-time-to-live
     summary: ISO 8601 or duration time format for Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
     description: ''
   - name: --enable-batched-operations
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allow server-side batched operations.
     description: ''
   - name: --enable-dead-lettering-on-message-expiration
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: A boolean Value that indicates whether a subscription has dead letter support when a message expires.
     description: ''
   - name: --enable-session
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: A boolean value indicating if a subscription supports the concept of sessions.
     description: ''
   - name: --forward-dead-lettered-messages-to
@@ -81,15 +81,15 @@ directCommands:
     summary: Queue/Topic name to forward the messages.
     description: ''
   - name: --is-client-affine
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Value that indicates whether the subscription has an affinity to the client id.
     description: ''
   - name: --is-durable
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: For client-affine subscriptions, this value indicates whether the subscription is durable or not.
     description: ''
   - name: --is-shared
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: For client-affine subscriptions, this value indicates whether the subscription is shared or not.
     description: ''
   - name: --lock-duration
@@ -99,7 +99,7 @@ directCommands:
     summary: Number of maximum deliveries.
     description: ''
   - name: --status
-    parameterValueGroup: Active, Disabled, ReceiveDisabled, SendDisabled
+    parameterValueGroup: "Active, Disabled, ReceiveDisabled, SendDisabled"
     summary: Enumerates the possible values for the status of a messaging entity.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
@@ -112,6 +112,7 @@ directCommands:
                                             [--name]
                                             [--namespace-name]
                                             [--resource-group]
+                                            [--subscription]
                                             [--topic-name]
   examples:
   - summary: Deletes the Subscription
@@ -128,6 +129,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --topic-name
     summary: Name of Topic.
@@ -176,6 +180,7 @@ directCommands:
                                           [--name]
                                           [--namespace-name]
                                           [--resource-group]
+                                          [--subscription]
                                           [--topic-name]
   examples:
   - summary: Shows the Subscription details.
@@ -192,6 +197,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --topic-name
     summary: Name of Topic.
@@ -221,6 +229,7 @@ directCommands:
                                             [--resource-group]
                                             [--set]
                                             [--status {Active, Disabled, ReceiveDisabled, SendDisabled}]
+                                            [--subscription]
                                             [--topic-name]
   examples:
   - summary: Update a new Subscription.
@@ -229,31 +238,33 @@ directCommands:
     syntax: az servicebus topic subscription update --name mysubscription --namespace-name mynamespace --resource-group myresourcegroup --status Active --subscription MySubscription --topic-name mytopic
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --auto-delete-on-idle
     summary: ISO 8601 timeSpan  or duration time format for idle interval after which the subscription is automatically deleted. The minimum duration is 5 minutes.
     description: ''
   - name: --dead-letter-on-filter-exceptions
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allow dead lettering when filter evaluation exceptions occur.
     description: ''
   - name: --default-message-time-to-live
     summary: ISO 8601 or duration time format for Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
     description: ''
   - name: --enable-batched-operations
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allow server-side batched operations.
     description: ''
   - name: --enable-dead-lettering-on-message-expiration
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: A boolean Value that indicates whether a subscription has dead letter support when a message expires.
     description: ''
   - name: --enable-session
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: A boolean value indicating if a subscription supports the concept of sessions.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --forward-dead-lettered-messages-to
@@ -278,17 +289,22 @@ directCommands:
     summary: Name of Namespace.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --status
-    parameterValueGroup: Active, Disabled, ReceiveDisabled, SendDisabled
+    parameterValueGroup: "Active, Disabled, ReceiveDisabled, SendDisabled"
     summary: Enumerates the possible values for the status of a messaging entity.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --topic-name
     summary: Name of Topic.
@@ -314,8 +330,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

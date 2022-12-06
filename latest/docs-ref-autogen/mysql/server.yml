@@ -42,33 +42,34 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: anxiousbasmati8
+    defaultValue: "machomuesli2"
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --assign-identity
+    defaultValue: "False"
     summary: Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
     description: ''
   - name: --auto-grow
-    defaultValue: Enabled
-    parameterValueGroup: Disabled, Enabled
+    defaultValue: "Enabled"
+    parameterValueGroup: "Disabled, Enabled"
     summary: Enable or disable autogrow of the storage. Default value is Enabled.
     description: ''
   - name: --backup-retention
     summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
   - name: --geo-redundant-backup
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: Enable or disable geo-redundant backups. Default value is Disabled. Not supported in Basic pricing tier.
     description: ''
   - name: --infrastructure-encryption -i
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: Add an optional second layer of encryption for data using new encryption algorithm. Default value is Disabled.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --minimal-tls-version
-    parameterValueGroup: TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled
+    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled"
     summary: Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
     description: ''
   - name: --name -n
@@ -81,11 +82,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --sku-name
-    defaultValue: GP_Gen5_2
+    defaultValue: "GP_Gen5_2"
     summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --ssl-enforcement
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: Enable or disable ssl enforcement for connections to server. Default is Enabled.
     description: ''
   - name: --storage-size
@@ -106,6 +107,7 @@ directCommands:
     az mysql server delete [--ids]
                            [--name]
                            [--resource-group]
+                           [--subscription]
                            [--yes]
   examples:
   - summary: Delete a server.
@@ -120,7 +122,11 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_mysql_server_georestore
@@ -137,6 +143,7 @@ directCommands:
                                [--no-wait]
                                [--resource-group]
                                [--sku-name]
+                               [--subscription]
   examples:
   - summary: Geo-restore 'testsvr' into a new server 'testsvrnew' located in West US 2.
     syntax: az mysql server georestore -g testgroup -n testsvrnew --source-server testsvr -l westus2
@@ -170,6 +177,7 @@ directCommands:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -177,6 +185,9 @@ directCommands:
     description: ''
   - name: --sku-name
     summary: 'The name of the sku. Defaults to sku of the source server. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_mysql_server_list
   name: az mysql server list
@@ -213,6 +224,7 @@ directCommands:
     az mysql server restart [--ids]
                             [--name]
                             [--resource-group]
+                            [--subscription]
   examples:
   - summary: Restart a server.
     syntax: az mysql server restart -g testgroup -n testsvr
@@ -228,6 +240,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_mysql_server_restore
   name: az mysql server restore
   summary: Restore a server from backup.
@@ -239,6 +254,7 @@ directCommands:
                             [--name]
                             [--no-wait]
                             [--resource-group]
+                            [--subscription]
   examples:
   - summary: Restore 'testsvr' to a specific point-in-time as a new server 'testsvrnew'.
     syntax: az mysql server restore -g testgroup -n testsvrnew --source-server testsvr --restore-point-in-time "2017-06-15T13:10:00Z"
@@ -264,10 +280,14 @@ directCommands:
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_mysql_server_show
   name: az mysql server show
@@ -277,6 +297,7 @@ directCommands:
     az mysql server show [--ids]
                          [--name]
                          [--resource-group]
+                         [--subscription]
   examples:
   - summary: Get the details of a server
     syntax: az mysql server show --name MyServer --resource-group MyResourceGroup
@@ -290,6 +311,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_mysql_server_show-connection-string
   name: az mysql server show-connection-string
   summary: Show the connection strings for a MySQL server database.
@@ -300,28 +324,32 @@ directCommands:
                                            [--database-name]
                                            [--ids]
                                            [--server-name]
+                                           [--subscription]
   examples:
   - summary: Show connection strings for cmd and programming languages.
     syntax: az mysql server show-connection-string -s testServer -u username -p password -d databasename
   optionalParameters:
   - name: --admin-password -p
-    defaultValue: '{password}'
+    defaultValue: "{password}"
     summary: The login password of the administrator.
     description: ''
   - name: --admin-user -u
-    defaultValue: '{username}'
+    defaultValue: "{username}"
     summary: The login username of the administrator.
     description: ''
   - name: --database-name -d
-    defaultValue: '{database}'
+    defaultValue: "{database}"
     summary: The name of a database.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --server-name -s
-    defaultValue: '{server}'
+    defaultValue: "{server}"
     summary: Name of the server.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_mysql_server_start
   name: az mysql server start
@@ -331,6 +359,7 @@ directCommands:
     az mysql server start [--ids]
                           [--name]
                           [--resource-group]
+                          [--subscription]
   examples:
   - summary: Start a stopped server. (autogenerated)
     syntax: az mysql server start --name testsvr --resource-group testgroup --subscription MySubscription
@@ -344,6 +373,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_mysql_server_stop
   name: az mysql server stop
   summary: Stop a running server.
@@ -352,6 +384,7 @@ directCommands:
     az mysql server stop [--ids]
                          [--name]
                          [--resource-group]
+                         [--subscription]
   examples:
   - summary: Stop a running server. (autogenerated)
     syntax: az mysql server stop --name testsvr --resource-group testgroup --subscription MySubscription
@@ -364,6 +397,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_mysql_server_update
   name: az mysql server update
@@ -386,6 +422,7 @@ directCommands:
                            [--sku-name]
                            [--ssl-enforcement {Disabled, Enabled}]
                            [--storage-size]
+                           [--subscription]
                            [--tags]
   examples:
   - summary: Update a server's sku.
@@ -396,29 +433,32 @@ directCommands:
     syntax: az mysql server update --name testsvrnew --resource-group testgroup --ssl-enforcement Enabled --minimal-tls-version TLS1_0
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --admin-password -p
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --assign-identity
+    defaultValue: "False"
     summary: Generate and assign an Azure Active Directory Identity for this server for use with key management services like Azure KeyVault.
     description: ''
   - name: --auto-grow
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: Enable or disable autogrow of the storage. Default value is Enabled.
     description: ''
   - name: --backup-retention
     summary: The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --minimal-tls-version
-    parameterValueGroup: TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled
+    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2, TLSEnforcementDisabled"
     summary: Set the minimal TLS version for connections to server when SSL is enabled. Default is TLSEnforcementDisabled.
     description: ''
   - name: --name -n
@@ -428,23 +468,28 @@ directCommands:
     summary: 'Enable or disable public network access to server. When disabled, only connections made through Private Links can reach this server. Allowed values are : Enabled, Disabled, all, 0.0.0.0, <SingleIP>, <StartIP-DestinationIP>. Default is Enabled.'
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku-name
     summary: 'The name of the sku. Follows the convention {pricing tier}_{compute generation}_{vCores} in shorthand. Examples: B_Gen5_1, GP_Gen5_4, MO_Gen5_16.'
     description: ''
   - name: --ssl-enforcement
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: Enable or disable ssl enforcement for connections to server. Default is Enabled.
     description: ''
   - name: --storage-size
     summary: The storage capacity of the server (unit is megabytes). Minimum 5120 and increases in 1024 increments. Default is 5120.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -458,6 +503,7 @@ directCommands:
                             [--ids]
                             [--name]
                             [--resource-group]
+                            [--subscription]
   examples:
   - summary: Upgrade mysql server.
     syntax: az mysql server upgrade --name testsvr --resource-group testgroup --subscription MySubscription --target-server-version 5.7
@@ -476,6 +522,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_mysql_server_wait
   name: az mysql server wait
   summary: Wait for server to satisfy certain conditions.
@@ -487,6 +536,7 @@ directCommands:
                          [--interval]
                          [--name]
                          [--resource-group]
+                         [--subscription]
                          [--timeout]
   examples:
   - summary: Wait for server to satisfy certain conditions. (autogenerated)
@@ -496,6 +546,7 @@ directCommands:
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --ids
@@ -510,6 +561,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
@@ -576,8 +630,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -586,4 +640,5 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   description: Manage MySQL servers.

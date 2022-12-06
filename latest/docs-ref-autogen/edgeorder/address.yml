@@ -53,6 +53,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --shipping-address
@@ -88,27 +89,34 @@ directCommands:
   summary: Delete an address.
   description: ''
   syntax: >-
-    az edgeorder address delete --address-name
-                                --resource-group
+    az edgeorder address delete [--address-name]
+                                [--ids]
                                 [--no-wait]
+                                [--resource-group]
+                                [--subscription]
                                 [--yes]
   examples:
   - summary: DeleteAddressByName
     syntax: az edgeorder address delete --name "TestAddressName1" --resource-group "TestRG"
-  requiredParameters:
-  - isRequired: true
-    name: --address-name --name -n
+  optionalParameters:
+  - name: --address-name --name -n
     summary: The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_edgeorder_address_list
@@ -139,45 +147,47 @@ directCommands:
   summary: Get information about the specified address.
   description: ''
   syntax: >-
-    az edgeorder address show --address-name
-                              --resource-group
+    az edgeorder address show [--address-name]
+                              [--ids]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: GetAddressByName
     syntax: az edgeorder address show --name "TestMSAddressName" --resource-group "TestRG"
-  requiredParameters:
-  - isRequired: true
-    name: --address-name --name -n
+  optionalParameters:
+  - name: --address-name --name -n
     summary: The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_edgeorder_address_update
   name: az edgeorder address update
   summary: Update the properties of an existing address.
   description: ''
   syntax: >-
-    az edgeorder address update --address-name
-                                --resource-group
+    az edgeorder address update [--address-name]
                                 [--contact-details]
+                                [--ids]
                                 [--if-match]
                                 [--no-wait]
+                                [--resource-group]
                                 [--shipping-address]
+                                [--subscription]
                                 [--tags]
   examples:
   - summary: UpdateAddress
     syntax: az edgeorder address update --name "TestAddressName2" --contact-details contact-name="Petr Cech" email-list="ssemcr@microsoft.com" phone="1234567890" phone-extension="" --shipping-address address-type="None" city="San Francisco" company-name="Microsoft" country="US" postal-code="94107" state-or-province="CA" street-address1="16 TOWNSEND STT" street-address2="UNIT 1" --tags Hobby="Web Series Added" Name="Smile-Updated" WhatElse="Web Series Added" Work="Engineering" --resource-group "TestRG"
-  requiredParameters:
-  - isRequired: true
-    name: --address-name --name -n
+  optionalParameters:
+  - name: --address-name --name -n
     summary: The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
   - name: --contact-details
     summary: Contact details for the address.
     description: >-
@@ -193,11 +203,18 @@ directCommands:
       mobile: Mobile number of the contact person.
 
       email-list: Required. List of Email-ids to be notified about job progress.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --if-match
     summary: Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --shipping-address
     summary: Shipping details for the address.
@@ -224,6 +241,9 @@ directCommands:
       company-name: Name of the company.
 
       address-type: Type of address.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -252,15 +272,18 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --interval
@@ -272,6 +295,7 @@ directCommands:
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
@@ -289,8 +313,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

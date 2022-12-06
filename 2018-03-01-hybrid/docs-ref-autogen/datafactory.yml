@@ -13,18 +13,15 @@ directCommands:
   summary: Updates a factory's repo information.
   description: ''
   syntax: >-
-    az datafactory configure-factory-repo --location
-                                          [--factory-git-hub-configuration]
+    az datafactory configure-factory-repo [--factory-git-hub-configuration]
                                           [--factory-resource-id]
                                           [--factory-vsts-configuration]
+                                          [--ids]
+                                          [--location]
+                                          [--subscription]
   examples:
   - summary: Factories_ConfigureFactoryRepo
     syntax: az datafactory configure-factory-repo --factory-resource-id "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName" --factory-vsts-configuration account-name="ADF" collaboration-branch="master" last-commit-id="" project-name="project" repository-name="repo" root-folder="/" tenant-id="" --location "East US"
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
   optionalParameters:
   - name: --factory-git-hub-configuration --github-config
     summary: Factory's GitHub repo information.
@@ -69,6 +66,15 @@ directCommands:
       root-folder: Required. Root folder.
 
       last-commit-id: Last commit id.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_datafactory_create
   name: az datafactory create
   summary: Create a factory.
@@ -139,7 +145,7 @@ directCommands:
     summary: 'List of parameters for factory. Expected value: json-string/json-file/@json-file.'
     description: ''
   - name: --if-match
-    summary: ETag of the factory entity. Should only be specified for update, for which it should match existing entity or can be \* for unconditional update.
+    summary: ETag of the factory entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -152,23 +158,29 @@ directCommands:
   summary: Deletes a factory.
   description: ''
   syntax: >-
-    az datafactory delete --factory-name
-                          --resource-group
+    az datafactory delete [--factory-name]
+                          [--ids]
+                          [--resource-group]
+                          [--subscription]
                           [--yes]
   examples:
   - summary: Factories_Delete
     syntax: az datafactory delete --name "exampleFactoryName" --resource-group "exampleResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --factory-name --name -n
+  optionalParameters:
+  - name: --factory-name --name -n
     summary: The factory name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_datafactory_get-data-plane-access
@@ -176,25 +188,18 @@ directCommands:
   summary: Get Data Plane access.
   description: ''
   syntax: >-
-    az datafactory get-data-plane-access --factory-name
-                                         --resource-group
-                                         [--access-resource-path]
+    az datafactory get-data-plane-access [--access-resource-path]
                                          [--expire-time]
+                                         [--factory-name]
+                                         [--ids]
                                          [--permissions]
                                          [--profile-name]
+                                         [--resource-group]
                                          [--start-time]
+                                         [--subscription]
   examples:
   - summary: Factories_GetDataPlaneAccess
     syntax: az datafactory get-data-plane-access --name "exampleFactoryName" --access-resource-path "" --expire-time "2018-11-10T09:46:20.2659347Z" --permissions "r" --profile-name "DefaultProfile" --start-time "2018-11-10T02:46:20.2659347Z" --resource-group "exampleResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --factory-name --name -n
-    summary: The factory name.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --access-resource-path
     summary: The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource.
@@ -202,33 +207,43 @@ directCommands:
   - name: --expire-time
     summary: Expiration time for the token. Maximum duration for the token is eight hours and by default the token will expire in eight hours.
     description: ''
+  - name: --factory-name --name -n
+    summary: The factory name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --permissions
     summary: The string with permissions for Data Plane access. Currently only 'r' is supported which grants read only access.
     description: ''
   - name: --profile-name
     summary: The name of the profile. Currently only the default is supported. The default value is DefaultProfile.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --start-time
     summary: Start time for the token. If not specified the current time will be used.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_datafactory_get-git-hub-access-token
   name: az datafactory get-git-hub-access-token
   summary: Get GitHub Access Token.
   description: ''
   syntax: >-
-    az datafactory get-git-hub-access-token --factory-name
-                                            --git-hub-access-code
+    az datafactory get-git-hub-access-token --git-hub-access-code
                                             --git-hub-access-token-base-url
-                                            --resource-group
+                                            [--factory-name]
                                             [--git-hub-client-id]
+                                            [--ids]
+                                            [--resource-group]
+                                            [--subscription]
   examples:
   - summary: Factories_GetGitHubAccessToken
     syntax: az datafactory get-git-hub-access-token --name "exampleFactoryName" --git-hub-access-code "some" --git-hub-access-token-base-url "some" --git-hub-client-id "some" --resource-group "exampleResourceGroup"
   requiredParameters:
-  - isRequired: true
-    name: --factory-name --name -n
-    summary: The factory name.
-    description: ''
   - isRequired: true
     name: --git-hub-access-code
     summary: GitHub access code.
@@ -237,13 +252,21 @@ directCommands:
     name: --git-hub-access-token-base-url
     summary: GitHub access token base URL.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
+  - name: --factory-name --name -n
+    summary: The factory name.
+    description: ''
   - name: --git-hub-client-id
     summary: GitHub application client ID.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_datafactory_list
   name: az datafactory list
@@ -264,46 +287,56 @@ directCommands:
   summary: Gets a factory.
   description: ''
   syntax: >-
-    az datafactory show --factory-name
-                        --resource-group
+    az datafactory show [--factory-name]
+                        [--ids]
                         [--if-none-match]
+                        [--resource-group]
+                        [--subscription]
   examples:
   - summary: Factories_Get
     syntax: az datafactory show --name "exampleFactoryName" --resource-group "exampleResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --factory-name --name -n
+  optionalParameters:
+  - name: --factory-name --name -n
     summary: The factory name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --if-none-match
+    summary: ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --if-none-match
-    summary: ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if \* was provided, then no content will be returned.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_datafactory_update
   name: az datafactory update
   summary: Updates a factory.
   description: ''
   syntax: >-
-    az datafactory update --factory-name
-                          --resource-group
+    az datafactory update [--factory-name]
+                          [--ids]
+                          [--resource-group]
+                          [--subscription]
                           [--tags]
   examples:
   - summary: Factories_Update
     syntax: az datafactory update --name "exampleFactoryName" --tags exampleTag="exampleValue" --resource-group "exampleResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --factory-name --name -n
+  optionalParameters:
+  - name: --factory-name --name -n
     summary: The factory name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -410,8 +443,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

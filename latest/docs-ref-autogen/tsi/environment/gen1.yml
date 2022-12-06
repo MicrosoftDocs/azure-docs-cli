@@ -54,7 +54,7 @@ directCommands:
       capacity: Required. The capacity of the sku. This value can be changed to support scale out of             environments after they have been created.
   optionalParameters:
   - name: --exceeded-behavior --storage-limit-exceeded-behavior
-    parameterValueGroup: PauseIngress, PurgeOldData
+    parameterValueGroup: "PauseIngress, PurgeOldData"
     summary: The behavior the Time Series Insights service should take when the environment's capacity has been exceeded. If "PauseIngress" is specified, new events will not be read from the event source. If "PurgeOldData" is specified, new events will continue to be read and old events will be deleted from the environment. The default behavior is PurgeOldData.
     description: ''
   - name: --key-properties --partition-key-properties
@@ -70,6 +70,7 @@ directCommands:
 
       Multiple actions can be specified by using more than one --partition-key-properties argument.
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --tags
@@ -80,35 +81,38 @@ directCommands:
   summary: Update a gen1 environment in the specified subscription and resource group.
   description: ''
   syntax: >-
-    az tsi environment gen1 update --environment-name
-                                   --resource-group
-                                   [--data-retention-time]
+    az tsi environment gen1 update [--data-retention-time]
+                                   [--environment-name]
                                    [--exceeded-behavior {PauseIngress, PurgeOldData}]
+                                   [--ids]
                                    [--no-wait]
+                                   [--resource-group]
                                    [--sku]
+                                   [--subscription]
                                    [--tags]
   examples:
   - summary: EnvironmentsGen1Update
     syntax: az tsi environment gen1 update --name "env1" --sku name="S1" capacity=2                --resource-group "rg1" --data-retention-time "P30D" --storage-limit-exceeded-behavior PurgeOldData
-  requiredParameters:
-  - isRequired: true
-    name: --environment-name --name -n
-    summary: Name of the environment.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --data-retention-time
     summary: ISO8601 timespan specifying the minimum number of days the environment's events will be available for query.
     description: ''
+  - name: --environment-name --name -n
+    summary: Name of the environment.
+    description: ''
   - name: --exceeded-behavior --storage-limit-exceeded-behavior
-    parameterValueGroup: PauseIngress, PurgeOldData
+    parameterValueGroup: "PauseIngress, PurgeOldData"
     summary: The behavior the Time Series Insights service should take when the environment's capacity has been exceeded. If "PauseIngress" is specified, new events will not be read from the event source. If "PurgeOldData" is specified, new events will continue to be read and old events will be deleted from the environment. The default behavior is PurgeOldData.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --sku
     summary: The sku determines the type of environment, either S1 or S2. For Gen1 environments the sku determines the capacity of the environment, the ingress rate, and the billing rate.
@@ -119,6 +123,9 @@ directCommands:
       name: Required. The name of this SKU.
 
       capacity: Required. The capacity of the sku. This value can be changed to support scale out of             environments after they have been created.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -133,8 +140,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

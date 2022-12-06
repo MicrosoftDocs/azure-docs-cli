@@ -21,7 +21,10 @@ directCommands:
     syntax: >-
       az network application-gateway ssl-cert create -g MyResourceGroup --gateway-name MyAppGateway \
           -n MySSLCert --cert-file \path\to\cert\file --cert-password Abc123
-  - summary: Upload an SSL certificate via --key-vault-secret-id of a KeyVault Secret
+  - summary: >-
+      Upload an SSL certificate via --key-vault-secret-id of a KeyVault Secret
+
+      with Base64 encoded value of an unencrypted pfx
     syntax: >-
       openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
         -out azure-cli-app-tls.crt \
@@ -80,6 +83,7 @@ directCommands:
     summary: Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in Azure KeyVault.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -93,6 +97,7 @@ directCommands:
                                                    [--name]
                                                    [--no-wait]
                                                    [--resource-group]
+                                                   [--subscription]
   examples:
   - summary: Delete an SSL certificate.
     syntax: az network application-gateway ssl-cert delete -g MyResourceGroup --gateway-name MyAppGateway -n MySslCert
@@ -107,10 +112,14 @@ directCommands:
     summary: The name of the SSL certificate.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_ssl-cert_list
@@ -142,6 +151,7 @@ directCommands:
                                                  [--ids]
                                                  [--name]
                                                  [--resource-group]
+                                                 [--subscription]
   examples:
   - summary: Get the details of an SSL certificate.
     syntax: az network application-gateway ssl-cert show -g MyResourceGroup --gateway-name MyAppGateway -n MySslCert
@@ -165,6 +175,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_ssl-cert_update
   name: az network application-gateway ssl-cert update
@@ -183,6 +196,7 @@ directCommands:
                                                    [--remove]
                                                    [--resource-group]
                                                    [--set]
+                                                   [--subscription]
   examples:
   - summary: Change a gateway SSL certificate and password.
     syntax: >-
@@ -190,6 +204,7 @@ directCommands:
           --cert-file \path\to\new\cert\file --cert-password Abc123Abc123
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --cert-file
@@ -199,6 +214,7 @@ directCommands:
     summary: Certificate password.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --gateway-name
@@ -214,16 +230,22 @@ directCommands:
     summary: The name of the SSL certificate.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -240,8 +262,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

@@ -60,6 +60,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --package-url
@@ -72,14 +73,14 @@ directCommands:
     summary: 'Specify certificates separated by space that should be installed onto the role instances. Format: KeyVaultName:CertificateUrl:CertificateUrl2:...:CertificateUrlN.'
     description: ''
   - name: --start-cloud-service
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicate whether to start the cloud service immediately after it is created. The default value is `true`. If false, the service model is still deployed, but the code is not run immediately. Instead, the service is PoweredOff until you call Start, at which time the service will be started. A deployed service still incurs charges, even if it is poweredoff.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --upgrade-mode
-    parameterValueGroup: Auto, Manual, Simultaneous
+    parameterValueGroup: "Auto, Manual, Simultaneous"
     summary: Update mode for the cloud service. Role instances are allocated to update domains when the service is deployed. Updates can be initiated manually in each update domain or initiated automatically in all update domains. Possible Values are Auto, Manual, Simultaneous. If not specified, the default value is Auto. If set to Manual, PUT UpdateDomain must be called to apply the update. If set to Auto, the update is automatically applied to each update domain in sequence.
     description: ''
 - uid: az_cloud-service_delete
@@ -87,24 +88,31 @@ directCommands:
   summary: Delete a cloud service.
   description: ''
   syntax: >-
-    az cloud-service delete --cloud-service-name
-                            --resource-group
+    az cloud-service delete [--cloud-service-name]
+                            [--ids]
                             [--no-wait]
+                            [--resource-group]
+                            [--subscription]
                             [--yes]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_cloud-service_delete-instance
@@ -112,28 +120,35 @@ directCommands:
   summary: Delete role instances in a cloud service.
   description: ''
   syntax: >-
-    az cloud-service delete-instance --cloud-service-name
-                                     --resource-group
+    az cloud-service delete-instance [--cloud-service-name]
+                                     [--ids]
                                      [--no-wait]
+                                     [--resource-group]
                                      [--role-instances]
+                                     [--subscription]
                                      [--yes]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --role-instances
-    summary: List of cloud service role instance names. Value of '\*' will signify all role instances of the cloud service.
+    summary: List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_cloud-service_list
@@ -156,171 +171,219 @@ directCommands:
   summary: Power off the cloud service. Note that resources are still attached and you are getting charged for the resources.
   description: ''
   syntax: >-
-    az cloud-service power-off --cloud-service-name
-                               --resource-group
+    az cloud-service power-off [--cloud-service-name]
+                               [--ids]
                                [--no-wait]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+                               [--resource-group]
+                               [--subscription]
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_cloud-service_rebuild
   name: az cloud-service rebuild
   summary: Rebuild Role Instances. Reinstall the operating system on instances of web roles or worker roles and initialize the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instances.
   description: ''
   syntax: >-
-    az cloud-service rebuild --cloud-service-name
-                             --resource-group
+    az cloud-service rebuild [--cloud-service-name]
+                             [--ids]
                              [--no-wait]
+                             [--resource-group]
                              [--role-instances]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+                             [--subscription]
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --role-instances
-    summary: List of cloud service role instance names. Value of '\*' will signify all role instances of the cloud service.
+    summary: List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_cloud-service_reimage
   name: az cloud-service reimage
   summary: Reimage asynchronous operation reinstalls the operating system on instances of web roles or worker roles.
   description: ''
   syntax: >-
-    az cloud-service reimage --cloud-service-name
-                             --resource-group
+    az cloud-service reimage [--cloud-service-name]
+                             [--ids]
                              [--no-wait]
+                             [--resource-group]
                              [--role-instances]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+                             [--subscription]
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --role-instances
-    summary: List of cloud service role instance names. Value of '\*' will signify all role instances of the cloud service.
+    summary: List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_cloud-service_restart
   name: az cloud-service restart
   summary: Restart one or more role instances in a cloud service.
   description: ''
   syntax: >-
-    az cloud-service restart --cloud-service-name
-                             --resource-group
+    az cloud-service restart [--cloud-service-name]
+                             [--ids]
                              [--no-wait]
+                             [--resource-group]
                              [--role-instances]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+                             [--subscription]
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --role-instances
-    summary: List of cloud service role instance names. Value of '\*' will signify all role instances of the cloud service.
+    summary: List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_cloud-service_show
   name: az cloud-service show
   summary: Display information about a cloud service.
   description: ''
   syntax: >-
-    az cloud-service show --cloud-service-name
-                          --resource-group
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+    az cloud-service show [--cloud-service-name]
+                          [--ids]
+                          [--resource-group]
+                          [--subscription]
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_cloud-service_show-instance-view
   name: az cloud-service show-instance-view
   summary: Get the status of a cloud service.
   description: ''
   syntax: >-
-    az cloud-service show-instance-view --cloud-service-name
-                                        --resource-group
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+    az cloud-service show-instance-view [--cloud-service-name]
+                                        [--ids]
+                                        [--resource-group]
+                                        [--subscription]
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_cloud-service_start
   name: az cloud-service start
   summary: Start the cloud service.
   description: ''
   syntax: >-
-    az cloud-service start --cloud-service-name
-                           --resource-group
+    az cloud-service start [--cloud-service-name]
+                           [--ids]
                            [--no-wait]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+                           [--resource-group]
+                           [--subscription]
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_cloud-service_update
   name: az cloud-service update
   summary: Update a cloud service.
   description: ''
   syntax: >-
-    az cloud-service update --cloud-service-name
-                            --resource-group
+    az cloud-service update [--cloud-service-name]
+                            [--ids]
                             [--no-wait]
+                            [--resource-group]
+                            [--subscription]
                             [--tags]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -330,46 +393,55 @@ directCommands:
   summary: Place the CLI in a waiting state until a condition of the cloud-service is met.
   description: ''
   syntax: >-
-    az cloud-service wait --cloud-service-name
-                          --resource-group
+    az cloud-service wait [--cloud-service-name]
                           [--created]
                           [--custom]
                           [--deleted]
                           [--exists]
+                          [--ids]
                           [--interval]
+                          [--resource-group]
+                          [--subscription]
                           [--timeout]
                           [--updated]
-  requiredParameters:
-  - isRequired: true
-    name: --cloud-service-name --name -n
+  optionalParameters:
+  - name: --cloud-service-name --name -n
     summary: Name of the cloud service.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
@@ -411,8 +483,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

@@ -13,9 +13,11 @@ directCommands:
   summary: Connect AI to an Azure function.
   description: ''
   syntax: >-
-    az monitor app-insights component connect-function --app
-                                                       --function
-                                                       --resource-group
+    az monitor app-insights component connect-function --function
+                                                       [--app]
+                                                       [--ids]
+                                                       [--resource-group]
+                                                       [--subscription]
   examples:
   - summary: Connect AI to an Azure function.
     syntax: az monitor app-insights component connect-function -g myRG -a myAI --function myFunction
@@ -23,27 +25,34 @@ directCommands:
     syntax: az monitor app-insights component connect-function -g myRG -a myAI --function /subscriptions/mySub/resourceGroups/myRG/providers/Microsoft.Web/sites/myFunction
   requiredParameters:
   - isRequired: true
-    name: --app -a
-    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
-    description: ''
-  - isRequired: true
     name: --function
     summary: Name or resource id of the Azure function.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --app -a
+    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_monitor_app-insights_component_connect-webapp
   name: az monitor app-insights component connect-webapp
   summary: Connect AI to a web app.
   description: ''
   syntax: >-
-    az monitor app-insights component connect-webapp --app
-                                                     --resource-group
-                                                     --web-app
+    az monitor app-insights component connect-webapp --web-app
+                                                     [--app]
                                                      [--enable-debugger {false, true}]
                                                      [--enable-profiler {false, true}]
+                                                     [--ids]
+                                                     [--resource-group]
+                                                     [--subscription]
   examples:
   - summary: Connect AI to a web app and enable both profiler and snapshot debugger for the web app.
     syntax: az monitor app-insights component connect-webapp -g myRG -a myAI --web-app myApp --enable-profiler --enable-snapshot-debugger
@@ -51,25 +60,29 @@ directCommands:
     syntax: az monitor app-insights component connect-webapp -g myRG -a myAI --web-app /subscriptions/mySub/resourceGroups/myRG/providers/Microsoft.Web/sites/myApp --enable-profiler --enable-snapshot-debugger false
   requiredParameters:
   - isRequired: true
-    name: --app -a
-    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --web-app
     summary: Name or resource id of the web app.
     description: ''
   optionalParameters:
+  - name: --app -a
+    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
+    description: ''
   - name: --enable-debugger --enable-snapshot-debugger
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable snapshot debugger when an exception is thrown. Currently it is only supported for .NET/.NET Core Web Apps.
     description: ''
   - name: --enable-profiler
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable collecting profiling traces that help you see where time is spent in code. Currently it is only supported for .NET/.NET Core Web Apps.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_monitor_app-insights_component_create
   name: az monitor app-insights component create
@@ -104,19 +117,19 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --application-type
-    defaultValue: web
-    summary: Type of application being monitored.
+    defaultValue: "web"
+    summary: Type of application being monitored. Possible values include 'web', 'other'. Default value is'web' .
     description: ''
   - name: --ingestion-access
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: The public network access type for accessing Application Insights ingestion.
     description: ''
   - name: --kind -k
-    defaultValue: web
+    defaultValue: "web"
     summary: The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of web, ios, other, store, java, phone.
     description: ''
   - name: --query-access
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: The public network access type for accessing Application Insights query.
     description: ''
   - name: --retention-time
@@ -133,19 +146,25 @@ directCommands:
   summary: Delete a new Application Insights resource.
   description: ''
   syntax: >-
-    az monitor app-insights component delete --app
-                                             --resource-group
+    az monitor app-insights component delete [--app]
+                                             [--ids]
+                                             [--resource-group]
+                                             [--subscription]
   examples:
   - summary: Delete a component with kind web and location.
     syntax: az monitor app-insights component delete --app demoApp -g demoRg
-  requiredParameters:
-  - isRequired: true
-    name: --app -a
+  optionalParameters:
+  - name: --app -a
     summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_monitor_app-insights_component_show
   name: az monitor app-insights component show
@@ -153,7 +172,9 @@ directCommands:
   description: ''
   syntax: >-
     az monitor app-insights component show [--app]
+                                           [--ids]
                                            [--resource-group]
+                                           [--subscription]
   examples:
   - summary: Get a component by name.
     syntax: az monitor app-insights component show --app demoApp -g demoRg
@@ -165,47 +186,58 @@ directCommands:
   - name: --app -a
     summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_monitor_app-insights_component_update
   name: az monitor app-insights component update
   summary: Update properties on an existing Application Insights resource. The primary value which can be updated is kind, which customizes the UI experience.
   description: ''
   syntax: >-
-    az monitor app-insights component update --app
-                                             --resource-group
+    az monitor app-insights component update [--app]
+                                             [--ids]
                                              [--ingestion-access {Disabled, Enabled}]
                                              [--kind]
                                              [--query-access {Disabled, Enabled}]
+                                             [--resource-group]
                                              [--retention-time]
+                                             [--subscription]
                                              [--workspace]
   examples:
   - summary: Update a component with kind web.
     syntax: az monitor app-insights component update --app demoApp -k web -g demoRg --retention-time 120
-  requiredParameters:
-  - isRequired: true
-    name: --app -a
+  optionalParameters:
+  - name: --app -a
     summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --ingestion-access
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: The public network access type for accessing Application Insights ingestion.
     description: ''
   - name: --kind -k
     summary: The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of web, ios, other, store, java, phone.
     description: ''
   - name: --query-access
-    parameterValueGroup: Disabled, Enabled
+    parameterValueGroup: "Disabled, Enabled"
     summary: The public network access type for accessing Application Insights query.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --retention-time
     summary: 'Retention in days for Application Insights. The value can be one of the following values: 30,60,90,120,180,270,365,550,730. It can be set only when Application Insights is not connected to a Log Analytics workspace.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --workspace
     summary: Name or resource ID of a log analytics workspace.
@@ -215,24 +247,31 @@ directCommands:
   summary: Update tags on an existing Application Insights resource.
   description: ''
   syntax: >-
-    az monitor app-insights component update-tags --app
-                                                  --resource-group
-                                                  --tags
+    az monitor app-insights component update-tags --tags
+                                                  [--app]
+                                                  [--ids]
+                                                  [--resource-group]
+                                                  [--subscription]
   examples:
   - summary: Update the tag 'name' to equal 'value'.
     syntax: az monitor app-insights component update-tags --app demoApp --tags name=value -g demoRg
   requiredParameters:
   - isRequired: true
-    name: --app -a
-    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  optionalParameters:
+  - name: --app -a
+    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_monitor_app-insights_component_billing
@@ -264,8 +303,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

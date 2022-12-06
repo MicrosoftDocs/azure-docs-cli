@@ -13,17 +13,19 @@ directCommands:
   summary: Add a VPN site link connection to a site-to-site VPN gateway connection.
   description: ''
   syntax: >-
-    az network vpn-gateway connection vpn-site-link-conn add --connection-name
-                                                             --gateway-name
-                                                             --name
-                                                             --resource-group
-                                                             --vpn-site-link
+    az network vpn-gateway connection vpn-site-link-conn add --vpn-site-link
                                                              [--connection-bandwidth]
+                                                             [--connection-name]
                                                              [--enable-bgp {false, true}]
+                                                             [--gateway-name]
+                                                             [--ids]
+                                                             [--name]
                                                              [--no-wait]
                                                              [--rate-limiting {false, true}]
+                                                             [--resource-group]
                                                              [--routing-weight]
                                                              [--shared-key]
+                                                             [--subscription]
                                                              [--use-local-azure-ip-address {false, true}]
                                                              [--use-policy-based-traffic-selectors {false, true}]
                                                              [--vpn-connection-protocol-type {IKEv1, IKEv2}]
@@ -33,22 +35,6 @@ directCommands:
     syntax: az network vpn-gateway connection vpn-site-link-conn add -g MyRG --connection-name MyConnection --gateway-name MyGateway -n MyVPNSiteLinkConn --vpn-site-link /subscriptions/MySub/resourceGroups/MyRG/providers/Microsoft.Network/vpnSites/MyVPNSite/vpnSiteLinks/vpnsitelink --vpn-connection-protocol-type IKEv2
   requiredParameters:
   - isRequired: true
-    name: --connection-name
-    summary: Name of the VPN gateway connection.
-    description: ''
-  - isRequired: true
-    name: --gateway-name
-    summary: Name of the VPN gateway.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Name of the VPN site link connection.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --vpn-site-link
     summary: The resource ID of VPN Site Link.
     description: ''
@@ -56,16 +42,32 @@ directCommands:
   - name: --connection-bandwidth
     summary: Expected bandwidth in Mbps.
     description: ''
+  - name: --connection-name
+    summary: Name of the VPN gateway connection.
+    description: ''
   - name: --enable-bgp
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable BGP.
     description: ''
+  - name: --gateway-name
+    summary: Name of the VPN gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the VPN site link connection.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --rate-limiting
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable rate limiting.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --routing-weight
     summary: Routing weight.
@@ -73,20 +75,23 @@ directCommands:
   - name: --shared-key
     summary: Shared key.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --use-local-azure-ip-address
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Use local azure ip to initiate connection.
     description: ''
   - name: --use-policy-based-traffic-selectors
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable policy-based traffic selectors.
     description: ''
   - name: --vpn-connection-protocol-type
-    parameterValueGroup: IKEv1, IKEv2
+    parameterValueGroup: "IKEv1, IKEv2"
     summary: Connection protocol used for this connection.
     description: ''
   - name: --vpn-link-connection-mode
-    parameterValueGroup: Default, InitiatorOnly, ResponderOnly
+    parameterValueGroup: "Default, InitiatorOnly, ResponderOnly"
     summary: Vpn link connection mode.
     description: ''
 - uid: az_network_vpn-gateway_connection_vpn-site-link-conn_list
@@ -118,34 +123,40 @@ directCommands:
   summary: Remove a VPN site link connection from a site-to-site VPN gateway connection.
   description: ''
   syntax: >-
-    az network vpn-gateway connection vpn-site-link-conn remove --connection-name
-                                                                --gateway-name
-                                                                --index
-                                                                --resource-group
+    az network vpn-gateway connection vpn-site-link-conn remove --index
+                                                                [--connection-name]
+                                                                [--gateway-name]
+                                                                [--ids]
                                                                 [--no-wait]
+                                                                [--resource-group]
+                                                                [--subscription]
   examples:
   - summary: Remove aVPN site link connection from site-to-site VPN gateway connection
     syntax: az network vpn-gateway connection vpn-site-link-conn remove -g MyRG --connection-name MyConnection --gateway-name MyGateway --index 1
   requiredParameters:
   - isRequired: true
-    name: --connection-name
-    summary: Name of the VPN gateway connection.
-    description: ''
-  - isRequired: true
-    name: --gateway-name
-    summary: Name of the VPN gateway.
-    description: ''
-  - isRequired: true
     name: --index
     summary: List index of the item (starting with 1).
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --connection-name
+    summary: Name of the VPN gateway connection.
+    description: ''
+  - name: --gateway-name
+    summary: Name of the VPN gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_network_vpn-gateway_connection_vpn-site-link-conn_add
@@ -163,8 +174,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

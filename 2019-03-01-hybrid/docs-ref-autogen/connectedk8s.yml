@@ -62,7 +62,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --azure-hybrid-benefit
-    parameterValueGroup: False, NotApplicable, True
+    parameterValueGroup: "False, NotApplicable, True"
     summary: Flag to enable/disable Azure Hybrid Benefit feature.
     description: ''
   - name: --container-log-path
@@ -78,23 +78,24 @@ directCommands:
     summary: OID of 'custom-locations' app.
     description: ''
   - name: --disable-auto-upgrade
+    defaultValue: "False"
     summary: Flag to disable auto upgrade of arc agents.
     description: ''
   - name: --distribution
-    defaultValue: auto
-    parameterValueGroup: aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg
+    defaultValue: "auto"
+    parameterValueGroup: "aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg"
     summary: The Kubernetes distribution which will be running on this connected cluster.
     description: ''
   - name: --distribution-version
     summary: The Kubernetes distribution version of the connected cluster.
     description: ''
   - name: --enable-private-link
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: 'Flag to enable/disable private link support on a connected cluster resource. Allowed values: false, true.'
     description: ''
   - name: --infrastructure
-    defaultValue: auto
-    parameterValueGroup: auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server
+    defaultValue: "auto"
+    parameterValueGroup: "auto, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server"
     summary: The infrastructure on which the Kubernetes cluster represented by this connected cluster will be running on.
     description: ''
   - name: --kube-config
@@ -107,6 +108,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --onboarding-timeout
@@ -129,6 +131,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_connectedk8s_delete
@@ -136,30 +139,27 @@ directCommands:
   summary: Delete a connected kubernetes cluster along with connected cluster agents.
   description: ''
   syntax: >-
-    az connectedk8s delete --name
-                           --resource-group
-                           [--force]
+    az connectedk8s delete [--force]
+                           [--ids]
                            [--kube-config]
                            [--kube-context]
+                           [--name]
                            [--no-wait]
+                           [--resource-group]
+                           [--subscription]
                            [--yes]
   examples:
   - summary: Delete a connected kubernetes cluster and connected cluster agents with default kubeconfig and kubecontext.
     syntax: az connectedk8s delete -g resourceGroupName -n connectedClusterName
   - summary: Delete a connected kubernetes cluster by specifying the kubeconfig and kubecontext for connected cluster agents deletion.
     syntax: az connectedk8s delete -g resourceGroupName -n connectedClusterName --kube-config /path/to/kubeconfig --kube-context kubeContextName
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the connected cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --force
+    defaultValue: "False"
     summary: Force delete to remove all azure-arc resources from the cluster.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --kube-config
     summary: Path to the kube config file.
@@ -167,10 +167,21 @@ directCommands:
   - name: --kube-context
     summary: Kubconfig context from current machine.
     description: ''
+  - name: --name -n
+    summary: The name of the connected cluster.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_connectedk8s_disable-features
@@ -179,10 +190,12 @@ directCommands:
   description: ''
   syntax: >-
     az connectedk8s disable-features --features {azure-rbac, cluster-connect, custom-locations}
-                                     --name
-                                     --resource-group
+                                     [--ids]
                                      [--kube-config]
                                      [--kube-context]
+                                     [--name]
+                                     [--resource-group]
+                                     [--subscription]
                                      [--yes]
   examples:
   - summary: Disables the azure-rbac feature.
@@ -192,25 +205,30 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --features
-    parameterValueGroup: azure-rbac, cluster-connect, custom-locations
+    parameterValueGroup: "azure-rbac, cluster-connect, custom-locations"
     summary: Space-separated list of features you want to disable.
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the connected cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --kube-config
     summary: Path to the kube config file.
     description: ''
   - name: --kube-context
     summary: Kubconfig context from current machine.
     description: ''
+  - name: --name -n
+    summary: The name of the connected cluster.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_connectedk8s_enable-features
@@ -219,14 +237,16 @@ directCommands:
   description: ''
   syntax: >-
     az connectedk8s enable-features --features {azure-rbac, cluster-connect, custom-locations}
-                                    --name
-                                    --resource-group
                                     [--app-id]
                                     [--app-secret]
                                     [--custom-locations-oid]
+                                    [--ids]
                                     [--kube-config]
                                     [--kube-context]
+                                    [--name]
+                                    [--resource-group]
                                     [--skip-azure-rbac-list]
+                                    [--subscription]
   examples:
   - summary: Enables the Cluster-Connect feature.
     syntax: az connectedk8s enable-features -n clusterName -g resourceGroupName --features cluster-connect
@@ -237,16 +257,8 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --features
-    parameterValueGroup: azure-rbac, cluster-connect, custom-locations
+    parameterValueGroup: "azure-rbac, cluster-connect, custom-locations"
     summary: Space-separated list of features you want to enable.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the connected cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --app-id
@@ -258,14 +270,26 @@ directCommands:
   - name: --custom-locations-oid
     summary: OID of 'custom-locations' app.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --kube-config
     summary: Path to the kube config file.
     description: ''
   - name: --kube-context
     summary: Kubconfig context from current machine.
     description: ''
+  - name: --name -n
+    summary: The name of the connected cluster.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --skip-azure-rbac-list
     summary: Comma separated list of names of usernames/email/oid. Azure RBAC will be skipped for these users. Specify when enabling azure-rbac.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_connectedk8s_list
   name: az connectedk8s list
@@ -286,11 +310,13 @@ directCommands:
   summary: Get access to a connected kubernetes cluster.
   description: ''
   syntax: >-
-    az connectedk8s proxy --name
-                          --resource-group
-                          [--file]
+    az connectedk8s proxy [--file]
+                          [--ids]
                           [--kube-context]
+                          [--name]
                           [--port]
+                          [--resource-group]
+                          [--subscription]
                           [--token]
   examples:
   - summary: Get access to a connected kubernetes cluster.
@@ -303,26 +329,29 @@ directCommands:
     syntax: az connectedk8s proxy -n clusterName -g resourceGroupName -f path/to/kubeconfig
   - summary: Get access to a connected kubernetes cluster by specifying custom context
     syntax: az connectedk8s proxy -n clusterName -g resourceGroupName --kube-context contextName
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the connected cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --file -f
-    defaultValue: ~/.kube/config
+    defaultValue: "~\\.kube\\config"
     summary: Kubernetes configuration file to update. If not provided, updates the file '~/.kube/config'. Use '-' to print YAML to stdout instead.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --kube-context
     summary: If specified, overwrite the default context name.
     description: ''
+  - name: --name -n
+    summary: The name of the connected cluster.
+    description: ''
   - name: --port
     defaultValue: "47011"
     summary: Port used for accessing connected cluster.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --token
     summary: Service account token to use to authenticate to the kubernetes cluster.
@@ -332,19 +361,25 @@ directCommands:
   summary: Show details of a connected kubernetes cluster.
   description: ''
   syntax: >-
-    az connectedk8s show --name
-                         --resource-group
+    az connectedk8s show [--ids]
+                         [--name]
+                         [--resource-group]
+                         [--subscription]
   examples:
   - summary: Show the details for a connected kubernetes cluster
     syntax: az connectedk8s show -g resourceGroupName -n connectedClusterName
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the connected cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_connectedk8s_troubleshoot
   name: az connectedk8s troubleshoot
@@ -383,20 +418,22 @@ directCommands:
   summary: Update properties of the arc onboarded kubernetes cluster.
   description: ''
   syntax: >-
-    az connectedk8s update --name
-                           --resource-group
-                           [--auto-upgrade {false, true}]
+    az connectedk8s update [--auto-upgrade {false, true}]
                            [--azure-hybrid-benefit {False, NotApplicable, True}]
                            [--container-log-path]
                            [--custom-ca-cert]
                            [--disable-proxy]
                            [--distribution {aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
                            [--distribution-version]
+                           [--ids]
                            [--kube-config]
                            [--kube-context]
+                           [--name]
                            [--proxy-http]
                            [--proxy-https]
                            [--proxy-skip-range]
+                           [--resource-group]
+                           [--subscription]
                            [--tags]
                            [--yes]
   examples:
@@ -406,22 +443,13 @@ directCommands:
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --disable-proxy
   - summary: Disable auto-upgrade of agents
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --auto-upgrade false
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the connected cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --auto-upgrade
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Flag to enable/disable auto upgrade of arc agents. By default, auto upgrade of agents is enabled.
     description: ''
   - name: --azure-hybrid-benefit
-    parameterValueGroup: False, NotApplicable, True
+    parameterValueGroup: "False, NotApplicable, True"
     summary: Flag to enable/disable Azure Hybrid Benefit feature.
     description: ''
   - name: --container-log-path
@@ -431,20 +459,27 @@ directCommands:
     summary: Path to the certificate file for proxy or custom Certificate Authority.
     description: ''
   - name: --disable-proxy
+    defaultValue: "False"
     summary: Disables proxy settings for agents.
     description: ''
   - name: --distribution
-    parameterValueGroup: aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg
+    parameterValueGroup: "aks, aks_engine, aks_management, aks_workload, auto, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg"
     summary: The Kubernetes distribution which will be running on this connected cluster.
     description: ''
   - name: --distribution-version
     summary: The Kubernetes distribution version of the connected cluster.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --kube-config
     summary: Path to the kube config file.
     description: ''
   - name: --kube-context
     summary: Kubconfig context from current machine.
+    description: ''
+  - name: --name -n
+    summary: The name of the connected cluster.
     description: ''
   - name: --proxy-http
     summary: Http proxy URL to be used.
@@ -455,10 +490,17 @@ directCommands:
   - name: --proxy-skip-range
     summary: List of URLs/CIDRs for which proxy should not to be used.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_connectedk8s_upgrade
@@ -466,11 +508,13 @@ directCommands:
   summary: Atomically upgrade onboarded agents to the specific version or default to the latest version.
   description: ''
   syntax: >-
-    az connectedk8s upgrade --name
-                            --resource-group
-                            [--agent-version]
+    az connectedk8s upgrade [--agent-version]
+                            [--ids]
                             [--kube-config]
                             [--kube-context]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
                             [--upgrade-timeout]
   examples:
   - summary: Upgrade the agents to the latest version
@@ -479,24 +523,27 @@ directCommands:
     syntax: az connectedk8s upgrade -g resourceGroupName -n connectedClusterName --agent-version 0.2.62
   - summary: Upgrade the agents with custom upgrade timeout.
     syntax: az connectedk8s upgrade -g resourceGroupName -n connectedClusterName --upgrade-timeout 600
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the connected cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --agent-version
     summary: Version of agent to update the helm charts to.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --kube-config
     summary: Path to the kube config file.
     description: ''
   - name: --kube-context
     summary: Kubconfig context from current machine.
+    description: ''
+  - name: --name -n
+    summary: The name of the connected cluster.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --upgrade-timeout
     defaultValue: "600"
@@ -521,8 +568,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
