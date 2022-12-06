@@ -324,7 +324,7 @@ az storage container create --account-name $storageAccount --account-key $accoun
 done
 
 for value in {5..8}
-for (( i=5; i<10; i++))
+for (( i=5; i<10; i++));
 do
 az storage container create --account-name $storageAccount --account-key $accountKey --name learnbash-$i
 done

@@ -51,14 +51,19 @@ directCommands:
 
     https://docs.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-manage-virtual-network-cli.
   syntax: >-
-    az postgres flexible-server create [--address-prefixes]
+    az postgres flexible-server create [--active-directory-auth {Disabled, Enabled}]
+                                       [--address-prefixes]
                                        [--admin-password]
                                        [--admin-user]
                                        [--backup-retention]
                                        [--database-name]
+                                       [--geo-redundant-backup {Disabled, Enabled}]
                                        [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
+                                       [--identity]
+                                       [--key]
                                        [--location]
                                        [--name]
+                                       [--password-auth {Disabled, Enabled}]
                                        [--private-dns-zone]
                                        [--public-access]
                                        [--resource-group]
@@ -126,7 +131,38 @@ directCommands:
          --name testserver --location testLocation \
         --subnet /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/virtualNetworks/tesetVnet/subnets/testSubnet \
         --private-dns-zone /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
+  - summary: Create a PostgreSQL flexible server with data encryption.
+    syntax: >-
+      # create keyvault
+
+      az keyvault create -g testGroup -n testVault --location testLocation --enable-purge-protection true
+
+
+      # create key in keyvault
+
+      az keyvault key create --name testKey -p software --vault-name testVault
+
+
+      # create identity
+
+      az identity create -g testGroup --name testIdentity --location testLocation
+
+
+      # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
+
+      az keyvault set-policy -g testGroup -n testVault --object-id '<principalID of testIdentity>' --key-permissions wrapKey unwrapKey get list
+
+
+      # create flexible server with data encryption enabled
+
+      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
+        --key '<key identifier of testKey>' --identity testIdentity
   optionalParameters:
+  - name: --active-directory-auth
+    defaultValue: Disabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether Azure Active Directory authentication is enabled.
+    description: ''
   - name: --address-prefixes
     summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
     description: ''
@@ -134,7 +170,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: hostilestork6
+    defaultValue: gleefulpolenta8
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --backup-retention
@@ -144,16 +180,32 @@ directCommands:
   - name: --database-name -d
     summary: The name of the database to be created when provisioning the database server.
     description: ''
+  - name: --geo-redundant-backup
+    defaultValue: Disabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not geo redundant backup is enabled.
+    description: ''
   - name: --high-availability
     defaultValue: Disabled
     parameterValueGroup: Disabled, Enabled, SameZone, ZoneRedundant
     summary: Enable (ZoneRedundant or SameZone) or disable high availability feature.
+    description: ''
+  - name: --identity
+    summary: The name or resource ID of the user assigned identity for data encryption.
+    description: ''
+  - name: --key
+    summary: The resource ID of the primary keyvault key for data encryption.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --password-auth
+    defaultValue: Enabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether password authentication is enabled.
     description: ''
   - name: --private-dns-zone
     summary: This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
@@ -262,6 +314,82 @@ directCommands:
   - name: --querytext -q
     summary: A query to run against the flexible server.
     description: ''
+- uid: az_postgres_flexible-server_geo-restore
+  name: az postgres flexible-server geo-restore
+  summary: Geo-restore a flexible server from backup.
+  description: ''
+  syntax: >-
+    az postgres flexible-server geo-restore --location
+                                            --source-server
+                                            [--address-prefixes]
+                                            [--geo-redundant-backup {Disabled, Enabled}]
+                                            [--ids]
+                                            [--name]
+                                            [--no-wait]
+                                            [--private-dns-zone]
+                                            [--resource-group]
+                                            [--subnet]
+                                            [--subnet-prefixes]
+                                            [--vnet]
+                                            [--yes]
+                                            [--zone]
+  examples:
+  - summary: Geo-restore public access server 'testserver' to a new server 'testserverNew' in location 'newLocation' with public access.
+    syntax: az postgres flexible-server geo-restore --resource-group testGroup --name testserverNew --source-server testserver --location newLocation
+  - summary: Geo-restore private access server 'testserver' as a new server 'testserverNew' with new subnet. New vnet, subnet, and private dns zone for the restored server will be provisioned. Please refer to 'flexible-server create' command for more private access scenarios.
+    syntax: >-
+      az postgres flexible-server geo-restore --resource-group testGroup --name testserverNew \
+        --source-server testserver --vnet newVnet --subnet newSubnet \
+        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
+        --private-dns-zone testDNS.postgres.database.azure.com --location newLocation
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --source-server
+    summary: The name or resource ID of the source server to restore from.
+    description: ''
+  optionalParameters:
+  - name: --address-prefixes
+    summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
+    description: ''
+  - name: --geo-redundant-backup
+    defaultValue: Disabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not geo redundant backup is enabled.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --no-wait
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --private-dns-zone
+    summary: This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subnet
+    summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
+    description: ''
+  - name: --subnet-prefixes
+    summary: The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --zone -z
+    summary: Availability zone into which to provision the resource.
+    description: ''
 - uid: az_postgres_flexible-server_list
   name: az postgres flexible-server list
   summary: List available flexible servers.
@@ -324,7 +452,10 @@ directCommands:
   syntax: >-
     az postgres flexible-server restore --source-server
                                         [--address-prefixes]
+                                        [--geo-redundant-backup {Disabled, Enabled}]
+                                        [--identity]
                                         [--ids]
+                                        [--key]
                                         [--name]
                                         [--no-wait]
                                         [--private-dns-zone]
@@ -349,8 +480,19 @@ directCommands:
   - name: --address-prefixes
     summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
     description: ''
+  - name: --geo-redundant-backup
+    defaultValue: Disabled
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether or not geo redundant backup is enabled.
+    description: ''
+  - name: --identity
+    summary: The name or resource ID of the user assigned identity for data encryption.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --key
+    summary: The resource ID of the primary keyvault key for data encryption.
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
@@ -365,7 +507,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: 2022-12-01T13:35:05+00:00
+    defaultValue: 2022-12-06T08:17:18+00:00
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
     description: ''
   - name: --subnet
@@ -484,14 +626,18 @@ directCommands:
   summary: Update a flexible server.
   description: ''
   syntax: >-
-    az postgres flexible-server update [--add]
+    az postgres flexible-server update [--active-directory-auth {Disabled, Enabled}]
+                                       [--add]
                                        [--admin-password]
                                        [--backup-retention]
                                        [--force-string]
                                        [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
+                                       [--identity]
                                        [--ids]
+                                       [--key]
                                        [--maintenance-window]
                                        [--name]
+                                       [--password-auth {Disabled, Enabled}]
                                        [--remove]
                                        [--resource-group]
                                        [--set]
@@ -507,7 +653,15 @@ directCommands:
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver --tags "k1=v1" "k2=v2"
   - summary: Reset password
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver -p password123
+  - summary: Change key/identity for data encryption. Data encryption cannot be enabled post server creation, this will only update the key/identity.
+    syntax: >-
+      az postgres flexible-server update --resource-group testGroup --name testserver \
+        --key '<key identifier of newKey>' --identity newIdentity
   optionalParameters:
+  - name: --active-directory-auth
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether Azure Active Directory authentication is enabled.
+    description: ''
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
@@ -524,14 +678,24 @@ directCommands:
     parameterValueGroup: Disabled, Enabled, SameZone, ZoneRedundant
     summary: Enable (ZoneRedundant or SameZone) or disable high availability feature.
     description: ''
+  - name: --identity
+    summary: The name or resource ID of the user assigned identity for data encryption.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --key
+    summary: The resource ID of the primary keyvault key for data encryption.
     description: ''
   - name: --maintenance-window
     summary: 'Period of time (UTC) designated for maintenance. Examples: "Sun:23:30" to schedule on Sunday, 11:30pm UTC. To set back to default pass in "Disabled".'
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --password-auth
+    parameterValueGroup: Disabled, Enabled
+    summary: Whether password authentication is enabled.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -556,6 +720,38 @@ directCommands:
     description: ''
   - name: --tier
     summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, Memory Optimized.'
+    description: ''
+- uid: az_postgres_flexible-server_upgrade
+  name: az postgres flexible-server upgrade
+  summary: Upgrade the major version of a flexible server.
+  description: ''
+  syntax: >-
+    az postgres flexible-server upgrade --version {12, 13, 14}
+                                        [--ids]
+                                        [--name]
+                                        [--resource-group]
+                                        [--yes]
+  examples:
+  - summary: Upgrade server 'testsvr' to PostgreSQL major version 14.
+    syntax: az postgres flexible-server upgrade -g testgroup -n testsvr -v 14
+  requiredParameters:
+  - isRequired: true
+    name: --version -v
+    parameterValueGroup: 12, 13, 14
+    summary: Server major version.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --yes -y
+    summary: Do not prompt for confirmation.
     description: ''
 - uid: az_postgres_flexible-server_wait
   name: az postgres flexible-server wait
@@ -606,6 +802,12 @@ directCommands:
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
+- az_postgres_flexible-server_ad-admin
+- az_postgres_flexible-server_ad-admin_create
+- az_postgres_flexible-server_ad-admin_delete
+- az_postgres_flexible-server_ad-admin_list
+- az_postgres_flexible-server_ad-admin_show
+- az_postgres_flexible-server_ad-admin_wait
 - az_postgres_flexible-server_backup
 - az_postgres_flexible-server_backup_list
 - az_postgres_flexible-server_backup_show
@@ -627,6 +829,12 @@ commands:
 - az_postgres_flexible-server_firewall-rule_list
 - az_postgres_flexible-server_firewall-rule_show
 - az_postgres_flexible-server_firewall-rule_update
+- az_postgres_flexible-server_geo-restore
+- az_postgres_flexible-server_identity
+- az_postgres_flexible-server_identity_assign
+- az_postgres_flexible-server_identity_list
+- az_postgres_flexible-server_identity_remove
+- az_postgres_flexible-server_identity_show
 - az_postgres_flexible-server_list
 - az_postgres_flexible-server_list-skus
 - az_postgres_flexible-server_migration
@@ -639,6 +847,10 @@ commands:
 - az_postgres_flexible-server_parameter_list
 - az_postgres_flexible-server_parameter_set
 - az_postgres_flexible-server_parameter_show
+- az_postgres_flexible-server_replica
+- az_postgres_flexible-server_replica_create
+- az_postgres_flexible-server_replica_list
+- az_postgres_flexible-server_replica_stop-replication
 - az_postgres_flexible-server_restart
 - az_postgres_flexible-server_restore
 - az_postgres_flexible-server_show
@@ -646,6 +858,7 @@ commands:
 - az_postgres_flexible-server_start
 - az_postgres_flexible-server_stop
 - az_postgres_flexible-server_update
+- az_postgres_flexible-server_upgrade
 - az_postgres_flexible-server_wait
 globalParameters:
 - name: --debug

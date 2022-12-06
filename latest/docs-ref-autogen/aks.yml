@@ -127,6 +127,7 @@ directCommands:
                   [--enable-private-cluster]
                   [--enable-secret-rotation]
                   [--enable-sgxquotehelper]
+                  [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
                   [--enable-windows-gmsa]
                   [--fqdn-subdomain]
@@ -165,7 +166,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
-                  [--os-sku {CBLMariner, Ubuntu, Windows2019, Windows2022}]
+                  [--os-sku {CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-subnet-id]
@@ -379,6 +380,7 @@ directCommands:
           - monitoring               : turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one.
                                        Specify "--workspace-resource-id" to use an existing workspace.
                                        Specify "--enable-msi-auth-for-monitoring" to use Managed Identity Auth.
+                                       Specify "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
                                        If monitoring addon is enabled --no-wait argument will have no effect
           - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
                                        Learn more at aka.ms/aks/policy.
@@ -434,6 +436,10 @@ directCommands:
     description: ''
   - name: --enable-sgxquotehelper
     summary: Enable SGX quote helper for confcom addon.
+    description: ''
+  - name: --enable-syslog
+    parameterValueGroup: false, true
+    summary: Enable syslog data collection for Monitoring addon.
     description: ''
   - name: --enable-ultra-ssd
     summary: Enable UltraSSD, default value is false.
@@ -568,7 +574,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --os-sku
-    parameterValueGroup: CBLMariner, Ubuntu, Windows2019, Windows2022
+    parameterValueGroup: CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022
     summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --outbound-type
@@ -717,7 +723,8 @@ directCommands:
     These addons are available:
         - http_application_routing : configure ingress with automatic public DNS name creation.
         - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
-                                     Requires "--enable_msi_auth_for_monitoring" for managed identity auth.
+                                     Requires "--enable-msi-auth-for-monitoring" for managed identity auth.
+                                     Requires "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
                                      If monitoring addon is enabled --no-wait argument will have no effect
         - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
         - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
@@ -737,6 +744,7 @@ directCommands:
                          [--enable-msi-auth-for-monitoring]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
+                         [--enable-syslog]
                          [--no-wait]
                          [--rotation-poll-interval]
                          [--subnet-name]
@@ -785,6 +793,9 @@ directCommands:
     description: ''
   - name: --enable-sgxquotehelper
     summary: Enable SGX quote helper for confcom addon.
+    description: ''
+  - name: --enable-syslog
+    summary: Enable syslog data collection for Monitoring addon.
     description: ''
   - name: --no-wait
     summary: Do not wait for the long-running operation to finish.
@@ -1855,5 +1866,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2022
+  ms.date: 11/29/2022
   description: Manage Azure Kubernetes Services.
