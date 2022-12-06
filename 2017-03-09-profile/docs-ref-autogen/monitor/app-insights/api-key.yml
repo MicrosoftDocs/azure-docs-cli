@@ -38,10 +38,10 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --read-properties
-    summary: A space-separated list of names of read Roles for this API key to inherit.
+    summary: A space-separated list of names of read Roles for this API key to inherit. Possible values include ReadTelemetry, AuthenticateSDKControlChannel and "".
     description: ''
   - name: --write-properties
-    summary: A space-separated list of names of write Roles for this API key to inherit.
+    summary: A space-separated list of names of write Roles for this API key to inherit. Possible values include WriteAnnotations and "".
     description: ''
 - uid: az_monitor_app-insights_api-key_delete
   name: az monitor app-insights api-key delete
@@ -49,8 +49,10 @@ directCommands:
   description: ''
   syntax: >-
     az monitor app-insights api-key delete --api-key
-                                           --app
-                                           --resource-group
+                                           [--app]
+                                           [--ids]
+                                           [--resource-group]
+                                           [--subscription]
   examples:
   - summary: Delete API Key.
     syntax: az monitor app-insights api-key delete --app demoApp -g demoRg --api-key demo-key
@@ -59,39 +61,49 @@ directCommands:
     name: --api-key
     summary: Name of the API key to delete. Can be found using `api-key show`.
     description: ''
-  - isRequired: true
-    name: --app -a
+  optionalParameters:
+  - name: --app -a
     summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_monitor_app-insights_api-key_show
   name: az monitor app-insights api-key show
   summary: Get all keys or a specific API key associated with an Application Insights resource.
   description: ''
   syntax: >-
-    az monitor app-insights api-key show --app
-                                         --resource-group
-                                         [--api-key]
+    az monitor app-insights api-key show [--api-key]
+                                         [--app]
+                                         [--ids]
+                                         [--resource-group]
+                                         [--subscription]
   examples:
   - summary: Fetch API Key.
     syntax: az monitor app-insights api-key show --app demoApp -g demoRg --api-key demo-key
   - summary: Fetch API Keys.
     syntax: az monitor app-insights api-key show --app demoApp -g demoRg
-  requiredParameters:
-  - isRequired: true
-    name: --app -a
-    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --api-key
     summary: Name of the API key to fetch. Can be found using `api-key show`.
+    description: ''
+  - name: --app -a
+    summary: GUID, app name, or fully-qualified Azure resource name of Application Insights component. The application GUID may be acquired from the API Access menu item on any Application Insights resource in the Azure portal. If using an application name, please specify resource group.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_monitor_app-insights_api-key_create
@@ -105,8 +117,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

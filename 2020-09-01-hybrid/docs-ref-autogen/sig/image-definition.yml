@@ -200,7 +200,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --os-type
-    parameterValueGroup: Linux, Windows
+    parameterValueGroup: "Linux, Windows"
     summary: The type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD.
     description: ''
   - isRequired: true
@@ -232,8 +232,8 @@ directCommands:
     summary: A list of gallery image features. E.g. "IsSecureBootSupported=true IsMeasuredBootSupported=false".
     description: ''
   - name: --hyper-v-generation
-    defaultValue: V1
-    parameterValueGroup: V1, V2
+    defaultValue: "V1"
+    parameterValueGroup: "V1, V2"
     summary: The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
     description: ''
   - name: --location -l
@@ -252,8 +252,8 @@ directCommands:
     summary: Minimum memory in MB.
     description: ''
   - name: --os-state
-    defaultValue: Generalized
-    parameterValueGroup: Generalized, Specialized
+    defaultValue: "Generalized"
+    parameterValueGroup: "Generalized, Specialized"
     summary: This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'.
     description: ''
   - name: --plan-name
@@ -283,6 +283,7 @@ directCommands:
                                    [--gallery-name]
                                    [--ids]
                                    [--resource-group]
+                                   [--subscription]
   optionalParameters:
   - name: --gallery-image-definition -i
     summary: Gallery image definition.
@@ -295,6 +296,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image-definition_list
   name: az sig image-definition list
@@ -317,31 +321,36 @@ directCommands:
   summary: List VM Image definitions in a gallery community (preview).
   description: List VM Image definitions in a gallery community (private preview feature, please contact community image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
   syntax: >-
-    az sig image-definition list-community --location
-                                           --public-gallery-name
+    az sig image-definition list-community [--ids]
+                                           [--location]
                                            [--marker]
+                                           [--public-gallery-name]
                                            [--show-next-marker]
+                                           [--subscription]
   examples:
   - summary: List an image definition in a gallery community.
     syntax: >-
       az sig image-definition list-community --public-gallery-name publicGalleryName \
 
       --location myLocation
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --public-gallery-name
-    summary: The public name of community gallery.
-    description: ''
-  optionalParameters:
   - name: --marker
     summary: A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. If specified, this generator will begin returning results from the point where the previous generator stopped.
     description: ''
+  - name: --public-gallery-name
+    summary: The public name of community gallery.
+    description: ''
   - name: --show-next-marker
     summary: Show nextMarker in result when specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image-definition_show
   name: az sig image-definition show
@@ -352,6 +361,7 @@ directCommands:
                                  [--gallery-name]
                                  [--ids]
                                  [--resource-group]
+                                 [--subscription]
   optionalParameters:
   - name: --gallery-image-definition -i
     summary: Gallery image definition.
@@ -365,32 +375,40 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_sig_image-definition_show-community
   name: az sig image-definition show-community
   summary: Get an image in a gallery community (preview).
   description: Get an image in a gallery community (private preview feature, please contact community image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
   syntax: >-
-    az sig image-definition show-community --gallery-image-definition
-                                           --location
-                                           --public-gallery-name
+    az sig image-definition show-community [--gallery-image-definition]
+                                           [--ids]
+                                           [--location]
+                                           [--public-gallery-name]
+                                           [--subscription]
   examples:
   - summary: Get an image definition in a gallery community in the given location.
     syntax: >-
       az sig image-definition show-community --public-gallery-name publicGalleryName \
 
       --gallery-image-definition myGalleryImageName --location myLocation
-  requiredParameters:
-  - isRequired: true
-    name: --gallery-image-definition -i
+  optionalParameters:
+  - name: --gallery-image-definition -i
     summary: The name of the community gallery image definition from which the image versions are to be listed.
     description: ''
-  - isRequired: true
-    name: --location -l
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --public-gallery-name
+  - name: --public-gallery-name
     summary: The public name of community gallery.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image-definition_update
   name: az sig image-definition update
@@ -438,15 +456,19 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
 commands:
@@ -465,8 +487,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
