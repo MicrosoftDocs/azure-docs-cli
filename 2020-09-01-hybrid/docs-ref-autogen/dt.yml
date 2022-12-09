@@ -17,6 +17,8 @@ directCommands:
                  --resource-group
                  [--assign-identity {false, true}]
                  [--location]
+                 [--mi-system-assigned {false, true}]
+                 [--mi-user-assigned]
                  [--no-wait]
                  [--pna {Disabled, Enabled}]
                  [--role]
@@ -28,15 +30,15 @@ directCommands:
   - summary: Create instance in target resource group with specified location and tags.
     syntax: az dt create -n {instance_name} -g {resouce_group} -l westus --tags a=b c=d
   - summary: Create instance in the target resource group with a system managed identity.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned
+  - summary: Create instance in the target resource group with a user managed identity.
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-user-assigned {resource_id}
+  - summary: Create instance in the target resource group with a system managed identity and multiple user managed identities.
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned --mi-user-assigned {resource_id} {resource_id}
   - summary: Create instance in the target resource group with a system managed identity then assign the identity to one or more scopes (space-separated) with the role of Contributor.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic"
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic"
   - summary: Create instance in the target resource group with a system managed identity then assign the identity to one or more scopes with a custom specified role.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic" --role MyCustomRole
-  - summary: Update an instance in the target resource group to enable system managed identity.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity
-  - summary: Update an instance in the target resource group to disable system managed identity.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity false
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic" --role MyCustomRole
   - summary: Update an instance in the target resource group with new tag values and disable public network access.
     syntax: az dt create -n {instance_name} -g {resouce_group} --tags env=prod --public-network-access Disabled
   requiredParameters:
@@ -55,6 +57,13 @@ directCommands:
     description: ''
   - name: --location -l
     summary: Digital Twins instance location. If no location is provided the resource group location is used.You can configure the default location using `az configure --defaults location=<name>`.
+    description: ''
+  - name: --mi-system-assigned
+    parameterValueGroup: "false, true"
+    summary: Assign a system generated identity to the Digital Twins instance.
+    description: ''
+  - name: --mi-user-assigned
+    summary: Space-separated user identity resource ids to add to the Digital Twins instance.
     description: ''
   - name: --no-wait
     defaultValue: "False"
@@ -241,6 +250,10 @@ commands:
 - az_dt_endpoint_list
 - az_dt_endpoint_show
 - az_dt_endpoint_wait
+- az_dt_identity
+- az_dt_identity_assign
+- az_dt_identity_remove
+- az_dt_identity_show
 - az_dt_job
 - az_dt_job_import
 - az_dt_job_import_create
