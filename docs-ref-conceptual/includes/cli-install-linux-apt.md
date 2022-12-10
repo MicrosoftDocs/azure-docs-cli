@@ -52,7 +52,7 @@ If you prefer a step-by-step installation process, complete the following steps 
 2. Download and install the Microsoft signing key:
 
     ```bash
-    curl -sL https://packages.microsoft.com/keys/microsoft.asc |
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc |
         gpg --dearmor |
         sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
     ```
