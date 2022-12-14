@@ -203,7 +203,7 @@ Two additional URLs used during installation to download Python packages and too
 
 ## See also
 
-- [How to use the Azure CLI effectively - Work behind a proxy](/cli/azure/use-cli-effectively&tabs=bash%2Cbash2#work-behind-a-proxy)
+- [How to use the Azure CLI effectively - Work behind a proxy](/cli/azure/use-cli-effectively?tabs=bash%2Cbash2#work-behind-a-proxy)
 - [Work with existing on-premises proxy servers](/azure/active-directory/app-proxy/application-proxy-configure-connectors-with-proxy-servers)
 - [Azure Firewall threat intelligence configuration - Allowlist addresses](/azure/firewall-manager/threat-intelligence-settings#allowlist-addresses)
 - Azure IP ranges and Service Tags
