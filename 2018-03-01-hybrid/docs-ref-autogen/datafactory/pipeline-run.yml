@@ -13,51 +13,53 @@ directCommands:
   summary: Cancel a pipeline run by its run ID.
   description: ''
   syntax: >-
-    az datafactory pipeline-run cancel --factory-name
-                                       --resource-group
-                                       --run-id
+    az datafactory pipeline-run cancel [--factory-name]
+                                       [--ids]
                                        [--is-recursive {false, true}]
+                                       [--resource-group]
+                                       [--run-id]
+                                       [--subscription]
   examples:
   - summary: PipelineRuns_Cancel
     syntax: az datafactory pipeline-run cancel --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup" --run-id "16ac5348-ff82-4f95-a80d-638c1d47b721"
-  requiredParameters:
-  - isRequired: true
-    name: --factory-name
+  optionalParameters:
+  - name: --factory-name
     summary: The factory name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --is-recursive
+    parameterValueGroup: "false, true"
+    summary: If true, cancel all the Child pipelines that are triggered by the current pipeline.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --run-id
+  - name: --run-id
     summary: The pipeline run identifier.
     description: ''
-  optionalParameters:
-  - name: --is-recursive
-    parameterValueGroup: false, true
-    summary: If true, cancel all the Child pipelines that are triggered by the current pipeline.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_datafactory_pipeline-run_query-by-factory
   name: az datafactory pipeline-run query-by-factory
   summary: Query pipeline runs in the factory based on input filter conditions.
   description: ''
   syntax: >-
-    az datafactory pipeline-run query-by-factory --factory-name
-                                                 --last-updated-after
+    az datafactory pipeline-run query-by-factory --last-updated-after
                                                  --last-updated-before
-                                                 --resource-group
                                                  [--continuation-token]
+                                                 [--factory-name]
                                                  [--filters]
+                                                 [--ids]
                                                  [--order-by]
+                                                 [--resource-group]
+                                                 [--subscription]
   examples:
   - summary: PipelineRuns_QueryByFactory
     syntax: az datafactory pipeline-run query-by-factory --factory-name "exampleFactoryName" --filters operand="PipelineName" operator="Equals" values="examplePipeline" --last-updated-after "2018-06-16T00:36:44.3345758Z" --last-updated-before "2018-06-16T00:49:48.3686473Z" --resource-group "exampleResourceGroup"
   requiredParameters:
-  - isRequired: true
-    name: --factory-name
-    summary: The factory name.
-    description: ''
   - isRequired: true
     name: --last-updated-after
     summary: The time at or after which the run event was updated in 'ISO 8601' format.
@@ -66,13 +68,12 @@ directCommands:
     name: --last-updated-before
     summary: The time at or before which the run event was updated in 'ISO 8601' format.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --continuation-token
     summary: The continuation token for getting the next page of results. Null for first page.
+    description: ''
+  - name: --factory-name
+    summary: The factory name.
     description: ''
   - name: --filters
     summary: List of filters.
@@ -88,6 +89,9 @@ directCommands:
 
 
       Multiple actions can be specified by using more than one --filters argument.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --order-by
     summary: List of OrderBy option.
     description: >-
@@ -100,29 +104,40 @@ directCommands:
 
 
       Multiple actions can be specified by using more than one --order-by argument.
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_datafactory_pipeline-run_show
   name: az datafactory pipeline-run show
   summary: Get a pipeline run by its run ID.
   description: ''
   syntax: >-
-    az datafactory pipeline-run show --factory-name
-                                     --resource-group
-                                     --run-id
+    az datafactory pipeline-run show [--factory-name]
+                                     [--ids]
+                                     [--resource-group]
+                                     [--run-id]
+                                     [--subscription]
   examples:
   - summary: PipelineRuns_Get
     syntax: az datafactory pipeline-run show --factory-name "exampleFactoryName" --resource-group "exampleResourceGroup" --run-id "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b"
-  requiredParameters:
-  - isRequired: true
-    name: --factory-name
+  optionalParameters:
+  - name: --factory-name
     summary: The factory name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --run-id
+  - name: --run-id
     summary: The pipeline run identifier.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_datafactory_pipeline-run_cancel
@@ -136,8 +151,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

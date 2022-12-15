@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/01/2022
+ms.date: 12/06/2022
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,108 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## December 06, 2022
+
+Version 2.43.0
+
+### Core
+* `aaz`: Fix `has_value` function for list, dict and object arg types (#24625)
+* `aaz`: Support argument preview and experimental (#24637)
+* `aaz`: Add registered property for `AAZBaseArg` (#24640)
+* `aaz`: Add aazlist and aazdict args transform help functions (#24690)
+* `aaz`: Support camel case key in `AAZObjectType` (#24771)
+* Disable removing and updating system extension in Cloud Shell (#24361)
+
+### AKS
+
+* `az aks enable-addons`: Add `--enable-syslog` parameter to monitoring addon
+* `az aks nodepool`: Unify the option names used to specify the nodepool name and cluster name. For nodepool name, option names are `--nodepool-name`, `--name` and `-n`. For cluster name, option name is `--cluster-name`
+* `az aks nodepool add`: Support the new SKU Mariner for parameter `--os-sku`
+
+### App Config
+
+* `az appconfig`: Update raised errors in app config command module
+
+### App Service
+
+* `az staticwebapp backends link`: Link an backend to a static webapp. Also known as "Bring your own Backend."
+* `az staticwebapp backends unlink`: Unlink backend from a static webapp
+* `az staticwebapp backends show`: Show details on the backend linked to a static webapp
+* `az staticwebapp backends validate`: Validate an backend for a static webapp
+* `az webapp config snapshot restore`: Fix the AttributeError `str object has no attribute get`
+* `az appservice plan create/update`: Add new environment SKU for parameter `--sku`
+* `az staticwebapp create`: Add new parameter `--login-with-ado` to create azure dev ops token automatically
+* Fix #24506: `az functionapp keys set/delete`: Update the wrong accepted parameter value `systemKey` to `systemKeys` for `--key-type`
+* `az webapp create`: Add `--public-network-access` parameter to support enabling public access
+* `az staticwebapp hostname show`: Fix dns-txt-token validation command to show command
+* Fix #24620: `az webapp create`: Improve the error message to show that the `az webapp list-runtimes` command depends on the specified runtime
+
+### ARM
+
+* `az deployment mg create`: Add new parameter `--mode` to support setting the mode for deploying resources
+* `az group lock list`: Mark the `--resource-group` as required in help message
+* `az bicep install`: Address issue installing bicep on non-musl default systems with musl
+
+### Backup
+
+* `az backup restore restore-disks`: Allow `--disk-encryption-set-id` for cross region restore
+
+### Compute
+
+* Fix #24624: `az sig image-version create`: Fix the error that the `--os-vhd-storage-account` must be a managed disk or snapshot
+
+### IoT
+
+* Fix #22257: `az iot dps linked-hub create`: Improve error handling for linked hubs
+* `az iot hub create/delete`: Add `--no-wait` parameter to support no wait operation
+
+### Key Vault
+
+* `az keyvault`: Add check-name command, support Security Domain Properties
+
+### Monitor
+
+* `az monitor diagnostic-settings`: Add `--marketplace-partner-id` parameter
+
+### Network
+
+* `az network bastion rdp`: Allow rdp session customization
+* `az network private-endpoint-connection`: Enable private link support for provider `Microsoft.DesktopVirtualization/hostpools` and `Microsoft.DesktopVirtualization/workspaces`
+* `az network application-gateway`: Support OCSP revocation check on client certificate
+* `az network traffic-manager endpoint`: Add `--always-serve` to manage the health check on endpoints
+* `az network public-ip create`: Fix `--ip-tags` cannot be used
+* `az network private-endpoint-connection`: Add Provider `Microsoft.MachineLearningServices/registries`
+
+### RDBMS
+
+* `az postgres flexible-server geo-restore/replica`: Introduce read replicas and geo-restore
+* `az postgres flexible-server upgrade`: Add major version upgrade for PostgreSQL flexible server
+* `az postgres flexible-server create/update/restore/replica`: Postgres flex byok
+* `az postgres flexible-server identity`: Add user managed identity operations for PostgreSQL flexible server
+* `az postgres flexible-server create/update/ad-admin`: Add Azure Active Directory Administrator operations for PostgreSQL flexible server
+
+### Service Connector
+
+* `az webapp/spring/containerapp connection create mysql`: Deprecate mysql single server connection command
+
+### SQL
+
+* `az sql server ipv6-firewall-rule`: Add new command group for AZ SQL server IPv6 firewall rule
+
+### SQL VM
+
+* `az sql vm update`: Deprecate the `--yes` prompt to upgrade SqlIaaSAgent extension to full mode
+* `az sql vm create/update`: Add `--least-privilege-mode` to take minimal permissions on their SQL Server
+* `az sql vm group create/update`: Add `--cluster-subnet-type` to support High Availability configuration
+
+### Storage
+
+* Fix #23893, #24528: `az storage account show-connection-string/keys renew`: Fix resource group auto completion
+* Fix #23216: `az storage file upload-batch`: Fix `--dryrun` to show correct file paths
+* `az storage blob copy start`: Add `--destination-blob-type` to allow switching between blob types when copying
+* `az storage account encryption-scope list`: Add `--filter`, `--include`, `--maxpagesize` to support advanced list
+* `az storage account failover`: Add `--failover-type` to support planned failover
 
 ## November 01, 2022
 

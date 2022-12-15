@@ -17,6 +17,8 @@ directCommands:
                  --resource-group
                  [--assign-identity {false, true}]
                  [--location]
+                 [--mi-system-assigned {false, true}]
+                 [--mi-user-assigned]
                  [--no-wait]
                  [--pna {Disabled, Enabled}]
                  [--role]
@@ -28,15 +30,15 @@ directCommands:
   - summary: Create instance in target resource group with specified location and tags.
     syntax: az dt create -n {instance_name} -g {resouce_group} -l westus --tags a=b c=d
   - summary: Create instance in the target resource group with a system managed identity.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned
+  - summary: Create instance in the target resource group with a user managed identity.
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-user-assigned {resource_id}
+  - summary: Create instance in the target resource group with a system managed identity and multiple user managed identities.
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned --mi-user-assigned {resource_id} {resource_id}
   - summary: Create instance in the target resource group with a system managed identity then assign the identity to one or more scopes (space-separated) with the role of Contributor.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic"
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic"
   - summary: Create instance in the target resource group with a system managed identity then assign the identity to one or more scopes with a custom specified role.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic" --role MyCustomRole
-  - summary: Update an instance in the target resource group to enable system managed identity.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity
-  - summary: Update an instance in the target resource group to disable system managed identity.
-    syntax: az dt create -n {instance_name} -g {resouce_group} --assign-identity false
+    syntax: az dt create -n {instance_name} -g {resouce_group} --mi-system-assigned --scopes "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.EventHub/namespaces/myEventHubNamespace/eventhubs/myEventHub" "/subscriptions/a12345ea-bb21-994d-2263-c716348e32a1/resourceGroups/ProResourceGroup/providers/Microsoft.ServiceBus/namespaces/myServiceBusNamespace/topics/myTopic" --role MyCustomRole
   - summary: Update an instance in the target resource group with new tag values and disable public network access.
     syntax: az dt create -n {instance_name} -g {resouce_group} --tags env=prod --public-network-access Disabled
   requiredParameters:
@@ -50,22 +52,30 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --assign-identity
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Assign a system generated identity to the Digital Twins instance.
     description: ''
   - name: --location -l
     summary: Digital Twins instance location. If no location is provided the resource group location is used.You can configure the default location using `az configure --defaults location=<name>`.
     description: ''
+  - name: --mi-system-assigned
+    parameterValueGroup: "false, true"
+    summary: Assign a system generated identity to the Digital Twins instance.
+    description: ''
+  - name: --mi-user-assigned
+    summary: Space-separated user identity resource ids to add to the Digital Twins instance.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --pna --public-network-access
-    defaultValue: Enabled
-    parameterValueGroup: Disabled, Enabled
+    defaultValue: "Enabled"
+    parameterValueGroup: "Disabled, Enabled"
     summary: Determines if the Digital Twins instance can be accessed from a public network.
     description: ''
   - name: --role
-    defaultValue: Contributor
+    defaultValue: "Contributor"
     summary: Role name or Id the system assigned identity will have.
     description: ''
   - name: --scopes
@@ -95,12 +105,14 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_dt_list
@@ -142,6 +154,7 @@ directCommands:
     summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_dt_show
@@ -192,15 +205,18 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --interval
@@ -234,6 +250,10 @@ commands:
 - az_dt_endpoint_list
 - az_dt_endpoint_show
 - az_dt_endpoint_wait
+- az_dt_identity
+- az_dt_identity_assign
+- az_dt_identity_remove
+- az_dt_identity_show
 - az_dt_job
 - az_dt_job_import
 - az_dt_job_import_create
@@ -298,8 +318,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

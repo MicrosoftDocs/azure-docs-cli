@@ -11,7 +11,27 @@ directCommands:
 - uid: az_iot_du_update_init_v5
   name: az iot du update init v5
   summary: Initialize a v5 import manifest with the desired state.
-  description: This command supports all attributes of the v5 import manifest. Review examples and parameter descriptions for details on how to fully utilize the operation. Note that there is positional sensitivity between --step and --file, as well as --file and --related-file. Review parameter help for more details.
+  description: >-
+    This command supports all attributes of the v5 import manifest. Note that there is
+
+    positional sensitivity between `--step` and `--file`, as well as `--file` and
+
+    `--related-file`. Review examples and parameter descriptions for details on how
+
+    to fully utilize the operation.
+
+
+    - For bash inline json format use '{"key":"value"}' and \ (backslash) for command continuation.
+
+    - For powershell inline json format use '{\"key\":\"value\"}' and ` (tilde) for command continuation.
+
+    - For cmd inline json format use "{\"key\":\"value\"}" and ^ (caret) for command continuation.
+
+    - For file based json input use "@/path/to/file". File based input avoids shell quotation issues.
+
+
+    For a detailed explanation of shell quoting rules please goto
+      https://learn.microsoft.com/en-us/cli/azure/use-cli-effectively.
   syntax: >-
     az iot du update init v5 --compat
                              --step
@@ -24,14 +44,35 @@ directCommands:
                              [--no-validation {false, true}]
                              [--related-file]
   examples:
-  - summary: Initialize a minimum content import manifest.
-    syntax: az iot du update init v5 --update-provider Microsoft --update-name AptUpdate --update-version 1.0.0 --description "My minimum update" --compat manufacturer=Contoso model=Vacuum --step handler=microsoft/apt:1 --file path=/my/apt/manifest/file
-  - summary: Initialize a non-deployable leaf update to be referenced in a bundled update.
-    syntax: az iot du update init v5 --update-provider Microsoft --update-name SwUpdate --update-version 1.1 --compat manufacturer=Contoso model=Microphone --step handler=microsoft/swupdate:1 description="Deploy Update" --file path=/my/update/image/file1 --file path=/my/update/image/file2 --is-deployable false
-  - summary: Initialize a bundled update referencing a leaf update as well as defining independent steps. Inline json examples compatible with bash-like shells.
-    syntax: "az iot du update init v5 --update-provider Microsoft --update-name Bundled --update-version 2.0 --compat manufacturer=Contoso model=SpaceStation --step handler=microsoft/script:1 properties='{\"arguments\": \"--pre\"}' description=\"Pre-install script\" --file path=/my/update/scripts/preinstall.sh downloadHandler=microsoft/delta:1 --related-file path=/my/update/scripts/related_preinstall.json properties='{\"microsoft.sourceFileHashAlgorithm\": \"sha256\"}' --step updateId.provider=Microsoft updateId.name=SwUpdate updateId.version=1.1 --step handler=microsoft/script:1 properties='{\"arguments\": \"--post\"}' description=\"Post-install script\" --file path=/my/update/scripts/postinstall.sh"
-  - summary: Initialize a bundled update referencing a leaf update as well as defining independent steps. Inline json examples compatible with powershell.
-    syntax: "az iot du update init v5 --update-provider Microsoft --update-name Bundled --update-version 2.0 --compat manufacturer=Contoso model=SpaceStation --step handler=microsoft/script:1 properties='{\\\"arguments\\\": \\\"--pre\\\"}' description=\"Pre-install script\" --file path=/my/update/scripts/preinstall.sh downloadHandler=microsoft/delta:1 --related-file path=/my/update/scripts/related_preinstall.json properties='{\\\"microsoft.sourceFileHashAlgorithm\\\": \\\"sha256\\\"}' --step updateId.provider=Microsoft updateId.name=SwUpdate updateId.version=1.1 --step handler=microsoft/script:1 properties='{\\\"arguments\": \\\"--post\\\"}' description=\"Post-install script\" --file path=/my/update/scripts/postinstall.sh"
+  - summary: Initialize a minimum content import manifest. Inline json optimized for `bash`.
+    syntax: "az iot du update init v5 --update-provider Microsoft --update-name myAptUpdate --update-version 1.0.0 --description \"My minimum update\" --compat manufacturer=Contoso model=Vacuum --step handler=microsoft/apt:1 properties='{\"installedCriteria\": \"1.0\"}' --file path=/my/apt/manifest/file"
+  - summary: Initialize a minimum content import manifest. Inline json optimized for `powershell`.
+    syntax: "az iot du update init v5 --update-provider Microsoft --update-name myAptUpdate --update-version 1.0.0 --description \"My minimum update\" --compat manufacturer=Contoso model=Vacuum --step handler=microsoft/apt:1 properties='{\\\"installedCriteria\\\": \\\"1.0\\\"}' --file path=/my/apt/manifest/file"
+  - summary: Initialize a minimum content import manifest. Inline json optimized for `cmd`.
+    syntax: 'az iot du update init v5 --update-provider Microsoft --update-name myAptUpdate --update-version 1.0.0 --description "My minimum update" --compat manufacturer=Contoso model=Vacuum --step handler=microsoft/apt:1 properties="{\"installedCriteria\": \"1.0\"}" --file path=/my/apt/manifest/file'
+  - summary: Initialize a minimum content import manifest. Use file input for json.
+    syntax: az iot du update init v5 --update-provider Microsoft --update-name myAptUpdate --update-version 1.0.0 --description "My minimum update" --compat manufacturer=Contoso model=Vacuum --step handler=microsoft/apt:1 properties="@/path/to/file" --file path=/my/apt/manifest/file
+  - summary: Initialize a non-deployable leaf update to be referenced in a bundled update. Inline json optimized for `bash`.
+    syntax: "az iot du update init v5 --update-provider Microsoft --update-name mySwUpdate --update-version 1.1.0 --compat manufacturer=Contoso model=Microphone --step handler=microsoft/swupdate:1 description=\"Deploy Update\" properties='{\"installedCriteria\": \"1.0\"}' --file path=/my/update/image/file1 --file path=/my/update/image/file2 --is-deployable false"
+  - summary: Initialize a bundled update referencing a leaf update as well as defining independent steps. Example optimized for `bash` using command continuation to delineate import manifest segments.
+    syntax: >-
+      az iot du update init v5 \
+
+      --update-provider Microsoft --update-name myBundled --update-version 2.0 \
+
+      --compat manufacturer=Contoso model=SpaceStation \
+
+      --step handler=microsoft/script:1 properties='{"arguments": "--pre"}' description="Pre-install script" \
+
+      --file path=/my/update/scripts/preinstall.sh downloadHandler=microsoft/delta:1 \
+
+      --related-file path=/my/update/scripts/related_preinstall.json properties='{"microsoft.sourceFileHashAlgorithm": "sha256"}' \
+
+      --step updateId.provider=Microsoft updateId.name=SwUpdate updateId.version=1.1 \
+
+      --step handler=microsoft/script:1 properties='{"arguments": "--post"}' description="Post-install script" \
+
+      --file path=/my/update/scripts/postinstall.sh
   requiredParameters:
   - isRequired: true
     name: --compat
@@ -61,15 +102,15 @@ directCommands:
     summary: "Space-separated key=value pairs corresponding to 'files' element properties. A --file entry can include the closest --related-file entries if provided. The following keys are supported: `path` [required] local file path to update file, `downloadHandler` (ex: 'microsoft/delta:1') handler for utilizing related files to download payload file, `properties` (in-line json object the agent will pass to the handler). --file can be used 1 or more times."
     description: ''
   - name: --is-deployable
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicates whether the update is independently deployable.
     description: ''
   - name: --no-validation
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Disables client-side json schema validation of the import manifest content.
     description: ''
   - name: --related-file
-    summary: "Space-separated key=value pairs corresponding to 'files[\\*].relatedFiles' element properties. A --related-file entry will be associated to the closest --file entry if it exists. The following keys are supported: `path` [required] local file path to related update file, `properties` (in-line json object passed to the download handler). --related-file can be used 1 or more times."
+    summary: "Space-separated key=value pairs corresponding to 'files[*].relatedFiles' element properties. A --related-file entry will be associated to the closest --file entry if it exists. The following keys are supported: `path` [required] local file path to related update file, `properties` (in-line json object passed to the download handler). --related-file can be used 1 or more times."
     description: ''
 commands:
 - az_iot_du_update_init_v5
@@ -81,8 +122,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

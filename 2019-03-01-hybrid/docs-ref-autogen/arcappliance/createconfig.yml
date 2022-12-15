@@ -16,7 +16,25 @@ directCommands:
     az arcappliance createconfig hci --location
                                      --name
                                      --resource-group
+                                     [--authenticationport]
+                                     [--certificateFilePath]
+                                     [--cloudagent]
+                                     [--controlPlaneEndpoint]
+                                     [--dnsservers]
+                                     [--gateway]
+                                     [--http]
+                                     [--https]
+                                     [--ipaddressprefix]
+                                     [--k8snodeippoolend]
+                                     [--k8snodeippoolstart]
+                                     [--loginconfigfile]
+                                     [--noproxy]
                                      [--out-dir]
+                                     [--overwrite-existing]
+                                     [--port]
+                                     [--storagecontainer]
+                                     [--vlanid]
+                                     [--vswitchname]
                                      [--working-dir]
   examples:
   - summary: Create Appliance HCI Configuration
@@ -35,8 +53,63 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --authenticationport
+    summary: Network port used by the appliance VM IP to communicate with the cloud agent endpoint. This port should be open on the firewall to enable communication between the two if the Windows Server physical cluster nodes and Arc Resource Bridge VM are on separate VLANs.
+    description: ''
+  - name: --certificateFilePath
+    summary: Certificate file path if your proxy server requires the proxy clients to trust a certificate.
+    description: ''
+  - name: --cloudagent
+    summary: FQDN or IP address of cloud agent service for Arc Resource Bridge.
+    description: ''
+  - name: --controlPlaneEndpoint
+    summary: Control Plane IP - Provide a static IP address outside the DHCP range but still available on the network segment. Ensure that this IP address isn't assigned to any other machine on the network. Arc Resource Bridge runs a Kubernetes cluster and its control plane requires a static IP address.
+    description: ''
+  - name: --dnsservers
+    summary: 'DNS Server(s): IP address(es) of DNS server(s) used by Arc Resource Bridge (Appliance VM) for DNS resolution. Multiple IP addresses should be entered as a comma separated list. Appliance VM must be able to resolve external sites and internal endpoints.'
+    description: ''
+  - name: --gateway
+    summary: Static gateway.
+    description: ''
+  - name: --http
+    summary: HTTP proxy url, Ex) http://<URL>:<PORT>.
+    description: ''
+  - name: --https
+    summary: HTTPS proxy url Ex) http://<URL>:<PORT>.
+    description: ''
+  - name: --ipaddressprefix
+    summary: "IP Address Prefix is the IP Prefix that is exposed by the network the Arc Resource Bridge (Appliance VM) is connected to. It is entered as the subnet's IP address range for the virtual network and subnet mask (IP Mask) in CIDR notation (ex: 192.168.7.1/24). An IP Subnet CIDR calculator can be used to figure this out."
+    description: ''
+  - name: --k8snodeippoolend
+    summary: The virtual machine hosting Appliance requires an IP range (minimum size of 2 addresses one for the VM, and the other IP is reserved for Appliance upgrade). Please specify the end range IP.
+    description: ''
+  - name: --k8snodeippoolstart
+    summary: The virtual machine hosting Appliance requires an IP range (minimum size of 2 addresses one for the VM, and the other IP is reserved for Appliance upgrade). Please specify the start range IP.
+    description: ''
+  - name: --loginconfigfile
+    summary: File path for HCI login configuration.
+    description: ''
+  - name: --noproxy
+    summary: The list of comma separated entries for excluded networks, hosts, or domains from being accessed through the proxy server.
+    description: ''
   - name: --out-dir
     summary: Output directory where created config files should be output, defaults to ./ (current directory).
+    description: ''
+  - name: --overwrite-existing
+    defaultValue: "False"
+    summary: 'Overwrite existing configuration files. Default: False.'
+    description: ''
+  - name: --port
+    summary: Port.
+    description: ''
+  - name: --storagecontainer
+    summary: Azure Stack HCI storage container.
+    description: ''
+  - name: --vlanid
+    summary: VLAN ID.
+    description: ''
+  - name: --vswitchname
+    summary: Azure Stack HCI virtual network switch name.
     description: ''
   - name: --working-dir
     summary: A local directory path where the images and files will be downloaded for deployment. Otherwise default temp directory is used.
@@ -49,7 +122,10 @@ directCommands:
     az arcappliance createconfig kubevirt --location
                                           --name
                                           --resource-group
+                                          [--fabric-kubeconfig]
                                           [--out-dir]
+                                          [--overwrite-existing]
+                                          [--vmsize]
                                           [--working-dir]
   examples:
   - summary: Create Appliance KubeVirt Configuration
@@ -68,8 +144,18 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --fabric-kubeconfig
+    summary: Complete path to fabric kubeconfig file.
+    description: ''
   - name: --out-dir
     summary: Output directory where created config files should be output, defaults to ./ (current directory).
+    description: ''
+  - name: --overwrite-existing
+    defaultValue: "False"
+    summary: 'Overwrite existing configuration files. Default: False.'
+    description: ''
+  - name: --vmsize
+    summary: Appliance VM size.
     description: ''
   - name: --working-dir
     summary: A local directory path where the images and files will be downloaded for deployment. Otherwise default temp directory is used.
@@ -82,7 +168,30 @@ directCommands:
     az arcappliance createconfig scvmm --location
                                        --name
                                        --resource-group
+                                       [--address]
+                                       [--certificateFilePath]
+                                       [--cloudname]
+                                       [--controlPlaneEndpoint]
+                                       [--dnsservers]
+                                       [--gateway]
+                                       [--highlyavailable]
+                                       [--http]
+                                       [--https]
+                                       [--ipaddressprefix]
+                                       [--ippool]
+                                       [--k8snodeippoolend]
+                                       [--k8snodeippoolstart]
+                                       [--libshare]
+                                       [--macaddress]
+                                       [--memorymib]
+                                       [--network]
+                                       [--noproxy]
+                                       [--numcpus]
                                        [--out-dir]
+                                       [--overwrite-existing]
+                                       [--password]
+                                       [--port]
+                                       [--username]
                                        [--working-dir]
   examples:
   - summary: Create Arc Appliance SCVMM Configuration
@@ -101,8 +210,78 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --address
+    summary: SCVMM Server FQDN(Role name in case of HAVMM) or IP address.
+    description: ''
+  - name: --certificateFilePath
+    summary: Certificate file path if your proxy server requires the proxy clients to trust a certificate (press enter to skip).
+    description: ''
+  - name: --cloudname
+    summary: SCVMM cloud.
+    description: ''
+  - name: --controlPlaneEndpoint
+    summary: Control Plane IP - Provide a static IP address outside the DHCP range but still available on the network segment. Ensure that this IP address isn't assigned to any other machine on the network. Arc Resource Bridge runs a Kubernetes cluster and its control plane requires a static IP address.
+    description: ''
+  - name: --dnsservers
+    summary: 'DNS Server(s): IP address(es) of DNS server(s) used by Arc Resource Bridge (Appliance VM) for DNS resolution. Multiple IP addresses should be entered as a comma separated list. Appliance VM must be able to resolve external sites and internal endpoints.'
+    description: ''
+  - name: --gateway
+    summary: Static gateway.
+    description: ''
+  - name: --highlyavailable
+    summary: Deploy resource bridge as Highly available.Highly available vm recommended for production environment.(Expected true/false).
+    description: ''
+  - name: --http
+    summary: HTTP proxy url, Ex) http://<URL>:<PORT>.
+    description: ''
+  - name: --https
+    summary: HTTPS proxy url Ex) http://<URL>:<PORT>.
+    description: ''
+  - name: --ipaddressprefix
+    summary: "IP Address Prefix is the IP Prefix that is exposed by the network the Arc Resource Bridge (Appliance VM) is connected to. It is entered as the subnet's IP address range for the virtual network and subnet mask (IP Mask) in CIDR notation (ex: 192.168.7.1/24). An IP Subnet CIDR calculator can be used to figure this out."
+    description: ''
+  - name: --ippool
+    summary: SCVMM Static IP Pool.
+    description: ''
+  - name: --k8snodeippoolend
+    summary: The virtual machine hosting Appliance requires an IP range (minimum size of 2 addresses one for the VM, and the other IP is reserved for Appliance upgrade). Please specify the end range IP.
+    description: ''
+  - name: --k8snodeippoolstart
+    summary: The virtual machine hosting Appliance requires an IP range (minimum size of 2 addresses one for the VM, and the other IP is reserved for Appliance upgrade). Please specify the start range IP.
+    description: ''
+  - name: --libshare
+    summary: SCVMM library share (Ensure VMM server has write access on the selected Library Share).
+    description: ''
+  - name: --macaddress
+    summary: Static MAC address (Press enter to assign MAC from Default VMM MAC Pool).
+    description: ''
+  - name: --memorymib
+    summary: Memorymib.
+    description: ''
+  - name: --network
+    summary: SCVMM VM network.
+    description: ''
+  - name: --noproxy
+    summary: The list of comma separated entries for excluded networks, hosts, or domains from being accessed through the proxy server.
+    description: ''
+  - name: --numcpus
+    summary: Numcpus.
+    description: ''
   - name: --out-dir
     summary: Output directory where created config files should be output, defaults to ./ (current directory).
+    description: ''
+  - name: --overwrite-existing
+    defaultValue: "False"
+    summary: 'Overwrite existing configuration files. Default: False.'
+    description: ''
+  - name: --password
+    summary: SCVMM Administrator Password.
+    description: ''
+  - name: --port
+    summary: SCVMM server port (The default is 8100. This is the port number specified for VMM console to server connection e.g. vmmserver.constoso.com:8100).
+    description: ''
+  - name: --username
+    summary: SCVMM Administrator Username (domain\username).
     description: ''
   - name: --working-dir
     summary: A local directory path where the images and files will be downloaded for deployment. Otherwise default temp directory is used.
@@ -115,7 +294,29 @@ directCommands:
     az arcappliance createconfig vmware --location
                                         --name
                                         --resource-group
+                                        [--address]
+                                        [--certificateFilePath]
+                                        [--controlPlaneEndpoint]
+                                        [--datacenter]
+                                        [--datastore]
+                                        [--disksizegib]
+                                        [--dnsservers]
+                                        [--folder]
+                                        [--gateway]
+                                        [--http]
+                                        [--https]
+                                        [--ipaddressprefix]
+                                        [--k8snodeippoolend]
+                                        [--k8snodeippoolstart]
+                                        [--memorymib]
+                                        [--network]
+                                        [--noproxy]
+                                        [--numcpus]
                                         [--out-dir]
+                                        [--overwrite-existing]
+                                        [--password]
+                                        [--resourcepool]
+                                        [--username]
                                         [--working-dir]
   examples:
   - summary: Create Appliance VMware Configuration
@@ -134,8 +335,75 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --address
+    summary: 'FQDN or IP address for vCenter Server instance. Ex: 10.160.0.1.'
+    description: ''
+  - name: --certificateFilePath
+    summary: Certificate file path if your proxy server requires the proxy clients to trust a certificate (press enter to skip).
+    description: ''
+  - name: --controlPlaneEndpoint
+    summary: Control Plane IP - Provide a static IP address outside the DHCP range but still available on the network segment. Ensure that this IP address isn't assigned to any other machine on the network. Arc Resource Bridge runs a Kubernetes cluster and its control plane requires a static IP address.
+    description: ''
+  - name: --datacenter
+    summary: Datacenter.
+    description: ''
+  - name: --datastore
+    summary: Datastore.
+    description: ''
+  - name: --disksizegib
+    summary: Disksizegib.
+    description: ''
+  - name: --dnsservers
+    summary: 'DNS Server(s): IP address(es) of DNS server(s) used by Arc Resource Bridge (Appliance VM) for DNS resolution. Multiple IP addresses should be entered as a comma separated list. Appliance VM must be able to resolve external sites and internal endpoints.'
+    description: ''
+  - name: --folder
+    summary: 'Input the complete path to the vSphere folder. Ex: /DatacenterA/vm/FolderA.'
+    description: ''
+  - name: --gateway
+    summary: Static gateway.
+    description: ''
+  - name: --http
+    summary: HTTP proxy url, Ex) http://<URL>:<PORT>.
+    description: ''
+  - name: --https
+    summary: HTTPS proxy url Ex) http://<URL>:<PORT>.
+    description: ''
+  - name: --ipaddressprefix
+    summary: "IP Address Prefix is the IP Prefix that is exposed by the network the Arc Resource Bridge (Appliance VM) is connected to. It is entered as the subnet's IP address range for the virtual network and subnet mask (IP Mask) in CIDR notation (ex: 192.168.7.1/24). An IP Subnet CIDR calculator can be used to figure this out."
+    description: ''
+  - name: --k8snodeippoolend
+    summary: The virtual machine hosting Appliance requires an IP range (minimum size of 2 addresses one for the VM, and the other IP is reserved for Appliance upgrade). Please specify the end range IP.
+    description: ''
+  - name: --k8snodeippoolstart
+    summary: The virtual machine hosting Appliance requires an IP range (minimum size of 2 addresses one for the VM, and the other IP is reserved for Appliance upgrade). Please specify the start range IP.
+    description: ''
+  - name: --memorymib
+    summary: Memory in mb for vm.
+    description: ''
+  - name: --network
+    summary: Network.
+    description: ''
+  - name: --noproxy
+    summary: The list of comma separated entries for excluded networks, hosts, or domains from being accessed through the proxy server.
+    description: ''
+  - name: --numcpus
+    summary: Numcpus.
+    description: ''
   - name: --out-dir
     summary: Output directory where created config files should be output, defaults to ./ (current directory).
+    description: ''
+  - name: --overwrite-existing
+    defaultValue: "False"
+    summary: 'Overwrite existing configuration files. Default: False.'
+    description: ''
+  - name: --password
+    summary: Password for vSphere account.
+    description: ''
+  - name: --resourcepool
+    summary: 'Input the complete path to the vSphere resource pool. Ex: /DatacenterA/host/Cluster-1/Resources/ResourcePoolA.'
+    description: ''
+  - name: --username
+    summary: Username for vSphere account.
     description: ''
   - name: --working-dir
     summary: A local directory path where the images and files will be downloaded for deployment. Otherwise default temp directory is used.
@@ -153,8 +421,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

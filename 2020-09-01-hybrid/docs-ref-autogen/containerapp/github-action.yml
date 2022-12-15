@@ -13,19 +13,21 @@ directCommands:
   summary: Add a GitHub Actions workflow to a repository to deploy a container app.
   description: ''
   syntax: >-
-    az containerapp github-action add --name
-                                      --repo-url
-                                      --resource-group
+    az containerapp github-action add --repo-url
                                       [--branch]
                                       [--context-path]
+                                      [--ids]
                                       [--image]
                                       [--login-with-github]
+                                      [--name]
                                       [--registry-password]
                                       [--registry-url]
                                       [--registry-username]
+                                      [--resource-group]
                                       [--service-principal-client-id]
                                       [--service-principal-client-secret]
                                       [--service-principal-tenant-id]
+                                      [--subscription]
                                       [--token]
   examples:
   - summary: Add GitHub Actions, using Azure Container Registry and personal access token.
@@ -36,16 +38,8 @@ directCommands:
     syntax: az containerapp github-action add -g MyResourceGroup -n MyContainerapp --repo-url https://github.com/userid/repo --branch main --registry-username MyUsername --registry-password MyPassword --service-principal-client-id 00000000-0000-0000-0000-00000000 --service-principal-tenant-id 00000000-0000-0000-0000-00000000 --service-principal-client-secret ClientSecret --login-with-github
   requiredParameters:
   - isRequired: true
-    name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
-  - isRequired: true
     name: --repo-url
     summary: 'The GitHub repository to which the workflow file will be added. In the format: https://github.com/<owner>/<repository-name>.'
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --branch -b
@@ -54,11 +48,18 @@ directCommands:
   - name: --context-path
     summary: Path in the repo from which to run the docker build. Defaults to "./".
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --image -i
     summary: Container image name that the Github Action should use. Defaults to the Container App name.
     description: ''
   - name: --login-with-github
+    defaultValue: "False"
     summary: Interactively log in with Github to retrieve the Personal Access Token.
+    description: ''
+  - name: --name -n
+    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
     description: ''
   - name: --registry-password
     summary: The password of the registry. If using Azure Container Registry, we will try to infer the credentials if not supplied.
@@ -69,6 +70,9 @@ directCommands:
   - name: --registry-username
     summary: The username of the registry. If using Azure Container Registry, we will try to infer the credentials if not supplied.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --service-principal-client-id
     summary: The service principal client ID.
     description: ''
@@ -78,6 +82,9 @@ directCommands:
   - name: --service-principal-tenant-id
     summary: The service principal tenant ID.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --token
     summary: 'A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line.'
     description: ''
@@ -86,27 +93,33 @@ directCommands:
   summary: Remove a previously configured Container Apps GitHub Actions workflow from a repository.
   description: ''
   syntax: >-
-    az containerapp github-action delete --name
-                                         --resource-group
+    az containerapp github-action delete [--ids]
                                          [--login-with-github]
+                                         [--name]
+                                         [--resource-group]
+                                         [--subscription]
                                          [--token]
   examples:
   - summary: Remove GitHub Actions using a personal access token.
     syntax: az containerapp github-action delete -g MyResourceGroup -n MyContainerapp --token MyAccessToken
   - summary: Remove GitHub Actions using log in to GitHub flow to retrieve personal access token.
     syntax: az containerapp github-action delete -g MyResourceGroup -n MyContainerapp --login-with-github
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --login-with-github
+    defaultValue: "False"
+    summary: Interactively log in with Github to retrieve the Personal Access Token.
+    description: ''
+  - name: --name -n
     summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --login-with-github
-    summary: Interactively log in with Github to retrieve the Personal Access Token.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --token
     summary: 'A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line.'
@@ -116,19 +129,25 @@ directCommands:
   summary: Show the GitHub Actions configuration on a container app.
   description: ''
   syntax: >-
-    az containerapp github-action show --name
-                                       --resource-group
+    az containerapp github-action show [--ids]
+                                       [--name]
+                                       [--resource-group]
+                                       [--subscription]
   examples:
   - summary: Show the GitHub Actions configuration on a Containerapp.
     syntax: az containerapp github-action show -g MyResourceGroup -n MyContainerapp
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
 - az_containerapp_github-action_add
@@ -142,8 +161,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

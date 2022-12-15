@@ -50,23 +50,29 @@ directCommands:
   summary: Deletes a data collection rule.
   description: ''
   syntax: >-
-    az monitor data-collection rule delete --name
-                                           --resource-group
+    az monitor data-collection rule delete [--ids]
+                                           [--name]
+                                           [--resource-group]
+                                           [--subscription]
                                            [--yes]
   examples:
   - summary: Delete data collection rule
     syntax: az monitor data-collection rule delete --name "myCollectionRule" --resource-group "myResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the data collection rule. The name is case insensitive.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_monitor_data-collection_rule_list
@@ -88,48 +94,47 @@ directCommands:
   summary: Return the specified data collection rule.
   description: ''
   syntax: >-
-    az monitor data-collection rule show --name
-                                         --resource-group
+    az monitor data-collection rule show [--ids]
+                                         [--name]
+                                         [--resource-group]
+                                         [--subscription]
   examples:
   - summary: Get data collection rule
     syntax: az monitor data-collection rule show --name "myCollectionRule" --resource-group "myResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the data collection rule. The name is case insensitive.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_monitor_data-collection_rule_update
   name: az monitor data-collection rule update
   summary: Update a data collection rule.
   description: ''
   syntax: >-
-    az monitor data-collection rule update --name
-                                           --resource-group
-                                           [--data-flows]
+    az monitor data-collection rule update [--data-flows]
                                            [--description]
                                            [--extensions]
+                                           [--ids]
                                            [--log-analytics]
                                            [--monitor-metrics]
+                                           [--name]
                                            [--performance-counters]
+                                           [--resource-group]
+                                           [--subscription]
                                            [--syslog]
                                            [--tags]
                                            [--windows-event-logs]
   examples:
   - summary: Update data collection rule
     syntax: az monitor data-collection rule update --resource-group "myResourceGroup" --name "myCollectionRule" --data-flows destinations="centralWorkspace" streams="Microsoft-Perf" streams="Microsoft-Syslog" streams="Microsoft-WindowsEvent" --log-analytics name="centralWorkspace" resource-id="/subscriptions/703362b3-f278-4e4b-9179-c76eaf41ffc2/resourceGroups/myResourceGroup/providers/Microsoft.OperationalInsights/workspaces/centralTeamWorkspace" --performance-counters name="appTeamExtraCounters" counter-specifiers="\\Process(_Total)\\Thread Count" sampling-frequency=30 streams="Microsoft-Perf" --syslog name="cronSyslog" facility-names="cron" log-levels="Debug" log-levels="Critical" log-levels="Emergency" streams="Microsoft-Syslog" --windows-event-logs name="cloudSecurityTeamEvents" streams="Microsoft-WindowsEvent" x-path-queries="Security!"
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the data collection rule. The name is case insensitive.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --data-flows
     summary: The specification of data flows.
@@ -148,6 +153,9 @@ directCommands:
     description: ''
   - name: --extensions
     summary: 'The list of Azure VM extension data source configurations. Expected value: json-string/@json-file.'
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --log-analytics
     summary: List of Log Analytics destinations.
@@ -168,6 +176,9 @@ directCommands:
 
 
       name: Required. A friendly name for the destination.  This name should be unique across all destinations (regardless of type) within the data collection rule.
+  - name: --name -n
+    summary: The name of the data collection rule. The name is case insensitive.
+    description: ''
   - name: --performance-counters
     summary: The list of performance counter data source configurations.
     description: >-
@@ -184,6 +195,12 @@ directCommands:
 
 
       Multiple actions can be specified by using more than one --performance-counters argument.
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --syslog
     summary: The list of Syslog data source configurations.
     description: >-
@@ -264,8 +281,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

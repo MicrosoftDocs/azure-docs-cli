@@ -27,7 +27,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --allow-protected-append-writes -w
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API.
     description: ''
   - name: --allow-protected-append-writes-all
@@ -51,11 +51,12 @@ directCommands:
     az storage container immutability-policy delete --account-name
                                                     --container-name
                                                     --if-match
+                                                    --immutability-policy-name
                                                     [--resource-group]
   requiredParameters:
   - isRequired: true
     name: --account-name
-    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. Required.
     description: ''
   - isRequired: true
     name: --container-name -c
@@ -63,7 +64,11 @@ directCommands:
     description: ''
   - isRequired: true
     name: --if-match
-    summary: The entity state (ETag) version of the immutability policy to update. A value of "\*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied.
+    summary: The entity state (ETag) version of the immutability policy to update. A value of "*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. Required.
+    description: ''
+  - isRequired: true
+    name: --immutability-policy-name
+    summary: The name of the blob container immutabilityPolicy within the specified storage account. ImmutabilityPolicy Name must be 'default'. "default" Required.
     description: ''
   optionalParameters:
   - name: --resource-group -g
@@ -97,7 +102,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --allow-protected-append-writes -w
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: This property can only be changed for unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. This property cannot be changed with ExtendImmutabilityPolicy API.
     description: ''
   - name: --allow-protected-append-writes-all
@@ -122,7 +127,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --account-name
-    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. Required.
     description: ''
   - isRequired: true
     name: --container-name -c
@@ -130,7 +135,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --if-match
-    summary: The entity state (ETag) version of the immutability policy to update. A value of "\*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied.
+    summary: The entity state (ETag) version of the immutability policy to update. A value of "*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. Required.
     description: ''
   optionalParameters:
   - name: --resource-group -g
@@ -144,20 +149,25 @@ directCommands:
   syntax: >-
     az storage container immutability-policy show --account-name
                                                   --container-name
+                                                  --immutability-policy-name
                                                   [--if-match]
                                                   [--resource-group]
   requiredParameters:
   - isRequired: true
     name: --account-name
-    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+    summary: The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. Required.
     description: ''
   - isRequired: true
     name: --container-name -c
     summary: The container name.
     description: ''
+  - isRequired: true
+    name: --immutability-policy-name
+    summary: The name of the blob container immutabilityPolicy within the specified storage account. ImmutabilityPolicy Name must be 'default'. "default" Required.
+    description: ''
   optionalParameters:
   - name: --if-match
-    summary: The entity state (ETag) version of the immutability policy to update. A value of "\*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. Default value is None.
+    summary: The entity state (ETag) version of the immutability policy to update. A value of "*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. Default value is None.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -177,8 +187,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -188,5 +198,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/24/2022
+  ms.date: 11/28/2022
   description: Manage container immutability policies.

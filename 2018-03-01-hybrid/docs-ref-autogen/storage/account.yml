@@ -76,14 +76,14 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --access-tier
-    parameterValueGroup: Cool, Hot
+    parameterValueGroup: "Cool, Hot"
     summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
     description: ''
   - name: --account-type
     summary: The storage account type.
     description: ''
   - name: --action
-    defaultValue: Allow
+    defaultValue: "Allow"
     summary: ''
     description: ''
   - name: --allow-blob-public-access
@@ -138,7 +138,7 @@ directCommands:
     summary: ''
     description: ''
   - name: --https-only
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allow https traffic only to storage service if set to true. The default value is false.
     description: ''
   - name: --identity-type
@@ -157,8 +157,8 @@ directCommands:
     summary: ''
     description: ''
   - name: --kind
-    defaultValue: Storage
-    parameterValueGroup: BlobStorage, Storage
+    defaultValue: "Storage"
+    parameterValueGroup: "BlobStorage, Storage"
     summary: Indicate the type of storage account.
     description: ''
   - name: --location -l
@@ -180,8 +180,8 @@ directCommands:
     summary: ''
     description: ''
   - name: --sku
-    defaultValue: Standard_RAGRS
-    parameterValueGroup: Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS
+    defaultValue: "Standard_RAGRS"
+    parameterValueGroup: "Premium_LRS, Standard_GRS, Standard_LRS, Standard_RAGRS, Standard_ZRS"
     summary: The storage account SKU.
     description: ''
   - name: --subnet
@@ -205,6 +205,7 @@ directCommands:
     az storage account delete [--ids]
                               [--name]
                               [--resource-group]
+                              [--subscription]
                               [--yes]
   examples:
   - summary: Delete a storage account using a resource ID.
@@ -221,7 +222,11 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
@@ -241,6 +246,7 @@ directCommands:
                                     [--ids]
                                     [--ip]
                                     [--start]
+                                    [--subscription]
   examples:
   - summary: Generate a sas token for the account that is valid for queue and table services on Linux.
     syntax: >-
@@ -293,6 +299,9 @@ directCommands:
   - name: --start
     summary: Specifies the UTC datetime (Y-m-d'T'H:M'Z') at which the SAS becomes valid. Defaults to the time of the request.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_list
   name: az storage account list
@@ -317,6 +326,7 @@ directCommands:
     az storage account show [--ids]
                             [--name]
                             [--resource-group]
+                            [--subscription]
   examples:
   - summary: Show properties for a storage account by resource ID.
     syntax: az storage account show --ids /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Storage/storageAccounts/{StorageAccount}
@@ -331,6 +341,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_account_show-connection-string
@@ -347,6 +360,7 @@ directCommands:
                                               [--queue-endpoint]
                                               [--resource-group]
                                               [--sas-token]
+                                              [--subscription]
                                               [--table-endpoint]
   examples:
   - summary: Get a connection string for a storage account.
@@ -364,16 +378,16 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --key
-    defaultValue: key1
-    parameterValueGroup: key1, key2, primary, secondary
+    defaultValue: "key1"
+    parameterValueGroup: "key1, key2, primary, secondary"
     summary: The key to use.
     description: ''
   - name: --name -n
     summary: The storage account name.
     description: ''
   - name: --protocol
-    defaultValue: https
-    parameterValueGroup: http, https
+    defaultValue: "https"
+    parameterValueGroup: "http, https"
     summary: The default endpoint protocol.
     description: ''
   - name: --queue-endpoint
@@ -384,6 +398,9 @@ directCommands:
     description: ''
   - name: --sas-token
     summary: The SAS token to be used in the connection-string.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --table-endpoint
     summary: Custom endpoint for tables.
@@ -403,8 +420,7 @@ directCommands:
   summary: Update the properties of a storage account.
   description: ''
   syntax: >-
-    az storage account update --name
-                              [--access-tier {Cool, Hot, Premium}]
+    az storage account update [--access-tier {Cool, Hot, Premium}]
                               [--account-type {Computer, User}]
                               [--add]
                               [--allow-append {false, true}]
@@ -435,12 +451,14 @@ directCommands:
                               [--forest-name]
                               [--https-only {false, true}]
                               [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
+                              [--ids]
                               [--immutability-period]
                               [--immutability-state {Disabled, Locked, Unlocked}]
                               [--key-exp-days]
                               [--key-vault-federated-client-id]
                               [--key-vault-user-identity-id]
                               [--min-tls-version {TLS1_0, TLS1_1, TLS1_2}]
+                              [--name]
                               [--net-bios-domain-name]
                               [--public-network-access {Disabled, Enabled}]
                               [--publish-internet-endpoints {false, true}]
@@ -452,65 +470,63 @@ directCommands:
                               [--sas-exp]
                               [--set]
                               [--sku {Premium_LRS, Premium_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS}]
+                              [--subscription]
                               [--tags]
                               [--use-subdomain {false, true}]
                               [--user-identity-id]
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The storage account name.
-    description: ''
   optionalParameters:
   - name: --access-tier
-    parameterValueGroup: Cool, Hot, Premium
+    parameterValueGroup: "Cool, Hot, Premium"
     summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
     description: ''
   - name: --account-type
-    parameterValueGroup: Computer, User
+    parameterValueGroup: "Computer, User"
     summary: Specify the Active Directory account type for Azure Storage.
     description: ''
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --allow-append --allow-protected-append-writes -w
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: This property can only be changed for disabled and unlocked time-based retention policies. When enabled, new blocks can be written to an append blob while maintaining immutability protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted.
     description: ''
   - name: --allow-blob-public-access
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allow or disallow public access to all blobs or containers in the storage account. The default value for this property is null, which is equivalent to true. When true, containers in the account may be configured for public access. Note that setting this property to true does not enable anonymous access to any data in the account. The additional step of configuring the public access setting for a container is required to enable anonymous access.
     description: ''
   - name: --allow-cross-tenant-replication -r
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allow or disallow cross AAD tenant object replication. The default interpretation is true for this property.
     description: ''
   - name: --allow-shared-key-access -k
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicate whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true.
     description: ''
   - name: --allowed-copy-scope -s
-    parameterValueGroup: AAD, PrivateLink
+    parameterValueGroup: "AAD, PrivateLink"
     summary: Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet.
     description: ''
   - name: --assign-identity
+    defaultValue: "False"
     summary: Generate and assign a new Storage Account Identity for this storage account for use with key management services like Azure KeyVault.
     description: ''
   - name: --azure-storage-sid
     summary: Specify the security identifier (SID) for Azure Storage. Required when --enable-files-adds is set to True.
     description: ''
   - name: --bypass
-    parameterValueGroup: AzureServices, Logging, Metrics, None
+    parameterValueGroup: "AzureServices, Logging, Metrics, None"
     summary: Bypass traffic for space-separated uses.
     description: ''
   - name: --custom-domain
     summary: User domain assigned to the storage account. Name is the CNAME source. Use "" to clear existing value.
     description: ''
   - name: --default-action
-    parameterValueGroup: Allow, Deny
+    parameterValueGroup: "Allow, Deny"
     summary: Default action to apply when no rule matches.
     description: ''
   - name: --default-share-permission -d
-    parameterValueGroup: None, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor, StorageFileDataSmbShareReader
+    parameterValueGroup: "None, StorageFileDataSmbShareContributor, StorageFileDataSmbShareElevatedContributor, StorageFileDataSmbShareReader"
     summary: Default share permission for users using Kerberos authentication if RBAC role is not assigned.
     description: ''
   - name: --domain-guid
@@ -523,29 +539,29 @@ directCommands:
     summary: Specify the security identifier (SID). Required when --enable-files-adds is set to True.
     description: ''
   - name: --enable-files-aadds
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable Azure Active Directory Domain Services authentication for Azure Files.
     description: ''
   - name: --enable-files-adds
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable Azure Files Active Directory Domain Service Authentication for storage account. When --enable-files-adds is set to true, Azure Active Directory Properties arguments must be provided.
     description: ''
   - name: --enable-large-file-share
     summary: Enable the capability to support large file shares with more than 5 TiB capacity for storage account.Once the property is enabled, the feature cannot be disabled. Currently only supported for LRS and ZRS replication types, hence account conversions to geo-redundant accounts would not be possible. For more information, please refer to https://go.microsoft.com/fwlink/?linkid=2086047.
     description: ''
   - name: --enable-local-user
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable local user features.
     description: ''
   - name: --enable-sftp
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable Secure File Transfer Protocol.
     description: ''
   - name: --encryption-key-name
     summary: The name of the KeyVault key.
     description: ''
   - name: --encryption-key-source
-    parameterValueGroup: Microsoft.Keyvault, Microsoft.Storage
+    parameterValueGroup: "Microsoft.Keyvault, Microsoft.Storage"
     summary: The default encryption key source.
     description: ''
   - name: --encryption-key-vault
@@ -555,28 +571,32 @@ directCommands:
     summary: The version of the KeyVault key to use, which will opt out of implicit key rotation. Please use "" to opt in key auto-rotation again.
     description: ''
   - name: --encryption-services
-    parameterValueGroup: blob, file, queue, table
+    parameterValueGroup: "blob, file, queue, table"
     summary: Specifies which service(s) to encrypt.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --forest-name
     summary: Specify the Active Directory forest to get. Required when --enable-files-adds is set to True.
     description: ''
   - name: --https-only
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allows https traffic only to storage service.
     description: ''
   - name: --identity-type
-    parameterValueGroup: None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned
+    parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
     summary: The identity type.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --immutability-period --immutability-period-in-days
     summary: The immutability period for the blobs in the container since the policy creation, in days.
     description: ''
   - name: --immutability-state
-    parameterValueGroup: Disabled, Locked, Unlocked
+    parameterValueGroup: "Disabled, Locked, Unlocked"
     summary: Defines the mode of the policy. Disabled state disables the policy, Unlocked state allows increase and decrease of immutability retention time and also allows toggling allow-protected-append-write property, Locked state only allows the increase of the immutability retention time. A policy can only be created in a Disabled or Unlocked state and can be toggled between the two states. Only a policy in an Unlocked state can transition to a Locked state which cannot be reverted.
     description: ''
   - name: --key-exp-days --key-expiration-period-in-days
@@ -589,32 +609,36 @@ directCommands:
     summary: Resource identifier of the UserAssigned identity to be associated with server-side encryption on the storage account.
     description: ''
   - name: --min-tls-version
-    parameterValueGroup: TLS1_0, TLS1_1, TLS1_2
+    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2"
     summary: The minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property.
+    description: ''
+  - name: --name -n
+    summary: The storage account name.
     description: ''
   - name: --net-bios-domain-name
     summary: Specify the NetBIOS domain name. Required when --enable-files-adds is set to True.
     description: ''
   - name: --public-network-access
-    parameterValueGroup: Disabled, Enabled
-    summary: Enable or disable public network access to the storage account.
+    parameterValueGroup: "Disabled, Enabled"
+    summary: 'Enable or disable public network access to the storage account. Possible values include: `Enabled` or `Disabled`.'
     description: ''
   - name: --publish-internet-endpoints
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: A boolean flag which indicates whether internet routing storage endpoints are to be published.
     description: ''
   - name: --publish-microsoft-endpoints
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: A boolean flag which indicates whether microsoft routing storage endpoints are to be published.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --routing-choice
-    parameterValueGroup: InternetRouting, MicrosoftRouting
+    parameterValueGroup: "InternetRouting, MicrosoftRouting"
     summary: Routing Choice defines the kind of network routing opted by the user.
     description: ''
   - name: --sam-account-name
@@ -624,17 +648,21 @@ directCommands:
     summary: Expiration period of the SAS Policy assigned to the storage account, DD.HH:MM:SS.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku
-    parameterValueGroup: Premium_LRS, Premium_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS
+    parameterValueGroup: "Premium_LRS, Premium_ZRS, Standard_GRS, Standard_GZRS, Standard_LRS, Standard_RAGRS, Standard_RAGZRS, Standard_ZRS"
     summary: Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --use-subdomain
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Specify whether to use indirect CNAME validation.
     description: ''
   - name: --user-identity-id
@@ -673,8 +701,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -683,6 +711,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 08/24/2022
   description: Manage storage accounts.

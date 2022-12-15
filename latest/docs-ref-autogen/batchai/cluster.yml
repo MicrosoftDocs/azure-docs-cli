@@ -14,6 +14,7 @@ directCommands:
                                   [--ids]
                                   [--name]
                                   [--resource-group]
+                                  [--subscription]
                                   [--workspace]
   examples:
   - summary: Make a cluster to auto scale between 0 and 10 nodes depending on number of queued and running jobs.
@@ -36,6 +37,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --workspace -w
     summary: Name of workspace.
@@ -111,14 +115,14 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --afs-mount-path
-    defaultValue: afs
+    defaultValue: "afs"
     summary: Relative mount path for Azure File share. The file share will be available at $AZ_BATCHAI_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
   - name: --afs-name
     summary: Name of Azure File Share to be mounted on each cluster node. Must be used in conjunction with --storage-account-name. Multiple shares can be mounted using configuration file (see --config-file option).
     description: ''
   - name: --bfs-mount-path
-    defaultValue: bfs
+    defaultValue: "bfs"
     summary: Relative mount path for Azure Storage container. The container will be available at $AZ_BATCHAI_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
   - name: --bfs-name
@@ -146,7 +150,7 @@ directCommands:
     summary: Name or ARM ID of a file server to be mounted on each cluster node. You need to provide full ARM ID if the file server belongs to a different workspace. Multiple NFS can be mounted using configuration file (see --config-file option).
     description: ''
   - name: --nfs-mount-path
-    defaultValue: nfs
+    defaultValue: "nfs"
     summary: Relative mount path for NFS. The NFS will be available at $AZ_BATCHAI_MOUNT_ROOT/<relative_mount_path> folder.
     description: ''
   - name: --password -p
@@ -174,13 +178,14 @@ directCommands:
     summary: Number of nodes which should be allocated immediately after cluster creation. If the cluster is in auto-scale mode, BatchAI can change the number of nodes later based on number of running and queued jobs.
     description: ''
   - name: --use-auto-storage
+    defaultValue: "False"
     summary: If provided, the command will create a storage account in a new or existing resource group named "batchaiautostorage". It will also create Azure File Share with name "batchaishare", Azure Blob Container with name "batchaicontainer". The File Share and Blob Container will be mounted on each cluster node at $AZ_BATCHAI_MOUNT_ROOT/autoafs and $AZ_BATCHAI_MOUNT_ROOT/autobfs. If the resource group already exists and contains an approapriate storage account belonging to the same region as cluster, this command will reuse existing storage account.
     description: ''
   - name: --user-name -u
     summary: Name of admin user account to be created on each compute node. If the value is not provided and no user configuration is provided in the config file, current user's name will be used.
     description: ''
   - name: --vm-priority
-    parameterValueGroup: dedicated, lowpriority
+    parameterValueGroup: "dedicated, lowpriority"
     summary: VM priority.
     description: ''
   - name: --vm-size -s
@@ -196,6 +201,7 @@ directCommands:
                               [--name]
                               [--no-wait]
                               [--resource-group]
+                              [--subscription]
                               [--workspace]
                               [--yes]
   examples:
@@ -213,15 +219,20 @@ directCommands:
     summary: Name of cluster.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --workspace -w
     summary: Name of workspace.
     description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/batchai/_help.py
@@ -254,6 +265,7 @@ directCommands:
                               [--ids]
                               [--name]
                               [--resource-group]
+                              [--subscription]
                               [--workspace]
   examples:
   - summary: Resize a cluster to zero size to stop paying for it.
@@ -275,6 +287,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --workspace -w
     summary: Name of workspace.
     description: ''
@@ -287,6 +302,7 @@ directCommands:
     az batchai cluster show [--ids]
                             [--name]
                             [--resource-group]
+                            [--subscription]
                             [--workspace]
   examples:
   - summary: Show full information about a cluster.
@@ -302,6 +318,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --workspace -w
     summary: Name of workspace.
@@ -327,8 +346,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

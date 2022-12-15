@@ -12,6 +12,7 @@ directCommands:
     az vm assess-patches [--ids]
                          [--name]
                          [--resource-group]
+                         [--subscription]
   examples:
   - summary: Assess patches on a VM.
     syntax: az vm assess-patches -g MyResourceGroup -n MyVm
@@ -25,6 +26,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_auto-shutdown
   name: az vm auto-shutdown
@@ -37,6 +41,7 @@ directCommands:
                         [--name]
                         [--off]
                         [--resource-group]
+                        [--subscription]
                         [--time]
                         [--webhook]
   examples:
@@ -63,6 +68,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --time
     summary: 'The UTC time of day the schedule will occur every day. Format: hhmm. Example: 1730.'
     description: ''
@@ -81,6 +89,7 @@ directCommands:
                   [--overwrite]
                   [--resource-group]
                   [--storage-container]
+                  [--subscription]
   examples:
   - summary: Deallocate, generalize, and capture a stopped virtual machine.
     syntax: >-
@@ -118,8 +127,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --storage-container
-    defaultValue: vhds
+    defaultValue: "vhds"
     summary: The storage account container name in which to save the disks.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_convert
@@ -130,6 +142,7 @@ directCommands:
     az vm convert [--ids]
                   [--name]
                   [--resource-group]
+                  [--subscription]
   examples:
   - summary: Convert a VM with unmanaged disks to use managed disks.
     syntax: az vm convert -g MyResourceGroup -n MyVm
@@ -144,6 +157,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_create
@@ -311,7 +327,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --accelerated-networking
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable accelerated networking. Unless specified, CLI will enable it based on machine image and size.
     description: ''
   - name: --accept-term
@@ -336,7 +352,7 @@ directCommands:
     summary: Attach an existing OS disk to the VM. Can use the name or ID of a managed disk or the URI to an unmanaged disk VHD.
     description: ''
   - name: --authentication-type
-    parameterValueGroup: all, password, ssh
+    parameterValueGroup: "all, password, ssh"
     summary: Type of authentication to use with the VM. Defaults to password for Windows and SSH public key for Linux. "all" enables both ssh and password authentication.
     description: ''
   - name: --availability-set
@@ -370,56 +386,58 @@ directCommands:
     summary: Space-separated empty managed data disk sizes in GB to create.
     description: ''
   - name: --disable-integrity-monitoring
+    defaultValue: "False"
     summary: Disable the default behavior of installing guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
     description: ''
   - name: --disk-controller-type
-    parameterValueGroup: NVMe, SCSI
+    parameterValueGroup: "NVMe, SCSI"
     summary: Specify the disk controller type configured for the VM or VMSS.
     description: ''
   - name: --edge-zone
     summary: The name of edge zone.
     description: ''
   - name: --enable-agent
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later.
     description: ''
   - name: --enable-auto-update
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicate whether Automatic Updates is enabled for the Windows virtual machine.
     description: ''
   - name: --enable-hibernation
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: The flag that enable or disable hibernation capability on the VM.
     description: ''
   - name: --enable-hotpatching
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Patch VMs without requiring a reboot. --enable-agent must be set and --patch-mode must be set to AutomaticByPlatform.
     description: ''
   - name: --enable-secure-boot
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable secure boot.
     description: ''
   - name: --enable-vtpm
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable vTPM.
     description: ''
   - name: --encryption-at-host
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable Host Encryption for the VM or VMSS. This will enable the encryption for all the disks including Resource/Temp disk at host itself.
     description: ''
   - name: --ephemeral-os-disk
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
     description: ''
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: CacheDisk, ResourceDisk
+    parameterValueGroup: "CacheDisk, ResourceDisk"
     summary: Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
     description: ''
   - name: --eviction-policy
-    parameterValueGroup: Deallocate, Delete
+    parameterValueGroup: "Deallocate, Delete"
     summary: The eviction policy for the Spot priority virtual machine. Default eviction policy is Deallocate for a Spot priority virtual machine.
     description: ''
   - name: --generate-ssh-keys
+    defaultValue: "False"
     summary: Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
     description: ''
   - name: --host
@@ -431,9 +449,9 @@ directCommands:
   - name: --image
     summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, custom image version ID, or VHD blob URI. In addition, it also supports shared gallery image. This parameter is required unless using `--attach-os-disk.` Valid URN format: "Publisher:Offer:Sku:Version". For more information, see https://docs.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage.'
     description: ''
-    valueFrom: az vm image list, az vm image show, az sig image-version show-shared
+    valueFrom: az sig image-version show-shared, az vm image list, az vm image show
   - name: --license-type
-    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, Windows_Client, Windows_Server
+    parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, Windows_Client, Windows_Server"
     summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --location -l
@@ -449,21 +467,22 @@ directCommands:
     summary: Names or IDs of existing NICs to attach to the VM. The first NIC will be designated as primary. If omitted, a new NIC will be created. If an existing NIC is specified, do not specify subnet, VNet, public IP or NSG.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --nsg
     summary: The name to use when creating a new Network Security Group (default) or referencing an existing one. Can also reference an existing NSG by ID or specify "" for none ('""' in Azure CLI using PowerShell or --% operator).
     description: ''
   - name: --nsg-rule
-    parameterValueGroup: NONE, RDP, SSH
+    parameterValueGroup: "NONE, RDP, SSH"
     summary: NSG rule to create when creating a new NSG. Defaults to open ports for allowing RDP on Windows and allowing SSH on Linux. NONE represents no NSG rule.
     description: ''
   - name: --os-disk-caching
-    parameterValueGroup: None, ReadOnly, ReadWrite
+    parameterValueGroup: "None, ReadOnly, ReadWrite"
     summary: 'Storage caching type for the VM OS disk. Default: ReadWrite.'
     description: ''
   - name: --os-disk-delete-option
-    parameterValueGroup: Delete, Detach
+    parameterValueGroup: "Delete, Detach"
     summary: Specify the behavior of the managed disk when the VM gets deleted i.e whether the managed disk is deleted or detached.
     description: ''
   - name: --os-disk-encryption-set
@@ -476,18 +495,18 @@ directCommands:
     summary: Specify the customer managed disk encryption set resource ID or name for the managed disk that is used for customer managed key encrypted Confidential VM OS disk and VM guest blob.
     description: ''
   - name: --os-disk-security-encryption-type
-    parameterValueGroup: DiskWithVMGuestState, VMGuestStateOnly
+    parameterValueGroup: "DiskWithVMGuestState, VMGuestStateOnly"
     summary: Specify the encryption type of the OS managed disk.
     description: ''
   - name: --os-disk-size-gb
     summary: OS disk size in GB to create.
     description: ''
   - name: --os-type
-    parameterValueGroup: linux, windows
+    parameterValueGroup: "linux, windows"
     summary: Type of OS installed on a custom VHD. Do not use when specifying an URN or URN alias.
     description: ''
   - name: --patch-mode
-    parameterValueGroup: AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual
+    parameterValueGroup: "AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual"
     summary: "Mode of in-guest patching to IaaS virtual machine. Allowed values for Windows VM: AutomaticByOS, AutomaticByPlatform, Manual. Allowed values for Linux VM: AutomaticByPlatform, ImageDefault. Manual - You control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the paramater --enable-auto-update must be false. AutomaticByOS - The virtual machine will automatically be updated by the OS. The parameter --enable-auto-update must be true. AutomaticByPlatform - the virtual machine will automatically updated by the OS. ImageDefault - The virtual machine's default patching configuration is used. The parameter --enable-agent and --enable-auto-update must be true."
     description: ''
   - name: --plan-name
@@ -509,7 +528,7 @@ directCommands:
     summary: The name or ID of the proximity placement group the VM should be associated with.
     description: ''
   - name: --priority
-    parameterValueGroup: Low, Regular, Spot
+    parameterValueGroup: "Low, Regular, Spot"
     summary: Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
     description: ''
   - name: --private-ip-address
@@ -519,14 +538,14 @@ directCommands:
     summary: Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None ('""' in Azure CLI using PowerShell or --% operator).
     description: ''
   - name: --public-ip-address-allocation
-    parameterValueGroup: dynamic, static
+    parameterValueGroup: "dynamic, static"
     summary: ''
     description: ''
   - name: --public-ip-address-dns-name
     summary: Globally unique DNS name for a newly created public IP.
     description: ''
   - name: --public-ip-sku
-    parameterValueGroup: Basic, Standard
+    parameterValueGroup: "Basic, Standard"
     summary: Public IP SKU. It is set to Basic by default. The public IP is supported to be created on edge zone only when it is 'Standard'.
     description: ''
   - name: --role
@@ -539,16 +558,16 @@ directCommands:
     summary: 'One or many Key Vault secrets as JSON strings or files via `@{path}` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.'
     description: ''
   - name: --security-type
-    parameterValueGroup: ConfidentialVM, TrustedLaunch
+    parameterValueGroup: "ConfidentialVM, TrustedLaunch"
     summary: Specify the security type of the virtual machine.
     description: ''
   - name: --size
-    defaultValue: Standard_DS1_v2
+    defaultValue: "Standard_DS1_v2"
     summary: The VM size to be created. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     description: ''
     valueFrom: az vm list-sizes
   - name: --specialized
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Indicate whether the source image is specialized.
     description: ''
   - name: --ssh-dest-key-path
@@ -573,17 +592,18 @@ directCommands:
     summary: The name of the subnet when creating a new VNet or referencing an existing one. Can also reference an existing subnet by ID. If both vnet-name and subnet are omitted, an appropriate VNet and subnet will be selected automatically, or a new one will be created.
     description: ''
   - name: --subnet-address-prefix
-    defaultValue: 10.0.0.0/24
+    defaultValue: "10.0.0.0/24"
     summary: The subnet IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --ultra-ssd-enabled
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enables or disables the capability to have 1 or more managed data disks with UltraSSD_LRS storage account.
     description: ''
   - name: --use-unmanaged-disk
+    defaultValue: "False"
     summary: Do not use managed disk to persist VM.
     description: ''
   - name: --user-data
@@ -596,13 +616,14 @@ directCommands:
     summary: Specify the ratio of vCPU to physical core. Setting this property to 1 also means that hyper-threading is disabled.
     description: ''
   - name: --validate
+    defaultValue: "False"
     summary: Generate and validate the ARM template without creating any resources.
     description: ''
   - name: --vmss
     summary: Name or ID of an existing virtual machine scale set that the virtual machine should be assigned to. None by default.
     description: ''
   - name: --vnet-address-prefix
-    defaultValue: 10.0.0.0/16
+    defaultValue: "10.0.0.0/16"
     summary: The IP address prefix to use when creating a new VNet in CIDR format.
     description: ''
   - name: --vnet-name
@@ -612,7 +633,7 @@ directCommands:
     summary: Name or ID of Log Analytics Workspace. If you specify the workspace through its name, the workspace should be in the same resource group with the vm, otherwise a new workspace will be created.
     description: ''
   - name: --zone -z
-    parameterValueGroup: 1, 2, 3
+    parameterValueGroup: "1, 2, 3"
     summary: Availability zone into which to provision the resource.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -626,6 +647,7 @@ directCommands:
                      [--name]
                      [--no-wait]
                      [--resource-group]
+                     [--subscription]
   examples:
   - summary: Deallocate, generalize, and capture a stopped virtual machine.
     syntax: >-
@@ -656,10 +678,14 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_delete
@@ -672,6 +698,7 @@ directCommands:
                  [--name]
                  [--no-wait]
                  [--resource-group]
+                 [--subscription]
                  [--yes]
   examples:
   - summary: Delete a VM without a prompt for confirmation.
@@ -689,12 +716,17 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -707,6 +739,7 @@ directCommands:
                      [--name]
                      [--no-wait]
                      [--resource-group]
+                     [--subscription]
   examples:
   - summary: Deallocate, generalize, and capture a stopped virtual machine.
     syntax: >-
@@ -732,10 +765,14 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_get-instance-view
@@ -746,6 +783,7 @@ directCommands:
     az vm get-instance-view [--ids]
                             [--name]
                             [--resource-group]
+                            [--subscription]
   examples:
   - summary: Use a resource group and name to get instance view information of a VM.
     syntax: az vm get-instance-view -g MyResourceGroup -n MyVm
@@ -760,6 +798,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_install-patches
@@ -780,6 +821,7 @@ directCommands:
                           [--package-name-masks-to-exclude]
                           [--package-name-masks-to-include]
                           [--resource-group]
+                          [--subscription]
   examples:
   - summary: Install patches on a windows VM, allowing the maximum amount of time to be 4 hours, and the VM will reboot if required during the software update operation.
     syntax: az vm install-patches -g MyResourceGroup -n MyVm --maximum-duration PT4H --reboot-setting IfRequired --classifications-to-include-win Critical Security --exclude-kbs-requiring-reboot true
@@ -792,20 +834,20 @@ directCommands:
     description: ''
   - isRequired: true
     name: --reboot-setting
-    parameterValueGroup: Always, IfRequired, Never
+    parameterValueGroup: "Always, IfRequired, Never"
     summary: Define when it is acceptable to reboot a VM during a software update operation.
     description: ''
   optionalParameters:
   - name: --classifications-to-include-linux
-    parameterValueGroup: Critical, Other, Security
+    parameterValueGroup: "Critical, Other, Security"
     summary: Space-separated list of classifications to include for Linux VM.
     description: ''
   - name: --classifications-to-include-win
-    parameterValueGroup: Critical, Definition, FeaturePack, Security, ServicePack, Tools, UpdateRollUp, Updates
+    parameterValueGroup: "Critical, Definition, FeaturePack, Security, ServicePack, Tools, UpdateRollUp, Updates"
     summary: Space-separated list of classifications to include for Windows VM.
     description: ''
   - name: --exclude-kbs-requiring-reboot
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Filter out KBs that don't have a reboot behavior of 'NeverReboots' when this is set. Applicable to Windows VM only.
     description: ''
   - name: --ids
@@ -821,6 +863,7 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --package-name-masks-to-exclude
@@ -831,6 +874,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_list
@@ -852,6 +898,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --show-details -d
+    defaultValue: "False"
     summary: Show public ip address, FQDN, and power states. command will run slow.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -863,6 +910,7 @@ directCommands:
     az vm list-ip-addresses [--ids]
                             [--name]
                             [--resource-group]
+                            [--subscription]
   examples:
   - summary: Get the IP addresses for a VM.
     syntax: az vm list-ip-addresses -g MyResourceGroup -n MyVm
@@ -877,6 +925,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_list-sizes
@@ -914,7 +965,7 @@ directCommands:
     syntax: az vm list-skus -l westus --resource-type availabilitySets
   optionalParameters:
   - name: --all
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Show all information including vm sizes not available under the current subscription.
     description: ''
   - name: --location -l
@@ -927,7 +978,7 @@ directCommands:
     summary: Size name, partial name is accepted.
     description: ''
   - name: --zone -z
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Show skus supporting availability zones.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -953,6 +1004,7 @@ directCommands:
     az vm list-vm-resize-options [--ids]
                                  [--name]
                                  [--resource-group]
+                                 [--subscription]
   examples:
   - summary: List all available VM sizes for resizing.
     syntax: az vm list-vm-resize-options -g MyResourceGroup -n MyVm
@@ -968,6 +1020,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_open-port
   name: az vm open-port
@@ -981,6 +1036,7 @@ directCommands:
                     [--nsg-name]
                     [--priority]
                     [--resource-group]
+                    [--subscription]
   examples:
   - summary: Open all ports on a VM to inbound traffic.
     syntax: az vm open-port -g MyResourceGroup -n MyVm --port '*'
@@ -993,10 +1049,11 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --port
-    summary: "The port or port range (ex: 80-100) to open inbound traffic to. Use '\\*' to allow traffic to all ports. Use comma separated values to specify more than one port or port range."
+    summary: "The port or port range (ex: 80-100) to open inbound traffic to. Use '*' to allow traffic to all ports. Use comma separated values to specify more than one port or port range."
     description: ''
   optionalParameters:
   - name: --apply-to-subnet
+    defaultValue: "False"
     summary: Allow inbound traffic on the subnet instead of the NIC.
     description: ''
   - name: --ids
@@ -1015,6 +1072,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_perform-maintenance
   name: az vm perform-maintenance
@@ -1024,6 +1084,7 @@ directCommands:
     az vm perform-maintenance [--ids]
                               [--name]
                               [--resource-group]
+                              [--subscription]
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -1033,6 +1094,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_reapply
@@ -1044,6 +1108,7 @@ directCommands:
                   [--name]
                   [--no-wait]
                   [--resource-group]
+                  [--subscription]
   examples:
   - summary: Reapply a VM.
     syntax: az vm reapply -g MyResourceGroup -n MyVm
@@ -1057,10 +1122,14 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_redeploy
@@ -1072,6 +1141,7 @@ directCommands:
                    [--name]
                    [--no-wait]
                    [--resource-group]
+                   [--subscription]
   examples:
   - summary: Redeploy a VM.
     syntax: az vm redeploy -g MyResourceGroup -n MyVm
@@ -1085,10 +1155,14 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_resize
@@ -1101,6 +1175,7 @@ directCommands:
                  [--name]
                  [--no-wait]
                  [--resource-group]
+                 [--subscription]
   examples:
   - summary: Resize a VM.
     syntax: az vm resize -g MyResourceGroup -n MyVm --size Standard_DS3_v2
@@ -1120,10 +1195,14 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_restart
@@ -1136,6 +1215,7 @@ directCommands:
                   [--name]
                   [--no-wait]
                   [--resource-group]
+                  [--subscription]
   examples:
   - summary: Restart a VM.
     syntax: az vm restart -g MyResourceGroup -n MyVm
@@ -1143,6 +1223,7 @@ directCommands:
     syntax: az vm restart --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   optionalParameters:
   - name: --force
+    defaultValue: "False"
     summary: Force the VM to restart by redeploying it. Use if the VM is unresponsive.
     description: ''
   - name: --ids
@@ -1152,10 +1233,14 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_show
@@ -1168,6 +1253,7 @@ directCommands:
                [--name]
                [--resource-group]
                [--show-details]
+               [--subscription]
   examples:
   - summary: Show information about a VM.
     syntax: az vm show -g MyResourceGroup -n MyVm -d
@@ -1178,6 +1264,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --include-user-data -u
+    defaultValue: "False"
     summary: Include the user data properties in the query result.
     description: ''
   - name: --name -n
@@ -1187,7 +1274,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --show-details -d
+    defaultValue: "False"
     summary: Show public ip address, FQDN, and power states. command will run slow.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_simulate-eviction
@@ -1198,6 +1289,7 @@ directCommands:
     az vm simulate-eviction [--ids]
                             [--name]
                             [--resource-group]
+                            [--subscription]
   examples:
   - summary: Simulate the eviction of a Spot VM.
     syntax: az vm simulate-eviction --resource-group MyResourceGroup --name MyVm
@@ -1211,6 +1303,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_start
   name: az vm start
@@ -1221,6 +1316,7 @@ directCommands:
                 [--name]
                 [--no-wait]
                 [--resource-group]
+                [--subscription]
   examples:
   - summary: Start a stopped VM.
     syntax: az vm start -g MyResourceGroup -n MyVm
@@ -1236,10 +1332,14 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_stop
@@ -1252,6 +1352,7 @@ directCommands:
                [--no-wait]
                [--resource-group]
                [--skip-shutdown]
+               [--subscription]
   examples:
   - summary: Power off (stop) a running VM.
     syntax: az vm stop --resource-group MyResourceGroup --name MyVm
@@ -1267,13 +1368,18 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --skip-shutdown
+    defaultValue: "False"
     summary: Skip shutdown and power-off immediately.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_update
@@ -1304,6 +1410,7 @@ directCommands:
                  [--resource-group]
                  [--set]
                  [--size]
+                 [--subscription]
                  [--ultra-ssd-enabled {false, true}]
                  [--user-data]
                  [--v-cpus-available]
@@ -1337,6 +1444,7 @@ directCommands:
       az vm start -n name -g group
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --capacity-reservation-group --crg
@@ -1346,26 +1454,27 @@ directCommands:
     summary: Use singular value to apply across, or specify individual disks, e.g. 'os=ReadWrite 0=None 1=ReadOnly' should enable update os disk and 2 data disks.
     description: ''
   - name: --disk-controller-type
-    parameterValueGroup: NVMe, SCSI
+    parameterValueGroup: "NVMe, SCSI"
     summary: Specify the disk controller type configured for the VM or VMSS.
     description: ''
   - name: --enable-hibernation
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: The flag that enable or disable hibernation capability on the VM.
     description: ''
   - name: --enable-secure-boot
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable secure boot.
     description: ''
   - name: --enable-vtpm
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enable vTPM.
     description: ''
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: CacheDisk, ResourceDisk
+    parameterValueGroup: "CacheDisk, ResourceDisk"
     summary: Only applicable when used with `--size`. Allows you to choose the Ephemeral OS disk provisioning location.
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --host
@@ -1378,7 +1487,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --license-type
-    parameterValueGroup: None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, Windows_Client, Windows_Server
+    parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, Windows_Client, Windows_Server"
     summary: Specifies that the Windows image or disk was licensed on-premises. To enable Azure Hybrid Benefit for Windows Server, use 'Windows_Server'. To enable Multi-tenant Hosting Rights for Windows 10, use 'Windows_Client'. For more information see the Azure Windows VM online docs.
     description: ''
   - name: --max-price
@@ -1388,6 +1497,7 @@ directCommands:
     summary: The name of the Virtual Machine. You can configure the default using `az configure --defaults vm=<name>`.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --os-disk
@@ -1397,23 +1507,28 @@ directCommands:
     summary: The name or ID of the proximity placement group the VM should be associated with.
     description: ''
   - name: --priority
-    parameterValueGroup: Low, Regular, Spot
+    parameterValueGroup: "Low, Regular, Spot"
     summary: Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --size
     summary: The new size of the virtual machine. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --ultra-ssd-enabled
-    parameterValueGroup: false, true
+    parameterValueGroup: "false, true"
     summary: Enables or disables the capability to have 1 or more managed data disks with UltraSSD_LRS storage account.
     description: ''
   - name: --user-data
@@ -1445,6 +1560,7 @@ directCommands:
                [--interval]
                [--name]
                [--resource-group]
+               [--subscription]
                [--timeout]
                [--updated]
   examples:
@@ -1454,15 +1570,18 @@ directCommands:
     syntax: az vm wait --deleted --ids $(az vm list -g MyResourceGroup --query "[].id" -o tsv)
   optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --ids
@@ -1478,11 +1597,15 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
@@ -1633,8 +1756,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -1643,6 +1766,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/26/2022
   description: Manage Linux or Windows virtual machines.

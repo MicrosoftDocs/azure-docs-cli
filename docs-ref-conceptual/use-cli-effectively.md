@@ -126,6 +126,10 @@ To avoid unanticipated results, here are a few suggestions:
 
 - If your command will be run at a Windows Command Prompt, you must use double quotes.  If the value contains double quotes, you must escape it.  The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
 
+- In Powershell, if your value is an empty string, please use `'""'`.
+
+- In Bash or Powershell, if your value is an empty quotes string `''`, please use `"''"`. 
+
 - Use Azure CLI's `@<file>` convention to load from a file and bypass the shell's interpretation mechanisms.
 
   ```azurecli

@@ -6,57 +6,45 @@ description: To learn more about ExpressRoute circuits visit https://docs.micros
 directCommands:
 - uid: az_network_express-route_create
   name: az network express-route create
-  summary: Create an ExpressRoute circuit.
+  summary: Create an express route circuit.
   description: ''
   syntax: >-
-    az network express-route create --bandwidth
-                                    --name
-                                    --peering-location
-                                    --provider
+    az network express-route create --name
                                     --resource-group
-                                    [--allow-classic-operations {false, true}]
-                                    [--allow-global-reach {false, true}]
+                                    [--allow-classic-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--allow-global-reach {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--bandwidth]
                                     [--express-route-port]
                                     [--location]
-                                    [--no-wait]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--peering-location]
+                                    [--provider]
                                     [--sku-family {MeteredData, UnlimitedData}]
                                     [--sku-tier {Basic, Local, Premium, Standard}]
                                     [--tags]
   examples:
   - summary: Create an ExpressRoute circuit.
-    syntax: az network express-route create --bandwidth 200 -n MyCircuit --peering-location "Silicon Valley" -g MyResourceGroup --provider "Equinix" -l "West US" --sku-family MeteredData --sku-tier Standard
+    syntax: az network express-route create --bandwidth 200 -n MyCircuit --peering-location "SiliconValley" -g MyResourceGroup --provider "Equinix" -l "West US" --sku-family MeteredData --sku-tier Standard
   requiredParameters:
-  - isRequired: true
-    name: --bandwidth
-    summary: 'Bandwidth of the circuit. Usage: INT {Mbps,Gbps}. Defaults to Mbps.'
-    description: ''
-    valueFrom: az network express-route list-service-providers
   - isRequired: true
     name: --name -n
     summary: ExpressRoute circuit name.
     description: ''
-  - isRequired: true
-    name: --peering-location
-    summary: Name of the peering location.
-    description: ''
-    valueFrom: az network express-route list-service-providers
-  - isRequired: true
-    name: --provider
-    summary: Name of the ExpressRoute Service Provider.
-    description: ''
-    valueFrom: az network express-route list-service-providers
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --allow-classic-operations
-    parameterValueGroup: false, true
-    summary: Allow classic operations.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Allow classic operations. Allowed values: false, true.'
     description: ''
   - name: --allow-global-reach
-    parameterValueGroup: false, true
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Enable global reach on the circuit.
+    description: ''
+  - name: --bandwidth
+    summary: 'Bandwidth of the circuit. Usage: INT {Mbps,Gbps}. Defaults to Mbps.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --express-route-port
     summary: Name or ID of an ExpressRoute port.
@@ -65,20 +53,27 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --peering-location
+    summary: 'Name of the peering location.  Values from: az network express-route list-service-providers.'
+    description: ''
+  - name: --provider
+    summary: 'Name of the ExpressRoute Service Provider.  Values from: az network express-route list-service-providers.'
+    description: ''
   - name: --sku-family
-    defaultValue: MeteredData
-    parameterValueGroup: MeteredData, UnlimitedData
-    summary: Chosen SKU family of ExpressRoute circuit.
+    defaultValue: "MeteredData"
+    parameterValueGroup: "MeteredData, UnlimitedData"
+    summary: 'Chosen SKU family of ExpressRoute circuit.  Allowed values: MeteredData, UnlimitedData.  Default: MeteredData.'
     description: ''
   - name: --sku-tier
-    defaultValue: Standard
-    parameterValueGroup: Basic, Local, Premium, Standard
-    summary: SKU Tier of ExpressRoute circuit.
+    defaultValue: "Standard"
+    parameterValueGroup: "Basic, Local, Premium, Standard"
+    summary: 'SKU Tier of ExpressRoute circuit.  Allowed values: Basic, Local, Premium, Standard.  Default: Standard.'
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_express-route_delete
@@ -88,8 +83,9 @@ directCommands:
   syntax: >-
     az network express-route delete [--ids]
                                     [--name]
-                                    [--no-wait]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--resource-group]
+                                    [--subscription]
   examples:
   - summary: Delete an ExpressRoute circuit.
     syntax: az network express-route delete -n MyCircuit -g MyResourceGroup
@@ -103,10 +99,14 @@ directCommands:
     summary: ExpressRoute circuit name.
     description: ''
   - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_express-route_get-stats
@@ -114,20 +114,18 @@ directCommands:
   summary: Get the statistics of an ExpressRoute circuit.
   description: ''
   syntax: >-
-    az network express-route get-stats [--ids]
-                                       [--name]
-                                       [--resource-group]
+    az network express-route get-stats --name
+                                       --resource-group
   examples:
   - summary: Get the statistics of an ExpressRoute circuit.
     syntax: az network express-route get-stats -g MyResourceGroup -n MyCircuit
-  optionalParameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
     summary: ExpressRoute circuit name.
     description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -149,26 +147,16 @@ directCommands:
   summary: Show the current Address Resolution Protocol (ARP) table of an ExpressRoute circuit.
   description: ''
   syntax: >-
-    az network express-route list-arp-tables --path {primary, secondary}
-                                             --peering-name
-                                             [--ids]
+    az network express-route list-arp-tables [--ids]
                                              [--name]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--path]
+                                             [--peering-name]
                                              [--resource-group]
+                                             [--subscription]
   examples:
   - summary: Show the current Address Resolution Protocol (ARP) table of an ExpressRoute circuit.
-    syntax: >-
-      az network express-route list-arp-tables -g MyResourceGroup -n MyCircuit \
-          --path primary --peering-name AzurePrivatePeering
-  requiredParameters:
-  - isRequired: true
-    name: --path
-    parameterValueGroup: primary, secondary
-    summary: The path of the device.
-    description: ''
-  - isRequired: true
-    name: --peering-name
-    summary: The name of the peering.
-    description: ''
+    syntax: az network express-route list-arp-tables -g MyResourceGroup -n MyCircuit --path primary --peering-name AzurePrivatePeering
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -176,8 +164,21 @@ directCommands:
   - name: --name -n
     summary: ExpressRoute circuit name.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --path
+    summary: 'The path of the device.  Allowed values: primary, secondary.'
+    description: ''
+  - name: --peering-name
+    summary: The name of the peering.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_express-route_list-route-tables
@@ -185,26 +186,16 @@ directCommands:
   summary: Show the current routing table of an ExpressRoute circuit peering.
   description: ''
   syntax: >-
-    az network express-route list-route-tables --path {primary, secondary}
-                                               --peering-name
-                                               [--ids]
+    az network express-route list-route-tables [--ids]
                                                [--name]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--path]
+                                               [--peering-name]
                                                [--resource-group]
+                                               [--subscription]
   examples:
   - summary: Show the current routing table of an ExpressRoute circuit peering.
-    syntax: >-
-      az network express-route list-route-tables -g MyResourceGroup -n MyCircuit \
-          --path primary --peering-name AzurePrivatePeering
-  requiredParameters:
-  - isRequired: true
-    name: --path
-    parameterValueGroup: primary, secondary
-    summary: The path of the device.
-    description: ''
-  - isRequired: true
-    name: --peering-name
-    summary: The name of the peering.
-    description: ''
+    syntax: az network express-route list-route-tables -g MyResourceGroup -n MyCircuit --path primary --peering-name AzurePrivatePeering
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -212,8 +203,21 @@ directCommands:
   - name: --name -n
     summary: ExpressRoute circuit name.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --path
+    summary: 'The path of the device.  Allowed values: primary, secondary.'
+    description: ''
+  - name: --peering-name
+    summary: The name of the peering.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_express-route_list-route-tables-summary
@@ -226,13 +230,14 @@ directCommands:
                                                        [--ids]
                                                        [--name]
                                                        [--resource-group]
+                                                       [--subscription]
   examples:
   - summary: List Route Table Summary
     syntax: az network express-route list-route-tables-summary -g MyResourceGroup -n MyCircuit --path primary --peering-name AzurePrivatePeering
   requiredParameters:
   - isRequired: true
     name: --path
-    parameterValueGroup: primary, secondary
+    parameterValueGroup: "primary, secondary"
     summary: The path of the device.
     description: ''
   - isRequired: true
@@ -248,6 +253,9 @@ directCommands:
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_express-route_list-service-providers
@@ -267,6 +275,7 @@ directCommands:
     az network express-route show [--ids]
                                   [--name]
                                   [--resource-group]
+                                  [--subscription]
   examples:
   - summary: Get the details of an ExpressRoute circuit.
     syntax: az network express-route show -n MyCircuit -g MyResourceGroup
@@ -280,6 +289,9 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_express-route_update
   name: az network express-route update
@@ -287,14 +299,14 @@ directCommands:
   description: ''
   syntax: >-
     az network express-route update [--add]
-                                    [--allow-classic-operations {false, true}]
-                                    [--allow-global-reach {false, true}]
+                                    [--allow-classic-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--allow-global-reach {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--bandwidth]
                                     [--express-route-port]
-                                    [--force-string]
+                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--ids]
                                     [--name]
-                                    [--no-wait]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--peering-location]
                                     [--provider]
                                     [--remove]
@@ -302,6 +314,7 @@ directCommands:
                                     [--set]
                                     [--sku-family {MeteredData, UnlimitedData}]
                                     [--sku-tier {Basic, Local, Premium, Standard}]
+                                    [--subscription]
                                     [--tags]
   examples:
   - summary: Change the SKU of an ExpressRoute circuit from Standard to Premium.
@@ -311,20 +324,21 @@ directCommands:
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --allow-classic-operations
-    parameterValueGroup: false, true
-    summary: Allow classic operations.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Allow classic operations.  Allowed values: false, true.'
     description: ''
   - name: --allow-global-reach
-    parameterValueGroup: false, true
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Enable global reach on the circuit.
     description: ''
   - name: --bandwidth
-    summary: 'Bandwidth of the circuit. Usage: INT {Mbps,Gbps}. Defaults to Mbps.'
+    summary: 'Bandwidth of the circuit. Usage: INT {Mbps,Gbps}. Defaults to Mbps.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --express-route-port
     summary: Name or ID of an ExpressRoute port.
     description: ''
   - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -334,6 +348,7 @@ directCommands:
     summary: ExpressRoute circuit name.
     description: ''
   - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --peering-location
@@ -352,20 +367,23 @@ directCommands:
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku-family
-    parameterValueGroup: MeteredData, UnlimitedData
-    summary: Chosen SKU family of ExpressRoute circuit.
+    parameterValueGroup: "MeteredData, UnlimitedData"
+    summary: 'Chosen SKU family of ExpressRoute circuit.  Allowed values: MeteredData, UnlimitedData.  Default: MeteredData.'
     description: ''
   - name: --sku-tier
-    parameterValueGroup: Basic, Local, Premium, Standard
-    summary: SKU Tier of ExpressRoute circuit.
+    parameterValueGroup: "Basic, Local, Premium, Standard"
+    summary: 'SKU Tier of ExpressRoute circuit.  Allowed values: Basic, Local, Premium, Standard.  Default: Standard.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_express-route_wait
   name: az network express-route wait
-  summary: Place the CLI in a waiting state until a condition of the ExpressRoute is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az network express-route wait [--created]
@@ -376,22 +394,23 @@ directCommands:
                                   [--interval]
                                   [--name]
                                   [--resource-group]
+                                  [--subscription]
                                   [--timeout]
                                   [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the ExpressRoute circuit is successfully provisioned.
-    syntax: az network express-route wait -n MyCircuit -g MyResourceGroup --created
   optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
   - name: --ids
@@ -407,11 +426,15 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -421,6 +444,7 @@ commands:
 - az_network_express-route_auth_delete
 - az_network_express-route_auth_list
 - az_network_express-route_auth_show
+- az_network_express-route_auth_wait
 - az_network_express-route_create
 - az_network_express-route_delete
 - az_network_express-route_gateway
@@ -430,11 +454,13 @@ commands:
 - az_network_express-route_gateway_connection_list
 - az_network_express-route_gateway_connection_show
 - az_network_express-route_gateway_connection_update
+- az_network_express-route_gateway_connection_wait
 - az_network_express-route_gateway_create
 - az_network_express-route_gateway_delete
 - az_network_express-route_gateway_list
 - az_network_express-route_gateway_show
 - az_network_express-route_gateway_update
+- az_network_express-route_gateway_wait
 - az_network_express-route_get-stats
 - az_network_express-route_list
 - az_network_express-route_list-arp-tables
@@ -450,6 +476,7 @@ commands:
 - az_network_express-route_peering_connection_ipv6-config_set
 - az_network_express-route_peering_connection_list
 - az_network_express-route_peering_connection_show
+- az_network_express-route_peering_connection_wait
 - az_network_express-route_peering_create
 - az_network_express-route_peering_delete
 - az_network_express-route_peering_get-stats
@@ -459,6 +486,7 @@ commands:
 - az_network_express-route_peering_peer-connection_show
 - az_network_express-route_peering_show
 - az_network_express-route_peering_update
+- az_network_express-route_peering_wait
 - az_network_express-route_port
 - az_network_express-route_port_create
 - az_network_express-route_port_delete
@@ -477,6 +505,7 @@ commands:
 - az_network_express-route_port_location_show
 - az_network_express-route_port_show
 - az_network_express-route_port_update
+- az_network_express-route_port_wait
 - az_network_express-route_show
 - az_network_express-route_update
 - az_network_express-route_wait
@@ -488,8 +517,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
@@ -499,5 +528,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/20/2022
+  ms.date: 11/07/2022
   description: To learn more about ExpressRoute circuits visit https://docs.microsoft.com/azure/expressroute/howto-circuit-cli.

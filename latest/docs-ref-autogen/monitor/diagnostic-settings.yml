@@ -6,15 +6,16 @@ description: ''
 directCommands:
 - uid: az_monitor_diagnostic-settings_create
   name: az monitor diagnostic-settings create
-  summary: Create diagnostic settings for the specified resource.
-  description: 'For more information, visit: https://docs.microsoft.com/rest/api/monitor/diagnosticsettings/createorupdate#metricsettings.'
+  summary: 'Create diagnostic settings for the specified resource. For more information, visit: https://docs.microsoft.com/rest/api/monitor/diagnosticsettings/createorupdate#metricsettings.'
+  description: ''
   syntax: >-
     az monitor diagnostic-settings create --name
                                           --resource
                                           [--event-hub]
                                           [--event-hub-rule]
-                                          [--export-to-resource-specific {false, true}]
+                                          [--export-to-resource-specific {0, 1, f, false, n, no, t, true, y, yes}]
                                           [--logs]
+                                          [--marketplace-partner-id]
                                           [--metrics]
                                           [--resource-group]
                                           [--resource-namespace]
@@ -24,33 +25,11 @@ directCommands:
                                           [--workspace]
   examples:
   - summary: Create diagnostic settings, retention here only applies when the target is a storage account.
-    syntax: >-
-      az monitor diagnostic-settings create --resource {ID} -n {name}
-         --storage-account {storageAccount}
-         --logs '[
-           {
-             "category": "WorkflowRuntime",
-             "enabled": true,
-             "retentionPolicy": {
-               "enabled": false,
-               "days": 0
-             }
-           }
-         ]'
-         --metrics '[
-           {
-             "category": "WorkflowRuntime",
-             "enabled": true,
-             "retentionPolicy": {
-               "enabled": false,
-               "days": 0
-             }
-           }
-         ]'
+    syntax: az monitor diagnostic-settings create --resource {ID} -n {name} --storage-account {storageAccount} --logs "[{category:WorkflowRuntime,enabled:true,retention-policy:{enabled:false,days:0}}]" --metrics "[{category:WorkflowRuntime,enabled:true,retention-policy:{enabled:false,days:0}}]"
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the diagnostic settings.
+    summary: The name of the diagnostic setting. Required.
     description: ''
   - isRequired: true
     name: --resource
@@ -64,17 +43,20 @@ directCommands:
     summary: Name or ID of the event hub authorization rule.
     description: ''
   - name: --export-to-resource-specific
-    parameterValueGroup: false, true
-    summary: Indicate that the export to LA must be done to a resource specific table, a.k.a. dedicated or fixed schema table, as opposed to the default dynamic schema table called AzureDiagnostics. This argument is effective only when the argument --workspace is also given.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Indicate that the export to LA must be done to a resource specific table, a.k.a. dedicated or fixed schema table, as opposed to the default dynamic schema table called AzureDiagnostics. This argument is effective only when the argument --workspace is also given.  Allowed values: false, true.'
     description: ''
   - name: --logs
-    summary: "JSON encoded list of logs settings. Use '@{file}' to load from a file.For more information, visit: https://docs.microsoft.com/rest/api/monitor/diagnosticsettings/createorupdate#logsettings."
+    summary: "JSON encoded list of logs settings. Use '@{file}' to load from a file.For more information, visit: https://docs.microsoft.com/rest/api/monitor/diagnosticsettings/createorupdate#logsettings.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
+    description: ''
+  - name: --marketplace-partner-id
+    summary: The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs.
     description: ''
   - name: --metrics
-    summary: "JSON encoded list of metric settings. Use '@{file}' to load from a file. For more information, visit: https://docs.microsoft.com/rest/api/monitor/diagnosticsettings/createorupdate#metricsettings."
+    summary: The list of metric settings.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --resource-group -g
-    summary: Name of the resource group for the Log Analytics and Storage Account when the name of the service instead of a full resource ID is given.
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-namespace
     summary: Target resource provider namespace.
@@ -218,12 +200,15 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --add
+    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
+    defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --remove
+    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
@@ -239,6 +224,7 @@ directCommands:
     summary: "Target resource type. Can also accept namespace/type format (Ex: 'Microsoft.Compute/virtualMachines')."
     description: ''
   - name: --set
+    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
@@ -265,8 +251,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

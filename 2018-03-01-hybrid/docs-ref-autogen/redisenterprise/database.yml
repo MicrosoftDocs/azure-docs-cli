@@ -38,15 +38,15 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --client-protocol
-    parameterValueGroup: Encrypted, Plaintext
+    parameterValueGroup: "Encrypted, Plaintext"
     summary: Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted.
     description: ''
   - name: --clustering-policy
-    parameterValueGroup: EnterpriseCluster, OSSCluster
+    parameterValueGroup: "EnterpriseCluster, OSSCluster"
     summary: Clustering policy - default is OSSCluster. Specified at create time.
     description: ''
   - name: --eviction-policy
-    parameterValueGroup: AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL
+    parameterValueGroup: "AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL"
     summary: Redis eviction policy - default is VolatileLRU.
     description: ''
   - name: --group-nickname
@@ -68,6 +68,7 @@ directCommands:
 
       Multiple actions can be specified by using more than one --modules argument.
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --persistence
@@ -94,27 +95,34 @@ directCommands:
   summary: Delete a single database in a Redis Enterprise cache.
   description: ''
   syntax: >-
-    az redisenterprise database delete --cluster-name
-                                       --resource-group
+    az redisenterprise database delete [--cluster-name]
+                                       [--ids]
                                        [--no-wait]
+                                       [--resource-group]
+                                       [--subscription]
                                        [--yes]
   examples:
   - summary: Delete a single database in a Redis Enterprise cache.
     syntax: az redisenterprise database delete --cluster-name "cache1" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the RedisEnterprise cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  optionalParameters:
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --yes -y
+    defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_redisenterprise_database_export
@@ -122,87 +130,108 @@ directCommands:
   summary: Export data stored in a Redis Enterprise database.
   description: Export data stored in a Redis Enterprise database to a target database file.
   syntax: >-
-    az redisenterprise database export --cluster-name
-                                       --resource-group
-                                       --sas-uri
+    az redisenterprise database export --sas-uri
+                                       [--cluster-name]
+                                       [--ids]
                                        [--no-wait]
+                                       [--resource-group]
+                                       [--subscription]
   examples:
   - summary: Export data stored in a Redis Enterprise database to a target database file.
     syntax: az redisenterprise database export --cluster-name "cache1" --sas-uri "https://contosostorage.blob.core.window.net/urlToBlobContainer?sasKeyParameters" --resource-group "rg1"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name --name -n
-    summary: The name of the RedisEnterprise cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --sas-uri
     summary: SAS URI for the target directory to export to.
     description: ''
   optionalParameters:
+  - name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_redisenterprise_database_force-unlink
   name: az redisenterprise database force-unlink
   summary: Forcibly removes the link to the specified database resource.
   description: ''
   syntax: >-
-    az redisenterprise database force-unlink --cluster-name
-                                             --resource-group
-                                             --unlink-ids
+    az redisenterprise database force-unlink --unlink-ids
+                                             [--cluster-name]
+                                             [--ids]
                                              [--no-wait]
+                                             [--resource-group]
+                                             [--subscription]
   examples:
   - summary: How to unlink a database during a regional outage
     syntax: az redisenterprise database force-unlink --cluster-name "cache1" --unlink-ids "/subscriptions/subid2/resourceGroups/rg2/providers/Microsoft.Cache/redisEnterprise/cache2/databases/default" --resource-group "rg1"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name --name -n
-    summary: The name of the RedisEnterprise cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --unlink-ids
     summary: The resource IDs of the database resources to be unlinked.
     description: ''
   optionalParameters:
+  - name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_redisenterprise_database_import
   name: az redisenterprise database import
   summary: Import data into a Redis Enterprise database.
   description: Import data from a database file into a target Redis Enterprise database.
   syntax: >-
-    az redisenterprise database import --cluster-name
-                                       --resource-group
-                                       --sas-uris
+    az redisenterprise database import --sas-uris
+                                       [--cluster-name]
+                                       [--ids]
                                        [--no-wait]
+                                       [--resource-group]
+                                       [--subscription]
   examples:
   - summary: Import data from a database file into a target Redis Enterprise database.
     syntax: az redisenterprise database import --cluster-name "cache1" --sas-uri "https://contosostorage.blob.core.window.net/urltoBlobFile?sasKeyParameters" --resource-group "rg1"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name --name -n
-    summary: The name of the RedisEnterprise cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
     name: --sas-uris
     summary: SAS URIs for the target blobs to import from.
     description: ''
   optionalParameters:
+  - name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_redisenterprise_database_list
   name: az redisenterprise database list
@@ -247,91 +276,104 @@ directCommands:
   summary: Regenerate an access key for a Redis Enterprise database.
   description: ''
   syntax: >-
-    az redisenterprise database regenerate-key --cluster-name
-                                               --key-type {Primary, Secondary}
-                                               --resource-group
+    az redisenterprise database regenerate-key --key-type {Primary, Secondary}
+                                               [--cluster-name]
+                                               [--ids]
                                                [--no-wait]
+                                               [--resource-group]
+                                               [--subscription]
   examples:
   - summary: Regenerate an access key for a Redis Enterprise database.
     syntax: az redisenterprise database regenerate-key --cluster-name "cache1" --key-type "Primary" --resource-group "rg1"
   requiredParameters:
   - isRequired: true
-    name: --cluster-name --name -n
-    summary: The name of the RedisEnterprise cluster.
-    description: ''
-  - isRequired: true
     name: --key-type
-    parameterValueGroup: Primary, Secondary
+    parameterValueGroup: "Primary, Secondary"
     summary: Which access key to regenerate.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --no-wait
-    summary: Do not wait for the long-running operation to finish.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_redisenterprise_database_show
   name: az redisenterprise database show
   summary: Get information about a database in a Redis Enterprise cache.
   description: ''
   syntax: >-
-    az redisenterprise database show --cluster-name
-                                     --resource-group
+    az redisenterprise database show [--cluster-name]
+                                     [--ids]
+                                     [--resource-group]
+                                     [--subscription]
   examples:
   - summary: Get information about a database in a Redis Enterprise cache.
     syntax: az redisenterprise database show --cluster-name "cache1" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the RedisEnterprise cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_redisenterprise_database_update
   name: az redisenterprise database update
   summary: Update an existing Redis Enterprise database.
   description: ''
   syntax: >-
-    az redisenterprise database update --cluster-name
-                                       --resource-group
-                                       [--client-protocol {Encrypted, Plaintext}]
+    az redisenterprise database update [--client-protocol {Encrypted, Plaintext}]
+                                       [--cluster-name]
                                        [--eviction-policy {AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL}]
                                        [--group-nickname]
+                                       [--ids]
                                        [--linked-databases]
                                        [--no-wait]
                                        [--persistence]
+                                       [--resource-group]
+                                       [--subscription]
   examples:
   - summary: Update an existing Redis Enterprise database.
     syntax: az redisenterprise database update --cluster-name "cache1" --client-protocol "Encrypted" --eviction-policy "AllKeysLRU" --persistence rdb-enabled=true rdb-frequency="12h" --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
-    summary: The name of the RedisEnterprise cluster.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --client-protocol
-    parameterValueGroup: Encrypted, Plaintext
+    parameterValueGroup: "Encrypted, Plaintext"
     summary: Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols.
     description: ''
+  - name: --cluster-name --name -n
+    summary: The name of the RedisEnterprise cluster.
+    description: ''
   - name: --eviction-policy
-    parameterValueGroup: AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL
+    parameterValueGroup: "AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL"
     summary: Redis eviction policy.
     description: ''
   - name: --group-nickname
     summary: Name for the group of linked database resources.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --linked-databases
     summary: List of database resources to link with this database.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --persistence
@@ -350,18 +392,26 @@ directCommands:
 
 
       After enabling persistence, you will be unable to disable it. Support for disabling persistence after enabling will be added at a later date.
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_redisenterprise_database_wait
   name: az redisenterprise database wait
   summary: Place the CLI in a waiting state until a condition of the Redis Enterprise database is met.
   description: ''
   syntax: >-
-    az redisenterprise database wait --cluster-name
-                                     --resource-group
+    az redisenterprise database wait [--cluster-name]
                                      [--created]
                                      [--custom]
                                      [--deleted]
                                      [--exists]
+                                     [--ids]
                                      [--interval]
+                                     [--resource-group]
+                                     [--subscription]
                                      [--timeout]
                                      [--updated]
   examples:
@@ -371,37 +421,44 @@ directCommands:
     syntax: az redisenterprise database wait --cluster-name "cache1" --resource-group "rg1" --updated
   - summary: Pause executing next line of CLI script until the Redis Enterprise database is successfully deleted.
     syntax: az redisenterprise database wait --cluster-name "cache1" --resource-group "rg1" --deleted
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name --name -n
+  optionalParameters:
+  - name: --cluster-name --name -n
     summary: The name of the RedisEnterprise cluster.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  optionalParameters:
   - name: --created
+    defaultValue: "False"
     summary: Wait until created with 'provisioningState' at 'Succeeded'.
     description: ''
   - name: --custom
     summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
     description: ''
   - name: --deleted
+    defaultValue: "False"
     summary: Wait until deleted.
     description: ''
   - name: --exists
+    defaultValue: "False"
     summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"
     summary: Maximum wait in seconds.
     description: ''
   - name: --updated
+    defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
@@ -424,8 +481,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.

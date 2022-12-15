@@ -1,0 +1,157 @@
+### YamlMime:AzureCLIGroup
+uid: az_postgres_flexible-server_replica
+name: az postgres flexible-server replica
+summary: Manage read replicas.
+description: ''
+directCommands:
+- uid: az_postgres_flexible-server_replica_create
+  name: az postgres flexible-server replica create
+  summary: Create a read replica for a server.
+  description: ''
+  syntax: >-
+    az postgres flexible-server replica create --replica-name
+                                               --resource-group
+                                               --source-server
+                                               [--address-prefixes]
+                                               [--identity]
+                                               [--key]
+                                               [--location]
+                                               [--no-wait]
+                                               [--private-dns-zone]
+                                               [--subnet]
+                                               [--subnet-prefixes]
+                                               [--vnet]
+                                               [--yes]
+                                               [--zone]
+  examples:
+  - summary: Create a read replica 'testReplicaServer' for 'testserver' with public or private access in the specified zone and location if available.
+    syntax: az postgres flexible-server replica create --replica-name testReplicaServer -g testGroup --source-server testserver --zone 3 --location testLocation
+  - summary: Create a read replica 'testReplicaServer' with new subnet for 'testserver' with private access.
+    syntax: >-
+      az postgres flexible-server replica create --replica-name testReplicaServer -g testGroup \
+        --source-server testserver --zone 3 --location testLocation \
+        --vnet newVnet --subnet newSubnet \
+        --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
+        --private-dns-zone testDNS.postgres.database.azure.com
+  requiredParameters:
+  - isRequired: true
+    name: --replica-name
+    summary: The name of the server to restore to.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --source-server
+    summary: The name or resource ID of the source server to restore from.
+    description: ''
+  optionalParameters:
+  - name: --address-prefixes
+    summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
+    description: ''
+  - name: --identity
+    summary: The name or resource ID of the user assigned identity for data encryption.
+    description: ''
+  - name: --key
+    summary: The resource ID of the primary keyvault key for data encryption.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --private-dns-zone
+    summary: This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+    description: ''
+  - name: --subnet
+    summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
+    description: ''
+  - name: --subnet-prefixes
+    summary: The subnet IP address prefix to use when creating a new subnet in CIDR format. Default value is 10.0.0.0/24.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
+  - name: --zone -z
+    summary: Availability zone into which to provision the resource.
+    description: ''
+- uid: az_postgres_flexible-server_replica_list
+  name: az postgres flexible-server replica list
+  summary: List all read replicas for a given server.
+  description: ''
+  syntax: >-
+    az postgres flexible-server replica list --name
+                                             --resource-group
+  examples:
+  - summary: List all read replicas for master server 'testserver'.
+    syntax: az postgres flexible-server replica list -g testGroup -n testserver
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the source server.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_postgres_flexible-server_replica_stop-replication
+  name: az postgres flexible-server replica stop-replication
+  summary: Stop replication to a read replica and make it a read/write server.
+  description: ''
+  syntax: >-
+    az postgres flexible-server replica stop-replication [--ids]
+                                                         [--name]
+                                                         [--resource-group]
+                                                         [--subscription]
+                                                         [--yes]
+  examples:
+  - summary: Stop replication to 'testReplicaServer' and make it a read/write server.
+    syntax: az postgres flexible-server replica stop-replication -g testGroup -n testReplicaServer
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
+commands:
+- az_postgres_flexible-server_replica_create
+- az_postgres_flexible-server_replica_list
+- az_postgres_flexible-server_replica_stop-replication
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
+  description: Manage read replicas.

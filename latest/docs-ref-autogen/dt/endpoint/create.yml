@@ -11,15 +11,15 @@ directCommands:
 - uid: az_dt_endpoint_create_eventgrid
   name: az dt endpoint create eventgrid
   summary: Adds an EventGrid Topic endpoint to a Digital Twins instance. Requires pre-created resource.
-  description: ''
+  description: EventGrid topic endpoints do not support identity based endpoint integration.
   syntax: >-
     az dt endpoint create eventgrid --dt-name
-                                    --egg
                                     --egt
                                     --en
                                     [--auth-type {IdentityBased, KeyBased}]
                                     [--deadletter-sas-uri]
                                     [--deadletter-uri]
+                                    [--egg]
                                     [--egs]
                                     [--no-wait]
                                     [--resource-group]
@@ -32,10 +32,6 @@ directCommands:
     summary: Digital Twins instance name.
     description: ''
   - isRequired: true
-    name: --egg --eventgrid-resource-group
-    summary: Name of EventGrid Topic resource group.
-    description: ''
-  - isRequired: true
     name: --egt --eventgrid-topic
     summary: Name of EventGrid Topic to integrate with.
     description: ''
@@ -45,8 +41,8 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --auth-type
-    defaultValue: KeyBased
-    parameterValueGroup: IdentityBased, KeyBased
+    defaultValue: "KeyBased"
+    parameterValueGroup: "IdentityBased, KeyBased"
     summary: Endpoint authentication type.
     description: ''
   - name: --deadletter-sas-uri --dsu
@@ -55,10 +51,14 @@ directCommands:
   - name: --deadletter-uri --du
     summary: Dead-letter storage container URL for Identity based authentication.
     description: ''
+  - name: --egg --eventgrid-resource-group
+    summary: Name of EventGrid Topic resource group. If not provided, the Digital Twin instance resource group will be used.
+    description: ''
   - name: --egs --eventgrid-subscription
-    summary: Name or ID of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
+    summary: Name or id of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -66,26 +66,35 @@ directCommands:
     description: ''
 - uid: az_dt_endpoint_create_eventhub
   name: az dt endpoint create eventhub
-  summary: Adds an EventHub endpoint to a Digital Twins instance. Requires pre-created resource. The instance must be created with a managed identity to support identity based endpoint integration.
-  description: ''
+  summary: Adds an EventHub endpoint to a Digital Twins instance. Requires pre-created resource.
+  description: >-
+    The instance must have a system-assigned identity to support system-assigned identity based endpoint
+
+    integration. The instance must have the user-assigned identity associated to support user-assigned
+
+    identity based endpoint integration.
   syntax: >-
     az dt endpoint create eventhub --dt-name
                                    --eh
-                                   --ehg
                                    --ehn
                                    --en
                                    [--auth-type {IdentityBased, KeyBased}]
                                    [--deadletter-sas-uri]
                                    [--deadletter-uri]
+                                   [--ehg]
                                    [--ehp]
                                    [--ehs]
+                                   [--mi-system-assigned {false, true}]
+                                   [--mi-user-assigned]
                                    [--no-wait]
                                    [--resource-group]
   examples:
   - summary: Adds an EventHub endpoint to a target instance using Key based auth.
     syntax: az dt endpoint create eventhub --endpoint-name {endpoint_name} --eventhub-resource-group {eventhub_resource_group} --eventhub-namespace {eventhub_namespace} --eventhub {eventhub_name} --eventhub-policy {eventhub_policy} -n {instance_name}
-  - summary: Adds an EventHub endpoint to a target instance using Identity based auth.
-    syntax: az dt endpoint create eventhub --endpoint-name {endpoint_name} --eventhub-resource-group {eventhub_resource_group} --eventhub-namespace {eventhub_namespace} --eventhub {eventhub_name} --auth-type IdentityBased -n {instance_name}
+  - summary: Adds an EventHub endpoint to a target instance using the system-assigned identity for authentication.
+    syntax: az dt endpoint create eventhub --endpoint-name {endpoint_name} --eventhub-resource-group {eventhub_resource_group} --eventhub-namespace {eventhub_namespace} --eventhub {eventhub_name} --mi-system-assigned -n {instance_name}
+  - summary: Adds an EventHub endpoint to a target instance using an user-assigned identity for authentication.
+    syntax: az dt endpoint create eventhub --endpoint-name {endpoint_name} --eventhub-resource-group {eventhub_resource_group} --eventhub-namespace {eventhub_namespace} --eventhub {eventhub_name} --mi-user-assigned {resource_id} -n {instance_name}
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
@@ -94,10 +103,6 @@ directCommands:
   - isRequired: true
     name: --eh --eventhub
     summary: Name of EventHub to integrate with.
-    description: ''
-  - isRequired: true
-    name: --ehg --eventhub-resource-group
-    summary: Name of EventHub resource group.
     description: ''
   - isRequired: true
     name: --ehn --eventhub-namespace
@@ -109,8 +114,8 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --auth-type
-    defaultValue: KeyBased
-    parameterValueGroup: IdentityBased, KeyBased
+    defaultValue: "KeyBased"
+    parameterValueGroup: "IdentityBased, KeyBased"
     summary: Endpoint authentication type.
     description: ''
   - name: --deadletter-sas-uri --dsu
@@ -119,13 +124,24 @@ directCommands:
   - name: --deadletter-uri --du
     summary: Dead-letter storage container URL for Identity based authentication.
     description: ''
+  - name: --ehg --eventhub-resource-group
+    summary: Name of EventHub resource group. If not provided, the Digital Twin instance resource group will be used.
+    description: ''
   - name: --ehp --eventhub-policy
     summary: EventHub policy to use for endpoint configuration. Required when --auth-type is KeyBased.
     description: ''
   - name: --ehs --eventhub-subscription
-    summary: Name or ID of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
+    summary: Name or id of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
+    description: ''
+  - name: --mi-system-assigned --system
+    parameterValueGroup: "false, true"
+    summary: Use the system-assigned managed identity for endpoint authentication.
+    description: ''
+  - name: --mi-user-assigned --user
+    summary: Use an user-assigned managed identities for endpoint authentication. Accepts the identity resource id.
     description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -133,26 +149,35 @@ directCommands:
     description: ''
 - uid: az_dt_endpoint_create_servicebus
   name: az dt endpoint create servicebus
-  summary: Adds a ServiceBus Topic endpoint to a Digital Twins instance. Requires pre-created resource. The instance must be created with a managed identity to support identity based endpoint integration.
-  description: ''
+  summary: Adds a ServiceBus Topic endpoint to a Digital Twins instance. Requires pre-created resource.
+  description: >-
+    The instance must have a system-assigned identity to support system-assigned identity based endpoint
+
+    integration. The instance must have the user-assigned identity associated to support user-assigned
+
+    identity based endpoint integration.
   syntax: >-
     az dt endpoint create servicebus --dt-name
                                      --en
-                                     --sbg
                                      --sbn
                                      --sbt
                                      [--auth-type {IdentityBased, KeyBased}]
                                      [--deadletter-sas-uri]
                                      [--deadletter-uri]
+                                     [--mi-system-assigned {false, true}]
+                                     [--mi-user-assigned]
                                      [--no-wait]
                                      [--resource-group]
+                                     [--sbg]
                                      [--sbp]
                                      [--sbs]
   examples:
   - summary: Adds a ServiceBus Topic endpoint to a target instance using Key based auth.
     syntax: az dt endpoint create servicebus --endpoint-name {endpoint_name} --servicebus-resource-group {servicebus_resource_group} --servicebus-namespace {servicebus_namespace} --servicebus-topic {servicebus_topic_name} --servicebus-policy {servicebus_policy} -n {instance_name}
-  - summary: Adds a ServiceBus Topic endpoint to a target instance using Identity based auth.
-    syntax: az dt endpoint create servicebus --endpoint-name {endpoint_name} --servicebus-resource-group {servicebus_resource_group} --servicebus-namespace {servicebus_namespace} --servicebus-topic {servicebus_topic_name} -n {instance_name}
+  - summary: Adds a ServiceBus Topic endpoint to a target instance using the system-assigned identity for authentication.
+    syntax: az dt endpoint create servicebus --endpoint-name {endpoint_name} --servicebus-resource-group {servicebus_resource_group} --servicebus-namespace {servicebus_namespace} --servicebus-topic {servicebus_topic_name} --mi-system-assigned -n {instance_name}
+  - summary: Adds a ServiceBus Topic endpoint to a target instance using an user-assigned identity for authentication.
+    syntax: az dt endpoint create servicebus --endpoint-name {endpoint_name} --servicebus-resource-group {servicebus_resource_group} --servicebus-namespace {servicebus_namespace} --servicebus-topic {servicebus_topic_name} --mi-user-assigned {resource_id} -n {instance_name}
   requiredParameters:
   - isRequired: true
     name: --dt-name --dtn -n
@@ -161,10 +186,6 @@ directCommands:
   - isRequired: true
     name: --en --endpoint-name
     summary: Endpoint name.
-    description: ''
-  - isRequired: true
-    name: --sbg --servicebus-resource-group
-    summary: Name of ServiceBus resource group.
     description: ''
   - isRequired: true
     name: --sbn --servicebus-namespace
@@ -176,8 +197,8 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --auth-type
-    defaultValue: KeyBased
-    parameterValueGroup: IdentityBased, KeyBased
+    defaultValue: "KeyBased"
+    parameterValueGroup: "IdentityBased, KeyBased"
     summary: Endpoint authentication type.
     description: ''
   - name: --deadletter-sas-uri --dsu
@@ -186,17 +207,28 @@ directCommands:
   - name: --deadletter-uri --du
     summary: Dead-letter storage container URL for Identity based authentication.
     description: ''
+  - name: --mi-system-assigned --system
+    parameterValueGroup: "false, true"
+    summary: Use the system-assigned managed identity for endpoint authentication.
+    description: ''
+  - name: --mi-user-assigned --user
+    summary: Use an user-assigned managed identities for endpoint authentication. Accepts the identity resource id.
+    description: ''
   - name: --no-wait
+    defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Digital Twins instance resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --sbg --servicebus-resource-group
+    summary: Name of ServiceBus resource group. If not provided, the Digital Twin instance resource group will be used.
+    description: ''
   - name: --sbp --servicebus-policy
     summary: ServiceBus Topic policy to use for endpoint configuration. Required when --auth-type is KeyBased.
     description: ''
   - name: --sbs --servicebus-subscription
-    summary: Name or ID of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
+    summary: Name or id of subscription where the endpoint resource exists. If no subscription is provided the default subscription is used.
     description: ''
 commands:
 - az_dt_endpoint_create_eventgrid
@@ -210,8 +242,8 @@ globalParameters:
 - name: --only-show-errors
   summary: Only show errors, suppressing warnings.
 - name: --output -o
-  defaultValue: json
-  parameterValueGroup: json, jsonc, table, tsv
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
   summary: Output format.
 - name: --query
   summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
