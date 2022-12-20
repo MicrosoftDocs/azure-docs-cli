@@ -1,8 +1,8 @@
 ---
-author: jiasli
-ms.author: jiasli
-manager: yonzhan
-ms.date: 10/12/2022
+author: chasecrum
+ms.author: chasecrum
+manager: mamccrea
+ms.date: 12/19/2022
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---

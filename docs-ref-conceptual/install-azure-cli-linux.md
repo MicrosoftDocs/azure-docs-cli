@@ -1,10 +1,10 @@
 ---
 title: Install the Azure CLI on Linux | Microsoft Docs
 description: Learn how to install and run the Azure CLI on Linux manually. You can install the Azure CLI on Linux computers with one command or a step-by-step process.
-author: jiasli
-ms.author: jiasli
-manager: yonzhan
-ms.date: 04/29/2022
+author: chasecrum
+ms.author: chasecrum
+manager: mamccrea
+ms.date: 12/19/2022
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -21,27 +21,27 @@ When you are ready to install the Azure CLI on Linux, it is recommended to use a
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
+::: zone pivot="dnf"
+
+[!INCLUDE [cli-install-linux-dnf](includes/cli-install-linux-dnf.md)]
+
+::: zone-end
+
+::: zone pivot="zypper"
+
+[!INCLUDE [cli-install-linux-zypper](includes/cli-install-linux-zypper.md)]
+
+::: zone-end
+
 ::: zone pivot="apt"
 
 [!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-apt.md)]
 
 ::: zone-end
 
-::: zone pivot="dnf"
-
-[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-dnf.md)]
-
-::: zone-end
-
 ::: zone pivot="tdnf"
 
 [!INCLUDE [cli-install-linux-tdnf](includes/cli-install-linux-tdnf.md)]
-
-::: zone-end
-
-::: zone pivot="zypper"
-
-[!INCLUDE [cli-install-linux-apt](includes/cli-install-linux-zypper.md)]
 
 ::: zone-end
 
