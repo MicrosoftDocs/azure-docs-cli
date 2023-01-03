@@ -4,7 +4,7 @@ name: az databricks workspace
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **databricks** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az databricks workspace** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **databricks** extension for the Azure CLI  (version 2.43.0 or higher).  The extension will automatically install the first time you run an **az databricks workspace** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage databricks workspace.
 description: ''
 directCommands:
@@ -13,19 +13,19 @@ directCommands:
   summary: Create a new workspace.
   description: ''
   syntax: >-
-    az databricks workspace create --location
-                                   --name
+    az databricks workspace create --name
                                    --resource-group
-                                   --sku {premium, standard, trial}
-                                   [--enable-no-public-ip]
+                                   [--enable-no-public-ip {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--location]
                                    [--managed-resource-group]
-                                   [--no-wait]
-                                   [--prepare-encryption]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--prepare-encryption {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--private-subnet]
                                    [--public-network-access {Disabled, Enabled}]
                                    [--public-subnet]
-                                   [--require-infrastructure-encryption]
+                                   [--require-infrastructure-encryption {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--required-nsg-rules {AllRules, NoAzureDatabricksRules, NoAzureServiceRules}]
+                                   [--sku]
                                    [--tags]
                                    [--vnet]
   examples:
@@ -35,10 +35,6 @@ directCommands:
     syntax: az databricks workspace create --resource-group MyResourceGroup --name MyWorkspace --location eastus2euap --sku premium --prepare-encryption
   requiredParameters:
   - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The name of the workspace.
     description: ''
@@ -46,23 +42,23 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --sku
-    parameterValueGroup: "premium, standard, trial"
-    summary: The SKU tier name.
-    description: ''
   optionalParameters:
   - name: --enable-no-public-ip
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Flag to enable the no public ip feature.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --managed-resource-group
     summary: The managed resource group to create. It can be either a name or a resource ID.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --prepare-encryption
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Flag to enable the Managed Identity for managed storage account to prepare for CMK encryption.
     description: ''
   - name: --private-subnet
@@ -70,20 +66,24 @@ directCommands:
     description: ''
   - name: --public-network-access
     parameterValueGroup: "Disabled, Enabled"
-    summary: The configuration to set whether network access from public internet to the endpoints are allowed.
+    summary: 'The configuration to set whether network access from public internet to the endpoints are allowed. Allowed values: Disabled, Enabled.'
     description: ''
   - name: --public-subnet
     summary: The name of a Public Subnet within the Virtual Network.
     description: ''
   - name: --require-infrastructure-encryption
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Flag to enable the DBFS root file system with secondary layer of encryption with platform managed keys for data at rest.
     description: ''
   - name: --required-nsg-rules
     parameterValueGroup: "AllRules, NoAzureDatabricksRules, NoAzureServiceRules"
-    summary: The type of Nsg rule for internal use only.
+    summary: 'The type of Nsg rule for internal use only.  Allowed values: AllRules, NoAzureDatabricksRules, NoAzureServiceRules.'
+    description: ''
+  - name: --sku
+    summary: 'The SKU tier name.  Allowed values: premium, standard, trial.'
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --vnet
     summary: Virtual Network name or resource ID.
@@ -95,13 +95,13 @@ directCommands:
   syntax: >-
     az databricks workspace delete [--ids]
                                    [--name]
-                                   [--no-wait]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--resource-group]
                                    [--subscription]
                                    [--yes]
   examples:
   - summary: Delete the workspace
-    syntax: az databricks workspace delete --resource-group MyResourceGroup --name MyWorkspace
+    syntax: az databricks workspace delete --resource-group MyResourceGroup --name MyWorkspace -y
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -110,7 +110,7 @@ directCommands:
     summary: The name of the workspace.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -167,15 +167,19 @@ directCommands:
   summary: Update the workspace.
   description: ''
   syntax: >-
-    az databricks workspace update [--ids]
+    az databricks workspace update [--add]
+                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--ids]
                                    [--key-name]
                                    [--key-source {Default, Microsoft.Keyvault}]
                                    [--key-vault]
                                    [--key-version]
                                    [--name]
-                                   [--no-wait]
-                                   [--prepare-encryption]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--prepare-encryption {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--remove]
                                    [--resource-group]
+                                   [--set]
                                    [--subscription]
                                    [--tags]
   examples:
@@ -190,6 +194,13 @@ directCommands:
   - summary: Revert encryption to Microsoft Managed Keys
     syntax: az databricks workspace update --resource-group MyResourceGroup --name MyWorkspace --key-source Default
   optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -198,7 +209,7 @@ directCommands:
     description: ''
   - name: --key-source
     parameterValueGroup: "Default, Microsoft.Keyvault"
-    summary: The encryption key source (provider).
+    summary: 'The encryption key source (provider).  Allowed values: Default, Microsoft.Keyvault.'
     description: ''
   - name: --key-vault
     summary: The Uri of KeyVault.
@@ -210,24 +221,31 @@ directCommands:
     summary: The name of the workspace.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --prepare-encryption
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Flag to enable the Managed Identity for managed storage account to prepare for CMK encryption.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
 - uid: az_databricks_workspace_wait
   name: az databricks workspace wait
-  summary: Place the CLI in a waiting state until a condition of the Databricks workspace is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az databricks workspace wait [--created]
@@ -241,9 +259,6 @@ directCommands:
                                  [--subscription]
                                  [--timeout]
                                  [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the Databricks workspace is successfully provisioned.
-    syntax: az databricks workspace wait --resource-group MyResourceGroup --name MyWorkspace \ --created
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -288,6 +303,18 @@ commands:
 - az_databricks_workspace_create
 - az_databricks_workspace_delete
 - az_databricks_workspace_list
+- az_databricks_workspace_outbound-endpoint
+- az_databricks_workspace_outbound-endpoint_list
+- az_databricks_workspace_private-endpoint-connection
+- az_databricks_workspace_private-endpoint-connection_create
+- az_databricks_workspace_private-endpoint-connection_delete
+- az_databricks_workspace_private-endpoint-connection_list
+- az_databricks_workspace_private-endpoint-connection_show
+- az_databricks_workspace_private-endpoint-connection_update
+- az_databricks_workspace_private-endpoint-connection_wait
+- az_databricks_workspace_private-link-resource
+- az_databricks_workspace_private-link-resource_list
+- az_databricks_workspace_private-link-resource_show
 - az_databricks_workspace_show
 - az_databricks_workspace_update
 - az_databricks_workspace_vnet-peering
