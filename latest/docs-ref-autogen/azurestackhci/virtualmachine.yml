@@ -17,7 +17,9 @@ directCommands:
                                            --resource-group
                                            [--admin-password]
                                            [--admin-username]
+                                           [--allow-password-auth {false, true}]
                                            [--computer-name]
+                                           [--data-disk]
                                            [--extended-location]
                                            [--hardware-profile]
                                            [--image-reference]
@@ -25,17 +27,19 @@ directCommands:
                                            [--location]
                                            [--network-profile]
                                            [--nic-id]
+                                           [--os-disk]
                                            [--os-profile]
                                            [--provision-vm-agent {false, true}]
                                            [--security-profile]
                                            [--ssh-public-keys]
                                            [--storage-profile]
+                                           [--storagepath-id]
                                            [--tags]
                                            [--vm-size]
                                            [--windows-configuration]
   examples:
   - summary: PutVirtualMachine
-    syntax: az azurestackhci virtualmachine create --resource-group "test-rg" --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocatio n/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --hardware-profile vm-size="Default" --nic-id "test-nic" --computer-name "test-machine" --admin-username xxx --admin-password xxx --ssh-public-keys /path/to/public_key.pub --provision-vm-agent true --image-reference "test-gallery-image" --name "test-vm"
+    syntax: az azurestackhci virtualmachine create --resource-group "test-rg" --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocatio n/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --hardware-profile vm-size="Default" --nic-id "test-nic" --computer-name "test-machine" --admin-username xxx --admin-password xxx --ssh-public-keys /path/to/public_key.pub --provision-vm-agent true --image-reference "test-gallery-image" --storagepath-id "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.AzureStackHCI/storagecontainers/test-storagepath" --name "test-vm" --allow-password-auth true
   requiredParameters:
   - isRequired: true
     name: --name
@@ -52,8 +56,19 @@ directCommands:
   - name: --admin-username
     summary: AdminUsername - Administrator Username.
     description: ''
+  - name: --allow-password-auth
+    parameterValueGroup: "false, true"
+    summary: Enable password authentication for Linux VM.
+    description: >-
+      Whether to enable password authentication for Linux virtual machines.
+
+
+      Note: This flag has no effect on Windows virtual machines.
   - name: --computer-name
     summary: Name of the Computer.
+    description: ''
+  - name: --data-disk
+    summary: Names of the data disk VHD's being attached to the VM.
     description: ''
   - name: --extended-location
     summary: ''
@@ -94,6 +109,9 @@ directCommands:
   - name: --nic-id
     summary: NicID - Network Interface id to attach to the virtual machine.
     description: ''
+  - name: --os-disk
+    summary: Id of the VHD being used to provision the VM.
+    description: ''
   - name: --os-profile
     summary: 'OsProfile - describes the configuration of the operating system and sets login data Expected value: json-string/@json-file.'
     description: ''
@@ -103,12 +121,15 @@ directCommands:
     description: ''
   - name: --security-profile
     summary: SecurityProfile - Specifies the security settings for the virtual machine.
-    description: 'Usage: --security-profile enable-tpm=XX.'
+    description: 'Usage: --security-profile enable-tpm=XX secure-boot-enabled=XX.'
   - name: --ssh-public-keys
     summary: Path to SSH public keys.
     description: ''
   - name: --storage-profile
     summary: 'StorageProfile - contains information about the disks and storage information for the virtual machine Expected value: json-string/@json-file.'
+    description: ''
+  - name: --storagepath-id
+    summary: Azure ID of the Storage Path pointing to the location where the VM config files are stored.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
