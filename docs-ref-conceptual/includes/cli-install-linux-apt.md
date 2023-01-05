@@ -51,9 +51,9 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 2. Download and install the Microsoft signing key:
 
-    ```bash  
-      sudo mkdir -p /etc/apt/keyrings
-      curl -sLS https://packages.microsoft.com/keys/microsoft.asc |
+    ```bash
+    sudo mkdir -p /etc/apt/keyrings
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc |
         gpg --dearmor |
         sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
     sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
