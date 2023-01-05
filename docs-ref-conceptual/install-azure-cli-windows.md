@@ -86,6 +86,37 @@ The `-e` option is to ensure the official Azure CLI package is installed. This c
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
 
+## Enable Tab Completion on PowerShell
+
+To enable tab completion for the Azure CLI on PowerShell, you need to have version 2.49 or higher installed. Once set up, tab completion for the Azure CLI is triggered by entering a az command in the shell and then pressing the Tab key.
+
+To add tab completion, create or edit the profile stored in the variable `$PROFILE`. The simplest way is to run `notepad $PROFILE` in PowerShell. For more information, see [How to create your profile](/powershell/module/microsoft.powershell.core/about/about_profiles#how-to-create-a-profile) and [Profiles and execution policy](/powershell/module/microsoft.powershell.core/about/about_profiles#profiles-and-execution-policy).
+
+Add the following code to your profile:
+
+```powershell
+Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
+    param($commandName, $wordToComplete, $cursorPosition)
+    $completion_file = New-TemporaryFile
+    $env:ARGCOMPLETE_USE_TEMPFILES = 1
+    $env:_ARGCOMPLETE_STDOUT_FILENAME = $completion_file
+    $env:COMP_LINE = $wordToComplete
+    $env:COMP_POINT = $cursorPosition
+    $env:_ARGCOMPLETE = 1
+    $env:_ARGCOMPLETE_SUPPRESS_SPACE = 0
+    $env:_ARGCOMPLETE_IFS = "`n"
+    az 2>&1 | Out-Null
+
+    Get-Content $completion_file | Sort-Object |ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
+    }
+    rm $completion_file
+    Remove-Item Env:\_ARGCOMPLETE_STDOUT_FILENAME, Env:\ARGCOMPLETE_USE_TEMPFILES, Env:\COMP_LINE, Env:\COMP_POINT, Env:\_ARGCOMPLETE, Env:\_ARGCOMPLETE_SUPPRESS_SPACE, Env:\_ARGCOMPLETE_IFS
+}
+```
+
+To get a bash like completion style, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` in `$PROFILE`.
+
 ## Troubleshooting
 
 Here are some common problems seen when installing the Azure CLI on Windows. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
@@ -117,9 +148,9 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 
 You uninstall the Azure CLI from the Windows "Apps and Features" list. To uninstall:
 
-| Platform | Instructions |
-|---|---|
-| Windows 10 | Start > Settings > Apps |
+| Platform                | Instructions                                           |
+| ----------------------- | ------------------------------------------------------ |
+| Windows 10              | Start > Settings > Apps                                |
 | Windows 8 and Windows 7 | Start > Control Panel > Programs > Uninstall a program |
 
 Once on this screen type __Azure CLI__ into the program search bar. The program to uninstall is listed as __Microsoft CLI 2.0 for Azure__. Select this application, then click the `Uninstall` button.
