@@ -95,7 +95,7 @@ To add tab completion, create or edit the profile stored in the variable `$PROFI
 Add the following code to your profile:
 
 ```powershell
-Import-Module  "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\az.completion.psm1"
+Import-Module "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\az.completion.psm1"
 ```
 
 To get a bash like completion style, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` in `$PROFILE`.
