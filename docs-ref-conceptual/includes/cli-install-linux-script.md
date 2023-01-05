@@ -1,8 +1,8 @@
 ---
-author: dbradish-microsoft
-ms.author: dbradish
-manager: barbkess
-ms.date: 12/15/2020
+author: chasecrum
+ms.author: chasecrum
+manager: mamccrea
+ms.date: 12/19/2022
 ms.topic: include
 ms.service: azure-cli
 ms.devlang: azurecli

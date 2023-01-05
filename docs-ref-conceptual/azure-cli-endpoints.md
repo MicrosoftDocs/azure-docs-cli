@@ -10,11 +10,9 @@ ms.date: 11/14/2022
 ms.tool: azure-cli
 ---
 
-# Overview
+# Azure CLI endpoints for proxy bypass
 
 If your organization is secured with a firewall or proxy server, you must add certain IP (internet protocol) addresses and domain URLs (uniform resource locators) to the **allowlist** prior to installing the Azure CLI.
-
-## Azure CLI endpoints for proxy bypass
 
 The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
@@ -139,38 +137,6 @@ mariadb_server_endpoint | *.mariadb.database.chinacloudapi.cn
 acr_login_server_endpoint | *.azurecr.cn
 synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
-### [Azure Germany Cloud](#tab/azure-germany-cloud)
-
-### Endpoints
-
-|Endpoint group | Endpoint
-|-|-|
-management | https://management.core.cloudapi.de/
-resource_manager | https://management.microsoftazure.de
-sql_management | https://management.core.cloudapi.de:8443/
-batch_resource_id | https://batch.cloudapi.de/
-gallery | https://gallery.cloudapi.de/
-active_directory | https://login.microsoftonline.de
-active_directory_resource_id | https://management.core.cloudapi.de/
-active_directory_graph_resource_id | https://graph.cloudapi.de/
-microsoft_graph_resource_id | https://graph.microsoft.de
-vm_image_alias_doc | https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/arm-compute/quickstart-templates/aliases.json
-media_resource_id | https://rest.media.cloudapi.de
-ossrdbms_resource_id | https://ossrdbms-aad.database.cloudapi.de
-portal | https://portal.microsoftazure.de
-
-### Endpoint suffixes
-
-|Suffix name | Suffix
-|-|-|
-storage_endpoint | *.core.cloudapi.de
-keyvault_dns | *.vault.microsoftazure.de
-mhsm_dns | *.managedhsm.microsoftazure.de
-sql_server_hostname | *.database.cloudapi.de
-mysql_server_endpoint | *.mysql.database.cloudapi.de
-postgresql_server_endpoint | *.postgres.database.cloudapi.de
-mariadb_server_endpoint | *.mariadb.database.cloudapi.de
-
 ---
 
 ## Extension endpoints
@@ -199,15 +165,15 @@ Azure CLI extensions are optional and installed separately.  All extensions inst
 | ml | azuremlsdktestpypi.blob.core.windows.net
 | qbs | qbsazcliextension.blob.core.windows.net
 
-Two additional URLs used during installation to download Python packages and tools are **pypi.org** and **files.pythonhosted.org**.
+> [!NOTE]
+> Two additional URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.
 
 ## See also
 
-- [How to use the Azure CLI effectively - Work behind a proxy](/cli/azure/use-cli-effectively&tabs=bash%2Cbash2#work-behind-a-proxy)
+- [How to use the Azure CLI effectively - Work behind a proxy](/cli/azure/use-cli-effectively?tabs=bash%2Cbash2#work-behind-a-proxy)
 - [Work with existing on-premises proxy servers](/azure/active-directory/app-proxy/application-proxy-configure-connectors-with-proxy-servers)
 - [Azure Firewall threat intelligence configuration - Allowlist addresses](/azure/firewall-manager/threat-intelligence-settings#allowlist-addresses)
 - Azure IP ranges and Service Tags
   - [Public Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
   - [US Government Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57063)
-  - [Germany Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57064)
   - [China Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57062)

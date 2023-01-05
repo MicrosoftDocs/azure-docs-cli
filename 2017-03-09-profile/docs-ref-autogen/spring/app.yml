@@ -146,6 +146,7 @@ directCommands:
                          [--assign-identity {false, true}]
                          [--assign-public-endpoint {false, true}]
                          [--backend-protocol {Default, GRPC}]
+                         [--client-auth-certs]
                          [--cpu]
                          [--disable-probe {false, true}]
                          [--enable-liveness-probe {false, true}]
@@ -204,6 +205,9 @@ directCommands:
   - name: --backend-protocol
     parameterValueGroup: "Default, GRPC"
     summary: Ingress backend protocol of app.
+    description: ''
+  - name: --client-auth-certs
+    summary: "A space-separated string containing resource ids of certificates for client authentication. e.g: --client_auth_certs='id0 id1'. Use '' to clear existing certificates."
     description: ''
   - name: --cpu
     defaultValue: "1"
@@ -270,7 +274,7 @@ directCommands:
     description: ''
   - name: --session-affinity
     parameterValueGroup: "Cookie, None"
-    summary: Ingress session afiinity of app.
+    summary: Ingress session affinity of app.
     description: ''
   - name: --session-max-age
     summary: Time until the cookie expires. Minimum is 1 second, maximum is 7 days. If set to 0, the expiration period is equal to the browser session period.
@@ -358,6 +362,8 @@ directCommands:
     syntax: az spring app deploy -n MyApp -s MyCluster -g MyResourceGroup --container-image contoso/your-app:v1 --container-registry myacr.azurecr.io --registry-username <username> --registry-password <password>
   - summary: Deploy with Application Configuration Service config file patterns to an app.
     syntax: az spring app deploy -n MyApp -s MyCluster -g MyResourceGroup --config-file-patterns MyPatterns --artifact-path app.jar
+  - summary: Deploy a pre-built jar to an app with build env (For Enterprise tier only).
+    syntax: az spring app deploy -n MyApp -s MyCluster -g MyResourceGroup --artifact-path app.jar --build-env BP_JVM_VERSION=11.*
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -905,6 +911,7 @@ directCommands:
                          [--assign-endpoint {false, true}]
                          [--assign-public-endpoint {false, true}]
                          [--backend-protocol {Default, GRPC}]
+                         [--client-auth-certs]
                          [--config-file-patterns]
                          [--deployment]
                          [--disable-probe {false, true}]
@@ -957,6 +964,9 @@ directCommands:
   - name: --backend-protocol
     parameterValueGroup: "Default, GRPC"
     summary: Ingress backend protocol of app.
+    description: ''
+  - name: --client-auth-certs
+    summary: "A space-separated string containing resource ids of certificates for client authentication. e.g: --client_auth_certs='id0 id1'. Use '' to clear existing certificates."
     description: ''
   - name: --config-file-patterns
     summary: (Enterprise Tier Only) Config file patterns separated with ',' to decide which patterns of Application Configuration Service will be used. Use '""' to clear existing configurations.
@@ -1033,7 +1043,7 @@ directCommands:
     description: ''
   - name: --session-affinity
     parameterValueGroup: "Cookie, None"
-    summary: Ingress session afiinity of app.
+    summary: Ingress session affinity of app.
     description: ''
   - name: --session-max-age
     summary: Time until the cookie expires. Minimum is 1 second, maximum is 7 days. If set to 0, the expiration period is equal to the browser session period.

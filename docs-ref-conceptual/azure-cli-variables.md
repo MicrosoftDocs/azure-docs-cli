@@ -23,7 +23,7 @@ In addition to specifying values directly in a command, you can provide values i
 
 This article discusses various ways to specify values in Azure CLI commands.
 
-[!INCLUDE [azure-cli-prepare-your-environment.md](includes/azure-cli-prepare-your-environment.md)]
+[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
 
 ## Use shell variables
 
