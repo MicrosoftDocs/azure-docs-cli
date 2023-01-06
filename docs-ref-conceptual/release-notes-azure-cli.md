@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 12/06/2022
+ms.date: 01/10/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,105 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## January 10, 2023
+
+Version 2.44.0
+
+### ACR
+
+* `az acr manifest`: Support oci artifact manifest
+
+### AKS
+
+* `az aks create`: Add new parameter `--data-collection-settings` to support for AKS Monitoring Addon in MSI auth mode
+* `az aks install-cli`: Automatically add the installation directories to system path on windows
+* `az aks create/update`: Add support for KEDA workload auto-scaler
+
+### APIM
+
+* `az apim api create`: Parse URL to detect Protocol and API type
+
+### App Service
+
+* Fix #23488: `az appservice plan create`: Fix zone redundant ASP creation fails for ASEv3
+* Fix #24858: Support for new isolated v2 (I4v2, I5v2, I6v2) SKUs
+* `az appservice ase upgrade/send-test-notification`: Add new commands for ASE to support ASE upgrade and sending test notifications
+* `az appservice ase update`: Add `--allow-incoming-ftp-connections` to allow incoming FTP connections
+* `az appservice ase update`: Add `--allow-remote-debugging` to allow remote debugging
+* Fix #19893: `az appservice plan create`: Fix the bug that cannot create app plan in a different subscription for ASEv3
+* Fix #16478: `az functionapp cors credentials`: Add enable/disable CORS creds commands
+* Fix #22934: `az functionapp delete`: Add new parameter `--keep-empty-plan` to support keeping empty app service plan
+* Fix #19469: `az functionapp vnet-integration add`: Add consumption plan validation
+* `az staticwebapp functions link`: Add new parameter `--environment-name` to support setting the environment name of static site
+
+### ARM
+
+* Fix #24810: Support ARM64 architecture for Bicep installation
+
+### Batch
+
+* `az batch pool create/set`: Add new parameter `--target-communication` to support setting the desired node communication mode for the pool
+
+### Compute
+
+* Fix #24896: `az vm create`: Fix the bug that the VM cannot be created from ACG image to other resource group
+* `az disk create`: Add new parameter `--performance-plus` to support boosting the performance target
+* `az vm list`: Add new paramter `--vmss` to support querying VM instances in a specific VMSS
+* `az sig image-version create/update`: Add parameters `--target-edge-zone-encryption` and `--target-edge-zones` to support edge zones
+
+### Container
+
+* `az container export`: Fix export when identity is set
+
+### Key Vault
+
+* `az keyvault key create`: Support OKP key and Ed25519 curve
+
+### Monitor
+
+* [BREAKING CHANGE] `az monitor action-group test-notifications create`: Remove notification in resource group and subscription level
+* `az monitor diagnostic-settings create`: Create with resource id and export without workspace
+
+### NetAppFiles
+
+* `az volumes qouta-rule create`: Add volume quota rule create command
+* `az volumes qouta-rule show`: Add volume quota rule show command
+* `az volumes qouta-rule list`: Add volume quota rule list command
+* `az volumes qouta-rule update`: Add volume quota rule update command
+* `az volumes qouta-rule delete`: Add volume quota rule delete command
+
+### Network
+
+* `az network vnet-gateway create`: Add parameter `--edge-zone-vnet-id` for local gateway
+* Fix #24853: `az network nsg rule create`: `--destination-asgs` and `--source-asgs` cannot be used
+* Fix #24883: `az network application-gateway stop/start`: Add missed parameter `--ids`
+* `az network watcher packet-capture create`: Resolve local path issue for Linux VM
+* `az network lb update`: Expose parameter `--tags`
+
+### Redis
+
+* `az redis import/export`: Add new optional parameter `--preferred-data-archive-method`
+* `az redis server-link`: Linked server has two new properties: `geoReplicatedPrimaryHostName` and `primaryHostName`
+
+### Security
+
+* `az security alert update`: `--status` now support `resolve` and `inprogress`
+
+### Service Connector
+
+* `az connection`: Support local connection which allows local environment to connect Azure resource
+* Fix #24806: `az webapp connection create mysql-flexible`: Fix mysql connection command with `--system-identity`
+
+### SQL
+
+* `az sql server/db/mi/midb advanced-threat-protection-setting show/update`: Support `advanced-threat-protection-setting` commands
+* `az sql db threat-policy`: Declare deprecation of this command group in version 2.45.0
+* `az sql db`: Add `--preferred-enclave-type` argument
+
+### Storage
+
+* `az storage blob copy start`: Fix `--tier` to support setting blob tier when copying
 
 ## December 06, 2022
 
