@@ -16,25 +16,31 @@ ms.custom: devx-track-azurecli
 
 ## Overview
 
-SUSE and OpenSUSE virtual machines in Azure using Azure Marketplace images already have Azure CLI installed. For systems that do not have Azure CLI installed, there are several options available.
+In Azure, SUSE and OpenSUSE virtual machines (VMs) based on Azure Marketplace images already have the Azure Command-Line Interface (Azure CLI) installed.
 
 [!INCLUDE [rpm-warning](rpm-warning.md)]
 
-## Install from SUSE or OpenSUSE repositories
+
+## Install Azure CLI
+
+For systems that do not have the Azure CLI installed, there are several installation options available.
+
+### Install from SUSE or OpenSUSE repositories
 
    ```bash
    sudo zypper install -y azure-cli
    ```
 
-## Install the latest Linux (any) version using the install script
+### Install with the install script
 
-you can manually install the Azure CLI on Linux by selecting the [Install script](cli-install-linux-script.md) option.
+You can manually install the Azure CLI on any version of Linux by using the [Install script](cli-install-linux-script.md) option.
 
 If you are *updating* to the most recent version using this method, be sure to uninstall the previous version first, as well as any repositories you may have added for that version.
 
-## Install from Microsoft repositories
+### Install from Microsoft repositories
 
-To install the most recent historical version of Azure CLI using Microsoft repositories:
+To install the most recent historical version of the Azure CLI using Microsoft repositories, follow these steps.
+
 (This package has been tested with **SLES 15** and **OpenSUSE Leap 15.1**)
 
 1. Install `curl`:
@@ -65,15 +71,15 @@ To install the most recent historical version of Azure CLI using Microsoft repos
 
 ### Install specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
+You must first configure `azure-cli` repository information as shown above. Available versions can be found in the [Azure CLI release notes](../release-notes-azure-cli.md).
 
-1. To view available versions with command:
+1. View the available versions using this command:
 
    ```bash
    zypper search --details --match-exact azure-cli
    ```
 
-2. To install specific version:
+2. To install a specific version:
 
    ```bash
    sudo zypper install --from azure-cli azure-cli=<version>-1.el7
@@ -84,13 +90,13 @@ You must first configure `azure-cli` repository information as shown above. Avai
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### NotImplementedError on OpenSUSE 15 VM
-The OpenSUSE 15 VM has a pre-installed Azure CLI with version `2.0.45`, it's outdated and has issues with `az login`. Please remove it along with its dependencies before following the [Install](#install) instruction to add the latest Azure CLI:
+The OpenSUSE 15 VM has a pre-installed Azure CLI with version 2.0.45, which is outdated and has issues with `az login`. Please remove this version along with its dependencies before following the [Install](#install-azure-cli) instruction to add the latest Azure CLI:
 
 ```bash
 sudo zypper rm -y --clean-deps azure-cli
 ```
 
-If you updated Azure CLI without removing the dependencies of version `2.0.45`, its old dependencies may affect the latest version of Azure CLI. You need to add back the old version to link to its dependencies and then remove `azure-cli` along with its dependencies:
+If you updated the Azure CLI without removing the dependencies of version 2.0.45, its old dependencies may affect the latest version of the Azure CLI. You need to add back the old version to link to its dependencies and then remove `azure-cli` along with its dependencies:
 
 ```bash
 # The package name may vary on different system version, run 'zypper --no-refresh info azure-cli' to check the source package format
@@ -101,9 +107,9 @@ sudo zypper rm -y --clean-deps azure-cli
 
 ### Install on SLES 12 or other systems without Python 3.6
 
-On SLES 12, the default `python3` package is `3.4` and not supported by Azure CLI. You can first follow step 1-3 of the [install instruction](#install) to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
+On SLES 12, the default `python3` package is 3.4 and not supported by Azure CLI. You can first follow step 1-3 of the [install instruction](#install-azure-cli) to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
 
-You can use the following one command to install or update Azure CLI based on above steps. The script will install `Python 3.8` under `/usr/local/azcli` and make Azure CLI use it by setting an alias of `az` to `PATH=/usr/local/azcli/bin:$PATH az`. You can also download the script and modify it according to your needs. For instance, you can change the Python version or install location.
+You can use the following one command to install or update Azure CLI based on above steps. The script will install Python 3.8 under `/usr/local/azcli` and make Azure CLI use it by setting an alias of `az` to `PATH=/usr/local/azcli/bin:$PATH az`. You can also download the script and modify it according to your needs. For instance, you can change the Python version or install location.
 
 ```bash
 curl -sL https://azurecliprod.blob.core.windows.net/sles12_install_v2.sh | sudo bash
@@ -118,14 +124,14 @@ source ~/.bashrc
 
 [!INCLUDE[configure-proxy](configure-proxy.md)]
 
-You may also want to explicitly configure `zypper` (via `yast2`) to use this proxy at all times. To do so,
+You may also want to explicitly configure `zypper` (via `yast2`) to always use this proxy. To do so,
 run the `yast2 proxy` command as superuser, and fill in the information presented in the form. If you have a window
 manager available on your system, you can also use the `Network Services > Proxy` pane in the `YaST Control Center`.
 
 For advanced configuration or more information, see the
 [OpenSUSE Proxy configuration documentation](https://www.suse.com/documentation/slms1/book_slms/data/sec_wy_config_updates_proxy.html)
 
-In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
+To get the Microsoft signing key and get the package from our repository, your proxy needs to
 allow HTTPS connections to the following addresses:
 
 * `https://packages.microsoft.com`
@@ -135,7 +141,7 @@ allow HTTPS connections to the following addresses:
 
 ### SSL certificate problem
 
-When a certificate is broken or outdated on a machine, you may receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.
+When a certificate is broken or outdated on a machine, you might receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.
 
 ```bach
 sudo zypper update-ca-certificates
