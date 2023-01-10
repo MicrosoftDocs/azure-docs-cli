@@ -2,7 +2,7 @@
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 01/09/2023
+ms.date: 01/10/2023
 ms.topic: include
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -10,18 +10,32 @@ ms.custom: devx-track-azurecli
 ---
 
 > [!WARNING]
-> The latest Azure CLI package developed for SUSE Linux Enterprise Server (SLES), and OpenSUSE (Leap), is version 2.39.0 (released on 08/02/2022). The Azure CLI development team is coordinating with SUSE to provide future version releases of this package within the official SUSE internal repositories. You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bugfixes from Microsoft.
+> The last Azure CLI package developed by Microsoft for SUSE Linux Enterprise Server (SLES), and OpenSUSE (Leap), is version 2.39.0 (released on 08/02/2022). You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bugfixes from Microsoft for those versions.
 >
 > Azure CLI packages beyond version 2.39.0 will be maintained and supported by the SUSE/OpenSUSE community. Please refer all support issues and bug reports to their support teams.
 
 ## Overview
 
-For Linux distributions with `zypper`, such as SLES or openSUSE, there's a package available
-for the Azure CLI. This package has been tested with SLES 15 and OpenSUSE Leap 15.1.
+SUSE and OpenSUSE virtual machines in Azure using Azure Marketplace images already have Azure CLI installed. For systems that do not have Azure CLI installed, there are several options available.
 
 [!INCLUDE [rpm-warning](rpm-warning.md)]
 
-## Install
+## Install from SUSE or OpenSUSE repositories
+
+   ```bash
+   sudo zypper install -y azure-cli
+   ```
+
+## Install the latest Linux (any) version using the install script
+
+you can manually install the Azure CLI on Linux by selecting the [Install script](cli-install-linux-script.md) option.
+
+If you are *updating* to the most recent version using this method, be sure to uninstall the previous version first, as well as any repositories you may have added for that version.
+
+## Install from Microsoft repositories
+
+To install the most recent historical version of Azure CLI using Microsoft repositories:
+(This package has been tested with **SLES 15** and **OpenSUSE Leap 15.1**)
 
 1. Install `curl`:
 
@@ -49,7 +63,7 @@ for the Azure CLI. This package has been tested with SLES 15 and OpenSUSE Leap 1
 
    Input 2 to continue install by ignoring some of its dependencies.
 
-## Install specific version
+### Install specific version
 
 You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
