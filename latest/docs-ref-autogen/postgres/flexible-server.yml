@@ -135,28 +135,32 @@ directCommands:
     syntax: >-
       # create keyvault
 
-      az keyvault create -g testGroup -n testVault --location testLocation --enable-purge-protection true
+      az keyvault create -g testGroup -n testVault --location testLocation \
+        --enable-purge-protection true
 
 
-      # create key in keyvault
+      # create key in keyvault and save its key identifier
 
-      az keyvault key create --name testKey -p software --vault-name testVault
+      keyIdentifier=$(az keyvault key create --name testKey -p software \
+        --vault-name testVault --query key.kid -o tsv)
 
 
-      # create identity
+      # create identity and save its principalId
 
-      az identity create -g testGroup --name testIdentity --location testLocation
+      identityPrincipalId=$(az identity create -g testGroup --name testIdentity \
+        --location testLocation --query principalId -o tsv)
 
 
       # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
 
-      az keyvault set-policy -g testGroup -n testVault --object-id '<principalID of testIdentity>' --key-permissions wrapKey unwrapKey get list
+      az keyvault set-policy -g testGroup -n testVault --object-id $identityPrincipalId \
+        --key-permissions wrapKey unwrapKey get list
 
 
       # create flexible server with data encryption enabled
 
       az postgres flexible-server create -g testGroup -n testServer --location testLocation \
-        --key '<key identifier of testKey>' --identity testIdentity
+        --key $keyIdentifier --identity testIdentity
   optionalParameters:
   - name: --active-directory-auth
     defaultValue: "Disabled"
@@ -170,7 +174,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: "needysnipe7"
+    defaultValue: "bestcoot1"
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --backup-retention
@@ -525,7 +529,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: "2023-01-05T12:08:04+00:00"
+    defaultValue: "2023-01-10T03:34:04+00:00"
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
     description: ''
   - name: --subnet
@@ -694,8 +698,16 @@ directCommands:
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver -p password123
   - summary: Change key/identity for data encryption. Data encryption cannot be enabled post server creation, this will only update the key/identity.
     syntax: >-
+      # get key identifier of the existing key
+
+      newKeyIdentifier=$(az keyvault key show --vault-name testVault --name testKey \
+        --query key.kid -o tsv)
+
+
+      # update server with new key/identity
+
       az postgres flexible-server update --resource-group testGroup --name testserver \
-        --key '<key identifier of newKey>' --identity newIdentity
+        --key $newKeyIdentifier --identity newIdentity
   optionalParameters:
   - name: --active-directory-auth
     parameterValueGroup: "Disabled, Enabled"
