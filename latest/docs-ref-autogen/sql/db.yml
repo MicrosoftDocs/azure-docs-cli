@@ -24,6 +24,7 @@ directCommands:
                    [--min-capacity]
                    [--name]
                    [--no-wait]
+                   [--preferred-enclave-type {Default, VBS}]
                    [--read-scale {Disabled, Enabled}]
                    [--resource-group]
                    [--server]
@@ -58,7 +59,7 @@ directCommands:
     summary: The compute model of the database.
     description: ''
   - name: --dest-resource-group
-    summary: Name of the resouce group to create the copy in. If unspecified, defaults to the origin resource group.
+    summary: Name of the resource group to create the copy in. If unspecified, defaults to the origin resource group.
     description: ''
   - name: --dest-server
     summary: Name of the server to create the copy in. If unspecified, defaults to the origin server.
@@ -88,6 +89,10 @@ directCommands:
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --preferred-enclave-type
+    parameterValueGroup: "Default, VBS"
+    summary: Create a database configured with Default or VBS preferred enclave type.
     description: ''
   - name: --read-scale
     parameterValueGroup: "Disabled, Enabled"
@@ -137,6 +142,7 @@ directCommands:
                      [--max-size]
                      [--min-capacity]
                      [--no-wait]
+                     [--preferred-enclave-type {Default, VBS}]
                      [--read-scale {Disabled, Enabled}]
                      [--sample-name {AdventureWorksLT}]
                      [--service-objective]
@@ -225,6 +231,10 @@ directCommands:
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --preferred-enclave-type
+    parameterValueGroup: "Default, VBS"
+    summary: Create a database configured with Default or VBS preferred enclave type.
+    description: ''
   - name: --read-scale
     parameterValueGroup: "Disabled, Enabled"
     summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
@@ -308,7 +318,7 @@ directCommands:
   - summary: Get an SAS key for use in export operation.
     syntax: >-
       az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac \
-          --permissions w --expiry 2018-01-01T00:00:00Z
+          --permissions rw --expiry 2018-01-01T00:00:00Z
   - summary: Export bacpac using an SAS key.
     syntax: >-
       az sql db export -s myserver -n mydatabase -g mygroup -p password -u login \
@@ -388,7 +398,7 @@ directCommands:
   - summary: Get an SAS key for use in import operation.
     syntax: >-
       az storage blob generate-sas --account-name myAccountName -c myContainer -n myBacpac.bacpac \
-          --permissions r --expiry 2018-01-01T00:00:00Z
+          --permissions rw --expiry 2018-01-01T00:00:00Z
   - summary: Import bacpac into an existing database using an SAS key.
     syntax: >-
       az sql db import -s myserver -n mydatabase -g mygroup -p password -u login \
@@ -629,6 +639,7 @@ directCommands:
                       [--min-capacity]
                       [--name]
                       [--no-wait]
+                      [--preferred-enclave-type {Default, VBS}]
                       [--read-scale {Disabled, Enabled}]
                       [--resource-group]
                       [--server]
@@ -692,6 +703,10 @@ directCommands:
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --preferred-enclave-type
+    parameterValueGroup: "Default, VBS"
+    summary: Create a database configured with Default or VBS preferred enclave type.
     description: ''
   - name: --read-scale
     parameterValueGroup: "Disabled, Enabled"
@@ -812,6 +827,7 @@ directCommands:
                      [--min-capacity]
                      [--name]
                      [--no-wait]
+                     [--preferred-enclave-type {Default, VBS}]
                      [--read-scale {Disabled, Enabled}]
                      [--remove]
                      [--resource-group]
@@ -890,6 +906,10 @@ directCommands:
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --preferred-enclave-type
+    parameterValueGroup: "Default, VBS"
+    summary: Create a database configured with Default or VBS preferred enclave type.
+    description: ''
   - name: --read-scale
     parameterValueGroup: "Disabled, Enabled"
     summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
@@ -920,6 +940,9 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
+- az_sql_db_advanced-threat-protection-setting
+- az_sql_db_advanced-threat-protection-setting_show
+- az_sql_db_advanced-threat-protection-setting_update
 - az_sql_db_audit-policy
 - az_sql_db_audit-policy_show
 - az_sql_db_audit-policy_update
@@ -997,5 +1020,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/02/2022
+  ms.date: 01/03/2023
   description: Manage databases.

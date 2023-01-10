@@ -30,6 +30,10 @@ directCommands:
     syntax: az appservice plan create -g MyResourceGroup -n MyPlan --hyper-v --sku P1V3
   - summary: Create an app service plan for app service environment.
     syntax: az appservice plan create -g MyResourceGroup -n MyPlan --app-service-environment MyAppServiceEnvironment --sku I1
+  - summary: Create an app service plan for app service environment in different subscription.
+    syntax: az appservice plan create -g MyResourceGroup -n MyPlan --app-service-environment '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/hostingEnvironments/test-ase' --sku I1V2
+  - summary: Create an app service plan for app service environment in different subscription and the resource group in different region than app service environment.
+    syntax: az appservice plan create -g MyResourceGroup -n MyPlan --app-service-environment '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Web/hostingEnvironments/test-ase' --sku I1V2 --location ase-region
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -41,7 +45,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --app-service-environment -e
-    summary: Name or ID of the app service environment.
+    summary: Name or ID of the app service environment. If you want to create the app service plan in different subscription than the app service environment, please use the resource ID for --app-service-environment parameter.
     description: ''
   - name: --hyper-v
     summary: Host web app on Windows container.
@@ -244,5 +248,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/01/2022
+  ms.date: 01/04/2023
   description: Manage app service plans.

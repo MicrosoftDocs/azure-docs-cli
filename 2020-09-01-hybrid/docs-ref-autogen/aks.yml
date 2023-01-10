@@ -100,6 +100,7 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--ca-profile]
                   [--client-secret]
+                  [--data-collection-settings]
                   [--defender-config]
                   [--disable-disk-driver]
                   [--disable-file-driver]
@@ -121,6 +122,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
+                  [--enable-keda]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
@@ -255,6 +257,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.13 --location westus2 --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
   - summary: Create a kubernetes cluster with no CNI installed.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
+  - summary: Create a kubernetes cluster with KEDA workload autoscaler enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-keda
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -337,6 +341,9 @@ directCommands:
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
+  - name: --data-collection-settings
+    summary: Path to JSON file containing data collection settings for Monitoring addon.
+    description: ''
   - name: --defender-config
     summary: Path to JSON file containing Microsoft Defender profile configurations.
     description: ''
@@ -388,6 +395,7 @@ directCommands:
                                        Specify "--workspace-resource-id" to use an existing workspace.
                                        Specify "--enable-msi-auth-for-monitoring" to use Managed Identity Auth.
                                        Specify "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
+                                       Specify "--data-collection-settings" to configure data collection settings
                                        If monitoring addon is enabled --no-wait argument will have no effect
           - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
                                        Learn more at aka.ms/aks/policy.
@@ -427,6 +435,10 @@ directCommands:
   - name: --enable-fips-image
     defaultValue: "False"
     summary: Use FIPS-enabled OS on agent nodes.
+    description: ''
+  - name: --enable-keda
+    defaultValue: "False"
+    summary: Enable KEDA workload auto-scaler.
     description: ''
   - name: --enable-managed-identity
     defaultValue: "1"
@@ -775,6 +787,7 @@ directCommands:
                          [--appgw-subnet-cidr]
                          [--appgw-subnet-id]
                          [--appgw-watch-namespace]
+                         [--data-collection-settings]
                          [--enable-msi-auth-for-monitoring]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
@@ -818,6 +831,9 @@ directCommands:
     description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
+    description: ''
+  - name: --data-collection-settings
+    summary: Path to JSON file containing data collection settings for Monitoring addon.
     description: ''
   - name: --enable-msi-auth-for-monitoring
     defaultValue: "False"
@@ -1291,6 +1307,7 @@ directCommands:
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
+                  [--disable-keda]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
@@ -1304,6 +1321,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
+                  [--enable-keda]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-oidc-issuer]
@@ -1381,6 +1399,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa
   - summary: Enable Windows gmsa for a kubernetes cluster without setting DNS server in the vnet used by the cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
+  - summary: Enable KEDA workload autoscaler for an existing kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-keda
+  - summary: Disable KEDA workload autoscaler for an existing kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-keda
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1466,6 +1488,10 @@ directCommands:
     defaultValue: "False"
     summary: Disable AzureFile CSI Driver.
     description: ''
+  - name: --disable-keda
+    defaultValue: "False"
+    summary: Disable KEDA workload auto-scaler.
+    description: ''
   - name: --disable-local-accounts
     defaultValue: "False"
     summary: If set to true, getting static credential will be disabled for this cluster.
@@ -1516,6 +1542,10 @@ directCommands:
   - name: --enable-file-driver
     defaultValue: "False"
     summary: Enable AzureFile CSI Driver.
+    description: ''
+  - name: --enable-keda
+    defaultValue: "False"
+    summary: Enable KEDA workload auto-scaler.
     description: ''
   - name: --enable-local-accounts
     defaultValue: "False"

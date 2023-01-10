@@ -116,7 +116,7 @@ directCommands:
         }
       ].
   - name: --redis-version
-    summary: 'Redis version. Only major version will be used in create/update request with current valid values: (4, 6).'
+    summary: "Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'."
     description: ''
   - name: --replicas-per-master
     summary: The number of replicas to be created per master.
@@ -176,11 +176,15 @@ directCommands:
   syntax: >-
     az redis export --container
                     --prefix
+                    [--auth-method {ManagedIdentity, SAS}]
                     [--file-format]
                     [--ids]
                     [--name]
                     [--resource-group]
                     [--subscription]
+  examples:
+  - summary: Use managed identity to export cache data
+    syntax: az redis export -n testCacheName -g testResourceGroup --prefix examplePrefix --container containerUrl  --preferred-data-archive-auth-method ManagedIdentity
   requiredParameters:
   - isRequired: true
     name: --container
@@ -191,6 +195,10 @@ directCommands:
     summary: Prefix to use for exported files.
     description: ''
   optionalParameters:
+  - name: --auth-method --preferred-data-archive-auth-method
+    parameterValueGroup: "ManagedIdentity, SAS"
+    summary: Preferred auth method to communicate to storage account used for data archive, default value is SAS.
+    description: ''
   - name: --file-format
     summary: Format of the blob (Currently rdb is the only supported format, with other formats expected in the future).
     description: ''
@@ -247,17 +255,25 @@ directCommands:
   description: ''
   syntax: >-
     az redis import --files
+                    [--auth-method {ManagedIdentity, SAS}]
                     [--file-format]
                     [--ids]
                     [--name]
                     [--resource-group]
                     [--subscription]
+  examples:
+  - summary: Use managed identity to import cache data
+    syntax: az redis import -n testCacheName -g testResourceGroup --files blobUrl --preferred-data-archive-auth-method ManagedIdentity
   requiredParameters:
   - isRequired: true
     name: --files
     summary: SAS url for blobs that needs to be imported.
     description: ''
   optionalParameters:
+  - name: --auth-method --preferred-data-archive-auth-method
+    parameterValueGroup: "ManagedIdentity, SAS"
+    summary: Preferred auth method to communicate to storage account used for data archive, default value is SAS.
+    description: ''
   - name: --file-format
     summary: Format of the blob (Currently rdb is the only supported format, with other formats expected in the future).
     description: ''
@@ -280,6 +296,7 @@ directCommands:
   description: Usage example - az redis import-method --name testCacheName --resource-group testResourceGroup --files [--file-format].
   syntax: >-
     az redis import-method --files
+                           [--auth-method {ManagedIdentity, SAS}]
                            [--file-format]
                            [--ids]
                            [--name]
@@ -291,6 +308,10 @@ directCommands:
     summary: SAS url for blobs that needs to be imported.
     description: ''
   optionalParameters:
+  - name: --auth-method --preferred-data-archive-auth-method
+    parameterValueGroup: "ManagedIdentity, SAS"
+    summary: Preferred auth method to communicate to storage account used for data archive, default value is SAS.
+    description: ''
   - name: --file-format
     summary: Format of the blob (Currently rdb is the only supported format, with other formats expected in the future).
     description: ''
@@ -414,7 +435,7 @@ directCommands:
   - summary: Disable the RDB back up data persistence for Premium Azure Cache for Redis
     syntax: az redis update --name MyRedisCache --resource-group MyResourceGroup --set "redisConfiguration.rdb-backup-enabled"="false"
   - summary: Configure the RDB back up enabled data persistence for already created Premium Azure Cache for Redis
-    syntax: az redis update --name MyRedisCache --resource-group MyResourceGroup --set "redisConfiguration.rdb-storage-connection-string"="DefaultEndpointsProtocol=https;AccountName=mystorageaccount;AccountKey=myAccountKey;EndpointSuffix=core.windows.net" "redisConfiguration.rdb-backup-enabled"="true" "redisConfiguration.rdb-backup-frequency"="15" "redisConfiguration.rdb-backup-max-snapshot-count"="1"
+    syntax: az redis update --name MyRedisCache --resource-group MyResourceGroup --set "redisConfiguration.rdb-storage-connection-string"="BlobEndpoint=https//..." "redisConfiguration.rdb-backup-enabled"="true" "redisConfiguration.rdb-backup-frequency"="15" "redisConfiguration.rdb-backup-max-snapshot-count"="1"
   - summary: Scale an Azure Cache for Redis Instance - Update to different size (An example to scale from c0 to c1).
     syntax: az redis update --name MyRedisCache --resource-group MyResourceGroup --set "sku.capacity"="2"
   - summary: Scale an Azure Cache for Redis Instance - Update to different tier (From Basic to Standard or Standard to Premium).
@@ -512,5 +533,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 05/23/2022
+  ms.date: 01/03/2023
   description: Manage dedicated Redis caches for your Azure applications.
