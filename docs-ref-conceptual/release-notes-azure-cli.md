@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 01/17/2023
+ms.date: 01/11/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -14,7 +14,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 # Azure CLI release notes
 
-## January 17, 2023
+## January 11, 2023
 
 Version 2.44.1
 
