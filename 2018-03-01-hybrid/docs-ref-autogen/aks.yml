@@ -73,6 +73,7 @@ directCommands:
                   [--client-secret]
                   [--cluster-snapshot-id]
                   [--crg-id]
+                  [--data-collection-settings]
                   [--defender-config]
                   [--disable-disk-driver]
                   [--disable-file-driver]
@@ -182,7 +183,7 @@ directCommands:
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
-                  [--workload-runtime {OCIContainer, WasmWasi}]
+                  [--workload-runtime {KataMshvVmIsolation, OCIContainer, WasmWasi}]
                   [--workspace-resource-id]
                   [--yes]
                   [--zones {1, 2, 3}]
@@ -345,6 +346,9 @@ directCommands:
     description: ''
   - name: --crg-id
     summary: The crg-id used to associate the new cluster with the existed Capacity Reservation Group resource.
+    description: ''
+  - name: --data-collection-settings
+    summary: Path to JSON file containing data collection settings for Monitoring addon.
     description: ''
   - name: --defender-config
     summary: Path to JSON file containing Microsoft Defender profile configurations.
@@ -776,7 +780,7 @@ directCommands:
       Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet.
   - name: --workload-runtime
     defaultValue: "OCIContainer"
-    parameterValueGroup: "OCIContainer, WasmWasi"
+    parameterValueGroup: "KataMshvVmIsolation, OCIContainer, WasmWasi"
     summary: Determines the type of workload a node can run. Defaults to OCIContainer.
     description: ''
   - name: --workspace-resource-id
@@ -879,6 +883,7 @@ directCommands:
                          [--appgw-subnet-cidr]
                          [--appgw-subnet-id]
                          [--appgw-watch-namespace]
+                         [--data-collection-settings]
                          [--dns-zone-resource-id]
                          [--enable-msi-auth-for-monitoring {false, true}]
                          [--enable-secret-rotation]
@@ -923,6 +928,9 @@ directCommands:
     description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces. Use with ingress-azure addon.
+    description: ''
+  - name: --data-collection-settings
+    summary: Path to JSON file containing data collection settings for Monitoring addon.
     description: ''
   - name: --dns-zone-resource-id
     summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
@@ -1780,7 +1788,7 @@ directCommands:
   - name: --outbound-type
     parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
     summary: How outbound traffic will be configured for a cluster.
-    description: This option will change the way how the outbound connections are managed in the AKS cluster. Default is loadbalancer, other available options are managedNATGateway, userassignedNATGateway, UDR.
+    description: This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway.
   - name: --private-dns-zone
     summary: The private dns zone mode for private cluster.
     description: ''
