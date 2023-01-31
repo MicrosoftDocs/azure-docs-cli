@@ -35,7 +35,7 @@ In the following example, the `az config` command is used to disable the survey 
 az config set core.survey_message=false
 ```
 
-You can also use the `AZSURVEYMESSAGE` environment variable to disable the survey message.
+You can also use the `AZURE_SURVEY_MESSAGE` environment variable to disable the survey message.
 
 ## Privacy statement
 
