@@ -61,7 +61,7 @@ hash -r
 The issue can also occur if you didn't restart your shell after installation. Make sure that the location of the `az` command is in your `$PATH`. The location
 of the `az` command is
 
-```text
+```
  <install path>/bin
 ```
 
