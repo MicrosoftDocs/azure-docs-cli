@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/01/2023
+ms.date: 02/02/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -57,14 +57,14 @@ You will be prompted to install an extension on first use.
 |[change-analysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis) | 2.37.0 | Microsoft Azure Command-Line Tools ChangeAnalysis Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/change-analysis/HISTORY.rst) |
 |[cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 2.13.0 | Translate ARM template to executable Azure CLI scripts. | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) |
 |[cloud-service](https://github.com/Azure/azure-cli-extensions/tree/master/src/cloudservice) | 2.15.0 | Microsoft Azure Command-Line Tools ComputeManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cloudservice/HISTORY.rst) |
-|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.40.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.4.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
+|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.40.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.3.10](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.15.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | GA | [0.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.1.11](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
-|[containerapp](https://github.com/Azure/azure-cli-extensions) | 2.37.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.20](https://github.com/Azure/azure-cli-extensions) |
+|[containerapp](https://github.com/Azure/azure-cli-extensions) | 2.37.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.21](https://github.com/Azure/azure-cli-extensions) |
 |[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.22.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.3.1 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
@@ -116,7 +116,7 @@ You will be prompted to install an extension on first use.
 |[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) |
 |[keyvault-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/keyvault-preview) | 2.15.0 | Microsoft Azure Command-Line Tools Keyvault-preview Extension | Preview | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/keyvault-preview/HISTORY.rst) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
-|[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.41.0 | Microsoft Azure Command-Line Tools Load Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
+|[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.41.0 | Microsoft Azure Command-Line Tools Load Extension. | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
 |[log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 2.0.0 | Support for Azure Log Analytics query capabilities. | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics/HISTORY.rst) |
 |[log-analytics-solution](https://github.com/Azure/azure-cli-extensions) | 2.3.0 | Support for Azure Log Analytics Solution | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions) |
 |[logic](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic) | 2.15.0 | Microsoft Azure Command-Line Tools LogicManagementClient Extension | Preview | [0.1.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic/HISTORY.rst) |
