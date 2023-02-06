@@ -58,6 +58,9 @@ directCommands:
     syntax: az spring app deployment create -n green-deployment --app MyApp -s MyCluster -g MyResourceGroup --container-image contoso/your-app:v1
   - summary: Deploy a container image on a private registry to an app.
     syntax: az spring app deployment create -n green-deployment --app MyApp -s MyCluster -g MyResourceGroup --container-image contoso/your-app:v1 --container-registry myacr.azurecr.io --registry-username <username> --registry-password <password>
+  - summary: Deploy source code to a new deployment of an app in the Enterprise tier and use JVM 17. This will pack current directory, build binary with Pivotal Build Service and then deploy.
+    syntax: az spring app deployment create -n green-deployment --app MyApp -s MyCluster -g MyResourceGroup --build-env BP_JVM_VERSION=17 --source-path
+
   requiredParameters:
   - isRequired: true
     name: --app
@@ -80,7 +83,7 @@ directCommands:
     summary: Deploy the specified pre-built artifact (jar or netcore zip).
     description: ''
   - name: --build-env
-    summary: Space-separated environment variables in 'key[=value]' format.
+    summary: Space-separated environment variables in 'key[=value]' format. Enterprise users should use --build-env BP_JVM_VERSION=17 to use JVM 17 as their runtime.
     description: ''
   - name: --builder
     defaultValue: "default"
@@ -164,7 +167,7 @@ directCommands:
     description: ''
   - name: --runtime-version
     parameterValueGroup: "Java_11, Java_17, Java_8, NetCore_31"
-    summary: Runtime version of used language.
+    summary: Runtime version of used language. Note: This does not work with Azure Spring Apps Enterprise. Please use the --build-env command above. 
     description: ''
   - name: --skip-clone-settings
     defaultValue: "False"
