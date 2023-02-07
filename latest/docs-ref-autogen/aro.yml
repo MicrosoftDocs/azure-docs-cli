@@ -21,6 +21,7 @@ directCommands:
                   [--domain]
                   [--fips {false, true}]
                   [--ingress-visibility {Private, Public}]
+                  [--install-version]
                   [--location]
                   [--master-enc-host {false, true}]
                   [--master-vm-size]
@@ -38,6 +39,8 @@ directCommands:
   examples:
   - summary: Create a cluster.
     syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet
+  - summary: Create a cluster with a supported OpenShift version.
+    syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --install-version X.Y.Z
   - summary: Create a cluster with 5 compute nodes and Red Hat pull secret.
     syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --worker-count 5 --pull-secret @pullsecret.txt
   - summary: Create a private cluster.
@@ -86,6 +89,9 @@ directCommands:
   - name: --ingress-visibility
     parameterValueGroup: "Private, Public"
     summary: Ingress visibility.
+    description: ''
+  - name: --install-version
+    summary: OpenShift version to use for cluster creation.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -164,6 +170,22 @@ directCommands:
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
+- uid: az_aro_get-versions
+  name: az aro get-versions
+  summary: List versions available for installation.
+  description: ''
+  syntax: az aro get-versions --location
+  examples:
+  - summary: List install versions available for the East US region.
+    syntax: az aro get-versions --location eastus
+  - summary: List install versions available for the East US region with table formatted output.
+    syntax: az aro get-versions --location eastus -o table
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_list
@@ -316,6 +338,7 @@ directCommands:
 commands:
 - az_aro_create
 - az_aro_delete
+- az_aro_get-versions
 - az_aro_list
 - az_aro_list-credentials
 - az_aro_show
@@ -340,5 +363,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/11/2020
+  ms.date: 02/02/2023
   description: Manage Azure Red Hat OpenShift clusters.

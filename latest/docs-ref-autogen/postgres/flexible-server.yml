@@ -161,6 +161,18 @@ directCommands:
 
       az postgres flexible-server create -g testGroup -n testServer --location testLocation \
         --key $keyIdentifier --identity testIdentity
+  - summary: Create a PostgreSQL flexible server with active directory auth as well as password auth.
+    syntax: >-
+      # create flexible server with aad auth and password auth enabled
+
+      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
+        --active-directory-auth Enabled
+  - summary: Create a PostgreSQL flexible server with active directory auth only.
+    syntax: >-
+      # create flexible server with aad only auth and password auth disabled
+
+      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
+        --active-directory-auth Enabled --password-auth Disabled
   optionalParameters:
   - name: --active-directory-auth
     defaultValue: "Disabled"
@@ -174,7 +186,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: "exoticcolt3"
+    defaultValue: "remotegoshawk6"
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --backup-retention
@@ -529,7 +541,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: "2023-01-31T12:08:49+00:00"
+    defaultValue: "2023-02-07T04:09:48+00:00"
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
     description: ''
   - name: --subnet
@@ -620,6 +632,7 @@ directCommands:
   syntax: >-
     az postgres flexible-server start [--ids]
                                       [--name]
+                                      [--no-wait]
                                       [--resource-group]
                                       [--subscription]
   examples:
@@ -631,6 +644,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -645,6 +662,7 @@ directCommands:
   syntax: >-
     az postgres flexible-server stop [--ids]
                                      [--name]
+                                     [--no-wait]
                                      [--resource-group]
                                      [--subscription]
   examples:
@@ -656,6 +674,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -696,6 +718,8 @@ directCommands:
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver --tags "k1=v1" "k2=v2"
   - summary: Reset password
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver -p password123
+  - summary: Update a flexible server to enable active directory auth for password auth enabled server
+    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --active-directory-auth Enabled
   - summary: Change key/identity for data encryption. Data encryption cannot be enabled post server creation, this will only update the key/identity.
     syntax: >-
       # get key identifier of the existing key
