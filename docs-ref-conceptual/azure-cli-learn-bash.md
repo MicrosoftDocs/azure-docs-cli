@@ -33,7 +33,7 @@ Start Bash using [Azure Cloud Shell](/azure/cloud-shell/quickstart) or a [local 
 
 ## Querying dictionary results
 
-A command that always returns only a single object returns a JSON dictionary. Dictionaries are unordered objects accessed with keys. For this article, we are going to start by querying the [Account](/cli/azure/account) object using the [Account Show](/cli/azure/account#az-account-show) command.
+A command that always returns only a single object returns a JSON dictionary. Dictionaries are unordered objects accessed with keys. For this article, we are going to start by querying the [Account](../latest/docs-ref-autogen/account.yml) object using the [Account Show](/cli/azure/account#az-account-show) command.
 
 ```azurecli-interactive
 az account show
