@@ -4,7 +4,7 @@ name: az dataprotection backup-vault
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **dataprotection** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az dataprotection backup-vault** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dataprotection** extension for the Azure CLI  (version 2.43.0 or higher).  The extension will automatically install the first time you run an **az dataprotection backup-vault** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage backup vault with dataprotection.
 description: ''
 directCommands:
@@ -14,65 +14,70 @@ directCommands:
   description: ''
   syntax: >-
     az dataprotection backup-vault create --resource-group
-                                          --storage-settings
+                                          --storage-setting
                                           --vault-name
                                           [--azure-monitor-alerts-for-job-failures {Disabled, Enabled}]
                                           [--e-tag]
+                                          [--immutability-state {Disabled, Locked, Unlocked}]
                                           [--location]
-                                          [--no-wait]
+                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--retention-duration-in-days]
+                                          [--soft-delete-state {AlwaysOn, Off, On}]
                                           [--tags]
                                           [--type]
   examples:
   - summary: Create BackupVault
-    syntax: az dataprotection backup-vault create --type "None" --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-settings type="LocallyRedundant" datastore-type="VaultStore" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
+    syntax: az dataprotection backup-vault create --type "None" --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
   - summary: Create BackupVault With MSI
-    syntax: az dataprotection backup-vault create --type "systemAssigned" --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-settings type="LocallyRedundant" datastore-type="VaultStore" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
+    syntax: az dataprotection backup-vault create --type "systemAssigned" --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - isRequired: true
-    name: --storage-settings
-    summary: Storage Settings.
-    description: >-
-      Usage: --storage-settings datastore-type=XX type=XX
-
-
-      datastore-type: Gets or sets the type of the datastore.
-
-      type: Gets or sets the type.
-
-
-      Multiple actions can be specified by using more than one --storage-settings argument.
+    name: --storage-setting --storage-settings
+    summary: "Storage Settings. Usage: --storage-setting \"[{type:'LocallyRedundant',datastore-type:'VaultStore'}]\"  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--storage-settings`."
+    description: ''
   - isRequired: true
     name: --vault-name
     summary: The name of the backup vault.
     description: ''
   optionalParameters:
-  - name: --azure-monitor-alerts-for-job-failures
+  - name: --azure-monitor-alerts-for-job-failures --job-failure-alerts
     parameterValueGroup: "Disabled, Enabled"
     summary: Property that specifies whether built-in Azure Monitor alerts should be fired for all failed jobs.
     description: ''
   - name: --e-tag
     summary: Optional ETag.
     description: ''
+  - name: --immutability-state
+    parameterValueGroup: "Disabled, Locked, Unlocked"
+    summary: Immutability state.
+    description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --retention-duration-in-days --soft-delete-retention
+    summary: Soft delete retention duration.
+    description: ''
+  - name: --soft-delete-state
+    parameterValueGroup: "AlwaysOn, Off, On"
+    summary: State of soft delete.
+    description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --type
     summary: The identityType which can be either SystemAssigned or None.
     description: ''
 - uid: az_dataprotection_backup-vault_delete
   name: az dataprotection backup-vault delete
-  summary: Deletes a BackupVault resource from the resource group.
+  summary: Delete a BackupVault resource from the resource group.
   description: ''
   syntax: >-
     az dataprotection backup-vault delete [--ids]
@@ -116,7 +121,7 @@ directCommands:
     description: ''
 - uid: az_dataprotection_backup-vault_show
   name: az dataprotection backup-vault show
-  summary: Returns a resource belonging to a resource group.
+  summary: Get a resource belonging to a resource group.
   description: ''
   syntax: >-
     az dataprotection backup-vault show [--ids]
@@ -146,10 +151,17 @@ directCommands:
   summary: Updates a BackupVault resource belonging to a resource group. For example, updating tags for a resource.
   description: ''
   syntax: >-
-    az dataprotection backup-vault update [--azure-monitor-alerts-for-job-failures {Disabled, Enabled}]
+    az dataprotection backup-vault update [--add]
+                                          [--azure-monitor-alerts-for-job-failures {Disabled, Enabled}]
+                                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                           [--ids]
-                                          [--no-wait]
+                                          [--immutability-state {Disabled, Locked, Unlocked}]
+                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--remove]
                                           [--resource-group]
+                                          [--retention-duration-in-days]
+                                          [--set]
+                                          [--soft-delete-state {AlwaysOn, Off, On}]
                                           [--subscription]
                                           [--tags]
                                           [--type]
@@ -158,25 +170,49 @@ directCommands:
   - summary: Patch BackupVault
     syntax: az dataprotection backup-vault update --azure-monitor-alerts-for-job-failures "Enabled" --tags newKey="newVal" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
   optionalParameters:
-  - name: --azure-monitor-alerts-for-job-failures
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --azure-monitor-alerts-for-job-failures --job-failure-alerts
     parameterValueGroup: "Disabled, Enabled"
     summary: Property that specifies whether built-in Azure Monitor alerts should be fired for all failed jobs.
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --immutability-state
+    parameterValueGroup: "Disabled, Locked, Unlocked"
+    summary: Immutability state.
+    description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --retention-duration-in-days --soft-delete-retention
+    summary: Soft delete retention duration.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --soft-delete-state
+    parameterValueGroup: "AlwaysOn, Off, On"
+    summary: State of soft delete.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --type
     summary: The identityType which can be either SystemAssigned or None.
@@ -186,7 +222,7 @@ directCommands:
     description: ''
 - uid: az_dataprotection_backup-vault_wait
   name: az dataprotection backup-vault wait
-  summary: Place the CLI in a waiting state until a condition of the dataprotection backup-vault is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az dataprotection backup-vault wait [--created]
@@ -200,11 +236,6 @@ directCommands:
                                         [--timeout]
                                         [--updated]
                                         [--vault-name]
-  examples:
-  - summary: Pause executing next line of CLI script until the dataprotection backup-vault is successfully created.
-    syntax: az dataprotection backup-vault wait --resource-group "SampleResourceGroup" --vault-name "swaggerExample" --created
-  - summary: Pause executing next line of CLI script until the dataprotection backup-vault is successfully updated.
-    syntax: az dataprotection backup-vault wait --resource-group "SampleResourceGroup" --vault-name "swaggerExample" --updated
   optionalParameters:
   - name: --created
     defaultValue: "False"
