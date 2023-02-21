@@ -176,6 +176,32 @@ directCommands:
       --target-region-encryption WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2 \
 
       EastUSDiskEncryptionSet1,0,EastUSDiskEncryptionSet2
+  - summary: Add a new image version and copy it to extended locations.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 --replica-count 1 \
+
+      --storage-account-type Standard_ZRS --managed-image image-name \
+
+      --target-edge-zones westus=microsoftlosangeles1 eastus=microsoftlosangeles2=1 \
+
+      brazilsouth=2=standard_lrs
+  - summary: Add a new image version and copy it to extended locations with encryption using a disk encryption set.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+
+      --target-edge-zones westus=microsoftlosangeles1 \
+
+      --target-edge-zone-encryption microsoftlosangeles1,WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2
   - summary: Add a new image version and don't wait on it. Later you can invoke "az sig image-version wait" command when ready to create a vm from the gallery image version
     syntax: >-
       az sig image-version create --resource-group MyResourceGroup \
@@ -470,6 +496,24 @@ directCommands:
       --gallery-image-version 1.0.0 \
 
       --target-regions westcentralus=2 eastus2
+  - summary: Change the replication extended locations
+    syntax: >-
+      az sig image-version update --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --target-edge-zones westus=microsoftlosangeles1 eastus=microsoftlosangeles2=1
+  - summary: Clear the replication extended locations
+    syntax: >-
+      az sig image-version update --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --target-edge-zones None
   - summary: Replicate to an additional region. Optional, you can set the replica count for the region and exclude this image when using the latest version of the image definition.
     syntax: >-
       az sig image-version update --resource-group MyResourceGroup \

@@ -27,6 +27,8 @@ directCommands:
     az iot edge deployment create --content
                                   --deployment-id
                                   [--auth-type {key, login}]
+                                  [--cl]
+                                  [--cmq]
                                   [--hub-name]
                                   [--lab]
                                   [--layered {false, true}]
@@ -47,6 +49,8 @@ directCommands:
     syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content '{"modulesContent":{"$edgeAgent":{"properties.desired.modules.mymodule0":{ }},"$edgeHub":{"properties.desired.routes.myroute0":"FROM /messages/* INTO $upstream"}}}' --target-condition "tags.building=9 and tags.environment='test'" --metrics '{"queries":{"mymetrik":"SELECT deviceId from devices where properties.reported.lastDesiredStatus.code = 200"}}' --layered
   - summary: Create a layered deployment that applies for devices in 'building 9' and environment 'test'. Both user metrics and modules content defined from file.
     syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content layered_modules_content.json --target-condition "tags.building=9 and tags.environment='test'" --metrics metrics_content.json --layered
+  - summary: Create a layered deployment with an alternative input style of labels and metrics (shell agnostic)
+    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content layered_modules_content.json --target-condition "tags.building=9 and tags.environment='test'" --custom-labels key0="value0" key1="value1" --custom-metric-queries mymetric1="select deviceId from devices where tags.location='US'" mymetric2="select *" --layered
   requiredParameters:
   - isRequired: true
     name: --content -k
@@ -62,11 +66,17 @@ directCommands:
     parameterValueGroup: "key, login"
     summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
     description: ''
+  - name: --cl --custom-labels
+    summary: 'An alternative input style (space separated key=value pairs) for --labels and intended to replace it in the future.For example: key1=value1 key2="this is my value".'
+    description: ''
+  - name: --cmq --custom-metric-queries
+    summary: 'An alternative input style (space separated key=value pairs) for --metrics and intended to replace it in the future.For example: metric1="select deviceId from devices where tags.location=US" metric2="select *".'
+    description: ''
   - name: --hub-name -n
     summary: IoT Hub name. Required if --login is not provided.
     description: ''
   - name: --lab --labels
-    summary: "Map of labels to be applied to target deployment. Use the following format: '{\"key0\":\"value0\", \"key1\":\"value1\"}'."
+    summary: "Map of labels to be applied to target deployment. Using --custom-labels instead of --labels is recommended.Use the following format: '{\"key0\":\"value0\", \"key1\":\"value1\"}'."
     description: ''
   - name: --layered
     defaultValue: "False"
@@ -77,7 +87,7 @@ directCommands:
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
     description: ''
   - name: --metrics -m
-    summary: IoT Edge deployment metric definitions. Provide file path or raw json.
+    summary: IoT Edge deployment metric definitions. Provide file path or raw json.Using --custom-metric-queries instead of --metrics is recommended.
     description: ''
   - name: --no-validation
     defaultValue: "False"

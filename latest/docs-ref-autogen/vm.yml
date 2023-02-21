@@ -277,6 +277,8 @@ directCommands:
     syntax: az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
   - summary: Create a VM by attaching to a managed operating system disk.
     syntax: az vm create -g MyResourceGroup -n MyVm --attach-os-disk MyOsDisk --os-type linux
+  - summary: Create a VM by attaching to an unmanaged operating system disk from a VHD blob uri.
+    syntax: az vm create -g MyResourceGroup -n MyVm --attach-os-disk https://vhd1234.blob.core.windows.net/vhds/osdisk1234.vhd --os-type linux --use-unmanaged-disk
   - summary: 'Create an Ubuntu Linux VM using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init.'
     syntax: az vm create -g MyResourceGroup -n MyVm --image debian --custom-data MyCloudInitScript.yml
   - summary: Create a Debian VM with SSH key authentication and a public DNS entry, located on an existing virtual network and availability set.
@@ -639,7 +641,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_deallocate
   name: az vm deallocate
-  summary: Deallocate a VM so that computing resources are no longer allocated (charged no longer apply). The status will change from 'Stopped' to 'Stopped (Deallocated)'.
+  summary: Deallocate a VM so that computing resources are no longer allocated (charges no longer apply). The status will change from 'Stopped' to 'Stopped (Deallocated)'.
   description: For an end-to-end tutorial, see https://docs.microsoft.com/azure/virtual-machines/linux/capture-image.
   syntax: >-
     az vm deallocate [--hibernate]
@@ -886,6 +888,7 @@ directCommands:
   syntax: >-
     az vm list [--resource-group]
                [--show-details]
+               [--vmss]
   examples:
   - summary: List all VMs.
     syntax: az vm list
@@ -900,6 +903,9 @@ directCommands:
   - name: --show-details -d
     defaultValue: "False"
     summary: Show public ip address, FQDN, and power states. command will run slow.
+    description: ''
+  - name: --vmss
+    summary: List VM instances in a specific VMSS. Please specify the VMSS id or VMSS name.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vm_list-ip-addresses

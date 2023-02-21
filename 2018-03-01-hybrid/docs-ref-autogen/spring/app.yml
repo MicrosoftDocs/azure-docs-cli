@@ -34,7 +34,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -42,7 +42,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
 - uid: az_spring_app_append-persistent-storage
   name: az spring app append-persistent-storage
@@ -68,7 +68,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --persistent-storage-type -t
@@ -80,7 +80,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   - isRequired: true
     name: --share-name
@@ -113,7 +113,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -121,7 +121,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -136,17 +136,18 @@ directCommands:
     description: ''
 - uid: az_spring_app_create
   name: az spring app create
-  summary: Create a new app with a default deployment in the Azure Spring Apps.
+  summary: Create a new app with a default deployment in the Azure Spring Apps instance.
   description: ''
   syntax: >-
     az spring app create --name
                          --resource-group
                          --service
                          [--assign-endpoint {false, true}]
-                         [--assign-identity {false, true}]
                          [--assign-public-endpoint {false, true}]
                          [--backend-protocol {Default, GRPC}]
+                         [--client-auth-certs]
                          [--cpu]
+                         [--deployment-name]
                          [--disable-probe {false, true}]
                          [--enable-liveness-probe {false, true}]
                          [--enable-persistent-storage {false, true}]
@@ -177,7 +178,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -185,7 +186,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --assign-endpoint
@@ -193,21 +194,24 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: If true, assign endpoint URL for direct access.
     description: ''
-  - name: --assign-identity
-    parameterValueGroup: "false, true"
-    summary: Enable system-assigned managed identity.
-    description: ''
   - name: --assign-public-endpoint
     parameterValueGroup: "false, true"
     summary: If true, assign endpoint URL which could be accessed out of virtual network for vnet injection instance app.
     description: ''
   - name: --backend-protocol
     parameterValueGroup: "Default, GRPC"
-    summary: Ingress backend protocol of app.
+    summary: Ingress backend protocol of app. Default means HTTP/HTTPS/WebSocket.
+    description: ''
+  - name: --client-auth-certs
+    summary: "A space-separated string containing resource ids of certificates for client authentication. e.g: --client_auth_certs='id0 id1'. Use '' to clear existing certificates."
     description: ''
   - name: --cpu
     defaultValue: "1"
     summary: CPU resource quantity. Should be 500m or number of CPU cores.
+    description: ''
+  - name: --deployment-name
+    defaultValue: "default"
+    summary: Name of the default deployment.
     description: ''
   - name: --disable-probe
     parameterValueGroup: "false, true"
@@ -270,7 +274,7 @@ directCommands:
     description: ''
   - name: --session-affinity
     parameterValueGroup: "Cookie, None"
-    summary: Ingress session afiinity of app.
+    summary: Ingress session affinity of app.
     description: ''
   - name: --session-max-age
     summary: Time until the cookie expires. Minimum is 1 second, maximum is 7 days. If set to 0, the expiration period is equal to the browser session period.
@@ -296,7 +300,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -304,7 +308,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
 - uid: az_spring_app_deploy
   name: az spring app deploy
@@ -363,7 +367,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -371,7 +375,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --artifact-path
@@ -491,7 +495,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -499,7 +503,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -523,7 +527,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -531,7 +535,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -557,7 +561,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -565,7 +569,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -588,7 +592,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
 - uid: az_spring_app_logs
   name: az spring app logs
@@ -608,7 +612,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -616,7 +620,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -656,7 +660,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -664,7 +668,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -695,7 +699,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -703,7 +707,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --cpu
@@ -742,7 +746,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -750,7 +754,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --no-wait
@@ -768,7 +772,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -776,7 +780,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
 - uid: az_spring_app_show-deploy-log
   name: az spring app show-deploy-log
@@ -790,7 +794,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -798,7 +802,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -817,7 +821,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -825,7 +829,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -848,7 +852,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -856,7 +860,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --deployment -d
@@ -881,7 +885,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -889,7 +893,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --no-wait
@@ -907,6 +911,7 @@ directCommands:
                          [--assign-endpoint {false, true}]
                          [--assign-public-endpoint {false, true}]
                          [--backend-protocol {Default, GRPC}]
+                         [--client-auth-certs]
                          [--config-file-patterns]
                          [--deployment]
                          [--disable-probe {false, true}]
@@ -937,7 +942,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: Name of app.
+    summary: The name of app running in the specified Azure Spring Apps instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -945,7 +950,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --service -s
-    summary: Name of Azure Spring Apps, you can configure the default service using az configure --defaults spring=<name>.
+    summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
   - name: --assign-endpoint
@@ -958,7 +963,10 @@ directCommands:
     description: ''
   - name: --backend-protocol
     parameterValueGroup: "Default, GRPC"
-    summary: Ingress backend protocol of app.
+    summary: Ingress backend protocol of app. Default means HTTP/HTTPS/WebSocket.
+    description: ''
+  - name: --client-auth-certs
+    summary: "A space-separated string containing resource ids of certificates for client authentication. e.g: --client_auth_certs='id0 id1'. Use '' to clear existing certificates."
     description: ''
   - name: --config-file-patterns
     summary: (Enterprise Tier Only) Config file patterns separated with ',' to decide which patterns of Application Configuration Service will be used. Use '""' to clear existing configurations.
@@ -1035,7 +1043,7 @@ directCommands:
     description: ''
   - name: --session-affinity
     parameterValueGroup: "Cookie, None"
-    summary: Ingress session afiinity of app.
+    summary: Ingress session affinity of app.
     description: ''
   - name: --session-max-age
     summary: Time until the cookie expires. Minimum is 1 second, maximum is 7 days. If set to 0, the expiration period is equal to the browser session period.
