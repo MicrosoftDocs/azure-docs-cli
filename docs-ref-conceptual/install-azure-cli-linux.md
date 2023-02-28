@@ -21,6 +21,10 @@ When you are ready to install the Azure CLI on Linux, it is recommended to use a
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
+> [!NOTE]
+>
+> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
+
 ::: zone pivot="dnf"
 
 [!INCLUDE [cli-install-linux-dnf](includes/cli-install-linux-dnf.md)]
