@@ -54,7 +54,7 @@ You can also install the Azure CLI using PowerShell. Start PowerShell as adminis
 Start PowerShell as administrator and run the following command:
 
    ```PowerShell
-   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
+   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
