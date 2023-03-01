@@ -15,6 +15,7 @@ directCommands:
   syntax: >-
     az dt data-history connection delete --cn
                                          --dt-name
+                                         [--clean {false, true}]
                                          [--no-wait]
                                          [--resource-group]
                                          [--yes]
@@ -23,6 +24,8 @@ directCommands:
     syntax: az dt data-history connection delete -n {instance_name} --cn {time_series_database_connection_name}
   - summary: Delete a data history connection configured on an instance without confirmation or blocking.
     syntax: az dt data-history connection delete -n {instance_name} --cn {time_series_database_connection_name} -y --no-wait
+  - summary: Delete a data history connection configured on an instance and attempt to clean up artifacts that were created when the connection was created. If appropriate permissions are not in place, the attempt may fail. Recorded data will not be deleted.
+    syntax: az dt data-history connection delete -n {instance_name} --cn {time_series_database_connection_name} --clean
   requiredParameters:
   - isRequired: true
     name: --cn --conn-name
@@ -33,6 +36,11 @@ directCommands:
     summary: Digital Twins instance name.
     description: ''
   optionalParameters:
+  - name: --clean -c
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Specifies whether or not to attempt to clean up artifacts that were created in order to establish a connection to the time series database. This is a best-effort attempt that will fail if appropriate permissions are not in place. Setting this to 'true' does not delete any recorded data.
+    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
