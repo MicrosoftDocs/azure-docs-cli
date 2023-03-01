@@ -25,7 +25,7 @@ Azure customers can choose to deploy resources in many different regions.  In so
 In the following example, the `az config` command is used to disable the region recommendation message:
 
 ```azurecli
-az config set displayRegionIdentified=no
+az config set core.display_region_identified=no
 ```
 
 For more information about Azure regions, see [Choose the right Azure region for you](https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview). 
