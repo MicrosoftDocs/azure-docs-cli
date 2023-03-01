@@ -57,7 +57,7 @@ If you prefer a step-by-step installation process, complete the following steps 
     sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
     ```
 
-3. Add the Azure CLI software repository:
+3. <div id="set-release"/>Add the Azure CLI software repository:
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
