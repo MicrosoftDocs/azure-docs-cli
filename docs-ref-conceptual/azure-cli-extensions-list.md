@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/28/2023
+ms.date: 03/01/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -47,7 +47,7 @@ You will be prompted to install an extension on first use.
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.26.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.14.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
-|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.32.0 | The Azure IoT extension for Azure CLI. | GA | [0.19.1](https://github.com/azure/azure-iot-cli-extension) |
+|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.32.0 | The Azure IoT extension for Azure CLI. | GA | [0.20.0](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
 |[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.43.0 | Microsoft Azure Command-Line Tools Bastion Extension. | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
