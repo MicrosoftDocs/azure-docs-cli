@@ -24,6 +24,10 @@ For Linux distributions with `dnf` such as RHEL 8/9 or CentOS Stream 8/9, there 
 >
 > Use the `yum` package manager if you are using Linux systems that does not support the `dnf` package manager.
 
+> [!NOTE]
+>
+> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
+
 ## Install
 
 1. Import the Microsoft repository key.
