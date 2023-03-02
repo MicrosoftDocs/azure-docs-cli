@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/01/2023
+ms.date: 03/02/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -46,7 +46,7 @@ You will be prompted to install an extension on first use.
 |[azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.30.0 | Additional commands for working with Azure Batch service | GA | [7.0.0](https://github.com/Azure/azure-batch-cli-extensions) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.26.0](https://github.com/Microsoft/azure-devops-cli-extension) |
-|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.14.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
+|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.15.0 | Manage Azure Firewall resources. | Preview | [0.14.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.32.0 | The Azure IoT extension for Azure CLI. | GA | [0.20.0](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
@@ -61,7 +61,7 @@ You will be prompted to install an extension on first use.
 |[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | Preview | [0.2.11](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
-|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.3.13](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
+|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.3.14](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.15.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | GA | [0.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.1.12](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
