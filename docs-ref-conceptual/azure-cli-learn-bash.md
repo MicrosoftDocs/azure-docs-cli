@@ -90,6 +90,24 @@ az account show --query user.name # Querying a nested value
 az account show --query user.name -o tsv # Removes quotation marks from the output
 ```
 
+### Querying and formatting properties from arrays
+
+The following query demonstrates getting properties in a JSON array. Get subscription properties, displayed as a table of subscriptions.
+
+```azurecli-interactive
+az account list --query "[].{subscription_id:id, name:name, isDefault:isDefault}" -o table
+```
+
+This query returns results like the following:
+
+```JSON
+Subscription_id                       Name                                               IsDefault
+------------------------------------  -------------------------------------------------  -----------
+11111111-3ddc-45ce-8334-c7b28a9e1c3a  C & L Azure developer experience content projects  False
+22222222-8f1c-409b-af1e-8e2e65d9b90a  DevCenter - Infrastructure - Dogfood               False
+33333333-c080-42a7-8973-1aa853ab4df3  Babel                                              False
+```
+
 ### Querying and formatting multiple values, including nested values
 
 To get more than one property, put expressions in square brackets [ ] (a multiselect list) as a comma-separated list. The following queries demonstrate querying multiple values in a JSON dictionary output, using multiple output formats.
