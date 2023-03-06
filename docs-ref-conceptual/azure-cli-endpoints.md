@@ -18,9 +18,9 @@ Two URLs are used during installation to download Python packages: **pypi.org** 
 
 The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
-### [Public Cloud](#tab/azure-cloud)
+## Endpoints
 
-### Endpoints
+### [Public Cloud](#tab/azure-cloud)
 
 |Endpoint group | Endpoint
 |-|-|
@@ -61,8 +61,6 @@ azure_datalake_analytics_catalog_and_job_endpoint | *.azuredatalakeanalytics.net
 acr_login_server_endpoint | *.azurecr.io
 synapse_analytics_endpoint | *.dev.azuresynapse.net
 attestation_endpoint | *.attest.azure.net
-
-## Endpoints
 
 ### [U.S. Government Cloud](#tab/us-government-cloud)
 
