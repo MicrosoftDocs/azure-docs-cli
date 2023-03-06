@@ -16,6 +16,9 @@ If your organization is secured with a firewall or proxy server, you must add ce
 
 The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
+> [!NOTE]
+> Two additional URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.  The Azure CLI also uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This aka.ms link points to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.
+
 ### [Public Cloud](#tab/azure-cloud)
 
 ### Endpoints
@@ -164,9 +167,6 @@ Azure CLI extensions are optional and installed separately.  All extensions inst
 | resource-graph |
 | ml | azuremlsdktestpypi.blob.core.windows.net
 | qbs | qbsazcliextension.blob.core.windows.net
-
-> [!NOTE]
-> Two additional URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.
 
 ## See also
 
