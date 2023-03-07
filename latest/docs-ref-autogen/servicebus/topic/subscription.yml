@@ -1,12 +1,12 @@
 ### YamlMime:AzureCLIGroup
 uid: az_servicebus_topic_subscription
 name: az servicebus topic subscription
-summary: Manage Azure Service Bus Subscription.
+summary: Servicebus topic subscription.
 description: ''
 directCommands:
 - uid: az_servicebus_topic_subscription_create
   name: az servicebus topic subscription create
-  summary: Create the ServiceBus Subscription.
+  summary: Create a topic subscription.
   description: ''
   syntax: >-
     az servicebus topic subscription create --name
@@ -15,30 +15,28 @@ directCommands:
                                             --topic-name
                                             [--auto-delete-on-idle]
                                             [--client-id]
-                                            [--dead-letter-on-filter-exceptions {false, true}]
+                                            [--dead-letter-on-filter-exceptions {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--default-message-time-to-live]
-                                            [--enable-batched-operations {false, true}]
-                                            [--enable-dead-lettering-on-message-expiration {false, true}]
-                                            [--enable-session {false, true}]
+                                            [--duplicate-detection-history-time-window]
+                                            [--enable-batched-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--enable-dead-lettering-on-message-expiration {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--enable-session {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--forward-dead-lettered-messages-to]
                                             [--forward-to]
-                                            [--is-client-affine {false, true}]
-                                            [--is-durable {false, true}]
-                                            [--is-shared {false, true}]
+                                            [--is-client-affine {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--is-durable {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--is-shared {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--lock-duration]
                                             [--max-delivery-count]
-                                            [--status {Active, Disabled, ReceiveDisabled, SendDisabled}]
-  examples:
-  - summary: Create a new Subscription.
-    syntax: az servicebus topic subscription create --resource-group myresourcegroup --namespace-name mynamespace --topic-name mytopic --name mysubscription
+                                            [--status {Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown}]
   requiredParameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of Subscription.
+    name: --name --subscription-name -n
+    summary: The subscription name.
     description: ''
   - isRequired: true
     name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -46,33 +44,36 @@ directCommands:
     description: ''
   - isRequired: true
     name: --topic-name
-    summary: Name of Topic.
+    summary: The topic name.
     description: ''
   optionalParameters:
   - name: --auto-delete-on-idle
-    summary: ISO 8601 timeSpan  or duration time format for idle interval after which the subscription is automatically deleted. The minimum duration is 5 minutes.
+    summary: ISO 8061 timeSpan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes.
     description: ''
   - name: --client-id
     summary: Indicates the Client ID of the application that created the client-affine subscription.
     description: ''
-  - name: --dead-letter-on-filter-exceptions
-    parameterValueGroup: "false, true"
-    summary: Allow dead lettering when filter evaluation exceptions occur.
+  - name: --dead-letter-on-filter-exceptions -f
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether a subscription has dead letter support on filter evaluation exceptions.
     description: ''
   - name: --default-message-time-to-live
-    summary: ISO 8601 or duration time format for Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
+    summary: ISO 8061 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
+    description: ''
+  - name: --duplicate-detection-history-time-window -d
+    summary: ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes.
     description: ''
   - name: --enable-batched-operations
-    parameterValueGroup: "false, true"
-    summary: Allow server-side batched operations.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether server-side batched operations are enabled.
     description: ''
-  - name: --enable-dead-lettering-on-message-expiration
-    parameterValueGroup: "false, true"
-    summary: A boolean Value that indicates whether a subscription has dead letter support when a message expires.
+  - name: --enable-dead-lettering-on-message-expiration --message-expiration
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: A value that indicates whether this queue has dead letter support when a message expires.
     description: ''
   - name: --enable-session
-    parameterValueGroup: "false, true"
-    summary: A boolean value indicating if a subscription supports the concept of sessions.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: A value that indicates whether the queue supports the concept of sessions.
     description: ''
   - name: --forward-dead-lettered-messages-to
     summary: Queue/Topic name to forward the Dead Letter message.
@@ -81,31 +82,31 @@ directCommands:
     summary: Queue/Topic name to forward the messages.
     description: ''
   - name: --is-client-affine
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Value that indicates whether the subscription has an affinity to the client id.
     description: ''
   - name: --is-durable
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: For client-affine subscriptions, this value indicates whether the subscription is durable or not.
     description: ''
   - name: --is-shared
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: For client-affine subscriptions, this value indicates whether the subscription is shared or not.
     description: ''
   - name: --lock-duration
-    summary: ISO 8601 or duration format (day:minute:seconds) for lock duration timespan for the subscription. The default value is 1 minute.
+    summary: ISO 8061 lock duration timespan for the subscription. The default value is 1 minute.
     description: ''
   - name: --max-delivery-count
     summary: Number of maximum deliveries.
     description: ''
   - name: --status
-    parameterValueGroup: "Active, Disabled, ReceiveDisabled, SendDisabled"
+    parameterValueGroup: "Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown"
     summary: Enumerates the possible values for the status of a messaging entity.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_subscription_delete
   name: az servicebus topic subscription delete
-  summary: Deletes the Service Bus Subscription.
+  summary: Delete a subscription from the specified topic.
   description: ''
   syntax: >-
     az servicebus topic subscription delete [--ids]
@@ -114,18 +115,15 @@ directCommands:
                                             [--resource-group]
                                             [--subscription]
                                             [--topic-name]
-  examples:
-  - summary: Deletes the Subscription
-    syntax: az servicebus topic subscription delete --resource-group myresourcegroup --namespace-name mynamespace --topic-name mytopic --name mysubscription
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Subscription.
+  - name: --name --subscription-name -n
+    summary: The subscription name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -134,12 +132,12 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --topic-name
-    summary: Name of Topic.
+    summary: The topic name.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_subscription_list
   name: az servicebus topic subscription list
-  summary: List the Subscription by Service Bus Topic.
+  summary: List all the subscriptions under a specified topic.
   description: ''
   syntax: >-
     az servicebus topic subscription list --namespace-name
@@ -147,13 +145,10 @@ directCommands:
                                           --topic-name
                                           [--skip]
                                           [--top]
-  examples:
-  - summary: Shows the Subscription by Service Bus Topic.
-    syntax: az servicebus topic subscription list --resource-group myresourcegroup --namespace-name mynamespace --topic-name mytopic
   requiredParameters:
   - isRequired: true
     name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -161,19 +156,19 @@ directCommands:
     description: ''
   - isRequired: true
     name: --topic-name
-    summary: Name of Topic.
+    summary: The topic name.
     description: ''
   optionalParameters:
   - name: --skip
-    summary: Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. Default value is None.
+    summary: Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls.
     description: ''
   - name: --top
-    summary: May be used to limit the number of results to the most recent N usageDetails. Default value is None.
+    summary: May be used to limit the number of results to the most recent N usageDetails.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_subscription_show
   name: az servicebus topic subscription show
-  summary: Shows Service Bus Subscription Details.
+  summary: Get a subscription description for the specified topic.
   description: ''
   syntax: >-
     az servicebus topic subscription show [--ids]
@@ -182,18 +177,15 @@ directCommands:
                                           [--resource-group]
                                           [--subscription]
                                           [--topic-name]
-  examples:
-  - summary: Shows the Subscription details.
-    syntax: az servicebus topic subscription show --resource-group myresourcegroup --namespace-name mynamespace --topic-name mytopic --name mysubscription
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Subscription.
+  - name: --name --subscription-name -n
+    summary: The subscription name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -202,25 +194,30 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --topic-name
-    summary: Name of Topic.
+    summary: The topic name.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_subscription_update
   name: az servicebus topic subscription update
-  summary: Updates the ServiceBus Subscription.
+  summary: Update a topic subscription.
   description: ''
   syntax: >-
     az servicebus topic subscription update [--add]
                                             [--auto-delete-on-idle]
-                                            [--dead-letter-on-filter-exceptions {false, true}]
+                                            [--client-id]
+                                            [--dead-letter-on-filter-exceptions {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--default-message-time-to-live]
-                                            [--enable-batched-operations {false, true}]
-                                            [--enable-dead-lettering-on-message-expiration {false, true}]
-                                            [--enable-session {false, true}]
-                                            [--force-string]
+                                            [--duplicate-detection-history-time-window]
+                                            [--enable-batched-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--enable-dead-lettering-on-message-expiration {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--enable-session {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--forward-dead-lettered-messages-to]
                                             [--forward-to]
                                             [--ids]
+                                            [--is-client-affine {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--is-durable {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--is-shared {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--lock-duration]
                                             [--max-delivery-count]
                                             [--name]
@@ -228,43 +225,43 @@ directCommands:
                                             [--remove]
                                             [--resource-group]
                                             [--set]
-                                            [--status {Active, Disabled, ReceiveDisabled, SendDisabled}]
+                                            [--status {Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown}]
                                             [--subscription]
                                             [--topic-name]
-  examples:
-  - summary: Update a new Subscription.
-    syntax: az servicebus topic subscription update --resource-group myresourcegroup --namespace-name mynamespace --topic-name mytopic --name mysubscription --lock-duration PT3M
-  - summary: Updates the ServiceBus Subscription (autogenerated)
-    syntax: az servicebus topic subscription update --name mysubscription --namespace-name mynamespace --resource-group myresourcegroup --status Active --subscription MySubscription --topic-name mytopic
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --auto-delete-on-idle
-    summary: ISO 8601 timeSpan  or duration time format for idle interval after which the subscription is automatically deleted. The minimum duration is 5 minutes.
+    summary: ISO 8061 timeSpan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes.
     description: ''
-  - name: --dead-letter-on-filter-exceptions
-    parameterValueGroup: "false, true"
-    summary: Allow dead lettering when filter evaluation exceptions occur.
+  - name: --client-id
+    summary: Indicates the Client ID of the application that created the client-affine subscription.
+    description: ''
+  - name: --dead-letter-on-filter-exceptions -f
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether a subscription has dead letter support on filter evaluation exceptions.
     description: ''
   - name: --default-message-time-to-live
-    summary: ISO 8601 or duration time format for Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
+    summary: ISO 8061 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
+    description: ''
+  - name: --duplicate-detection-history-time-window -d
+    summary: ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes.
     description: ''
   - name: --enable-batched-operations
-    parameterValueGroup: "false, true"
-    summary: Allow server-side batched operations.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether server-side batched operations are enabled.
     description: ''
-  - name: --enable-dead-lettering-on-message-expiration
-    parameterValueGroup: "false, true"
-    summary: A boolean Value that indicates whether a subscription has dead letter support when a message expires.
+  - name: --enable-dead-lettering-on-message-expiration --message-expiration
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: A value that indicates whether this queue has dead letter support when a message expires.
     description: ''
   - name: --enable-session
-    parameterValueGroup: "false, true"
-    summary: A boolean value indicating if a subscription supports the concept of sessions.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: A value that indicates whether the queue supports the concept of sessions.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --forward-dead-lettered-messages-to
@@ -276,38 +273,48 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --is-client-affine
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether the subscription has an affinity to the client id.
+    description: ''
+  - name: --is-durable
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: For client-affine subscriptions, this value indicates whether the subscription is durable or not.
+    description: ''
+  - name: --is-shared
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: For client-affine subscriptions, this value indicates whether the subscription is shared or not.
+    description: ''
   - name: --lock-duration
-    summary: ISO 8601 or duration format (day:minute:seconds) for lock duration timespan for the subscription. The default value is 1 minute.
+    summary: ISO 8061 lock duration timespan for the subscription. The default value is 1 minute.
     description: ''
   - name: --max-delivery-count
     summary: Number of maximum deliveries.
     description: ''
-  - name: --name -n
-    summary: Name of Subscription.
+  - name: --name --subscription-name -n
+    summary: The subscription name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --status
-    parameterValueGroup: "Active, Disabled, ReceiveDisabled, SendDisabled"
+    parameterValueGroup: "Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown"
     summary: Enumerates the possible values for the status of a messaging entity.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --topic-name
-    summary: Name of Topic.
+    summary: The topic name.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 commands:
@@ -341,5 +348,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/08/2022
-  description: Manage Azure Service Bus Subscription.
+  ms.date: 03/02/2023
+  description: Servicebus topic subscription.

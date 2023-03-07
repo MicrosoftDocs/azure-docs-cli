@@ -41,6 +41,7 @@ directCommands:
                      [--user-assigned-identity-id]
                      [--vnet-name]
                      [--yes]
+                     [--zone-redundant {false, true}]
   examples:
   - summary: Create a managed instance with minimal set of parameters
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName}
@@ -60,6 +61,10 @@ directCommands:
     syntax: az sql mi create --enable-ad-only-auth --external-admin-principal-type User --external-admin-name myUserName \ --external-admin-sid c5e964e2-6bb2-1111-1111-3b16ec0e1234 -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type SystemAssigned,UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --subnet /subscriptions/78975f9f-2222-1111-1111-29c42ac70000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/vnet-test/subnets/ManagedInstance
   - summary: Create a managed instance without SQL Admin, with AD admin, AD Only enabled, User ManagedIdenties and Identity Type is UserAssigned.
     syntax: az sql mi create --enable-ad-only-auth --external-admin-principal-type User --external-admin-name myUserName \ --external-admin-sid c5e964e2-6bb2-1111-1111-3b16ec0e1234 -g myResourceGroup -n myServer -i \ --user-assigned-identity-id /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --identity-type UserAssigned --pid /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testumi \ --subnet /subscriptions/78975f9f-2222-1111-1111-29c42ac70000/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/vnet-test/subnets/ManagedInstance
+  - summary: Create managed instance with enabled zone redundancy
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} -z
+  - summary: Create managed instance with zone redundancy explicitly disabled
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} -z false
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -170,6 +175,10 @@ directCommands:
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: "false, true"
+    summary: Specifies whether to enable zone redundancy.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_delete
@@ -332,6 +341,7 @@ directCommands:
                      [--user-assigned-identity-id]
                      [--vnet-name]
                      [--yes]
+                     [--zone-redundant {false, true}]
   examples:
   - summary: Updates a mi with specified parameters and with identity
     syntax: az sql mi update -g mygroup -n myinstance -i -p mypassword --license-type mylicensetype --capacity vcorecapacity --storage storagesize
@@ -359,6 +369,8 @@ directCommands:
     syntax: az sql mi update -g myResourceGroup -n myServer -i \ --subnet /subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/mysubnet \
   - summary: Update mi backup storage redundancy
     syntax: az sql mi update -g mygroup -n myinstance --bsr Local
+  - summary: Enable zone redundancy on a managed instance
+    syntax: az sql mi update -g mygroup -n myinstance -z
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -463,6 +475,10 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
+  - name: --zone-redundant -z
+    parameterValueGroup: "false, true"
+    summary: Specifies whether to enable zone redundancy.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
 - az_sql_mi_ad-admin
@@ -532,5 +548,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/31/2023
+  ms.date: 03/01/2023
   description: Manage SQL managed instances.
