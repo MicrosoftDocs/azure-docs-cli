@@ -39,9 +39,14 @@ directCommands:
                                  --dest-server
                                  --geo-backup-id
                                  --resource-group
+                                 [--assign-identity {false, true}]
                                  [--backup-storage-redundancy]
+                                 [--encryption-protector]
+                                 [--federated-client-id]
                                  [--ha-replicas]
+                                 [--keys]
                                  [--service-level-objective]
+                                 [--umi]
                                  [--zone-redundant {false, true}]
   examples:
   - summary: Restore Geo-redundant backup.
@@ -69,14 +74,31 @@ directCommands:
     summary: Name of the target resource group of the server to restore database to.
     description: ''
   optionalParameters:
+  - name: --assign-identity -i
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Assign identity for database.
+    description: ''
   - name: --backup-storage-redundancy --bsr
     summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
+    description: ''
+  - name: --encryption-protector
+    summary: Specifies the Azure key vault key to be used as database encryption protector key.
+    description: ''
+  - name: --federated-client-id
+    summary: The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
     description: ''
   - name: --ha-replicas --read-replicas
     summary: The number of high availability replicas to provision for the database. Only settable for Hyperscale edition.
     description: ''
+  - name: --keys
+    summary: The list of AKV keys for the SQL Database.
+    description: ''
   - name: --service-level-objective --service-objective
-    summary: The name of the new service objective.
+    summary: The name of the service objective for the restored database.
+    description: ''
+  - name: --umi --user-assigned-identity-id
+    summary: The list of user assigned identity for the SQL Database.
     description: ''
   - name: --zone-redundant -z
     parameterValueGroup: "false, true"
@@ -89,7 +111,9 @@ directCommands:
   description: ''
   syntax: >-
     az sql db geo-backup show [--database]
+                              [--expand-keys {false, true}]
                               [--ids]
+                              [--keys-filter]
                               [--resource-group]
                               [--server]
                               [--subscription]
@@ -100,8 +124,16 @@ directCommands:
   - name: --database --database-name -d
     summary: Retrieves a requested geo-redundant backup under this database.
     description: ''
+  - name: --expand-keys
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Expand the AKV keys for the database.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --keys-filter
+    summary: Expand the AKV keys for the database.
     description: ''
   - name: --resource-group -g
     summary: Retrieves a requested geo-redundant backup under this resource group.
@@ -136,5 +168,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/31/2023
+  ms.date: 03/01/2023
   description: Manage SQL database geo redundant backups.
