@@ -9,7 +9,7 @@ ms.custom: devx-track-azurecli
 
 ## Overview
 
-The `apt` package manager contains an x86_64 package for the Azure CLI that has been tested on the following distributions.
+The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions. There is no ARM64 package for Ubuntu 18.04.
 
 | Distribution | Version |
 |:-------------|:--------|
