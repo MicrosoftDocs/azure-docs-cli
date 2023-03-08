@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/04/2023
+ms.date: 03/08/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -58,7 +58,7 @@ You will be prompted to install an extension on first use.
 |[cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 2.13.0 | Translate ARM template to executable Azure CLI scripts. | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) |
 |[cloud-service](https://github.com/Azure/azure-cli-extensions/tree/master/src/cloudservice) | 2.15.0 | Microsoft Azure Command-Line Tools ComputeManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cloudservice/HISTORY.rst) |
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.40.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
-|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | Preview | [0.2.11](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
+|[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | Preview | [0.2.12](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.3.14](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
@@ -82,6 +82,7 @@ You will be prompted to install an extension on first use.
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
 |[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.15.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
+|[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.45.0 | Microsoft Azure Command-Line Tools DevCenter Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[dnc](https://github.com/Azure/azure-cli-extensions/tree/master/src/dnc) | 2.15.0 | Microsoft Azure Command-Line Tools DNC Extension | Preview | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/dnc/HISTORY.rst) |
@@ -154,7 +155,7 @@ You will be prompted to install an extension on first use.
 |[scheduled-query](https://github.com/Azure/azure-cli-extensions/tree/main/src/scheduled-query) | 2.38.0 | Microsoft Azure Command-Line Tools Scheduled_query Extension | Preview | [0.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/scheduled-query/HISTORY.rst) |
 |[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | Preview | [0.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
-|[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) |
+|[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) |
 |[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.45.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
 |[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.38.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.30.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
