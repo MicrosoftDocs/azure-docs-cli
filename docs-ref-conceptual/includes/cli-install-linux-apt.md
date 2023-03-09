@@ -9,7 +9,7 @@ ms.custom: devx-track-azurecli
 
 ## Overview
 
-The `apt` package manager contains an x86_64 package for the Azure CLI that has been tested on the following distributions.
+The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions. There is no ARM64 package for Ubuntu 18.04.
 
 | Distribution | Version |
 |:-------------|:--------|
@@ -21,8 +21,10 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 > [!WARNING]
 > Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  See [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove) for more information on `apt remove`.
+
+> [!NOTE]
 >
-> The `azure-cli` deb package does not support ARM64 architecture.
+> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
 ## Installation Options
 
@@ -59,7 +61,7 @@ If you prefer a step-by-step installation process, complete the following steps 
     sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
     ```
 
-3. Add the Azure CLI software repository:
+3. <div id="set-release"/>Add the Azure CLI software repository:
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
