@@ -122,7 +122,7 @@ When you provide a default value, that argument is no longer required by any com
 | | access\_key | string | The default access key to use for `az batch` commands. Only used with `aad` authorization. |
 | | endpoint | string | The default endpoint to connect to for `az batch` commands. |
 | | auth\_mode | string | The authorization mode to use for `az batch` commands. Can be `shared_key` or `aad`. |
-| __cloud__ | name | string | The default cloud for all `az` commands.  The possible values are  `AzureCloud` (default), `AzureChinaCloud`, `AzureUSGovernment`, `AzureGermanCloud`. To change clouds, you can use the `az cloud set –name` command.  For an example, see [Manage Clouds with the Azure CLI](manage-clouds-azure-cli.md). |
+| __cloud__ | name | string | The default cloud for all `az` commands.  The possible values are  `AzureCloud` (default), `AzureChinaCloud`, `AzureUSGovernment`. To change clouds, you can use the `az cloud set –name` command.  For an example, see [Manage Clouds with the Azure CLI](manage-clouds-azure-cli.md). |
 | __extension__ | use_dynamic_install | string | Install an extension if it's not added yet when running a command from it. The possible values are `no` (default), `yes_prompt`, `yes_without_prompt`. |
 | | run_after_dynamic_install | boolean | Continue to run the command when an extension is dynamically installed for it. Default is `False`. |
 | | index_url | string | URL of private extension index file following the format in [index.json](https://github.com/Azure/azure-cli-extensions/blob/main/src/index.json). Once specified, executing `az extension add --name <extension-name>` will use that file to find the extension to add. |
