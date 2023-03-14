@@ -28,7 +28,7 @@ In the following example, the `az config` command is used to disable the region 
 az config set core.display_region_identified=no
 ```
 
-For more information about Azure regions, see [Choose the right Azure region for you](https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview). 
+For more information about Azure regions, see [Choose the right Azure region for you](/explore/global-infrastructure/geographies/#overview). 
 
 ## Create a resource group
 
