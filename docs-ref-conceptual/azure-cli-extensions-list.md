@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/17/2023
+ms.date: 03/18/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -157,8 +157,8 @@ You will be prompted to install an extension on first use.
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) |
 |[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.45.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
-|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.7.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
-|[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.45.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
+|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.7.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
+|[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.45.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [1.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [0.1.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
 |[staticwebapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp) | 2.39.0 | Microsoft Azure Command-Line Tools Staticwebapp Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp/HISTORY.rst) |
