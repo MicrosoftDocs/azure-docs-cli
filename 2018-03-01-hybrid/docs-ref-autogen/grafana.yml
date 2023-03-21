@@ -8,6 +8,39 @@ extensionInformation: >-
 summary: Commands to manage Azure Grafana instanced.
 description: For optimized experience, not all data plane Apis, documented at https://grafana.com/docs/grafana/latest/http_api/, are exposed. On coverage gap, please reach out to ad4g@microsoft.com.
 directCommands:
+- uid: az_grafana_backup
+  name: az grafana backup
+  summary: Backup an Azure Managed Grafana instance's content to an achive.
+  description: ''
+  syntax: >-
+    az grafana backup --name
+                      [--components {annotations, dashboards, datasources, folders, snapshots}]
+                      [--directory]
+                      [--folders-to-exclude]
+                      [--folders-to-include]
+                      [--resource-group]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure Managed Grafana.
+    description: ''
+  optionalParameters:
+  - name: --components -c
+    parameterValueGroup: "annotations, dashboards, datasources, folders, snapshots"
+    summary: Grafana artifact types to backup.
+    description: ''
+  - name: --directory -d
+    summary: Directory to backup Grafana artifacts.
+    description: ''
+  - name: --folders-to-exclude -e
+    summary: Folders to exclude in backup or sync.
+    description: ''
+  - name: --folders-to-include -i
+    summary: Folders to include in backup or sync.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_grafana_create
   name: az grafana create
   summary: Create a Azure Managed Grafana instance.
@@ -17,6 +50,7 @@ directCommands:
                       --resource-group
                       [--location]
                       [--principal-ids]
+                      [--principal-types {Group, ServicePrincipal, User}]
                       [--skip-role-assignments {false, true}]
                       [--skip-system-assigned-identity {false, true}]
                       [--tags]
@@ -36,6 +70,10 @@ directCommands:
     description: ''
   - name: --principal-ids
     summary: Space-separated Azure AD object ids for users, groups, etc to be made as Grafana Admins. Once provided, CLI won't make the current logon user as Grafana Admin.
+    description: ''
+  - name: --principal-types
+    parameterValueGroup: "Group, ServicePrincipal, User"
+    summary: Space-separated Azure AD principal types to pair with --principal-ids.
     description: ''
   - name: --skip-role-assignments
     defaultValue: "False"
@@ -81,6 +119,32 @@ directCommands:
   description: ''
   syntax: az grafana list [--resource-group]
   optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_grafana_restore
+  name: az grafana restore
+  summary: Restore an Azure Managed Grafana instance from an achive.
+  description: ''
+  syntax: >-
+    az grafana restore --archive-file
+                       --name
+                       [--components {annotations, dashboards, datasources, folders, snapshots}]
+                       [--resource-group]
+  requiredParameters:
+  - isRequired: true
+    name: --archive-file -a
+    summary: Archive to restore Grafana artifacts from.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure Managed Grafana.
+    description: ''
+  optionalParameters:
+  - name: --components -c
+    parameterValueGroup: "annotations, dashboards, datasources, folders, snapshots"
+    summary: Grafana artifact types to backup.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -180,6 +244,7 @@ commands:
 - az_grafana_api-key_create
 - az_grafana_api-key_delete
 - az_grafana_api-key_list
+- az_grafana_backup
 - az_grafana_create
 - az_grafana_dashboard
 - az_grafana_dashboard_create
@@ -187,6 +252,7 @@ commands:
 - az_grafana_dashboard_import
 - az_grafana_dashboard_list
 - az_grafana_dashboard_show
+- az_grafana_dashboard_sync
 - az_grafana_dashboard_update
 - az_grafana_data-source
 - az_grafana_data-source_create
@@ -210,6 +276,7 @@ commands:
 - az_grafana_notification-channel_show
 - az_grafana_notification-channel_test
 - az_grafana_notification-channel_update
+- az_grafana_restore
 - az_grafana_service-account
 - az_grafana_service-account_create
 - az_grafana_service-account_delete
