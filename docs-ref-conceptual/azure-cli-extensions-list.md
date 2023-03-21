@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/18/2023
+ms.date: 03/21/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -156,7 +156,7 @@ You will be prompted to install an extension on first use.
 |[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | Preview | [0.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) |
-|[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.45.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
+|[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.45.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
 |[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.7.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.45.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [1.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
@@ -175,7 +175,7 @@ You will be prompted to install an extension on first use.
 |[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.43.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.45.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Preview | [0.2.16](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
-|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
+|[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [0.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.11.0 | Azure VMware Solution commands. | GA | [5.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.39.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
