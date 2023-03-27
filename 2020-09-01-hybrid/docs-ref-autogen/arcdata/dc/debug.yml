@@ -8,6 +8,37 @@ extensionInformation: >-
 summary: Debug data controller.
 description: ''
 directCommands:
+- uid: az_arcdata_dc_debug_controldb-cdc
+  name: az arcdata dc debug controldb-cdc
+  summary: Enable/disable CDC on Data Controller Database and Tables - for troubleshooting purposes only.
+  description: Enable/Disable Change Data Capture for 'controller' Database and supported tables with configurable retention hours.
+  syntax: >-
+    az arcdata dc debug controldb-cdc --k8s-namespace
+                                      [--enable {false, true}]
+                                      [--retention-hours]
+                                      [--use-k8s]
+  examples:
+  - summary: Enables Change Data Capture with 4 hours of retention.
+    syntax: az arcdata dc debug controldb-cdc -k arc-data-services --enable true --retention-hours 4
+  - summary: Disables Change Data Capture.
+    syntax: az arcdata dc debug controldb-cdc -k arc-data-services --enable false
+  requiredParameters:
+  - isRequired: true
+    name: --k8s-namespace -k
+    summary: Kubernetes namespace of the existing data controller.
+    description: ''
+  optionalParameters:
+  - name: --enable
+    parameterValueGroup: "false, true"
+    summary: Enable or disable change data capture.
+    description: ''
+  - name: --retention-hours
+    defaultValue: "8"
+    summary: CDC retention period, specified in hours. Allowed values are 1 to 24.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
 - uid: az_arcdata_dc_debug_copy-logs
   name: az arcdata dc debug copy-logs
   summary: Copy logs.
@@ -15,6 +46,9 @@ directCommands:
   syntax: >-
     az arcdata dc debug copy-logs --k8s-namespace
                                   [--container]
+                                  [--exclude-arcdata-logs]
+                                  [--exclude-cluster-info]
+                                  [--exclude-controldb]
                                   [--exclude-dumps]
                                   [--exclude-system-logs]
                                   [--pod]
@@ -33,13 +67,25 @@ directCommands:
   - name: --container -c
     summary: Copy the logs for the containers with similar name, Optional, by default copies logs for all containers. Cannot be specified multiple times. If specified multiple times, last one will be used.
     description: ''
+  - name: --exclude-arcdata-logs
+    defaultValue: "False"
+    summary: Whether or not to exclude arc data services logs from result folder. The default value is False which includes all arc data services container logs.
+    description: ''
+  - name: --exclude-cluster-info
+    defaultValue: "False"
+    summary: Whether or not to exclude kubernetes resource info from result folder per namespace. The default value is False which includes namespaced resource info.
+    description: ''
+  - name: --exclude-controldb
+    defaultValue: "False"
+    summary: Whether or not to exclude a backup of controldb from result folder. The default value is False which includes a controldb backup.
+    description: ''
   - name: --exclude-dumps
     defaultValue: "False"
     summary: Whether or not to exclude dumps from result folder. The default value is False which includes dumps.
     description: ''
   - name: --exclude-system-logs
     defaultValue: "False"
-    summary: Whether or not to exclude system logs from collection. The default value is False which includes system logs.
+    summary: Whether or not to exclude kube-system and azure-arc namespace logs from collection. The default value is False which includes kube-system and connectedk8s logs, if accessible.
     description: ''
   - name: --pod
     summary: Copy the logs for the pods with similar name. Optional, by default copies logs for all pods. Cannot be specified multiple times. If specified multiple times, last one will be used.
@@ -91,9 +137,37 @@ directCommands:
   - name: --use-k8s
     summary: Use local Kubernetes APIs to perform this action.
     description: ''
+- uid: az_arcdata_dc_debug_restore-controldb-snapshot
+  name: az arcdata dc debug restore-controldb-snapshot
+  summary: Restores a unique copy of ControlDB from backup - for troubleshooting purposes only.
+  description: Restores a COPY_ONLY backup of ControlDB under a unique name for troubleshooting - Kubernetes configuration is required on your system.
+  syntax: >-
+    az arcdata dc debug restore-controldb-snapshot --backup-file
+                                                   --k8s-namespace
+                                                   [--use-k8s]
+  examples:
+  - summary: Linux - Restore a backup taken from a previously run 'arcdata dc debug copy-logs' command.
+    syntax: az arcdata dc debug restore-controldb-snapshot -k arc-data-services -f /path/to/backup/controller-1675653451.bak
+  - summary: Windows - Restore a backup taken from a previously run 'arcdata dc debug copy-logs' command.
+    syntax: az arcdata dc debug restore-controldb-snapshot -k arc-data-services -f C:\path\to\backup\controller-1675653451.bak
+  requiredParameters:
+  - isRequired: true
+    name: --backup-file -f
+    summary: Existing Controller Database backup file - must end in '.bak', will be restored under a unique database name based on execution timestamp.
+    description: ''
+  - isRequired: true
+    name: --k8s-namespace -k
+    summary: Kubernetes namespace of the existing data controller.
+    description: ''
+  optionalParameters:
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
 commands:
+- az_arcdata_dc_debug_controldb-cdc
 - az_arcdata_dc_debug_copy-logs
 - az_arcdata_dc_debug_dump
+- az_arcdata_dc_debug_restore-controldb-snapshot
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

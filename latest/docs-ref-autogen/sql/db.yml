@@ -10,16 +10,21 @@ directCommands:
   description: A full list of performance level options can be seen by executing `az sql db list-editions -a -o table -l LOCATION`. The copy destination database must have the same edition as the source database, but you can change the edition after the copy has completed.
   syntax: >-
     az sql db copy --dest-name
+                   [--assign-identity {false, true}]
                    [--auto-pause-delay]
+                   [--availability-zone]
                    [--backup-storage-redundancy]
                    [--capacity]
                    [--compute-model {Provisioned, Serverless}]
                    [--dest-resource-group]
                    [--dest-server]
                    [--elastic-pool]
+                   [--encryption-protector]
                    [--family]
+                   [--federated-client-id]
                    [--ha-replicas]
                    [--ids]
+                   [--keys]
                    [--license-type {BasePrice, LicenseIncluded}]
                    [--min-capacity]
                    [--name]
@@ -31,6 +36,7 @@ directCommands:
                    [--service-level-objective]
                    [--subscription]
                    [--tags]
+                   [--umi]
                    [--zone-redundant {false, true}]
   examples:
   - summary: Create a database with performance level S0 as a copy of an existing Standard database.
@@ -45,8 +51,15 @@ directCommands:
     summary: Name of the database that will be created as the copy destination.
     description: ''
   optionalParameters:
+  - name: --assign-identity -i
+    parameterValueGroup: "false, true"
+    summary: Assign identity for database.
+    description: ''
   - name: --auto-pause-delay
     summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --availability-zone
+    summary: Availability zone.
     description: ''
   - name: --backup-storage-redundancy --bsr
     summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
@@ -67,14 +80,23 @@ directCommands:
   - name: --elastic-pool
     summary: The name or resource id of the elastic pool to create the database in.
     description: ''
+  - name: --encryption-protector
+    summary: Specifies the Azure key vault key to be used as database encryption protector key.
+    description: ''
   - name: --family -f
     summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --federated-client-id
+    summary: The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
     description: ''
   - name: --ha-replicas --read-replicas
     summary: The number of high availability replicas to provision for the database. Only settable for Hyperscale edition.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --keys
+    summary: The list of AKV keys for the SQL Database.
     description: ''
   - name: --license-type
     parameterValueGroup: "BasePrice, LicenseIncluded"
@@ -113,6 +135,9 @@ directCommands:
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
+  - name: --umi --user-assigned-identity-id
+    summary: The list of user assigned identity for the SQL Database.
+    description: ''
   - name: --zone-redundant -z
     parameterValueGroup: "false, true"
     summary: Specifies whether to enable zone redundancy.
@@ -126,7 +151,9 @@ directCommands:
     az sql db create --name
                      --resource-group
                      --server
+                     [--assign-identity {false, true}]
                      [--auto-pause-delay]
+                     [--availability-zone]
                      [--backup-storage-redundancy]
                      [--capacity]
                      [--catalog-collation {DATABASE_DEFAULT, SQL_Latin1_General_CP1_CI_AS}]
@@ -134,8 +161,11 @@ directCommands:
                      [--compute-model {Provisioned, Serverless}]
                      [--edition]
                      [--elastic-pool]
+                     [--encryption-protector]
                      [--family]
+                     [--federated-client-id]
                      [--ha-replicas]
+                     [--keys]
                      [--ledger-on {Disabled, Enabled}]
                      [--license-type {BasePrice, LicenseIncluded}]
                      [--maint-config-id]
@@ -147,6 +177,7 @@ directCommands:
                      [--sample-name {AdventureWorksLT}]
                      [--service-level-objective]
                      [--tags]
+                     [--umi]
                      [--yes]
                      [--zone-redundant {false, true}]
   examples:
@@ -178,8 +209,15 @@ directCommands:
     summary: Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
     description: ''
   optionalParameters:
+  - name: --assign-identity -i
+    parameterValueGroup: "false, true"
+    summary: Assign identity for database.
+    description: ''
   - name: --auto-pause-delay
     summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --availability-zone
+    summary: Availability zone.
     description: ''
   - name: --backup-storage-redundancy --bsr
     summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
@@ -204,11 +242,20 @@ directCommands:
   - name: --elastic-pool
     summary: The name or resource id of the elastic pool to create the database in.
     description: ''
+  - name: --encryption-protector
+    summary: Specifies the Azure key vault key to be used as database encryption protector key.
+    description: ''
   - name: --family -f
     summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
     description: ''
+  - name: --federated-client-id
+    summary: The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
+    description: ''
   - name: --ha-replicas --read-replicas
     summary: The number of high availability replicas to provision for the database. Only settable for Hyperscale edition.
+    description: ''
+  - name: --keys
+    summary: The list of AKV keys for the SQL Database.
     description: ''
   - name: --ledger-on
     parameterValueGroup: "Disabled, Enabled"
@@ -248,6 +295,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --umi --user-assigned-identity-id
+    summary: The list of user assigned identity for the SQL Database.
     description: ''
   - name: --yes -y
     summary: Do not prompt for confirmation.
@@ -625,16 +675,21 @@ directCommands:
   description: ''
   syntax: >-
     az sql db restore --dest-name
+                      [--assign-identity {false, true}]
                       [--auto-pause-delay]
+                      [--availability-zone]
                       [--backup-storage-redundancy]
                       [--capacity]
                       [--compute-model {Provisioned, Serverless}]
                       [--deleted-time]
                       [--edition]
                       [--elastic-pool]
+                      [--encryption-protector]
                       [--family]
+                      [--federated-client-id]
                       [--ha-replicas]
                       [--ids]
+                      [--keys]
                       [--license-type {BasePrice, LicenseIncluded}]
                       [--min-capacity]
                       [--name]
@@ -647,6 +702,7 @@ directCommands:
                       [--subscription]
                       [--tags]
                       [--time]
+                      [--umi]
                       [--zone-redundant {false, true}]
   examples:
   - summary: Create a new database by restoring from a backup. (autogenerated)
@@ -659,8 +715,15 @@ directCommands:
     summary: Name of the database that will be created as the restore destination.
     description: ''
   optionalParameters:
+  - name: --assign-identity -i
+    parameterValueGroup: "false, true"
+    summary: Assign identity for database.
+    description: ''
   - name: --auto-pause-delay
     summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --availability-zone
+    summary: Availability zone.
     description: ''
   - name: --backup-storage-redundancy --bsr
     summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
@@ -681,14 +744,23 @@ directCommands:
   - name: --elastic-pool
     summary: The name or resource id of the elastic pool to create the database in.
     description: ''
+  - name: --encryption-protector
+    summary: Specifies the Azure key vault key to be used as database encryption protector key.
+    description: ''
   - name: --family -f
     summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --federated-client-id
+    summary: The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
     description: ''
   - name: --ha-replicas --read-replicas
     summary: The number of high availability replicas to provision for the database. Only settable for Hyperscale edition.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --keys
+    summary: The list of AKV keys for the SQL Database.
     description: ''
   - name: --license-type
     parameterValueGroup: "BasePrice, LicenseIncluded"
@@ -730,6 +802,9 @@ directCommands:
   - name: --time -t
     summary: "The point in time of the source database that will be restored to create the new database. Must be greater than or equal to the source database's earliestRestoreDate value. Either --time or --deleted-time (or both) must be specified. Time should be in following format: \"YYYY-MM-DDTHH:MM:SS\"."
     description: ''
+  - name: --umi --user-assigned-identity-id
+    summary: The list of user assigned identity for the SQL Database.
+    description: ''
   - name: --zone-redundant -z
     parameterValueGroup: "false, true"
     summary: Specifies whether to enable zone redundancy.
@@ -740,7 +815,9 @@ directCommands:
   summary: Get the details for a database.
   description: ''
   syntax: >-
-    az sql db show [--ids]
+    az sql db show [--expand-keys {false, true}]
+                   [--ids]
+                   [--keys-filter]
                    [--name]
                    [--resource-group]
                    [--server]
@@ -749,8 +826,16 @@ directCommands:
   - summary: Get the details for a database. (autogenerated)
     syntax: az sql db show --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver
   optionalParameters:
+  - name: --expand-keys
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Expand the AKV keys for the database.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --keys-filter
+    summary: Expand the AKV keys for the database.
     description: ''
   - name: --name -n
     summary: Name of the Azure SQL Database.
@@ -806,22 +891,70 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+- uid: az_sql_db_show-deleted
+  name: az sql db show-deleted
+  summary: Get the details for a deleted database.
+  description: ''
+  syntax: >-
+    az sql db show-deleted --restorable-dropped-database-id
+                           [--expand-keys {false, true}]
+                           [--ids]
+                           [--keys-filter]
+                           [--resource-group]
+                           [--server]
+                           [--subscription]
+  examples:
+  - summary: Get the details for a deleted database. (autogenerated)
+    syntax: az sql db show-deleted --resource-group MyResourceGroup --server myserver --restorable-dropped-database-id "MyAzureSQLDatabase,133203966918270000"
+  requiredParameters:
+  - isRequired: true
+    name: --restorable-dropped-database-id -r
+    summary: Restorable dropped database id.
+    description: ''
+  optionalParameters:
+  - name: --expand-keys
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Expand the AKV keys for the database.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --keys-filter
+    summary: Expand the AKV keys for the database.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --server -s
+    summary: Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_update
   name: az sql db update
   summary: Update a database.
   description: ''
   syntax: >-
     az sql db update [--add]
+                     [--assign-identity {false, true}]
                      [--auto-pause-delay]
                      [--backup-storage-redundancy]
                      [--capacity]
                      [--compute-model {Provisioned, Serverless}]
                      [--edition]
                      [--elastic-pool]
+                     [--encryption-protector]
                      [--family]
+                     [--federated-client-id]
+                     [--filter]
                      [--force-string]
                      [--ha-replicas]
                      [--ids]
+                     [--keys]
+                     [--keys-to-remove]
                      [--maint-config-id]
                      [--max-size]
                      [--min-capacity]
@@ -835,6 +968,7 @@ directCommands:
                      [--service-objective]
                      [--set]
                      [--subscription]
+                     [--umi]
                      [--zone-redundant {false, true}]
   examples:
   - summary: Update a database to Standard edition, S0 performance level (10 DTU) by specifying DTU capacity. Note that GeneralPurpose allows a wider range of max size than Standard edition.
@@ -858,6 +992,11 @@ directCommands:
     defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --assign-identity -i
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Assign identity for database.
+    description: ''
   - name: --auto-pause-delay
     summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
     description: ''
@@ -877,8 +1016,17 @@ directCommands:
   - name: --elastic-pool
     summary: The name or resource id of the elastic pool to move the database into.
     description: ''
+  - name: --encryption-protector
+    summary: Specifies the Azure key vault key to be used as database encryption protector key.
+    description: ''
   - name: --family -f
     summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
+    description: ''
+  - name: --federated-client-id
+    summary: The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
+    description: ''
+  - name: --filter
+    summary: An OData filter expression that filters elements in the collection. Default value is None.
     description: ''
   - name: --force-string
     defaultValue: "False"
@@ -889,6 +1037,12 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --keys
+    summary: The list of AKV keys for the SQL Database.
+    description: ''
+  - name: --keys-to-remove
+    summary: The list of AKV keys to remove from the SQL Database.
     description: ''
   - name: --maint-config-id -m
     summary: Specified maintenance configuration id or name for this resource.
@@ -933,6 +1087,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --umi --user-assigned-identity-id
+    summary: The list of user assigned identity for the SQL Database.
     description: ''
   - name: --zone-redundant -z
     parameterValueGroup: "false, true"
@@ -994,11 +1151,15 @@ commands:
 - az_sql_db_restore
 - az_sql_db_show
 - az_sql_db_show-connection-string
+- az_sql_db_show-deleted
 - az_sql_db_str-policy
 - az_sql_db_str-policy_set
 - az_sql_db_str-policy_show
 - az_sql_db_str-policy_wait
 - az_sql_db_tde
+- az_sql_db_tde_key
+- az_sql_db_tde_key_revalidate
+- az_sql_db_tde_key_revert
 - az_sql_db_tde_set
 - az_sql_db_tde_show
 - az_sql_db_threat-policy
@@ -1024,5 +1185,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 01/31/2023
+  ms.date: 03/01/2023
   description: Manage databases.

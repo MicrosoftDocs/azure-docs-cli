@@ -1,7 +1,7 @@
 ### YamlMime:AzureCLIGroup
 uid: az_network_cross-region-lb_address-pool
 name: az network cross-region-lb address-pool
-summary: Manage address pools of a load balancer.
+summary: Manage address pools of a cross-region load balancer.
 description: ''
 directCommands:
 - uid: az_network_cross-region-lb_address-pool_create
@@ -40,7 +40,7 @@ directCommands:
   - name: --backend-address --backend-addresses
     summary: 'An array of backend addresses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--backend-address`.'
     description: ''
-  - name: --drain-period
+  - name: --drain-period --drain-period-in-seconds
     summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
     description: ''
   - name: --location
@@ -156,11 +156,11 @@ directCommands:
                                                    [--subscription]
   examples:
   - summary: Update all backend addresses in the address pool using shorthand syntax
-    syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses "[{name:addr1,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1'},{name:addr2,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb2'}]"
+    syntax: az network cross-region-lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses "[{name:addr1,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1'},{name:addr2,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb2'}]"
   - summary: Update the frontend-ip-address of the first backend address in the address pool using shorthand syntax
-    syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0].frontend-ip-address='/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1'
+    syntax: az network cross-region-lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0].frontend-ip-address=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1
   - summary: Remove the first backend address in the address pool using shorthand syntax
-    syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0]=null
+    syntax: az network cross-region-lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0]=null
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -169,9 +169,9 @@ directCommands:
     summary: The name of the backend address pool. If only one exists, omit to use as default.
     description: ''
   - name: --backend-address --backend-addresses
-    summary: 'Backend addresses information for backend address pool.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--backend-address`.'
+    summary: 'An array of backend addresses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--backend-address`.'
     description: ''
-  - name: --drain-period
+  - name: --drain-period --drain-period-in-seconds
     summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
     description: ''
   - name: --force-string
@@ -204,67 +204,6 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
-- uid: az_network_cross-region-lb_address-pool_wait
-  name: az network cross-region-lb address-pool wait
-  summary: Place the CLI in a waiting state until a condition is met.
-  description: ''
-  syntax: >-
-    az network cross-region-lb address-pool wait [--address-pool-name]
-                                                 [--created]
-                                                 [--custom]
-                                                 [--deleted]
-                                                 [--exists]
-                                                 [--ids]
-                                                 [--interval]
-                                                 [--lb-name]
-                                                 [--resource-group]
-                                                 [--subscription]
-                                                 [--timeout]
-                                                 [--updated]
-  optionalParameters:
-  - name: --address-pool-name --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
-    description: ''
-  - name: --created
-    defaultValue: "False"
-    summary: Wait until created with 'provisioningState' at 'Succeeded'.
-    description: ''
-  - name: --custom
-    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
-    description: ''
-  - name: --deleted
-    defaultValue: "False"
-    summary: Wait until deleted.
-    description: ''
-  - name: --exists
-    defaultValue: "False"
-    summary: Wait until the resource exists.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --interval
-    defaultValue: "30"
-    summary: Polling interval in seconds.
-    description: ''
-  - name: --lb-name
-    summary: The name of the load balancer.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --timeout
-    defaultValue: "3600"
-    summary: Maximum wait in seconds.
-    description: ''
-  - name: --updated
-    defaultValue: "False"
-    summary: Wait until updated with provisioningState at 'Succeeded'.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
 - az_network_cross-region-lb_address-pool_address
 - az_network_cross-region-lb_address-pool_address_add
@@ -272,13 +211,11 @@ commands:
 - az_network_cross-region-lb_address-pool_address_remove
 - az_network_cross-region-lb_address-pool_address_show
 - az_network_cross-region-lb_address-pool_address_update
-- az_network_cross-region-lb_address-pool_address_wait
 - az_network_cross-region-lb_address-pool_create
 - az_network_cross-region-lb_address-pool_delete
 - az_network_cross-region-lb_address-pool_list
 - az_network_cross-region-lb_address-pool_show
 - az_network_cross-region-lb_address-pool_update
-- az_network_cross-region-lb_address-pool_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -298,5 +235,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/02/2023
-  description: Manage address pools of a load balancer.
+  ms.date: 03/03/2023
+  description: Manage address pools of a cross-region load balancer.

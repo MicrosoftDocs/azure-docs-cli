@@ -137,11 +137,13 @@ directCommands:
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--host-group-id]
                   [--http-proxy-config]
+                  [--ip-families]
                   [--kubelet-config]
                   [--kubernetes-version]
                   [--linux-os-config]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
+                  [--load-balancer-managed-outbound-ipv6-count]
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
@@ -169,11 +171,13 @@ directCommands:
                   [--os-sku {CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
+                  [--pod-cidrs]
                   [--pod-subnet-id]
                   [--ppg]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--service-cidr]
+                  [--service-cidrs]
                   [--service-principal]
                   [--skip-subnet-role-assignment]
                   [--snapshot-id]
@@ -499,6 +503,9 @@ directCommands:
   - name: --http-proxy-config
     summary: HTTP Proxy configuration for this cluster.
     description: ''
+  - name: --ip-families
+    summary: A comma separated list of IP versions to use for cluster networking.
+    description: Each IP version should be in the format IPvN. For example, IPv4.
   - name: --kubelet-config
     summary: Path to JSON file containing Kubelet configurations for agent nodes. https://aka.ms/aks/custom-node-config.
     description: ''
@@ -515,6 +522,9 @@ directCommands:
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-managed-outbound-ipv6-count
+    summary: Load balancer managed outbound IPv6 IP count.
+    description: Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
   - name: --load-balancer-outbound-ip-prefixes
     summary: Load balancer outbound IP prefix resource IDs.
     description: Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
@@ -612,6 +622,9 @@ directCommands:
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
     description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+  - name: --pod-cidrs
+    summary: A comma separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
+    description: Each range must not overlap with any Subnet IP ranges. For example, "172.244.0.0/16,fd0:abcd::/64".
   - name: --pod-subnet-id
     summary: The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
     description: ''
@@ -627,6 +640,9 @@ directCommands:
   - name: --service-cidr
     summary: A CIDR notation IP range from which to assign service cluster IPs.
     description: This range must not overlap with any Subnet IP ranges. For example, 10.0.0.0/16.
+  - name: --service-cidrs
+    summary: A comma separated list of CIDR notation IP ranges from which to assign service cluster IPs.
+    description: Each range must not overlap with any Subnet IP ranges. For example, "10.0.0.0/16,2001:abcd::/108".
   - name: --service-principal
     summary: Service principal used for authentication to Azure APIs.
     description: If not specified, a new service principal is created and cached at $HOME/.azure/aksServicePrincipal.json to be used by subsequent `az aks` commands.
@@ -1322,6 +1338,7 @@ directCommands:
                   [--http-proxy-config]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
+                  [--load-balancer-managed-outbound-ipv6-count]
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
@@ -1584,6 +1601,9 @@ directCommands:
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs. If the new value is greater than the original value, new additional outbound IPs will be created. If the value is less than the original value, existing outbound IPs will be deleted and outbound connections may fail due to configuration update.
+  - name: --load-balancer-managed-outbound-ipv6-count
+    summary: Load balancer managed outbound IPv6 IP count.
+    description: Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
   - name: --load-balancer-outbound-ip-prefixes
     summary: Load balancer outbound IP prefix resource IDs.
     description: Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count and Load balancer outbound IP resource IDs.

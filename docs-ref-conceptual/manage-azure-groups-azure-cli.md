@@ -18,6 +18,18 @@ An Azure resource group is a container that holds related resources for an Azure
 
 The Azure Command-Line Interface (CLI) allows you to create, persist, and set default Azure resource groups. The CLI will also allow you clean up resources after creating them. 
 
+## Azure Region Identification
+
+Azure customers can choose to deploy resources in many different regions.  In some cases, customers may be able to reduce costs by selecting nearby regions offering the same services.  If a nearby region is identified, a message will display the region to select for future deployments.
+
+In the following example, the `az config` command is used to disable the region recommendation message:
+
+```azurecli
+az config set core.display_region_identified=no
+```
+
+For more information about Azure regions, see [Choose the right Azure region for you](https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview). 
+
 ## Create a resource group
 
 To create a resource group, use the [az group create](/cli/azure/group#az_group_create) command:

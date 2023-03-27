@@ -14,11 +14,13 @@ ms.tool: azure-cli
 
 If your organization is secured with a firewall or proxy server, you must add certain IP (internet protocol) addresses and domain URLs (uniform resource locators) to the **allowlist** prior to installing the Azure CLI.
 
+Two URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.
+
 The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
-### [Public Cloud](#tab/azure-cloud)
+## Endpoints
 
-### Endpoints
+### [Public Cloud](#tab/azure-cloud)
 
 |Endpoint group | Endpoint
 |-|-|
@@ -62,8 +64,6 @@ attestation_endpoint | *.attest.azure.net
 
 ### [U.S. Government Cloud](#tab/us-government-cloud)
 
-### Endpoints
-
 |Endpoint group | Endpoint
 |-|-|
 management | https://management.core.usgovcloudapi.net/
@@ -101,8 +101,6 @@ synapse_analytics_endpoint | *.dev.azuresynapse.usgovcloudapi.net'
 
 ### [Azure China Cloud](#tab/azure-china-cloud)
 
-### Endpoints
-
 |Endpoint group | Endpoint
 |-|-|
 management | https://management.core.chinacloudapi.cn/
@@ -139,9 +137,11 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 ---
 
-## Extension endpoints
+## Extensions
 
-Azure CLI extensions are optional and installed separately.  All extensions install with endpoint **azcliprod.blob.core.windows.net** with the following exceptions:
+Azure CLI extensions are optional and installed separately.  The Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This _aka.ms_ link points to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
+
+All extensions install with endpoint **azcliprod.blob.core.windows.net** with the following exceptions:
 
 |Extension name | Endpoint
 |-|-|
@@ -164,9 +164,6 @@ Azure CLI extensions are optional and installed separately.  All extensions inst
 | resource-graph |
 | ml | azuremlsdktestpypi.blob.core.windows.net
 | qbs | qbsazcliextension.blob.core.windows.net
-
-> [!NOTE]
-> Two additional URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.
 
 ## See also
 
