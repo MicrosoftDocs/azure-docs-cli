@@ -38,6 +38,7 @@ directCommands:
                         [--ssh-key-value]
                         [--tags]
                         [--vnet-ids]
+                        [--zones]
   examples:
   - summary: PutProvisionedCluster
     syntax: az hybridaks create -g sample-rg --custom-location sample-cl -n sample-hybridakscluster --vnet-id vnet1
@@ -135,6 +136,9 @@ directCommands:
   - name: --vnet-ids
     summary: ARM resource ID(s) of the HybridAKS VNets.
     description: ''
+  - name: --zones -z
+    summary: Comma-separated list of availability zones where control plane nodes will be placed.
+    description: ''
 - uid: az_hybridaks_delete
   name: az hybridaks delete
   summary: Deletes the Hybrid AKS provisioned cluster.
@@ -164,6 +168,25 @@ directCommands:
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_hybridaks_get-upgrades
+  name: az hybridaks get-upgrades
+  summary: Get the upgrade versions available for the Hybrid AKS provisioned cluster.
+  description: ''
+  syntax: >-
+    az hybridaks get-upgrades --name
+                              --resource-group
+  examples:
+  - summary: Get the upgrade versions available for the Hybrid AKS provisioned cluster
+    syntax: az hybridaks get-upgrades --name "samplecluster" --resource-group "sample-rg"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the provisioned cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: az_hybridaks_list
   name: az hybridaks list
@@ -273,9 +296,51 @@ directCommands:
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
+- uid: az_hybridaks_upgrade
+  name: az hybridaks upgrade
+  summary: Upgrades the Hybrid AKS provisioned cluster.
+  description: ''
+  syntax: >-
+    az hybridaks upgrade --name
+                         --resource-group
+                         [--kubernetes-version]
+                         [--no-wait]
+                         [--node-image-only]
+                         [--yes]
+  examples:
+  - summary: UpgradeProvisionedCluster
+    syntax: az hybridaks upgrade --name "sample-hybridakscluster" --resource-group "sample-rg" --kubernetes-version v1.22.2
+  - summary: UpgradeProvisionedClusterNodeImage
+    syntax: az hybridaks upgrade --name "sample-hybridakscluster" --resource-group "sample-rg" --node-image-only
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the provisioned cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --kubernetes-version -k
+    summary: The kubernetes version of the provisioned cluster.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --node-image-only
+    defaultValue: "False"
+    summary: Flag to upgrade only the node image.
+    description: ''
+  - name: --yes
+    defaultValue: "False"
+    summary: Flag to disable confirmation prompts.
+    description: ''
 commands:
 - az_hybridaks_create
 - az_hybridaks_delete
+- az_hybridaks_get-upgrades
 - az_hybridaks_list
 - az_hybridaks_nodepool
 - az_hybridaks_nodepool_add
@@ -285,6 +350,7 @@ commands:
 - az_hybridaks_proxy
 - az_hybridaks_show
 - az_hybridaks_update
+- az_hybridaks_upgrade
 - az_hybridaks_vnet
 - az_hybridaks_vnet_create
 - az_hybridaks_vnet_delete
