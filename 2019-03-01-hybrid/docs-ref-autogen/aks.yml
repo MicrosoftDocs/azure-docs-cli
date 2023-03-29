@@ -88,6 +88,7 @@ directCommands:
                   [--enable-addons]
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-asm]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
@@ -177,7 +178,7 @@ directCommands:
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
-                  [--uptime-sla]
+                  [--tier {free, standard}]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -251,6 +252,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
   - summary: Create a kubernetes cluster with Custom CA Trust enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
+  - summary: Create a kubernetes cluster with Azure Service Mesh enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -413,6 +416,9 @@ directCommands:
   - name: --enable-apiserver-vnet-integration
     defaultValue: "False"
     summary: Enable integration of user vnet with control plane apiserver pods.
+    description: ''
+  - name: --enable-asm --enable-azure-service-mesh
+    summary: Enable Azure Service Mesh.
     description: ''
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
@@ -744,9 +750,9 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
     description: ''
   - name: --vm-set-type
     summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet.
@@ -1387,7 +1393,6 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
-                  [--no-uptime-sla]
                   [--no-wait]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--nodepool-labels]
@@ -1397,8 +1402,8 @@ directCommands:
                   [--rotation-poll-interval]
                   [--ssh-key-value]
                   [--tags]
+                  [--tier {free, standard}]
                   [--update-cluster-autoscaler]
-                  [--uptime-sla]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -1779,10 +1784,6 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
-  - name: --no-uptime-sla
-    defaultValue: "False"
-    summary: Change a paid managed cluster to a free one.
-    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
@@ -1814,13 +1815,13 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' changes a standard managed cluster to a free one.
+    description: ''
   - name: --update-cluster-autoscaler -u
     defaultValue: "False"
     summary: Update min-count or max-count for cluster autoscaler.
-    description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
     description: ''
   - name: --windows-admin-password
     summary: User account password to use on windows node VMs.
@@ -2029,6 +2030,11 @@ commands:
 - az_aks_maintenanceconfiguration_list
 - az_aks_maintenanceconfiguration_show
 - az_aks_maintenanceconfiguration_update
+- az_aks_mesh
+- az_aks_mesh_disable
+- az_aks_mesh_disable-ingress-gateway
+- az_aks_mesh_enable
+- az_aks_mesh_enable-ingress-gateway
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
