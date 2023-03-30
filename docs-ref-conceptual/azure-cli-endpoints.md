@@ -6,6 +6,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: conceptual
+ms.custom: devx-track-azurecli
 ms.date: 11/14/2022
 ms.tool: azure-cli
 ---

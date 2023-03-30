@@ -4,6 +4,7 @@ ms.author: chasecrum
 manager: mamccrea
 ms.date: 01/11/2023
 ms.topic: include
+ms.custom: devx-track-azurecli
 ---
 > [!IMPORTANT]
 >
