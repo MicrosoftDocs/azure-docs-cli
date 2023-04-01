@@ -92,7 +92,6 @@ directCommands:
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
-                  [--enable-cilium-dataplane]
                   [--enable-cluster-autoscaler]
                   [--enable-custom-ca-trust]
                   [--enable-defender]
@@ -143,6 +142,7 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode {overlay}]
                   [--network-policy]
@@ -431,13 +431,6 @@ directCommands:
   - name: --enable-blob-driver
     summary: Enable AzureBlob CSI Driver.
     description: ''
-  - name: --enable-cilium-dataplane
-    defaultValue: "False"
-    summary: Use Cilium as the networking dataplane for the Kubernetes cluster.
-    description: >-
-      Used together with the "azure" network plugin.
-
-      Requires either --pod-subnet-id or --network-plugin-mode=overlay.
   - name: --enable-cluster-autoscaler
     defaultValue: "False"
     summary: Enable cluster autoscaler, default value is false.
@@ -623,6 +616,13 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-dataplane
+    parameterValueGroup: "azure, cilium"
+    summary: The network dataplane to use.
+    description: >-
+      Network dataplane used in the Kubernetes cluster.
+
+      Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --network-plugin
     parameterValueGroup: "azure, kubenet, none"
     summary: The Kubernetes network plugin to use.
@@ -1393,11 +1393,13 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-plugin-mode]
                   [--no-wait]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--nodepool-labels]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
+                  [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--ssh-key-value]
@@ -1786,6 +1788,12 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-plugin-mode
+    summary: The network plugin mode to use.
+    description: >-
+      Used to control the mode the network plugin should operate in. For example, "overlay" used with
+
+      --network-plugin=azure will use an overlay network (non-VNET IPs) for pods in the cluster.
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
@@ -1805,6 +1813,9 @@ directCommands:
     parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
     summary: How outbound traffic will be configured for a cluster.
     description: This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
+  - name: --pod-cidr
+    summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
+    description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
   - name: --private-dns-zone
     summary: The private dns zone mode for private cluster.
     description: ''
