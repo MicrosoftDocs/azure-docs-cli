@@ -18,6 +18,7 @@ directCommands:
                      [--app-subnet]
                      [--build-pool-size {S1, S2, S3, S4, S5, S6, S7, S8, S9}]
                      [--disable-app-insights {false, true}]
+                     [--disable-build-service {false, true}]
                      [--enable-acs]
                      [--enable-alv]
                      [--enable-api-portal]
@@ -33,6 +34,9 @@ directCommands:
                      [--marketplace-plan-id]
                      [--no-wait]
                      [--outbound-type]
+                     [--registry-password]
+                     [--registry-server]
+                     [--registry-username]
                      [--reserved-cidr-range]
                      [--sampling-rate]
                      [--service-runtime-network-resource-group]
@@ -103,6 +107,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Disable Application Insights, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
     description: ''
+  - name: --disable-build-service
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: (Enterprise Tier Only) Disable build service.
+    description: ''
   - name: --enable-acs --enable-application-configuration-service
     defaultValue: "False"
     summary: (Enterprise Tier Only) Enable Application Configuration Service.
@@ -156,6 +165,15 @@ directCommands:
   - name: --outbound-type
     defaultValue: "loadBalancer"
     summary: The outbound type of Azure Spring Apps VNet instance.
+    description: ''
+  - name: --registry-password
+    summary: (Enterprise Tier Only) The container registry password used in build service.
+    description: ''
+  - name: --registry-server
+    summary: (Enterprise Tier Only) The container registry server used in build service.
+    description: ''
+  - name: --registry-username
+    summary: (Enterprise Tier Only) The container registry username used in build service.
     description: ''
   - name: --reserved-cidr-range
     summary: Comma-separated list of IP address ranges in CIDR format. The IP ranges are reserved to host underlying Azure Spring Apps infrastructure, which should be 3 at least /16 unused IP ranges, must not overlap with any Subnet IP ranges.
@@ -412,6 +430,7 @@ commands:
 - az_spring_application-accelerator_customized-accelerator_delete
 - az_spring_application-accelerator_customized-accelerator_list
 - az_spring_application-accelerator_customized-accelerator_show
+- az_spring_application-accelerator_customized-accelerator_sync-cert
 - az_spring_application-accelerator_customized-accelerator_update
 - az_spring_application-accelerator_delete
 - az_spring_application-accelerator_predefined-accelerator
@@ -438,6 +457,15 @@ commands:
 - az_spring_application-live-view_delete
 - az_spring_application-live-view_show
 - az_spring_build-service
+- az_spring_build-service_build
+- az_spring_build-service_build_create
+- az_spring_build-service_build_delete
+- az_spring_build-service_build_list
+- az_spring_build-service_build_result
+- az_spring_build-service_build_result_list
+- az_spring_build-service_build_result_show
+- az_spring_build-service_build_show
+- az_spring_build-service_build_update
 - az_spring_build-service_builder
 - az_spring_build-service_builder_buildpack-binding
 - az_spring_build-service_builder_buildpack-binding_create
@@ -523,6 +551,9 @@ commands:
 - az_spring_connection_update_webpubsub
 - az_spring_connection_validate
 - az_spring_connection_wait
+- az_spring_container-registry
+- az_spring_container-registry_show
+- az_spring_container-registry_update
 - az_spring_create
 - az_spring_delete
 - az_spring_dev-tool
