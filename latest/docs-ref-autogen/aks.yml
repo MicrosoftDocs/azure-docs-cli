@@ -119,6 +119,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
+                  [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
@@ -130,6 +131,7 @@ directCommands:
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
@@ -137,6 +139,7 @@ directCommands:
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--host-group-id]
                   [--http-proxy-config]
+                  [--image-cleaner-interval-hours]
                   [--ip-families]
                   [--kubelet-config]
                   [--kubernetes-version]
@@ -154,7 +157,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
+                  [--network-plugin-mode {overlay}]
                   [--network-policy]
                   [--no-ssh-key]
                   [--no-wait]
@@ -168,7 +173,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
-                  [--os-sku {CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
+                  [--os-sku {CBLMariner, Mariner, Ubuntu}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
@@ -183,7 +188,7 @@ directCommands:
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
-                  [--uptime-sla]
+                  [--tier {free, standard}]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -428,6 +433,10 @@ directCommands:
     defaultValue: "False"
     summary: Use FIPS-enabled OS on agent nodes.
     description: ''
+  - name: --enable-image-cleaner
+    defaultValue: "False"
+    summary: Enable ImageCleaner Service.
+    description: ''
   - name: --enable-keda
     defaultValue: "False"
     summary: Enable KEDA workload auto-scaler.
@@ -474,6 +483,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Windows gmsa.
     description: ''
+  - name: --enable-workload-identity
+    defaultValue: "False"
+    summary: Enable workload identity addon.
+    description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
     description: ''
@@ -502,6 +515,9 @@ directCommands:
     description: ''
   - name: --http-proxy-config
     summary: HTTP Proxy configuration for this cluster.
+    description: ''
+  - name: --image-cleaner-interval-hours
+    summary: ImageCleaner scanning interval.
     description: ''
   - name: --ip-families
     summary: A comma separated list of IP versions to use for cluster networking.
@@ -557,10 +573,24 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-dataplane
+    parameterValueGroup: "azure, cilium"
+    summary: The network dataplane to use.
+    description: >-
+      Network dataplane used in the Kubernetes cluster.
+
+      Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --network-plugin
     parameterValueGroup: "azure, kubenet, none"
     summary: The Kubernetes network plugin to use.
     description: Specify "azure" for routable pod IPs from VNET, "kubenet" for non-routable pod IPs with an overlay network, or "none" for no networking configured. Defaults to "kubenet".
+  - name: --network-plugin-mode
+    parameterValueGroup: "overlay"
+    summary: The network plugin mode to use.
+    description: >-
+      Used to control the mode the network plugin should operate in. For example, "overlay" used with
+
+      --network-plugin=azure will use an overlay network (non-VNET IPs) for pods in the cluster.
   - name: --network-policy
     summary: The Kubernetes network policy to use.
     description: >-
@@ -612,7 +642,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --os-sku
-    parameterValueGroup: "CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022"
+    parameterValueGroup: "CBLMariner, Mariner, Ubuntu"
     summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --outbound-type
@@ -660,9 +690,9 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
     description: ''
   - name: --vm-set-type
     summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet. Defaults to 'VirtualMachineScaleSets'.
@@ -1103,7 +1133,6 @@ directCommands:
   syntax: >-
     az aks operation-abort --name
                            --resource-group
-                           [--aks-custom-headers]
                            [--no-wait]
   examples:
   - summary: Abort operation on managed cluster
@@ -1118,13 +1147,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --aks-custom-headers
-    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
-    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_remove-dev-spaces
   name: az aks remove-dev-spaces
   summary: Remove Azure Dev Spaces from a managed Kubernetes cluster.
@@ -1311,11 +1338,13 @@ directCommands:
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
+                  [--disable-image-cleaner]
                   [--disable-keda]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
+                  [--disable-workload-identity]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-azure-keyvault-kms]
@@ -1325,6 +1354,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
+                  [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
@@ -1333,9 +1363,11 @@ directCommands:
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--http-proxy-config]
+                  [--image-cleaner-interval-hours]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-managed-outbound-ipv6-count]
@@ -1346,13 +1378,14 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
-                  [--no-uptime-sla]
+                  [--network-plugin-mode]
                   [--no-wait]
                   [--nodepool-labels]
+                  [--pod-cidr]
                   [--rotation-poll-interval]
                   [--tags]
+                  [--tier {free, standard}]
                   [--update-cluster-autoscaler]
-                  [--uptime-sla]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -1493,6 +1526,10 @@ directCommands:
     defaultValue: "False"
     summary: Disable AzureFile CSI Driver.
     description: ''
+  - name: --disable-image-cleaner
+    defaultValue: "False"
+    summary: Disable ImageCleaner Service.
+    description: ''
   - name: --disable-keda
     defaultValue: "False"
     summary: Disable KEDA workload auto-scaler.
@@ -1512,6 +1549,10 @@ directCommands:
   - name: --disable-snapshot-controller
     defaultValue: "False"
     summary: Disable CSI Snapshot Controller.
+    description: ''
+  - name: --disable-workload-identity
+    defaultValue: "False"
+    summary: Disable workload identity addon.
     description: ''
   - name: --enable-aad
     defaultValue: "False"
@@ -1548,6 +1589,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable AzureFile CSI Driver.
     description: ''
+  - name: --enable-image-cleaner
+    defaultValue: "False"
+    summary: Enable ImageCleaner Service.
+    description: ''
   - name: --enable-keda
     defaultValue: "False"
     summary: Enable KEDA workload auto-scaler.
@@ -1580,6 +1625,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Windows gmsa on cluster.
     description: ''
+  - name: --enable-workload-identity
+    defaultValue: "False"
+    summary: Enable workload identity addon.
+    description: ''
   - name: --gmsa-dns-server
     summary: Specify DNS server for Windows gmsa on cluster.
     description: >-
@@ -1594,6 +1643,9 @@ directCommands:
       You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
   - name: --http-proxy-config
     summary: HTTP Proxy configuration for this cluster.
+    description: ''
+  - name: --image-cleaner-interval-hours
+    summary: ImageCleaner scanning interval.
     description: ''
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
@@ -1625,9 +1677,8 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
-  - name: --no-uptime-sla
-    defaultValue: "False"
-    summary: Change a paid managed cluster to a free one.
+  - name: --network-plugin-mode
+    summary: Update the mode of a network plugin to migrate to a different pod networking setup.
     description: ''
   - name: --no-wait
     defaultValue: "False"
@@ -1636,19 +1687,22 @@ directCommands:
   - name: --nodepool-labels
     summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
     description: ''
+  - name: --pod-cidr
+    summary: Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
+    description: ''
   - name: --rotation-poll-interval
     summary: Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
     description: ''
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' changes a standard managed cluster to a free one.
+    description: ''
   - name: --update-cluster-autoscaler -u
     defaultValue: "False"
     summary: Update min-count or max-count for cluster autoscaler.
-    description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
     description: ''
   - name: --windows-admin-password
     summary: User account password to use on windows node VMs.
