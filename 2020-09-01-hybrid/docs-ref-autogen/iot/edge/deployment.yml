@@ -17,12 +17,22 @@ directCommands:
 
     By default properties of system modules $edgeAgent and $edgeHub are validated against schemas installed with the IoT extension.
 
-    This can be disabled by using the --no-validation switch.
+    This validation is intended for base deployments. If the corresponding schema is not available or base deployment format is not detected,
+
+    this step will be skipped. Schema validation can be disabled by using the --no-validation switch.
 
 
-    Edge deployments can be created with user defined metrics for on demand evaluation.
+    An edge deployment is classified as layered if a module has properties.desired.* defined.
 
-    User metrics are json and in the form of {"queries":{...}} or {"metrics":{"queries":{...}}}.
+    Any edge device targeted by a layered deployment, first needs a base deployment applied to it.
+
+
+    Any layered deployments targeting a device must have a higher priority than the base deployment for that device.
+
+
+    Note: If the properties.desired field of a module twin is set in a layered deployment,
+
+    properties.desired will overwrite the desired properties for that module in any lower priority deployments.
   syntax: >-
     az iot edge deployment create --content
                                   --deployment-id
@@ -40,17 +50,20 @@ directCommands:
                                   [--target-condition]
   examples:
   - summary: Create a deployment with labels (bash syntax example) that applies for devices in 'building 9' and the environment is 'test'.
-    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content modules_content.json --labels '{"key0":"value0", "key1":"value1"}' --target-condition "tags.building=9 and tags.environment='test'" --priority 3
+    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content ./modules_content.json --labels '{"key0":"value0", "key1":"value1"}' --target-condition "tags.building=9 and tags.environment='test'" --priority 3
   - summary: Create a deployment with labels (powershell syntax example) that applies for devices tagged with environment 'dev'.
-    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content modules_content.json --labels "{'key':'value'}" --target-condition "tags.environment='dev'"
-  - summary: Create a layered deployment that applies for devices tagged with environment 'dev'. Both user metrics and modules content defined inline (powershell syntax example).
-    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content "{'modulesContent':{'`$edgeAgent':{'properties.desired.modules.mymodule0':{ }},'`$edgeHub':{'properties.desired.routes.myroute0':'FROM /messages/* INTO `$upstream'}}}" --target-condition "tags.environment='dev'" --priority 10 --metrics "{'queries':{'mymetrik':'SELECT deviceId from devices where properties.reported.lastDesiredStatus.code = 200'}}" --layered
-  - summary: Create a layered deployment that applies for devices in 'building 9' and environment 'test'. Both user metrics and modules content defined inline (bash syntax example).
-    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content '{"modulesContent":{"$edgeAgent":{"properties.desired.modules.mymodule0":{ }},"$edgeHub":{"properties.desired.routes.myroute0":"FROM /messages/* INTO $upstream"}}}' --target-condition "tags.building=9 and tags.environment='test'" --metrics '{"queries":{"mymetrik":"SELECT deviceId from devices where properties.reported.lastDesiredStatus.code = 200"}}' --layered
-  - summary: Create a layered deployment that applies for devices in 'building 9' and environment 'test'. Both user metrics and modules content defined from file.
-    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content layered_modules_content.json --target-condition "tags.building=9 and tags.environment='test'" --metrics metrics_content.json --layered
-  - summary: Create a layered deployment with an alternative input style of labels and metrics (shell agnostic)
-    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content layered_modules_content.json --target-condition "tags.building=9 and tags.environment='test'" --custom-labels key0="value0" key1="value1" --custom-metric-queries mymetric1="select deviceId from devices where tags.location='US'" mymetric2="select *" --layered
+    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content ./modules_content.json --labels "{'key':'value'}" --target-condition "tags.environment='dev'"
+  - summary: Create a layered deployment that applies for devices tagged with environment 'dev'. Both user metrics and modules content defined inline (powershell syntax example). Note that this is in layered deployment format as properties.desired.* has been defined.
+    syntax: >-
+      az iot edge deployment create -d {deployment_name} -n {iothub_name} --content "{'modulesContent':{'`$edgeAgent':{
+        'properties.desired.modules.mymodule0':{ }},'`$edgeHub':{'properties.desired.routes.myroute0':'FROM /messages/* INTO `$upstream'}}}"
+      --target-condition "tags.environment='dev'" --priority 10 --metrics "{'queries':{'mymetrik':'SELECT deviceId from devices where properties.reported.lastDesiredStatus.code = 200'}}"
+  - summary: Create a layered deployment that applies for devices in 'building 9' and environment 'test'. Both user metrics and modules content defined inline (bash syntax example). Note that this is in layered deployment format as properties.desired.* has been defined.
+    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content '{"modulesContent":{"$edgeAgent":{"properties.desired.modules.mymodule0":{ }},"$edgeHub":{"properties.desired.routes.myroute0":"FROM /messages/* INTO $upstream"}}}' --target-condition "tags.building=9 and tags.environment='test'" --metrics '{"queries":{"mymetrik":"SELECT deviceId from devices where properties.reported.lastDesiredStatus.code = 200"}}'
+  - summary: Create a deployment that applies for devices in 'building 9' and environment 'test'. Both user metrics and modules content defined from file.
+    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content ./modules_content.json --target-condition "tags.building=9 and tags.environment='test'" --metrics ./metrics_content.json
+  - summary: Create a deployment whose definition is from file with shell-agnostic input of labels and metrics.
+    syntax: az iot edge deployment create -d {deployment_name} -n {iothub_name} --content ./modules_content.json --target-condition "tags.building=9 and tags.environment='test'" --custom-labels key0=value0 key1=value1 --custom-metric-queries mymetric1="select deviceId from devices where tags.location='US'" mymetric2="select *"
   requiredParameters:
   - isRequired: true
     name: --content -k
@@ -58,7 +71,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --deployment-id -d
-    summary: Target deployment name.
+    summary: "Target deployment name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   optionalParameters:
   - name: --auth-type
@@ -67,27 +80,27 @@ directCommands:
     summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
     description: ''
   - name: --cl --custom-labels
-    summary: 'An alternative input style (space separated key=value pairs) for --labels and intended to replace it in the future.For example: key1=value1 key2="this is my value".'
+    summary: 'An alternative input style (space separated key=value pairs) for --labels and intended to replace it in the future. Format example: key1=value1 key2="this is my value".'
     description: ''
   - name: --cmq --custom-metric-queries
-    summary: 'An alternative input style (space separated key=value pairs) for --metrics and intended to replace it in the future.For example: metric1="select deviceId from devices where tags.location=US" metric2="select *".'
+    summary: "An alternative input style (space separated key=value pairs) for --metrics and intended to replace it in the future. Format example: metric1=\"select deviceId from devices where tags.location='US'\" metric2=\"select *\"."
     description: ''
   - name: --hub-name -n
     summary: IoT Hub name. Required if --login is not provided.
     description: ''
   - name: --lab --labels
-    summary: "Map of labels to be applied to target deployment. Using --custom-labels instead of --labels is recommended.Use the following format: '{\"key0\":\"value0\", \"key1\":\"value1\"}'."
+    summary: "Map of labels to be applied to target deployment. Use the following format: '{\"key0\":\"value0\", \"key1\":\"value1\"}'. Using --custom-labels instead of --labels is recommended."
     description: ''
   - name: --layered
     defaultValue: "False"
     parameterValueGroup: "false, true"
-    summary: Layered deployments allow you to define desired properties in $edgeAgent, $edgeHub and user modules that will layer on top of a base deployment. For example the routes specified in a layered deployment will merge with routes of the base deployment. Routes with the same name will be overwritten based on deployment priority.
+    summary: Layered deployments allow you to define desired properties in $edgeAgent, $edgeHub and user modules that will layer on top of a base deployment. The properties specified in a layered deployment will merge with properties of the base deployment. Properties with the same path will be overwritten based on deployment priority. This option is an alias for --no-validation.
     description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
     description: ''
   - name: --metrics -m
-    summary: IoT Edge deployment metric definitions. Provide file path or raw json.Using --custom-metric-queries instead of --metrics is recommended.
+    summary: IoT Edge deployment user metric definitions. Provide file path or raw json. User metrics are in the form of {"queries":{...}} or {"metrics":{"queries":{...}}}. Using --custom-metric-queries instead of --metrics is recommended.
     description: ''
   - name: --no-validation
     defaultValue: "False"
@@ -102,7 +115,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --target-condition --tc -t
-    summary: Target condition in which an edge deployment applies to. Deployments with no target condition will target no device.
+    summary: "Target condition in which an edge deployment applies to. Deployments with no target condition will target no device. Use the following format: \"tags.environment='test'\"."
     description: ''
 - uid: az_iot_edge_deployment_delete
   name: az iot edge deployment delete
@@ -118,7 +131,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --deployment-id -d
-    summary: Target deployment name.
+    summary: "Target deployment name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   optionalParameters:
   - name: --auth-type
@@ -179,7 +192,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --deployment-id -d
-    summary: Target deployment name.
+    summary: "Target deployment name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   optionalParameters:
   - name: --auth-type
@@ -216,7 +229,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --deployment-id -d
-    summary: Target deployment name.
+    summary: "Target deployment name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   - isRequired: true
     name: --metric-id -m
@@ -269,7 +282,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --deployment-id -d
-    summary: Target deployment name.
+    summary: "Target deployment name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   optionalParameters:
   - name: --add

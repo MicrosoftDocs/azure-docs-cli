@@ -88,10 +88,10 @@ directCommands:
                   [--enable-addons]
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-asm]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
-                  [--enable-cilium-dataplane]
                   [--enable-cluster-autoscaler]
                   [--enable-custom-ca-trust]
                   [--enable-defender]
@@ -142,6 +142,7 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode {overlay}]
                   [--network-policy]
@@ -177,7 +178,7 @@ directCommands:
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
-                  [--uptime-sla]
+                  [--tier {free, standard}]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -251,6 +252,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
   - summary: Create a kubernetes cluster with Custom CA Trust enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
+  - summary: Create a kubernetes cluster with Azure Service Mesh enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -414,6 +417,9 @@ directCommands:
     defaultValue: "False"
     summary: Enable integration of user vnet with control plane apiserver pods.
     description: ''
+  - name: --enable-asm --enable-azure-service-mesh
+    summary: Enable Azure Service Mesh.
+    description: ''
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: Enable Azure KeyVault Key Management Service.
@@ -425,13 +431,6 @@ directCommands:
   - name: --enable-blob-driver
     summary: Enable AzureBlob CSI Driver.
     description: ''
-  - name: --enable-cilium-dataplane
-    defaultValue: "False"
-    summary: Use Cilium as the networking dataplane for the Kubernetes cluster.
-    description: >-
-      Used together with the "azure" network plugin.
-
-      Requires either --pod-subnet-id or --network-plugin-mode=overlay.
   - name: --enable-cluster-autoscaler
     defaultValue: "False"
     summary: Enable cluster autoscaler, default value is false.
@@ -617,6 +616,13 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-dataplane
+    parameterValueGroup: "azure, cilium"
+    summary: The network dataplane to use.
+    description: >-
+      Network dataplane used in the Kubernetes cluster.
+
+      Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --network-plugin
     parameterValueGroup: "azure, kubenet, none"
     summary: The Kubernetes network plugin to use.
@@ -744,9 +750,9 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
     description: ''
   - name: --vm-set-type
     summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet.
@@ -1387,18 +1393,21 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
-                  [--no-uptime-sla]
+                  [--network-plugin-mode]
                   [--no-wait]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--nodepool-labels]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
+                  [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--ssh-key-value]
                   [--tags]
+                  [--tier {free, standard}]
                   [--update-cluster-autoscaler]
-                  [--uptime-sla]
+                  [--upgrade-override-until]
+                  [--upgrade-settings]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -1779,10 +1788,12 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
-  - name: --no-uptime-sla
-    defaultValue: "False"
-    summary: Change a paid managed cluster to a free one.
-    description: ''
+  - name: --network-plugin-mode
+    summary: The network plugin mode to use.
+    description: >-
+      Used to control the mode the network plugin should operate in. For example, "overlay" used with
+
+      --network-plugin=azure will use an overlay network (non-VNET IPs) for pods in the cluster.
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
@@ -1802,6 +1813,9 @@ directCommands:
     parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
     summary: How outbound traffic will be configured for a cluster.
     description: This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
+  - name: --pod-cidr
+    summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
+    description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
   - name: --private-dns-zone
     summary: The private dns zone mode for private cluster.
     description: ''
@@ -1814,14 +1828,20 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' changes a standard managed cluster to a free one.
+    description: ''
   - name: --update-cluster-autoscaler -u
     defaultValue: "False"
     summary: Update min-count or max-count for cluster autoscaler.
     description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
+  - name: --upgrade-override-until
+    summary: Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --upgrade-settings is set to IgnoreKubernetesDeprecations and --upgrade-override-until is not set, by default it will be set to 3 days from now.
     description: ''
+  - name: --upgrade-settings
+    summary: A comma separated list of supported cluster upgrade settings. E.g., IgnoreKubernetesDeprecations.
+    description: Allowed value is "IgnoreKubernetesDeprecations". If set as "", upgrade settings will be set to default and the existing overrides will no longer be effective.
   - name: --windows-admin-password
     summary: User account password to use on windows node VMs.
     description: >-
@@ -2029,6 +2049,11 @@ commands:
 - az_aks_maintenanceconfiguration_list
 - az_aks_maintenanceconfiguration_show
 - az_aks_maintenanceconfiguration_update
+- az_aks_mesh
+- az_aks_mesh_disable
+- az_aks_mesh_disable-ingress-gateway
+- az_aks_mesh_enable
+- az_aks_mesh_enable-ingress-gateway
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
