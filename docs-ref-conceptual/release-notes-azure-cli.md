@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 03/07/2023
+ms.date: 04/04/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,102 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## April 04, 2023
+
+Version 2.47.0
+
+### AKS
+
+* `az aks create/update`: Add `--tier` argument will specify the sku tier that customer wants
+* `az aks nodepool operation-abort`: Add new command to support aborting last running operation on nodepool
+* `az aks operation-abort`: Add new command to support aborting last running operation on managed cluster
+* `az aks create`: Raise a ClientRequestError when creating the same cluster again
+* `az aks create/update`: Add new parameter `--enable-image-cleaner` to enable Image Cleaner service
+* `az aks create/update`: Add new parameter `--image-cleaner-interval-hours` to set Image Cleaner scanning interval
+* `az aks create`: Add new parameter `--network-plugin-mode` to support creating Azure CNI Overlay clusters
+* `az aks create/update`: Add new parameter `--enable-workload-identity` to support enabling workload identity addon
+* `az aks create`: Add new parameter `--network-dataplane` to support creating Cilium clusters
+* `az aks update`: Add prameter `--network-plugin-mode` to update the mode of a network plugin
+* `az aks update`: Add prameter `--pod-cidr` to update the pod CIDR for a cluster
+
+### App Config
+
+* `az appconfig import/export`: Add warning log info to output even when `--yes` flag is set
+* `az appconfig kv import`: Ensure the case of imported boolean values does not change for string conversion from file
+
+### App Service
+
+* Fix #25375: `az functionapp deployment source config-zip`: Fix the `Could not find a 'AzureWebJobsStorage' application setting` error
+* Fix #25876: `az webapp config ssl import`: Fix the UnboundLocalError `local variable 'cert_name' referenced before assignment`
+* `az functionapp create`: Support container app deployments
+* `az functionapp delete`: Add a validation to check whether Azure Functions is not in the Azure Container app environments
+
+### ARM
+
+* `az deployment group create`: Support deployment with bicepparam files
+* `az resource patch`: Add new command to support updating resource by PATCH request
+* Fix #25706: `az bicep format`: Fix the TypeError `ensure_bicep_installation() missing 1 required positional argument 'cli_ctx'`
+* Fix #25715: `az bicep install/upgrade`: Fix the `configparser.NoSectionError: No section: 'bicep'`
+
+### Compute
+
+* `az vm reimage`: Add new command to support reimaging a virtual machine
+* `az vm/vmss create`: Deprecate image alias `UbuntuLTS` and `Win2008R2SP1`. Please use the image alias including the version of the distribution you want to use. For example: Please use `Ubuntu2204` instead of `UbuntuLTS`
+
+### Cosmos DB
+
+* `az cosmosdb identity assign`: Allow refreshing user assigned identities if they're reassigned to an account
+
+### Extension
+
+* `az extension add`: Add actionable message for extension not found error
+
+### Key Vault
+
+* `az keyvault region`: GA MHSM region commands
+
+### Monitor
+
+* `az monitor activity-log alert`: Adjust help message
+
+### NetAppFiles
+
+* `az netappfiles volume update`: Patch assign snapshotpolicyID
+
+### Network
+
+* [BREAKING CHANGE] `az network`: Clean up irrelevant commands in azure-stack profiles.
+* [BREAKING CHANGE] `az network application-gateway waf-policy custom-rule`: Rename output property `applicationGatewayIpConfigurations` to `applicationGatewayIPConfigurations` to keep consistent with the name in API
+* `az network routeserver create/update`: Add parameter `--hub-routing-preference`
+* Drop `azure-mgmt-network` SDK
+* Fix #25784: `az network private-link-service update`: `--lb-frontend-ip-configs` cannot be used
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres flexible-server replica create`: Fix the behavior of AZ selection in case zone is not passed as parameter
+* Fix #368903181: Fix zone selection during creation of replica
+* `az mysql flexible-server restore/geo-restore`: Add parameters to enhance PITR
+* `az mysql flexible-server replica create`: Add parameters to support cross region paired vnet
+
+### Service Bus
+
+* `az servicebus namespace/topic/queue authorization-rule keys renew/list`: Add `-n` option for `--authorization-rule-name` to create auth rule
+
+### SQL
+
+* `az sql server refresh-external-governance-status`: New command for refreshing external governance status
+* `az sql db geo/ltr-backup restore`: Add more parameters to geo restore and ltr restore
+
+### Storage
+
+* `az storage blob copy start`: Fix auth issue when providing source uri containing sas token
+* `az storage container/blob list`: Fix MemoryError when service returns less num than requested
+* `az storage account create`: GA partition DNS account support
+
+### Synapse
+
+* `az synapse spark pool create/update`: Update `--node-size-family` and `--node-size` allowed values
 
 ## March 07, 2023
 
