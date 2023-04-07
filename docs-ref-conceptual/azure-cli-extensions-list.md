@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 04/04/2023
+ms.date: 04/07/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -65,7 +65,7 @@ You will be prompted to install an extension on first use.
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.15.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | GA | [0.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.1.12](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
-|[containerapp](https://github.com/Azure/azure-cli-extensions) | 2.45.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.25](https://github.com/Azure/azure-cli-extensions) |
+|[containerapp](https://github.com/Azure/azure-cli-extensions) | 2.45.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.27](https://github.com/Azure/azure-cli-extensions) |
 |[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.22.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.3.1 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
@@ -75,7 +75,7 @@ You will be prompted to install an extension on first use.
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.45.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.10.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog) | 2.17.0 | Microsoft Azure Command-Line Tools MicrosoftDatadogClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
-|[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
+|[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Experimental | [0.4.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
 |[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.43.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | Experimental | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up/HISTORY.rst) |
@@ -158,7 +158,7 @@ You will be prompted to install an extension on first use.
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) |
 |[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.46.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | Preview | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
-|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.9.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
+|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.9.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.45.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [1.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [0.1.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
