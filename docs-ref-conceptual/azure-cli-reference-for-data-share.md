@@ -27,12 +27,16 @@ List of Azure Data Share CLI references that can be used to manage Azure Data Sh
 |-|-|
 | [az datashare](../latest/docs-ref-autogen/datashare.yml) | All commands to manage Azure Data Share.
 | [az datashare account](../latest/docs-ref-autogen/datashare/account.yml) | Commands to manage Azure Data Share accounts.
-| [az datashare consumer](/cli/azure/datashare/consumer) | Commands for consumers to manage Azure Data Share.
-| [az datashare dataset](/cli/azure/datashare/dataset) | Commands for providers to manage Azure Data Share datasets.
+| [az datashare consumer invitation](../latest/docs-ref-autogen/datashare/consumer-invitation.yml) | Commands for consumers to manage invitations with Azure Data Share.
+| [az datashare consumer-source-data-set](../latest/docs-ref-autogen/datashare/consumer-source-data-set.yml) | Commands to manage consumer source data sets with Azure Data Share accounts.
+| [az datashare data-set](../latest/docs-ref-autogen/datashare/data-set.yml) | Commands for providers to manage Azure Data Share datasets.
+| [az datashare data-set-mapping](../latest/docs-ref-autogen/datashare/data-set-mapping.yml) | Commands for providers to manage Azure Data Share data set mapping.
+| [az datashare email-registration](../latest/docs-ref-autogen/datashare/email-registration.yml) | Commands for providers to manage email registration with Azure Data Share.
 | [az datashare invitation](../latest/docs-ref-autogen/datashare/invitation.yml) | Commands for consumers to manage Azure Data Share invitations.
 | [az datashare provider-share-subscription](../latest/docs-ref-autogen/datashare/provider-share-subscription.yml) | Commands for providers to manage Azure Data Share subscriptions.
-| [az datashare synchronization](../latest/docs-ref-autogen/datashare.yml) | Commands to manage Azure Data Share synchronization.
+| [az datashare share-subscription](../latest/docs-ref-autogen/datashare/share-subscription.yml) | Commands to manage Azure Data Share synchronization.
 | [az datashare synchronization-setting](../latest/docs-ref-autogen/datashare/synchronization-setting.yml) | Commands for providers to manage Azure Data Share synchronization settings.
+| [az datashare trigger](../latest/docs-ref-autogen/datashare/trigger.yml) | Commands for providers to manage Azure Data Share triggers.
 
 ## Reference examples
 
