@@ -5,31 +5,36 @@ extensionInformation: >-
   > [!Note]
 
   > This reference is part of the **arcdata** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az sql instance-failover-group-arc** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Create or Delete a Failover Group.
+summary: Manage Arc-enabled SQL managed instance Failover Groups.
 description: ''
 directCommands:
 - uid: az_sql_instance-failover-group-arc_create
   name: az sql instance-failover-group-arc create
   summary: Create a failover group resource.
-  description: Create a failover group resource to create a distributed availability group.
+  description: Create an Arc-enabled SQL Managed Instance failover group resource to set up a distributed availability group.
   syntax: >-
     az sql instance-failover-group-arc create --mi
                                               --name
                                               --partner-mi
-                                              --partner-mirroring-cert-file
-                                              --partner-mirroring-url
-                                              --role
                                               [--k8s-namespace]
-                                              [--partner-sync-mode]
+                                              [--no-wait]
+                                              [--partner-mirroring-cert-file]
+                                              [--partner-mirroring-url]
+                                              [--partner-resource-group]
+                                              [--partner-sync-mode {async, sync}]
+                                              [--resource-group]
+                                              [--role {primary, secondary}]
                                               [--shared-name]
                                               [--use-k8s]
   examples:
-  - summary: Ex 1 - Create a failover group resource fogCr1 to create failover group by using shared name sharedName1 between sqlmi instance sqlmi1 and partner SQL managed instance sqlmi2. It requires partner sqlmi primary mirror partnerPrimary:5022 and partner sqlmi mirror endpoint certificate file ./sqlmi2.cer.
-    syntax: az sql instance-failover-group-arc create --name fogCr1 --shared-name sharedName1 --mi sqlmi1 --role primary --partner-mi sqlmi2 --partner-mirroring-url partnerPrimary:5022 --partner-mirroring-cert-file ./sqlmi2.cer --use-k8s
+  - summary: Use the Kubernetes API to create a failover group resource between primary SQL managed instance sqlmi1 and partner SQL managed instance sqlmi2.The partner mirroring endpoint and cert file are required.
+    syntax: az sql instance-failover-group-arc create --name fogcr --shared-name sharedname1 --mi sqlmi1 --role primary --partner-mi sqlmi2 --partner-mirroring-url 10.20.5.20:970 --partner-mirroring-cert-file ./sqlmi2.cer --use-k8s
+  - summary: Use Azure Resource Manager (ARM) to create a failover group resource.
+    syntax: az sql instance-failover-group-arc create --name fogcr  --mi sqlmi1 --resource-group primary-rg-name  --partner-mi sqlmi2 --partner-resource-group partner-rg-name --partner-sync-mode async --role primary
   requiredParameters:
   - isRequired: true
     name: --mi
-    summary: The name of the local SQL managed instance.
+    summary: The name of the primary SQL managed instance.
     description: ''
   - isRequired: true
     name: --name -n
@@ -37,75 +42,131 @@ directCommands:
     description: ''
   - isRequired: true
     name: --partner-mi
-    summary: The name of the partner SQL managed instance or remote SQL instance.
-    description: ''
-  - isRequired: true
-    name: --partner-mirroring-cert-file -f
-    summary: The filename of mirroring endpoint public certificate for the partner SQL managed instance or availability group on remote SQL instance. Only PEM format is supported.
-    description: ''
-  - isRequired: true
-    name: --partner-mirroring-url -u
-    summary: The mirroring endpoint URL of the partner SQL managed instance.
-    description: ''
-  - isRequired: true
-    name: --role
-    summary: 'The requested role of the failover group. Allowed values are: primary, secondary. Role can be changed.'
+    summary: The name of the partner SQL managed instance or remote SQL instance. When using ARM-targeted arguments, this refers to the Disaster Recovery (DR) instance name.
     description: ''
   optionalParameters:
   - name: --k8s-namespace -k
     summary: Namespace where the failover group is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --partner-mirroring-cert-file -f
+    summary: The filename of mirroring endpoint public certificate for the partner SQL managed instance or availability group on remote SQL instance. Only PEM format is supported.
+    description: ''
+  - name: --partner-mirroring-url -u
+    summary: The mirroring endpoint URL of the partner SQL managed instance.
+    description: ''
+  - name: --partner-resource-group
+    summary: The Azure resource group of the DR partner Arc-enabled SQL managed instance.
+    description: ''
   - name: --partner-sync-mode -m
-    summary: The partner synchronization mode of managed SQL Instance.
+    parameterValueGroup: "async, sync"
+    summary: The partner synchronization mode of the Arc-enabled SQL managed instance.
+    description: ''
+  - name: --resource-group -g
+    summary: The Azure resource group of the primary Arc-enabled SQL managed instance.
+    description: ''
+  - name: --role
+    parameterValueGroup: "primary, secondary"
+    summary: The requested role of the failover group. The role can be changed.
     description: ''
   - name: --shared-name
-    summary: The shared name of the failover group for this SQL managed instance. Both Managed Instance and its partner have to use the same shared name.
+    summary: The shared name of the failover group for this SQL managed instance. Both the primary SQL managed instance and its partner must use the same shared name.
     description: ''
   - name: --use-k8s
     summary: Create the Arc-enabled SQL managed instance failover group using local Kubernetes APIs.
     description: ''
 - uid: az_sql_instance-failover-group-arc_delete
   name: az sql instance-failover-group-arc delete
-  summary: Delete a failover group resource on a SQL managed instance.
-  description: Delete a failover group resource on a SQL managed instance.
+  summary: Delete an Arc-enabled SQL Managed Instance failover group.
+  description: ''
   syntax: >-
     az sql instance-failover-group-arc delete --name
                                               [--k8s-namespace]
+                                              [--mi]
+                                              [--resource-group]
                                               [--use-k8s]
   examples:
-  - summary: Ex 1 - delete failover group resources named fogCr1.
-    syntax: az sql instance-failover-group-arc delete --name fogCr1 --use-k8s
+  - summary: Delete a failover group resource using the Kubernetes API.
+    syntax: az sql instance-failover-group-arc delete --name fogcr --use-k8s
+  - summary: Delete a failover group resource using Azure Resource Manager.
+    syntax: az sql instance-failover-group-arc delete --name fogcr --mi sqlmi1 -g rg-name
   requiredParameters:
   - isRequired: true
-    name: --name
-    summary: The name of the failover group resource.
+    name: --name -n
+    summary: The name of the failover group resource to delete.
     description: ''
   optionalParameters:
   - name: --k8s-namespace -k
     summary: Namespace where the failover group is deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --mi
+    summary: The name of the primary Arc-enabled SQL managed instance.
+    description: ''
+  - name: --resource-group -g
+    summary: The Azure resource group of the primary Arc-enabled SQL managed instance.
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
+- uid: az_sql_instance-failover-group-arc_list
+  name: az sql instance-failover-group-arc list
+  summary: List all failover groups.
+  description: ''
+  syntax: >-
+    az sql instance-failover-group-arc list [--k8s-namespace]
+                                            [--mi]
+                                            [--resource-group]
+                                            [--use-k8s]
+  examples:
+  - summary: List all failover groups in a namespace using the Kubernetes API.
+    syntax: az sql instance-failover-group-arc list --k8s-namespace arcdata --use-k8s
+  - summary: List all failover groups by querying Azure Resource Manager (ARM).
+    syntax: az sql instance-failover-group-arc list --mi sqlmi1 -g rg-name
+  optionalParameters:
+  - name: --k8s-namespace -k
+    summary: Namespace where the failover groups are deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --mi
+    summary: The name of the Arc-enabled SQL managed instance.
+    description: ''
+  - name: --resource-group -g
+    summary: The Azure resource group of the Arc-enabled SQL managed instance.
     description: ''
   - name: --use-k8s
     summary: Use local Kubernetes APIs to perform this action.
     description: ''
 - uid: az_sql_instance-failover-group-arc_show
   name: az sql instance-failover-group-arc show
-  summary: Show a failover group resource.
-  description: Show a failover group resource.
+  summary: Show the details of a failover group resource.
+  description: ''
   syntax: >-
     az sql instance-failover-group-arc show --name
                                             [--k8s-namespace]
+                                            [--mi]
+                                            [--resource-group]
                                             [--use-k8s]
   examples:
-  - summary: Ex 1 - show failover group resources named fogCr1.
-    syntax: az sql instance-failover-group-arc show --name fogCr1 --use-k8s
+  - summary: Show the details of a failover group using the Kubernetes API.
+    syntax: az sql instance-failover-group-arc show --name fogcr --use-k8s
+  - summary: Show the details of a failover group by querying Azure Resource Manager (ARM).
+    syntax: az sql instance-failover-group-arc show --name fogcr1 --mi sqlmi1 -g rg-name
   requiredParameters:
   - isRequired: true
-    name: --name
+    name: --name -n
     summary: The name of the failover group resource.
     description: ''
   optionalParameters:
   - name: --k8s-namespace -k
-    summary: Namespace where the failover group is to be deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    summary: Namespace where the failover group is deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --mi
+    summary: The name of the primary Arc-enabled SQL managed instance.
+    description: ''
+  - name: --resource-group -g
+    summary: The Azure resource group of the primary Arc-enabled SQL managed instance.
     description: ''
   - name: --use-k8s
     summary: Use local Kubernetes APIs to perform this action.
@@ -113,16 +174,21 @@ directCommands:
 - uid: az_sql_instance-failover-group-arc_update
   name: az sql instance-failover-group-arc update
   summary: Update a failover group resource.
-  description: Update a failover group resource to change the role of distributed availability group.
+  description: Update an Arc-enabled SQL Managed Instance failover group resource to change the role of the distributed availability group.
   syntax: >-
     az sql instance-failover-group-arc update --name
                                               [--k8s-namespace]
-                                              [--partner-sync-mode]
-                                              [--role]
+                                              [--mi]
+                                              [--no-wait]
+                                              [--partner-sync-mode {async, sync}]
+                                              [--resource-group]
+                                              [--role {force-primary-allow-data-loss, force-secondary, secondary}]
                                               [--use-k8s]
   examples:
-  - summary: Ex 1 - Update a failover group resource fogCr1 to secondary role from primary
-    syntax: az sql instance-failover-group-arc update --name fogCr1 --role secondary --use-k8s
+  - summary: Update a failover group resource to the secondary role from primary using the Kubernetes API.
+    syntax: az sql instance-failover-group-arc update --name fogcr --role secondary --use-k8s
+  - summary: Update a failover group resource using Azure Resource Manager.
+    syntax: az sql instance-failover-group-arc update --name fogcr  --role secondary --mi sqlmi1 --resource-group rg-name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -132,11 +198,23 @@ directCommands:
   - name: --k8s-namespace -k
     summary: Namespace where the failover group exists. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
     description: ''
+  - name: --mi
+    summary: The name of the Arc-enabled SQL managed instance to update.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --partner-sync-mode -m
-    summary: The partner synchronization mode of managed SQL Instance.
+    parameterValueGroup: "async, sync"
+    summary: The partner synchronization mode of the SQL managed instance.
+    description: ''
+  - name: --resource-group -g
+    summary: The Azure resource group of the primary Arc-enabled SQL managed instance.
     description: ''
   - name: --role
-    summary: 'The requested role change of failover group resource. Role can only be changed to: secondary, force-primary-allow-data-loss, force-secondary.'
+    parameterValueGroup: "force-primary-allow-data-loss, force-secondary, secondary"
+    summary: The requested role of the failover group.
     description: ''
   - name: --use-k8s
     summary: Use local Kubernetes APIs to perform this action.
@@ -144,6 +222,7 @@ directCommands:
 commands:
 - az_sql_instance-failover-group-arc_create
 - az_sql_instance-failover-group-arc_delete
+- az_sql_instance-failover-group-arc_list
 - az_sql_instance-failover-group-arc_show
 - az_sql_instance-failover-group-arc_update
 globalParameters:
@@ -164,4 +243,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Create or Delete a Failover Group.
+  description: Manage Arc-enabled SQL managed instance Failover Groups.
