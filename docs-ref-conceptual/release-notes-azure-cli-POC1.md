@@ -15,26 +15,30 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 # Azure CLI release notes
 
 > [!CHANGES]
-> 1. Release notes group by the first word after `az` and no longer by an internal source code group or description.  For example:
+> "Reference group" = the first word follosing `az`.
+> 1. Release notes are sorted by reference group and no longer by an internal source code group or description.  There will now be a direct linkable connection between our autogen reference content and our release notes.  For example:
 >    - "ARM" is now (az) "deployment", or "bicep" or "resourcemanagement etc.
 >    - "App Service" is now "functionapp", or "app config" or "webapp" etc.
 >    - "RDBMS" is now "mysql" or "postgres" etc.
 >    - "arctransfer" is now "arc"
->    - "aks-preview" is now "aks" for both Core and Extension release notes
-> 2. Both Core and Extension are in one `Release Notes` doc
-> 3. Conceptual tabs have been used when a single H2 group contains both `Core` and `Extension` commands
+>    - "AKS" and "aks-preview" are now "aks" for both Core and Extension release notes
+> 2. Both Core and Extension command are in a single `Release Notes` doc
+> 3. Conceptual tabs have been used when a single reference group contains both `Core` and `Extension` commands
 > 4. A sentence has been added if the reference group is extension-only
 > 5. Two options have been POCd for version/release date:
 >    * H4 - see `az aks Core`
 >    * bold face type (Delora's visual preference but you can't bookmark it)
-> 6. Extra `++++` have been removed from extension release notes
+> 6. Extra `` have been removed from extension release notes
 > 7. Extension release notes have been copied in full
-> 8. Only a sample has been copied for Core release notes
-> 7. Examples:
->    * **Core and Extension examples:** az account and az aks
+> 8. Only a _sample_ has been copied for _Core_ release notes
+> 9. Extension release notes are in the extension name, like `application-insights` instead of `az monitor`.  This new design would sort these release notes under `monitor` as `az application-insights` does not exist.  Extension `alertsmanagement` also contains `az monitor` commands.  These release notes will need to be combined in the autogen output (not the source).
+> 10. If 2 extensions can contain release notes for a single reference group (like `az monitor`), does this also happen in reverse?  One extension contains > 1 reference group, like **ExtensionNameABC** contains commands for `az abc` and `az def`?
+> 11. Examples:
+>    * **Core and Extension examples:** az account, az aks
 >    * **Extension only example:** az adp
->    * **Core only example:** az appconfig and ad advisor
+>    * **Core only example:** az appconfig, ad advisor
 >    * **Large quantity example:** az aks
+>    * **Ref group w/ located in > 1 extension**: az monitor
 
 ## account
 
@@ -57,6 +61,8 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 **Version 2.32.0, January 04, 2022**
 
 - `az account show/set`: Add -n, --name argument
+
+**more az account Core history here**
 
 # [Extension](#tab/azurecli-extension)
 
@@ -109,6 +115,8 @@ Initial release.
 
 # [Core](#tab/azurecli-core)
 
+> [!NOTE] Version and Date/time are in H4 format.  Compare readability to the bold text above.
+
 #### Version 2.47.0, April 04, 2023
 
 * `az aks create/update`: Add `--tier` argument will specify the sku tier that customer wants
@@ -149,7 +157,7 @@ Initial release.
 * `az aks create`: Deprecate parameters `--aad-client-app-id`, `--aad-server-app-id` and `--aad-server-app-secret`
 * `az aks update-credentials`: Deprecate parameters `--reset-aad`, `--aad-client-app-id`, `--aad-server-app-id` and `--aad-server-app-secret`
 
-**More release notes here**
+**More az aks Core release notes here**
 
 # [Extension](#tab/azurecli-extension)
 
@@ -1296,13 +1304,177 @@ Pending
 * `az appconfig kv import`: Ensure app configuration references are not imported from App Service
 * `az appconfig feature filter update`: Add new command to support updating functionality for feature filters
 
-**more history here**
+**more az appconfig Core history here**
+
+## monitor (Option #1)
+
+# [Core](#tab/azurecli-core)
+
+**Version 2.47.0, April 04, 2023**
+
+* `az monitor activity-log alert`: Adjust help message
+
+**Version 2.44.0, January 10, 2023**
+
+* [BREAKING CHANGE] `az monitor action-group test-notifications create`: Remove notification in resource group and subscription level
+* `az monitor diagnostic-settings create`: Create with resource id and export without workspace
+
+**more az monitor Core history here**
+
+# [Extension](#tab/azurecli-extension)
+
+* We could put in /Include files here with an embedded set of conceptual tabs.  There is an example of this in [Query command output](https://learn.microsoft.com/cli/azure/query-azure-cli&tabs=examples%2Cbash)
+* We could struggle to actually combine the notes, but if this will be confusing for us, how much more for our customer?
+* Consider option #2 as the simple solution
+* If we are going to carry the extension name into the tab name, we should do this for all our extension tabs.
+
+---
+
+## monitor (Option #2)
+
+# [Core](#tab/azurecli-core)
+
+**Version 2.47.0, April 04, 2023**
+
+* `az monitor activity-log alert`: Adjust help message
+
+**Version 2.44.0, January 10, 2023**
+
+* [BREAKING CHANGE] `az monitor action-group test-notifications create`: Remove notification in resource group and subscription level
+* `az monitor diagnostic-settings create`: Create with resource id and export without workspace
+
+**more az monitor Core history here**
+
+# [Extension alertsmanagement](#tab/azurecli-extension)
+
+**0.2.2**
+
+Added support for contains and doesNotContain operators for filter-resource-type in create method
+
+**0.2.1**
+
+Fixed help file text and an error loading the help files of all methods
+
+**0.2.0**
+
+This version supports the new alert processing rule API (changed from action rule) and is breaking  old versions.
+It is recommended to replace all old versions to use this version of the CLI.
+new API for alert processing rule can be found here: https://docs.microsoft.com/en-us/rest/api/monitor/alertsmanagement/alert-processing-rules
+new documentation for alert processing rules can be found here: https://docs.microsoft.com/en-us/rest/api/monitor/alertsmanagement/alert-processing-rules
+
+**0.1.1**
+
+* Add an example were the recurrence type is set to once.
+* Fix error: when the recurrence type is set to once, 'Action Rule property 'properties.suppressionConfig.schedule' cannot be null.'
+
+**0.1.0**
+
+* Initial release.
+
+# [Extension application-insights](#tab/azurecli-extension2)
+
+**0.1.19**
+
+* `az monitor app-insights web-test`: Upgrade api-version to 2022-06-15.
+
+**0.1.18**
+
+* `az monitor app-insights web-test`: Fix issue for header property create and display.
+
+**0.1.17**
+
+* `az monitor app-insights component connect-webapp`: Support cross resource groups.
+* `az monitor app-insights component connect-function`: Support cross resource groups.
+
+**0.1.16**
+
+* `az monitor app-insights query`: Fix application could not be found.
+
+**0.1.15**
+
+* `az monitor app-insights web-test`: Create/list/update/show/delete Application Insights Web Test.
+
+**0.1.14**
+
+
+* `az monitor app-insights events show`: Add enum values for `--type`.
+
+**0.1.13**
+
+
+* `az monitor app-insights component connect-function`: Enable application insights on Azure function.
+
+**0.1.12**
+
+
+* `az monitor app-insights component connect-webapp`: Enable application insights on web app.
+
+**0.1.11**
+
+
+* `az monitor app-insights component update`: Update consent message.
+
+**0.1.10**
+
+
+* `az monitor app-insights component update`: Prompt consent when migrating to workspace-centric workspace.
+
+**0.1.9**
+
+
+* Argument `--cap` in `az monitor app-insights component billing update` supports float value.
+* [Incoming Breaking Change] Default write permission would be removed for `az monitor app-insights api-key` in the future.
+
+**0.1.8**
+
+
+* Argument `--offset` in `az monitor app-insights query` supports iso8601 format.
+
+**0.1.7**
+
+
+* support linked storage account for application insights component.
+* support link one log analytics workspace to application insights component.
+* support setting public network access for application insights component.
+* one fix for api-key creation.
+
+**0.1.6**
+
+
+* Typo fixes
+
+**0.1.5**
+
+
+* Small fixes for help messages and error messages
+
+**0.1.4**
+
+
+* Support managing billing features of application insights component.
+
+**0.1.3**
+
+
+* Set min azure cli core version to 2.**0.79
+
+**0.1.2**
+
+
+* Support the usage in Azure China Cloud.
+
+**0.1.0**
+
+
+* Initial release.
+
+---
 
 ## Next command group
 
 **more history here**
 
-## GA release
+## Azure CLI GA release
 
 **Version 2.0.0, February 27, 2017**
 
