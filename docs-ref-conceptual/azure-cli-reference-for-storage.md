@@ -166,6 +166,7 @@ Some references in this table are part of the [storage-preview](https://github.c
 
 ## See also
 
+* [Authorize access to data in Azure Storage](/azure/storage/common/authorize-data-access)
 * [Get started with Azure CLI](./get-started-with-azure-cli.md) to learn about installation and sign in.
 * Discover additional [reference commands](../latest/docs-ref-autogen/reference-index.yml) and [available extensions](./azure-cli-extensions-list.md) in the Azure CLI documentation.
 * [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
