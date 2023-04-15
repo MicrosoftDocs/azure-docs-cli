@@ -27,18 +27,18 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 > 4. A sentence has been added if the reference group is extension-only
 > 5. Two options have been POCd for version/release date:
 >    * H4 - see `az aks Core`
->    * bold face type (Delora's visual preference but you can't bookmark it)
-> 6. Extra `` have been removed from extension release notes
+>    * bold face type (not as "loud", but you can't bookmark it)
+> 6. Extra `++++` that cause a line break have been removed from extension release notes
 > 7. Extension release notes have been copied in full
 > 8. Only a _sample_ has been copied for _Core_ release notes
-> 9. Extension release notes are in the extension name, like `application-insights` instead of `az monitor`.  This new design would sort these release notes under `monitor` as `az application-insights` does not exist.  Extension `alertsmanagement` also contains `az monitor` commands.  These release notes will need to be combined in the autogen output (not the source).
-> 10. If 2 extensions can contain release notes for a single reference group (like `az monitor`), does this also happen in reverse?  One extension contains > 1 reference group, like **ExtensionNameABC** contains commands for `az abc` and `az def`?
+> 9. Source code for extension release notes are in the extension name, like [application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) instead of `az monitor`.  This new design would sort these release notes under `monitor` as `az application-insights` does not exist.  Extension [alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) also contains `az monitor` commands.  These release notes will need to be combined under a single `monitor` H2.
+> 10. Q: If 2 extensions can contain release notes for a single reference group (like `az monitor`), does this also happen in reverse?  One extension contains > 1 reference group, like **ExtensionNameABC** contains commands for `az abc` and `az def`?
 > 11. Examples:
 >    * **Core and Extension examples:** az account, az aks
 >    * **Extension only example:** az adp
 >    * **Core only example:** az appconfig, ad advisor
 >    * **Large quantity example:** az aks
->    * **Ref group w/ located in > 1 extension**: az monitor
+>    * **Reference group w/ > 1 extension**: az monitor
 
 ## account
 
