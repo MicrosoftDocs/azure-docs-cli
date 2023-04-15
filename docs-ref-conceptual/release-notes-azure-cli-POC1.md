@@ -14,20 +14,22 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 # Azure CLI release notes
 
->[!CHANGES]
+> [!CHANGES]
 > 1. Release notes group by the first word after `az` and no longer by an internal source code group or description.  For example:
 >    - "ARM" is now (az) "deployment", or "bicep" or "resourcemanagement etc.
 >    - "App Service" is now "functionapp", or "app config" or "webapp" etc.
->    - "RDBMS" is now "mysql" or "postfres" etc.
+>    - "RDBMS" is now "mysql" or "postgres" etc.
 >    - "arctransfer" is now "arc"
 >    - "aks-preview" is now "aks" for both Core and Extension release notes
 > 2. Both Core and Extension are in one `Release Notes` doc
 > 3. Conceptual tabs have been used when a single H2 group contains both `Core` and `Extension` commands
 > 4. A sentence has been added if the reference group is extension-only
 > 5. Two options have been POCd for version/release date:
->    * H4
->    * bold face type (Delora's preference)
+>    * H4 - see `az aks Core`
+>    * bold face type (Delora's visual preference but you can't bookmark it)
 > 6. Extra `++++` have been removed from extension release notes
+> 7. Extension release notes have been copied in full
+> 8. Only a sample has been copied for Core release notes
 > 7. Examples:
 >    * **Core and Extension examples:** az account and az aks
 >    * **Extension only example:** az adp
@@ -40,47 +42,47 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 **Version 2.39.0, August 02, 2022**
 
-- az account list: Add TenantId column to table output
+- `az account list`: Add TenantId column to table output
 
 **Version 2.34.0, March 01, 2022**
 
-- az account management-group entities: Add a new command group to support entities (Management Groups and Subscriptions) operations for the authenticated user
-- az account management-group hierarchy-settings: Add a new command group to support operations on hierarchy settings defined at the management group level
-- az account management-group tenant-backfill: Add a new command group to support backfilling subscriptions for the tenant
-- az account management-group subscription show: Get the details of a given subscription under a given management group
-- az account management-group subscription show-sub-under-mg: Show what subscription is under a given management group
-- az account management-group check-name-availability: Check if a management group name is valid and available
-- [BREAKING CHANGE] az account show: Drop --sdk-auth
+- `az account management-group entities`: Add a new command group to support entities (Management Groups and Subscriptions) operations for the authenticated user
+- `az account management-group hierarchy-settings`: Add a new command group to support operations on hierarchy settings defined at the management group level
+- `az account management-group tenant-backfill`: Add a new command group to support backfilling subscriptions for the tenant
+- `az account management-group subscription show`: Get the details of a given subscription under a given management group
+- `az account management-group subscription show-sub-under-mg`: Show what subscription is under a given management group
+- `az account management-group check-name-availability`: Check if a management group name is valid and available
+- [BREAKING CHANGE] `az account show`: Drop --sdk-auth
 
 **Version 2.32.0, January 04, 2022**
 
-- az account show/set: Add -n, --name argument
+- `az account show/set`: Add -n, --name argument
 
 # [Extension](#tab/azurecli-extension)
 
-#### Version 0.2.5
+**Version 0.2.5**
 
 * Update SDK `azure-mgmt-subscription` version to 3.1.1
 * Add new command `az account accept-ownership-status` to support accept subscription ownership status
 
-#### Version 0.2.4
+**Version 0.2.4**
 
 * Update `minCliCoreVersion` requirement from `2.3.1` to `2.38.0`.
 * GA of `az account alias`: Manage subscription alias.
 * Update SDK `azure-mgmt-subscription` version to 3.0.0 and api-version to 2021-10-01.
 
-#### Version 0.2.1
+**Version 0.2.1**
 
-* az account alias create: add --reseller-id
+* `az account alias create`: add --reseller-id
 
-#### Version 0.2.0
+**Version 0.2.0**
 
 * Breaking Change: remove `az account subscription create`.
-* Add az account alias commands.
-* Add az account tenant commands.
+* Add `az account alias` commands.
+* Add `az account tenant` commands.
 * Support sovereign clouds.
 
-#### Version 0.1.0
+**Version 0.1.0**
 
 * Initial release.
 
@@ -97,7 +99,7 @@ Initial release.
 
 **Version 2.39.0, August 02, 2022**
 
-* Fix #11070: az advisor recommendation disable: Fix NoneType error
+* Fix #11070: `az advisor recommendation disable`: Fix NoneType error
 
 **Version 2.0.50, November 6, 2018**
 
@@ -147,7 +149,7 @@ Initial release.
 * `az aks create`: Deprecate parameters `--aad-client-app-id`, `--aad-server-app-id` and `--aad-server-app-secret`
 * `az aks update-credentials`: Deprecate parameters `--reset-aad`, `--aad-client-app-id`, `--aad-server-app-id` and `--aad-server-app-secret`
 
-#### More release notes here
+**More release notes here**
 
 # [Extension](#tab/azurecli-extension)
 
@@ -216,7 +218,7 @@ Pending
 **0.5.126**
 
 * Add `--nrg-lockdown-restriction-level <restriction level>` option for chosing the node resource group restriction level in `aks create` and `aks update`
-* Raise InvalidArgumentValueError for azure cni + pod_cidr without overlay.
+* Raise InvalidArgumentValueError for azure cni  pod_cidr without overlay.
 
 **0.5.125**
 
@@ -1029,7 +1031,7 @@ Pending
 **0.4.44**
 
 
-* Fix issues with monitoring addon enabling with CLI versions 2.4.0+
+* Fix issues with monitoring addon enabling with CLI versions 2.4.0
 
 **0.4.43**
 
@@ -1194,79 +1196,79 @@ Pending
 * Add support for `az aks update --disable-acr --acr <name-or-id>`
 
 0.4.9
-+
+
 
 * Use https if dashboard container port is using https
 
 0.4.8
-+
+
 
 * Add update support for `--enable-acr` together with `--acr <name-or-id>`
 * Merge `az aks create --acr-name` into `az aks create --acr <name-or-id>`
 
 0.4.7
-+
+
 
 * Add support for `--enable-acr` and `--acr-name`
 
 0.4.4
-+
+
 
 * Add support for per node pool auto scaler settings.
 * Add `az aks nodepool update` to allow users to change auto scaler settings per node pool.
 * Add support for Standard sku load balancer.
 
 0.4.1
-+
+
 
 * Add `az aks get-versions -l location` to allow users to see all managed cluster versions.
 * Add `az aks get-upgrades` to get all available versions to upgrade.
 * Add '(preview)' suffix if kubernetes version is preview when using `get-versions` and `get-upgrades`
 
 0.4.0
-+
+
 
 * Add support for Azure policy add-on.
 
 0.3.2
-+
+
 
 * Add support of customizing node resource group
 
 0.3.1
-+
+
 
 * Add support of pod security policy.
 
-0.3.0
-+
+**0.3.0**
+
 
 * Add support of feature `--node-zones`
 
-0.2.3
-+
+**0.2.3**
+
 
 * `az aks create/scale --nodepool-name` configures nodepool name, truncated to 12 characters, default - nodepool1
 * Don't require --nodepool-name in "az aks scale" if there's only one nodepool
 
-0.2.2
-+
+**0.2.2**
+
 
 * Add support of Network Policy when creating new AKS clusters
 
-0.2.1
-+
+**0.2.1**
+
 
 * add support of apiserver authorized IP ranges
 
-0.2.0
-+
+**0.2.0**
+
 
 * Breaking Change: Set default agentType to VMAS
 * opt-in VMSS by --enable-VMSS when creating AKS
 
-0.1.0
-+
+**0.1.0**
+
 
 * new feature `enable-cluster-autoscaler`
 * default agentType is VMSS
@@ -1275,16 +1277,16 @@ Pending
 
 ## appconfig
 
-#### Version 2.47.0, April 04, 2023
+**Version 2.47.0, April 04, 2023**
 
 * `az appconfig import/export`: Add warning log info to output even when `--yes` flag is set
 * `az appconfig kv import`: Ensure the case of imported boolean values does not change for string conversion from file
 
-#### Version 2.43.0, December 06, 2022
+**Version 2.43.0, December 06, 2022**
 
 * `az appconfig`: Update raised errors in app config command module
 
-#### Version 2.41.0, October 11, 2022
+**Version 2.41.0, October 11, 2022**
 
 * [BREAKING CHANGE] `az appconfig kv import`: Add validation to JSON file import to ensure that only valid JSON objects are imports
 * [BREAKING CHANGE] `az appconfig kv export`: Update the array conversion logic to prevent dropping keys during export
@@ -1294,13 +1296,15 @@ Pending
 * `az appconfig kv import`: Ensure app configuration references are not imported from App Service
 * `az appconfig feature filter update`: Add new command to support updating functionality for feature filters
 
+**more history here**
+
 ## Next command group
 
 **more history here**
 
 ## GA release
 
-#### Version 2.0.0, February 27, 2017
+**Version 2.0.0, February 27, 2017**
 
 This release of Azure CLI 2.0 is the first "Generally Available" release
 General availability applies to these command modules:
