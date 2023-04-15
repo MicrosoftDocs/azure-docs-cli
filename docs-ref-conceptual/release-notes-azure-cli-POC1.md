@@ -15,7 +15,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 # Azure CLI release notes
 
 > [!CHANGES]
-> "Reference group" = the first word follosing `az`.
+> * "Reference group" = the first word following `az`.
 > 1. Release notes are sorted by reference group and no longer by an internal source code group or description.  There will now be a direct linkable connection between our autogen reference content and our release notes.  For example:
 >    - "ARM" is now (az) "deployment", or "bicep" or "resourcemanagement etc.
 >    - "App Service" is now "functionapp", or "app config" or "webapp" etc.
@@ -1327,12 +1327,14 @@ Pending
 * We could struggle to actually combine the notes, but if this will be confusing for us, how much more for our customer?
 * Consider option #2 as the simple solution
 * If we are going to carry the extension name into the tab name, we should do this for all our extension tabs.
+* If you have an unequal number of conceptual tabs in a doc, they don't work.  Either every tab group needs a unique #tab/ID, or every tab group must have the same number of tabs.
 
 ---
 
 ## monitor (Option #2)
+> [!Note] TO get this tab group to work, the #tab/IDs had to be unique.  They will not toggle with the tab groups above.
 
-# [Core](#tab/azurecli-core)
+# [Core](#tab/azurecli-core1)
 
 **Version 2.47.0, April 04, 2023**
 
@@ -1345,7 +1347,7 @@ Pending
 
 **more az monitor Core history here**
 
-# [Extension alertsmanagement](#tab/azurecli-extension)
+# [Extension alertsmanagement](#tab/azurecli-extension1)
 
 **0.2.2**
 
