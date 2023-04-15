@@ -74,7 +74,7 @@ The _/_help.py_ file within the Python source code for reference content contain
    az same-command -g MyRG -l eastus --p4 "SystemAssigned, UserAssigned" --p5 Tag1
    ```
 
-1. Provide real-world parameter values.  These examples expect the customer to figure out an actual value and format for the example.
+1. Provide real-world parameter values.  The **Helpful** examples do not expect the customer to figure out an actual value and format for the command.
     - **Not very helpful:** az some-command -g MyRG --address-prefix MyAddressPrefix --settings MySettings
     - **Helpful:** az same-command -g MyRG --address-prefix 10.0.1.0/24 --settings '{ "fileUris": ["https://raw.githubusercontent.com/Azure/azure-docs-powershell-samples/master/application-gateway/iis/install_nginx.sh"],"commandToExecute": "./install_nginx.sh" }'
     
@@ -90,7 +90,7 @@ The _/_help.py_ file within the Python source code for reference content contain
    az some-command -g MyRG --address-prefix 10.0.1.0/24 --settings '{ "fileUris": ["https://raw.githubusercontent.com/Azure/azure-docs-powershell-samples/master/application-gateway/iis/install_nginx.sh"],"commandToExecute": "./install_nginx.sh" }'
 
    ```
->[!TO DO] Confirm that code blocks with > 1 command reference do not throw a build validation error.
+>[!TO DO] Confirm that code blocks with > 1 command reference do not throw a build validation error.  Yes!  See [az vm create](https://learn.microsoft.com/en-us/cli/azure/vm?view=azure-cli-latest#az-vm-create-examples) examples
 
 1. Provide examples for complex parameters or those that require a particular format.  Here are some examples:
    - **--linked-resources id**="/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/mystorageacc"
@@ -113,7 +113,7 @@ The _/_help.py_ file within the Python source code for reference content contain
       - Storage Arguments
       - Global Arguments
 
->[!TO DO] Need example code blocks of parameter groups
+>[!TO DO] Need example code blocks of parameter group usage.  
 
 ## Conceptual articles
 
