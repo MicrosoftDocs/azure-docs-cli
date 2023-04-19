@@ -31,7 +31,9 @@ The _/_help.py_ file within the Python source code for reference content contain
 
 #### Summaries
 
-1. Write the `short-summary` in active voice within a single sentence.  Active voice has an understood "you".  Examples:
+Summary guidelines apply to command groups (`az account`), reference commands (`az account create`) and parameters (`--group`).
+
+1. Write the `short-summary` in active voice within a single sentence that contains a noun, a verb and a direct object.  Active voice has an understood "you".  Examples:
    - **Poor:** Work with accounts.
    - **Not great:** Manage accounts.
    - **Good:** Manage Azure subscription information.  (The word "information" does not ad meaning to the sentence.)
@@ -50,11 +52,44 @@ The _/_help.py_ file within the Python source code for reference content contain
    - Use links to conceptual content judiciously.  There isn't an automated process to fix broken links in the Python source code files.
    - **Good Example:** [az network application-gateway rule create](https://learn.microsoft.com/cli/azure/network/application-gateway/rule?view=azure-cli-latest#az-network-application-gateway-rule-create)]
 
+#### Parameters
+
+1. The parameter `help`, usually located in `_params.py`, is an excellent opportunity to help customers avoid formatting errors!  Think of the parameter `help` value as a blank canvas and throw on it all the clarity paint you can.  
+1. Remember to keep parameter `help` information _about_ the parameter, not a Quickstart on how to use it.
+1. Include the following information in the `help` property:
+   - A full sentence description containing a noun, a verb and a direct object.  Here is an example for `--enrollment-account-name`:
+     - **Poor:** Enrollment account name
+     - **Not great:** The name of the enrollment account used to create a subscription.  
+     - **Better:** The name of the enrollment account used to create a subscription.  An enrollment account is a billing contract, also known as an Enterprise Agreement, that an organization has with Microsoft to use Azure.  To find the name of your enrollment account, go to the Overview page in Azure Active Directory.
+     - **Good example:** [az keyvault create](https://learn.microsoft.com/en-us/cli/azure/keyvault/private-endpoint-connection?view=azure-cli-latest#az-keyvault-private-endpoint-connection-approve-examples)
+   - Accepted values.  Example: [az account create --offer-type](https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-create)
+   - Azure CLI default value.  Example: [az account list --all](https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-create)
+   - Azure service default value.  Example: az keyvault **need link here**
+   - Information about parameter pairs.  Examples:
+     - "If p1 is used, you must also supply p2."
+     - "If p1 is used, you do not need to supply p2."
+     - "If p1 is used, you cannot supply p2."
+     - "P1 is optional if p2 has been provided."
+     - **Good example:** [az keyvault network-rule add -- subnet](https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-create)
+   - Example value.  This is especially important when example code blocks do not use all available parameters.  Tip:  Give individual parameter examples in the parameter `help` and focus code block examples on common scenarios.
+     - If a parameter accepts multiple values, provide a multi-value string example.  Is it comma delimited?  Space delimited?  Are there quotes around each value, the entire string, or no quotes at all?
+     - If a parameter "can be passed in as file or string", how would the contents of the file be formatted?  What information is acceptable?  What would a multi-value string look like?
+     - When the string value is complex, give an example of a variable that gets the value from a `--query` command.  You can do this in `help` or in a code block example as seen here: [az keyvault private-endpoint-connection approve](https://learn.microsoft.com/en-us/cli/azure/keyvault/private-endpoint-connection?view=azure-cli-latest#az-keyvault-private-endpoint-connection-approve-examples)
+   - Data type.  !TO DO: Discuss with Damien.  azCLI is not like azPS.
+
+Many of our GitHub issues and negative HaTS results are come from misunderstood parameter usage or formats.  You may feel you are "over explaining" but take time to build out the parameter `help` especially in `create` commands.
+
 #### Examples
 
 1. Every reference command must have an example code block.  Remember that reference content is translated into many languages and customers have diverse technical skills.  What is intuitive for one customer, is a frustrating roadblock for another.
 
 1. Give special attention to `create` command examples.  These are often revenue-generating and Microsoft loses billable resources when a create command fails.
+
+1. Use line breaks for examples with multiple parameters.  This improves readability.  Engineering is working on a "copy with" and "copy without" line breaks feature of the Azure CLI code block UI which will improve copyability.
+
+1. Use Global Parameters (`--output`, `--query`) in examples when needed for clarity.  Showing customers how to get a value from an Azure resource and store it in a variable is especially helpful when the `--query` syntax required is not intuitive.
+
+1. Avoid parameter abbreviations in examples.  This requires the customer to lookup abbreviations.  Reference examples strive for clarity and readability, not reduced key strokes.  Use a line continuation character if the example uses multiple parameters.
 
 1. Create diverse, not repetitive examples.
 
