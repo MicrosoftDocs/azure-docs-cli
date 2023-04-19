@@ -54,8 +54,8 @@ Summary guidelines apply to command groups (`az account`), reference commands (`
 
 #### Parameters
 
-1. The parameter `help`, usually located in `_params.py`, is an excellent opportunity to help customers avoid formatting errors!  Think of the parameter `help` value as a blank canvas and throw on it all the clarity paint you can.  
-1. Remember to keep parameter `help` information _about_ the parameter, not a Quickstart on how to use it.
+1. The parameter `help`, usually located in `_params.py`, is an excellent opportunity to provide additional information to customers and avoid formatting errors!  Think of the parameter `help` as a blank canvas and throw on it all the clarity paint you can.  
+1. Remember to keep parameter `help` information _about_ the parameter, not a Quickstart on how to use the parameter.
 1. Include the following information in the `help` property:
    - A full sentence description containing a noun, a verb and a direct object.  Here is an example for `--enrollment-account-name`:
      - **Poor:** Enrollment account name
@@ -71,13 +71,31 @@ Summary guidelines apply to command groups (`az account`), reference commands (`
      - "If p1 is used, you cannot supply p2."
      - "P1 is optional if p2 has been provided."
      - **Good example:** [az keyvault network-rule add -- subnet](https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-create)
-   - Example value.  This is especially important when example code blocks do not use all available parameters.  Tip:  Give individual parameter examples in the parameter `help` and focus code block examples on common scenarios.
-     - If a parameter accepts multiple values, provide a multi-value string example.  Is it comma delimited?  Space delimited?  Are there quotes around each value, the entire string, or no quotes at all?
-     - If a parameter "can be passed in as file or string", how would the contents of the file be formatted?  What information is acceptable?  What would a multi-value string look like?
-     - When the string value is complex, give an example of a variable that gets the value from a `--query` command.  You can do this in `help` or in a code block example as seen here: [az keyvault private-endpoint-connection approve](https://learn.microsoft.com/en-us/cli/azure/keyvault/private-endpoint-connection?view=azure-cli-latest#az-keyvault-private-endpoint-connection-approve-examples)
+   - Example value.  This is especially important when example code blocks do not use all available parameters.  Tip:  Give individual parameter examples in the parameter `help`.  Focus code block examples on common scenarios.  Here are parameter help guielines:
+     - When possible, tell customers how to find the value for a parameter.  Example: "Use `az account list-locations` to find available location values."
+     - Do not expect the customer to know Bash, or to intuitively figure out parameter formats.
+       - If a parameter accepts multiple values, provide a multi-value string example.  Is it comma delimited?  Space delimited?  Are there quotes around each value, the entire string, or no quotes at all?  
+       - If a parameter "can be passed in as file or string", how would the contents of the file be formatted?  What information is acceptable?  What would a multi-value string look like?
+     - When the string value is complex, give an example of a variable that gets the value from a `--query` command.  You can do this in `help` or in a code block example as seen here: [az keyvault private-endpoint-connection approve](https://learn.microsoft.com/en-us/cli/azure/keyvault/private-endpoint-connection?view=azure-cli-latest#az-keyvault-private-endpoint-connection-approve-examples).
+     - Don't repeat values in parameter examples with identical values in example code blocks.  Redundancy does not typically add value.  It's okay to say "See parameter usage in examples."
+     - Here is an example of a parameter value for `--kind`
+       - **Not great:** The API name of cognitive services account.
+       - **Better:**  The API name of cognitive services account.  Get available values by running `az cognitiveservices account list-kinds`
+     - Here is an example of a parameter value for `--encryption`
+       - **Okay:** The encryption proeprties for this resource in JSON format.
+       - **Better:** See JSON format example in Examples.
+       - **Even better if the JSON values aren't identical to Example code block:**  >
+       > '{
+       > "keySource": "Microsoft.KeyVault",
+       > "keyVaultProperties": {
+       > "keyName": "KeyName",
+       > "keyVersion": "secretVersion",
+       > "keyVaultUri": "https://issue23056kv.vault.azure.net/"
+       >    }
+       > }'
    - Data type.  !TO DO: Discuss with Damien.  azCLI is not like azPS.
 
-Many of our GitHub issues and negative HaTS results are come from misunderstood parameter usage or formats.  You may feel you are "over explaining" but take time to build out the parameter `help` especially in `create` commands.
+Many of our GitHub issues and negative HaTS results are come from misunderstood parameter usage or formats.  You may feel you are "over explaining" but take time to build out the parameter `help` especially for `create` commands.
 
 #### Examples
 
