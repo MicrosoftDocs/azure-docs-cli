@@ -50,8 +50,6 @@ az appconfig kv [reference help]()
 
 ## logicapp
 
-### logicapp create`
-
 - The following two parameters will be removed from `az logicapp create` in the September 2023 breaking change release:  `--consumption-plan-location` and `--os-type`.  Scripts continuing to use these parameters will receive error _Parameter not found.  For a list of available parameters, run az logicapp create -h._  For remediation use `--something-else` instead.
 
 az logicapp [release notes]()
