@@ -26,7 +26,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 # Upcoming breaking changes in the Azure CLI - POC2
 
 - In POC4 we are trying a table format idea as POC3 ended up with 4 levels of headers.
-- The H3 for reference group name has been removed
+- The H3 for reference group name and H4 for reference command name have been removed
 - The link the release notes, previously at the bottom of each H4, has been removed
 
 ## April 30, 2023
@@ -47,7 +47,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 |Reference command | Breaking change
 |-|-|
 |[az account create](/cli/azure/account#az-account-create) | The parameter `--resolve-error` will be removed.  Any script continuing to use this parameter will receive error message _Parameter not found.  For a list of available parameters, run az account -h_.  For remediation, change you scripts to use parameter `--resolve-azError`.
-|acs command group | The `acs` command group, which was deprecated in November 2022, will be permanently removed.  Any script continuing to use this command will receive an _Command not recognized_ error message.  For remediation, migrate to [az aks](https://learn.microsoft.com/en-us/cli/azure/aks).  For more information, see [Azure Container Service Will Retire]](https://azure.microsoft.com/updates/azure-container-service-will-retire-on-january-31-2020/).
+|`acs` command group | The `acs` command group, which was deprecated in November 2022, will be permanently removed.  Any script continuing to use this command will receive an _Command not recognized_ error message.  For remediation, migrate to [az aks](https://learn.microsoft.com/en-us/cli/azure/aks).  For more information, see [Azure Container Service Will Retire]](https://azure.microsoft.com/updates/azure-container-service-will-retire-on-january-31-2020/).
 
 ## See also
 - [Azure CLI Release Notes]()
