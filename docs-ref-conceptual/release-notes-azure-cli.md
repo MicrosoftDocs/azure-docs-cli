@@ -16,6 +16,14 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 ## April 25, 2023
 
+Version 2.48.1
+
+### App Service
+
+* Hotfix: Use basic auth with SCM sites if supported, else use AAD auth
+
+## April 25, 2023
+
 Version 2.48.0
 
 ### App Service
