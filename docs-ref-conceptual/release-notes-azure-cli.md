@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 04/04/2023
+ms.date: 04/25/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,56 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## April 25, 2023
+
+Version 2.48.0
+
+### App Service
+
+* Fix #25642: `az functionapp deployment user show`: Fix the AttributeError `'function' object has no attribute 'metadata'`
+* `az staticwebapp appsettings`: Add `--environment-name` parameter to allow app setting operation on preview environments
+* `az functionapp create`: Update 'kind' attribute for Centauri function apps
+
+### Compute
+
+* Fix #26118: `az vm list-ip-addresses`: Fix the KeyError when attributes missing in public IP address
+* Fix #26164: `az vmss update`: Fix unexpected error while running the update instance protection command on VMSS flex instances
+* Fix #26185: `az sig update`: Fix issues that `is_soft_delete_enabled` may not exist
+* `az vm host resize`: Add new command to support resizing dedicated host
+* `az vm host list-resize-options`: Add new command to support getting possible resize options
+
+### DMS
+
+* `az dms project tack create`: Add support for database schema migration
+
+### Eventhub
+
+* `az eventhubs namespace application-group policy remove`: Add upcoming breaking change notification
+
+### Network
+
+* `az network nic update`: Add `--ip-configurations` to support shorthand syntax
+* `az network public-ip prefix create`: Add parameter `--ip-tags`
+* `az network cross-region-lb rule create`: Set default value for `--enable-tcp-reset` and `--idle-timeout`
+
+### RDBMS
+
+* `az mysql flexible-server create/update/gtid reset`: Add GTID reset and fix public-access
+
+### SQL
+
+* `az sql midb ledger-digest-uploads`: Support SQL Ledger
+* `az sql mi server-configuration-option`: New command group to manage server configuration options
+
+### SQL VM
+
+* `az sql vm enable-azure-ad-auth/validate-azure-ad-auth`: Single mode improvement
+
+### Storage
+
+* `az storage file/directory`: Add `--auth-mode login` and `--backup-intent` to support OAuth
+* `az storage blob sync`: Add positional argument `extra_options` to pass through options to `azcopy`
 
 ## April 04, 2023
 
