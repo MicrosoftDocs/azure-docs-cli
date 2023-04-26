@@ -30,28 +30,24 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 > 7. Q: If 2 extensions can contain release notes for a single reference group (like `az monitor`), does this also happen in reverse?  One extension contains > 1 reference group, like **ExtensionNameABC** contains commands for `az abc` and `az def`?
 
 POC3 differences
-- code block format
+- block format
 - table format
 - Q: What value is there to adding a link to the GitHub release PR?
 - tags for command group
-- lines between H2 command groups
 
-**Code block example that doesn't improve clarity**
-```[version 2.39.0](https://github.com/Azure/azure-cli/pull/26231), August 02, 2022
+**Block example**
 
-- `az account list`: Add TenantId column to table output
-- [az account list](/cli/azure/account#az-account-list): Add TenantId column to table output
+>[version 2.39.0](https://github.com/Azure/azure-cli/pull/26231), August 02, 2022
+> 
+> - `az account list`: Add TenantId column to table output
+> - [az account list](/cli/azure/account#az-account-list): Add TenantId column to table output
 
-```
+>[version 0.2.5](https://github.com/Azure/azure-cli-extensions/blob/main/src/account/HISTORY.rst#025), April 1, 2022 (Extension)
+>
+> - Update SDK `azure-mgmt-subscription` version to 3.1.1
+> - Add new command `az account accept-ownership-status` to support accept subscription ownership status
 
-```[version 0.2.5](https://github.com/Azure/azure-cli-extensions/blob/main/src/account/HISTORY.rst#025), April 1, 2022 (Extension)
-
-- Update SDK `azure-mgmt-subscription` version to 3.1.1
-- Add new command `az account accept-ownership-status` to support accept subscription ownership status
-
-```
-
-**Table example that is visually more pleasing(?)**
+**Table example**
 
 ## account
 
@@ -68,7 +64,7 @@ POC3 differences
 | | | - `az account management-group check-name-availability`: Check if a management group name is valid and available
 | | | - [BREAKING CHANGE] `az account show`: Drop --sdk-auth
 |**Version 2.32.0**| January 04, 2022 (Extension) | - `az account show/set`: Add -n, --name argument
-**Version 0.2.4,**| December 12, 2022 |- Update `minCliCoreVersion` requirement from `2.3.1` to `2.38.0`.
+|**Version 0.2.4,**| December 12, 2022 |- Update `minCliCoreVersion` requirement from `2.3.1` to `2.38.0`.
 | | | - GA of `az account alias`: Manage subscription alias.
 | | | - Update SDK `azure-mgmt-subscription` version to 3.0.0 and api-version to 2021-10-01.
 |**Version 0.2.1**| November 1, 2022 (Extension) | - `az account alias create`: add --reseller-id
@@ -79,14 +75,12 @@ POC3 differences
 |**Version 0.1.0**| June 1, 2022 (Extension) | Initial release.
 |**Version 2.31.0**| December 07, 2021 |- `az account management-group`: Add new parameters `--no-register` to skip RP registration for `Microsoft.Management`
 
-++++++++
 ## adp
 
 |Version|Date|Release note
 |-|-|-|
 |**0.1.0**| January 1, 1900 | Initial release.
 
-+++++++
 ## advisor
 
 |Version|Date|Release note
@@ -94,12 +88,10 @@ POC3 differences
 |**Version 2.39.0**| August 02, 2022 | - Fix #11070: `az advisor recommendation disable`: Fix NoneType error
 |**Version 2.0.50**| November 6, 2018| - GA release
 
-++++
 ## Next command group
 
 **more history here**
 
-+++++
 ## Azure CLI GA release
 
 **Version 2.0.0, February 27, 2017**

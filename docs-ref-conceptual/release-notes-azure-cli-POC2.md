@@ -80,7 +80,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 
 * `az account management-group`: Add new parameters `--no-register` to skip RP registration for `Microsoft.Management`
 
----
+---------------------------------------------------------
 
 ## adp
 
