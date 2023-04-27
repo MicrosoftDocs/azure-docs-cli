@@ -32,7 +32,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 POC3 differences
 - block format
 - table format
-- tags for command group indicating command group type (core, extension).  Can be any meaningful tag we select.
+- tags for command group indicating command group type (core, extension).  Can be any meaningful tag we select.  View the JPG file from the GitHub `Conversations` tab or [click here](https://review.learn.microsoft.com/en-us/cli/azure/media/releasenotesscreencapture1.jpg?branch=pr-en-us-3606).
 - Q: What value is there to adding a link to the GitHub release PR?
 
 **Block example**
@@ -159,4 +159,6 @@ You can report issues with nightly preview builds in the following ways:
 
 **Tag example**
 
-![tag example](./media/ReleaseNotesScreenCapture1.png)
+![tag example will not instantiate in GH preview mode](./media/ReleaseNotesScreenCapture1.png)
+
+View the JPG file from the GitHub `Conversations` tab or [click here](https://review.learn.microsoft.com/en-us/cli/azure/media/releasenotesscreencapture1.jpg?branch=pr-en-us-3606).
