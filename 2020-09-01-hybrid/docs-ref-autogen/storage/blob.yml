@@ -1152,11 +1152,14 @@ directCommands:
                          [--exclude-pattern]
                          [--include-pattern]
                          [--sas-token]
+                         [<EXTRA_OPTIONS>]
   examples:
   - summary: Sync a single blob to a container.
     syntax: az storage blob sync -c mycontainer -s "path/to/file" -d NewBlob
   - summary: Sync a directory to a container.
     syntax: az storage blob sync -c mycontainer --account-name mystorageccount --account-key 00000000 -s "path/to/directory"
+  - summary: Sync a directory to a container with azcopy options pass-through (in this case capping the upload bandwith to 20 MBit/s).
+    syntax: az storage blob sync -c mycontainer --account-name mystorageccount --account-key 00000000 -s "path/to/directory" -- --cap-mbps=20
   requiredParameters:
   - isRequired: true
     name: --container -c
@@ -1198,6 +1201,9 @@ directCommands:
     description: ''
   - name: --sas-token
     summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: <EXTRA_OPTIONS>
+    summary: Other options which will be passed through to azcopy as it is. Please put all the extra options after a `--`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 - uid: az_storage_blob_undelete
