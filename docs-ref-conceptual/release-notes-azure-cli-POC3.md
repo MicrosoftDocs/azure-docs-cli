@@ -32,9 +32,8 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 POC3 differences
 - block format
 - table format
-- tag format
+- tags for command group indicating command group type (core, extension).  Can be any meaningful tag we select.
 - Q: What value is there to adding a link to the GitHub release PR?
-- tags for command group
 
 **Block example**
 
