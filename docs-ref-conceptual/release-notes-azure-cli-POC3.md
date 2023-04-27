@@ -32,6 +32,7 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 POC3 differences
 - block format
 - table format
+- tag format
 - Q: What value is there to adding a link to the GitHub release PR?
 - tags for command group
 
@@ -156,3 +157,7 @@ You can report issues with nightly preview builds in the following ways:
 - Report issues in our [github issues list](https://github.com/azure/azure-cli/issues/)
 - Contact the product team at [azfeedback@microsoft.com](mailto:azfeedback@microsoft.com)
 - Provide feedback from the command line with the `az feedback` command
+
+**Tag example**
+
+![tag example](./media/ReleaseNotesScreenCapture1.png)
