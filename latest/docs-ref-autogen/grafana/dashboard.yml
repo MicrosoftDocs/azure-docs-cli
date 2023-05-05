@@ -185,12 +185,16 @@ directCommands:
   syntax: >-
     az grafana dashboard sync --destination
                               --source
+                              [--dashboards-to-exclude]
+                              [--dashboards-to-include]
                               [--dry-run {false, true}]
                               [--folders-to-exclude]
                               [--folders-to-include]
   examples:
-  - summary: Sync only dashboardss under a few folders
+  - summary: Sync only dashboards under a few folders
     syntax: az grafana dashboard sync --source /subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspaces/providers/Microsoft.Dashboard/grafana/source --destination /subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspaces/providers/Microsoft.Dashboard/grafana/destination --folders-to-include "Azure Monitor Container Insights" "Azure Monitor"
+  - summary: Sync a single dashboard
+    syntax: az grafana dashboard sync --source /subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspaces/providers/Microsoft.Dashboard/grafana/source --destination /subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspaces/providers/Microsoft.Dashboard/grafana/destination --folders-to-include "MyFolder" --dashboards-to-include "My Service Health"
   - summary: Preview the sync
     syntax: az grafana dashboard sync --source /subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspaces/providers/Microsoft.Dashboard/grafana/source --destination /subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/workspaces/providers/Microsoft.Dashboard/grafana/destination --dry-run
   requiredParameters:
@@ -203,6 +207,12 @@ directCommands:
     summary: Resource id of the source workspace.
     description: ''
   optionalParameters:
+  - name: --dashboards-to-exclude
+    summary: Space separated titles of dashboards to exclude in sync. Pair with --folders-to-exclude for folders specific.
+    description: ''
+  - name: --dashboards-to-include
+    summary: Space separated titles of dashboards to include in sync. Pair with --folders-to-include for folders specific.
+    description: ''
   - name: --dry-run
     parameterValueGroup: "false, true"
     summary: Preview changes w/o committing.

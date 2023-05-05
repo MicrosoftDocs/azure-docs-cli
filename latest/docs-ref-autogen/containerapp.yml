@@ -68,6 +68,7 @@ directCommands:
                            [--scale-rule-metadata]
                            [--scale-rule-name]
                            [--scale-rule-type]
+                           [--secret-volume-mount]
                            [--secrets]
                            [--system-assigned]
                            [--tags]
@@ -117,6 +118,12 @@ directCommands:
                                 "cloud=AzurePublicCloud" \
                                 "queueLength": "5" "queueName": "foo" \
           --scale-rule-auth "connection=my-connection-string-secret-name"
+  - summary: Create a container app with secrets and mounts them in a volume.
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --image my-app:v1.0 --environment MyContainerappEnv \
+          --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
+          --secret-volume-mount "mnt/secrets"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -230,7 +237,10 @@ directCommands:
     summary: The name of the scale rule.
     description: ''
   - name: --scale-rule-type --srt
-    summary: 'The type of the scale rule. Default: http.'
+    summary: 'The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.'
+    description: ''
+  - name: --secret-volume-mount
+    summary: Path to mount all secrets e.g. mnt/secrets.
     description: ''
   - name: --secrets -s
     summary: A list of secret(s) for the container app. Space-separated values in 'key=value' format.
@@ -521,6 +531,7 @@ directCommands:
                            [--scale-rule-metadata]
                            [--scale-rule-name]
                            [--scale-rule-type]
+                           [--secret-volume-mount]
                            [--set-env-vars]
                            [--subscription]
                            [--tags]
@@ -612,7 +623,10 @@ directCommands:
     summary: The name of the scale rule.
     description: ''
   - name: --scale-rule-type --srt
-    summary: 'The type of the scale rule. Default: http.'
+    summary: 'The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.'
+    description: ''
+  - name: --secret-volume-mount
+    summary: Path to mount all secrets e.g. mnt/secrets.
     description: ''
   - name: --set-env-vars
     summary: Add or update environment variable(s) in container. Existing environmentenvironment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
