@@ -17,11 +17,17 @@ RPMs are released for [CBL-Mariner](https://github.com/microsoft/CBL-Mariner) 2.
 
 ## Install
 
-Install with the `tdnf install` command:
+1. Install the official Microsoft curated set of trusted root certificates:
 
-```bash
-sudo tdnf install azure-cli
-```
+    ```bash
+    sudo tdnf install ca-certificates
+    ```
+
+2. Install Azure CLI:
+
+    ```bash
+    sudo tdnf install azure-cli
+    ```
 
 ## Install specific version
 
