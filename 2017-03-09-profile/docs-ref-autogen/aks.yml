@@ -65,6 +65,7 @@ directCommands:
                   [--azure-keyvault-kms-key-id]
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
+                  [--azure-monitor-workspace-resource-id]
                   [--ca-certs]
                   [--ca-profile]
                   [--client-secret]
@@ -91,6 +92,7 @@ directCommands:
                   [--enable-asm]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-rbac]
+                  [--enable-azuremonitormetrics]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-custom-ca-trust]
@@ -113,16 +115,20 @@ directCommands:
                   [--enable-ultra-ssd]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
+                  [--enable-windows-recording-rules]
                   [--enable-workload-identity {false, true}]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
+                  [--grafana-resource-id]
                   [--host-group-id]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
                   [--ip-families]
+                  [--ksm-metric-annotations-allow-list]
+                  [--ksm-metric-labels-allow-list]
                   [--kube-proxy-config]
                   [--kubelet-config]
                   [--kubernetes-version]
@@ -254,6 +260,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
   - summary: Create a kubernetes cluster with Azure Service Mesh enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
+  - summary: Create a kubernetes cluster with Azure Monitor Metrics enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azuremonitormetrics
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -324,6 +332,9 @@ directCommands:
     description: Allowed values are "Public", "Private". If not set, defaults to type "Public". Requires --azure-keyvault-kms-key-id to be used.
   - name: --azure-keyvault-kms-key-vault-resource-id
     summary: Resource ID of Azure Key Vault.
+    description: ''
+  - name: --azure-monitor-workspace-resource-id
+    summary: Resource ID of the Azure Monitor Workspace.
     description: ''
   - name: --ca-certs --custom-ca-trust-certificates
     summary: Path to a file containing up to 10 blank line separated certificates. Only valid for linux nodes.
@@ -428,6 +439,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Azure RBAC to control authorization checks on cluster.
     description: ''
+  - name: --enable-azuremonitormetrics
+    defaultValue: "False"
+    summary: Enable Azure Monitor Metrics Profile.
+    description: ''
   - name: --enable-blob-driver
     summary: Enable AzureBlob CSI Driver.
     description: ''
@@ -517,6 +532,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Windows gmsa.
     description: ''
+  - name: --enable-windows-recording-rules
+    defaultValue: "False"
+    summary: Enable Windows Recording Rules when enabling the Azure Monitor Metrics addon.
+    description: ''
   - name: --enable-workload-identity
     parameterValueGroup: "false, true"
     summary: (PREVIEW) Enable workload identity addon.
@@ -544,6 +563,9 @@ directCommands:
     parameterValueGroup: "MIG1g, MIG2g, MIG3g, MIG4g, MIG7g"
     summary: GPU instance profile to partition multi-gpu Nvidia GPUs.
     description: ''
+  - name: --grafana-resource-id
+    summary: Resource ID of the Azure Managed Grafana Workspace.
+    description: ''
   - name: --host-group-id
     summary: (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
     description: ''
@@ -556,6 +578,12 @@ directCommands:
   - name: --ip-families
     summary: A comma separated list of IP versions to use for cluster networking.
     description: Each IP version should be in the format IPvN. For example, IPv4.
+  - name: --ksm-metric-annotations-allow-list
+    summary: Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
+    description: ''
+  - name: --ksm-metric-labels-allow-list
+    summary: Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g. '=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
+    description: ''
   - name: --kube-proxy-config
     summary: Kube-proxy configuration for this cluster.
     description: ''
@@ -1549,7 +1577,7 @@ directCommands:
     description: ''
   - name: --disable-azuremonitormetrics
     defaultValue: "False"
-    summary: Disable Azure Monitor Metrics Profile.
+    summary: Disable Azure Monitor Metrics Profile. This will delete all DCRA's associated with the cluster, any linked DCRs with the data stream = prometheus-stream and the recording rule groups created by the addon for this AKS cluster.
     description: ''
   - name: --disable-blob-driver
     summary: Disable AzureBlob CSI Driver.
