@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/09/2023
+ms.date: 05/11/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -32,14 +32,14 @@ You will be prompted to install an extension on first use.
 |[adp](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp) | 2.40.0 | Microsoft Azure Command-Line Tools Adp Extension. | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.44.0 | Provides a preview for upcoming AKS features | Preview | [0.5.137](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.44.0 | Provides a preview for upcoming AKS features | Preview | [0.5.138](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
 |[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.38.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [1.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.38.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [0.1.19](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.41.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | Preview | [0.2.31](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
-|[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.4.13](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
+|[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.0](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.11.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
 |[automanage](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage) | 2.44.1 | Microsoft Azure Command-Line Tools Automanage Extension. | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/automanage/HISTORY.rst) |
@@ -47,7 +47,7 @@ You will be prompted to install an extension on first use.
 |[azure-batch-cli-extensions](https://github.com/Azure/azure-batch-cli-extensions) | 2.30.0 | Additional commands for working with Azure Batch service | GA | [7.0.0](https://github.com/Azure/azure-batch-cli-extensions) |
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.26.0](https://github.com/Microsoft/azure-devops-cli-extension) |
-|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.45.0 | Manage Azure Firewall resources. | Preview | [0.14.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
+|[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.45.0 | Manage Azure Firewall resources. | Preview | [0.14.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.21.2](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
