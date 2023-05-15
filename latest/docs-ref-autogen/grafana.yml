@@ -8,6 +8,39 @@ extensionInformation: >-
 summary: Commands to manage Azure Grafana instanced.
 description: For optimized experience, not all data plane Apis, documented at https://grafana.com/docs/grafana/latest/http_api/, are exposed. On coverage gap, please reach out to ad4g@microsoft.com.
 directCommands:
+- uid: az_grafana_backup
+  name: az grafana backup
+  summary: Backup an Azure Managed Grafana instance's content to an achive.
+  description: ''
+  syntax: >-
+    az grafana backup --name
+                      [--components {annotations, dashboards, datasources, folders, snapshots}]
+                      [--directory]
+                      [--folders-to-exclude]
+                      [--folders-to-include]
+                      [--resource-group]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure Managed Grafana.
+    description: ''
+  optionalParameters:
+  - name: --components -c
+    parameterValueGroup: "annotations, dashboards, datasources, folders, snapshots"
+    summary: Grafana artifact types to backup.
+    description: ''
+  - name: --directory -d
+    summary: Directory to backup Grafana artifacts.
+    description: ''
+  - name: --folders-to-exclude -e
+    summary: Folders to exclude in backup or sync.
+    description: ''
+  - name: --folders-to-include -i
+    summary: Folders to include in backup or sync.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_grafana_create
   name: az grafana create
   summary: Create a Azure Managed Grafana instance.
@@ -17,6 +50,7 @@ directCommands:
                       --resource-group
                       [--location]
                       [--principal-ids]
+                      [--principal-types {Group, ServicePrincipal, User}]
                       [--skip-role-assignments {false, true}]
                       [--skip-system-assigned-identity {false, true}]
                       [--tags]
@@ -36,6 +70,10 @@ directCommands:
     description: ''
   - name: --principal-ids
     summary: Space-separated Azure AD object ids for users, groups, etc to be made as Grafana Admins. Once provided, CLI won't make the current logon user as Grafana Admin.
+    description: ''
+  - name: --principal-types
+    parameterValueGroup: "Group, ServicePrincipal, User"
+    summary: Space-separated Azure AD principal types to pair with --principal-ids.
     description: ''
   - name: --skip-role-assignments
     defaultValue: "False"
@@ -84,6 +122,37 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_grafana_restore
+  name: az grafana restore
+  summary: Restore an Azure Managed Grafana instance from an achive.
+  description: ''
+  syntax: >-
+    az grafana restore --archive-file
+                       --name
+                       [--components {annotations, dashboards, datasources, folders, snapshots}]
+                       [--remap-data-sources {false, true}]
+                       [--resource-group]
+  requiredParameters:
+  - isRequired: true
+    name: --archive-file -a
+    summary: Archive to restore Grafana artifacts from.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure Managed Grafana.
+    description: ''
+  optionalParameters:
+  - name: --components -c
+    parameterValueGroup: "annotations, dashboards, datasources, folders, snapshots"
+    summary: Grafana artifact types to backup.
+    description: ''
+  - name: --remap-data-sources -r
+    parameterValueGroup: "false, true"
+    summary: During restoration, update dashboards to reference data sources defined at the destination workspace through name matching.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_grafana_show
   name: az grafana show
   summary: Show details of a Azure Managed Grafana instance.
@@ -108,12 +177,22 @@ directCommands:
     az grafana update --name
                       [--api-key {Disabled, Enabled}]
                       [--deterministic-outbound-ip {Disabled, Enabled}]
+                      [--from-address]
+                      [--from-name]
+                      [--host]
+                      [--password]
                       [--public-network-access {Disabled, Enabled}]
                       [--resource-group]
+                      [--skip-verify {false, true}]
+                      [--smtp {Disabled, Enabled}]
+                      [--start-tls-policy {MandatoryStartTLS, NoStartTLS, OpportunisticStartTLS}]
                       [--tags]
+                      [--user]
   examples:
   - summary: disable the public network access
     syntax: az grafana update -g MyResourceGroup -n MyGrafana --public-network-access disabled
+  - summary: enable mail notification through SMTP relay sevice of mailgun
+    syntax: az grafana update -g MyResourceGroup -n MyGrafana --smtp enabled --from-address johndoe@outlook.com --from-name john --host "smtp.mailgun.org:587" --user "postmaster@sandbox12345.mailgun.org" --password "password" --start-tls-policy OpportunisticStartTLS --skip-verify true
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -128,6 +207,18 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: If enabled, the Grafana workspace will have fixed egress IPs you can use them in the firewall of datasources.
     description: ''
+  - name: --from-address
+    summary: Address used when sending out emails.
+    description: ''
+  - name: --from-name
+    summary: Name to be used when sending out emails.
+    description: ''
+  - name: --host
+    summary: Smtp server url(port included).
+    description: ''
+  - name: --password
+    summary: Smtp server user password.
+    description: ''
   - name: --public-network-access -p
     parameterValueGroup: "Disabled, Enabled"
     summary: Allow public network access.
@@ -135,14 +226,30 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --skip-verify
+    parameterValueGroup: "false, true"
+    summary: Skip verifying SSL for SMTP server.
+    description: ''
+  - name: --smtp
+    parameterValueGroup: "Disabled, Enabled"
+    summary: Allow Grafana to send email.
+    description: ''
+  - name: --start-tls-policy
+    parameterValueGroup: "MandatoryStartTLS, NoStartTLS, OpportunisticStartTLS"
+    summary: TLS policy.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --user
+    summary: Smtp server user name.
     description: ''
 commands:
 - az_grafana_api-key
 - az_grafana_api-key_create
 - az_grafana_api-key_delete
 - az_grafana_api-key_list
+- az_grafana_backup
 - az_grafana_create
 - az_grafana_dashboard
 - az_grafana_dashboard_create
@@ -150,6 +257,7 @@ commands:
 - az_grafana_dashboard_import
 - az_grafana_dashboard_list
 - az_grafana_dashboard_show
+- az_grafana_dashboard_sync
 - az_grafana_dashboard_update
 - az_grafana_data-source
 - az_grafana_data-source_create
@@ -173,6 +281,7 @@ commands:
 - az_grafana_notification-channel_show
 - az_grafana_notification-channel_test
 - az_grafana_notification-channel_update
+- az_grafana_restore
 - az_grafana_service-account
 - az_grafana_service-account_create
 - az_grafana_service-account_delete

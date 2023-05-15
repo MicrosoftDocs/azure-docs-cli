@@ -2,7 +2,7 @@
 uid: az_network_lb
 name: az network lb
 summary: Manage and configure load balancers.
-description: To learn more about Azure Load Balancer visit https://docs.microsoft.com/azure/load-balancer/load-balancer-get-started-internet-arm-cli.
+description: To learn more about Azure Load Balancer visit https://learn.microsoft.com/en-us/azure/load-balancer/quickstart-load-balancer-standard-public-cli.
 directCommands:
 - uid: az_network_lb_create
   name: az network lb create
@@ -97,11 +97,12 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_delete
   name: az network lb delete
-  summary: Delete a load balancer.
+  summary: Delete the specified load balancer.
   description: ''
   syntax: >-
     az network lb delete [--ids]
                          [--name]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--resource-group]
                          [--subscription]
   examples:
@@ -113,6 +114,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The load balancer name.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -170,28 +175,26 @@ directCommands:
   description: This command can only be used to update the tags for a load balancer. Name and resource group are immutable and cannot be updated.
   syntax: >-
     az network lb update [--add]
-                         [--content-type]
-                         [--force-string]
+                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                          [--ids]
                          [--name]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--outbound-nat-rules]
+                         [--probes]
                          [--remove]
                          [--resource-group]
                          [--set]
                          [--subscription]
+                         [--tags]
   examples:
   - summary: Update the tags of a load balancer.
-    syntax: az network lb update -g MyResourceGroup -n MyLb --set tags.CostCenter=MyBusinessGroup
+    syntax: az network lb update -g MyResourceGroup -n MyLB --tags CostCenter=MyTestGroup
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
-  - name: --content-type
-    defaultValue: "application/json"
-    summary: ''
-    description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -200,24 +203,35 @@ directCommands:
   - name: --name -n
     summary: The load balancer name.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --outbound-nat-rules
+    summary: The outbound NAT rules.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --probes
+    summary: Collection of probe objects used in the load balancer.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_wait
   name: az network lb wait
-  summary: Place the CLI in a waiting state until a condition of the load balancer is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az network lb wait [--created]
@@ -232,9 +246,6 @@ directCommands:
                        [--subscription]
                        [--timeout]
                        [--updated]
-  examples:
-  - summary: Wait for load balancer to return as created.
-    syntax: az network lb wait -g MyResourceGroup -n MyLB --created
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -281,14 +292,11 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
 - az_network_lb_address-pool
-- az_network_lb_address-pool_address
-- az_network_lb_address-pool_address_add
-- az_network_lb_address-pool_address_list
-- az_network_lb_address-pool_address_remove
 - az_network_lb_address-pool_create
 - az_network_lb_address-pool_delete
 - az_network_lb_address-pool_list
 - az_network_lb_address-pool_show
+- az_network_lb_address-pool_wait
 - az_network_lb_create
 - az_network_lb_delete
 - az_network_lb_frontend-ip
@@ -297,18 +305,21 @@ commands:
 - az_network_lb_frontend-ip_list
 - az_network_lb_frontend-ip_show
 - az_network_lb_frontend-ip_update
+- az_network_lb_frontend-ip_wait
 - az_network_lb_inbound-nat-pool
 - az_network_lb_inbound-nat-pool_create
 - az_network_lb_inbound-nat-pool_delete
 - az_network_lb_inbound-nat-pool_list
 - az_network_lb_inbound-nat-pool_show
 - az_network_lb_inbound-nat-pool_update
+- az_network_lb_inbound-nat-pool_wait
 - az_network_lb_inbound-nat-rule
 - az_network_lb_inbound-nat-rule_create
 - az_network_lb_inbound-nat-rule_delete
 - az_network_lb_inbound-nat-rule_list
 - az_network_lb_inbound-nat-rule_show
 - az_network_lb_inbound-nat-rule_update
+- az_network_lb_inbound-nat-rule_wait
 - az_network_lb_list
 - az_network_lb_probe
 - az_network_lb_probe_create
@@ -316,12 +327,14 @@ commands:
 - az_network_lb_probe_list
 - az_network_lb_probe_show
 - az_network_lb_probe_update
+- az_network_lb_probe_wait
 - az_network_lb_rule
 - az_network_lb_rule_create
 - az_network_lb_rule_delete
 - az_network_lb_rule_list
 - az_network_lb_rule_show
 - az_network_lb_rule_update
+- az_network_lb_rule_wait
 - az_network_lb_show
 - az_network_lb_update
 - az_network_lb_wait
@@ -344,5 +357,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
-  description: To learn more about Azure Load Balancer visit https://docs.microsoft.com/azure/load-balancer/load-balancer-get-started-internet-arm-cli.
+  ms.date: 03/03/2023
+  description: To learn more about Azure Load Balancer visit https://learn.microsoft.com/en-us/azure/load-balancer/quickstart-load-balancer-standard-public-cli.

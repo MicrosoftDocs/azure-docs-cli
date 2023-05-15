@@ -4,7 +4,7 @@ name: az quantum job
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **quantum** extension for the Azure CLI  (version 2.23.0 or higher).  The extension will automatically install the first time you run an **az quantum job** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **quantum** extension for the Azure CLI  (version 2.41.0 or higher).  The extension will automatically install the first time you run an **az quantum job** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage jobs for Azure Quantum.
 description: ''
 directCommands:
@@ -72,6 +72,7 @@ directCommands:
                           --location
                           --resource-group
                           --workspace-name
+                          [--item]
   examples:
   - summary: Print the results of a successful Azure Quantum job.
     syntax: >-
@@ -93,6 +94,10 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
+    description: ''
+  optionalParameters:
+  - name: --item
+    summary: The item index in a batching job.
     description: ''
 - uid: az_quantum_job_show
   name: az quantum job show
@@ -127,14 +132,18 @@ directCommands:
     description: ''
 - uid: az_quantum_job_submit
   name: az quantum job submit
-  summary: Submit a Q# project to run on Azure Quantum.
+  summary: Submit a program or circuit to run on Azure Quantum.
   description: ''
   syntax: >-
     az quantum job submit --location
                           --resource-group
                           --target-id
                           --workspace-name
+                          [--entry-point]
+                          [--job-input-file]
+                          [--job-input-format]
                           [--job-name]
+                          [--job-output-format]
                           [--job-params]
                           [--no-build]
                           [--project]
@@ -143,15 +152,15 @@ directCommands:
                           [--target-capability]
                           [<PROGRAM_ARGS>]
   examples:
-  - summary: Submit the Q# program from the current folder.
+  - summary: Submit a Q# program from the current folder.
     syntax: >-
       az quantum job submit -g MyResourceGroup -w MyWorkspace -l MyLocation \
          -t MyTarget --job-name MyJob
-  - summary: Submit the Q# program from the current folder with job parameters for a target.
+  - summary: Submit a Q# program from the current folder with job parameters for a target.
     syntax: >-
       az quantum job submit -g MyResourceGroup -w MyWorkspace -l MyLocation \
          -t MyTarget --job-name MyJob --job-params param1=value1 param2=value2
-  - summary: Submit the Q# program with program parameters (e.g. n-qubits = 2).
+  - summary: Submit a Q# program with program parameters (e.g. n-qubits = 2).
     syntax: >-
       az quantum job submit -g MyResourceGroup -w MyWorkspace -l MyLocation \
          -t MyTarget --job-name MyJob -- --n-qubits=2
@@ -159,6 +168,11 @@ directCommands:
     syntax: >-
       az quantum job submit -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget \
           --target-capability MyTargetCapability
+  - summary: Submit QIR bitcode from a file in the current folder.
+    syntax: >-
+      az quantum job submit -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget \
+          --job-name MyJob --job-input-format qir.v1 --job-input-file MyQirBitcode.bc \
+          --entry-point MyQirEntryPoint
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -177,8 +191,20 @@ directCommands:
     summary: Name of the Quantum Workspace. You can configure the default workspace using `az quantum workspace set`.
     description: ''
   optionalParameters:
+  - name: --entry-point
+    summary: The entry point for the QIR program or circuit. Required for QIR. Ignored on Q# jobs.
+    description: ''
+  - name: --job-input-file
+    summary: The location of the input file to submit. Required for QIR, QIO, and pass-through jobs. Ignored on Q# jobs.
+    description: ''
+  - name: --job-input-format
+    summary: The format of the file to submit. Omit this parameter on Q# jobs.
+    description: ''
   - name: --job-name
     summary: A friendly name to give to this run of the program.
+    description: ''
+  - name: --job-output-format
+    summary: The expected job output format. Ignored on Q# jobs.
     description: ''
   - name: --job-params
     summary: Job parameters passed to the target as a list of key=value pairs, json string, or `@{file}` with json content.

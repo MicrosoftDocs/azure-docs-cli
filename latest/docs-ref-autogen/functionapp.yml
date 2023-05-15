@@ -23,10 +23,14 @@ directCommands:
                           [--disable-app-insights {false, true}]
                           [--docker-registry-server-password]
                           [--docker-registry-server-user]
+                          [--environment]
                           [--functions-version {2, 3, 4}]
                           [--https-only {false, true}]
+                          [--image]
                           [--os-type {Linux, Windows}]
                           [--plan]
+                          [--registry-password]
+                          [--registry-username]
                           [--role]
                           [--runtime]
                           [--runtime-version]
@@ -67,8 +71,8 @@ directCommands:
   - name: --consumption-plan-location -c
     summary: Geographic location where function app will be hosted. Use `az functionapp list-consumption-locations` to view available locations.
     description: ''
-  - name: --deployment-container-image-name -i
-    summary: Container image name from Docker Hub, e.g. publisher/image-name:tag.
+  - name: --deployment-container-image-name
+    summary: Container image, e.g. publisher/image-name:tag.
     description: ''
   - name: --deployment-local-git -l
     summary: Enable local git.
@@ -84,11 +88,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Disable creating application insights resource during functionapp create. No logs will be available.
     description: ''
-  - name: --docker-registry-server-password -w
+  - name: --docker-registry-server-password
     summary: The container registry server password. Required for private registries.
     description: ''
-  - name: --docker-registry-server-user -d
+  - name: --docker-registry-server-user
     summary: The container registry server username.
+    description: ''
+  - name: --environment
+    summary: Name of the container app environment.
     description: ''
   - name: --functions-version
     parameterValueGroup: "2, 3, 4"
@@ -99,12 +106,21 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Redirect all traffic made to an app using HTTP to HTTPS.
     description: ''
+  - name: --image -i
+    summary: Container image, e.g. publisher/image-name:tag.
+    description: ''
   - name: --os-type
     parameterValueGroup: "Linux, Windows"
     summary: Set the OS type for the app to be created.
     description: ''
   - name: --plan -p
     summary: Name or resource id of the functionapp app service plan. Use 'appservice plan create' to get one. If using an App Service plan from a different resource group, the full resource id must be used and not the plan name.
+    description: ''
+  - name: --registry-password -w
+    summary: The container registry server password. Required for private registries.
+    description: ''
+  - name: --registry-username -d
+    summary: The container registry server username.
     description: ''
   - name: --role
     defaultValue: "Contributor"
@@ -135,6 +151,7 @@ directCommands:
   description: ''
   syntax: >-
     az functionapp delete [--ids]
+                          [--keep-empty-plan]
                           [--name]
                           [--resource-group]
                           [--slot]
@@ -146,8 +163,11 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --keep-empty-plan
+    summary: Keep empty app service plan.
+    description: ''
   - name: --name -n
-    summary: Name of the function app.
+    summary: The name of the functionapp.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -480,6 +500,7 @@ commands:
 - az_functionapp_config_ssl_upload
 - az_functionapp_cors
 - az_functionapp_cors_add
+- az_functionapp_cors_credentials
 - az_functionapp_cors_remove
 - az_functionapp_cors_show
 - az_functionapp_create
@@ -519,6 +540,7 @@ commands:
 - az_functionapp_function_keys_delete
 - az_functionapp_function_keys_list
 - az_functionapp_function_keys_set
+- az_functionapp_function_list
 - az_functionapp_function_show
 - az_functionapp_hybrid-connection
 - az_functionapp_hybrid-connection_add

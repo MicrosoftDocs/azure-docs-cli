@@ -12,7 +12,9 @@ ms.custom: devx-track-azurecli
 For Linux distributions with `dnf` such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
 
 > [!WARNING]
-> Starting from Azure CLI 2.39.0 (released on 08/02/2022), no RPM packages will be released for RHEL 7 and CentOS 7. You may continue to use historical versions of Azure CLI on these systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of RHEL or CentOS to use the latest Azure CLI.
+> Starting from Azure CLI 2.39.0 (released on 08/02/2022), no RPM packages will be released for RHEL 7 and CentOS 7. You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bug fixes from Microsoft for those versions.
+>
+> Azure CLI and the Linux [Install script](https://learn.microsoft.com/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
 
 [!INCLUDE [current-version](current-version.md)]
 
@@ -20,7 +22,11 @@ For Linux distributions with `dnf` such as RHEL 8/9 or CentOS Stream 8/9, there 
 
 > [!NOTE]
 >
-> Use `yum` package manager if you are using Linux systems that don't support `dnf` package manager.
+> Use the `yum` package manager if you are using Linux systems that does not support the `dnf` package manager.
+
+> [!NOTE]
+>
+> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
 ## Install
 
@@ -59,7 +65,7 @@ For Linux distributions with `dnf` such as RHEL 8/9 or CentOS Stream 8/9, there 
    sudo dnf install azure-cli
    ```
 
-## Install specific version
+## Installing a specific version
 
 You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
@@ -69,7 +75,7 @@ You must first configure `azure-cli` repository information as shown above. Avai
    dnf list --showduplicates azure-cli
    ```
 
-2. To install specific version:
+2. To install a specific version:
 
    ```bash
    sudo dnf install azure-cli-<version>-1.el7
@@ -81,9 +87,9 @@ Here are some common problems seen when installing with `dnf`. If you experience
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
-If you can, please upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
+If you are able, upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
 
-You can use the following one command to install Azure CLI with `python 3.6` built from source:
+You can use the following command to download and install the Azure CLI install script with `python 3.6` built from source:
 
 ```bash
 curl -sL https://azurecliprod.blob.core.windows.net/rhel7_6_install.sh | sudo bash
@@ -91,7 +97,7 @@ curl -sL https://azurecliprod.blob.core.windows.net/rhel7_6_install.sh | sudo ba
 
 You can also do it step by step:
 
-First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
+First, Azure CLI requires `SSL 1.1+` and you will need to build `openssl 1.1` from source before building `python3`:
 
 ```bash
 sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
@@ -121,18 +127,18 @@ make
 sudo make install
 ```
 
-Finally, follow step 1 and 2 of the [install instruction](#install) to add Azure CLI repository. You can now download the package and install it without dependency.
+Finally, follow steps 1 and 2 of the [install instruction](#install) to add the Azure CLI repository. You can now download the package and install it without dependency.
 
 > [!NOTE]
 >
-> In case you don't have the dnf download plugin installed, you will encounter command not found error on executing the below code. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
+> If the dnf download plugin isn't already installed, you will encounter a `command not found` error when executing the code below. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
 
 ```bash
 sudo dnf download azure-cli
 sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
-As an alternative, you can also install Python 3 through some [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Following this way, if you have set up `python3` but are still getting an error `python3: command not found` when trying to run the cli, you need to add it to your path.
+As an alternative, you can also install Python 3 using an [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Use this method, if you have set up `python3` but are still getting the error `python3: command not found`. Make sure it has been include it in your path.
 
 ```bash
 scl enable rh-python36 bash
@@ -153,7 +159,7 @@ proxy_username=[username] # Only required for basic auth
 proxy_password=[password] # Only required for basic auth
 ```
 
-In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
+In order to get the Microsoft signing key and the package from our repository, your proxy needs to
 allow HTTPS connections to the following address:
 
 * `https://packages.microsoft.com`

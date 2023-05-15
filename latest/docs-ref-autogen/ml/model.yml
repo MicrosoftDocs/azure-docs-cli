@@ -14,10 +14,11 @@ directCommands:
   description: Archiving a model will hide it by default from list queries (`az ml model list`). You can still continue to reference and use an archived model in your workflows. You can archive either a model container or a specific model version. Archiving a model container will archive all versions of the model under that given name. You can restore an archived model using `az ml model restore`. If the entire model container is archived, you cannot restore individual versions of the model - you will need to restore the model container.
   syntax: >-
     az ml model archive --name
-                        --resource-group
-                        --workspace-name
                         [--label]
+                        [--registry-name]
+                        [--resource-group]
                         [--version]
+                        [--workspace-name]
   examples:
   - summary: Archive a model container (archives all versions of that model)
     syntax: az ml model archive --name my-model --resource-group my-resource-group --workspace-name my-workspace
@@ -28,25 +29,26 @@ directCommands:
     name: --name -n
     summary: Name of the model.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
   optionalParameters:
   - name: --label -l
     summary: Label of the model.
     description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --version -v
     summary: Version of the model.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
 - uid: az_ml_model_create
   name: az ml model create
   summary: Create a model.
-  description: Models can be created from a local file, local directory, datastore or job outputs. The created model will be tracked in the workspace under the specified name and version.
+  description: Models can be created from a local file, local directory, datastore or job outputs. The created model will be tracked in the workspace/registry under the specified name and version. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
   syntax: >-
     az ml model create [--datastore]
                        [--description]
@@ -116,14 +118,14 @@ directCommands:
 - uid: az_ml_model_download
   name: az ml model download
   summary: Download all model-related files.
-  description: The files will be downloaded into a folder named after the model's name.
+  description: The files will be downloaded into a folder named after the model's name. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
   syntax: >-
     az ml model download --name
                          --version
-                         --workspace-name
                          [--download-path]
                          [--registry-name]
                          [--resource-group]
+                         [--workspace-name]
   examples:
   - summary: Download a model with the specified name and version
     syntax: az ml model download --name my-model --version 1 --resource-group my-resource-group --workspace-name my-workspace
@@ -138,10 +140,6 @@ directCommands:
     name: --version -v
     summary: Version of the model.
     description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
   optionalParameters:
   - name: --download-path -p
     summary: Path to download the model files, defaults to the current working directory.
@@ -152,9 +150,12 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
 - uid: az_ml_model_list
   name: az ml model list
-  summary: List models in a workspace.
+  summary: List models in a workspace/registry. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
   description: ''
   syntax: >-
     az ml model list [--archived-only]
@@ -201,10 +202,11 @@ directCommands:
   description: When an archived model is restored, it will no longer be hidden from list queries (`az ml model list`). If an entire model container is archived, you can restore that archived container. This will restore all versions of the model under that given name. You cannot restore only a specific model version if the entire model container is archived - you will need to restore the entire container. If only an individual model version was archived, you can restore that specific version.
   syntax: >-
     az ml model restore --name
-                        --resource-group
-                        --workspace-name
                         [--label]
+                        [--registry-name]
+                        [--resource-group]
                         [--version]
+                        [--workspace-name]
   examples:
   - summary: Restore an archived model container (restores all versions of that model)
     syntax: az ml model restore --name my-model --resource-group my-resource-group --workspace-name my-workspace
@@ -215,24 +217,68 @@ directCommands:
     name: --name -n
     summary: Name of the model.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --workspace-name -w
-    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
-    description: ''
   optionalParameters:
   - name: --label -l
     summary: Label of the model.
     description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --version -v
     summary: Version of the model.
     description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+- uid: az_ml_model_share
+  name: az ml model share
+  summary: Share a specific model from workspace to registry.
+  description: Copy an existing model from a workspace to a registry for cross-workspace reuse.
+  syntax: >-
+    az ml model share --name
+                      --registry-name
+                      --share-with-name
+                      --share-with-version
+                      --version
+                      [--resource-group]
+                      [--workspace-name]
+  examples:
+  - summary: Share an existing environment from workspace to registry
+    syntax: az ml model share --name my-model --version my-version --resource-group my-resource-group --workspace-name my-workspace --share-with-name new-name-in-registry --share-with-version new-version-in-registry --registry-name my-registry
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the model.
+    description: ''
+  - isRequired: true
+    name: --registry-name
+    summary: Destination registry.
+    description: ''
+  - isRequired: true
+    name: --share-with-name
+    summary: Name  of the model to be created with.
+    description: ''
+  - isRequired: true
+    name: --share-with-version
+    summary: Version  of the model to be created with.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the model.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
 - uid: az_ml_model_show
   name: az ml model show
-  summary: Show details for a model.
+  summary: Show details for a model in a workspace/registry. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
   description: ''
   syntax: >-
     az ml model show --name
@@ -267,8 +313,8 @@ directCommands:
     description: ''
 - uid: az_ml_model_update
   name: az ml model update
-  summary: Update a model.
-  description: The 'description', and 'tags' properties can be updated.
+  summary: Update a model in a workspace/registry.
+  description: The 'description', and 'tags' properties can be updated. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
   syntax: >-
     az ml model update --name
                        --resource-group
@@ -323,6 +369,7 @@ commands:
 - az_ml_model_download
 - az_ml_model_list
 - az_ml_model_restore
+- az_ml_model_share
 - az_ml_model_show
 - az_ml_model_update
 globalParameters:

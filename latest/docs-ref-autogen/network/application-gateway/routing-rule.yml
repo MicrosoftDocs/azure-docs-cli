@@ -1,7 +1,7 @@
 ### YamlMime:AzureCLIGroup
 uid: az_network_application-gateway_routing-rule
 name: az network application-gateway routing-rule
-summary: Evaluate probe information and define tcp/tls routing rules.
+summary: Evaluate probe information and define TCP/TLS routing rules.
 description: ''
 directCommands:
 - uid: az_network_application-gateway_routing-rule_create
@@ -14,15 +14,13 @@ directCommands:
                                                        --resource-group
                                                        [--address-pool]
                                                        [--listener]
-                                                       [--no-wait]
+                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                        [--priority]
-                                                       [--rule-type]
+                                                       [--rule-type {Basic, PathBasedRouting}]
                                                        [--settings]
   examples:
   - summary: Create a basic rule.
-    syntax: >-
-      az network application-gateway routing-rule create -g MyResourceGroup --gateway-name MyAppGateway \
-          -n MyRule --listener MyBackendListener --rule-type Basic --address-pool MyAddressPool --settings MySettings
+    syntax: az network application-gateway routing-rule create -g MyResourceGroup --gateway-name MyAppGateway -n MyRule --listener MyBackendListener --rule-type Basic --address-pool MyAddressPool --settings MySettings
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -30,7 +28,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: The name of the routing rule.
+    summary: Name of the routing rule.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -38,24 +36,25 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --address-pool
-    summary: The name or ID of the backend address pool. If only one exists, omit to use as default.
+    summary: Name or ID of the backend address pool. If only one exists, omit to use as default.
     description: ''
   - name: --listener
-    summary: The name or ID of the listener. If only one exists, omit to use as default.
+    summary: Name or ID of the listener. If only one exists, omit to use as default.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --priority
-    summary: Priority of the rule. Supported SKU tiers are Standard_v2, WAF_v2.
+    summary: Priority of the routing rule. Supported SKU tiers are Standard_v2, WAF_v2.
     description: ''
   - name: --rule-type
     defaultValue: "Basic"
-    summary: The rule type (Basic, PathBasedRouting).
+    parameterValueGroup: "Basic, PathBasedRouting"
+    summary: Type of the routing rule.
     description: ''
   - name: --settings
-    summary: The name or ID of the settings. If only one exists, omit to use as default.
+    summary: Name or ID of the settings. If only one exists, omit to use as default.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_routing-rule_delete
@@ -63,34 +62,30 @@ directCommands:
   summary: Delete a rule.
   description: ''
   syntax: >-
-    az network application-gateway routing-rule delete [--gateway-name]
-                                                       [--ids]
-                                                       [--name]
-                                                       [--no-wait]
-                                                       [--resource-group]
-                                                       [--subscription]
+    az network application-gateway routing-rule delete --gateway-name
+                                                       --name
+                                                       --resource-group
+                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Delete a rule.
     syntax: az network application-gateway routing-rule delete -g MyResourceGroup --gateway-name MyAppGateway -n MyRule
-  optionalParameters:
-  - name: --gateway-name
-    summary: The name of the application gateway.
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the routing rule.
     description: ''
-  - name: --name -n
-    summary: The name of the routing rule.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_routing-rule_list
@@ -106,7 +101,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --gateway-name
-    summary: The name of the application gateway.
+    summary: Name of the application gateway.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -118,29 +113,24 @@ directCommands:
   summary: Get the details of a rule.
   description: ''
   syntax: >-
-    az network application-gateway routing-rule show [--gateway-name]
-                                                     [--ids]
-                                                     [--name]
-                                                     [--resource-group]
-                                                     [--subscription]
+    az network application-gateway routing-rule show --gateway-name
+                                                     --name
+                                                     --resource-group
   examples:
   - summary: Get the details of a rule.
     syntax: az network application-gateway routing-rule show -g MyResourceGroup --gateway-name MyAppGateway -n MyRule
-  optionalParameters:
-  - name: --gateway-name
-    summary: The name of the application gateway.
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the routing rule.
     description: ''
-  - name: --name -n
-    summary: The name of the routing rule.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_routing-rule_update
@@ -148,39 +138,101 @@ directCommands:
   summary: Update a rule.
   description: ''
   syntax: >-
-    az network application-gateway routing-rule update [--add]
+    az network application-gateway routing-rule update --gateway-name
+                                                       --name
+                                                       --resource-group
+                                                       [--add]
                                                        [--address-pool]
-                                                       [--force-string]
-                                                       [--gateway-name]
-                                                       [--ids]
+                                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                        [--listener]
-                                                       [--name]
-                                                       [--no-wait]
+                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                        [--priority]
                                                        [--remove]
-                                                       [--resource-group]
-                                                       [--rule-type]
+                                                       [--rule-type {Basic, PathBasedRouting}]
                                                        [--set]
                                                        [--settings]
-                                                       [--subscription]
   examples:
   - summary: Update a rule use a new listener.
-    syntax: >-
-      az network application-gateway routing-rule update -g MyResourceGroup --gateway-name MyAppGateway \
-          -n MyRule --listener MyNewBackendListener
-  - summary: Update a rule.
-    syntax: az network application-gateway routing-rule update --address-pool MyAddressPool --gateway-name MyAppGateway --name MyRule --resource-group MyResourceGroup
+    syntax: az network application-gateway routing-rule update -g MyResourceGroup --gateway-name MyAppGateway -n MyRule --listener MyNewBackendListener
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the routing rule.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --address-pool
-    summary: The name or ID of the backend address pool.
+    summary: Name or ID of the backend address pool.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --listener
+    summary: Name or ID of the listener.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --priority
+    summary: Priority of the routing rule. Supported SKU tiers are Standard_v2, WAF_v2.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --rule-type
+    parameterValueGroup: "Basic, PathBasedRouting"
+    summary: Type of the routing rule.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --settings
+    summary: Name or ID of the settings.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_application-gateway_routing-rule_wait
+  name: az network application-gateway routing-rule wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network application-gateway routing-rule wait [--created]
+                                                     [--custom]
+                                                     [--deleted]
+                                                     [--exists]
+                                                     [--gateway-name]
+                                                     [--ids]
+                                                     [--interval]
+                                                     [--resource-group]
+                                                     [--subscription]
+                                                     [--timeout]
+                                                     [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
     description: ''
   - name: --gateway-name
     summary: Name of the application gateway.
@@ -188,38 +240,23 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --listener
-    summary: The name or ID of the listener.
-    description: ''
-  - name: --name -n
-    summary: The name of the routing rule.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --priority
-    summary: Priority of the rule. Supported SKU tiers are Standard_v2, WAF_v2.
-    description: ''
-  - name: --remove
-    defaultValue: "[]"
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --rule-type
-    summary: The rule type (Basic, PathBasedRouting).
-    description: ''
-  - name: --set
-    defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --settings
-    summary: The name or ID of the settings.
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -228,6 +265,7 @@ commands:
 - az_network_application-gateway_routing-rule_list
 - az_network_application-gateway_routing-rule_show
 - az_network_application-gateway_routing-rule_update
+- az_network_application-gateway_routing-rule_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -247,5 +285,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
-  description: Evaluate probe information and define tcp/tls routing rules.
+  ms.date: 03/03/2023
+  description: Evaluate probe information and define TCP/TLS routing rules.

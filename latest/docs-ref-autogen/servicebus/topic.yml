@@ -1,12 +1,12 @@
 ### YamlMime:AzureCLIGroup
 uid: az_servicebus_topic
 name: az servicebus topic
-summary: Manage Azure Service Bus Topic and Authorization Rule.
+summary: Servicebus topic.
 description: ''
 directCommands:
 - uid: az_servicebus_topic_create
   name: az servicebus topic create
-  summary: Create the Service Bus Topic.
+  summary: Create a topic in the specified namespace.
   description: ''
   syntax: >-
     az servicebus topic create --name
@@ -14,26 +14,23 @@ directCommands:
                                --resource-group
                                [--auto-delete-on-idle]
                                [--default-message-time-to-live]
+                               [--duplicate-detection {0, 1, f, false, n, no, t, true, y, yes}]
                                [--duplicate-detection-history-time-window]
-                               [--enable-batched-operations {false, true}]
-                               [--enable-duplicate-detection {false, true}]
-                               [--enable-express {false, true}]
-                               [--enable-ordering {false, true}]
-                               [--enable-partitioning {false, true}]
+                               [--enable-batched-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--enable-express {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--enable-ordering {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--enable-partitioning {0, 1, f, false, n, no, t, true, y, yes}]
                                [--max-message-size]
-                               [--max-size {1024, 10240, 2048, 20480, 3072, 4096, 40960, 5120, 81920}]
-                               [--status {Active, Disabled, SendDisabled}]
-  examples:
-  - summary: Create a new Service Bus Topic
-    syntax: az servicebus topic create --resource-group myresourcegroup --namespace-name mynamespace --name mytopic --max-message-size-in-kilobytes 102400
+                               [--max-size]
+                               [--status {Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown}]
   requiredParameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of Topic.
+    name: --name --topic-name -n
+    summary: The topic name.
     description: ''
   - isRequired: true
     name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -41,49 +38,48 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --auto-delete-on-idle
-    summary: ISO 8601 timespan or duration time format for idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes.
+    summary: ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes.
     description: ''
   - name: --default-message-time-to-live
-    summary: ISO 8601 or duration time format for Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
+    summary: ISO 8601 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
     description: ''
-  - name: --duplicate-detection-history-time-window
-    summary: ISO 8601 timespan or duration time format for structure that defines the duration of the duplicate detection history. The default value is 10 minutes.
+  - name: --duplicate-detection --enable-duplicate-detection
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: A value indicating if this queue requires duplicate detection.
+    description: ''
+  - name: --duplicate-detection-history-time-window -d
+    summary: ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes.
     description: ''
   - name: --enable-batched-operations
-    parameterValueGroup: "false, true"
-    summary: Allow server-side batched operations.
-    description: ''
-  - name: --enable-duplicate-detection
-    parameterValueGroup: "false, true"
-    summary: A boolean value indicating if this topic requires duplicate detection.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether server-side batched operations are enabled.
     description: ''
   - name: --enable-express
-    parameterValueGroup: "false, true"
-    summary: A boolean value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage.
     description: ''
   - name: --enable-ordering
-    parameterValueGroup: "false, true"
-    summary: A boolean value that indicates whether the topic supports ordering.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether the topic supports ordering.
     description: ''
   - name: --enable-partitioning
-    parameterValueGroup: "false, true"
-    summary: A boolean value that indicates whether the topic to be partitioned across multiple message brokers is enabled.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether the topic to be partitioned across multiple message brokers is enabled.
     description: ''
   - name: --max-message-size --max-message-size-in-kilobytes
-    summary: Maximum size (in KB) of the message payload that can be accepted by the queue. This property is only used in Premium today and default is 1024.
+    summary: Maximum size (in KB) of the message payload that can be accepted by the topic. This property is only used in Premium today and default is 1024.
     description: ''
-  - name: --max-size
-    parameterValueGroup: "1024, 10240, 2048, 20480, 3072, 4096, 40960, 5120, 81920"
-    summary: Maximum size of topic in megabytes, which is the size of the memory allocated for the topic. Default is 1024. Max for Standard SKU is 5120 and for Premium SKU is 81920.
+  - name: --max-size --max-size-in-megabytes
+    summary: Maximum size of the topic in megabytes, which is the size of the memory allocated for the topic. Default is 1024.
     description: ''
   - name: --status
-    parameterValueGroup: "Active, Disabled, SendDisabled"
+    parameterValueGroup: "Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown"
     summary: Enumerates the possible values for the status of a messaging entity.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_delete
   name: az servicebus topic delete
-  summary: Deletes the Service Bus Topic.
+  summary: Delete a topic from the specified namespace and resource group.
   description: ''
   syntax: >-
     az servicebus topic delete [--ids]
@@ -91,18 +87,15 @@ directCommands:
                                [--namespace-name]
                                [--resource-group]
                                [--subscription]
-  examples:
-  - summary: Deletes the Service Bus Topic
-    syntax: az servicebus topic delete --resource-group myresourcegroup --namespace-name mynamespace --name mytopic
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Topic.
+  - name: --name --topic-name -n
+    summary: The topic name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -113,20 +106,17 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_list
   name: az servicebus topic list
-  summary: List the Topic by Service Bus Namespace.
+  summary: List all the topics in a namespace.
   description: ''
   syntax: >-
     az servicebus topic list --namespace-name
                              --resource-group
                              [--skip]
                              [--top]
-  examples:
-  - summary: Get the Topics by Namespace.
-    syntax: az servicebus topic list --resource-group myresourcegroup --namespace-name mynamespace
   requiredParameters:
   - isRequired: true
     name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -134,15 +124,15 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --skip
-    summary: Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. Default value is None.
+    summary: Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls.
     description: ''
   - name: --top
-    summary: May be used to limit the number of results to the most recent N usageDetails. Default value is None.
+    summary: May be used to limit the number of results to the most recent N usageDetails.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_show
   name: az servicebus topic show
-  summary: Shows the Service Bus Topic Details.
+  summary: Get a description for the specified topic.
   description: ''
   syntax: >-
     az servicebus topic show [--ids]
@@ -150,18 +140,15 @@ directCommands:
                              [--namespace-name]
                              [--resource-group]
                              [--subscription]
-  examples:
-  - summary: Shows the Topic details.
-    syntax: az servicebus topic show --resource-group myresourcegroup --namespace-name mynamespace --name mytopic
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Topic.
+  - name: --name --topic-name -n
+    summary: The topic name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -172,103 +159,92 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_topic_update
   name: az servicebus topic update
-  summary: Updates the Service Bus Topic.
+  summary: Update a topic in the specified namespace.
   description: ''
   syntax: >-
     az servicebus topic update [--add]
                                [--auto-delete-on-idle]
                                [--default-message-time-to-live]
+                               [--duplicate-detection {0, 1, f, false, n, no, t, true, y, yes}]
                                [--duplicate-detection-history-time-window]
-                               [--enable-batched-operations {false, true}]
-                               [--enable-duplicate-detection {false, true}]
-                               [--enable-express {false, true}]
-                               [--enable-ordering {false, true}]
-                               [--enable-partitioning {false, true}]
-                               [--force-string]
+                               [--enable-batched-operations {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--enable-express {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--enable-ordering {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--enable-partitioning {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                [--ids]
                                [--max-message-size]
-                               [--max-size {1024, 10240, 2048, 20480, 3072, 4096, 40960, 5120, 81920}]
+                               [--max-size]
                                [--name]
                                [--namespace-name]
                                [--remove]
                                [--resource-group]
                                [--set]
-                               [--status {Active, Disabled, SendDisabled}]
+                               [--status {Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown}]
                                [--subscription]
-  examples:
-  - summary: Updates existing Service Bus Topic.
-    syntax: az servicebus topic update --resource-group myresourcegroup --namespace-name mynamespace --name mytopic --enable-ordering True
-  - summary: Updates the Service Bus Topic (autogenerated)
-    syntax: az servicebus topic update --auto-delete-on-idle PT3M --name mytopic --namespace-name mynamespace --resource-group myresourcegroup
-  - summary: Updates the Service Bus Topic (autogenerated)
-    syntax: az servicebus topic update --enable-batched-operations true --name mytopic --namespace-name mynamespace --resource-group myresourcegroup
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --auto-delete-on-idle
-    summary: ISO 8601 timespan or duration time format for idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes.
+    summary: ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes.
     description: ''
   - name: --default-message-time-to-live
-    summary: ISO 8601 or duration time format for Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
+    summary: ISO 8601 Default message timespan to live value. This is the duration after which the message expires, starting from when the message is sent to Service Bus. This is the default value used when TimeToLive is not set on a message itself.
     description: ''
-  - name: --duplicate-detection-history-time-window
-    summary: ISO 8601 timespan or duration time format for structure that defines the duration of the duplicate detection history. The default value is 10 minutes.
+  - name: --duplicate-detection --enable-duplicate-detection
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: A value indicating if this queue requires duplicate detection.
+    description: ''
+  - name: --duplicate-detection-history-time-window -d
+    summary: ISO 8601 timeSpan structure that defines the duration of the duplicate detection history. The default value is 10 minutes.
     description: ''
   - name: --enable-batched-operations
-    parameterValueGroup: "false, true"
-    summary: Allow server-side batched operations.
-    description: ''
-  - name: --enable-duplicate-detection
-    parameterValueGroup: "false, true"
-    summary: A boolean value indicating if this topic requires duplicate detection.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether server-side batched operations are enabled.
     description: ''
   - name: --enable-express
-    parameterValueGroup: "false, true"
-    summary: A boolean value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage.
     description: ''
   - name: --enable-ordering
-    parameterValueGroup: "false, true"
-    summary: A boolean value that indicates whether the topic supports ordering.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether the topic supports ordering.
     description: ''
   - name: --enable-partitioning
-    parameterValueGroup: "false, true"
-    summary: A boolean value that indicates whether the topic to be partitioned across multiple message brokers is enabled.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Value that indicates whether the topic to be partitioned across multiple message brokers is enabled.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --max-message-size --max-message-size-in-kilobytes
-    summary: Maximum size (in KB) of the message payload that can be accepted by the queue. This property is only used in Premium today and default is 1024.
+    summary: Maximum size (in KB) of the message payload that can be accepted by the topic. This property is only used in Premium today and default is 1024.
     description: ''
-  - name: --max-size
-    parameterValueGroup: "1024, 10240, 2048, 20480, 3072, 4096, 40960, 5120, 81920"
-    summary: Maximum size of topic in megabytes, which is the size of the memory allocated for the topic. Default is 1024. Max for Standard SKU is 5120 and for Premium SKU is 81920.
+  - name: --max-size --max-size-in-megabytes
+    summary: Maximum size of the topic in megabytes, which is the size of the memory allocated for the topic. Default is 1024.
     description: ''
-  - name: --name -n
-    summary: Name of Topic.
+  - name: --name --topic-name -n
+    summary: The topic name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --status
-    parameterValueGroup: "Active, Disabled, SendDisabled"
+    parameterValueGroup: "Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, Restoring, SendDisabled, Unknown"
     summary: Enumerates the possible values for the status of a messaging entity.
     description: ''
   - name: --subscription
@@ -321,5 +297,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/08/2022
-  description: Manage Azure Service Bus Topic and Authorization Rule.
+  ms.date: 03/02/2023
+  description: Servicebus topic.

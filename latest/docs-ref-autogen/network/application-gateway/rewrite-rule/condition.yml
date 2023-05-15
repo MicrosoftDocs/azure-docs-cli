@@ -14,10 +14,13 @@ directCommands:
                                                                  --rule-name
                                                                  --rule-set-name
                                                                  --variable
-                                                                 [--ignore-case {false, true}]
-                                                                 [--negate {false, true}]
-                                                                 [--no-wait]
+                                                                 [--ignore-case {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                 [--negate {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                                  [--pattern]
+  examples:
+  - summary: Create a rewrite rule.
+    syntax: az network application-gateway rewrite-rule condition create -g MyResourceGroup --gateway-name MyGateway --rule-set-name MyRuleSet --rule-name MyRule --variable MyVariable --pattern "^Bearer" --ignore-case false --negate
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -37,24 +40,23 @@ directCommands:
     description: ''
   - isRequired: true
     name: --variable
-    summary: The variable whose value is being evaluated.
+    summary: 'Variable whose value is being evaluated. Values from: `az network application-gateway rewrite-rule condition list-server-variables` (prefix headers needed).'
     description: ''
-    valueFrom: az network application-gateway rewrite-rule condition list-server-variables
   optionalParameters:
   - name: --ignore-case
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Make comparison case-insensitive.
     description: ''
   - name: --negate
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Check the negation of the condition.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --pattern
-    summary: The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition.
+    summary: Pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_rewrite-rule_condition_delete
@@ -62,41 +64,40 @@ directCommands:
   summary: Delete a rewrite rule condition.
   description: ''
   syntax: >-
-    az network application-gateway rewrite-rule condition delete --variable
-                                                                 [--gateway-name]
-                                                                 [--ids]
-                                                                 [--no-wait]
-                                                                 [--resource-group]
-                                                                 [--rule-name]
-                                                                 [--rule-set-name]
-                                                                 [--subscription]
+    az network application-gateway rewrite-rule condition delete --gateway-name
+                                                                 --resource-group
+                                                                 --rule-name
+                                                                 --rule-set-name
+                                                                 --variable
+                                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+  examples:
+  - summary: Delete a rewrite rule condition.
+    syntax: az network application-gateway rewrite-rule condition delete -g MyResourceGroup --gateway-name MyGateway --rule-set-name MyRuleSet --rule-name MyRule --variable MyVariable
   requiredParameters:
   - isRequired: true
-    name: --variable
-    summary: The variable whose value is being evaluated.
-    description: ''
-  optionalParameters:
-  - name: --gateway-name
+    name: --gateway-name
     summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --rule-name
+  - isRequired: true
+    name: --rule-name
     summary: Name of the rewrite rule.
     description: ''
-  - name: --rule-set-name
+  - isRequired: true
+    name: --rule-set-name
     summary: Name of the rewrite rule set.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - isRequired: true
+    name: --variable
+    summary: 'Variable whose value is being evaluated. Values from: `az network application-gateway rewrite-rule condition list-server-variables` (prefix headers needed).'
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_rewrite-rule_condition_list
@@ -109,7 +110,7 @@ directCommands:
                                                                --rule-name
                                                                --rule-set-name
   examples:
-  - summary: List rewrite rule conditions. (autogenerated)
+  - summary: List rewrite rule conditions.
     syntax: az network application-gateway rewrite-rule condition list --gateway-name MyGateway --resource-group MyResourceGroup --rule-name MyRule --rule-set-name MyRuleSet
   requiredParameters:
   - isRequired: true
@@ -131,45 +132,46 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_rewrite-rule_condition_list-server-variables
   name: az network application-gateway rewrite-rule condition list-server-variables
-  summary: Lists all available server variables.
-  description: ':keyword api_version: Api Version. Default value is "2022-01-01". Note that overriding this  default value may result in unsupported behavior. :paramtype api_version: str :keyword callable cls: A custom type or function that will be passed the direct response :return: list of str, or the result of cls(response) :rtype: list[str] :raises: ~azure.core.exceptions.HttpResponseError.'
+  summary: List all available server variables.
+  description: ''
   syntax: az network application-gateway rewrite-rule condition list-server-variables
+  examples:
+  - summary: List all available server variables.
+    syntax: az network application-gateway rewrite-rule condition list-server-variables
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_rewrite-rule_condition_show
   name: az network application-gateway rewrite-rule condition show
   summary: Get the details of a rewrite rule condition.
   description: ''
   syntax: >-
-    az network application-gateway rewrite-rule condition show --variable
-                                                               [--gateway-name]
-                                                               [--ids]
-                                                               [--resource-group]
-                                                               [--rule-name]
-                                                               [--rule-set-name]
-                                                               [--subscription]
+    az network application-gateway rewrite-rule condition show --gateway-name
+                                                               --resource-group
+                                                               --rule-name
+                                                               --rule-set-name
+                                                               --variable
+  examples:
+  - summary: Get the details of a rewrite rule condition.
+    syntax: az network application-gateway rewrite-rule condition show -g MyResourceGroup --gateway-name MyGateway --rule-set-name MyRuleSet --rule-name MyRule --variable MyVariable
   requiredParameters:
   - isRequired: true
-    name: --variable
-    summary: The variable whose value is being evaluated.
-    description: ''
-  optionalParameters:
-  - name: --gateway-name
+    name: --gateway-name
     summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --rule-name
+  - isRequired: true
+    name: --rule-name
     summary: Name of the rewrite rule.
     description: ''
-  - name: --rule-set-name
+  - isRequired: true
+    name: --rule-set-name
     summary: Name of the rewrite rule set.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - isRequired: true
+    name: --variable
+    summary: 'Variable whose value is being evaluated. Values from: `az network application-gateway rewrite-rule condition list-server-variables` (prefix headers needed).'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_rewrite-rule_condition_update
@@ -177,35 +179,104 @@ directCommands:
   summary: Update a rewrite rule condition.
   description: ''
   syntax: >-
-    az network application-gateway rewrite-rule condition update --variable
+    az network application-gateway rewrite-rule condition update --gateway-name
+                                                                 --resource-group
+                                                                 --rule-name
+                                                                 --rule-set-name
+                                                                 --variable
                                                                  [--add]
-                                                                 [--force-string]
-                                                                 [--gateway-name]
-                                                                 [--ids]
-                                                                 [--ignore-case {false, true}]
-                                                                 [--negate {false, true}]
-                                                                 [--no-wait]
+                                                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                 [--ignore-case {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                 [--negate {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                                  [--pattern]
                                                                  [--remove]
-                                                                 [--resource-group]
-                                                                 [--rule-name]
-                                                                 [--rule-set-name]
                                                                  [--set]
-                                                                 [--subscription]
+  examples:
+  - summary: Update a rewrite rule condition.
+    syntax: az network application-gateway rewrite-rule condition update -g MyResourceGroup --gateway-name MyGateway --rule-set-name MyRuleSet --rule-name MyRule --variable MyVariable --pattern "^Bearers"
   requiredParameters:
   - isRequired: true
-    name: --variable
-    summary: The variable whose value is being evaluated.
+    name: --gateway-name
+    summary: Name of the application gateway.
     description: ''
-    valueFrom: az network application-gateway rewrite-rule condition list-server-variables
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --rule-name
+    summary: Name of the rewrite rule.
+    description: ''
+  - isRequired: true
+    name: --rule-set-name
+    summary: Name of the rewrite rule set.
+    description: ''
+  - isRequired: true
+    name: --variable
+    summary: 'Variable whose value is being evaluated. Values from: `az network application-gateway rewrite-rule condition list-server-variables` (prefix headers needed).'
+    description: ''
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ignore-case
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Make comparison case-insensitive.
+    description: ''
+  - name: --negate
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Check the negation of the condition.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --pattern
+    summary: Pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_application-gateway_rewrite-rule_condition_wait
+  name: az network application-gateway rewrite-rule condition wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network application-gateway rewrite-rule condition wait [--created]
+                                                               [--custom]
+                                                               [--deleted]
+                                                               [--exists]
+                                                               [--gateway-name]
+                                                               [--ids]
+                                                               [--interval]
+                                                               [--resource-group]
+                                                               [--subscription]
+                                                               [--timeout]
+                                                               [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
     description: ''
   - name: --gateway-name
     summary: Name of the application gateway.
@@ -213,40 +284,23 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --ignore-case
-    parameterValueGroup: "false, true"
-    summary: Make comparison case-insensitive.
-    description: ''
-  - name: --negate
-    parameterValueGroup: "false, true"
-    summary: Check the negation of the condition.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --pattern
-    summary: The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition.
-    description: ''
-  - name: --remove
-    defaultValue: "[]"
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --rule-name
-    summary: Name of the rewrite rule.
-    description: ''
-  - name: --rule-set-name
-    summary: Name of the rewrite rule set.
-    description: ''
-  - name: --set
-    defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -256,6 +310,7 @@ commands:
 - az_network_application-gateway_rewrite-rule_condition_list-server-variables
 - az_network_application-gateway_rewrite-rule_condition_show
 - az_network_application-gateway_rewrite-rule_condition_update
+- az_network_application-gateway_rewrite-rule_condition_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -275,5 +330,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage rewrite rule conditions of an application gateway.

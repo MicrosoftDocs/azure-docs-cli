@@ -11,14 +11,12 @@ directCommands:
   syntax: >-
     az network application-gateway frontend-port create --gateway-name
                                                         --name
-                                                        --port
                                                         --resource-group
-                                                        [--no-wait]
+                                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                        [--port]
   examples:
   - summary: Create a frontend port.
-    syntax: >-
-      az network application-gateway frontend-port create -g MyResourceGroup --gateway-name MyAppGateway \
-          -n MyFrontendPort --port 8080
+    syntax: az network application-gateway frontend-port create -g MyResourceGroup --gateway-name MyAppGateway -n MyFrontendPort --port 8080
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -26,11 +24,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: The name of the frontend port.
-    description: ''
-  - isRequired: true
-    name: --port
-    summary: The port number.
+    summary: Name of the frontend port.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -38,8 +32,11 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --port
+    summary: Number of the port.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_frontend-port_delete
@@ -47,34 +44,30 @@ directCommands:
   summary: Delete a frontend port.
   description: ''
   syntax: >-
-    az network application-gateway frontend-port delete [--gateway-name]
-                                                        [--ids]
-                                                        [--name]
-                                                        [--no-wait]
-                                                        [--resource-group]
-                                                        [--subscription]
+    az network application-gateway frontend-port delete --gateway-name
+                                                        --name
+                                                        --resource-group
+                                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Delete a frontend port.
     syntax: az network application-gateway frontend-port delete -g MyResourceGroup --gateway-name MyAppGateway -n MyFrontendPort
-  optionalParameters:
-  - name: --gateway-name
-    summary: The name of the application gateway.
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the frontend port.
     description: ''
-  - name: --name -n
-    summary: The name of the frontend port.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_frontend-port_list
@@ -90,7 +83,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --gateway-name
-    summary: The name of the application gateway.
+    summary: Name of the application gateway.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -102,29 +95,24 @@ directCommands:
   summary: Get the details of a frontend port.
   description: ''
   syntax: >-
-    az network application-gateway frontend-port show [--gateway-name]
-                                                      [--ids]
-                                                      [--name]
-                                                      [--resource-group]
-                                                      [--subscription]
+    az network application-gateway frontend-port show --gateway-name
+                                                      --name
+                                                      --resource-group
   examples:
   - summary: Get the details of a frontend port.
     syntax: az network application-gateway frontend-port show -g MyResourceGroup --gateway-name MyAppGateway -n MyFrontendPort
-  optionalParameters:
-  - name: --gateway-name
-    summary: The name of the application gateway.
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the frontend port.
     description: ''
-  - name: --name -n
-    summary: The name of the frontend port.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_frontend-port_update
@@ -132,30 +120,84 @@ directCommands:
   summary: Update a frontend port.
   description: ''
   syntax: >-
-    az network application-gateway frontend-port update [--add]
-                                                        [--force-string]
-                                                        [--gateway-name]
-                                                        [--ids]
-                                                        [--name]
-                                                        [--no-wait]
+    az network application-gateway frontend-port update --gateway-name
+                                                        --name
+                                                        --resource-group
+                                                        [--add]
+                                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                         [--port]
                                                         [--remove]
-                                                        [--resource-group]
                                                         [--set]
-                                                        [--subscription]
   examples:
   - summary: Update a frontend port to use a different port.
-    syntax: >-
-      az network application-gateway frontend-port update -g MyResourceGroup --gateway-name MyAppGateway \
-          -n MyFrontendPort --port 8081
+    syntax: az network application-gateway frontend-port update -g MyResourceGroup --gateway-name MyAppGateway -n MyFrontendPort --port 8081
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the frontend port.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --port
+    summary: Number of the port.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_application-gateway_frontend-port_wait
+  name: az network application-gateway frontend-port wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network application-gateway frontend-port wait [--created]
+                                                      [--custom]
+                                                      [--deleted]
+                                                      [--exists]
+                                                      [--gateway-name]
+                                                      [--ids]
+                                                      [--interval]
+                                                      [--resource-group]
+                                                      [--subscription]
+                                                      [--timeout]
+                                                      [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
     description: ''
   - name: --gateway-name
     summary: Name of the application gateway.
@@ -163,29 +205,23 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: The name of the frontend port.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --port
-    summary: The port number.
-    description: ''
-  - name: --remove
-    defaultValue: "[]"
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --set
-    defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -194,6 +230,7 @@ commands:
 - az_network_application-gateway_frontend-port_list
 - az_network_application-gateway_frontend-port_show
 - az_network_application-gateway_frontend-port_update
+- az_network_application-gateway_frontend-port_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -213,5 +250,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage frontend ports of an application gateway.

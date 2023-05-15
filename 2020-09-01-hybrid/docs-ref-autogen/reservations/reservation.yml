@@ -4,7 +4,7 @@ name: az reservations reservation
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **reservation** extension for the Azure CLI  (version 2.41.0 or higher).  The extension will automatically install the first time you run an **az reservations reservation** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **reservation** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az reservations reservation** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Reservations reservation.
 description: ''
 directCommands:
@@ -190,15 +190,25 @@ directCommands:
   syntax: >-
     az reservations reservation update --reservation-id
                                        --reservation-order-id
-                                       [--applied-scope-type {Shared, Single}]
+                                       [--applied-scope-property]
+                                       [--applied-scope-type {ManagementGroup, Shared, Single}]
                                        [--applied-scopes]
                                        [--instance-flexibility {Off, On}]
                                        [--name]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--renew {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--renewal-properties]
   examples:
-  - summary: Update applied scope type
+  - summary: Set reservation to Shared scope
     syntax: az reservations reservation update --applied-scope-type Shared --reservation-id 10000000-aaaa-bbbb-cccc-200000000001 --reservation-order-id 50000000-aaaa-bbbb-cccc-200000000005
+  - summary: Set reservation renewal
+    syntax: az reservations reservation update --reservation-id 10000000-aaaa-bbbb-cccc-200000000001 --reservation-order-id 50000000-aaaa-bbbb-cccc-200000000005 --renew true
+  - summary: Set reservation to Single scope
+    syntax: az reservations reservation update --reservation-id 10000000-aaaa-bbbb-cccc-200000000001 --reservation-order-id 50000000-aaaa-bbbb-cccc-200000000005 --applied-scope-type Single --applied-scopes ['/subscriptions/50000000-aaaa-bbbb-cccc-200000000009']
+  - summary: Set reservation to Single scope resource group
+    syntax: az reservations reservation update --reservation-id 10000000-aaaa-bbbb-cccc-200000000001 --reservation-order-id 50000000-aaaa-bbbb-cccc-200000000005 --applied-scope-type Single --applied-scopes ['/subscriptions/50000000-aaaa-bbbb-cccc-200000000009/resourceGroups/mock_resource_group_name']
+  - summary: Set reservation to management group scope
+    syntax: az reservations reservation update --reservation-id 10000000-aaaa-bbbb-cccc-200000000001 --reservation-order-id 50000000-aaaa-bbbb-cccc-200000000005 --applied-scope-type ManagementGroup --applied-scope-property '{management-group-id:/providers/Microsoft.Management/managementGroups/mock_management_group_name,tenant-id:50000000-aaaa-bbbb-cccc-200000000008}'
   requiredParameters:
   - isRequired: true
     name: --reservation-id
@@ -209,8 +219,11 @@ directCommands:
     summary: Order Id of the reservation.
     description: ''
   optionalParameters:
+  - name: --applied-scope-property
+    summary: Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --applied-scope-type
-    parameterValueGroup: "Shared, Single"
+    parameterValueGroup: "ManagementGroup, Shared, Single"
     summary: Type of the Applied Scope.
     description: ''
   - name: --applied-scopes
@@ -231,6 +244,9 @@ directCommands:
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Setting this to true will automatically purchase a new reservation on the expiration date time.
+    description: ''
+  - name: --renewal-properties
+    summary: Renewal purchase properties  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_reservations_reservation_wait
   name: az reservations reservation wait

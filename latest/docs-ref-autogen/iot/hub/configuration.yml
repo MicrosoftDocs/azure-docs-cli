@@ -4,7 +4,7 @@ name: az iot hub configuration
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.32.0 or higher).  The extension will automatically install the first time you run an **az iot hub configuration** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.37.0 or higher).  The extension will automatically install the first time you run an **az iot hub configuration** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage IoT automatic device management configuration at scale.
 description: ''
 directCommands:
@@ -31,6 +31,8 @@ directCommands:
     az iot hub configuration create --config-id
                                     --content
                                     [--auth-type {key, login}]
+                                    [--cl]
+                                    [--cmq]
                                     [--hub-name]
                                     [--lab]
                                     [--login]
@@ -41,16 +43,18 @@ directCommands:
   examples:
   - summary: Create a device configuration with a priority of 3 that applies on condition when a device is tagged in building 9 and the environment is 'test'.
     syntax: az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition "tags.building=9 and tags.environment='test'" --priority 3
-  - summary: Create a device configuration with labels and provide user metrics inline (bash syntax example)
+  - summary: Create a device configuration with labels and provide user metrics inline (bash syntax example).
     syntax: "az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition \"tags.building=9\" --labels '{\"key0\":\"value0\", \"key1\":\"value1\"}' --priority 10 --metrics '{\"metrics\": {\"queries\": {\"mymetric\": \"select deviceId from devices where tags.location='US'\"}}}'"
   - summary: Create a module configuration with labels and provide user metrics inline (cmd syntax example)
     syntax: "az iot hub configuration create -c {config_name} -n {iothub_name} --content module_content.json --target-condition \"from devices.modules where tags.building=9\" --labels \"{\\\"key0\\\":\\\"value0\\\", \\\"key1\\\":\\\"value1\\\"}\" --metrics \"{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetric\\\": \\\"select moduleId from devices.modules where tags.location='US'\\\"}}}\""
-  - summary: Create a module configuration with content and user metrics inline (powershell syntax example)
+  - summary: Create a module configuration with content and user metrics inline (powershell syntax example).
     syntax: "az iot hub configuration create -c {config_name} -n {iothub_name} --content '{\\\"moduleContent\\\": {\\\"properties.desired.chillerWaterSettings\\\": {\\\"temperature\\\": 38, \\\"pressure\\\": 78}}}' --target-condition \"from devices.modules where tags.building=9\" --priority 1 --metrics '{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetric\\\":\\\"select moduleId from devices.modules where tags.location=''US''\\\"}}}'"
+  - summary: Create a device configuration with an alternative input style of labels and metrics (shell agnostic).
+    syntax: az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition "from devices.modules where tags.building=9" --custom-labels key0="value0" key1="value1" --priority 10 --custom-metric-queries mymetric1="select deviceId from devices where tags.location='US'" mymetric2="select *"
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: Target device configuration name.
+    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   - isRequired: true
     name: --content -k
@@ -62,17 +66,23 @@ directCommands:
     parameterValueGroup: "key, login"
     summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
     description: ''
+  - name: --cl --custom-labels
+    summary: 'An alternative input style (space separated key=value pairs) for --labels and intended to replace it in the future. Format example: key1=value1 key2="this is my value".'
+    description: ''
+  - name: --cmq --custom-metric-queries
+    summary: "An alternative input style (space separated key=value pairs) for --metrics and intended to replace it in the future. Format example: metric1=\"select deviceId from devices where tags.location='US'\" metric2=\"select *\"."
+    description: ''
   - name: --hub-name -n
     summary: IoT Hub name. Required if --login is not provided.
     description: ''
   - name: --lab --labels
-    summary: 'Map of labels to be applied to target configuration. Format example: {"key0":"value0", "key1":"value1"}.'
+    summary: 'Map of labels to be applied to target configuration. Using --custom-labels instead of --labels is recommended.Format example: {"key0":"value0", "key1":"value1"}.'
     description: ''
   - name: --login -l
     summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
     description: ''
   - name: --metrics -m
-    summary: Device configuration metric definitions. Provide file path or raw json.
+    summary: Device configuration metric definitions. Provide file path or raw json.Using --custom-metric-queries instead of --metrics is recommended.
     description: ''
   - name: --pri --priority
     defaultValue: "0"
@@ -82,7 +92,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --target-condition --tc -t
-    summary: Target condition in which a device or module configuration applies to. Configurations with no target condition will target no device or module.
+    summary: "Target condition in which a device or module configuration applies to. Configurations with no target condition will target no device or module. Use the following format: \"tags.environment='test'\"."
     description: ''
 - uid: az_iot_hub_configuration_delete
   name: az iot hub configuration delete
@@ -98,7 +108,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: Target device configuration name.
+    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   optionalParameters:
   - name: --auth-type
@@ -159,7 +169,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: Target device configuration name.
+    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   optionalParameters:
   - name: --auth-type
@@ -196,7 +206,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: Target device configuration name.
+    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   - isRequired: true
     name: --metric-id -m
@@ -224,17 +234,14 @@ directCommands:
     description: ''
 - uid: az_iot_hub_configuration_update
   name: az iot hub configuration update
-  summary: >-
-    Update specified properties of an IoT automatic device management configuration.
-
-
+  summary: Update specified properties of an IoT automatic device management configuration.
+  description: >-
     Use --set followed by property assignments for updating a configuration.
 
 
     Note: Configuration content is immutable. Configuration properties that can be
 
     updated are 'labels', 'metrics', 'priority' and 'targetCondition'.
-  description: ''
   syntax: >-
     az iot hub configuration update --config-id
                                     [--add]
@@ -252,7 +259,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: Target device configuration name.
+    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
     description: ''
   optionalParameters:
   - name: --add

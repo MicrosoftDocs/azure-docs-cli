@@ -128,7 +128,7 @@ To avoid unanticipated results, here are a few suggestions:
 
 - In Powershell, if your value is an empty string, please use `'""'`.
 
-- In Bash or Powershell, if your value is an empty quotes string `''`, please use `"''"`. 
+- In Bash or Powershell, if your value is an empty quotes string `''`, please use `"''"`.
 
 - Use Azure CLI's `@<file>` convention to load from a file and bypass the shell's interpretation mechanisms.
 
@@ -290,9 +290,31 @@ Append the proxy server's certificate to the CA bundle certificate file, or copy
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
 
-## Concurrent builds
+## Concurrent execution
 
-If you run Azure CLI on a build machine where multiple jobs can be run in parallel, access tokens might be shared between two build jobs run as the same OS user.  To avoid mix ups, set `AZURE_CONFIG_DIR` to a directory where the access tokens are stored.
+If you run Azure CLI commands concurrently on the same machine, write conflicts can happen if multiple Azure CLI commands write to the same MSAL token cache.
+
+To avoid potential failures, you may isolate the Azure CLI configuration folder for each script by setting environment variable `AZURE_CONFIG_DIR` for each script to a separate directory. Azure CLI commands in that script will save the configuration and token cache to the configured location instead of the default `~/.azure` folder.
+
+  ### [Bash](#tab/bash)
+
+  ```bash
+  export AZURE_CONFIG_DIR=/my/config/dir
+  ```
+
+  ### [PowerShell](#tab/powershell)
+
+  ```powershell
+  $env:AZURE_CONFIG_DIR='D:\my\config\dir'
+  ```
+
+  ### [Cmd](#tab/cmd)
+
+  ```azurecli
+  set AZURE_CONFIG_DIR=D:\my\config\dir
+  ```
+
+  ---
 
 ## Generic update parameters
 

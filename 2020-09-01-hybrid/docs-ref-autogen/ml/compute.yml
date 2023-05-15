@@ -74,6 +74,35 @@ directCommands:
   - name: --user-assigned-identities -i
     summary: The user assigned identity's resource ID, required for --identity_type=UserAssigned.
     description: ''
+- uid: az_ml_compute_connect-ssh
+  name: az ml compute connect-ssh
+  summary: Set up SSH connection to Compute Instance.
+  description: ''
+  syntax: >-
+    az ml compute connect-ssh --name
+                              --resource-group
+                              --workspace-name
+                              [--private-key-file-path]
+  examples:
+  - summary: Connect to a Compute Instance via SSH
+    syntax: az ml compute connect-ssh --name ci1 --resource-group my-resource-group --workspace-name my-workspace --private-key-file-path sshkey.pem
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the compute target. Required.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --private-key-file-path -f
+    summary: The path to the private key file file.
+    description: ''
 - uid: az_ml_compute_create
   name: az ml compute create
   summary: Create a compute target.
@@ -84,9 +113,11 @@ directCommands:
                          [--admin-password]
                          [--admin-username]
                          [--description]
+                         [--enable-node-public-ip]
                          [--file]
                          [--identity-type]
                          [--idle-time-before-scale-down]
+                         [--location]
                          [--max-instances]
                          [--min-instances]
                          [--name]
@@ -127,14 +158,20 @@ directCommands:
   - name: --description
     summary: Description of the compute target.
     description: ''
+  - name: --enable-node-public-ip
+    summary: 'Indicates whether public IP is enabled. Default: True.'
+    description: ''
   - name: --file -f
-    summary: 'Local path to the YAML file containing the Azure ML compute specification. The YAML reference docs for compute can be found at: https://aka.ms/ml-cli-v2-compute-aml-yaml-reference, https://aka.ms/ml-cli-v2-compute-aml-yaml-reference, https://aka.ms/ml-cli-v2-compute-vm-yaml-reference.'
+    summary: 'Local path to the YAML file containing the Azure ML compute specification. The YAML reference docs for compute can be found at: https://aka.ms/ml-cli-v2-compute-aml-yaml-reference, https://aka.ms/ml-cli-v2-compute-instance-yaml-reference, https://aka.ms/ml-cli-v2-compute-vm-yaml-reference.'
     description: ''
   - name: --identity-type
     summary: 'The type of managed identity. Allowed values: SystemAssigned, UserAssigned.'
     description: ''
   - name: --idle-time-before-scale-down -d
     summary: 'Node idle time in seconds before scaling down the cluster. Default: 120.'
+    description: ''
+  - name: --location -l
+    summary: Location of the compute. If not specified, defaults to the location of the workspace.
     description: ''
   - name: --max-instances
     summary: 'The maximum number of nodes to use on the cluster. Default: 4.'
@@ -469,12 +506,13 @@ directCommands:
                          [--no-wait]
                          [--remove]
                          [--set]
+                         [--tags]
                          [--user-assigned-identities]
   examples:
   - summary: Update the minimum number of nodes for an AmlCompute cluster
     syntax: az ml compute update --name nc6-cluster --min-instances 1 --resource-group my-resource-group --workspace-name my-workspace
   - summary: Update existing tags or add new tags for an AmlCompute cluster
-    syntax: az ml compute update --name nc6-cluster --set tags.key1=value1 tags.key2=value2 --resource-group my-resource-group --workspace-name my-workspace
+    syntax: az ml compute update --name nc6-cluster --tags key1=value1 key2=value2 --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -521,11 +559,15 @@ directCommands:
     defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --tags
+    summary: Space-separated key-value pairs for the tags of the object.
+    description: ''
   - name: --user-assigned-identities -i
     summary: Use '[system]' to set a system assigned identity else input resource IDs separated by commas (ie <ResourceID1>,<ResourceID2>) to set user assigned identities.
     description: ''
 commands:
 - az_ml_compute_attach
+- az_ml_compute_connect-ssh
 - az_ml_compute_create
 - az_ml_compute_delete
 - az_ml_compute_detach

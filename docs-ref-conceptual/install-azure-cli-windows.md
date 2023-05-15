@@ -54,7 +54,7 @@ You can also install the Azure CLI using PowerShell. Start PowerShell as adminis
 Start PowerShell as administrator and run the following command:
 
    ```PowerShell
-   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; rm .\AzureCLI.msi
+   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
 This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
@@ -148,9 +148,10 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 
 You uninstall the Azure CLI from the Windows "Apps and Features" list. To uninstall:
 
-| Platform                | Instructions                                           |
-| ----------------------- | ------------------------------------------------------ |
-| Windows 10              | Start > Settings > Apps                                |
+| Platform | Instructions |
+|---|---|
+| Windows 11 | Start > Settings > Apps > Installed apps |
+| Windows 10 | Start > Settings > System > Apps & Features |
 | Windows 8 and Windows 7 | Start > Control Panel > Programs > Uninstall a program |
 
 Once on this screen type __Azure CLI__ into the program search bar. The program to uninstall is listed as __Microsoft CLI 2.0 for Azure__. Select this application, then click the `Uninstall` button.

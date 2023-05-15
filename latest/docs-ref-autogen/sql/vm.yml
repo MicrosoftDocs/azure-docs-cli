@@ -72,7 +72,7 @@ directCommands:
                      [--image-offer]
                      [--image-sku {Developer, Enterprise, Express, Standard, Web}]
                      [--key-vault]
-                     [--least-privilege-mode {Enabled}]
+                     [--least-privilege-mode {Enabled, NotSet}]
                      [--license-type {AHUB, DR, PAYG}]
                      [--location]
                      [--log-backup-frequency]
@@ -183,7 +183,7 @@ directCommands:
     summary: Azure Key Vault url.
     description: ''
   - name: --least-privilege-mode
-    parameterValueGroup: "Enabled"
+    parameterValueGroup: "Enabled, NotSet"
     summary: SQL IaaS Agent Least Privilege Mode. Updates from sysadmin to specific permissions used per feature.
     description: ''
   - name: --license-type -i
@@ -265,6 +265,46 @@ directCommands:
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+- uid: az_sql_vm_enable-azure-ad-auth
+  name: az sql vm enable-azure-ad-auth
+  summary: Enable Azure AD authentication of a SQL virtual machine.
+  description: ''
+  syntax: >-
+    az sql vm enable-azure-ad-auth [--ids]
+                                   [--msi-client-id]
+                                   [--name]
+                                   [--resource-group]
+                                   [--skip-client-validation]
+                                   [--subscription]
+  examples:
+  - summary: Enable Azure AD authentication with system-assigned managed identity with client side validation.
+    syntax: az sql vm enable-azure-ad-auth -n sqlvm -g myresourcegroup
+  - summary: Enable Azure AD authentication with user-assigned managed identity with client side validation.
+    syntax: az sql vm enable-azure-ad-auth -n sqlvm -g myresourcegroup --msi-client-id 12345678
+  - summary: Enable Azure AD authentication with system-assigned managed identity skipping client side validation. The server side validation always happens.
+    syntax: az sql vm enable-azure-ad-auth -n sqlvm -g myresourcegroup --skip-client-validation
+  - summary: Enable Azure AD authentication with user-assigned managed identity skipping client side validation. The server side validation always happens.
+    syntax: az sql vm enable-azure-ad-auth -n sqlvm -g myresourcegroup --msi-client-id 12345678 --skip-client-validation
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --msi-client-id
+    summary: Virutal Machine Managed Identity Client ID.
+    description: ''
+  - name: --name -n
+    summary: Name of the SQL virtual machine.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --skip-client-validation
+    summary: Skip client side Azure AD authentication validation, the server side validation will still happen.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_vm_list
@@ -387,7 +427,7 @@ directCommands:
                      [--ids]
                      [--image-sku {Developer, Enterprise, Express, Standard, Web}]
                      [--key-vault]
-                     [--least-privilege-mode {Enabled}]
+                     [--least-privilege-mode {Enabled, NotSet}]
                      [--license-type {AHUB, DR, PAYG}]
                      [--log-backup-frequency]
                      [--maintenance-window-duration]
@@ -401,7 +441,7 @@ directCommands:
                      [--set]
                      [--sp-name]
                      [--sp-secret]
-                     [--sql-mgmt-type {Full}]
+                     [--sql-mgmt-type {Full, LightWeight, NoAgent}]
                      [--sql-workload-type {DW, GENERAL, OLTP}]
                      [--storage-account]
                      [--subscription]
@@ -539,7 +579,7 @@ directCommands:
     summary: Azure Key Vault url.
     description: ''
   - name: --least-privilege-mode
-    parameterValueGroup: "Enabled"
+    parameterValueGroup: "Enabled, NotSet"
     summary: SQL IaaS Agent Least Privilege Mode. Updates from sysadmin to specific permissions used per feature.
     description: ''
   - name: --license-type -i
@@ -585,7 +625,7 @@ directCommands:
     summary: Service principal name secret to access key vault.
     description: ''
   - name: --sql-mgmt-type
-    parameterValueGroup: "Full"
+    parameterValueGroup: "Full, LightWeight, NoAgent"
     summary: SQL Server management type. Updates from LightWeight to Full.
     description: ''
   - name: --sql-workload-type
@@ -612,10 +652,43 @@ directCommands:
     summary: Do not prompt for confirmation. Requires --sql-mgmt-type.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+- uid: az_sql_vm_validate-azure-ad-auth
+  name: az sql vm validate-azure-ad-auth
+  summary: Validate Azure AD authentication of a SQL virtual machine at the client side without enabling it.
+  description: ''
+  syntax: >-
+    az sql vm validate-azure-ad-auth [--ids]
+                                     [--msi-client-id]
+                                     [--name]
+                                     [--resource-group]
+                                     [--subscription]
+  examples:
+  - summary: Validate Azure AD authentication with system-assigned managed identity at the client side.
+    syntax: az sql vm validate-azure-ad-auth -n sqlvm -g myresourcegroup
+  - summary: Validate Azure AD authentication with user-assigned managed identity at the client side.
+    syntax: az sql vm validate-azure-ad-auth -n sqlvm -g myresourcegroup --msi-client-id 12345678
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --msi-client-id
+    summary: Virutal Machine Managed Identity Client ID.
+    description: ''
+  - name: --name -n
+    summary: Name of the SQL virtual machine.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
 - az_sql_vm_add-to-group
 - az_sql_vm_create
 - az_sql_vm_delete
+- az_sql_vm_enable-azure-ad-auth
 - az_sql_vm_group
 - az_sql_vm_group_ag-listener
 - az_sql_vm_group_ag-listener_create
@@ -633,6 +706,7 @@ commands:
 - az_sql_vm_show
 - az_sql_vm_start-assessment
 - az_sql_vm_update
+- az_sql_vm_validate-azure-ad-auth
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -652,5 +726,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/02/2022
+  ms.date: 04/12/2023
   description: Manage SQL virtual machines.

@@ -2,7 +2,7 @@
 uid: az_network_vnet_peering
 name: az network vnet peering
 summary: Manage peering connections between Azure Virtual Networks.
-description: To learn more about virtual network peering visit https://docs.microsoft.com/azure/virtual-network/virtual-network-manage-peering.
+description: To learn more about virtual network peering visit https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering.
 directCommands:
 - uid: az_network_vnet_peering_create
   name: az network vnet peering create
@@ -10,26 +10,21 @@ directCommands:
   description: To successfully peer two virtual networks this command must be called twice with the values for --vnet-name and --remote-vnet reversed.
   syntax: >-
     az network vnet peering create --name
-                                   --remote-vnet
                                    --resource-group
                                    --vnet-name
-                                   [--allow-forwarded-traffic]
-                                   [--allow-gateway-transit]
-                                   [--allow-vnet-access]
-                                   [--use-remote-gateways]
+                                   [--allow-forwarded-traffic {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--allow-gateway-transit {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--allow-vnet-access {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--remote-vnet]
+                                   [--use-remote-gateways {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Create a peering connection between two virtual networks.
-    syntax: >-
-      az network vnet peering create -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 \
-          --remote-vnet MyVnet2Id --allow-vnet-access
+    syntax: az network vnet peering create -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 --remote-vnet MyVnet2Id --allow-vnet-access
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: The name of the VNet peering.
-    description: ''
-  - isRequired: true
-    name: --remote-vnet
-    summary: Resource ID or name of the remote VNet.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -42,18 +37,29 @@ directCommands:
   optionalParameters:
   - name: --allow-forwarded-traffic
     defaultValue: "False"
-    summary: Allows forwarded traffic from the local VNet to the remote VNet.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network.
     description: ''
   - name: --allow-gateway-transit
     defaultValue: "False"
-    summary: Allows gateway link to be used in the remote VNet.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: If gateway links can be used in remote virtual networking to link to this virtual network.
     description: ''
   - name: --allow-vnet-access
     defaultValue: "False"
-    summary: Allows access from the local VNet to the remote VNet.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remote-vnet
+    summary: Name or ID of the remote VNet.
     description: ''
   - name: --use-remote-gateways
     defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Allows VNet to use the remote VNet's gateway. Remote VNet gateway must have --allow-gateway-transit enabled for remote peering. Only 1 peering can have this flag enabled. Cannot be set if the VNet already has a gateway.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -178,9 +184,10 @@ directCommands:
   description: ''
   syntax: >-
     az network vnet peering update [--add]
-                                   [--force-string]
+                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--ids]
                                    [--name]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--remove]
                                    [--resource-group]
                                    [--set]
@@ -197,11 +204,10 @@ directCommands:
     syntax: az network vnet peering update -g MyResourceGroup -n MyVnet1ToMyVnet2 --vnet-name MyVnet1 --set useRemoteGateways=true
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -210,15 +216,17 @@ directCommands:
   - name: --name -n
     summary: The name of the VNet peering.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
@@ -316,5 +324,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
-  description: To learn more about virtual network peering visit https://docs.microsoft.com/azure/virtual-network/virtual-network-manage-peering.
+  ms.date: 03/03/2023
+  description: To learn more about virtual network peering visit https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering.

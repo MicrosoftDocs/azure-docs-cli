@@ -4,6 +4,7 @@ ms.author: sttramer
 manager: carmonm
 ms.date: 09/07/2018
 ms.topic: include
+ms.custom: devx-track-azurecli
 ---
 1. Run the `login` command.
 

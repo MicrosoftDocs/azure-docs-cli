@@ -10,7 +10,7 @@ description: ''
 directCommands:
 - uid: az_k8s-extension_create
   name: az k8s-extension create
-  summary: Create a Kubernetes Extension.
+  summary: Create a Kubernetes Cluster Extension, including purchasing an extension Offer from Azure Marketplace (AKS only). Please refer to the example at the end to see how to create an extension or purchase an extension offer.
   description: ''
   syntax: >-
     az k8s-extension create --cluster-name
@@ -24,7 +24,14 @@ directCommands:
                             [--config-file]
                             [--config-protected]
                             [--config-protected-file]
+                            [--config-settings]
+                            [--configuration-protected-settings]
+                            [--configuration-protected-settings-file]
+                            [--configuration-settings-file]
                             [--no-wait]
+                            [--plan-name]
+                            [--plan-product]
+                            [--plan-publisher]
                             [--release-namespace]
                             [--release-train]
                             [--scope {cluster, namespace}]
@@ -33,6 +40,8 @@ directCommands:
   examples:
   - summary: Create a Kubernetes Extension
     syntax: az k8s-extension create --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension --extension-type microsoft.openservicemesh --scope cluster --release-train stable
+  - summary: Create a Kubernetes Marketplace Extension
+    syntax: az k8s-extension create --resource-group my-resource-group --cluster-name mycluster --cluster-type managedClusters --name myextension --extension-type Contoso.AzureVoteKubernetesAppTest --scope cluster --release-train stable --plan-name testplan --plan-product kubernetest_apps_demo_offer --plan-publisher test_test_mix3pptest0011614206850774
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -63,21 +72,42 @@ directCommands:
   - name: --cluster-resource-provider --cluster-rp
     summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
-  - name: --config --config-settings --configuration-settings
+  - name: --config --configuration-settings
     summary: Configuration Settings as key=value pair.  Repeat parameter for each setting.
     description: ''
-  - name: --config-file --config-settings-file --configuration-settings-file
+  - name: --config-file --config-settings-file
     summary: JSON file path for configuration-settings.
     description: ''
-  - name: --config-protected --config-protected-settings --configuration-protected-settings
+  - name: --config-protected --config-protected-settings
     summary: Configuration Protected Settings as key=value pair.  Repeat parameter for each setting.
     description: ''
-  - name: --config-protected-file --config-protected-settings-file --configuration-protected-settings-file
+  - name: --config-protected-file --config-protected-settings-file
     summary: JSON file path for configuration-protected-settings.
+    description: ''
+  - name: --config-settings
+    summary: Configuration Settings as key=value pair.  Repeat parameter for each setting.
+    description: ''
+  - name: --configuration-protected-settings
+    summary: Configuration Protected Settings as key=value pair.  Repeat parameter for each setting.
+    description: ''
+  - name: --configuration-protected-settings-file
+    summary: JSON file path for configuration-protected-settings.
+    description: ''
+  - name: --configuration-settings-file
+    summary: JSON file path for configuration-settings.
     description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --plan-name
+    summary: The plan name is referring to the Plan ID of the extension that is being taken from Marketplace portal under Usage Information + Support.
+    description: ''
+  - name: --plan-product
+    summary: The plan product is referring to the Product ID of the extension that is being taken from Marketplace portal under Usage Information + Support. An example of this is the name of the ISV offering used.
+    description: ''
+  - name: --plan-publisher
+    summary: The plan publisher is referring to the Publisher ID of the extension that is being taken from Marketplace portal under Usage Information + Support.
     description: ''
   - name: --release-namespace
     summary: Specify the namespace to install the extension release.
@@ -225,13 +255,17 @@ directCommands:
                             [--config-file]
                             [--config-protected]
                             [--config-protected-file]
+                            [--config-settings]
+                            [--configuration-protected-settings]
+                            [--configuration-protected-settings-file]
+                            [--configuration-settings-file]
                             [--no-wait]
                             [--release-train]
                             [--version]
                             [--yes]
   examples:
   - summary: Update a Kubernetes Extension
-    syntax: az k8s-extension update --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension --auto-upgrade true/false --version extension-version --release-train stable --configuration-settings settings-key=settings-value --configuration-protected-settings protected-settings-key=protected-value --configuration-settings-file=config-settings-file --configuration-protected-settings-file=protected-settings-file
+    syntax: az k8s-extension update --resource-group my-resource-group --cluster-name mycluster --cluster-type connectedClusters --name myextension --auto-upgrade true/false --version extension-version --release-train stable --configuration-settings settings-key=settings-value --config-protected-settings protected-settings-key=protected-value --config-settings-file=config-settings-file --config-protected-file=protected-settings-file
   requiredParameters:
   - isRequired: true
     name: --cluster-name -c
@@ -258,17 +292,29 @@ directCommands:
   - name: --cluster-resource-provider --cluster-rp
     summary: Cluster Resource Provider name for this clusterType (Required for provisionedClusters).
     description: ''
-  - name: --config --config-settings --configuration-settings
+  - name: --config --configuration-settings
     summary: Configuration Settings as key=value pair.  Repeat parameter for each setting.
     description: ''
-  - name: --config-file --config-settings-file --configuration-settings-file
+  - name: --config-file --config-settings-file
     summary: JSON file path for configuration-settings.
     description: ''
-  - name: --config-protected --config-protected-settings --configuration-protected-settings
+  - name: --config-protected --config-protected-settings
     summary: Configuration Protected Settings as key=value pair.  Repeat parameter for each setting.
     description: ''
-  - name: --config-protected-file --config-protected-settings-file --configuration-protected-settings-file
+  - name: --config-protected-file --config-protected-settings-file
     summary: JSON file path for configuration-protected-settings.
+    description: ''
+  - name: --config-settings
+    summary: Configuration Settings as key=value pair.  Repeat parameter for each setting.
+    description: ''
+  - name: --configuration-protected-settings
+    summary: Configuration Protected Settings as key=value pair.  Repeat parameter for each setting.
+    description: ''
+  - name: --configuration-protected-settings-file
+    summary: JSON file path for configuration-protected-settings.
+    description: ''
+  - name: --configuration-settings-file
+    summary: JSON file path for configuration-settings.
     description: ''
   - name: --no-wait
     defaultValue: "False"

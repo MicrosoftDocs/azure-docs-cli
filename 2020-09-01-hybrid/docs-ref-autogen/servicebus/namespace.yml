@@ -11,12 +11,18 @@ directCommands:
   syntax: >-
     az servicebus namespace create --name
                                    --resource-group
+                                   [--alternate-name]
                                    [--capacity {1, 16, 2, 4, 8}]
+                                   [--disable-local-auth {false, true}]
                                    [--encryption-config]
+                                   [--infra-encryption {false, true}]
                                    [--location]
                                    [--mi-system-assigned {false, true}]
                                    [--mi-user-assigned]
                                    [--min-tls {1.0, 1.1, 1.2}]
+                                   [--no-wait]
+                                   [--premium-messaging-partitions]
+                                   [--public-network {Disabled, Enabled}]
                                    [--sku {Basic, Premium, Standard}]
                                    [--tags]
                                    [--zone-redundant {false, true}]
@@ -35,12 +41,23 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --alternate-name
+    summary: Alternate name specified when alias and namespace names are same.
+    description: ''
   - name: --capacity
     parameterValueGroup: "1, 16, 2, 4, 8"
     summary: Number of message units. This property is only applicable to namespaces of Premium SKU.
     description: ''
+  - name: --disable-local-auth
+    parameterValueGroup: "false, true"
+    summary: A boolean value that indicates whether SAS authentication is enabled/disabled for the Service Bus.
+    description: ''
   - name: --encryption-config
     summary: List of KeyVaultProperties objects.
+    description: ''
+  - name: --infra-encryption
+    parameterValueGroup: "false, true"
+    summary: A boolean value that indicates whether Infrastructure Encryption (Double Encryption).
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
@@ -56,6 +73,17 @@ directCommands:
     parameterValueGroup: "1.0, 1.1, 1.2"
     summary: The minimum TLS version for the cluster to support, e.g. 1.2.
     description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --premium-messaging-partitions --premium-partitions
+    summary: The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4.
+    description: ''
+  - name: --public-network --public-network-access
+    parameterValueGroup: "Disabled, Enabled"
+    summary: This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile' access rules.
+    description: ''
   - name: --sku
     defaultValue: "Standard"
     parameterValueGroup: "Basic, Premium, Standard"
@@ -67,32 +95,6 @@ directCommands:
   - name: --zone-redundant
     parameterValueGroup: "false, true"
     summary: Enabling this property creates a ServiceBus Zone Redundant Namespace in regions supported availability zones.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
-- uid: az_servicebus_namespace_delete
-  name: az servicebus namespace delete
-  summary: Deletes the Service Bus Namespace.
-  description: ''
-  syntax: >-
-    az servicebus namespace delete [--ids]
-                                   [--name]
-                                   [--resource-group]
-                                   [--subscription]
-  examples:
-  - summary: Deletes the Service Bus Namespace
-    syntax: az servicebus namespace delete --resource-group myresourcegroup --name mynamespace
-  optionalParameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of Namespace.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_namespace_exists
@@ -109,126 +111,8 @@ directCommands:
     summary: Namespace name. Name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
-- uid: az_servicebus_namespace_list
-  name: az servicebus namespace list
-  summary: List the Service Bus Namespaces.
-  description: ''
-  syntax: az servicebus namespace list [--resource-group]
-  examples:
-  - summary: Get the Service Bus Namespaces by resource group
-    syntax: az servicebus namespace list --resource-group myresourcegroup
-  - summary: Get the Service Bus Namespaces by Subscription.
-    syntax: az servicebus namespace list
-  optionalParameters:
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
-- uid: az_servicebus_namespace_show
-  name: az servicebus namespace show
-  summary: Shows the Service Bus Namespace details.
-  description: ''
-  syntax: >-
-    az servicebus namespace show [--ids]
-                                 [--name]
-                                 [--resource-group]
-                                 [--subscription]
-  examples:
-  - summary: shows the Namespace details.
-    syntax: az servicebus namespace show --resource-group myresourcegroup --name mynamespace
-  optionalParameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Name of Namespace.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
-- uid: az_servicebus_namespace_update
-  name: az servicebus namespace update
-  summary: Updates a Service Bus Namespace.
-  description: ''
-  syntax: >-
-    az servicebus namespace update [--add]
-                                   [--capacity {1, 16, 2, 4, 8}]
-                                   [--force-string]
-                                   [--ids]
-                                   [--min-tls {1.0, 1.1, 1.2}]
-                                   [--name]
-                                   [--remove]
-                                   [--resource-group]
-                                   [--set]
-                                   [--sku {Basic, Premium, Standard}]
-                                   [--subscription]
-                                   [--tags]
-  examples:
-  - summary: Updates a Service Bus Namespace.
-    syntax: az servicebus namespace update --resource-group myresourcegroup --name mynamespace --tags tag=value
-  - summary: Updates a Service Bus Namespace (autogenerated)
-    syntax: az servicebus namespace update --name mynamespace --resource-group myresourcegroup --sku Basic
-  optionalParameters:
-  - name: --add
-    defaultValue: "[]"
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --capacity
-    parameterValueGroup: "1, 16, 2, 4, 8"
-    summary: Number of message units. This property is only applicable to namespaces of Premium SKU.
-    description: ''
-  - name: --force-string
-    defaultValue: "False"
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --min-tls --minimum-tls-version
-    parameterValueGroup: "1.0, 1.1, 1.2"
-    summary: The minimum TLS version for the cluster to support, e.g. 1.2.
-    description: ''
-  - name: --name -n
-    summary: Name of Namespace.
-    description: ''
-  - name: --remove
-    defaultValue: "[]"
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --set
-    defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --sku
-    parameterValueGroup: "Basic, Premium, Standard"
-    summary: Namespace SKU.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 commands:
-- az_servicebus_namespace_authorization-rule
-- az_servicebus_namespace_authorization-rule_create
-- az_servicebus_namespace_authorization-rule_delete
-- az_servicebus_namespace_authorization-rule_keys
-- az_servicebus_namespace_authorization-rule_keys_list
-- az_servicebus_namespace_authorization-rule_keys_renew
-- az_servicebus_namespace_authorization-rule_list
-- az_servicebus_namespace_authorization-rule_show
-- az_servicebus_namespace_authorization-rule_update
 - az_servicebus_namespace_create
-- az_servicebus_namespace_delete
 - az_servicebus_namespace_encryption
 - az_servicebus_namespace_encryption_add
 - az_servicebus_namespace_encryption_remove
@@ -236,7 +120,6 @@ commands:
 - az_servicebus_namespace_identity
 - az_servicebus_namespace_identity_assign
 - az_servicebus_namespace_identity_remove
-- az_servicebus_namespace_list
 - az_servicebus_namespace_network-rule
 - az_servicebus_namespace_network-rule_add
 - az_servicebus_namespace_network-rule_list
@@ -245,13 +128,7 @@ commands:
 - az_servicebus_namespace_private-endpoint-connection
 - az_servicebus_namespace_private-endpoint-connection_approve
 - az_servicebus_namespace_private-endpoint-connection_delete
-- az_servicebus_namespace_private-endpoint-connection_list
 - az_servicebus_namespace_private-endpoint-connection_reject
-- az_servicebus_namespace_private-endpoint-connection_show
-- az_servicebus_namespace_private-link-resource
-- az_servicebus_namespace_private-link-resource_show
-- az_servicebus_namespace_show
-- az_servicebus_namespace_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -271,5 +148,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/08/2022
+  ms.date: 03/02/2023
   description: Manage Azure Service Bus Namespace.

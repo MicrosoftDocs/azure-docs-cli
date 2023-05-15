@@ -78,9 +78,6 @@ directCommands:
     az aks create --name
                   --resource-group
                   [--aad-admin-group-object-ids]
-                  [--aad-client-app-id]
-                  [--aad-server-app-id]
-                  [--aad-server-app-secret]
                   [--aad-tenant-id]
                   [--aci-subnet-name]
                   [--admin-username]
@@ -100,6 +97,7 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--ca-profile]
                   [--client-secret]
+                  [--data-collection-settings]
                   [--defender-config]
                   [--disable-disk-driver]
                   [--disable-file-driver]
@@ -121,6 +119,8 @@ directCommands:
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
+                  [--enable-image-cleaner]
+                  [--enable-keda]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
                   [--enable-node-public-ip]
@@ -131,6 +131,7 @@ directCommands:
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
@@ -138,11 +139,14 @@ directCommands:
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--host-group-id]
                   [--http-proxy-config]
+                  [--image-cleaner-interval-hours]
+                  [--ip-families]
                   [--kubelet-config]
                   [--kubernetes-version]
                   [--linux-os-config]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
+                  [--load-balancer-managed-outbound-ipv6-count]
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
@@ -153,7 +157,9 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
+                  [--network-plugin-mode {overlay}]
                   [--network-policy]
                   [--no-ssh-key]
                   [--no-wait]
@@ -167,20 +173,22 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
-                  [--os-sku {CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
+                  [--os-sku {CBLMariner, Mariner, Ubuntu}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
+                  [--pod-cidrs]
                   [--pod-subnet-id]
                   [--ppg]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--service-cidr]
+                  [--service-cidrs]
                   [--service-principal]
                   [--skip-subnet-role-assignment]
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
-                  [--uptime-sla]
+                  [--tier {free, standard}]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -255,6 +263,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.13 --location westus2 --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize --enable-managed-identity --assign-identity <user_assigned_identity_resource_id>
   - summary: Create a kubernetes cluster with no CNI installed.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
+  - summary: Create a kubernetes cluster with KEDA workload autoscaler enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-keda
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -267,15 +277,6 @@ directCommands:
   optionalParameters:
   - name: --aad-admin-group-object-ids
     summary: Comma seperated list of aad group object IDs that will be set as cluster admin.
-    description: ''
-  - name: --aad-client-app-id
-    summary: The ID of an Azure Active Directory client application of type "Native". This application is for user login via kubectl.
-    description: ''
-  - name: --aad-server-app-id
-    summary: The ID of an Azure Active Directory server application of type "Web app/API". This application represents the managed cluster's apiserver (Server application).
-    description: ''
-  - name: --aad-server-app-secret
-    summary: The secret of an Azure Active Directory server application.
     description: ''
   - name: --aad-tenant-id
     summary: The ID of an Azure Active Directory tenant.
@@ -337,6 +338,9 @@ directCommands:
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
+  - name: --data-collection-settings
+    summary: Path to JSON file containing data collection settings for Monitoring addon.
+    description: ''
   - name: --defender-config
     summary: Path to JSON file containing Microsoft Defender profile configurations.
     description: ''
@@ -388,6 +392,7 @@ directCommands:
                                        Specify "--workspace-resource-id" to use an existing workspace.
                                        Specify "--enable-msi-auth-for-monitoring" to use Managed Identity Auth.
                                        Specify "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
+                                       Specify "--data-collection-settings" to configure data collection settings
                                        If monitoring addon is enabled --no-wait argument will have no effect
           - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
                                        Learn more at aka.ms/aks/policy.
@@ -427,6 +432,14 @@ directCommands:
   - name: --enable-fips-image
     defaultValue: "False"
     summary: Use FIPS-enabled OS on agent nodes.
+    description: ''
+  - name: --enable-image-cleaner
+    defaultValue: "False"
+    summary: Enable ImageCleaner Service.
+    description: ''
+  - name: --enable-keda
+    defaultValue: "False"
+    summary: Enable KEDA workload auto-scaler.
     description: ''
   - name: --enable-managed-identity
     defaultValue: "1"
@@ -470,6 +483,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Windows gmsa.
     description: ''
+  - name: --enable-workload-identity
+    defaultValue: "False"
+    summary: Enable workload identity addon.
+    description: ''
   - name: --fqdn-subdomain
     summary: Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
     description: ''
@@ -499,6 +516,12 @@ directCommands:
   - name: --http-proxy-config
     summary: HTTP Proxy configuration for this cluster.
     description: ''
+  - name: --image-cleaner-interval-hours
+    summary: ImageCleaner scanning interval.
+    description: ''
+  - name: --ip-families
+    summary: A comma separated list of IP versions to use for cluster networking.
+    description: Each IP version should be in the format IPvN. For example, IPv4.
   - name: --kubelet-config
     summary: Path to JSON file containing Kubelet configurations for agent nodes. https://aka.ms/aks/custom-node-config.
     description: ''
@@ -515,6 +538,9 @@ directCommands:
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
+  - name: --load-balancer-managed-outbound-ipv6-count
+    summary: Load balancer managed outbound IPv6 IP count.
+    description: Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
   - name: --load-balancer-outbound-ip-prefixes
     summary: Load balancer outbound IP prefix resource IDs.
     description: Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
@@ -547,10 +573,24 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-dataplane
+    parameterValueGroup: "azure, cilium"
+    summary: The network dataplane to use.
+    description: >-
+      Network dataplane used in the Kubernetes cluster.
+
+      Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --network-plugin
     parameterValueGroup: "azure, kubenet, none"
     summary: The Kubernetes network plugin to use.
     description: Specify "azure" for routable pod IPs from VNET, "kubenet" for non-routable pod IPs with an overlay network, or "none" for no networking configured. Defaults to "kubenet".
+  - name: --network-plugin-mode
+    parameterValueGroup: "overlay"
+    summary: The network plugin mode to use.
+    description: >-
+      Used to control the mode the network plugin should operate in. For example, "overlay" used with
+
+      --network-plugin=azure will use an overlay network (non-VNET IPs) for pods in the cluster.
   - name: --network-policy
     summary: The Kubernetes network policy to use.
     description: >-
@@ -602,7 +642,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --os-sku
-    parameterValueGroup: "CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022"
+    parameterValueGroup: "CBLMariner, Mariner, Ubuntu"
     summary: The OS SKU of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --outbound-type
@@ -612,6 +652,9 @@ directCommands:
   - name: --pod-cidr
     summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
     description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+  - name: --pod-cidrs
+    summary: A comma separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
+    description: Each range must not overlap with any Subnet IP ranges. For example, "172.244.0.0/16,fd0:abcd::/64".
   - name: --pod-subnet-id
     summary: The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
     description: ''
@@ -627,6 +670,9 @@ directCommands:
   - name: --service-cidr
     summary: A CIDR notation IP range from which to assign service cluster IPs.
     description: This range must not overlap with any Subnet IP ranges. For example, 10.0.0.0/16.
+  - name: --service-cidrs
+    summary: A comma separated list of CIDR notation IP ranges from which to assign service cluster IPs.
+    description: Each range must not overlap with any Subnet IP ranges. For example, "10.0.0.0/16,2001:abcd::/108".
   - name: --service-principal
     summary: Service principal used for authentication to Azure APIs.
     description: If not specified, a new service principal is created and cached at $HOME/.azure/aksServicePrincipal.json to be used by subsequent `az aks` commands.
@@ -644,9 +690,9 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
     description: ''
   - name: --vm-set-type
     summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet. Defaults to 'VirtualMachineScaleSets'.
@@ -775,6 +821,7 @@ directCommands:
                          [--appgw-subnet-cidr]
                          [--appgw-subnet-id]
                          [--appgw-watch-namespace]
+                         [--data-collection-settings]
                          [--enable-msi-auth-for-monitoring]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
@@ -818,6 +865,9 @@ directCommands:
     description: ''
   - name: --appgw-watch-namespace
     summary: Specify the namespace, which AGIC should watch. This could be a single string value, or a comma-separated list of namespaces.
+    description: ''
+  - name: --data-collection-settings
+    summary: Path to JSON file containing data collection settings for Monitoring addon.
     description: ''
   - name: --enable-msi-auth-for-monitoring
     defaultValue: "False"
@@ -1083,7 +1133,6 @@ directCommands:
   syntax: >-
     az aks operation-abort --name
                            --resource-group
-                           [--aks-custom-headers]
                            [--no-wait]
   examples:
   - summary: Abort operation on managed cluster
@@ -1098,13 +1147,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --aks-custom-headers
-    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
-    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
 - uid: az_aks_remove-dev-spaces
   name: az aks remove-dev-spaces
   summary: Remove Azure Dev Spaces from a managed Kubernetes cluster.
@@ -1291,10 +1338,13 @@ directCommands:
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
+                  [--disable-image-cleaner]
+                  [--disable-keda]
                   [--disable-local-accounts]
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
+                  [--disable-workload-identity]
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-azure-keyvault-kms]
@@ -1304,6 +1354,8 @@ directCommands:
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
+                  [--enable-image-cleaner]
+                  [--enable-keda]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
                   [--enable-oidc-issuer]
@@ -1311,11 +1363,14 @@ directCommands:
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
                   [--enable-windows-gmsa]
+                  [--enable-workload-identity]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--http-proxy-config]
+                  [--image-cleaner-interval-hours]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
+                  [--load-balancer-managed-outbound-ipv6-count]
                   [--load-balancer-outbound-ip-prefixes]
                   [--load-balancer-outbound-ips]
                   [--load-balancer-outbound-ports]
@@ -1323,13 +1378,14 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
-                  [--no-uptime-sla]
+                  [--network-plugin-mode]
                   [--no-wait]
                   [--nodepool-labels]
+                  [--pod-cidr]
                   [--rotation-poll-interval]
                   [--tags]
+                  [--tier {free, standard}]
                   [--update-cluster-autoscaler]
-                  [--uptime-sla]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -1381,6 +1437,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa
   - summary: Enable Windows gmsa for a kubernetes cluster without setting DNS server in the vnet used by the cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
+  - summary: Enable KEDA workload autoscaler for an existing kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-keda
+  - summary: Disable KEDA workload autoscaler for an existing kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-keda
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1466,6 +1526,14 @@ directCommands:
     defaultValue: "False"
     summary: Disable AzureFile CSI Driver.
     description: ''
+  - name: --disable-image-cleaner
+    defaultValue: "False"
+    summary: Disable ImageCleaner Service.
+    description: ''
+  - name: --disable-keda
+    defaultValue: "False"
+    summary: Disable KEDA workload auto-scaler.
+    description: ''
   - name: --disable-local-accounts
     defaultValue: "False"
     summary: If set to true, getting static credential will be disabled for this cluster.
@@ -1481,6 +1549,10 @@ directCommands:
   - name: --disable-snapshot-controller
     defaultValue: "False"
     summary: Disable CSI Snapshot Controller.
+    description: ''
+  - name: --disable-workload-identity
+    defaultValue: "False"
+    summary: Disable workload identity addon.
     description: ''
   - name: --enable-aad
     defaultValue: "False"
@@ -1517,6 +1589,14 @@ directCommands:
     defaultValue: "False"
     summary: Enable AzureFile CSI Driver.
     description: ''
+  - name: --enable-image-cleaner
+    defaultValue: "False"
+    summary: Enable ImageCleaner Service.
+    description: ''
+  - name: --enable-keda
+    defaultValue: "False"
+    summary: Enable KEDA workload auto-scaler.
+    description: ''
   - name: --enable-local-accounts
     defaultValue: "False"
     summary: If set to true, will enable getting static credential for this cluster.
@@ -1545,6 +1625,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Windows gmsa on cluster.
     description: ''
+  - name: --enable-workload-identity
+    defaultValue: "False"
+    summary: Enable workload identity addon.
+    description: ''
   - name: --gmsa-dns-server
     summary: Specify DNS server for Windows gmsa on cluster.
     description: >-
@@ -1560,12 +1644,18 @@ directCommands:
   - name: --http-proxy-config
     summary: HTTP Proxy configuration for this cluster.
     description: ''
+  - name: --image-cleaner-interval-hours
+    summary: ImageCleaner scanning interval.
+    description: ''
   - name: --load-balancer-idle-timeout
     summary: Load balancer idle timeout in minutes.
     description: Desired idle timeout for load balancer outbound flows, default is 30 minutes. Please specify a value in the range of [4, 100].
   - name: --load-balancer-managed-outbound-ip-count
     summary: Load balancer managed outbound IP count.
     description: Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs. If the new value is greater than the original value, new additional outbound IPs will be created. If the value is less than the original value, existing outbound IPs will be deleted and outbound connections may fail due to configuration update.
+  - name: --load-balancer-managed-outbound-ipv6-count
+    summary: Load balancer managed outbound IPv6 IP count.
+    description: Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
   - name: --load-balancer-outbound-ip-prefixes
     summary: Load balancer outbound IP prefix resource IDs.
     description: Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count and Load balancer outbound IP resource IDs.
@@ -1587,9 +1677,8 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
-  - name: --no-uptime-sla
-    defaultValue: "False"
-    summary: Change a paid managed cluster to a free one.
+  - name: --network-plugin-mode
+    summary: Update the mode of a network plugin to migrate to a different pod networking setup.
     description: ''
   - name: --no-wait
     defaultValue: "False"
@@ -1598,19 +1687,22 @@ directCommands:
   - name: --nodepool-labels
     summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
     description: ''
+  - name: --pod-cidr
+    summary: Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
+    description: ''
   - name: --rotation-poll-interval
     summary: Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
     description: ''
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' changes a standard managed cluster to a free one.
+    description: ''
   - name: --update-cluster-autoscaler -u
     defaultValue: "False"
     summary: Update min-count or max-count for cluster autoscaler.
-    description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
     description: ''
   - name: --windows-admin-password
     summary: User account password to use on windows node VMs.
@@ -1637,20 +1729,13 @@ directCommands:
   syntax: >-
     az aks update-credentials --name
                               --resource-group
-                              [--aad-client-app-id]
-                              [--aad-server-app-id]
-                              [--aad-server-app-secret]
-                              [--aad-tenant-id]
                               [--client-secret]
                               [--no-wait]
-                              [--reset-aad]
                               [--reset-service-principal]
                               [--service-principal]
   examples:
   - summary: Update an existing Kubernetes cluster with new service principal.
     syntax: az aks update-credentials -g MyResourceGroup -n MyManagedCluster --reset-service-principal --service-principal MyNewServicePrincipalID --client-secret MyNewServicePrincipalSecret
-  - summary: Update an existing Azure Active Directory Kubernetes cluster with new server app secret key.
-    syntax: az aks update-credentials -g MyResourceGroup -n MyManagedCluster --reset-aad --aad-server-app-id MyExistingAADServerAppID --aad-server-app-secret MyNewAADServerAppSecret --aad-client-app-id MyExistingAADClientAppID --aad-tenant-id MyAADTenantID
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1661,28 +1746,12 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --aad-client-app-id
-    summary: The ID of an Azure Active Directory client application. This argument is required if `--reset-aad` is specified.
-    description: ''
-  - name: --aad-server-app-id
-    summary: The ID of an Azure Active Directory server application. This argument is required if `--reset-aad` is specified.
-    description: ''
-  - name: --aad-server-app-secret
-    summary: The secret of an Azure Active Directory server application. This argument is required if `--reset-aad` is specified.
-    description: ''
-  - name: --aad-tenant-id
-    summary: Tenant ID associated with Azure Active Directory.
-    description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
     description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --reset-aad
-    defaultValue: "False"
-    summary: Reset Azure Active Directory configuration for a managed cluster.
     description: ''
   - name: --reset-service-principal
     defaultValue: "False"
@@ -1883,6 +1952,11 @@ commands:
 - az_aks_maintenanceconfiguration_list
 - az_aks_maintenanceconfiguration_show
 - az_aks_maintenanceconfiguration_update
+- az_aks_mesh
+- az_aks_mesh_disable
+- az_aks_mesh_disable-ingress-gateway
+- az_aks_mesh_enable
+- az_aks_mesh_enable-ingress-gateway
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_delete

@@ -6,32 +6,36 @@ description: ''
 directCommands:
 - uid: az_network_lb_address-pool_create
   name: az network lb address-pool create
-  summary: Create an address pool.
+  summary: Create load balancer backend address pool.
   description: ''
   syntax: >-
-    az network lb address-pool create --lb-name
-                                      --name
+    az network lb address-pool create --address-pool-name
+                                      --lb-name
                                       --resource-group
                                       [--admin-state {Down, Drain, None, Up}]
                                       [--backend-address]
-                                      [--backend-addresses-config-file]
                                       [--drain-period]
+                                      [--location]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--tunnel-interfaces]
                                       [--vnet]
   examples:
   - summary: Create an address pool.
     syntax: az network lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool
-  - summary: Create an address pool with several backend addresses using key-value arguments.
-    syntax: az network lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --vnet {VnetResourceId} --backend-address name=addr1 ip-address=10.0.0.1 --backend-address name=addr2 ip-address=10.0.0.3
+  - summary: Create an address pool with several backend addresses using shorthand syntax arguments.
+    syntax: az network lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --vnet MyVnetResource --backend-addresses "[{name:addr1,ip-address:10.0.0.1},{name:addr2,ip-address:10.0.0.2,subnet:subnetName}]"
   - summary: Create an address pool with several backend addresses using config file
-    syntax: az network lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses-config-file @config_file.json
+    syntax: az network lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses config_file.json
+  - summary: Create an address pool with one backend address using key-value arguments.
+    syntax: az network lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-address name=addr1 ip-address=10.0.0.1 subnet=/subscriptions/000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet1
   requiredParameters:
+  - isRequired: true
+    name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
+    description: ''
   - isRequired: true
     name: --lb-name
     summary: The load balancer name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -40,86 +44,57 @@ directCommands:
   optionalParameters:
   - name: --admin-state
     parameterValueGroup: "Down, Drain, None, Up"
-    summary: Administrative state which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections.
+    summary: Default administrative state to backend addresses in `--backend-addresses`.
     description: ''
-  - name: --backend-address
-    summary: Backend addresses information for backend address pool. If it's used, --vnet is required or subnet is required.
-    description: >-
-      Usage1: --backend-address name=addr1 ip-address=10.0.0.1 --vnet MyVnet
-
-      Usage2: --backend-address name=addr1 ip-address=10.0.0.1 subnet=/subscriptions/000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet1
-
-      Usage3: --backend-address name=addr1 ip-address=10.0.0.1 subnet=subnet1 --vnet MyVnet
-
-
-      name: Required. The name of the backend address.
-
-      ip-address: Required. Ip Address within the Virtual Network.
-
-      subnet: Name or Id of the subnet.
-
-
-      Multiple backend addresses can be specified by using more than one `--backend-address` argument.
-  - name: --backend-addresses-config-file
-    summary: A config file used to set backend addresses. This argument is for experienced users. You may encounter parse errors if the json file is invalid.
-    description: >-
-      Usage: --backend-addresses-config-file @"{config_file.json}"
-
-
-      A example config file is
-
-      [
-        {
-          "name": "address1",
-          "virtualNetwork": "clitestvnet",
-          "ipAddress": "10.0.0.4"
-        },
-        {
-          "name": "address2",
-          "virtualNetwork": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/virtualNetworks/clitestvnet",
-          "ipAddress": "10.0.0.5"
-        },
-        {
-          "name": "address3",
-          "subnet": "subnet3",
-          "ipAddress": "10.0.0.6"
-        },
-        {
-          "name": "address4",
-          "subnet": "/subscriptions/000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet4",
-          "ipAddress": "10.0.0.7"
-        }
-      ].
-  - name: --drain-period
+  - name: --backend-address --backend-addresses
+    summary: 'An array of backend addresses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--backend-address`.'
+    description: ''
+  - name: --drain-period --drain-period-in-seconds
     summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
     description: ''
+  - name: --location
+    summary: The location of the backend address pool.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tunnel-interfaces
+    summary: An array of gateway load balancer tunnel interfaces.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --vnet
-    summary: Name or Id of the virtual network applied to all backend addresses.
+    summary: Name or Id of the default virtual network applied to backend addresses in `--backend-addresses`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address-pool_delete
   name: az network lb address-pool delete
-  summary: Delete an address pool.
+  summary: Delete the specified load balancer backend address pool.
   description: ''
   syntax: >-
-    az network lb address-pool delete --lb-name
-                                      --name
+    az network lb address-pool delete --address-pool-name
+                                      --lb-name
                                       --resource-group
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Delete an address pool.
     syntax: az network lb address-pool delete -g MyResourceGroup --lb-name MyLb -n MyAddressPool
   requiredParameters:
   - isRequired: true
+    name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
+    description: ''
+  - isRequired: true
     name: --lb-name
     summary: The load balancer name.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address-pool_list
@@ -135,7 +110,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --lb-name
-    summary: The load balancer name.
+    summary: The name of the load balancer.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -147,24 +122,29 @@ directCommands:
   summary: Get the details of an address pool.
   description: ''
   syntax: >-
-    az network lb address-pool show --lb-name
-                                    --name
-                                    --resource-group
+    az network lb address-pool show [--address-pool-name]
+                                    [--ids]
+                                    [--lb-name]
+                                    [--resource-group]
+                                    [--subscription]
   examples:
   - summary: Get the details of an address pool.
     syntax: az network lb address-pool show -g MyResourceGroup --lb-name MyLb -n MyAddressPool
-  requiredParameters:
-  - isRequired: true
-    name: --lb-name
-    summary: The load balancer name.
+  optionalParameters:
+  - name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address-pool_update
@@ -172,108 +152,143 @@ directCommands:
   summary: Update an address pool.
   description: ''
   syntax: >-
-    az network lb address-pool update --lb-name
-                                      --name
-                                      --resource-group
-                                      [--add]
+    az network lb address-pool update [--add]
+                                      [--address-pool-name]
                                       [--admin-state {Down, Drain, None, Up}]
                                       [--backend-address]
-                                      [--backend-addresses-config-file]
                                       [--drain-period]
-                                      [--force-string]
+                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--ids]
+                                      [--lb-name]
+                                      [--location]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                       [--remove]
+                                      [--resource-group]
                                       [--set]
+                                      [--subscription]
+                                      [--tunnel-interfaces]
                                       [--vnet]
   examples:
-  - summary: Update an address pool with several backend addresses using key-value arguments.
-    syntax: az network lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --vnet {VnetResourceId} --backend-address name=addr1 ip-address=10.0.0.1 --backend-address name=addr2 ip-address=10.0.0.3
-  requiredParameters:
-  - isRequired: true
-    name: --lb-name
-    summary: The load balancer name.
-    description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+  - summary: Update all backend addresses in the address pool using shorthand syntax
+    syntax: az network lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --vnet MyVnetResource --backend-addresses "[{name:addr1,ip-address:10.0.0.1},{name:addr2,ip-address:10.0.0.2,subnet:subnetName}]"
+  - summary: Update the subnet of the first backend address in the address pool using shorthand syntax
+    syntax: az network lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0].subnet=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet1
+  - summary: Remove the first backend address in the address pool using shorthand syntax
+    syntax: az network lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0]=null
+  - summary: Remove all the backend addresses in the address pool
+    syntax: az network lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses null
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
     description: ''
   - name: --admin-state
     parameterValueGroup: "Down, Drain, None, Up"
-    summary: Administrative state which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections.
+    summary: Default administrative state to backend addresses in `--backend-addresses`.
     description: ''
-  - name: --backend-address
-    summary: Backend addresses information for backend address pool. If it's used, --vnet is required or subnet is required.
-    description: >-
-      Usage1: --backend-address name=addr1 ip-address=10.0.0.1 --vnet MyVnet
-
-      Usage2: --backend-address name=addr1 ip-address=10.0.0.1 subnet=/subscriptions/000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet1
-
-      Usage3: --backend-address name=addr1 ip-address=10.0.0.1 subnet=subnet1 --vnet MyVnet
-
-
-      name: Required. The name of the backend address.
-
-      ip-address: Required. Ip Address within the Virtual Network.
-
-      subnet: Name or Id of the subnet.
-
-
-      Multiple backend addresses can be specified by using more than one `--backend-address` argument.
-  - name: --backend-addresses-config-file
-    summary: A config file used to set backend addresses. This argument is for experienced users. You may encounter parse errors if the json file is invalid.
-    description: >-
-      Usage: --backend-addresses-config-file @"{config_file.json}"
-
-
-      A example config file is
-
-      [
-        {
-          "name": "address1",
-          "virtualNetwork": "clitestvnet",
-          "ipAddress": "10.0.0.4"
-        },
-        {
-          "name": "address2",
-          "virtualNetwork": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/virtualNetworks/clitestvnet",
-          "ipAddress": "10.0.0.5"
-        },
-        {
-          "name": "address3",
-          "subnet": "subnet3",
-          "ipAddress": "10.0.0.6"
-        },
-        {
-          "name": "address4",
-          "subnet": "/subscriptions/000/resourceGroups/MyRg/providers/Microsoft.Network/virtualNetworks/vnet/subnets/subnet4",
-          "ipAddress": "10.0.0.7"
-        }
-      ].
-  - name: --drain-period
+  - name: --backend-address --backend-addresses
+    summary: 'An array of backend addresses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--backend-address`.'
+    description: ''
+  - name: --drain-period --drain-period-in-seconds
     summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - name: --location
+    summary: The location of the backend address pool.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tunnel-interfaces
+    summary: An array of gateway load balancer tunnel interfaces.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --vnet
-    summary: Name or Id of the virtual network applied to all backend addresses.
+    summary: Name or Id of the default virtual network applied to backend addresses in `--backend-addresses`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_lb_address-pool_wait
+  name: az network lb address-pool wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network lb address-pool wait [--address-pool-name]
+                                    [--created]
+                                    [--custom]
+                                    [--deleted]
+                                    [--exists]
+                                    [--ids]
+                                    [--interval]
+                                    [--lb-name]
+                                    [--resource-group]
+                                    [--subscription]
+                                    [--timeout]
+                                    [--updated]
+  optionalParameters:
+  - name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
+    description: ''
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -281,6 +296,9 @@ commands:
 - az_network_lb_address-pool_address_add
 - az_network_lb_address-pool_address_list
 - az_network_lb_address-pool_address_remove
+- az_network_lb_address-pool_address_show
+- az_network_lb_address-pool_address_update
+- az_network_lb_address-pool_address_wait
 - az_network_lb_address-pool_create
 - az_network_lb_address-pool_delete
 - az_network_lb_address-pool_list
@@ -289,8 +307,11 @@ commands:
 - az_network_lb_address-pool_tunnel-interface_add
 - az_network_lb_address-pool_tunnel-interface_list
 - az_network_lb_address-pool_tunnel-interface_remove
+- az_network_lb_address-pool_tunnel-interface_show
 - az_network_lb_address-pool_tunnel-interface_update
+- az_network_lb_address-pool_tunnel-interface_wait
 - az_network_lb_address-pool_update
+- az_network_lb_address-pool_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -310,5 +331,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage address pools of a load balancer.

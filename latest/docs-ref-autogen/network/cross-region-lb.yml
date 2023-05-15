@@ -2,7 +2,7 @@
 uid: az_network_cross-region-lb
 name: az network cross-region-lb
 summary: Manage and configure cross-region load balancers.
-description: To learn more about Azure Load Balancer visit https://docs.microsoft.com/azure/load-balancer/load-balancer-get-started-internet-arm-cli.
+description: To learn more about Azure Load Balancer visit https://learn.microsoft.com/en-us/azure/load-balancer/tutorial-cross-region-cli.
 directCommands:
 - uid: az_network_cross-region-lb_create
   name: az network cross-region-lb create
@@ -77,19 +77,27 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_cross-region-lb_delete
   name: az network cross-region-lb delete
-  summary: Deletes the specified load balancer.
+  summary: Delete the specified load balancer.
   description: ''
   syntax: >-
     az network cross-region-lb delete [--ids]
                                       [--name]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                       [--resource-group]
                                       [--subscription]
+  examples:
+  - summary: Delete a load balancer.
+    syntax: az network cross-region-lb delete -g MyResourceGroup -n MyLb
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: The load balancer name.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -113,7 +121,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_cross-region-lb_show
   name: az network cross-region-lb show
-  summary: Gets the specified load balancer.
+  summary: Get the details of a load balancer.
   description: ''
   syntax: >-
     az network cross-region-lb show [--expand]
@@ -121,6 +129,9 @@ directCommands:
                                     [--name]
                                     [--resource-group]
                                     [--subscription]
+  examples:
+  - summary: Get the details of a load balancer.
+    syntax: az network cross-region-lb show -g MyResourceGroup -n MyLb
   optionalParameters:
   - name: --expand
     summary: Expands referenced resources. Default value is None.
@@ -140,27 +151,32 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_cross-region-lb_update
   name: az network cross-region-lb update
-  summary: Update a cross-region load balancer.
-  description: This command can only be used to update the tags for a load balancer. Name and resource group are immutable and cannot be updated.
+  summary: Update a load balancer.
+  description: >-
+    This command can only be used to update the tags for a load balancer.
+
+    Name and resource group are immutable and cannot be updated.
   syntax: >-
     az network cross-region-lb update [--add]
-                                      [--force-string]
+                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                       [--ids]
                                       [--name]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--probes]
                                       [--remove]
                                       [--resource-group]
                                       [--set]
                                       [--subscription]
+                                      [--tags]
   examples:
   - summary: Update the tags of a load balancer.
-    syntax: az network cross-region-lb update -g MyResourceGroup -n MyLb --set tags.CostCenter=MyBusinessGroup
+    syntax: az network cross-region-lb update -g MyResourceGroup -n MyLB --tags CostCenter=MyTestGroup
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -169,24 +185,32 @@ directCommands:
   - name: --name -n
     summary: The load balancer name.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --probes
+    summary: Collection of probe objects used in the load balancer.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_cross-region-lb_wait
   name: az network cross-region-lb wait
-  summary: Place the CLI in a waiting state until a condition of the cross-region load balancer is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az network cross-region-lb wait [--created]
@@ -201,9 +225,6 @@ directCommands:
                                     [--subscription]
                                     [--timeout]
                                     [--updated]
-  examples:
-  - summary: Wait for load balancer to return as created.
-    syntax: az network cross-region-lb wait -g MyResourceGroup -n MyLB --created
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -254,10 +275,13 @@ commands:
 - az_network_cross-region-lb_address-pool_address_add
 - az_network_cross-region-lb_address-pool_address_list
 - az_network_cross-region-lb_address-pool_address_remove
+- az_network_cross-region-lb_address-pool_address_show
+- az_network_cross-region-lb_address-pool_address_update
 - az_network_cross-region-lb_address-pool_create
 - az_network_cross-region-lb_address-pool_delete
 - az_network_cross-region-lb_address-pool_list
 - az_network_cross-region-lb_address-pool_show
+- az_network_cross-region-lb_address-pool_update
 - az_network_cross-region-lb_create
 - az_network_cross-region-lb_delete
 - az_network_cross-region-lb_frontend-ip
@@ -267,12 +291,6 @@ commands:
 - az_network_cross-region-lb_frontend-ip_show
 - az_network_cross-region-lb_frontend-ip_update
 - az_network_cross-region-lb_list
-- az_network_cross-region-lb_probe
-- az_network_cross-region-lb_probe_create
-- az_network_cross-region-lb_probe_delete
-- az_network_cross-region-lb_probe_list
-- az_network_cross-region-lb_probe_show
-- az_network_cross-region-lb_probe_update
 - az_network_cross-region-lb_rule
 - az_network_cross-region-lb_rule_create
 - az_network_cross-region-lb_rule_delete
@@ -301,5 +319,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
-  description: To learn more about Azure Load Balancer visit https://docs.microsoft.com/azure/load-balancer/load-balancer-get-started-internet-arm-cli.
+  ms.date: 03/03/2023
+  description: To learn more about Azure Load Balancer visit https://learn.microsoft.com/en-us/azure/load-balancer/tutorial-cross-region-cli.

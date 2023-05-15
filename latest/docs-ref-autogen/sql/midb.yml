@@ -13,6 +13,7 @@ directCommands:
                        --name
                        --resource-group
                        [--collation]
+                       [--ledger-on {Disabled, Enabled}]
                        [--no-wait]
                        [--tags]
   examples:
@@ -34,6 +35,10 @@ directCommands:
   optionalParameters:
   - name: --collation
     summary: 'The collation of the Azure SQL Managed Database collation to use, e.g.: SQL_Latin1_General_CP1_CI_AS or Latin1_General_100_CS_AS_SC.'
+    description: ''
+  - name: --ledger-on
+    parameterValueGroup: "Disabled, Enabled"
+    summary: 'Create a ledger database, in which the integrity of all data is protected by the ledger feature. All tables in the ledger database must be ledger tables. Note: the value of this property cannot be changed after the database has been created.'
     description: ''
   - name: --no-wait
     defaultValue: "False"
@@ -135,6 +140,47 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+- uid: az_sql_midb_recover
+  name: az sql midb recover
+  summary: Recover a managed database using geo-pair instance backup.
+  description: ''
+  syntax: >-
+    az sql midb recover --recoverable-database-id
+                        [--ids]
+                        [--managed-instance]
+                        [--name]
+                        [--no-wait]
+                        [--resource-group]
+                        [--subscription]
+  examples:
+  - summary: Recover managed database using recoverable database id
+    syntax: az sql midb recover -g mygroup --mi myinstance -n mymanageddb -r '/subscriptions/sub1/resourceGroups/rg1/providers/Microsoft.Sql/managedInstances/myinstance/recoverableDatabases/db1'
+  requiredParameters:
+  - isRequired: true
+    name: --recoverable-database-id -r
+    summary: The id of recoverable database from geo-replicated instance.
+    description: ''
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --managed-instance --mi
+    summary: Name of the Azure SQL managed instance.
+    description: ''
+  - name: --name -n
+    summary: The name of the Azure SQL Managed Database.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_midb_restore
   name: az sql midb restore
   summary: Restore a managed database.
@@ -150,7 +196,9 @@ directCommands:
                         [--name]
                         [--no-wait]
                         [--resource-group]
+                        [--source-sub]
                         [--subscription]
+                        [--tags]
   examples:
   - summary: Restore a live managed database using Point in time restore
     syntax: az sql midb restore -g mygroup --mi myinstance -n mymanageddb --dest-name targetmidb --time "2018-05-20T05:34:22"
@@ -158,6 +206,10 @@ directCommands:
     syntax: az sql midb restore -g mygroup --mi myinstance -n mymanageddb --dest-name targetmidb --time "2018-05-20T05:34:22" --deleted-time "2018-05-20T05:34:22"
   - summary: Restore a live managed database from another instance using Point in time restore
     syntax: az sql midb restore -g mygroup --mi myinstance -n mymanageddb --dest-name targetmidb --time "2018-05-20T05:34:22" --dest-mi targetmi --dest-resource-group targetrg
+  - summary: Restore a live managed database from another subscription using Point in time restore
+    syntax: az sql midb restore -s sourcesubscriptionid -g sourcegroup --mi sourceinstance -n sourcemanageddb --dest-name targetmidb --dest-mi targetmi --time "2018-05-20T05:34:22"
+  - summary: Restore a dropped managed database from another subscription using Point in time restore
+    syntax: az sql midb restore -s sourcesubscriptionid -g sourcegroup --mi sourceinstance -n sourcemanageddb --dest-name targetmidb --dest-mi targetmi --time "2018-05-20T05:34:22" --deleted-time "2018-05-20T05:34:22"
   requiredParameters:
   - isRequired: true
     name: --dest-name
@@ -193,8 +245,14 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --source-sub -s
+    summary: Subscription id of the source database, the one restored from. This parameter should be used when doing cross subscription restore.
+    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_midb_show
@@ -287,8 +345,15 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
+- az_sql_midb_advanced-threat-protection-setting
+- az_sql_midb_advanced-threat-protection-setting_show
+- az_sql_midb_advanced-threat-protection-setting_update
 - az_sql_midb_create
 - az_sql_midb_delete
+- az_sql_midb_ledger-digest-uploads
+- az_sql_midb_ledger-digest-uploads_disable
+- az_sql_midb_ledger-digest-uploads_enable
+- az_sql_midb_ledger-digest-uploads_show
 - az_sql_midb_list
 - az_sql_midb_list-deleted
 - az_sql_midb_log-replay
@@ -306,6 +371,7 @@ commands:
 - az_sql_midb_ltr-policy
 - az_sql_midb_ltr-policy_set
 - az_sql_midb_ltr-policy_show
+- az_sql_midb_recover
 - az_sql_midb_restore
 - az_sql_midb_short-term-retention-policy
 - az_sql_midb_short-term-retention-policy_set
@@ -331,5 +397,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/02/2022
+  ms.date: 04/12/2023
   description: Manage SQL managed instance databases.

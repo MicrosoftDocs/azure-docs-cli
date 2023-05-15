@@ -12,6 +12,9 @@ directCommands:
     az search service create --name
                              --resource-group
                              --sku {Basic, Free, Standard, Standard2, Standard3}
+                             [--aad-auth-failure-mode]
+                             [--auth-options]
+                             [--disable-local-auth {false, true}]
                              [--hosting-mode]
                              [--identity-type]
                              [--ip-rules]
@@ -35,6 +38,16 @@ directCommands:
     summary: 'The SKU of the search service, which determines price tier and capacity limits. Accepted Values: Free, Basic, Standard, Standard2, Standard3.'
     description: ''
   optionalParameters:
+  - name: --aad-auth-failure-mode
+    summary: Describes response code from calls to the search service that failed authentication; possible values include "http401WithBearerChallenge", "http403"; This cannot be combined with disable_local_auth.
+    description: ''
+  - name: --auth-options
+    summary: Options for authenticating calls to the search service; possible values include"aadOrApiKey", "apiKeyOnly"; This cannot be combined with disable_local_auth.
+    description: ''
+  - name: --disable-local-auth
+    parameterValueGroup: "false, true"
+    summary: If calls to the search service will not be permitted to utilize API keys for authentication; This cannot be combined with auth_options.
+    description: ''
   - name: --hosting-mode
     defaultValue: "default"
     summary: 'The hosting mode; possible values include: "default", "highDensity"; Note that "highDensity" is only applicable to the standard3 SKU.'
@@ -90,7 +103,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/search/_help.py
 - uid: az_search_service_list
   name: az search service list
-  summary: Gets a list of all search services in the given resource group.
+  summary: Gets a list of all Search services in the given resource group.
   description: ''
   syntax: az search service list --resource-group
   requiredParameters:
@@ -123,7 +136,10 @@ directCommands:
   syntax: >-
     az search service update --name
                              --resource-group
+                             [--aad-auth-failure-mode]
                              [--add]
+                             [--auth-options]
+                             [--disable-local-auth {false, true}]
                              [--force-string]
                              [--identity-type]
                              [--ip-rules]
@@ -143,9 +159,19 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aad-auth-failure-mode
+    summary: Describes response code from calls to the search service that failed authentication; possible values include "http401WithBearerChallenge", "http403"; This cannot be combined with disable_local_auth.
+    description: ''
   - name: --add
     defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --auth-options
+    summary: Options for authenticating calls to the search service; possible values include "aadOrApiKey", "apiKeyOnly"; This cannot be combined with disable_local_auth.
+    description: ''
+  - name: --disable-local-auth
+    parameterValueGroup: "false, true"
+    summary: If calls to the search service will not be permitted to utilize API keys for authentication. This cannot be combined with auth_options.
     description: ''
   - name: --force-string
     defaultValue: "False"

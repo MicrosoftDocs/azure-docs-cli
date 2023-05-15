@@ -135,28 +135,44 @@ directCommands:
     syntax: >-
       # create keyvault
 
-      az keyvault create -g testGroup -n testVault --location testLocation --enable-purge-protection true
+      az keyvault create -g testGroup -n testVault --location testLocation \
+        --enable-purge-protection true
 
 
-      # create key in keyvault
+      # create key in keyvault and save its key identifier
 
-      az keyvault key create --name testKey -p software --vault-name testVault
+      keyIdentifier=$(az keyvault key create --name testKey -p software \
+        --vault-name testVault --query key.kid -o tsv)
 
 
-      # create identity
+      # create identity and save its principalId
 
-      az identity create -g testGroup --name testIdentity --location testLocation
+      identityPrincipalId=$(az identity create -g testGroup --name testIdentity \
+        --location testLocation --query principalId -o tsv)
 
 
       # add testIdentity as an access policy with key permissions 'Wrap Key', 'Unwrap Key', 'Get' and 'List' inside testVault
 
-      az keyvault set-policy -g testGroup -n testVault --object-id '<principalID of testIdentity>' --key-permissions wrapKey unwrapKey get list
+      az keyvault set-policy -g testGroup -n testVault --object-id $identityPrincipalId \
+        --key-permissions wrapKey unwrapKey get list
 
 
       # create flexible server with data encryption enabled
 
       az postgres flexible-server create -g testGroup -n testServer --location testLocation \
-        --key '<key identifier of testKey>' --identity testIdentity
+        --key $keyIdentifier --identity testIdentity
+  - summary: Create a PostgreSQL flexible server with active directory auth as well as password auth.
+    syntax: >-
+      # create flexible server with aad auth and password auth enabled
+
+      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
+        --active-directory-auth Enabled
+  - summary: Create a PostgreSQL flexible server with active directory auth only.
+    syntax: >-
+      # create flexible server with aad only auth and password auth disabled
+
+      az postgres flexible-server create -g testGroup -n testServer --location testLocation \
+        --active-directory-auth Enabled --password-auth Disabled
   optionalParameters:
   - name: --active-directory-auth
     defaultValue: "Disabled"
@@ -170,7 +186,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: "earthyllama1"
+    defaultValue: "drearymagpie9"
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --backup-retention
@@ -238,7 +254,7 @@ directCommands:
     description: ''
   - name: --tier
     defaultValue: "GeneralPurpose"
-    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, Memory Optimized.'
+    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.'
     description: ''
   - name: --version
     defaultValue: "13"
@@ -525,7 +541,7 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: "2023-01-03T12:07:50+00:00"
+    defaultValue: "2023-05-14T12:11:22+00:00"
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
     description: ''
   - name: --subnet
@@ -616,6 +632,7 @@ directCommands:
   syntax: >-
     az postgres flexible-server start [--ids]
                                       [--name]
+                                      [--no-wait]
                                       [--resource-group]
                                       [--subscription]
   examples:
@@ -627,6 +644,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -641,6 +662,7 @@ directCommands:
   syntax: >-
     az postgres flexible-server stop [--ids]
                                      [--name]
+                                     [--no-wait]
                                      [--resource-group]
                                      [--subscription]
   examples:
@@ -652,6 +674,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -692,10 +718,20 @@ directCommands:
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver --tags "k1=v1" "k2=v2"
   - summary: Reset password
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver -p password123
+  - summary: Update a flexible server to enable active directory auth for password auth enabled server
+    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --active-directory-auth Enabled
   - summary: Change key/identity for data encryption. Data encryption cannot be enabled post server creation, this will only update the key/identity.
     syntax: >-
+      # get key identifier of the existing key
+
+      newKeyIdentifier=$(az keyvault key show --vault-name testVault --name testKey \
+        --query key.kid -o tsv)
+
+
+      # update server with new key/identity
+
       az postgres flexible-server update --resource-group testGroup --name testserver \
-        --key '<key identifier of newKey>' --identity newIdentity
+        --key $newKeyIdentifier --identity newIdentity
   optionalParameters:
   - name: --active-directory-auth
     parameterValueGroup: "Disabled, Enabled"
@@ -765,7 +801,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --tier
-    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, Memory Optimized.'
+    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.'
     description: ''
 - uid: az_postgres_flexible-server_upgrade
   name: az postgres flexible-server upgrade

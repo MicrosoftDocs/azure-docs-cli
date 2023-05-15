@@ -32,10 +32,10 @@ command or via an environment variable.
 In the following example, the `az config` command is used to disable the survey message.
 
 ```azurecli
-az config set core.display_survey_message=false
+az config set core.survey_message=false
 ```
 
-You can also use the `AZSURVEYMESSAGE` environment variable to disable the survey message.
+You can also use the `AZURE_CORE_SURVEY_MESSAGE` environment variable to disable the survey message.
 
 ## Privacy statement
 

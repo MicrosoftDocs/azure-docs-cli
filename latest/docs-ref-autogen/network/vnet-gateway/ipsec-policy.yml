@@ -7,7 +7,7 @@ directCommands:
 - uid: az_network_vnet-gateway_ipsec-policy_add
   name: az network vnet-gateway ipsec-policy add
   summary: Add a virtual network gateway IPSec policy.
-  description: Set all IPsec policies of a virtual network gateway. If you want to set any IPsec policy, you must set them all.
+  description: ''
   syntax: >-
     az network vnet-gateway ipsec-policy add --dh-group {DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None}
                                              --gateway-name
@@ -19,18 +19,15 @@ directCommands:
                                              --resource-group
                                              --sa-lifetime
                                              --sa-max-size
-                                             [--no-wait]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Add specified IPsec policies to a gateway instead of relying on defaults.
-    syntax: >-
-      az network vnet-gateway ipsec-policy add -g MyResourceGroup --gateway-name MyGateway \
-          --dh-group DHGroup14 --ike-encryption AES256 --ike-integrity SHA384 --ipsec-encryption DES3 \
-          --ipsec-integrity GCMAES256 --pfs-group PFS2048 --sa-lifetime 27000 --sa-max-size 102400000
+    syntax: az network vnet-gateway ipsec-policy add -g MyResourceGroup --gateway-name MyGateway --dh-group DHGroup14 --ike-encryption AES256 --ike-integrity SHA384 --ipsec-encryption DES3 --ipsec-integrity GCMAES256 --pfs-group PFS2048 --sa-lifetime 27000 --sa-max-size 102400000
   requiredParameters:
   - isRequired: true
     name: --dh-group
     parameterValueGroup: "DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None"
-    summary: The DH Groups used for initial SA.
+    summary: The DH Group used in initial SA.
     description: ''
   - isRequired: true
     name: --gateway-name
@@ -59,7 +56,7 @@ directCommands:
   - isRequired: true
     name: --pfs-group
     parameterValueGroup: "ECP256, ECP384, None, PFS1, PFS14, PFS2, PFS2048, PFS24, PFSMM"
-    summary: The Pfs Groups used for new child SA.
+    summary: The Pfs Group used for new child SA.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -75,7 +72,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -125,10 +122,68 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_vnet-gateway_ipsec-policy_wait
+  name: az network vnet-gateway ipsec-policy wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network vnet-gateway ipsec-policy wait [--created]
+                                              [--custom]
+                                              [--deleted]
+                                              [--exists]
+                                              [--gateway-name]
+                                              [--ids]
+                                              [--interval]
+                                              [--resource-group]
+                                              [--subscription]
+                                              [--timeout]
+                                              [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --gateway-name
+    summary: Virtual network gateway name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
 - az_network_vnet-gateway_ipsec-policy_add
 - az_network_vnet-gateway_ipsec-policy_clear
 - az_network_vnet-gateway_ipsec-policy_list
+- az_network_vnet-gateway_ipsec-policy_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -148,5 +203,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage virtual network gateway IPSec policies.

@@ -4,6 +4,7 @@ ms.author: sttramer
 manager: carmonm
 ms.date: 11/26/2018
 ms.topic: include
+ms.custom: devx-track-azurecli
 ---
 ### CLI fails to install or run on Windows Subsystem for Linux
 

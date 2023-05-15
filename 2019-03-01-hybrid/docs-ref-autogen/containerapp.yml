@@ -1,10 +1,6 @@
 ### YamlMime:AzureCLIGroup
 uid: az_containerapp
 name: az containerapp
-extensionInformation: >-
-  > [!Note]
-
-  > This reference is part of the **containerapp** extension for the Azure CLI  (version 2.37.0 or higher).  The extension will automatically install the first time you run an **az containerapp** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure Container Apps.
 description: ''
 directCommands:
@@ -72,12 +68,14 @@ directCommands:
                            [--scale-rule-metadata]
                            [--scale-rule-name]
                            [--scale-rule-type]
+                           [--secret-volume-mount]
                            [--secrets]
                            [--system-assigned]
                            [--tags]
                            [--target-port]
                            [--transport {auto, http, http2, tcp}]
                            [--user-assigned]
+                           [--workload-profile-name]
                            [--yaml]
   examples:
   - summary: Create a container app and retrieve its fully qualified domain name.
@@ -120,6 +118,12 @@ directCommands:
                                 "cloud=AzurePublicCloud" \
                                 "queueLength": "5" "queueName": "foo" \
           --scale-rule-auth "connection=my-connection-string-secret-name"
+  - summary: Create a container app with secrets and mounts them in a volume.
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --image my-app:v1.0 --environment MyContainerappEnv \
+          --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
+          --secret-volume-mount "mnt/secrets"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -233,7 +237,10 @@ directCommands:
     summary: The name of the scale rule.
     description: ''
   - name: --scale-rule-type --srt
-    summary: 'The type of the scale rule. Default: http.'
+    summary: 'The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.'
+    description: ''
+  - name: --secret-volume-mount
+    summary: Path to mount all secrets e.g. mnt/secrets.
     description: ''
   - name: --secrets -s
     summary: A list of secret(s) for the container app. Space-separated values in 'key=value' format.
@@ -255,6 +262,9 @@ directCommands:
     description: ''
   - name: --user-assigned
     summary: Space-separated user identities to be assigned.
+    description: ''
+  - name: --workload-profile-name -w
+    summary: Name of the workload profile to run the app on.
     description: ''
   - name: --yaml
     summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
@@ -411,6 +421,7 @@ directCommands:
                        [--source]
                        [--target-port]
                        [--token]
+                       [--workload-profile-name]
   examples:
   - summary: Create a container app from a dockerfile in a GitHub repo (setting up github actions)
     syntax: az containerapp up -n MyContainerapp --repo https://github.com/myAccount/myRepo
@@ -491,6 +502,9 @@ directCommands:
   - name: --token
     summary: 'A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.'
     description: ''
+  - name: --workload-profile-name -w
+    summary: The friendly name for the workload profile.
+    description: ''
 - uid: az_containerapp_update
   name: az containerapp update
   summary: Update a container app. In multiple revisions mode, create a new revision based on the latest revision.
@@ -517,9 +531,11 @@ directCommands:
                            [--scale-rule-metadata]
                            [--scale-rule-name]
                            [--scale-rule-type]
+                           [--secret-volume-mount]
                            [--set-env-vars]
                            [--subscription]
                            [--tags]
+                           [--workload-profile-name]
                            [--yaml]
   examples:
   - summary: Update a container app's container image.
@@ -607,7 +623,10 @@ directCommands:
     summary: The name of the scale rule.
     description: ''
   - name: --scale-rule-type --srt
-    summary: 'The type of the scale rule. Default: http.'
+    summary: 'The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.'
+    description: ''
+  - name: --secret-volume-mount
+    summary: Path to mount all secrets e.g. mnt/secrets.
     description: ''
   - name: --set-env-vars
     summary: Add or update environment variable(s) in container. Existing environmentenvironment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
@@ -617,6 +636,9 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --workload-profile-name -w
+    summary: The friendly name for the workload profile.
     description: ''
   - name: --yaml
     summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
@@ -651,6 +673,62 @@ commands:
 - az_containerapp_browse
 - az_containerapp_compose
 - az_containerapp_compose_create
+- az_containerapp_connection
+- az_containerapp_connection_create
+- az_containerapp_connection_create_appconfig
+- az_containerapp_connection_create_confluent-cloud
+- az_containerapp_connection_create_cosmos-cassandra
+- az_containerapp_connection_create_cosmos-gremlin
+- az_containerapp_connection_create_cosmos-mongo
+- az_containerapp_connection_create_cosmos-sql
+- az_containerapp_connection_create_cosmos-table
+- az_containerapp_connection_create_eventhub
+- az_containerapp_connection_create_keyvault
+- az_containerapp_connection_create_mysql
+- az_containerapp_connection_create_mysql-flexible
+- az_containerapp_connection_create_postgres
+- az_containerapp_connection_create_postgres-flexible
+- az_containerapp_connection_create_redis
+- az_containerapp_connection_create_redis-enterprise
+- az_containerapp_connection_create_servicebus
+- az_containerapp_connection_create_signalr
+- az_containerapp_connection_create_sql
+- az_containerapp_connection_create_storage-blob
+- az_containerapp_connection_create_storage-file
+- az_containerapp_connection_create_storage-queue
+- az_containerapp_connection_create_storage-table
+- az_containerapp_connection_create_webpubsub
+- az_containerapp_connection_delete
+- az_containerapp_connection_list
+- az_containerapp_connection_list-configuration
+- az_containerapp_connection_list-support-types
+- az_containerapp_connection_show
+- az_containerapp_connection_update
+- az_containerapp_connection_update_appconfig
+- az_containerapp_connection_update_confluent-cloud
+- az_containerapp_connection_update_cosmos-cassandra
+- az_containerapp_connection_update_cosmos-gremlin
+- az_containerapp_connection_update_cosmos-mongo
+- az_containerapp_connection_update_cosmos-sql
+- az_containerapp_connection_update_cosmos-table
+- az_containerapp_connection_update_eventhub
+- az_containerapp_connection_update_keyvault
+- az_containerapp_connection_update_mysql
+- az_containerapp_connection_update_mysql-flexible
+- az_containerapp_connection_update_postgres
+- az_containerapp_connection_update_postgres-flexible
+- az_containerapp_connection_update_redis
+- az_containerapp_connection_update_redis-enterprise
+- az_containerapp_connection_update_servicebus
+- az_containerapp_connection_update_signalr
+- az_containerapp_connection_update_sql
+- az_containerapp_connection_update_storage-blob
+- az_containerapp_connection_update_storage-file
+- az_containerapp_connection_update_storage-queue
+- az_containerapp_connection_update_storage-table
+- az_containerapp_connection_update_webpubsub
+- az_containerapp_connection_validate
+- az_containerapp_connection_wait
 - az_containerapp_create
 - az_containerapp_dapr
 - az_containerapp_dapr_disable
@@ -658,6 +736,7 @@ commands:
 - az_containerapp_delete
 - az_containerapp_env
 - az_containerapp_env_certificate
+- az_containerapp_env_certificate_create
 - az_containerapp_env_certificate_delete
 - az_containerapp_env_certificate_list
 - az_containerapp_env_certificate_upload
@@ -678,12 +757,19 @@ commands:
 - az_containerapp_env_storage_set
 - az_containerapp_env_storage_show
 - az_containerapp_env_update
+- az_containerapp_env_workload-profile
+- az_containerapp_env_workload-profile_delete
+- az_containerapp_env_workload-profile_list
+- az_containerapp_env_workload-profile_list-supported
+- az_containerapp_env_workload-profile_set
+- az_containerapp_env_workload-profile_show
 - az_containerapp_exec
 - az_containerapp_github-action
 - az_containerapp_github-action_add
 - az_containerapp_github-action_delete
 - az_containerapp_github-action_show
 - az_containerapp_hostname
+- az_containerapp_hostname_add
 - az_containerapp_hostname_bind
 - az_containerapp_hostname_delete
 - az_containerapp_hostname_list
@@ -699,9 +785,13 @@ commands:
 - az_containerapp_ingress_disable
 - az_containerapp_ingress_enable
 - az_containerapp_ingress_show
+- az_containerapp_ingress_sticky-sessions
+- az_containerapp_ingress_sticky-sessions_set
+- az_containerapp_ingress_sticky-sessions_show
 - az_containerapp_ingress_traffic
 - az_containerapp_ingress_traffic_set
 - az_containerapp_ingress_traffic_show
+- az_containerapp_ingress_update
 - az_containerapp_list
 - az_containerapp_logs
 - az_containerapp_logs_show

@@ -32,6 +32,8 @@ directCommands:
                                 [--replication-mode {Full, Shallow}]
                                 [--storage-account-type {Premium_LRS, Standard_LRS, Standard_ZRS}]
                                 [--tags]
+                                [--target-edge-zone-encryption]
+                                [--target-edge-zones]
                                 [--target-region-cvm-encryption]
                                 [--target-region-encryption]
                                 [--target-regions]
@@ -179,6 +181,32 @@ directCommands:
       --target-region-encryption WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2 \
 
       EastUSDiskEncryptionSet1,0,EastUSDiskEncryptionSet2
+  - summary: Add a new image version and copy it to extended locations.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 --replica-count 1 \
+
+      --storage-account-type Standard_ZRS --managed-image image-name \
+
+      --target-edge-zones westus=microsoftlosangeles1 eastus=microsoftlosangeles2=1 \
+
+      brazilsouth=2=standard_lrs
+  - summary: Add a new image version and copy it to extended locations with encryption using a disk encryption set.
+    syntax: >-
+      az sig image-version create --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --virtual-machine /subscriptions/00000000-0000-0000-0000-00000000xxxx/resourceGroups/imageGroups/providers/Microsoft.Compute/virtualMachines/MyVM \
+
+      --target-edge-zones westus=microsoftlosangeles1 \
+
+      --target-edge-zone-encryption microsoftlosangeles1,WestUSDiskEncryptionSet1,0,WestUSDiskEncryptionSet2
   - summary: Add a new image version and don't wait on it. Later you can invoke "az sig image-version wait" command when ready to create a vm from the gallery image version
     syntax: >-
       az sig image-version create --resource-group MyResourceGroup \
@@ -291,6 +319,12 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --target-edge-zone-encryption --zone-encryption
+    summary: 'Space-separated list of customer managed keys for encrypting the OS and data disks in the gallery artifact for each region. Format for each edge zone: <edge zone>,<os_des>,<lun1>,<lun1_des>,<lun2>,<lun2_des>.'
+    description: ''
+  - name: --target-edge-zones
+    summary: Space-separated list of regions, edge zones, replica counts and storage types. Use <region>=<edge zone>[=<replica count>][=<storage account type>] to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used. If "--target-edge-zones None" is specified, the target extended locations will be cleared.
     description: ''
   - name: --target-region-cvm-encryption
     summary: 'Space-separated list of customer managed key for Confidential VM encrypting the OS disk in the gallery artifact for each region. Format for each region: `<os_cvm_encryption_type>,<os_cvm_des>`. The valid values for os_cvm_encryption_type are EncryptedVMGuestStateOnlyWithPmk, EncryptedWithPmk, EncryptedWithCmk.'
@@ -554,6 +588,7 @@ directCommands:
                                 [--remove]
                                 [--replica-count]
                                 [--set]
+                                [--target-edge-zones]
                                 [--target-regions]
   examples:
   - summary: Change the replication regions and replica count
@@ -565,6 +600,24 @@ directCommands:
       --gallery-image-version 1.0.0 \
 
       --target-regions westcentralus=2 eastus2
+  - summary: Change the replication extended locations
+    syntax: >-
+      az sig image-version update --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --target-edge-zones westus=microsoftlosangeles1 eastus=microsoftlosangeles2=1
+  - summary: Clear the replication extended locations
+    syntax: >-
+      az sig image-version update --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.0.0 \
+
+      --target-edge-zones None
   - summary: Replicate to an additional region. Optional, you can set the replica count for the region and exclude this image when using the latest version of the image definition.
     syntax: >-
       az sig image-version update --resource-group MyResourceGroup \
@@ -641,6 +694,9 @@ directCommands:
   - name: --set
     defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --target-edge-zones
+    summary: Space-separated list of regions, edge zones, replica counts and storage types. Use <region>=<edge zone>[=<replica count>][=<storage account type>] to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used. If "--target-edge-zones None" is specified, the target extended locations will be cleared.
     description: ''
   - name: --target-regions
     summary: Space-separated list of regions and their replica counts. Use `<region>[=<replica count>][=<storage account type>]` to optionally set the replica count and/or storage account type for each region. If a replica count is not specified, the default replica count will be used. If a storage account type is not specified, the default storage account type will be used.

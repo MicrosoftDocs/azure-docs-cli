@@ -14,18 +14,28 @@ directCommands:
   description: To set the password of the server, please set the environment variable AZDATA_PASSWORD.
   syntax: >-
     az postgres server-arc create --name
+                                  [--ad-account-name]
+                                  [--ad-connector-name]
                                   [--admin-login-secret]
+                                  [--cert-private-key-file]
+                                  [--cert-public-key-file]
                                   [--cores-limit]
                                   [--cores-request]
                                   [--dev]
+                                  [--dns-name]
+                                  [--extensions]
                                   [--k8s-namespace]
+                                  [--keytab-secret]
+                                  [--log-level]
                                   [--memory-limit]
                                   [--memory-request]
                                   [--no-external-endpoint]
                                   [--no-wait]
                                   [--path]
                                   [--port]
+                                  [--retention-days]
                                   [--service-annotations]
+                                  [--service-cert-secret]
                                   [--service-labels]
                                   [--service-type]
                                   [--storage-class-backups]
@@ -44,8 +54,20 @@ directCommands:
     summary: Name of the Azure Arc enabled PostgreSQL server.
     description: ''
   optionalParameters:
+  - name: --ad-account-name
+    summary: The Active Directory account name for this Azure Arc enabled PostgreSQL server. This account needs to be created prior to the deployment of this instance.
+    description: ''
+  - name: --ad-connector-name
+    summary: The name of the Active Directory Connector. This parameter indicates an intent to deploy with AD support.
+    description: ''
   - name: --admin-login-secret
     summary: Name of the Kubernetes secret to generate that hosts or will host user admin login account credential.
+    description: ''
+  - name: --cert-private-key-file
+    summary: Path to the file containing a PEM formatted certificate private key to be used for client SSL connections.
+    description: ''
+  - name: --cert-public-key-file
+    summary: Path to the file containing a PEM formatted certificate public key to be used for client SSL connections.
     description: ''
   - name: --cores-limit
     summary: The maximum number of CPU cores that can be used for Azure Arc enabled PostgreSQL server.
@@ -56,8 +78,20 @@ directCommands:
   - name: --dev
     summary: If this is specified, then it is considered a dev instance and will not be billed for.
     description: ''
+  - name: --dns-name
+    summary: The service DNS name exposed to the end-users to connect to this Azure Arc enabled PostgreSQL server (e.g. pginstancename.contoso.com).
+    description: ''
+  - name: --extensions
+    summary: Comma seperated list of extensions to be enabled. Once enabled, extension can be installed via 'CREATE EXTENSION' command.
+    description: ''
   - name: --k8s-namespace -k
     summary: The Kubernetes namespace where the Azure Arc enabled PostgreSQL server is deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --keytab-secret
+    summary: The name of the Kubernetes secret that contains the keytab file for this Azure Arc enabled PostgreSQL server.
+    description: ''
+  - name: --log-level
+    summary: 'Sets the log_min_messages setting for the PostgreSQL engine. Valid values are: DEBUG5, DEBUG4, DEBUG3, DEBUG2, DEBUG1, INFO, NOTICE, WARNING, ERROR, LOG, FATAL, PANIC.'
     description: ''
   - name: --memory-limit
     summary: The memory limit of the Azure Arc enabled PostgreSQL server as a number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
@@ -70,7 +104,7 @@ directCommands:
     description: ''
   - name: --no-wait
     defaultValue: "False"
-    summary: If given, the command will not wait for the instance to be in a ready state before returning.
+    summary: Do not wait for deployment to be ready before returning.
     description: ''
   - name: --path
     summary: The path to the source json file for the Azure Arc enabled PostgreSQL server. This is optional.
@@ -78,8 +112,14 @@ directCommands:
   - name: --port
     summary: The port number on which the primary service is exposed to the end-users.
     description: ''
+  - name: --retention-days
+    summary: Backup retention period, specified in days. Allowed values are 0 to 35. Default is 7. Setting the retention period to 0 will turn off automatic backups for Azure Arc enabled PostgreSql.
+    description: ''
   - name: --service-annotations
     summary: Comma-separated list of annotations to apply to all external services.
+    description: ''
+  - name: --service-cert-secret
+    summary: Name of the Kubernetes secret to generate that hosts the SSL certificate.
     description: ''
   - name: --service-labels
     summary: Comma-separated list of labels to apply to all external services.
@@ -100,7 +140,7 @@ directCommands:
     summary: Use local Kubernetes APIs to perform this action.
     description: ''
   - name: --volume-size-backups
-    summary: The volume size for the storage classes to be used for logs.
+    summary: The size of the storage volume to be used for backups as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
     description: ''
   - name: --volume-size-data
     summary: The size of the storage volume to be used for data as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
@@ -128,7 +168,7 @@ directCommands:
   optionalParameters:
   - name: --force -f
     defaultValue: "False"
-    summary: Force delete the Azure Arc enabled PostgreSQL server without confirmation.
+    summary: Delete the Azure Arc enabled PostgreSQL server without confirmation.
     description: ''
   - name: --k8s-namespace -k
     summary: The Kubernetes namespace where the Azure Arc enabled PostgreSQL server is deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
@@ -152,6 +192,73 @@ directCommands:
     description: ''
   - name: --use-k8s
     summary: Use local Kubernetes APIs to perform this action.
+    description: ''
+- uid: az_postgres_server-arc_restore
+  name: az postgres server-arc restore
+  summary: Restore an Azure Arc enabled PostgreSQL server from backup from another server.
+  description: To set the password of the server, please set the environment variable AZDATA_PASSWORD.
+  syntax: >-
+    az postgres server-arc restore --k8s-namespace
+                                   --name
+                                   --source-server
+                                   [--dry-run]
+                                   [--no-wait]
+                                   [--storage-class-backups]
+                                   [--storage-class-data]
+                                   [--storage-class-logs]
+                                   [--time]
+                                   [--use-k8s]
+                                   [--volume-size-backups]
+                                   [--volume-size-data]
+                                   [--volume-size-logs]
+  examples:
+  - summary: Restore an Azure Arc enabled PostgreSQL server.
+    syntax: az postgres server-arc restore -n <to-pg> --source-server <from-pg> --k8s-namespace namespace --use-k8s
+  requiredParameters:
+  - isRequired: true
+    name: --k8s-namespace -k
+    summary: The Kubernetes namespace that contains the Azure Arc enabled PostgreSql. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure Arc enabled PostgreSQL server to be created.
+    description: ''
+  - isRequired: true
+    name: --source-server
+    summary: The name of the Azure Arc enabled PostgreSQL server to restore from.
+    description: ''
+  optionalParameters:
+  - name: --dry-run
+    defaultValue: "False"
+    summary: If set, validates the source and destination resources and the time, without performing the restore. The earliest and latest possible restore times are returned in the status of the restore task.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for deployment to be ready before returning.
+    description: ''
+  - name: --storage-class-backups
+    summary: The storage class to be used for backup persistent volumes.
+    description: ''
+  - name: --storage-class-data
+    summary: The storage class to be used for data persistent volumes.
+    description: ''
+  - name: --storage-class-logs
+    summary: The storage class to be used for logs persistent volumes.
+    description: ''
+  - name: --time -t
+    summary: "The point in time of the source server that will be restored to create the new Azure Arc enabled PostgreSQL server. Must be greater than or equal to the source database's earliest restore date/time value. Time should be in following format: 'YYYY-MM-DDTHH:MM:SSZ'. If no time is provided, the most recent backup will be restored."
+    description: ''
+  - name: --use-k8s
+    summary: Use local Kubernetes APIs to perform this action.
+    description: ''
+  - name: --volume-size-backups
+    summary: The size of the storage volume to be used for backups as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
+    description: ''
+  - name: --volume-size-data
+    summary: The size of the storage volume to be used for data as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
+    description: ''
+  - name: --volume-size-logs
+    summary: The size of the storage volume to be used for logs as a positive number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes).
     description: ''
 - uid: az_postgres_server-arc_show
   name: az postgres server-arc show
@@ -186,29 +293,46 @@ directCommands:
   description: ''
   syntax: >-
     az postgres server-arc update --name
+                                  [--cert-private-key-file]
+                                  [--cert-public-key-file]
                                   [--cores-limit]
                                   [--cores-request]
                                   [--dev]
+                                  [--extensions]
                                   [--k8s-namespace]
+                                  [--keytab-secret]
+                                  [--log-level]
                                   [--memory-limit]
                                   [--memory-request]
                                   [--no-external-endpoint]
                                   [--no-wait]
                                   [--path]
                                   [--port]
+                                  [--retention-days]
                                   [--service-annotations]
+                                  [--service-cert-secret]
                                   [--service-labels]
                                   [--service-type]
                                   [--use-k8s]
   examples:
   - summary: Update the configuration of an Azure Arc enabled PostgreSQL server.
     syntax: az postgres server-arc update --path ./spec.json -n pg1 --k8s-namespace namespace --use-k8s
+  - summary: Enable extensions for an existing Azure Arc enabled PostgreSQL server.
+    syntax: az postgres server-arc update -n pg1 --extensions 'pgaudit,pg_partman' --k8s-namespace namespace --use-k8s
+  - summary: Remove extensions from an Azure Arc enabled PostgreSQL server.
+    syntax: az postgres server-arc update -n pg1 --extensions "''" --k8s-namespace namespace --use-k8s
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the Azure Arc enabled PostgreSQL server that is being updated. The name under which your instance is deployed cannot be changed.
     description: ''
   optionalParameters:
+  - name: --cert-private-key-file
+    summary: Path to the file containing a PEM formatted certificate private key to be used for client SSL connections.
+    description: ''
+  - name: --cert-public-key-file
+    summary: Path to the file containing a PEM formatted certificate public key to be used for client SSL connections.
+    description: ''
   - name: --cores-limit
     summary: The maximum number of CPU cores for Azure Arc enabled PostgreSQL server that can be used per node. To remove the cores_limit, specify its value as empty string.
     description: ''
@@ -218,8 +342,17 @@ directCommands:
   - name: --dev
     summary: If this is specified, then it is considered a dev instance and will not be billed for.
     description: ''
+  - name: --extensions
+    summary: Comma seperated list of extensions to be enabled. To Add or remove a new extension update the existing list of extensions. Once enabled, extension can be installed via 'CREATE EXTENSION' command.
+    description: ''
   - name: --k8s-namespace -k
     summary: The Kubernetes namespace where the Azure Arc enabled PostgreSQL server is deployed. If no namespace is specified, then the namespace defined in the kubeconfig will be used.
+    description: ''
+  - name: --keytab-secret
+    summary: The name of the Kubernetes secret that contains the keytab file for this Azure Arc enabled PostgreSQL server.
+    description: ''
+  - name: --log-level
+    summary: 'Sets the log_min_messages setting for the PostgreSQL engine. Valid values are: DEBUG5, DEBUG4, DEBUG3, DEBUG2, DEBUG1, INFO, NOTICE, WARNING, ERROR, LOG, FATAL, PANIC.'
     description: ''
   - name: --memory-limit
     summary: The memory limit for Azure Arc enabled PostgreSQL server as a number followed by Ki (kilobytes), Mi (megabytes), or Gi (gigabytes). To remove the memory_limit, specify its value as empty string.
@@ -232,7 +365,7 @@ directCommands:
     description: ''
   - name: --no-wait
     defaultValue: "False"
-    summary: If given, the command will not wait for the instance to be in a ready state before returning.
+    summary: Do not wait for deployment to be ready before returning.
     description: ''
   - name: --path
     summary: The path to the source json file for the Azure Arc enabled PostgreSQL server. This is optional.
@@ -240,8 +373,14 @@ directCommands:
   - name: --port
     summary: The port number on which the primary service is exposed to the end-users.
     description: ''
+  - name: --retention-days
+    summary: Backup retention period, specified in days. Allowed values are 0 to 35. Default is 7. Setting the retention period to 0 will turn off automatic backups for Azure Arc enabled PostgreSql.
+    description: ''
   - name: --service-annotations
     summary: Comma-separated list of annotations to apply to all external services.
+    description: ''
+  - name: --service-cert-secret
+    summary: Name of the Kubernetes secret to generate that hosts the SSL certificate.
     description: ''
   - name: --service-labels
     summary: Comma-separated list of labels to apply to all external services.
@@ -258,6 +397,7 @@ commands:
 - az_postgres_server-arc_endpoint
 - az_postgres_server-arc_endpoint_list
 - az_postgres_server-arc_list
+- az_postgres_server-arc_restore
 - az_postgres_server-arc_show
 - az_postgres_server-arc_update
 globalParameters:

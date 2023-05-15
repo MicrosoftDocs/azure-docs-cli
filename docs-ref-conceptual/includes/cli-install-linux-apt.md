@@ -9,7 +9,7 @@ ms.custom: devx-track-azurecli
 
 ## Overview
 
-The `apt` package manager contains an x86_64 package for the Azure CLI that has been tested on the following distributions.
+The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions. There is no ARM64 package for Ubuntu 18.04.
 
 | Distribution | Version |
 |:-------------|:--------|
@@ -21,12 +21,14 @@ The `apt` package manager contains an x86_64 package for the Azure CLI that has 
 
 > [!WARNING]
 > Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  See [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove) for more information on `apt remove`.
+
+> [!NOTE]
 >
-> The `azure-cli` deb package does not support ARM64 architecture.
+> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
 ## Installation Options
 
-There are two options to install the Azure CLI on your system.  First, you may execute a single command that will download an install script and run the install commands for you.  Or if you prefer, you can execute the install commands yourself in a step-by-step process.  Both methods are provided below.
+There are two options to install the Azure CLI on your system.  You can download an install script that will run the install commands for you, or you can execute the install commands yourself in a step-by-step process if you prefer.  Both methods are provided below.
 
 ## Option 1: Install with one command
 
@@ -52,16 +54,18 @@ If you prefer a step-by-step installation process, complete the following steps 
 2. Download and install the Microsoft signing key:
 
     ```bash
-    curl -sL https://packages.microsoft.com/keys/microsoft.asc |
+    sudo mkdir -p /etc/apt/keyrings
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc |
         gpg --dearmor |
-        sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+        sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
+    sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
     ```
 
 3. <div id="set-release"/>Add the Azure CLI software repository:
 
     ```bash
     AZ_REPO=$(lsb_release -cs)
-    echo "deb [arch=`dpkg --print-architecture`] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
+    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
@@ -72,9 +76,9 @@ If you prefer a step-by-step installation process, complete the following steps 
     sudo apt-get install azure-cli
     ```
 
-## Install specific version
+## Installing a specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
+Configure the `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
 1. To view available versions with command:
 
@@ -98,14 +102,13 @@ If you installed `azure-cli` on `Focal` without adding the Azure CLI software re
 
 ### lsb_release does not return the correct base distribution version
 
-Some Ubuntu- or Debian-derived distributions such as Linux Mint may not return the correct version name from `lsb_release`. This value is used in the install process to
-determine the package to install. If you know the code name of the Ubuntu or Debian version your distribution is derived from, you can set the `AZ_REPO` value manually when
+Some Ubuntu or other Debian-derived distributions (such as Linux Mint) may not return the correct version name from `lsb_release`. This value is used in the install process to
+determine the package to install. If you know the code name of the Ubuntu or Debian version that your distribution is derived from, you can set the `AZ_REPO` value manually when
 [adding the repository](#set-release). Otherwise, look up information for your distribution on how to determine the base distribution code name and set `AZ_REPO` to the correct value.
 
 ### No package for your distribution
 
-Sometimes it may be a while after a distribution is released before there's an Azure CLI package available for it. The Azure CLI designed to be resilient with regards to future
-versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
+Sometimes, an updated Azure CLI package isn't immediately available following a distribution version release. The Azure CLI is designed to be resilient with regards to future versions of dependencies and rely on as few of them as possible. If there's no package available for your base distribution, try a package for an earlier distribution.
 
 To do this, set the value of `AZ_REPO` manually when [adding the repository](#set-release). For Ubuntu distributions, use the latest `jammy` repository:
 
@@ -119,7 +122,9 @@ For Debian distributions, use the latest `bullseye` repository:
 AZ_REPO="bullseye"
 ```
 
-Distributions released before Ubuntu Bionic and Debian Buster are not supported.
+> [!IMPORTANT]
+>
+> Distributions released before Ubuntu Bionic and Debian Buster are not supported.
 
 ### Elementary OS (EOS) fails to install the Azure CLI
 
@@ -198,7 +203,7 @@ You can also use `apt-get upgrade` to update the CLI package.
    sudo rm /etc/apt/sources.list.d/azure-cli.list
    ```
 
-3. If you use no other packages from Microsoft, remove the signing key:
+3. If you are not using other packages from Microsoft, remove the signing key:
 
     ```bash
     sudo rm /etc/apt/trusted.gpg.d/microsoft.gpg

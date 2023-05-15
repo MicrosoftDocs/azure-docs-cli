@@ -6,102 +6,100 @@ description: ''
 directCommands:
 - uid: az_network_cross-region-lb_address-pool_create
   name: az network cross-region-lb address-pool create
-  summary: Create an address pool.
+  summary: Create load balancer backend address pool.
   description: ''
   syntax: >-
-    az network cross-region-lb address-pool create --lb-name
-                                                   --name
+    az network cross-region-lb address-pool create --address-pool-name
+                                                   --lb-name
                                                    --resource-group
                                                    [--backend-address]
-                                                   [--backend-addresses-config-file]
+                                                   [--drain-period]
+                                                   [--location]
+                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Create an address pool.
     syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool
-  - summary: Create an address pool with several backend addresses using key-value arguments.
-    syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-address name=addr1 frontend-ip-address=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1 --backend-address name=addr2 frontend-ip-address=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb2
+  - summary: Create an address pool with several backend addresses using shorthand syntax arguments.
+    syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses "[{name:addr1,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1'},{name:addr2,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb2'}]"
   - summary: Create an address pool with several backend addresses using config file
-    syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses-config-file @config_file.json
+    syntax: az network cross-region-lb address-pool create -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses config_file.json
   requiredParameters:
   - isRequired: true
-    name: --lb-name
-    summary: The load balancer name.
+    name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+    name: --lb-name
+    summary: The name of the load balancer.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --backend-address
-    summary: Backend addresses information for backend address pool.
-    description: >-
-      Usage: --backend-address name=addr1 frontend-ip-address=regional_lb_resource_id
-
-
-      name: Required. The name of the backend address.
-
-      frontend-ip-address: Required. Resource id of a regional load balancer.
-
-
-      Multiple backend addresses can be specified by using more than one `--backend-address` argument.
-  - name: --backend-addresses-config-file --config-file
-    summary: A config file used to set backend addresses. This argument is for experienced users. You may encounter parse errors if the json file is invalid.
-    description: >-
-      Usage: --backend-addresses-config-file @"{config_file.json}"
-
-
-      A example config file is
-
-      [
-        {
-          "name": "address1",
-          "frontendIpAddress": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1"
-        },
-        {
-          "name": "address2",
-          "frontendIpAddress": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb2"
-        }
-      ].
+  - name: --backend-address --backend-addresses
+    summary: 'An array of backend addresses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--backend-address`.'
+    description: ''
+  - name: --drain-period --drain-period-in-seconds
+    summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
+    description: ''
+  - name: --location
+    summary: The location of the backend address pool.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_cross-region-lb_address-pool_delete
   name: az network cross-region-lb address-pool delete
-  summary: Delete an address pool.
+  summary: Delete the specified load balancer backend address pool.
   description: ''
   syntax: >-
-    az network cross-region-lb address-pool delete --lb-name
-                                                   --name
-                                                   --resource-group
+    az network cross-region-lb address-pool delete [--address-pool-name]
+                                                   [--ids]
+                                                   [--lb-name]
+                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--resource-group]
+                                                   [--subscription]
   examples:
   - summary: Delete an address pool.
     syntax: az network cross-region-lb address-pool delete -g MyResourceGroup --lb-name MyLb -n MyAddressPool
-  requiredParameters:
-  - isRequired: true
-    name: --lb-name
-    summary: The load balancer name.
+  optionalParameters:
+  - name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_cross-region-lb_address-pool_list
   name: az network cross-region-lb address-pool list
-  summary: Gets all the load balancer backed address pools.
+  summary: List all the load balancer backed address pools.
   description: ''
   syntax: >-
     az network cross-region-lb address-pool list --lb-name
                                                  --resource-group
+  examples:
+  - summary: List address pools.
+    syntax: az network cross-region-lb address-pool list -g MyResourceGroup --lb-name MyLb -o table
   requiredParameters:
   - isRequired: true
     name: --lb-name
-    summary: The load balancer name.
+    summary: The name of the load balancer.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -110,24 +108,100 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_cross-region-lb_address-pool_show
   name: az network cross-region-lb address-pool show
-  summary: Gets load balancer backend address pool.
+  summary: Get load balancer backend address pool.
   description: ''
   syntax: >-
-    az network cross-region-lb address-pool show --lb-name
-                                                 --name
-                                                 --resource-group
-  requiredParameters:
-  - isRequired: true
-    name: --lb-name
-    summary: The load balancer name.
+    az network cross-region-lb address-pool show [--address-pool-name]
+                                                 [--ids]
+                                                 [--lb-name]
+                                                 [--resource-group]
+                                                 [--subscription]
+  examples:
+  - summary: Get the details of an address pool.
+    syntax: az network cross-region-lb address-pool show -g MyResourceGroup --lb-name MyLb -n MyAddressPool
+  optionalParameters:
+  - name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_cross-region-lb_address-pool_update
+  name: az network cross-region-lb address-pool update
+  summary: Update a load balancer backend address pool.
+  description: ''
+  syntax: >-
+    az network cross-region-lb address-pool update [--add]
+                                                   [--address-pool-name]
+                                                   [--backend-address]
+                                                   [--drain-period]
+                                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--ids]
+                                                   [--lb-name]
+                                                   [--location]
+                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--remove]
+                                                   [--resource-group]
+                                                   [--set]
+                                                   [--subscription]
+  examples:
+  - summary: Update all backend addresses in the address pool using shorthand syntax
+    syntax: az network cross-region-lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses "[{name:addr1,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1'},{name:addr2,frontend-ip-address:'/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb2'}]"
+  - summary: Update the frontend-ip-address of the first backend address in the address pool using shorthand syntax
+    syntax: az network cross-region-lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0].frontend-ip-address=/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/cli_test_lb_address_pool_addresses000001/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb1
+  - summary: Remove the first backend address in the address pool using shorthand syntax
+    syntax: az network cross-region-lb address-pool update -g MyResourceGroup --lb-name MyLb -n MyAddressPool --backend-addresses [0]=null
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --address-pool-name --name -n
+    summary: The name of the backend address pool.
+    description: ''
+  - name: --backend-address --backend-addresses
+    summary: 'An array of backend addresses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--backend-address`.'
+    description: ''
+  - name: --drain-period --drain-period-in-seconds
+    summary: Amount of seconds Load Balancer waits for before sending RESET to client and backend address.
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - name: --location
+    summary: The location of the backend address pool.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -135,10 +209,13 @@ commands:
 - az_network_cross-region-lb_address-pool_address_add
 - az_network_cross-region-lb_address-pool_address_list
 - az_network_cross-region-lb_address-pool_address_remove
+- az_network_cross-region-lb_address-pool_address_show
+- az_network_cross-region-lb_address-pool_address_update
 - az_network_cross-region-lb_address-pool_create
 - az_network_cross-region-lb_address-pool_delete
 - az_network_cross-region-lb_address-pool_list
 - az_network_cross-region-lb_address-pool_show
+- az_network_cross-region-lb_address-pool_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -158,5 +235,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage address pools of a cross-region load balancer.

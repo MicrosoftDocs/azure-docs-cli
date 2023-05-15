@@ -6,12 +6,12 @@ description: ''
 directCommands:
 - uid: az_monitor_log-profiles_create
   name: az monitor log-profiles create
-  summary: Create a log profile.
+  summary: Create a log profile in Azure Monitoring REST API.
   description: ''
   syntax: >-
     az monitor log-profiles create --categories
                                    --days
-                                   --enabled {false, true}
+                                   --enabled {0, 1, f, false, n, no, t, true, y, yes}
                                    --location
                                    --locations
                                    --name
@@ -24,7 +24,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --categories
-    summary: Space-separated categories of the logs. These categories are created as is convenient to the user. Some values are Write, Delete, and/or Action.
+    summary: "Space-separated categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
     description: ''
   - isRequired: true
     name: --days
@@ -32,8 +32,8 @@ directCommands:
     description: ''
   - isRequired: true
     name: --enabled
-    parameterValueGroup: "false, true"
-    summary: Whether the retention policy is enabled.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Whether the retention policy is enabled.  Allowed values: false, true.'
     description: ''
   - isRequired: true
     name: --location -l
@@ -41,7 +41,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --locations
-    summary: Space-separated list of regions for which Activity Log events should be stored.
+    summary: Space-separated list of regions for which Activity Log events should be stored.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - isRequired: true
     name: --name -n
@@ -49,77 +49,122 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --service-bus-rule-id
-    summary: The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format '{service bus resource ID}/authorizationrules/{key name}'.
+    summary: "The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'."
     description: ''
   - name: --storage-account-id
     summary: The resource id of the storage account to which you would like to send the Activity Log.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: "Space-separated tags: key[=value] [key[=value] ...]. Use '' to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-profiles_delete
   name: az monitor log-profiles delete
-  summary: Deletes the log profile.
+  summary: Delete the log profile.
   description: ''
-  syntax: az monitor log-profiles delete --name
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the log profile. Required.
+  syntax: >-
+    az monitor log-profiles delete [--ids]
+                                   [--name]
+                                   [--subscription]
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the log profile.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-profiles_list
   name: az monitor log-profiles list
   summary: List the log profiles.
-  description: ':keyword callable cls: A custom type or function that will be passed the direct response :return: An iterator like instance of either LogProfileResource or the result of cls(response) :rtype:  ~azure.core.paging.ItemPaged[~$(python-base-namespace).v2016_03_01.models.LogProfileResource] :raises ~azure.core.exceptions.HttpResponseError:.'
+  description: ''
   syntax: az monitor log-profiles list
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-profiles_show
   name: az monitor log-profiles show
-  summary: Gets the log profile.
+  summary: Get the log profile.
   description: ''
-  syntax: az monitor log-profiles show --name
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the log profile. Required.
+  syntax: >-
+    az monitor log-profiles show [--ids]
+                                 [--name]
+                                 [--subscription]
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the log profile.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 - uid: az_monitor_log-profiles_update
   name: az monitor log-profiles update
-  summary: Update a log profile.
+  summary: Update a log profile in Azure Monitoring REST API.
   description: ''
   syntax: >-
-    az monitor log-profiles update --name
-                                   [--add]
-                                   [--force-string]
+    az monitor log-profiles update [--add]
+                                   [--categories]
+                                   [--days]
+                                   [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--ids]
+                                   [--locations]
+                                   [--name]
                                    [--remove]
+                                   [--service-bus-rule-id]
                                    [--set]
-  examples:
-  - summary: Update a log profile. (autogenerated)
-    syntax: az monitor log-profiles update --name MyLogProfile --set retentionPolicy.days=365
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the log profile. Required.
-    description: ''
+                                   [--storage-account-id]
+                                   [--subscription]
+                                   [--tags]
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
+  - name: --categories
+    summary: "Space-separated categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
+    description: ''
+  - name: --days
+    summary: The number of days for the retention in days. A value of 0 will retain the events indefinitely.
+    description: ''
+  - name: --enabled
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Whether the retention policy is enabled.  Allowed values: false, true.'
+    description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --locations
+    summary: Space-separated list of regions for which Activity Log events should be stored.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --name -n
+    summary: The name of the log profile.
+    description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --service-bus-rule-id
+    summary: "The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'."
+    description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --storage-account-id
+    summary: The resource id of the storage account to which you would like to send the Activity Log.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: "Space-separated tags: key[=value] [key[=value] ...]. Use '' to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
 commands:
@@ -147,5 +192,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 10/08/2022
+  ms.date: 03/27/2023
   description: Manage log profiles.

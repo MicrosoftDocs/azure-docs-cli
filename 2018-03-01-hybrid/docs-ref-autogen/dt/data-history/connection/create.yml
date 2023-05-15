@@ -4,7 +4,7 @@ name: az dt data-history connection create
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.32.0 or higher).  The extension will automatically install the first time you run an **az dt data-history connection create** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.37.0 or higher).  The extension will automatically install the first time you run an **az dt data-history connection create** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Creates a data history connection between a Digital Twins instance and supported resources.
 description: ''
 directCommands:
@@ -12,7 +12,7 @@ directCommands:
   name: az dt data-history connection create adx
   summary: Creates a data history connection between a Digital Twins instance and an Azure Data Explorer database. Requires pre-created Azure Data Explorer and Event Hub resources.
   description: >-
-    Will prompt the user to add the following roles and permissions on the Digital Twins instance needed to successfully create the connection:
+    Will prompt the user to add the following roles and permissions on the Digital Twins instance or User Assigned Identity needed to successfully create the connection:
 
     - 'Contributor' role for the Azure Data Explorer Database scope
 
@@ -26,24 +26,37 @@ directCommands:
                                              --dt-name
                                              --eh
                                              --ehn
+                                             [--adx-property-events-table]
+                                             [--adx-record-removals {false, true}]
+                                             [--adx-relationship-events-table]
                                              [--adx-resource-group]
                                              [--adx-subscription]
                                              [--adx-table-name]
+                                             [--adx-twin-events-table]
                                              [--ehc]
                                              [--ehg]
                                              [--ehs]
+                                             [--mi-user-assigned]
                                              [--no-wait]
                                              [--resource-group]
                                              [--yes]
   examples:
   - summary: Adds a data history connection to a target Digital Twins instance with the $Default Event Hub consumer group.
     syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace}
+  - summary: Adds a data history connection to a target Digital Twins instance using a User Assigned Identity associated with the Digital twin with the $Default Event Hub consumer group.
+    syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace} --mi-user-assigned {resource_id}
   - summary: Adds a data history connection to a target Digital Twins instance with a custom Azure Data Explorer table name and Event Hub consumer group.
-    syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --adx-table-name {adx_table_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace} --eventhub-consumer-group {event_hub_consumer_group}
+    syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --adx-property-events-table {adx_property_events_table_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace} --eventhub-consumer-group {event_hub_consumer_group}
   - summary: Adds a data history connection to a target Digital Twins instance integrating with an Event Hub and Azure Data Explorer instances in different resource groups and subscriptions from the target instance.
     syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --adx-resource-group {adx_resource_group} --adx-subscription {adx_subscription} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace} --eventhub-resource-group {event_hub_resource_group} --eventhub-subscription {event_subscription}
   - summary: Adds a data history connection to a target Digital Twins instance with the $Default Event Hub consumer group and skip the role assignment prompts.
     syntax: az dt data-history connection create adx -n {instance_name} -y --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace}
+  - summary: Adds a data history connection to a target Digital Twins instance with the $Default Event Hub consumer group and enables record property and item removals. An additional column will be added to the table used for storing updates to properties of twins and relationships (defaulted to AdtPropertyEvents).
+    syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace} --adx-record-removals true
+  - summary: Adds a data history connection to a target Digital Twins instance with the $Default Event Hub consumer group and creates two extra tables in the Azure Data Explorer database. One table will be for recording twin lifecycle events and the other for relationship lifecycle events.
+    syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace} --adx-twin-events-table {adx_twin_events_table_name} --adx-relationship-events-table {adx_relationship_events_table_name}
+  - summary: Adds a data history connection to a target Digital Twins instance with the $Default Event Hub consumer group, uses a custom twin property event table name, and creates two extra tables in the Azure Data Explorer database.
+    syntax: az dt data-history connection create adx -n {instance_name} --cn {time_series_database_connection_name} --adx-cluster-name {adx_cluster_name} --adx-database-name {adx_database_name} --eventhub {event_hub} --eventhub-namespace {event_hub_namespace} --adx-property-events-table {adx_property_events_table_name} --adx-twin-events-table {adx_twin_events_table_name} --adx-relationship-events-table {adx_relationship_events_table_name}
   requiredParameters:
   - isRequired: true
     name: --adx-cluster-name --adxc
@@ -70,6 +83,18 @@ directCommands:
     summary: EventHub Namespace identifier.
     description: ''
   optionalParameters:
+  - name: --adx-property-events-table --adxpet
+    defaultValue: "AdtPropertyEvents"
+    summary: The name of the Azure Data Explorer table used for storing updates to properties of twins and relationships.
+    description: ''
+  - name: --adx-record-removals --adxrr
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Specifies whether or not to record twin / relationship property and item removals, including removals of indexed or keyed values (such as map entries, array elements, etc.). Setting this property to 'true' will generate an additional column in the property events table in ADX.
+    description: ''
+  - name: --adx-relationship-events-table --adxret
+    summary: The name of the Azure Data Explorer table used for recording relationship lifecycle events. The table will not be created if this property is left unspecified.
+    description: ''
   - name: --adx-resource-group --adxg
     summary: Name of Azure Data Explorer resource group. If not provided, will use the Digital Twin's resource group.
     description: ''
@@ -77,7 +102,11 @@ directCommands:
     summary: Name or id of subscription where the Azure Data Explorer exists. If not provided, will use the subscription that contains the Digital Twin Instance.
     description: ''
   - name: --adx-table-name --adxt
-    summary: Name of Azure Data Explorer table to be created. If not provided, will use the format adt_dh_{dt_name}_{dt_location}.
+    defaultValue: "AdtPropertyEvents"
+    summary: The name of the Azure Data Explorer table used for storing updates to properties of twins and relationships.
+    description: ''
+  - name: --adx-twin-events-table --adxtet
+    summary: The name of the Azure Data Explorer table used for recording twin lifecycle events. The table will not be created if this property is left unspecified.
     description: ''
   - name: --ehc --eventhub-consumer-group
     defaultValue: "$Default"
@@ -88,6 +117,9 @@ directCommands:
     description: ''
   - name: --ehs --eventhub-subscription
     summary: Name or id of subscription where the EventHub exists. If not provided, will use the subscription that contains the Digital Twin Instance.
+    description: ''
+  - name: --mi-user-assigned --user
+    summary: Use an user-assigned managed identity for data history connection authentication. Accepts the identity resource id. If not provided, will use system identity instead.
     description: ''
   - name: --no-wait
     defaultValue: "False"

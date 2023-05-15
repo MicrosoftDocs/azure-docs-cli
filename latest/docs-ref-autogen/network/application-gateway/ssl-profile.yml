@@ -1,27 +1,28 @@
 ### YamlMime:AzureCLIGroup
 uid: az_network_application-gateway_ssl-profile
 name: az network application-gateway ssl-profile
-summary: Manage ssl profiles of application gateway.
+summary: Manage SSL profiles of application gateway.
 description: ''
 directCommands:
 - uid: az_network_application-gateway_ssl-profile_add
   name: az network application-gateway ssl-profile add
-  summary: Add ssl profiles of the application gateway.
+  summary: Add an SSL profile of the application gateway.
   description: ''
   syntax: >-
     az network application-gateway ssl-profile add --gateway-name
                                                    --name
                                                    --resource-group
                                                    [--cipher-suites]
-                                                   [--client-auth-config {False, True}]
+                                                   [--client-auth-config {0, 1, f, false, n, no, t, true, y, yes}]
                                                    [--disabled-protocols]
-                                                   [--min-protocol-version]
-                                                   [--policy-name]
+                                                   [--min-protocol-version {TLSv1_0, TLSv1_1, TLSv1_2, TLSv1_3}]
+                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                   [--policy-name {AppGwSslPolicy20150501, AppGwSslPolicy20170401, AppGwSslPolicy20170401S, AppGwSslPolicy20220101, AppGwSslPolicy20220101S}]
                                                    [--policy-type {Custom, CustomV2, Predefined}]
                                                    [--trusted-client-cert]
   examples:
-  - summary: Add ssl profile for an existing application gateway.
-    syntax: az network application-gateway ssl-profile add --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile
+  - summary: Update SSL profile for an existing application gateway.
+    syntax: az network application-gateway ssl-profile update --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile --client-auth-configuration False
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -29,7 +30,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name
-    summary: Name of the SSL profile that is unique within an Application Gateway.
+    summary: Name of the SSL profile.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -37,38 +38,44 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --cipher-suites
-    summary: Ssl cipher suites to be enabled in the specified order to application gateway.
+    summary: SSL cipher suites to be enabled in the specified order to application gateway.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --client-auth-config --client-auth-configuration
-    parameterValueGroup: "False, True"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Client authentication configuration of the application gateway resource.
     description: ''
   - name: --disabled-protocols --disabled-ssl-protocols
-    summary: Space-separated list of protocols to disable.
+    summary: Space-separated list of protocols to disable.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --min-protocol-version
-    summary: Minimum version of Ssl protocol to be supported on application gateway.
+    parameterValueGroup: "TLSv1_0, TLSv1_1, TLSv1_2, TLSv1_3"
+    summary: Minimum version of SSL protocol to be supported on application gateway.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --policy-name
-    summary: Name of Ssl Policy.
+    parameterValueGroup: "AppGwSslPolicy20150501, AppGwSslPolicy20170401, AppGwSslPolicy20170401S, AppGwSslPolicy20220101, AppGwSslPolicy20220101S"
+    summary: Name of SSL policy.
     description: ''
   - name: --policy-type
     parameterValueGroup: "Custom, CustomV2, Predefined"
-    summary: Type of Ssl Policy.
+    summary: Type of SSL policy.
     description: ''
   - name: --trusted-client-cert --trusted-client-certificates
-    summary: Array of references to application gateway trusted client certificates.
+    summary: Array of references to application gateway trusted client certificates.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_ssl-profile_list
   name: az network application-gateway ssl-profile list
-  summary: List the existing ssl profiles of the application gateway.
+  summary: List the existing SSL profiles of the application gateway.
   description: ''
   syntax: >-
     az network application-gateway ssl-profile list --gateway-name
                                                     --resource-group
   examples:
-  - summary: List all the ssl profile for an existing application gateway.
+  - summary: List all the SSL profiles for an existing application gateway.
     syntax: az network application-gateway ssl-profile list --gateway-name MyAppGateway -g MyResourceGroup
   requiredParameters:
   - isRequired: true
@@ -82,14 +89,15 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_ssl-profile_remove
   name: az network application-gateway ssl-profile remove
-  summary: Remove an existing ssl profiles of the application gateway.
+  summary: Remove an existing SSL profile of the application gateway.
   description: ''
   syntax: >-
     az network application-gateway ssl-profile remove --gateway-name
                                                       --name
                                                       --resource-group
+                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
-  - summary: Remove ssl profile for an existing application gateway.
+  - summary: Remove SSL profile for an existing application gateway.
     syntax: az network application-gateway ssl-profile remove --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile
   requiredParameters:
   - isRequired: true
@@ -98,23 +106,28 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name
-    summary: Name of the SSL profile that is unique within an Application Gateway.
+    summary: Name of the SSL profile.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_ssl-profile_show
   name: az network application-gateway ssl-profile show
-  summary: Show an existing ssl profiles of the application gateway.
+  summary: Show an existing SSL profile of the application gateway.
   description: ''
   syntax: >-
     az network application-gateway ssl-profile show --gateway-name
                                                     --name
                                                     --resource-group
   examples:
-  - summary: Show ssl profile for an existing application gateway.
+  - summary: Show SSL profile for an existing application gateway.
     syntax: az network application-gateway ssl-profile show --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile
   requiredParameters:
   - isRequired: true
@@ -123,7 +136,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name
-    summary: Name of the SSL profile that is unique within an Application Gateway.
+    summary: Name of the SSL profile.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -132,21 +145,26 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_ssl-profile_update
   name: az network application-gateway ssl-profile update
-  summary: Update ssl profiles of the application gateway.
+  summary: Update SSL profile of the application gateway.
   description: ''
   syntax: >-
     az network application-gateway ssl-profile update --gateway-name
                                                       --name
                                                       --resource-group
+                                                      [--add]
                                                       [--cipher-suites]
-                                                      [--client-auth-config {False, True}]
+                                                      [--client-auth-config {0, 1, f, false, n, no, t, true, y, yes}]
                                                       [--disabled-protocols]
-                                                      [--min-protocol-version]
-                                                      [--policy-name]
+                                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                      [--min-protocol-version {TLSv1_0, TLSv1_1, TLSv1_2, TLSv1_3}]
+                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                      [--policy-name {AppGwSslPolicy20150501, AppGwSslPolicy20170401, AppGwSslPolicy20170401S, AppGwSslPolicy20220101, AppGwSslPolicy20220101S}]
                                                       [--policy-type {Custom, CustomV2, Predefined}]
+                                                      [--remove]
+                                                      [--set]
                                                       [--trusted-client-cert]
   examples:
-  - summary: Update ssl profile for an existing application gateway.
+  - summary: Update SSL profile for an existing application gateway.
     syntax: az network application-gateway ssl-profile update --gateway-name MyAppGateway -g MyResourceGroup --name MySslProfile --client-auth-configuration False
   requiredParameters:
   - isRequired: true
@@ -155,35 +173,111 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name
-    summary: Name of the SSL profile that is unique within an Application Gateway.
+    summary: Name of the SSL profile.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
   - name: --cipher-suites
-    summary: Ssl cipher suites to be enabled in the specified order to application gateway.
+    summary: SSL cipher suites to be enabled in the specified order to application gateway.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --client-auth-config --client-auth-configuration
-    parameterValueGroup: "False, True"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Client authentication configuration of the application gateway resource.
     description: ''
   - name: --disabled-protocols --disabled-ssl-protocols
-    summary: Space-separated list of protocols to disable.
+    summary: Space-separated list of protocols to disable.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --min-protocol-version
-    summary: Minimum version of Ssl protocol to be supported on application gateway.
+    parameterValueGroup: "TLSv1_0, TLSv1_1, TLSv1_2, TLSv1_3"
+    summary: Minimum version of SSL protocol to be supported on application gateway.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --policy-name
-    summary: Name of Ssl Policy.
+    parameterValueGroup: "AppGwSslPolicy20150501, AppGwSslPolicy20170401, AppGwSslPolicy20170401S, AppGwSslPolicy20220101, AppGwSslPolicy20220101S"
+    summary: Name of SSL policy.
     description: ''
   - name: --policy-type
     parameterValueGroup: "Custom, CustomV2, Predefined"
-    summary: Type of Ssl Policy.
+    summary: Type of SSL policy.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --trusted-client-cert --trusted-client-certificates
-    summary: Array of references to application gateway trusted client certificates.
+    summary: Array of references to application gateway trusted client certificates.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_application-gateway_ssl-profile_wait
+  name: az network application-gateway ssl-profile wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network application-gateway ssl-profile wait [--created]
+                                                    [--custom]
+                                                    [--deleted]
+                                                    [--exists]
+                                                    [--gateway-name]
+                                                    [--ids]
+                                                    [--interval]
+                                                    [--resource-group]
+                                                    [--subscription]
+                                                    [--timeout]
+                                                    [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --gateway-name
+    summary: Name of the application gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -192,6 +286,7 @@ commands:
 - az_network_application-gateway_ssl-profile_remove
 - az_network_application-gateway_ssl-profile_show
 - az_network_application-gateway_ssl-profile_update
+- az_network_application-gateway_ssl-profile_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -211,5 +306,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
-  description: Manage ssl profiles of application gateway.
+  ms.date: 03/03/2023
+  description: Manage SSL profiles of application gateway.

@@ -1,7 +1,7 @@
 ### YamlMime:AzureCLIGroup
 uid: az_network_application-gateway_probe
 name: az network application-gateway probe
-summary: Manage probes to gather and evaluate information on a gateway.
+summary: Manage probes to gather and evaluate information on an application gateway.
 description: ''
 directCommands:
 - uid: az_network_application-gateway_probe_create
@@ -11,25 +11,23 @@ directCommands:
   syntax: >-
     az network application-gateway probe create --gateway-name
                                                 --name
-                                                --protocol {Http, Https, Tcp, Tls}
                                                 --resource-group
+                                                [--from-http-settings {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--from-settings {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--host]
-                                                [--host-name-from-http-settings {false, true}]
-                                                [--host-name-from-settings {false, true}]
                                                 [--interval]
                                                 [--match-body]
                                                 [--match-status-codes]
                                                 [--min-servers]
-                                                [--no-wait]
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--path]
                                                 [--port]
+                                                [--protocol {Http, Https, Tcp, Tls}]
                                                 [--threshold]
                                                 [--timeout]
   examples:
   - summary: Create an application gateway probe.
-    syntax: >-
-      az network application-gateway probe create -g MyResourceGroup --gateway-name MyAppGateway \
-          -n MyProbe --protocol https --host 127.0.0.1 --path /path/to/probe
+    syntax: az network application-gateway probe create -g MyResourceGroup --gateway-name MyAppGateway -n MyProbe --protocol https --host 127.0.0.1 --path ProbePath
   requiredParameters:
   - isRequired: true
     name: --gateway-name
@@ -37,59 +35,58 @@ directCommands:
     description: ''
   - isRequired: true
     name: --name -n
-    summary: The name of the probe.
-    description: ''
-  - isRequired: true
-    name: --protocol
-    parameterValueGroup: "Http, Https, Tcp, Tls"
-    summary: The settings protocol.
+    summary: Name of the probe.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --from-http-settings --host-name-from-http-settings
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to use host header from HTTP settings.
+    description: ''
+  - name: --from-settings --host-name-from-settings
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to use host header from settings. Pick hostname from settings is currently not supported, now only support false.
+    description: ''
   - name: --host
-    summary: The name of the host to send the probe.
-    description: ''
-  - name: --host-name-from-http-settings
-    parameterValueGroup: "false, true"
-    summary: Use host header from HTTP settings.
-    description: ''
-  - name: --host-name-from-settings -s
-    parameterValueGroup: "false, true"
-    summary: Use host header from settings. Pick hostname from settings is currently not supported, now only support false.
+    summary: Name of the host to send the probe.
     description: ''
   - name: --interval
     defaultValue: "30"
-    summary: The time interval in seconds between consecutive probes.
+    summary: Time interval in seconds between consecutive probes.
     description: ''
   - name: --match-body
     summary: Body that must be contained in the health response.
     description: ''
   - name: --match-status-codes
-    summary: Space-separated list of allowed ranges of healthy status codes for the health response.
+    summary: Space-separated list of allowed ranges of healthy status codes for the health response.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --min-servers
     summary: Minimum number of servers that are always marked healthy.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --path
-    summary: The relative path of the probe. Valid paths start from "/".
+    summary: Relative path of probe. Valid path starts from "/". Probe is sent to <Protocol>://<host>:<port><path>.
     description: ''
   - name: --port
     summary: Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only.
     description: ''
+  - name: --protocol
+    parameterValueGroup: "Http, Https, Tcp, Tls"
+    summary: Protocol used for the probe.
+    description: ''
   - name: --threshold
     defaultValue: "8"
-    summary: The number of failed probes after which the back end server is marked down.
+    summary: Number of failed probes after which the back end server is marked down.
     description: ''
   - name: --timeout
     defaultValue: "120"
-    summary: The probe timeout in seconds.
+    summary: Probe timeout in seconds.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_probe_delete
@@ -97,36 +94,30 @@ directCommands:
   summary: Delete a probe.
   description: ''
   syntax: >-
-    az network application-gateway probe delete [--gateway-name]
-                                                [--ids]
-                                                [--name]
-                                                [--no-wait]
-                                                [--resource-group]
-                                                [--subscription]
+    az network application-gateway probe delete --gateway-name
+                                                --name
+                                                --resource-group
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Delete a probe.
     syntax: az network application-gateway probe delete -g MyResourceGroup --gateway-name MyAppGateway -n MyProbe
-  - summary: Delete a probe. (autogenerated)
-    syntax: az network application-gateway probe delete --gateway-name MyAppGateway --name MyProbe --resource-group MyResourceGroup --subscription MySubscription
-  optionalParameters:
-  - name: --gateway-name
-    summary: The name of the application gateway.
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the probe.
     description: ''
-  - name: --name -n
-    summary: The name of the probe.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_probe_list
@@ -142,7 +133,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --gateway-name
-    summary: The name of the application gateway.
+    summary: Name of the application gateway.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -154,29 +145,24 @@ directCommands:
   summary: Get the details of a probe.
   description: ''
   syntax: >-
-    az network application-gateway probe show [--gateway-name]
-                                              [--ids]
-                                              [--name]
-                                              [--resource-group]
-                                              [--subscription]
+    az network application-gateway probe show --gateway-name
+                                              --name
+                                              --resource-group
   examples:
   - summary: Get the details of a probe.
     syntax: az network application-gateway probe show -g MyResourceGroup --gateway-name MyAppGateway -n MyProbe
-  optionalParameters:
-  - name: --gateway-name
-    summary: The name of the application gateway.
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
     description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - isRequired: true
+    name: --name -n
+    summary: Name of the probe.
     description: ''
-  - name: --name -n
-    summary: The name of the probe.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_probe_update
@@ -184,109 +170,155 @@ directCommands:
   summary: Update a probe.
   description: ''
   syntax: >-
-    az network application-gateway probe update [--add]
-                                                [--force-string]
-                                                [--gateway-name]
+    az network application-gateway probe update --gateway-name
+                                                --name
+                                                --resource-group
+                                                [--add]
+                                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--from-http-settings {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--from-settings {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--host]
-                                                [--host-name-from-http-settings {false, true}]
-                                                [--host-name-from-settings {false, true}]
-                                                [--ids]
                                                 [--interval]
                                                 [--match-body]
                                                 [--match-status-codes]
                                                 [--min-servers]
-                                                [--name]
-                                                [--no-wait]
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--path]
                                                 [--port]
                                                 [--protocol {Http, Https, Tcp, Tls}]
                                                 [--remove]
-                                                [--resource-group]
                                                 [--set]
-                                                [--subscription]
                                                 [--threshold]
                                                 [--timeout]
   examples:
   - summary: Update an application gateway probe with a timeout of 60 seconds.
-    syntax: >-
-      az network application-gateway probe update -g MyResourceGroup --gateway-name MyAppGateway \
-          -n MyProbe --timeout 60
-  - summary: Update a probe. (autogenerated)
-    syntax: az network application-gateway probe update --gateway-name MyAppGateway --host 127.0.0.1 --name MyProbe --resource-group MyResourceGroup --subscription MySubscription
+    syntax: az network application-gateway probe update -g MyResourceGroup --gateway-name MyAppGateway -n MyProbe --timeout 60
+  requiredParameters:
+  - isRequired: true
+    name: --gateway-name
+    summary: Name of the application gateway.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the probe.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
-  - name: --gateway-name
-    summary: Name of the application gateway.
+  - name: --from-http-settings --host-name-from-http-settings
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to use host header from HTTP settings.
+    description: ''
+  - name: --from-settings --host-name-from-settings
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to use host header from settings. Pick hostname from settings is currently not supported, now only support false.
     description: ''
   - name: --host
-    summary: The name of the host to send the probe.
-    description: ''
-  - name: --host-name-from-http-settings
-    parameterValueGroup: "false, true"
-    summary: Use host header from HTTP settings.
-    description: ''
-  - name: --host-name-from-settings -s
-    parameterValueGroup: "false, true"
-    summary: Use host header from settings. Pick hostname from settings is currently not supported, now only support false.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    summary: Name of the host to send the probe.
     description: ''
   - name: --interval
-    summary: The time interval in seconds between consecutive probes.
+    summary: Time interval in seconds between consecutive probes.
     description: ''
   - name: --match-body
     summary: Body that must be contained in the health response.
     description: ''
   - name: --match-status-codes
-    summary: Space-separated list of allowed ranges of healthy status codes for the health response.
+    summary: Space-separated list of allowed ranges of healthy status codes for the health response.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --min-servers
     summary: Minimum number of servers that are always marked healthy.
     description: ''
-  - name: --name -n
-    summary: The name of the probe.
-    description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --path
-    summary: The relative path of the probe. Valid paths start from "/".
+    summary: Relative path of probe. Valid path starts from "/". Probe is sent to <Protocol>://<host>:<port><path>.
     description: ''
   - name: --port
     summary: Custom port which will be used for probing the backend servers. The valid value ranges from 1 to 65535. In case not set, port from http settings will be used. This property is valid for Standard_v2 and WAF_v2 only.
     description: ''
   - name: --protocol
     parameterValueGroup: "Http, Https, Tcp, Tls"
-    summary: The settings protocol.
+    summary: Protocol used for the probe.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --threshold
+    summary: Number of failed probes after which the back end server is marked down.
+    description: ''
+  - name: --timeout
+    summary: Probe timeout in seconds.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_application-gateway_probe_wait
+  name: az network application-gateway probe wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network application-gateway probe wait [--created]
+                                              [--custom]
+                                              [--deleted]
+                                              [--exists]
+                                              [--gateway-name]
+                                              [--ids]
+                                              [--interval]
+                                              [--resource-group]
+                                              [--subscription]
+                                              [--timeout]
+                                              [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --gateway-name
+    summary: Name of the application gateway.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --set
-    defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  - name: --threshold
-    summary: The number of failed probes after which the back end server is marked down.
-    description: ''
   - name: --timeout
-    summary: The probe timeout in seconds.
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -295,6 +327,7 @@ commands:
 - az_network_application-gateway_probe_list
 - az_network_application-gateway_probe_show
 - az_network_application-gateway_probe_update
+- az_network_application-gateway_probe_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -314,5 +347,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
-  description: Manage probes to gather and evaluate information on a gateway.
+  ms.date: 03/03/2023
+  description: Manage probes to gather and evaluate information on an application gateway.

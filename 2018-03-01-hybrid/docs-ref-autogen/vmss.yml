@@ -36,7 +36,6 @@ directCommands:
                    [--image]
                    [--instance-count]
                    [--lb]
-                   [--lb-nat-pool-name]
                    [--lb-nat-rule-name]
                    [--lb-sku {Basic, Standard}]
                    [--license-type {None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, Windows_Client, Windows_Server}]
@@ -83,23 +82,23 @@ directCommands:
   - summary: Create a Linux VM scale set with an auto-generated ssh key pair, a public IP address, a DNS entry, an existing load balancer, and an existing virtual network.
     syntax: >-
       az vmss create -n MyVmss -g MyResourceGroup --public-ip-address-dns-name my-globally-dns-name \
-          --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image UbuntuLTS \
+          --load-balancer MyLoadBalancer --vnet-name MyVnet --subnet MySubnet --image Ubuntu2204 \
           --generate-ssh-keys
   - summary: Create a Linux VM scale set from a custom image using the default existing public SSH key.
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image MyImage
   - summary: Create a Linux VM scale set with a load balancer and custom DNS servers. Each VM has a public-ip address and a custom domain name.
     syntax: >-
-      az vmss create -n MyVmss -g MyResourceGroup --image centos \
+      az vmss create -n MyVmss -g MyResourceGroup --image CentOS85Gen2 \
           --public-ip-per-vm --vm-domain-name myvmss --dns-servers 10.0.0.6 10.0.0.5
   - summary: 'Create a Linux VM scale set using a cloud-init script for configuration. See: https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init'
-    syntax: az vmss create -g MyResourceGroup -n MyVmss --image debian --custom-data MyCloudInitScript.yml
+    syntax: az vmss create -g MyResourceGroup -n MyVmss --image Debian11 --custom-data MyCloudInitScript.yml
   - summary: Create a VMSS from a generalized gallery image version.
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0
   - summary: Create a VMSS from a specialized gallery image version.
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0 --specialized
   - summary: Create a VMSS from the latest version of a gallery image
     syntax: az vmss create -g MyResourceGroup -n MyVmss --image /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage
-  - summary: Create a Debian VM scaleset using Key Vault secrets.
+  - summary: Create a Debian11 VM scaleset using Key Vault secrets.
     syntax: >-
       az keyvault certificate create --vault-name vaultname -n cert1 \
         -p "$(az keyvault certificate get-default-policy)"
@@ -111,15 +110,15 @@ directCommands:
 
 
       az vmss create -g group-name -n vm-name --admin-username deploy  \
-        --image debian --secrets "$vm_secrets"
+        --image Debian11 --secrets "$vm_secrets"
   - summary: Create a VM scaleset with system assigned identity. The VM will have a 'Contributor' Role with access to a storage account.
-    syntax: az vmss create -n MyVmss -g MyResourceGroup --image centos --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1 --role Contributor
-  - summary: Create a debian VM scaleset with a user assigned identity.
-    syntax: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
-  - summary: Create a debian VM scaleset with both system and user assigned identity.
-    syntax: az vmss create -n MyVmss -g rg1 --image debian --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+    syntax: az vmss create -n MyVmss -g MyResourceGroup --image CentOS85Gen2 --assign-identity --scope /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/MyResourceGroup/myRG/providers/Microsoft.Storage/storageAccounts/storage1 --role Contributor
+  - summary: Create a Debian11 VM scaleset with a user assigned identity.
+    syntax: az vmss create -n MyVmss -g rg1 --image Debian11 --assign-identity  /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
+  - summary: Create a Debian11 VM scaleset with both system and user assigned identity.
+    syntax: az vmss create -n MyVmss -g rg1 --image Debian11 --assign-identity  [system] /subscriptions/99999999-1bf0-4dda-aec3-cb9272f09590/resourcegroups/myRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID
   - summary: Create a VMSS that supports SpotRestore.
-    syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image Centos --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
+    syntax: az vmss create -n MyVmss -g MyResourceGroup  --location NorthEurope --instance-count 2 --image CentOS85Gen2 --priority Spot --eviction-policy Deallocate --single-placement-group --enable-spot-restore True --spot-restore-timeout PT1H
   - summary: Create a VMSS from shared gallery image.
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image /SharedGalleries/{gallery_unique_name}/Images/{image}/Versions/{version}
   - summary: Create a VMSS from community gallery image.
@@ -209,7 +208,7 @@ directCommands:
     summary: Probe name from the existing load balancer, mainly used for rolling upgrade or automatic repairs.
     description: ''
   - name: --image
-    summary: 'The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. In addition, it also supports shared gallery image. Valid URN format: "Publisher:Offer:Sku:Version".'
+    summary: "The name of the operating system image as a URN alias, URN, custom image name or ID, or VHD blob URI. In addition, it also supports shared gallery image. Please use the image alias including the version of the distribution you want to use. For example: please use Debian11 instead of Debian.' This parameter is required unless using `--attach-os-disk.` Valid URN format: \"Publisher:Offer:Sku:Version\". For more information, see https://docs.microsoft.com/azure/virtual-machines/linux/cli-ps-findimage."
     description: ''
     valueFrom: az sig image-version show-shared, az vm image list, az vm image show
   - name: --instance-count
@@ -218,9 +217,6 @@ directCommands:
     description: ''
   - name: --lb --load-balancer
     summary: Name to use when creating a new load balancer (default) or referencing an existing one. Can also reference an existing load balancer by ID or specify "" for none.
-    description: ''
-  - name: --lb-nat-pool-name --nat-pool-name
-    summary: Name to use for the NAT pool when creating a new load balancer.
     description: ''
   - name: --lb-nat-rule-name --nat-rule-name
     summary: Name to use for the NAT rule v2 when creating a new load balancer. (NAT rule V2 is used to replace NAT pool).
@@ -244,7 +240,6 @@ directCommands:
     summary: Name or ID of an existing Network Security Group.
     description: ''
   - name: --orchestration-mode
-    defaultValue: "Uniform"
     parameterValueGroup: "Flexible, Uniform"
     summary: Choose how virtual machines are managed by the scale set. In Uniform mode, you define a virtual machine model and Azure will generate identical instances based on that model. In Flexible mode, you manually create and add a virtual machine of any configuration to the scale set or generate identical instances based on virtual machine model defined for the scale set.
     description: ''
@@ -609,20 +604,24 @@ directCommands:
   description: ''
   syntax: >-
     az vmss reimage [--ids]
-                    [--instance-id]
+                    [--instance-ids]
                     [--name]
                     [--no-wait]
                     [--resource-group]
                     [--subscription]
   examples:
-  - summary: Reimage VMs within a VMSS. (autogenerated)
-    syntax: az vmss reimage --instance-id 1 --name MyScaleSet --resource-group MyResourceGroup --subscription MySubscription
+  - summary: Reimage a VM instance within a VMSS.
+    syntax: az vmss reimage --instance-ids 1 --name MyScaleSet --resource-group MyResourceGroup --subscription MySubscription
+  - summary: Reimage a batch of VM instances within a VMSS.
+    syntax: az vmss reimage --instance-ids 1 2 3 --name MyScaleSet --resource-group MyResourceGroup --subscription MySubscription
+  - summary: Reimage all the VM instances within a VMSS.
+    syntax: az vmss reimage --name MyScaleSet --resource-group MyResourceGroup --subscription MySubscription
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --instance-id
-    summary: VM instance ID. If missing, reimage all instances.
+  - name: --instance-ids
+    summary: Space-separated list of VM instance ID. If missing, reimage all instances.
     description: ''
   - name: --name -n
     summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
@@ -1040,9 +1039,6 @@ commands:
 - az_vmss_extension_delete
 - az_vmss_extension_image
 - az_vmss_extension_image_list
-- az_vmss_extension_image_list-names
-- az_vmss_extension_image_list-versions
-- az_vmss_extension_image_show
 - az_vmss_extension_list
 - az_vmss_extension_set
 - az_vmss_extension_show
@@ -1092,5 +1088,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/11/2022
+  ms.date: 04/12/2023
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

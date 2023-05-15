@@ -4,84 +4,26 @@ name: az network watcher flow-log
 summary: Manage network security group flow logging.
 description: For more information about configuring flow logs visit https://docs.microsoft.com/azure/network-watcher/network-watcher-nsg-flow-logging-cli.
 directCommands:
-- uid: az_network_watcher_flow-log_configure
-  name: az network watcher flow-log configure
-  summary: Configure flow logging on a network security group.
-  description: ''
-  syntax: >-
-    az network watcher flow-log configure --nsg
-                                          [--enabled {false, true}]
-                                          [--format {JSON}]
-                                          [--interval]
-                                          [--log-version]
-                                          [--resource-group]
-                                          [--retention]
-                                          [--storage-account]
-                                          [--traffic-analytics {false, true}]
-                                          [--workspace]
-  examples:
-  - summary: Enable NSG flow logs.
-    syntax: az network watcher flow-log configure -g MyResourceGroup --enabled true --nsg MyNsg --storage-account MyStorageAccount
-  - summary: Disable NSG flow logs.
-    syntax: az network watcher flow-log configure -g MyResourceGroup --enabled false --nsg MyNsg
-  requiredParameters:
-  - isRequired: true
-    name: --nsg
-    summary: Name or ID of the Network Security Group to target.
-    description: ''
-  optionalParameters:
-  - name: --enabled
-    defaultValue: "true"
-    parameterValueGroup: "false, true"
-    summary: Enable logging.
-    description: ''
-  - name: --format
-    parameterValueGroup: "JSON"
-    summary: File type of the flow log.
-    description: ''
-  - name: --interval
-    summary: Interval in minutes at which to conduct flow analytics. Temporarily allowed values are 10 and 60.
-    description: ''
-  - name: --log-version
-    summary: Version (revision) of the flow log.
-    description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --retention
-    defaultValue: "0"
-    summary: Number of days to retain logs.
-    description: ''
-  - name: --storage-account
-    summary: Name or ID of the storage account in which to save the flow logs.
-    description: ''
-  - name: --traffic-analytics
-    parameterValueGroup: "false, true"
-    summary: Enable traffic analytics. Defaults to true if `--workspace` is provided.
-    description: ''
-  - name: --workspace
-    summary: Name or ID of a Log Analytics workspace. Must be in the same region of flow log.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_flow-log_create
   name: az network watcher flow-log create
   summary: Create a flow log on a network security group.
   description: ''
   syntax: >-
-    az network watcher flow-log create --location
-                                       --name
-                                       [--enabled {false, true}]
+    az network watcher flow-log create --name
+                                       [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--format {JSON}]
                                        [--interval]
+                                       [--location]
                                        [--log-version]
                                        [--nic]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--nsg]
                                        [--resource-group]
                                        [--retention]
                                        [--storage-account]
                                        [--subnet]
                                        [--tags]
-                                       [--traffic-analytics {false, true}]
+                                       [--traffic-analytics {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--vnet]
                                        [--workspace]
   examples:
@@ -103,18 +45,13 @@ directCommands:
     syntax: az network watcher flow-log create --location westus --name MyFlowLog --nic MyNetworkInterfaceID --storage-account account
   requiredParameters:
   - isRequired: true
-    name: --location -l
-    summary: Location to identify the exclusive Network Watcher under a region. Only one Network Watcher can be existed per subscription and region.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The name of the flow logger.
     description: ''
   optionalParameters:
   - name: --enabled
-    defaultValue: "true"
-    parameterValueGroup: "false, true"
-    summary: Enable logging.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Enable logging. Default: true.'
     description: ''
   - name: --format
     parameterValueGroup: "JSON"
@@ -124,11 +61,19 @@ directCommands:
     defaultValue: "60"
     summary: Interval in minutes at which to conduct flow analytics. Temporarily allowed values are 10 and 60.
     description: ''
+  - name: --location -l
+    summary: Location to identify the exclusive Network Watcher under a region. Only one Network Watcher can be existed per subscription and region.
+    description: ''
   - name: --log-version
+    defaultValue: "0"
     summary: Version (revision) of the flow log.
     description: ''
   - name: --nic
     summary: Name or ID of the Network Interface (NIC) Resource.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --nsg
     summary: Name or ID of the network security group.
@@ -137,20 +82,19 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --retention
-    defaultValue: "0"
     summary: Number of days to retain logs.
     description: ''
   - name: --storage-account
-    summary: Name or ID of the storage account in which to save the flow logs. Must be in the same region of flow log.
+    summary: Name or ID of the storage account in which to save the flow logs.                                Must be in the same region of flow log.
     description: ''
   - name: --subnet
     summary: Name or ID of Subnet.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear                                existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --traffic-analytics
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Enable traffic analytics. Defaults to true if `--workspace` is provided.
     description: ''
   - name: --vnet
@@ -165,32 +109,36 @@ directCommands:
   summary: Delete the specified flow log resource.
   description: ''
   syntax: >-
-    az network watcher flow-log delete --location
-                                       --name
+    az network watcher flow-log delete --name
+                                       [--location]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
-  - summary: Delete the specified flow log resource. (autogenerated)
+  - summary: Delete the specified flow log resource.
     syntax: az network watcher flow-log delete --location westus2 --name MyFlowLogger
   requiredParameters:
   - isRequired: true
-    name: --location -l
-    summary: Location to identify the exclusive Network Watcher under a region. Only one Network Watcher can be existed per subscription and region.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The name of the flow logger.
+    description: ''
+  optionalParameters:
+  - name: --location -l
+    summary: Location to identify the exclusive Network Watcher under a region. Only one Network Watcher can be existed per subscription and region.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_flow-log_list
   name: az network watcher flow-log list
   summary: List all flow log resources for the specified Network Watcher.
   description: ''
-  syntax: az network watcher flow-log list --location
+  syntax: az network watcher flow-log list [--location]
   examples:
-  - summary: List all flow log resources for the specified Network Watcher. (autogenerated)
+  - summary: List all flow log resources for the specified Network Watcher.
     syntax: az network watcher flow-log list --location westus2
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
+  optionalParameters:
+  - name: --location -l
     summary: Location to identify the exclusive Network Watcher under a region. Only one Network Watcher can be existed per subscription and region.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -227,15 +175,16 @@ directCommands:
   summary: Update the flow log configuration of a network security group.
   description: ''
   syntax: >-
-    az network watcher flow-log update --location
-                                       --name
+    az network watcher flow-log update --name
                                        [--add]
-                                       [--enabled {false, true}]
-                                       [--force-string]
+                                       [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--format {JSON}]
                                        [--interval]
+                                       [--location]
                                        [--log-version]
                                        [--nic]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--nsg]
                                        [--remove]
                                        [--resource-group]
@@ -244,7 +193,7 @@ directCommands:
                                        [--storage-account]
                                        [--subnet]
                                        [--tags]
-                                       [--traffic-analytics {false, true}]
+                                       [--traffic-analytics {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--vnet]
                                        [--workspace]
   examples:
@@ -264,25 +213,19 @@ directCommands:
     syntax: az network watcher flow-log update --location westus --resource-group MyAnotherResourceGroup --name MyFlowLog --workspace MyAnotherLogAnalyticWorkspace
   requiredParameters:
   - isRequired: true
-    name: --location -l
-    summary: Location to identify the exclusive Network Watcher under a region. Only one Network Watcher can be existed per subscription and region.
-    description: ''
-  - isRequired: true
     name: --name -n
     summary: The name of the flow logger.
     description: ''
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --enabled
-    defaultValue: "true"
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Enable logging.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --format
@@ -290,8 +233,10 @@ directCommands:
     summary: File type of the flow log.
     description: ''
   - name: --interval
-    defaultValue: "60"
     summary: Interval in minutes at which to conduct flow analytics. Temporarily allowed values are 10 and 60.
+    description: ''
+  - name: --location -l
+    summary: Location to identify the exclusive Network Watcher under a region. Only one Network Watcher can be existed per subscription and region.
     description: ''
   - name: --log-version
     summary: Version (revision) of the flow log.
@@ -299,35 +244,36 @@ directCommands:
   - name: --nic
     summary: Name or ID of the Network Interface (NIC) Resource.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --nsg
     summary: Name or ID of the network security group.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --retention
-    defaultValue: "0"
     summary: Number of days to retain logs.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --storage-account
-    summary: Name or ID of the storage account in which to save the flow logs. Must be in the same region of flow log.
+    summary: Name or ID of the storage account in which to save the flow logs.                                Must be in the same region of flow log.
     description: ''
   - name: --subnet
     summary: Name or ID of Subnet.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear                                existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --traffic-analytics
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Enable traffic analytics. Defaults to true if `--workspace` is provided.
     description: ''
   - name: --vnet
@@ -337,13 +283,74 @@ directCommands:
     summary: Name or ID of a Log Analytics workspace. Must be in the same region of flow log.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_watcher_flow-log_wait
+  name: az network watcher flow-log wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network watcher flow-log wait [--created]
+                                     [--custom]
+                                     [--deleted]
+                                     [--exists]
+                                     [--ids]
+                                     [--interval]
+                                     [--name]
+                                     [--network-watcher-name]
+                                     [--resource-group]
+                                     [--subscription]
+                                     [--timeout]
+                                     [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: The name of the flow logger.
+    description: ''
+  - name: --network-watcher-name
+    summary: The name of the network watcher.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
-- az_network_watcher_flow-log_configure
 - az_network_watcher_flow-log_create
 - az_network_watcher_flow-log_delete
 - az_network_watcher_flow-log_list
 - az_network_watcher_flow-log_show
 - az_network_watcher_flow-log_update
+- az_network_watcher_flow-log_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -363,5 +370,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: For more information about configuring flow logs visit https://docs.microsoft.com/azure/network-watcher/network-watcher-nsg-flow-logging-cli.

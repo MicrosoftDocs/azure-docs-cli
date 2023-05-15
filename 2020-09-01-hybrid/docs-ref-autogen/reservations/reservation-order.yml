@@ -4,7 +4,7 @@ name: az reservations reservation-order
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **reservation** extension for the Azure CLI  (version 2.41.0 or higher).  The extension will automatically install the first time you run an **az reservations reservation-order** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **reservation** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az reservations reservation-order** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Reservations reservation-order.
 description: ''
 directCommands:
@@ -14,7 +14,8 @@ directCommands:
   description: ''
   syntax: >-
     az reservations reservation-order calculate [--applied-scope]
-                                                [--applied-scope-type {Shared, Single}]
+                                                [--applied-scope-property]
+                                                [--applied-scope-type {ManagementGroup, Shared, Single}]
                                                 [--billing-plan {Monthly, Upfront}]
                                                 [--billing-scope]
                                                 [--display-name]
@@ -23,6 +24,7 @@ directCommands:
                                                 [--quantity]
                                                 [--renew {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--reserved-resource-type {AVS, AppService, AzureDataExplorer, AzureFiles, BlockBlob, CosmosDb, DataFactory, Databricks, DedicatedHost, ManagedDisk, MariaDb, MySql, NetAppStorage, PostgreSql, RedHat, RedHatOsa, RedisCache, SapHana, SqlAzureHybridBenefit, SqlDataWarehouse, SqlDatabases, SqlEdge, SuseLinux, VMwareCloudSimple, VirtualMachineSoftware, VirtualMachines}]
+                                                [--review-date-time]
                                                 [--sku]
                                                 [--term {P1Y, P3Y, P5Y}]
   examples:
@@ -32,8 +34,11 @@ directCommands:
   - name: --applied-scope
     summary: Subscription that the benefit will be applied. Required if --applied-scope-type is Single. Do not specify if --applied-scope-type is Shared.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
+  - name: --applied-scope-property
+    summary: Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --applied-scope-type
-    parameterValueGroup: "Shared, Single"
+    parameterValueGroup: "ManagementGroup, Shared, Single"
     summary: Type of the Applied Scope.
     description: ''
   - name: --billing-plan
@@ -64,6 +69,9 @@ directCommands:
   - name: --reserved-resource-type
     parameterValueGroup: "AVS, AppService, AzureDataExplorer, AzureFiles, BlockBlob, CosmosDb, DataFactory, Databricks, DedicatedHost, ManagedDisk, MariaDb, MySql, NetAppStorage, PostgreSql, RedHat, RedHatOsa, RedisCache, SapHana, SqlAzureHybridBenefit, SqlDataWarehouse, SqlDatabases, SqlEdge, SuseLinux, VMwareCloudSimple, VirtualMachineSoftware, VirtualMachines"
     summary: The type of the resource that is being reserved.
+    description: ''
+  - name: --review-date-time
+    summary: This is the date-time when the Azure hybrid benefit needs to be reviewed.
     description: ''
   - name: --sku
     summary: Sku name for purchasing.
@@ -137,7 +145,8 @@ directCommands:
   syntax: >-
     az reservations reservation-order purchase --reservation-order-id
                                                [--applied-scope]
-                                               [--applied-scope-type {Shared, Single}]
+                                               [--applied-scope-property]
+                                               [--applied-scope-type {ManagementGroup, Shared, Single}]
                                                [--billing-plan {Monthly, Upfront}]
                                                [--billing-scope]
                                                [--display-name]
@@ -147,11 +156,12 @@ directCommands:
                                                [--quantity]
                                                [--renew {0, 1, f, false, n, no, t, true, y, yes}]
                                                [--reserved-resource-type {AVS, AppService, AzureDataExplorer, AzureFiles, BlockBlob, CosmosDb, DataFactory, Databricks, DedicatedHost, ManagedDisk, MariaDb, MySql, NetAppStorage, PostgreSql, RedHat, RedHatOsa, RedisCache, SapHana, SqlAzureHybridBenefit, SqlDataWarehouse, SqlDatabases, SqlEdge, SuseLinux, VMwareCloudSimple, VirtualMachineSoftware, VirtualMachines}]
+                                               [--review-date-time]
                                                [--sku]
                                                [--term {P1Y, P3Y, P5Y}]
   examples:
   - summary: Purchase a single scope reservation
-    syntax: az reservations reservation-order purchase --reservation-order-id 40000000-aaaa-bbbb-cccc-200000000005 --applied-scope-type Single --billing-scope 50000000-aaaa-bbbb-cccc-200000000005 --reserved-resource-type VirtualMachines --display-name name1 --quantity 1 --sku Standard_B1s --term P1Y --billing-plan Monthly --location eastus --applied-scope 50000000-aaaa-bbbb-cccc-200000000005
+    syntax: az reservations reservation-order purchase --reservation-order-id 40000000-aaaa-bbbb-cccc-200000000005 --applied-scope-type Single --billing-scope 50000000-aaaa-bbbb-cccc-200000000005 --reserved-resource-type VirtualMachines --display-name name1 --quantity 1 --sku Standard_B1s --term P1Y --billing-plan Monthly --location eastus --applied-scope 50000000-aaaa-bbbb-cccc-200000000010
   - summary: Purchase a Single scope with resource group reservation
     syntax: az reservations reservation-order purchase --reservation-order-id 40000000-aaaa-bbbb-cccc-200000000005 --applied-scope-type Single --billing-scope 50000000-aaaa-bbbb-cccc-200000000005 --reserved-resource-type VirtualMachines --display-name testername1 --quantity 1 --sku Standard_B1s --term P1Y --billing-plan Monthly --location eastus --applied-scope '/subscriptions/50000000-aaaa-bbbb-cccc-200000000005/resourceGroups/rg1' --instance-flexibility Off
   requiredParameters:
@@ -163,8 +173,11 @@ directCommands:
   - name: --applied-scope
     summary: Subscription that the benefit will be applied. Required if --applied-scope-type is Single. Do not specify if --applied-scope-type is Shared.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
+  - name: --applied-scope-property
+    summary: Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --applied-scope-type
-    parameterValueGroup: "Shared, Single"
+    parameterValueGroup: "ManagementGroup, Shared, Single"
     summary: Type of the Applied Scope.
     description: ''
   - name: --billing-plan
@@ -200,6 +213,9 @@ directCommands:
     parameterValueGroup: "AVS, AppService, AzureDataExplorer, AzureFiles, BlockBlob, CosmosDb, DataFactory, Databricks, DedicatedHost, ManagedDisk, MariaDb, MySql, NetAppStorage, PostgreSql, RedHat, RedHatOsa, RedisCache, SapHana, SqlAzureHybridBenefit, SqlDataWarehouse, SqlDatabases, SqlEdge, SuseLinux, VMwareCloudSimple, VirtualMachineSoftware, VirtualMachines"
     summary: The type of the resource that is being reserved.
     description: ''
+  - name: --review-date-time
+    summary: This is the date-time when the Azure hybrid benefit needs to be reviewed.
+    description: ''
   - name: --sku
     summary: Sku name for purchasing.
     description: ''
@@ -213,6 +229,7 @@ directCommands:
   description: ''
   syntax: >-
     az reservations reservation-order return --reservation-order-id
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--quantity]
                                              [--reservation-id]
                                              [--return-reason]
@@ -220,13 +237,17 @@ directCommands:
                                              [--session-id]
   examples:
   - summary: Return a reservation
-    syntax: az reservations reservation-order return --reservation-order-id 50000000-aaaa-bbbb-cccc-200000000000 --return-reason mockReason --scope Reservation --quantity 1 --reservation-id /providers/microsoft.capacity/reservationOrders/50000000-aaaa-bbbb-cccc-200000000000/reservations/30000000-aaaa-bbbb-cccc-200000000011 --session-id 40000000-aaaa-bbbb-cccc-200000000012
+    syntax: az reservations reservation-order return --reservation-order-id 50000000-aaaa-bbbb-cccc-200000000000 --return-reason mockReason --scope Reservation --quantity 1 --reservation-id /providers/microsoft.capacity/reservationOrders/50000000-aaaa-bbbb-cccc-200000000000/reservations/30000000-aaaa-bbbb-cccc-200000000011 --session-id 40000000-aaaa-bbbb-cccc-200000000020
   requiredParameters:
   - isRequired: true
     name: --reservation-order-id
     summary: Order Id of the reservation.
     description: ''
   optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --quantity
     summary: Quantity to be returned. Must be greater than zero.
     description: ''

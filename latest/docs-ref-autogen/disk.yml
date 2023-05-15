@@ -26,7 +26,6 @@ directCommands:
                    [--edge-zone]
                    [--enable-bursting {false, true}]
                    [--encryption-type {EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey}]
-                   [--for-upload {false, true}]
                    [--gallery-image-reference]
                    [--gallery-image-reference-lun]
                    [--hyper-v-generation {V1, V2}]
@@ -38,6 +37,7 @@ directCommands:
                    [--network-access-policy {AllowAll, AllowPrivate, DenyAll}]
                    [--no-wait]
                    [--os-type {Linux, Windows}]
+                   [--performance-plus {false, true}]
                    [--public-network-access {Disabled, Enabled}]
                    [--secure-vm-disk-encryption-set]
                    [--security-data-uri]
@@ -64,7 +64,7 @@ directCommands:
   - summary: Create a disk in an availability zone in the region of "East US 2"
     syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --location eastus2 --zone 1
   - summary: Create a disk from image.
-    syntax: az disk create -g MyResourceGroup -n MyDisk --image-reference Canonical:UbuntuServer:18.04-LTS:18.04.202002180
+    syntax: az disk create -g MyResourceGroup -n MyDisk --image-reference Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest
   - summary: Create a disk from the OS Disk of a compute gallery image version
     syntax: az disk create -g MyResourceGroup -n MyDisk --gallery-image-reference /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myImage/versions/1.0.0
   - summary: Create a disk from the OS Disk of the latest version in a compute gallery image
@@ -84,9 +84,9 @@ directCommands:
   - summary: Create a disk from the blob URI for VM guest state VHD.
     syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --security-data-uri GuestStateDiskVhdUri --security-type TrustedLaunch --hyper-v-generation V2
   - summary: Create a standard disk for uploading blobs.
-    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --upload-type Upload
+    syntax: az disk create -g MyResourceGroup -n MyDisk --upload-size-bytes 20972032 --upload-type Upload
   - summary: Create an OS disk for uploading along with VM guest state.
-    syntax: az disk create -g MyResourceGroup -n MyDisk --size-gb 10 --upload-type UploadWithSecurityData --security-type TrustedLaunch --hyper-v-generation V2
+    syntax: az disk create -g MyResourceGroup -n MyDisk --upload-size-bytes 20972032 --upload-type UploadWithSecurityData --security-type TrustedLaunch --hyper-v-generation V2
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -138,10 +138,6 @@ directCommands:
     parameterValueGroup: "EncryptionAtRestWithCustomerKey, EncryptionAtRestWithPlatformAndCustomerKeys, EncryptionAtRestWithPlatformKey"
     summary: 'Encryption type. EncryptionAtRestWithPlatformKey: Disk is encrypted with XStore managed key at rest. It is the default encryption type. EncryptionAtRestWithCustomerKey: Disk is encrypted with Customer managed key at rest.'
     description: ''
-  - name: --for-upload
-    parameterValueGroup: "false, true"
-    summary: Create the disk for uploading blobs. Replaced by "--upload-type Upload".
-    description: ''
   - name: --gallery-image-reference
     summary: ID of the Compute, Shared or Community Gallery image version from which to create a disk. For details about valid format, please refer to the help sample.
     description: ''
@@ -179,6 +175,10 @@ directCommands:
   - name: --os-type
     parameterValueGroup: "Linux, Windows"
     summary: The Operating System type of the Disk.
+    description: ''
+  - name: --performance-plus
+    parameterValueGroup: "false, true"
+    summary: Set this flag to true to get a boost on the performance target of the disk deployed. This flag can only be set on disk creation time and cannot be disabled after enabled.
     description: ''
   - name: --public-network-access
     parameterValueGroup: "Disabled, Enabled"
@@ -219,7 +219,7 @@ directCommands:
     summary: 'Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/pricing/details/managed-disks/. Does not apply to Ultra disks.'
     description: ''
   - name: --upload-size-bytes
-    summary: 'The size (in bytes) of the contents of the upload including the VHD footer. Min value: 20972032. Max value: 35183298347520.'
+    summary: 'The size (in bytes) of the contents of the upload including the VHD footer. Min value: 20972032. Max value: 35183298347520. This parameter is required if --upload-type is specified.'
     description: ''
   - name: --upload-type
     parameterValueGroup: "Upload, UploadWithSecurityData"

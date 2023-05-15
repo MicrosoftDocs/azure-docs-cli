@@ -270,6 +270,26 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+- uid: az_appservice_ase_send-test-notification
+  name: az appservice ase send-test-notification
+  summary: Send a test upgrade notification in app service environment v3.
+  description: ''
+  syntax: >-
+    az appservice ase send-test-notification --name
+                                             [--resource-group]
+  examples:
+  - summary: Send a test upgrade notification in app service environment v3.
+    syntax: az appservice ase send-test-notification -n MyAseV3Name -g MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 - uid: az_appservice_ase_show
   name: az appservice ase show
   summary: Show details of an app service environment.
@@ -296,7 +316,9 @@ directCommands:
   description: ''
   syntax: >-
     az appservice ase update --name
+                             [--allow-incoming-ftp-connections {false, true}]
                              [--allow-new-private-endpoint-connections {false, true}]
+                             [--allow-remote-debugging {false, true}]
                              [--front-end-scale-factor]
                              [--front-end-sku {I1, I2, I3}]
                              [--no-wait]
@@ -308,15 +330,27 @@ directCommands:
         --front-end-scale-factor 10
   - summary: Update app service environment v3 to allow new private endpoint connections.
     syntax: az appservice ase update -n MyAseV3Name -g MyResourceGroup --allow-new-private-endpoint-connections
+  - summary: Update app service environment v3 to allow incoming ftp connections.
+    syntax: az appservice ase update -n MyAseV3Name -g MyResourceGroup --allow-incoming-ftp-connections
+  - summary: Update app service environment v3 to allow remote debugging.
+    syntax: az appservice ase update -n MyAseV3Name -g MyResourceGroup --allow-remote-debugging
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the app service environment.
     description: ''
   optionalParameters:
+  - name: --allow-incoming-ftp-connections -f
+    parameterValueGroup: "false, true"
+    summary: (ASEv3 only) Configure App Service Environment to allow FTP access. This ftpEnabled setting allows you to allow or deny FTP connections on the App Service Environment level. Individual apps will still need to configure FTP access.
+    description: ''
   - name: --allow-new-private-endpoint-connections -p
     parameterValueGroup: "false, true"
     summary: (ASEv3 only) Configure Apps in App Service Environment to allow new private endpoint connections.
+    description: ''
+  - name: --allow-remote-debugging -r
+    parameterValueGroup: "false, true"
+    summary: (ASEv3 only) Configure App Service Environment to allow remote debugging. You will still have to configure remote debugging at the individual app level.
     description: ''
   - name: --front-end-scale-factor
     summary: (ASEv2 only) Scale of front ends to app service plan instance ratio between 5 and 15.
@@ -333,6 +367,36 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+- uid: az_appservice_ase_upgrade
+  name: az appservice ase upgrade
+  summary: Upgrade app service environment v3.
+  description: ''
+  syntax: >-
+    az appservice ase upgrade --name
+                              [--no-wait]
+                              [--resource-group]
+                              [--yes]
+  examples:
+  - summary: Upgrade app service environment v3.
+    syntax: az appservice ase upgrade -n MyAseV3Name -g MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the app service environment.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
 commands:
 - az_appservice_ase_create
 - az_appservice_ase_create-inbound-services
@@ -340,8 +404,10 @@ commands:
 - az_appservice_ase_list
 - az_appservice_ase_list-addresses
 - az_appservice_ase_list-plans
+- az_appservice_ase_send-test-notification
 - az_appservice_ase_show
 - az_appservice_ase_update
+- az_appservice_ase_upgrade
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -361,5 +427,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 12/01/2022
+  ms.date: 04/14/2023
   description: Manage App Service Environments.

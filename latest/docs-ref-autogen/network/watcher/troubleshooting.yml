@@ -10,8 +10,10 @@ directCommands:
   description: ''
   syntax: >-
     az network watcher troubleshooting show --resource
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--resource-group]
                                             [--resource-type {vnetGateway, vpnConnection}]
+                                            [--watcher-rg]
   examples:
   - summary: Show the results or status of a troubleshooting operation for a Vnet Gateway.
     syntax: az network watcher troubleshooting show -g MyResourceGroup --resource MyVnetGateway --resource-type vnetGateway
@@ -21,12 +23,19 @@ directCommands:
     summary: Name or ID of the resource to troubleshoot.
     description: ''
   optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --resource-type -t
     parameterValueGroup: "vnetGateway, vpnConnection"
     summary: The resource type.
+    description: ''
+  - name: --watcher-rg
+    summary: Name of the resource group the watcher is in.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_troubleshooting_start
@@ -37,15 +46,13 @@ directCommands:
     az network watcher troubleshooting start --resource
                                              --storage-account
                                              --storage-path
-                                             [--no-wait]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--resource-group]
                                              [--resource-type {vnetGateway, vpnConnection}]
+                                             [--watcher-rg]
   examples:
   - summary: Start a troubleshooting operation on a VPN Connection.
-    syntax: >-
-      az network watcher troubleshooting start -g MyResourceGroup --resource MyVPNConnection \
-          --resource-type vpnConnection --storage-account MyStorageAccount \
-          --storage-path https://{storageAccountName}.blob.core.windows.net/{containerName}
+    syntax: az network watcher troubleshooting start -g MyResourceGroup --resource MyVPNConnection --resource-type vpnConnection --storage-account MyStorageAccount --storage-path https://{storageAccountName}.blob.core.windows.net/{containerName}
   requiredParameters:
   - isRequired: true
     name: --resource
@@ -61,7 +68,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -70,6 +77,9 @@ directCommands:
   - name: --resource-type -t
     parameterValueGroup: "vnetGateway, vpnConnection"
     summary: The type of target resource to troubleshoot, if resource ID is not specified.
+    description: ''
+  - name: --watcher-rg
+    summary: Name of the resource group the watcher is in.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -94,5 +104,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: For more information on configuring troubleshooting visit https://docs.microsoft.com/azure/network-watcher/network-watcher-troubleshoot-manage-cli.

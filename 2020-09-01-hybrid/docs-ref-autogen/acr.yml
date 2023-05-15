@@ -334,7 +334,6 @@ directCommands:
     az acr login --name
                  [--expose-token]
                  [--password]
-                 [--resource-group]
                  [--suffix]
                  [--username]
   examples:
@@ -355,9 +354,6 @@ directCommands:
   - name: --password -p
     summary: The password used to log into a container registry.
     description: ''
-  - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   - name: --suffix
     summary: The tenant suffix in registry login server. You may specify '--suffix tenant' if your registry login server is in the format 'registry-tenant.azurecr.io'. Applicable if you're accessing the registry from a different subscription or you have permission to access images but not the permission to manage the registry resource.
     description: ''
@@ -365,6 +361,50 @@ directCommands:
     summary: The username used to log into a container registry.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+- uid: az_acr_query
+  name: az acr query
+  summary: Query the content in an ACR using Kusto Query Language.
+  description: Query for artifacts and images in an Azure Container Registry using the Kusto Query Language. OCI manifest properties such as digest, subject, annotations, etc. can be used to query, filter, and order search results.
+  syntax: >-
+    az acr query --kql-query
+                 --name
+                 [--password]
+                 [--repository]
+                 [--skip-token]
+                 [--username]
+  examples:
+  - summary: Fetch a single manifest
+    syntax: az acr query -n $MyRegistry -q "Manifests | limit 1"
+  - summary: Count all manifests in repository $RepositoryName
+    syntax: az acr query -n $MyRegistry -q "Manifests" -o table
+  - summary: List all manifests in repository $RepositoryName in order of creation date
+    syntax: az acr query -n $MyRegistry --repository $RepositoryName -q "Manifests | order by createdAt desc"
+  - summary: Query for all digests signed by $Signature in the repository $RepositoryName
+    syntax: az acr query -n $MyRegistry --repository $RepositoryName -q "Manifests | where annotations['org.cncf.notary.signature.subject'] == $Signature | project createdAt, digest, subject"
+  - summary: Query for the digests in a registry using a skip token and sort by digest (for results with pagination)
+    syntax: az acr query -n $MyRegistry -q "Manifests | project digest | order by digest asc" --skip-token eyAibm8iOiAibHVjayIsICJidXQiOiAibmljZSIsICJ0cnkiOiAiISIgfQ==
+  requiredParameters:
+  - isRequired: true
+    name: --kql-query -q
+    summary: The KQL query to execute.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry that the query is run against.
+    description: ''
+  optionalParameters:
+  - name: --password -p
+    summary: Registry password.
+    description: ''
+  - name: --repository
+    summary: The repository that the query is run against. If no repository is provided, the query is run at the registry level.
+    description: ''
+  - name: --skip-token
+    summary: Skip token to get the next page of the query if applicable.
+    description: ''
+  - name: --username -u
+    summary: Registry username.
+    description: ''
 - uid: az_acr_run
   name: az acr run
   summary: Queues a quick run providing streamed logs for an Azure Container Registry.
@@ -609,6 +649,12 @@ commands:
 - az_acr_agentpool_show
 - az_acr_agentpool_update
 - az_acr_build
+- az_acr_cache
+- az_acr_cache_create
+- az_acr_cache_delete
+- az_acr_cache_list
+- az_acr_cache_show
+- az_acr_cache_update
 - az_acr_check-health
 - az_acr_check-name
 - az_acr_config
@@ -644,6 +690,12 @@ commands:
 - az_acr_credential
 - az_acr_credential_renew
 - az_acr_credential_show
+- az_acr_credential-set
+- az_acr_credential-set_create
+- az_acr_credential-set_delete
+- az_acr_credential-set_list
+- az_acr_credential-set_show
+- az_acr_credential-set_update
 - az_acr_delete
 - az_acr_encryption
 - az_acr_encryption_rotate-key
@@ -708,6 +760,7 @@ commands:
 - az_acr_private-endpoint-connection_show
 - az_acr_private-link-resource
 - az_acr_private-link-resource_list
+- az_acr_query
 - az_acr_replication
 - az_acr_replication_create
 - az_acr_replication_delete

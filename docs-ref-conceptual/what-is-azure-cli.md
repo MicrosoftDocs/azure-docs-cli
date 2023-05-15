@@ -33,7 +33,7 @@ While we appreciate the insights this data provides, we also understand that not
 
 Before running Azure CLI commands, you need to setup your environment.
 
-[!INCLUDE [prerequisites](includes/azure-cli-prepare-your-environment-no-header.md)]
+[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
 ## Azure CLI examples
 This article provides different Azure CLI examples for the following :

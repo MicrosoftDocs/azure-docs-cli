@@ -2,59 +2,74 @@
 uid: az_network_watcher_connection-monitor
 name: az network watcher connection-monitor
 summary: Manage connection monitoring between an Azure Virtual Machine and any IP resource.
-description: >-
-  Connection monitor can be used to monitor network connectivity between an Azure virtual machine and an IP address.
-   The IP address can be assigned to another Azure resource or a resource on the Internet or on-premises. To learn
-   more visit https://aka.ms/connectionmonitordoc.
+description: Connection monitor can be used to monitor network connectivity between an Azure virtual machine and an IP address. The IP address can be assigned to another Azure resource or a resource on the Internet or on-premises. To learn more visit https://aka.ms/connectionmonitordoc.
 directCommands:
 - uid: az_network_watcher_connection-monitor_create
   name: az network watcher connection-monitor create
   summary: Create a connection monitor.
   description: ''
   syntax: >-
-    az network watcher connection-monitor create --name
+    az network watcher connection-monitor create --connection-monitor-name
+                                                 --endpoint-dest-name
+                                                 --endpoint-source-name
+                                                 --endpoint-source-resource-id
+                                                 --test-config-name
                                                  [--endpoint-dest-address]
                                                  [--endpoint-dest-coverage-level {AboveAverage, Average, BelowAverage, Default, Full, Low}]
-                                                 [--endpoint-dest-name]
                                                  [--endpoint-dest-resource-id]
                                                  [--endpoint-dest-type {AzureArcVM, AzureSubnet, AzureVM, AzureVMSS, AzureVNet, ExternalAddress, MMAWorkspaceMachine, MMAWorkspaceNetwork}]
                                                  [--endpoint-source-address]
                                                  [--endpoint-source-coverage-level {AboveAverage, Average, BelowAverage, Default, Full, Low}]
-                                                 [--endpoint-source-name]
-                                                 [--endpoint-source-resource-id]
                                                  [--endpoint-source-type {AzureArcVM, AzureSubnet, AzureVM, AzureVMSS, AzureVNet, ExternalAddress, MMAWorkspaceMachine, MMAWorkspaceNetwork}]
                                                  [--frequency]
                                                  [--http-method {Get, Post}]
                                                  [--http-path]
                                                  [--http-port]
                                                  [--http-valid-status-codes]
-                                                 [--https-prefer {false, true}]
-                                                 [--icmp-disable-trace-route {false, true}]
+                                                 [--https-prefer {0, 1, f, false, n, no, t, true, y, yes}]
+                                                 [--icmp-disable-trace-route {0, 1, f, false, n, no, t, true, y, yes}]
                                                  [--location]
+                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                  [--notes]
                                                  [--output-type {Workspace}]
                                                  [--preferred-ip-version {IPv4, IPv6}]
                                                  [--protocol {Http, Icmp, Tcp}]
                                                  [--resource-group]
                                                  [--tags]
-                                                 [--tcp-disable-trace-route {false, true}]
+                                                 [--tcp-disable-trace-route {0, 1, f, false, n, no, t, true, y, yes}]
                                                  [--tcp-port]
                                                  [--tcp-port-behavior {ListenIfAvailable, None}]
-                                                 [--test-config-name]
-                                                 [--test-group-disable {false, true}]
+                                                 [--test-group-disable {0, 1, f, false, n, no, t, true, y, yes}]
                                                  [--test-group-name]
                                                  [--threshold-failed-percent]
                                                  [--threshold-round-trip-time]
                                                  [--workspace-ids]
   examples:
   - summary: Create a connection monitor
-    syntax: az network watcher connection-monitor create --name MyV2ConnectionMonitor --endpoint-source-name "vm01" --endpoint-source-resource-id MyVM01ResourceID --endpoint-dest-name bing --endpoint-dest-address bing.com --test-config-name TCPTestConfig --protocol Tcp --tcp-port 2048
-  - summary: Create a connection monitor. (autogenerated)
-    syntax: az network watcher connection-monitor create --endpoint-dest-address bing.com --endpoint-dest-name bing --endpoint-source-name "vm01" --endpoint-source-resource-id MyVM01ResourceID --location westus2 --name MyConnectionMonitorName --protocol Tcp --tcp-port 2048 --test-config-name TCPTestConfig
+    syntax: >-
+      az network watcher connection-monitor create --name MyV2ConnectionMonitor --endpoint-source- name "vm01" --endpoint-source-resource-id MyVM01ResourceID --endpoint-dest-name bing --endpoint-dest-address bing.com --test-config-name TCPTestConfig --protocol Tcp --tcp-port 2048
+
+      az network watcher connection-monitor create --endpoint-dest-address bing.com --endpoint- dest-name bing --endpoint-source-name "vm01" --endpoint-source-resource-id MyVM01ResourceID --location westus2 --name MyConnectionMonitorName --protocol Tcp --tcp-port 2048 --test- config-name TCPTestConfig
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --connection-monitor-name --name -n
     summary: Connection monitor name.
+    description: ''
+  - isRequired: true
+    name: --endpoint-dest-name
+    summary: The name of the destination of connection monitor endpoint. If you are creating a V2 Connection Monitor, it's required.
+    description: ''
+  - isRequired: true
+    name: --endpoint-source-name
+    summary: The name of the source of connection monitor endpoint. If you are creating a V2 Connection Monitor, it's required.
+    description: ''
+  - isRequired: true
+    name: --endpoint-source-resource-id
+    summary: Resource ID of the source of connection monitor endpoint. If endpoint is intended to used as source, this option is required.
+    description: ''
+  - isRequired: true
+    name: --test-config-name
+    summary: The name of the connection monitor test configuration. If you are creating a V2 Connection Monitor, it's required.
     description: ''
   optionalParameters:
   - name: --endpoint-dest-address
@@ -63,9 +78,6 @@ directCommands:
   - name: --endpoint-dest-coverage-level
     parameterValueGroup: "AboveAverage, Average, BelowAverage, Default, Full, Low"
     summary: Test coverage for the endpoint.
-    description: ''
-  - name: --endpoint-dest-name
-    summary: The name of the destination of connection monitor endpoint. If you are creating a V2 Connection Monitor, it's required.
     description: ''
   - name: --endpoint-dest-resource-id
     summary: Resource ID of the destination of connection monitor endpoint.
@@ -80,12 +92,6 @@ directCommands:
   - name: --endpoint-source-coverage-level
     parameterValueGroup: "AboveAverage, Average, BelowAverage, Default, Full, Low"
     summary: Test coverage for the endpoint.
-    description: ''
-  - name: --endpoint-source-name
-    summary: The name of the source of connection monitor endpoint. If you are creating a V2 Connection Monitor, it's required.
-    description: ''
-  - name: --endpoint-source-resource-id
-    summary: Resource ID of the source of connection monitor endpoint. If endpoint is intended to used as source, this option is required.
     description: ''
   - name: --endpoint-source-type
     parameterValueGroup: "AzureArcVM, AzureSubnet, AzureVM, AzureVMSS, AzureVNet, ExternalAddress, MMAWorkspaceMachine, MMAWorkspaceNetwork"
@@ -106,23 +112,27 @@ directCommands:
     summary: The port to connect to.
     description: ''
   - name: --http-valid-status-codes
-    summary: Space-separated list of HTTP status codes to consider successful. For instance, "2xx 301-304 418".
+    summary: Space-separated list of HTTP status codes to consider successful. For instance, '2xx 301-304 418'  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --https-prefer
-    parameterValueGroup: "false, true"
-    summary: Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit.  Allowed values: false, true.'
     description: ''
   - name: --icmp-disable-trace-route
-    parameterValueGroup: "false, true"
-    summary: Value indicating whether path evaluation with trace route should be disabled. false is default.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Value indicating whether path evaluation with trace route should be disabled. false is default.  Allowed values: false, true.'
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --notes
     summary: Optional notes to be associated with the connection monitor.
     description: ''
-  - name: --output-type
+  - name: --output-type --type
     parameterValueGroup: "Workspace"
     summary: Connection monitor output destination type. Currently, only "Workspace" is supported.
     description: ''
@@ -138,11 +148,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: "Space-separated tags: key[=value] [key[=value] ...]. Use ''to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
     description: ''
   - name: --tcp-disable-trace-route
-    parameterValueGroup: "false, true"
-    summary: Value indicating whether path evaluation with trace route should be disabled. false is default.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Value indicating whether path evaluation with trace route should be disabled. false is default. Allowed values: false, true.'
     description: ''
   - name: --tcp-port
     summary: The port to connect to.
@@ -151,11 +161,8 @@ directCommands:
     parameterValueGroup: "ListenIfAvailable, None"
     summary: Destination port behavior.
     description: ''
-  - name: --test-config-name
-    summary: The name of the connection monitor test configuration. If you are creating a V2 Connection Monitor, it's required.
-    description: ''
   - name: --test-group-disable
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Value indicating whether test group is disabled. false is default.
     description: ''
   - name: --test-group-name
@@ -169,7 +176,7 @@ directCommands:
     summary: The maximum round-trip time in milliseconds permitted for a test to evaluate as successful.
     description: ''
   - name: --workspace-ids
-    summary: Space-separated list of ids of log analytics workspace.
+    summary: Space-separated list of ids of log analytics workspace.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_connection-monitor_delete
@@ -177,19 +184,25 @@ directCommands:
   summary: Delete a connection monitor for the given region.
   description: ''
   syntax: >-
-    az network watcher connection-monitor delete --location
-                                                 --name
+    az network watcher connection-monitor delete --connection-monitor-name
+                                                 --location
+                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Delete a connection monitor for the given region.
     syntax: az network watcher connection-monitor delete -l westus -n MyConnectionMonitorName
   requiredParameters:
   - isRequired: true
+    name: --connection-monitor-name --name -n
+    summary: Connection monitor name.
+    description: ''
+  - isRequired: true
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Connection monitor name.
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_connection-monitor_list
@@ -199,9 +212,10 @@ directCommands:
   syntax: az network watcher connection-monitor list --location
   examples:
   - summary: List a connection monitor for the given region.
-    syntax: az network watcher connection-monitor list -l westus
-  - summary: List connection monitors for the given region. (autogenerated)
-    syntax: az network watcher connection-monitor list --location westus --subscription MySubscription
+    syntax: >-
+      az network watcher connection-monitor list -l westus
+
+      az az network watcher connection-monitor list --location westus --subscription MySubscription
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -213,19 +227,25 @@ directCommands:
   summary: Query a snapshot of the most recent connection state of a connection monitor.
   description: ''
   syntax: >-
-    az network watcher connection-monitor query --location
-                                                --name
+    az network watcher connection-monitor query --connection-monitor-name
+                                                --location
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: List a connection monitor for the given region.
     syntax: az network watcher connection-monitor query -l westus -n MyConnectionMonitorName
   requiredParameters:
   - isRequired: true
+    name: --connection-monitor-name --name -n
+    summary: Connection monitor name.
+    description: ''
+  - isRequired: true
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Connection monitor name.
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_connection-monitor_show
@@ -233,19 +253,19 @@ directCommands:
   summary: Shows a connection monitor by name.
   description: ''
   syntax: >-
-    az network watcher connection-monitor show --location
-                                               --name
+    az network watcher connection-monitor show --connection-monitor-name
+                                               --location
   examples:
   - summary: Show a connection monitor for the given name.
     syntax: az network watcher connection-monitor show -l westus -n MyConnectionMonitorName
   requiredParameters:
   - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    name: --connection-monitor-name --name -n
+    summary: Connection monitor name.
     description: ''
   - isRequired: true
-    name: --name -n
-    summary: Connection monitor name.
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_connection-monitor_start
@@ -253,19 +273,25 @@ directCommands:
   summary: Start the specified connection monitor.
   description: ''
   syntax: >-
-    az network watcher connection-monitor start --location
-                                                --name
+    az network watcher connection-monitor start --connection-monitor-name
+                                                --location
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Start the specified connection monitor.
     syntax: az network watcher connection-monitor start -l westus -n MyConnectionMonitorName
   requiredParameters:
   - isRequired: true
+    name: --connection-monitor-name --name -n
+    summary: Connection monitor name.
+    description: ''
+  - isRequired: true
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Connection monitor name.
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_connection-monitor_stop
@@ -273,19 +299,86 @@ directCommands:
   summary: Stop the specified connection monitor.
   description: ''
   syntax: >-
-    az network watcher connection-monitor stop --location
-                                               --name
+    az network watcher connection-monitor stop --connection-monitor-name
+                                               --location
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Stop the specified connection monitor.
     syntax: az network watcher connection-monitor stop -l westus -n MyConnectionMonitorName
   requiredParameters:
   - isRequired: true
+    name: --connection-monitor-name --name -n
+    summary: Connection monitor name.
+    description: ''
+  - isRequired: true
     name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
-  - isRequired: true
-    name: --name -n
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_watcher_connection-monitor_wait
+  name: az network watcher connection-monitor wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network watcher connection-monitor wait [--connection-monitor-name]
+                                               [--created]
+                                               [--custom]
+                                               [--deleted]
+                                               [--exists]
+                                               [--ids]
+                                               [--interval]
+                                               [--network-watcher-name]
+                                               [--resource-group-name]
+                                               [--subscription]
+                                               [--timeout]
+                                               [--updated]
+  optionalParameters:
+  - name: --connection-monitor-name --name -n
     summary: Connection monitor name.
+    description: ''
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --network-watcher-name
+    summary: The name of the Network Watcher resource.
+    description: ''
+  - name: --resource-group-name -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -296,11 +389,13 @@ commands:
 - az_network_watcher_connection-monitor_endpoint_list
 - az_network_watcher_connection-monitor_endpoint_remove
 - az_network_watcher_connection-monitor_endpoint_show
+- az_network_watcher_connection-monitor_endpoint_wait
 - az_network_watcher_connection-monitor_list
 - az_network_watcher_connection-monitor_output
 - az_network_watcher_connection-monitor_output_add
 - az_network_watcher_connection-monitor_output_list
 - az_network_watcher_connection-monitor_output_remove
+- az_network_watcher_connection-monitor_output_wait
 - az_network_watcher_connection-monitor_query
 - az_network_watcher_connection-monitor_show
 - az_network_watcher_connection-monitor_start
@@ -310,11 +405,14 @@ commands:
 - az_network_watcher_connection-monitor_test-configuration_list
 - az_network_watcher_connection-monitor_test-configuration_remove
 - az_network_watcher_connection-monitor_test-configuration_show
+- az_network_watcher_connection-monitor_test-configuration_wait
 - az_network_watcher_connection-monitor_test-group
 - az_network_watcher_connection-monitor_test-group_add
 - az_network_watcher_connection-monitor_test-group_list
 - az_network_watcher_connection-monitor_test-group_remove
 - az_network_watcher_connection-monitor_test-group_show
+- az_network_watcher_connection-monitor_test-group_wait
+- az_network_watcher_connection-monitor_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -334,8 +432,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
-  description: >-
-    Connection monitor can be used to monitor network connectivity between an Azure virtual machine and an IP address.
-     The IP address can be assigned to another Azure resource or a resource on the Internet or on-premises. To learn
-     more visit https://aka.ms/connectionmonitordoc.
+  ms.date: 03/03/2023
+  description: Connection monitor can be used to monitor network connectivity between an Azure virtual machine and an IP address. The IP address can be assigned to another Azure resource or a resource on the Internet or on-premises. To learn more visit https://aka.ms/connectionmonitordoc.

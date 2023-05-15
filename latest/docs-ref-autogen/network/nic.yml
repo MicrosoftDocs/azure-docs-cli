@@ -2,7 +2,7 @@
 uid: az_network_nic
 name: az network nic
 summary: Manage network interfaces.
-description: To learn more about network interfaces in Azure visit https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface.
+description: To learn more about network interfaces in Azure, visit https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface?tabs=network-interface-portal.
 directCommands:
 - uid: az_network_nic_create
   name: az network nic create
@@ -12,20 +12,20 @@ directCommands:
     az network nic create --name
                           --resource-group
                           --subnet
-                          [--accelerated-networking {false, true}]
-                          [--app-gateway-address-pools]
+                          [--accelerated-networking {0, 1, f, false, n, no, t, true, y, yes}]
+                          [--ag-address-pools]
                           [--application-security-groups]
                           [--dns-servers]
                           [--edge-zone]
                           [--gateway-name]
                           [--internal-dns-name]
-                          [--ip-forwarding {false, true}]
+                          [--ip-forwarding {0, 1, f, false, n, no, t, true, y, yes}]
                           [--lb-address-pools]
                           [--lb-inbound-nat-rules]
                           [--lb-name]
                           [--location]
                           [--network-security-group]
-                          [--no-wait]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--private-ip-address]
                           [--private-ip-address-version {IPv4, IPv6}]
                           [--public-ip-address]
@@ -34,20 +34,14 @@ directCommands:
   examples:
   - summary: Create a network interface for a specified subnet on a specified virtual network.
     syntax: az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic
-  - summary: >-
-      Create a network interface for a specified subnet on a virtual network which allows
-          IP forwarding subject to a network security group.
-    syntax: >-
-      az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic \
-          --ip-forwarding --network-security-group MyNsg
+  - summary: Create a network interface for a specified subnet on a virtual network which allows IP forwarding subject to a network security group.
+    syntax: az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic --ip-forwarding --network-security-group MyNsg
   - summary: Create a network interface for a specified subnet on a virtual network with network security group and application security groups.
-    syntax: >-
-      az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic \
-          --network-security-group MyNsg --application-security-groups Web App
+    syntax: az network nic create -g MyResourceGroup --vnet-name MyVnet --subnet MySubnet -n MyNic --network-security-group MyNsg --application-security-groups Web App
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The network interface (NIC).
+    summary: Name of the network interface (NIC).
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -55,53 +49,52 @@ directCommands:
     description: ''
   - isRequired: true
     name: --subnet
-    summary: Name or ID of an existing subnet. If name specified, also specify --vnet-name. If you want to use an existing subnet in other resource group, please provide the ID instead of the name of the subnet.
+    summary: Name or ID of an existing subnet. If name specified, please also specify `--vnet-name`; If you want to use an existing subnet in other resource group, please provide the ID instead of the name of the subnet.
     description: ''
   optionalParameters:
   - name: --accelerated-networking
-    parameterValueGroup: "false, true"
-    summary: Enable accelerated networking.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to enable accelerated networking.
     description: ''
-  - name: --app-gateway-address-pools
-    summary: Space-separated list of names or IDs of application gateway backend address pools to associate with the NIC. If names are used, --gateway-name must be specified.
+  - name: --ag-address-pools --app-gateway-address-pools
+    summary: Space-separated list of names or IDs of application gateway backend address pools to associate with the NIC. If names are used, `--gateway-name` must be specified.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --application-security-groups --asgs
-    summary: Space-separated list of application security groups.
+    summary: Space-separated list of application security groups.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --dns-servers
-    summary: Space-separated list of DNS server IP addresses.
+    summary: Space-separated list of DNS server IP addresses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --edge-zone
-    summary: The name of edge zone.
+    summary: Name of edge zone.
     description: ''
   - name: --gateway-name
-    summary: The name of the application gateway to use when adding address pools by name (ignored when IDs are specified).
+    summary: Name of the application gateway.
     description: ''
   - name: --internal-dns-name
-    summary: The internal DNS name label.
+    summary: Name of internal DNS label.
     description: ''
   - name: --ip-forwarding
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: Enable IP forwarding.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to enable IP forwarding.
     description: ''
   - name: --lb-address-pools
-    summary: Space-separated list of names or IDs of load balancer address pools to associate with the NIC. If names are used, --lb-name must be specified.
+    summary: Space-separated list of names or IDs of load balancer address pools to associate with the NIC. If names are used, `--lb-name` must be specified.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --lb-inbound-nat-rules
-    summary: Space-separated list of names or IDs of load balancer inbound NAT rules to associate with the NIC. If names are used, --lb-name must be specified.
+    summary: Space-separated list of names or IDs of load balancer inbound NAT rules to associate with the NIC. If names are used, `--lb-name` must be specified.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --lb-name
-    summary: The name of the load balancer to use when adding NAT rules or address pools by name (ignored when IDs are specified).
+    summary: Name of the load balancer.
     description: ''
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --network-security-group
-    summary: Name or ID of an existing network security group, or none by default.
+    summary: Name or ID of an existing network security group.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --private-ip-address
@@ -110,16 +103,16 @@ directCommands:
   - name: --private-ip-address-version
     defaultValue: "IPv4"
     parameterValueGroup: "IPv4, IPv6"
-    summary: The private IP address version to use.
+    summary: Version of private IP address to use.
     description: ''
   - name: --public-ip-address
-    summary: Name or ID of an existing public IP address, or none by default.
+    summary: Name or ID of an existing public IP address.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --vnet-name
-    summary: The virtual network (VNet) name.
+    summary: Name of the virtual network.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_delete
@@ -129,7 +122,7 @@ directCommands:
   syntax: >-
     az network nic delete [--ids]
                           [--name]
-                          [--no-wait]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--resource-group]
                           [--subscription]
   examples:
@@ -140,10 +133,10 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The network interface (NIC).
+    summary: Name of the network interface (NIC).
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -156,7 +149,7 @@ directCommands:
 - uid: az_network_nic_list
   name: az network nic list
   summary: List network interfaces.
-  description: To list network interfaces attached to VMs in VM scale sets use 'az vmss nic list' or 'az vmss nic list-vm-nics'.
+  description: To list network interfaces attached to VMs in VM scale sets use `az vmss nic list` or `az vmss nic list-vm-nics`.
   syntax: az network nic list [--resource-group]
   examples:
   - summary: List all NICs by internal DNS suffix.
@@ -169,10 +162,11 @@ directCommands:
 - uid: az_network_nic_list-effective-nsg
   name: az network nic list-effective-nsg
   summary: List all effective network security groups applied to a network interface.
-  description: To learn more about troubleshooting using effective security rules visit https://docs.microsoft.com/azure/virtual-network/virtual-network-nsg-troubleshoot-portal.
+  description: To learn more about troubleshooting using effective security rules visit https://learn.microsoft.com/en-us/azure/virtual-network/diagnose-network-traffic-filter-problem.
   syntax: >-
     az network nic list-effective-nsg [--ids]
                                       [--name]
+                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                       [--resource-group]
                                       [--subscription]
   examples:
@@ -183,7 +177,11 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The network interface (NIC).
+    summary: Name of the network interface (NIC).
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -207,13 +205,13 @@ directCommands:
     syntax: az network nic show -g MyResourceGroup -n MyNic --query "dnsSettings.internalDomainNameSuffix"
   optionalParameters:
   - name: --expand
-    summary: Expands referenced resources. Default value is None.
+    summary: Expands referenced resources.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The network interface (NIC).
+    summary: Name of the network interface (NIC).
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -225,10 +223,11 @@ directCommands:
 - uid: az_network_nic_show-effective-route-table
   name: az network nic show-effective-route-table
   summary: Show the effective route table applied to a network interface.
-  description: To learn more about troubleshooting using the effective route tables visit https://docs.microsoft.com/azure/virtual-network/virtual-network-routes-troubleshoot-portal#using-effective-routes-to-troubleshoot-vm-traffic-flow.
+  description: To learn more about troubleshooting using the effective route tables visit https://learn.microsoft.com/en-us/azure/virtual-network/diagnose-network-routing-problem#using-effective-routes-to-troubleshoot-vm-traffic-flow.
   syntax: >-
     az network nic show-effective-route-table [--ids]
                                               [--name]
+                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                               [--resource-group]
                                               [--subscription]
   examples:
@@ -239,7 +238,11 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The network interface (NIC).
+    summary: Name of the network interface (NIC).
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -253,16 +256,17 @@ directCommands:
   summary: Update a network interface.
   description: ''
   syntax: >-
-    az network nic update [--accelerated-networking {false, true}]
+    az network nic update [--accelerated-networking {0, 1, f, false, n, no, t, true, y, yes}]
                           [--add]
                           [--dns-servers]
-                          [--force-string]
+                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                           [--ids]
                           [--internal-dns-name]
-                          [--ip-forwarding {false, true}]
+                          [--ip-configurations]
+                          [--ip-forwarding {0, 1, f, false, n, no, t, true, y, yes}]
                           [--name]
                           [--network-security-group]
-                          [--no-wait]
+                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--remove]
                           [--resource-group]
                           [--set]
@@ -270,53 +274,51 @@ directCommands:
   examples:
   - summary: Update a network interface to use a different network security group.
     syntax: az network nic update -g MyResourceGroup -n MyNic --network-security-group MyNewNsg
-  - summary: Update a network interface. (autogenerated)
-    syntax: az network nic update --accelerated-networking true --name MyNic --resource-group MyResourceGroup
   optionalParameters:
   - name: --accelerated-networking
-    parameterValueGroup: "false, true"
-    summary: Enable accelerated networking.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to enable accelerated networking.
     description: ''
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --dns-servers
-    summary: Space-separated list of DNS server IP addresses. Use ""('""' in PowerShell) to revert to default Azure servers.
+    summary: Space-separated list of DNS server IP addresses. Use null to revert to default Azure servers.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --internal-dns-name
-    summary: The internal DNS name label.
+    summary: Name of internal DNS label.
+    description: ''
+  - name: --ip-configurations
+    summary: List of IP configurations of the network interface.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --ip-forwarding
-    parameterValueGroup: "false, true"
-    summary: Enable IP forwarding.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether to enable IP forwarding.
     description: ''
   - name: --name -n
-    summary: The network interface (NIC).
+    summary: Name of the network interface (NIC).
     description: ''
   - name: --network-security-group
-    summary: Name or ID of the associated network security group.
+    summary: Name or ID of an existing network security group.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
@@ -325,7 +327,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_nic_wait
   name: az network nic wait
-  summary: Place the CLI in a waiting state until a condition of the network interface is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az network nic wait [--created]
@@ -340,11 +342,6 @@ directCommands:
                         [--subscription]
                         [--timeout]
                         [--updated]
-  examples:
-  - summary: Pause CLI until the network interface is created.
-    syntax: az network nic wait -g MyResourceGroup -n MyNic --created
-  - summary: Place the CLI in a waiting state until a condition of the network interface is met. (autogenerated)
-    syntax: az network nic wait --deleted --name MyNic --resource-group MyResourceGroup --subscription MySubscription
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -362,7 +359,7 @@ directCommands:
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
-    summary: Expands referenced resources. Default value is None.
+    summary: Expands referenced resources.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -372,7 +369,7 @@ directCommands:
     summary: Polling interval in seconds.
     description: ''
   - name: --name -n
-    summary: The network interface (NIC).
+    summary: Name of the network interface (NIC).
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -401,9 +398,11 @@ commands:
 - az_network_nic_ip-config_inbound-nat-rule
 - az_network_nic_ip-config_inbound-nat-rule_add
 - az_network_nic_ip-config_inbound-nat-rule_remove
+- az_network_nic_ip-config_inbound-nat-rule_wait
 - az_network_nic_ip-config_list
 - az_network_nic_ip-config_show
 - az_network_nic_ip-config_update
+- az_network_nic_ip-config_wait
 - az_network_nic_list
 - az_network_nic_list-effective-nsg
 - az_network_nic_show
@@ -433,4 +432,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: To learn more about network interfaces in Azure visit https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface.
+  description: To learn more about network interfaces in Azure, visit https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface?tabs=network-interface-portal.

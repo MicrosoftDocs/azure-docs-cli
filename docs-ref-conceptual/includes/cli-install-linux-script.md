@@ -24,18 +24,18 @@ The CLI requires the following software:
 
 > [!IMPORTANT]
 >
-> The CLI has dropped support for Python 2.7 since version `2.1.0`. New versions no longer
-> guarantee to run with Python 2.7 correctly.
+> The Azure CLI has dropped support for Python 2.7 since version `2.1.0`. Newer versions may not
+> run correctly using Python 2.7.
 
 ## Install or update
 
-Both installing and updating the CLI requires re-running the install script. Install the CLI by running `curl`.
+Both installing and updating the Azure CLI requires re-running the install script.
 
 ```bash
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-The script can also be downloaded and run locally. You may have to restart your shell in order for changes to take effect.
+The script can also be downloaded and run locally. You may have to restart your shell in order for the changes to take effect.
 
 ## Troubleshooting
 
@@ -52,19 +52,17 @@ curl https://azurecliprod.blob.core.windows.net/install | bash
 
 ### `az` command not found
 
-If you can't run the command after installation and using `bash` or `zsh`, clear your shell's command hash cache. Run
+If you can't run the command after installation using `bash` or `zsh`, try clearing your shell's command hash cache and check if the problem is resolved.
 
 ```bash
 hash -r
 ```
 
-and check if the problem is resolved.
-
 The issue can also occur if you didn't restart your shell after installation. Make sure that the location of the `az` command is in your `$PATH`. The location
 of the `az` command is
 
-```bash
-<install path>/bin
+```
+ <install path>/bin
 ```
 
 ### Proxy blocks connection
@@ -85,7 +83,7 @@ following addresses:
 
 [!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
-Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is `$HOME`.
+Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is the user's home directory ($HOME).
 
 1. Remove the installed CLI files.
 

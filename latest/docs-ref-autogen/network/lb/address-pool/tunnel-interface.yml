@@ -15,14 +15,16 @@ directCommands:
                                                     --protocol {Native, None, VXLAN}
                                                     --resource-group
                                                     --type {External, Internal, None}
+                                                    [--index]
+                                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                     [--port]
   examples:
   - summary: Add one tunnel interface into the load balance tunnel interface pool.
-    syntax: az network lb address-pool tunnel-interface add -g MyResourceGroup --lb-name MyLb --address-pool MyAddressPool     --type external --protocol vxlan --identifier 901 --port 10000
+    syntax: az network lb address-pool tunnel-interface add -g MyResourceGroup --lb-name MyLb --address-pool MyAddressPool --type external --protocol vxlan --identifier 901 --port 10000
   requiredParameters:
   - isRequired: true
-    name: --address-pool
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+    name: --address-pool --address-pool-name
+    summary: The name of the backend address pool.
     description: ''
   - isRequired: true
     name: --identifier
@@ -30,7 +32,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --lb-name
-    summary: The load balancer name.
+    summary: The name of the load balancer.
     description: ''
   - isRequired: true
     name: --protocol
@@ -47,6 +49,13 @@ directCommands:
     summary: Traffic type of gateway load balancer tunnel interface.
     description: ''
   optionalParameters:
+  - name: --index
+    summary: Index of the tunnel interfaces to change.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --port
     summary: Port of gateway load balancer tunnel interface.
     description: ''
@@ -64,12 +73,12 @@ directCommands:
     syntax: az network lb address-pool tunnel-interface list -g MyResourceGroup --lb-name MyLb --address-pool MyAddressPool
   requiredParameters:
   - isRequired: true
-    name: --address-pool
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+    name: --address-pool --address-pool-name
+    summary: The name of the backend address pool.
     description: ''
   - isRequired: true
     name: --lb-name
-    summary: The load balancer name.
+    summary: The name of the load balancer.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -78,20 +87,21 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_lb_address-pool_tunnel-interface_remove
   name: az network lb address-pool tunnel-interface remove
-  summary: Remove one tunnel interface from the load balance tunnel interface pool.
+  summary: Remove one tunnel interface from the load  balance tunnel interface pool.
   description: ''
   syntax: >-
     az network lb address-pool tunnel-interface remove --address-pool
                                                        --index
                                                        --lb-name
                                                        --resource-group
+                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Remove one tunnel interface from the load balance tunnel interface pool.
-    syntax: az network lb address-pool tunnel-interface remove -g MyResourceGroup --lb-name MyLb  --address-pool MyAddressPool     --index 0
+    syntax: az network lb address-pool tunnel-interface remove -g MyResourceGroup --lb-name MyLb --address-pool MyAddressPool --index 0
   requiredParameters:
   - isRequired: true
-    name: --address-pool
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+    name: --address-pool --address-pool-name
+    summary: The name of the backend address pool.
     description: ''
   - isRequired: true
     name: --index
@@ -99,7 +109,42 @@ directCommands:
     description: ''
   - isRequired: true
     name: --lb-name
-    summary: The load balancer name.
+    summary: The name of the load balancer.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_lb_address-pool_tunnel-interface_show
+  name: az network lb address-pool tunnel-interface show
+  summary: Get one tunnel interface of load balance tunnel interface pool.
+  description: ''
+  syntax: >-
+    az network lb address-pool tunnel-interface show --address-pool
+                                                     --index
+                                                     --lb-name
+                                                     --resource-group
+  examples:
+  - summary: Get one tunnel interface from the load balance tunnel interface pool.
+    syntax: az network lb address-pool tunnel-interface show -g MyResourceGroup --lb-name MyLb --address-pool MyAddressPool --index 0
+  requiredParameters:
+  - isRequired: true
+    name: --address-pool --address-pool-name
+    summary: The name of the backend address pool.
+    description: ''
+  - isRequired: true
+    name: --index
+    summary: Index of the tunnel interfaces to change.
+    description: ''
+  - isRequired: true
+    name: --lb-name
+    summary: The name of the load balancer.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -115,17 +160,22 @@ directCommands:
                                                        --index
                                                        --lb-name
                                                        --resource-group
+                                                       [--add]
+                                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                        [--identifier]
+                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                        [--port]
                                                        [--protocol {Native, None, VXLAN}]
+                                                       [--remove]
+                                                       [--set]
                                                        [--type {External, Internal, None}]
   examples:
   - summary: update one tunnel interface of load balance tunnel interface pool.
-    syntax: az network lb address-pool tunnel-interface update -g MyResourceGroup --lb-name MyLb --address-pool MyAddressPool     --type external --protocol vxlan --identifier 901 --port 10000 --index 0
+    syntax: az network lb address-pool tunnel-interface update -g MyResourceGroup --lb-name MyLb --address-pool MyAddressPool --type external --protocol vxlan --identifier 901 --port 10000 --index 0
   requiredParameters:
   - isRequired: true
-    name: --address-pool
-    summary: The name of the backend address pool. If only one exists, omit to use as default.
+    name: --address-pool --address-pool-name
+    summary: The name of the backend address pool.
     description: ''
   - isRequired: true
     name: --index
@@ -133,15 +183,26 @@ directCommands:
     description: ''
   - isRequired: true
     name: --lb-name
-    summary: The load balancer name.
+    summary: The name of the load balancer.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
   - name: --identifier
     summary: Identifier of gateway load balancer tunnel interface.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --port
     summary: Port of gateway load balancer tunnel interface.
@@ -150,16 +211,85 @@ directCommands:
     parameterValueGroup: "Native, None, VXLAN"
     summary: Protocol of gateway load balancer tunnel interface.
     description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
   - name: --type
     parameterValueGroup: "External, Internal, None"
     summary: Traffic type of gateway load balancer tunnel interface.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_lb_address-pool_tunnel-interface_wait
+  name: az network lb address-pool tunnel-interface wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network lb address-pool tunnel-interface wait [--address-pool]
+                                                     [--created]
+                                                     [--custom]
+                                                     [--deleted]
+                                                     [--exists]
+                                                     [--ids]
+                                                     [--interval]
+                                                     [--lb-name]
+                                                     [--resource-group]
+                                                     [--subscription]
+                                                     [--timeout]
+                                                     [--updated]
+  optionalParameters:
+  - name: --address-pool --address-pool-name
+    summary: The name of the backend address pool.
+    description: ''
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --lb-name
+    summary: The name of the load balancer.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
 - az_network_lb_address-pool_tunnel-interface_add
 - az_network_lb_address-pool_tunnel-interface_list
 - az_network_lb_address-pool_tunnel-interface_remove
+- az_network_lb_address-pool_tunnel-interface_show
 - az_network_lb_address-pool_tunnel-interface_update
+- az_network_lb_address-pool_tunnel-interface_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -179,5 +309,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage tunnel interfaces of a load balancer.

@@ -225,31 +225,32 @@ directCommands:
   summary: Show the current routing table summary of an ExpressRoute circuit peering.
   description: ''
   syntax: >-
-    az network express-route list-route-tables-summary --path {primary, secondary}
-                                                       --peering-name
-                                                       [--ids]
+    az network express-route list-route-tables-summary [--ids]
                                                        [--name]
+                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                       [--path]
+                                                       [--peering-name]
                                                        [--resource-group]
                                                        [--subscription]
   examples:
   - summary: List Route Table Summary
     syntax: az network express-route list-route-tables-summary -g MyResourceGroup -n MyCircuit --path primary --peering-name AzurePrivatePeering
-  requiredParameters:
-  - isRequired: true
-    name: --path
-    parameterValueGroup: "primary, secondary"
-    summary: The path of the device.
-    description: ''
-  - isRequired: true
-    name: --peering-name
-    summary: The name of the peering.
-    description: ''
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
     summary: ExpressRoute circuit name.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --path
+    summary: 'The path of the device.  Allowed values: primary, secondary.'
+    description: ''
+  - name: --peering-name
+    summary: The name of the peering.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -325,7 +326,7 @@ directCommands:
     description: ''
   - name: --allow-classic-operations
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: 'Allow classic operations.  Allowed values: false, true.'
+    summary: Allow classic operations.
     description: ''
   - name: --allow-global-reach
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -368,11 +369,11 @@ directCommands:
     description: ''
   - name: --sku-family
     parameterValueGroup: "MeteredData, UnlimitedData"
-    summary: 'Chosen SKU family of ExpressRoute circuit.  Allowed values: MeteredData, UnlimitedData.  Default: MeteredData.'
+    summary: 'Chosen SKU family of ExpressRoute circuit.  Allowed values: MeteredData, UnlimitedData.'
     description: ''
   - name: --sku-tier
     parameterValueGroup: "Basic, Local, Premium, Standard"
-    summary: 'SKU Tier of ExpressRoute circuit.  Allowed values: Basic, Local, Premium, Standard.  Default: Standard.'
+    summary: 'SKU Tier of ExpressRoute circuit.  Allowed values: Basic, Local, Premium, Standard.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -474,6 +475,7 @@ commands:
 - az_network_express-route_peering_connection_ipv6-config
 - az_network_express-route_peering_connection_ipv6-config_remove
 - az_network_express-route_peering_connection_ipv6-config_set
+- az_network_express-route_peering_connection_ipv6-config_wait
 - az_network_express-route_peering_connection_list
 - az_network_express-route_peering_connection_show
 - az_network_express-route_peering_connection_wait
@@ -495,10 +497,12 @@ commands:
 - az_network_express-route_port_identity_assign
 - az_network_express-route_port_identity_remove
 - az_network_express-route_port_identity_show
+- az_network_express-route_port_identity_wait
 - az_network_express-route_port_link
 - az_network_express-route_port_link_list
 - az_network_express-route_port_link_show
 - az_network_express-route_port_link_update
+- az_network_express-route_port_link_wait
 - az_network_express-route_port_list
 - az_network_express-route_port_location
 - az_network_express-route_port_location_list
@@ -528,5 +532,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: To learn more about ExpressRoute circuits visit https://docs.microsoft.com/azure/expressroute/howto-circuit-cli.

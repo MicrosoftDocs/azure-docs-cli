@@ -4,10 +4,44 @@ name: az containerapp env certificate
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **containerapp** extension for the Azure CLI  (version 2.37.0 or higher).  The extension will automatically install the first time you run an **az containerapp env certificate** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **containerapp** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az containerapp env certificate** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage certificates for the Container Apps environment.
 description: ''
 directCommands:
+- uid: az_containerapp_env_certificate_create
+  name: az containerapp env certificate create
+  summary: Create a managed certificate.
+  description: ''
+  syntax: >-
+    az containerapp env certificate create --hostname
+                                           --name
+                                           --resource-group
+                                           --validation-method
+                                           [--certificate-name]
+  examples:
+  - summary: Create a managed certificate.
+    syntax: az containerapp env certificate create -g MyResourceGroup --name MyEnvironment --certificate-name MyCertificate --hostname MyHostname --validation-method CNAME
+  requiredParameters:
+  - isRequired: true
+    name: --hostname
+    summary: The custom domain name.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Container Apps environment.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --validation-method -v
+    summary: Validation method of custom domain ownership. Supported methods are HTTP, CNAME and TXT.
+    description: ''
+  optionalParameters:
+  - name: --certificate-name -c
+    summary: Name of the managed certificate which should be unique within the Container Apps environment.
+    description: ''
 - uid: az_containerapp_env_certificate_delete
   name: az containerapp env certificate delete
   summary: Delete a certificate from the Container Apps environment.
@@ -26,7 +60,7 @@ directCommands:
     syntax: az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --certificate MyCertificateName
   - summary: Delete a certificate from the Container Apps environment by certificate id
     syntax: az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --certificate MyCertificateId
-  - summary: Delete a certificate from the Container Apps environment by certificate thumbprint
+  - summary: Delete all certificates that have a matching thumbprint from the Container Apps environment
     syntax: az containerapp env certificate delete -g MyResourceGroup --name MyEnvironment --thumbprint MyCertificateThumbprint
   optionalParameters:
   - name: --certificate -c
@@ -63,16 +97,22 @@ directCommands:
                                          --resource-group
                                          [--certificate]
                                          [--location]
+                                         [--managed-certificates-only]
+                                         [--private-key-certificates-only]
                                          [--thumbprint]
   examples:
   - summary: List certificates for an environment.
     syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment
-  - summary: List certificates by certificate id.
+  - summary: Show a certificate by certificate id.
     syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --certificate MyCertificateId
   - summary: List certificates by certificate name.
     syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --certificate MyCertificateName
   - summary: List certificates by certificate thumbprint.
     syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --thumbprint MyCertificateThumbprint
+  - summary: List managed certificates for an environment.
+    syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --managed-certificates-only
+  - summary: List private key certificates for an environment.
+    syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --private-key-certificates-only
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -88,6 +128,14 @@ directCommands:
     description: ''
   - name: --location -l
     summary: 'Location of resource. Examples: eastus2, northeurope.'
+    description: ''
+  - name: --managed-certificates-only -m
+    defaultValue: "False"
+    summary: List managed certificates only.
+    description: ''
+  - name: --private-key-certificates-only -p
+    defaultValue: "False"
+    summary: List private-key certificates only.
     description: ''
   - name: --thumbprint -t
     summary: Thumbprint of the certificate.
@@ -143,6 +191,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 commands:
+- az_containerapp_env_certificate_create
 - az_containerapp_env_certificate_delete
 - az_containerapp_env_certificate_list
 - az_containerapp_env_certificate_upload

@@ -82,6 +82,7 @@ directCommands:
   syntax: >-
     az network public-ip delete [--ids]
                                 [--name]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--resource-group]
                                 [--subscription]
   examples:
@@ -93,6 +94,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: The name of the public IP address.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -132,10 +137,10 @@ directCommands:
   - summary: Get information about a public IP resource.
     syntax: az network public-ip show -g MyResourceGroup -n MyIp
   - summary: Get the FQDN and IP address of a public IP resource.
-    syntax: 'az network public-ip show -g MyResourceGroup -n MyIp --query "{fqdn: dnsSettings.fqdn, address: ipAddress}"'
+    syntax: 'az network public-ip show -g MyResourceGroup -n MyIp --query "{fqdn: dnsSettings.fqdn,address: ipAddress}"'
   optionalParameters:
   - name: --expand
-    summary: Expands referenced resources. Default value is None.
+    summary: Expands referenced resources.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -156,41 +161,37 @@ directCommands:
   description: ''
   syntax: >-
     az network public-ip update [--add]
-                                [--allocation-method]
-                                [--content-type]
+                                [--allocation-method {Dynamic, Static}]
                                 [--dns-name]
-                                [--force-string]
+                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--idle-timeout]
                                 [--ids]
                                 [--name]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--remove]
                                 [--resource-group]
                                 [--reverse-fqdn]
                                 [--set]
-                                [--sku]
+                                [--sku {Basic, Standard}]
                                 [--subscription]
                                 [--tags]
-                                [--version]
+                                [--version {IPv4, IPv6}]
   examples:
   - summary: Update a public IP resource with a DNS name label and static allocation.
     syntax: az network public-ip update -g MyResourceGroup -n MyIp --dns-name MyLabel --allocation-method Static
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --allocation-method
-    summary: ''
-    description: ''
-  - name: --content-type
-    defaultValue: "application/json"
-    summary: ''
+    parameterValueGroup: "Dynamic, Static"
+    summary: 'IP address allocation method.  Allowed values: Dynamic, Static.'
     description: ''
   - name: --dns-name
     summary: Globally unique DNS entry.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --idle-timeout
@@ -202,8 +203,11 @@ directCommands:
   - name: --name -n
     summary: The name of the public IP address.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
@@ -213,31 +217,92 @@ directCommands:
     summary: Reverse FQDN (fully qualified domain name).
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --sku
-    summary: ''
+    parameterValueGroup: "Basic, Standard"
+    summary: Name of a public IP address SKU.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: 'Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --version
-    summary: ''
+    defaultValue: "IPv4"
+    parameterValueGroup: "IPv4, IPv6"
+    summary: IP address type.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_public-ip_wait
+  name: az network public-ip wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network public-ip wait [--created]
+                              [--custom]
+                              [--deleted]
+                              [--exists]
+                              [--expand]
+                              [--ids]
+                              [--interval]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --expand
+    summary: Expands referenced resources.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: The name of the public IP address.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
 - az_network_public-ip_create
 - az_network_public-ip_delete
 - az_network_public-ip_list
-- az_network_public-ip_prefix
-- az_network_public-ip_prefix_create
-- az_network_public-ip_prefix_list
 - az_network_public-ip_show
 - az_network_public-ip_update
+- az_network_public-ip_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -257,5 +322,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: To learn more about public IP addresses visit https://docs.microsoft.com/azure/virtual-network/virtual-network-public-ip-address.

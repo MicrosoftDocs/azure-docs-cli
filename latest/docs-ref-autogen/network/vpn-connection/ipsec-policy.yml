@@ -7,7 +7,10 @@ directCommands:
 - uid: az_network_vpn-connection_ipsec-policy_add
   name: az network vpn-connection ipsec-policy add
   summary: Add a VPN connection IPSec policy.
-  description: Set all IPsec policies of a VPN connection. If you want to set any IPsec policy, you must set them all.
+  description: >-
+    Set all IPsec policies of a VPN connection. If you want to set any IPsec policy, you must
+
+    set them all.
   syntax: >-
     az network vpn-connection ipsec-policy add --connection-name
                                                --dh-group {DHGroup1, DHGroup14, DHGroup2, DHGroup2048, DHGroup24, ECP256, ECP384, None}
@@ -19,13 +22,10 @@ directCommands:
                                                --resource-group
                                                --sa-lifetime
                                                --sa-max-size
-                                               [--no-wait]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: Add specified IPsec policies to a connection instead of relying on defaults.
-    syntax: >-
-      az network vpn-connection ipsec-policy add -g MyResourceGroup --connection-name MyConnection \
-          --dh-group DHGroup14 --ike-encryption AES256 --ike-integrity SHA384 --ipsec-encryption DES3 \
-          --ipsec-integrity GCMAES256 --pfs-group PFS2048 --sa-lifetime 27000 --sa-max-size 102400000
+    syntax: az network vpn-connection ipsec-policy add -g MyResourceGroup --connection-name MyConnection --dh-group DHGroup14 --ike-encryption AES256 --ike-integrity SHA384 --ipsec-encryption DES3 --ipsec-integrity GCMAES256 --pfs-group PFS2048 --sa-lifetime 27000 --sa-max-size 102400000
   requiredParameters:
   - isRequired: true
     name: --connection-name
@@ -75,7 +75,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
@@ -125,10 +125,68 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_vpn-connection_ipsec-policy_wait
+  name: az network vpn-connection ipsec-policy wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network vpn-connection ipsec-policy wait [--connection-name]
+                                                [--created]
+                                                [--custom]
+                                                [--deleted]
+                                                [--exists]
+                                                [--ids]
+                                                [--interval]
+                                                [--resource-group]
+                                                [--subscription]
+                                                [--timeout]
+                                                [--updated]
+  optionalParameters:
+  - name: --connection-name
+    summary: Connection name.
+    description: ''
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
 - az_network_vpn-connection_ipsec-policy_add
 - az_network_vpn-connection_ipsec-policy_clear
 - az_network_vpn-connection_ipsec-policy_list
+- az_network_vpn-connection_ipsec-policy_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -148,5 +206,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage VPN connection IPSec policies.

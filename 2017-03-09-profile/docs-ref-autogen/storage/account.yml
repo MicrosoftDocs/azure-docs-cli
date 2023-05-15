@@ -31,6 +31,7 @@ directCommands:
                               [--allow-shared-key-access]
                               [--custom-domain]
                               [--default-share-permission]
+                              [--dns-endpoint-type]
                               [--edge-zone]
                               [--enable-alw]
                               [--enable-files-aadkerb]
@@ -77,7 +78,7 @@ directCommands:
   optionalParameters:
   - name: --access-tier
     parameterValueGroup: "Cool, Hot"
-    summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
+    summary: Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The "Premium" access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type.
     description: ''
   - name: --account-type
     summary: The storage account type.
@@ -102,6 +103,9 @@ directCommands:
     summary: User domain assigned to the storage account. Name is the CNAME source.
     description: ''
   - name: --default-share-permission
+    summary: ''
+    description: ''
+  - name: --dns-endpoint-type
     summary: ''
     description: ''
   - name: --edge-zone
@@ -421,7 +425,7 @@ directCommands:
   description: ''
   syntax: >-
     az storage account update [--access-tier {Cool, Hot, Premium}]
-                              [--account-type {Computer, User}]
+                              [--account-type]
                               [--add]
                               [--allow-append {false, true}]
                               [--allow-blob-public-access {false, true}]
@@ -438,6 +442,7 @@ directCommands:
                               [--domain-name]
                               [--domain-sid]
                               [--enable-files-aadds {false, true}]
+                              [--enable-files-aadkerb {false, true}]
                               [--enable-files-adds {false, true}]
                               [--enable-large-file-share]
                               [--enable-local-user {false, true}]
@@ -477,10 +482,9 @@ directCommands:
   optionalParameters:
   - name: --access-tier
     parameterValueGroup: "Cool, Hot, Premium"
-    summary: The access tier used for billing StandardBlob accounts. Cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or PremiumLRS account types. It is required for StandardBlob accounts during creation.
+    summary: Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The "Premium" access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type.
     description: ''
   - name: --account-type
-    parameterValueGroup: "Computer, User"
     summary: Specify the Active Directory account type for Azure Storage.
     description: ''
   - name: --add
@@ -541,6 +545,10 @@ directCommands:
   - name: --enable-files-aadds
     parameterValueGroup: "false, true"
     summary: Enable Azure Active Directory Domain Services authentication for Azure Files.
+    description: ''
+  - name: --enable-files-aadkerb
+    parameterValueGroup: "false, true"
+    summary: Enable Azure Files Active Directory Domain Service Kerberos Authentication for the storage account.
     description: ''
   - name: --enable-files-adds
     parameterValueGroup: "false, true"
@@ -677,18 +685,6 @@ commands:
 - az_storage_account_keys_list
 - az_storage_account_keys_renew
 - az_storage_account_list
-- az_storage_account_local-user
-- az_storage_account_local-user_create
-- az_storage_account_local-user_delete
-- az_storage_account_local-user_list
-- az_storage_account_local-user_list-keys
-- az_storage_account_local-user_regenerate-password
-- az_storage_account_local-user_show
-- az_storage_account_local-user_update
-- az_storage_account_network-rule
-- az_storage_account_network-rule_add
-- az_storage_account_network-rule_list
-- az_storage_account_network-rule_remove
 - az_storage_account_show
 - az_storage_account_show-connection-string
 - az_storage_account_show-usage

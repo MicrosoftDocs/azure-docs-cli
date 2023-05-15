@@ -14,20 +14,25 @@ directCommands:
                                                                          --policy-name
                                                                          --resource-group
                                                                          --selector
+                                                                         [--index]
+                                                                         [--rule-sets]
+  examples:
+  - summary: Add an OWASP CRS exclusion rule to the WAF policy managed rules.
+    syntax: az network application-gateway waf-policy managed-rule exclusion add -g MyResourceGroup --policy-name MyWAF --match-variable "RequestHeaderNames" --selector-match-operator "StartsWith" --selector "Bing"
   requiredParameters:
   - isRequired: true
     name: --match-operator --selector-match-operator
     parameterValueGroup: "Contains, EndsWith, Equals, EqualsAny, StartsWith"
-    summary: When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
+    summary: When match-variable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to.
     description: ''
   - isRequired: true
     name: --match-variable
     parameterValueGroup: "RequestArgKeys, RequestArgNames, RequestArgValues, RequestCookieKeys, RequestCookieNames, RequestCookieValues, RequestHeaderKeys, RequestHeaderNames, RequestHeaderValues"
-    summary: The variable to be excluded.
+    summary: Variable to be excluded.
     description: ''
   - isRequired: true
     name: --policy-name
-    summary: The name of the web application firewall policy.
+    summary: Name of the web application firewall policy.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -35,12 +40,19 @@ directCommands:
     description: ''
   - isRequired: true
     name: --selector
-    summary: When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to.
+    summary: When match-variable is a collection, operator used to specify which elements in the collection this exclusion applies to.
+    description: ''
+  optionalParameters:
+  - name: --index
+    summary: Index of exclusion. If no index is provided, the default behavior is `append`.
+    description: ''
+  - name: --rule-sets
+    summary: The managed rule sets that are associated with the exclusion.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_waf-policy_managed-rule_exclusion_list
   name: az network application-gateway waf-policy managed-rule exclusion list
-  summary: List all OWASP CRS exclusion rules that are applied on a Waf policy managed rules.
+  summary: List all OWASP CRS exclusion rules that are applied on a WAF policy managed rules.
   description: ''
   syntax: >-
     az network application-gateway waf-policy managed-rule exclusion list --policy-name
@@ -57,7 +69,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_application-gateway_waf-policy_managed-rule_exclusion_remove
   name: az network application-gateway waf-policy managed-rule exclusion remove
-  summary: Remove all OWASP CRS exclusion rules that are applied on a Waf policy managed rules.
+  summary: Remove all OWASP CRS exclusion rules that are applied on a WAF policy managed rules.
   description: ''
   syntax: >-
     az network application-gateway waf-policy managed-rule exclusion remove --policy-name
@@ -99,5 +111,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage OWASP CRS exclusions that are applied on a WAF policy managed rules.

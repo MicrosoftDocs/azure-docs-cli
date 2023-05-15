@@ -67,21 +67,19 @@ directCommands:
     summary: Full URI of the HSM.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-- uid: az_keyvault_security-domain_upload
-  name: az keyvault security-domain upload
-  summary: Start to restore the HSM.
+- uid: az_keyvault_security-domain_restore-blob
+  name: az keyvault security-domain restore-blob
+  summary: Enable to decrypt and encrypt security domain file as blob. Can be run in offline environment, before file is uploaded to HSM using security-domain upload.
   description: ''
   syntax: >-
-    az keyvault security-domain upload --sd-exchange-key
-                                       --sd-file
-                                       --sd-wrapping-keys
-                                       [--hsm-name]
-                                       [--id]
-                                       [--no-wait]
-                                       [--passwords]
+    az keyvault security-domain restore-blob --sd-exchange-key
+                                             --sd-file
+                                             --sd-file-restore-blob
+                                             --sd-wrapping-keys
+                                             [--passwords]
   examples:
-  - summary: Security domain upload (M=2).
-    syntax: az keyvault security-domain upload --hsm-name MyHSM --sd-file "{SD_TRANSFER_FILE}" --sd-exchange-key "{PEM_FILE_NAME}" --sd-wrapping-keys "{PEM_PRIVATE_KEY1_FILE_NAME}" "{PEM_PRIVATE_KEY2_FILE_NAME}"
+  - summary: Security domain restore blob.
+    syntax: az keyvault security-domain restore-blob --sd-file "{SD_TRANSFER_FILE}" --sd-exchange-key "{PEM_FILE_NAME}" --sd-wrapping-keys "{PEM_PRIVATE_KEY1_FILE_NAME}" "{PEM_PRIVATE_KEY2_FILE_NAME}" --sd-file-restore-blob "{SD_TRANSFER_FILE_RESTORE_BLOB}"
   requiredParameters:
   - isRequired: true
     name: --sd-exchange-key
@@ -92,8 +90,40 @@ directCommands:
     summary: This file contains security domain encrypted using SD Exchange file downloaded in security-domain init-recovery command.
     description: ''
   - isRequired: true
+    name: --sd-file-restore-blob
+    summary: Local file path to store the security domain encrypted with the exchange key.
+    description: ''
+  - isRequired: true
     name: --sd-wrapping-keys
     summary: Space-separated file paths to PEM files containing private keys.
+    description: ''
+  optionalParameters:
+  - name: --passwords
+    summary: Space-separated password list for --sd-wrapping-keys. CLI will match them in order. Can be omitted if your keys are without password protection.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+- uid: az_keyvault_security-domain_upload
+  name: az keyvault security-domain upload
+  summary: Start to restore the HSM.
+  description: ''
+  syntax: >-
+    az keyvault security-domain upload --sd-file
+                                       [--hsm-name]
+                                       [--id]
+                                       [--no-wait]
+                                       [--passwords]
+                                       [--restore-blob]
+                                       [--sd-exchange-key]
+                                       [--sd-wrapping-keys]
+  examples:
+  - summary: Security domain upload (M=2).
+    syntax: az keyvault security-domain upload --hsm-name MyHSM --sd-file "{SD_TRANSFER_FILE}" --sd-exchange-key "{PEM_FILE_NAME}" --sd-wrapping-keys "{PEM_PRIVATE_KEY1_FILE_NAME}" "{PEM_PRIVATE_KEY2_FILE_NAME}"
+  - summary: Security domain upload, in which sd_file is already restored using keyvault security-domain restore-blob command
+    syntax: az keyvault security-domain upload --hsm-name MyHSM --sd-file "{SD_TRANSFER_FILE}" --restore-blob
+  requiredParameters:
+  - isRequired: true
+    name: --sd-file
+    summary: This file contains security domain encrypted using SD Exchange file downloaded in security-domain init-recovery command.
     description: ''
   optionalParameters:
   - name: --hsm-name
@@ -109,6 +139,16 @@ directCommands:
   - name: --passwords
     summary: Space-separated password list for --sd-wrapping-keys. CLI will match them in order. Can be omitted if your keys are without password protection.
     description: ''
+  - name: --restore-blob
+    defaultValue: "False"
+    summary: Indicator if blob is already restored.
+    description: ''
+  - name: --sd-exchange-key
+    summary: The exchange key for security domain.
+    description: ''
+  - name: --sd-wrapping-keys
+    summary: Space-separated file paths to PEM files containing private keys.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_security-domain_wait
   name: az keyvault security-domain wait
@@ -117,7 +157,7 @@ directCommands:
   syntax: >-
     az keyvault security-domain wait [--hsm-name]
                                      [--id]
-                                     [--target-operation {download, upload}]
+                                     [--target-operation {download, restore_blob, upload}]
   examples:
   - summary: Pause CLI until the security domain operation is finished.
     syntax: az keyvault security-domain wait --hsm-name MyHSM
@@ -130,13 +170,14 @@ directCommands:
     description: ''
   - name: --target-operation
     defaultValue: "upload"
-    parameterValueGroup: "download, upload"
+    parameterValueGroup: "download, restore_blob, upload"
     summary: Target operation that needs waiting.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 commands:
 - az_keyvault_security-domain_download
 - az_keyvault_security-domain_init-recovery
+- az_keyvault_security-domain_restore-blob
 - az_keyvault_security-domain_upload
 - az_keyvault_security-domain_wait
 globalParameters:
@@ -158,5 +199,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/30/2021
+  ms.date: 03/29/2023
   description: Manage security domain operations.

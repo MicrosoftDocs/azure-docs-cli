@@ -13,6 +13,7 @@ directCommands:
                                 --resource-group
                                 [--allocation-method {Dynamic, Static}]
                                 [--ddos-protection-mode {Disabled, Enabled, VirtualNetworkInherited}]
+                                [--ddos-protection-plan]
                                 [--dns-name]
                                 [--edge-zone]
                                 [--idle-timeout]
@@ -51,6 +52,9 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled, VirtualNetworkInherited"
     summary: The DDoS protection mode of the public IP.
     description: ''
+  - name: --ddos-protection-plan
+    summary: Name or ID of a DDoS protection plan associated with the public IP. Can only be set if `--protection-mode` is Enabled.
+    description: ''
   - name: --dns-name
     summary: Globally unique DNS entry.
     description: ''
@@ -88,7 +92,6 @@ directCommands:
     summary: Tier of a public IP address SKU and Global tier is only supported for standard SKU public IP addresses.
     description: ''
   - name: --version
-    defaultValue: "IPv4"
     parameterValueGroup: "IPv4, IPv6"
     summary: IP address type.
     description: ''
@@ -205,6 +208,8 @@ directCommands:
   examples:
   - summary: Update a public IP resource with a DNS name label and static allocation.
     syntax: az network public-ip update -g MyResourceGroup -n MyIp --dns-name MyLabel --allocation-method Static
+  - summary: Detach a DDoS protection plan in a public IP resource.
+    syntax: az network public-ip update -g MyResourceGroup -n MyIP --protection-mode Disabled --ddos-protection-plan null
   optionalParameters:
   - name: --add
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
@@ -218,7 +223,7 @@ directCommands:
     summary: The DDoS protection mode of the public IP.
     description: ''
   - name: --ddos-protection-plan
-    summary: The DDoS protection plan associated with the public IP. Can only be set if ProtectionMode is Enabled.
+    summary: Name or ID of a DDoS protection plan associated with the public IP. Can only be set if `--protection-mode` is Enabled.
     description: ''
   - name: --dns-name
     summary: Globally unique DNS entry.
@@ -345,6 +350,7 @@ commands:
 - az_network_public-ip_prefix_list
 - az_network_public-ip_prefix_show
 - az_network_public-ip_prefix_update
+- az_network_public-ip_prefix_wait
 - az_network_public-ip_show
 - az_network_public-ip_update
 - az_network_public-ip_wait
@@ -367,5 +373,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: To learn more about public IP addresses visit https://docs.microsoft.com/azure/virtual-network/virtual-network-public-ip-address.

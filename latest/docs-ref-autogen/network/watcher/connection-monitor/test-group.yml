@@ -15,7 +15,7 @@ directCommands:
                                                          --location
                                                          --name
                                                          --test-config-name
-                                                         [--disable {false, true}]
+                                                         [--disable {0, 1, f, false, n, no, t, true, y, yes}]
                                                          [--endpoint-dest-address]
                                                          [--endpoint-dest-resource-id]
                                                          [--endpoint-source-address]
@@ -25,11 +25,12 @@ directCommands:
                                                          [--http-path]
                                                          [--http-port]
                                                          [--http-valid-status-codes]
-                                                         [--https-prefer {false, true}]
-                                                         [--icmp-disable-trace-route {false, true}]
+                                                         [--https-prefer {0, 1, f, false, n, no, t, true, y, yes}]
+                                                         [--icmp-disable-trace-route {0, 1, f, false, n, no, t, true, y, yes}]
+                                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                          [--preferred-ip-version {IPv4, IPv6}]
                                                          [--protocol {Http, Icmp, Tcp}]
-                                                         [--tcp-disable-trace-route {false, true}]
+                                                         [--tcp-disable-trace-route {0, 1, f, false, n, no, t, true, y, yes}]
                                                          [--tcp-port]
                                                          [--threshold-failed-percent]
                                                          [--threshold-round-trip-time]
@@ -58,7 +59,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --test-group-name -n
     summary: The name of the connection monitor test group.
     description: ''
   - isRequired: true
@@ -67,9 +68,8 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --disable
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: Value indicating whether test group is disabled. false is default.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Value indicating whether test group is disabled. false is  default.  Allowed values: false, true.'
     description: ''
   - name: --endpoint-dest-address
     summary: Address of the destination of connection monitor endpoint (IP or domain name).
@@ -84,8 +84,7 @@ directCommands:
     summary: Resource ID of the source of connection monitor endpoint. If endpoint is intended to used as source, this option is required.
     description: ''
   - name: --frequency
-    defaultValue: "60"
-    summary: The frequency of test evaluation, in seconds.
+    summary: 'The frequency of test evaluation, in seconds.  Default: 60.'
     description: ''
   - name: --http-method
     parameterValueGroup: "Get, Post"
@@ -98,15 +97,19 @@ directCommands:
     summary: The port to connect to.
     description: ''
   - name: --http-valid-status-codes
-    summary: Space-separated list of HTTP status codes to consider successful. For instance, "2xx 301-304 418".
+    summary: Space-separated list of HTTP status codes to consider successful. For instance, '2xx 301-304 418'  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --https-prefer
-    parameterValueGroup: "false, true"
-    summary: Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit.  Allowed values: false, true.'
     description: ''
   - name: --icmp-disable-trace-route
-    parameterValueGroup: "false, true"
-    summary: Value indicating whether path evaluation with trace route should be disabled. false is default.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Value indicating whether path evaluation with trace route should be disabled. false is default.  Allowed values: false, true.'
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --preferred-ip-version
     parameterValueGroup: "IPv4, IPv6"
@@ -117,8 +120,8 @@ directCommands:
     summary: The protocol to use in test evaluation.
     description: ''
   - name: --tcp-disable-trace-route
-    parameterValueGroup: "false, true"
-    summary: Value indicating whether path evaluation with trace route should be disabled. false is default.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: 'Value indicating whether path evaluation with trace route should be disabled. false is default. Allowed values: false, true.'
     description: ''
   - name: --tcp-port
     summary: The port to connect to.
@@ -132,13 +135,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_watcher_connection-monitor_test-group_list
   name: az network watcher connection-monitor test-group list
-  summary: List all test groups of a connection monitor.
+  summary: List all test groups of a connection     monitor.
   description: ''
   syntax: >-
     az network watcher connection-monitor test-group list --connection-monitor
                                                           --location
   examples:
-  - summary: List all test groups of a connection monitor. (autogenerated)
+  - summary: List all test groups of a connection monitor.
     syntax: az network watcher connection-monitor test-group list --connection-monitor MyConnectionMonitor --location westus2
   requiredParameters:
   - isRequired: true
@@ -159,7 +162,7 @@ directCommands:
                                                             --location
                                                             --name
   examples:
-  - summary: Remove test group from a connection monitor. (autogenerated)
+  - summary: Remove test group from a connection monitor.
     syntax: az network watcher connection-monitor test-group remove --connection-monitor MyConnectionMonitor --location westus2 --name MyConnectionMonitorTestGroup
   requiredParameters:
   - isRequired: true
@@ -184,7 +187,7 @@ directCommands:
                                                           --location
                                                           --name
   examples:
-  - summary: Show a test group of a connection monitor. (autogenerated)
+  - summary: Show a test group of a connection monitor.
     syntax: az network watcher connection-monitor test-group show --connection-monitor MyConnectionMonitor --location westus2 --name MyConnectionMonitorTestGroup --subscription MySubscription
   requiredParameters:
   - isRequired: true
@@ -196,8 +199,69 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - isRequired: true
-    name: --name -n
+    name: --name --test-group-name -n
     summary: The name of the connection monitor test group.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
+- uid: az_network_watcher_connection-monitor_test-group_wait
+  name: az network watcher connection-monitor test-group wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network watcher connection-monitor test-group wait [--connection-monitor]
+                                                          [--created]
+                                                          [--custom]
+                                                          [--deleted]
+                                                          [--exists]
+                                                          [--ids]
+                                                          [--interval]
+                                                          [--subscription]
+                                                          [--timeout]
+                                                          [--updated]
+                                                          [--watcher-name]
+                                                          [--watcher-rg]
+  optionalParameters:
+  - name: --connection-monitor
+    summary: Connection monitor name.
+    description: ''
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
+  - name: --watcher-name
+    summary: The name of the Network Watcher resource.
+    description: ''
+  - name: --watcher-rg -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:
@@ -205,6 +269,7 @@ commands:
 - az_network_watcher_connection-monitor_test-group_list
 - az_network_watcher_connection-monitor_test-group_remove
 - az_network_watcher_connection-monitor_test-group_show
+- az_network_watcher_connection-monitor_test-group_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -224,5 +289,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/07/2022
+  ms.date: 03/03/2023
   description: Manage a test group of a connection monitor.
