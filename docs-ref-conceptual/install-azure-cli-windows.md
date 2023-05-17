@@ -107,7 +107,7 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
     $env:_ARGCOMPLETE_IFS = "`n"
     az 2>&1 | Out-Null
 
-    Get-Content $completion_file | Sort-Object |ForEach-Object {
+    Get-Content $completion_file | Sort-Object | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
     }
     Remove-Item $completion_file
