@@ -1,5 +1,5 @@
 ---
-title: Create an Azure service principal – Azure CLI | Microsoft Docs
+title: Work with Azure service principals – Azure CLI | Microsoft Docs
 description: Learn how to create and use service principals with the Azure CLI. Use service principals to gain control over which Azure resources can be accessed.
 manager: mkluck
 author: dbradish-microsoft
@@ -11,7 +11,7 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
-# Create an Azure service principal with the Azure CLI
+# Work with Azure service principal using the Azure CLI
 
 Automated tools that use Azure services should always have restricted permissions. Instead of having
 applications sign in as a fully privileged user, Azure offers service principals.
@@ -167,6 +167,14 @@ For certificate stored in Key Vault, retrieve the certificate with its private k
 ```azurecli-interactive
 az keyvault secret download --file /path/to/cert.pfx --vault-name VaultName --name CertName --encoding base64
 openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
+```
+
+#### Convert existing PKCS12 file
+
+If you already have a PKCS#12 file, you can convert it to PEM format using OpenSSL.  If you have a password, change the `passin` argument.
+
+```console
+openssl pkcs12 -in fileName.p12 -clcerts -nodes -out fileName.pem -passin pass:
 ```
 
 ## 2. Get an existing service principal

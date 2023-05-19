@@ -64,7 +64,7 @@ az login -u <username> -p <password>
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 pre-defined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
 allowing you to apply both permissions restrictions and locally stored static credential information. To learn more
-about service principals, see [Create an Azure service principal with the Azure CLI](./create-an-azure-service-principal-azure-cli.md#4-sign-in-using-a-service-principal).
+about service principals, see [Working with Azure service principals using the Azure CLI](./create-an-azure-service-principal-azure-cli.md#4-sign-in-using-a-service-principal).
 
 To sign in with a service principal, you need:
 
@@ -73,7 +73,7 @@ To sign in with a service principal, you need:
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 > [!NOTE]
-> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
 
 > [!IMPORTANT]
 >
@@ -97,6 +97,8 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > $AzCred = Get-Credential -UserName <app-id>
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
+
+See [Working with service principals](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication) for more information on PEM file formats.
 
 ## Sign in with a different tenant
 
