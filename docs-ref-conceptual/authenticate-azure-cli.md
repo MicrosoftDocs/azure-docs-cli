@@ -124,6 +124,27 @@ az login --identity --username <client_id|object_id|resource_id>
 
 To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm) and [Use managed identities for Azure resources for sign in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
 
+## Sign in with WAM
+
+The Azure CLI now offers preview support for Web Account Manager (WAM).  WAM is a Windows 10+ component that acts as an authentication broker.  Using WAM has several benefits:
+
+_ Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
+_ Support for Windows Hello, conditional access, and FIDO keys.
+_ Fast single sign-on.
+_ Bug fixes and enhancements shipped with Windows.
+
+Signing in with WAM is a preview feature. Once turned on, it will replace the previous browser-based user interface. 
+
+```azurecli-interactive
+az config set core-allow_broker=true
+az account clear
+az login
+```
+
+At the current stage of development, there are a few known limitations to WAM:
+_ WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac , Linux, and earlier versions of Windows, we automatically fall back to a browser.  
+_ Microsoft Accounts (for example @outlook.com or @live.com) are not supported for the time being  . We are working with the Microsoft  Identity team to bring the support in the near future.
+
 ## See also
 
 * [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant)
