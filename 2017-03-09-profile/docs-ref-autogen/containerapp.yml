@@ -37,6 +37,7 @@ directCommands:
     az containerapp create --name
                            --resource-group
                            [--args]
+                           [--bind]
                            [--command]
                            [--container-name]
                            [--cpu]
@@ -136,6 +137,9 @@ directCommands:
   optionalParameters:
   - name: --args
     summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --bind
+    summary: Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
     description: ''
   - name: --command
     summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
@@ -494,7 +498,7 @@ directCommands:
     summary: The service principal tenant ID. Used by Github Actions to authenticate with Azure.
     description: ''
   - name: --source
-    summary: 'Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using Oryx. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.'
+    summary: 'Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.'
     description: ''
   - name: --target-port
     summary: The application port used for ingress traffic.
@@ -511,6 +515,7 @@ directCommands:
   description: ''
   syntax: >-
     az containerapp update [--args]
+                           [--bind]
                            [--command]
                            [--container-name]
                            [--cpu]
@@ -535,6 +540,7 @@ directCommands:
                            [--set-env-vars]
                            [--subscription]
                            [--tags]
+                           [--unbind]
                            [--workload-profile-name]
                            [--yaml]
   examples:
@@ -562,6 +568,9 @@ directCommands:
   optionalParameters:
   - name: --args
     summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --bind
+    summary: Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
     description: ''
   - name: --command
     summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
@@ -629,13 +638,16 @@ directCommands:
     summary: Path to mount all secrets e.g. mnt/secrets.
     description: ''
   - name: --set-env-vars
-    summary: Add or update environment variable(s) in container. Existing environmentenvironment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    summary: Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --unbind
+    summary: Space separated list of services(bindings) to be removed from this app. e.g. BIND_NAME1...
     description: ''
   - name: --workload-profile-name -w
     summary: The friendly name for the workload profile.
@@ -758,11 +770,13 @@ commands:
 - az_containerapp_env_storage_show
 - az_containerapp_env_update
 - az_containerapp_env_workload-profile
+- az_containerapp_env_workload-profile_add
 - az_containerapp_env_workload-profile_delete
 - az_containerapp_env_workload-profile_list
 - az_containerapp_env_workload-profile_list-supported
 - az_containerapp_env_workload-profile_set
 - az_containerapp_env_workload-profile_show
+- az_containerapp_env_workload-profile_update
 - az_containerapp_exec
 - az_containerapp_github-action
 - az_containerapp_github-action_add
@@ -792,9 +806,24 @@ commands:
 - az_containerapp_ingress_traffic_set
 - az_containerapp_ingress_traffic_show
 - az_containerapp_ingress_update
+- az_containerapp_job
+- az_containerapp_job_create
+- az_containerapp_job_delete
+- az_containerapp_job_execution
+- az_containerapp_job_execution_list
+- az_containerapp_job_execution_show
+- az_containerapp_job_list
+- az_containerapp_job_show
+- az_containerapp_job_start
+- az_containerapp_job_stop
+- az_containerapp_job_update
 - az_containerapp_list
 - az_containerapp_logs
 - az_containerapp_logs_show
+- az_containerapp_patch
+- az_containerapp_patch_apply
+- az_containerapp_patch_interactive
+- az_containerapp_patch_list
 - az_containerapp_registry
 - az_containerapp_registry_list
 - az_containerapp_registry_remove
@@ -820,6 +849,14 @@ commands:
 - az_containerapp_secret_remove
 - az_containerapp_secret_set
 - az_containerapp_secret_show
+- az_containerapp_service
+- az_containerapp_service_list
+- az_containerapp_service_postgres
+- az_containerapp_service_postgres_create
+- az_containerapp_service_postgres_delete
+- az_containerapp_service_redis
+- az_containerapp_service_redis_create
+- az_containerapp_service_redis_delete
 - az_containerapp_show
 - az_containerapp_ssl
 - az_containerapp_ssl_upload
