@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 For Linux distributions with `dnf` such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
 
 > [!WARNING]
-> Starting from Azure CLI 2.39.0 (released on 08/02/2022), no RPM packages will be released for RHEL 7 and CentOS 7. You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bug fixes from Microsoft for those versions.
+> Starting from Azure CLI 2.39.0 (released on 08/02/2022), no RPM packages will be released for RHEL 7 and CentOS 7. You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bug fixes from Microsoft for those versions. They will continue to receive security fixes as long as the dependencies are supported.
 >
 > Azure CLI and the Linux [Install script](https://learn.microsoft.com/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
 
