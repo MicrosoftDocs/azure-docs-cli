@@ -98,6 +98,8 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
+See [Working with service principals](create-an-azure-service-principal-azure-cli#certificate-based-authentication) for more information on PEM file formats.
+
 ## Sign in with a different tenant
 
 You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both
