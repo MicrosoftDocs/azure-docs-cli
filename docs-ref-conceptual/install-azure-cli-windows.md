@@ -1,6 +1,6 @@
 ---
 title: Install the Azure CLI for Windows | Microsoft Docs
-description: To install the Azure CLI on Windows, you must use Powershell, or an MSI installer, which gives you access to the CLI through the Windows Command Prompt (CMD).
+description: To install the Azure CLI on Windows, you must use PowerShell, or an MSI installer, which gives you access to the CLI through the Windows Command Prompt (CMD).
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
@@ -44,7 +44,7 @@ To download the MSI installer for specific version, change the version segment i
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
-### Powershell
+### PowerShell
 
 You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
 
