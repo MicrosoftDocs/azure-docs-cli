@@ -46,12 +46,16 @@ To download the MSI installer for specific version, change the version segment i
 
 ### PowerShell
 
-You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
+You can also install the Azure CLI using PowerShell. 
 
-> [!Note]
-> PowerShell must be run as administrator.
+> [!NOTE]
+> Most Azure CLI documentation is written and tested in a Bash shell.  If you prefer to use PowerShell, be aware of the syntax differences explained in these articles:
+>_[Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+>_[Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+>_Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+>_[Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
 
-Start PowerShell as administrator and run the following command:
+Start PowerShell **as administrator** and run the following command:
 
    ```PowerShell
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
