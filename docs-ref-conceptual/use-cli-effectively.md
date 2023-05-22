@@ -346,6 +346,9 @@ If you only need create or update commands, use the [az deployment group create]
 
 If generic update parameters and [az resource](../latest/docs-ref-autogen/resource.yml) don't meet your needs, you can use the [az rest](/cli/azure/reference-index#az-rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
 
+> [!NOTE]
+> Calling a service REST API directly with `az rest` is a _supplemental_ feature of Azure CLI, and only works if the REST API is invoked correctly. Calling these APIs with `az rest` is subject to change for reasons including, but not limited to, Azure CLI permission changes, Microsoft Graph service limitations, AAD Conditional Access policies, etc. For service REST API questions or issues, please [create a support ticket](https://azure.microsoft.com/support/create-ticket).
+
 This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
 
 ```azurecli
