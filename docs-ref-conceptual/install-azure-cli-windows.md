@@ -87,8 +87,10 @@ The `-e` option is to ensure the official Azure CLI package is installed. This c
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
 
 ## Enable Tab Completion on PowerShell
-"When typing in a command followed by a parameter, pressing the tab key will display a list of available options for that parameter. This saves you time and effort in remembering specific arguments or looking them up in the reference documentation.  This capability applies to commands and parameters and also extends to values such as account name and subscription name."
-To enable tab completion for the Azure CLI on PowerShell, you need to have version 2.49 or higher installed. Once set up, tab completion for the Azure CLI is triggered by entering an az command in the shell and then pressing the Tab key. You can use it to complete commands, parameters or values such as account names or subscriptions.
+
+When typing in a command followed by a parameter, pressing the tab key will display a list of available options for that parameter. This saves you time and effort in remembering specific arguments or looking them up in the reference documentation.  This capability applies to commands and parameters and also extends to values such as account name and subscription name.
+
+To enable tab completion for the Azure CLI on PowerShell, you need to have version 2.49 or higher installed.
 
 To add tab completion, create or edit the profile stored in the variable `$PROFILE`. The simplest way is to run `notepad $PROFILE` in PowerShell. For more information, see [How to create your profile](/powershell/module/microsoft.powershell.core/about/about_profiles#how-to-create-a-profile) and [Profiles and execution policy](/powershell/module/microsoft.powershell.core/about/about_profiles#profiles-and-execution-policy).
 
