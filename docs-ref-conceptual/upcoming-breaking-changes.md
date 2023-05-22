@@ -16,113 +16,78 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 
 ## AKS
 
-### `az acs`
+### `az aks create`
 
-- The `acs` command group has been deprecated and as of 2.41.0, `acs` will be removed. For more information, please refer to [this doc](https://azure.microsoft.com/updates/azure-container-service-will-retire-on-january-31-2020/)
+- Specifying `--pod-cidr` with Azure CNI will return an error instead of logging a warning when not using overlay mode.
   
-## App Config
+## KeyVault
 
-### `az appconfig kv export`
+### `az keyvault role assignment delete`
 
-- Validations will be added to JSON file imports to ensure that only valid JSON objects are imported. Other JSON primitives will be rejected. 
-
-### `az appconfig kv import`
-
-- Validations will be added to JSON file imports to ensure that only valid JSON objects are imported. Other JSON primitives will be rejected. 
-
-## App Service
-
-### `az logicapp create`
-
-- Parameter breaking-change will happen to the parameter sets
-  - `--consumption-plan-location` and `--os-type` parameter will be deprecated. 
-
-## Compute
-
-### `az vm create`
-
-- Parameter breaking-change will apply to all parameter sets
-  - Make the default value of  `--enable-secure-boot` to `True` for Trusted Launch VM. 
-    - This will lower the barrier to entry even further and provide customers the full set of Trusted Launch features by default.
-
-### `az vmss create`
-
-- Parameter breaking-change will apply to all parameter sets
-  - Make the default value of  `--enable-secure-boot` to `True` for Trusted Launch VMSS.
-    - This will lower the barrier to entry even further and provide customers the full set of Trusted Launch features by default.
-
-## Event Hubs
-
-### `az eventhubs namespace update`
-
-The following parameters will be deprecated in 2.41.0. Please use `az eventhubs namespace encryption` to manage keys.
-
--  `--key-source`
--  `--key-name`
--  `--key-vault-uri`
--  `--key-version`
-
-### `az eventhubs namespace create`
-
-- Parameter breaking-change will apply to all parameter sets
-  - `--identity` will be deprecated, please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead
-  - `-default-action` and `--enable-trusted-service-access` will be deprecated, please use `az eventhubs namespace network-rule update` instead
-
-### `az eventhubs namespace update`
-
-- Parameter breaking-change will apply to all parameter sets
-  - `--identity` will be deprecated. Please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead.
-  - `-default-action` and `--enable-trusted-service-access` will be deprecated. Please use `az eventhubs namespace network-rule update` instead
-
-## Key Vault
-
-### `az keyvault create`
-
-- Parameter breaking-change will happen to the parameter sets
-  - `--enable-soft-delete` will be deprecated and all keyvault will be created with soft delete enabled.
-
-## Monitor
-
-### `az monitor diagnostic-settings list`
-
-- `value` property will be dropped from output.
--  New output will return a list instead of a dict
+- Output will be deprecated.
 
 ## Network
 
-### `az network vnet create`
-
-- Parameter breaking-change will apply to all parameter sets
-  - `--defer` will be deprecated, please use short hand syntax instead
-
+### `az network application-gateway settings update`
+### `az network application-gateway settings update`
+### `az network application-gateway url-path-map update`
+### `az network nic update`
+### `az network nic ip-config update`
+### `az network nsg rule update`
 ### `az network vnet update`
+### `az network vnet subnet update`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--defer` will be deprecated, please use short hand syntax instead
+- Use `null` instead of `""`  to detach.
 
-### `az network vnet subnet create`
+### `az network cross-region-lb rule`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--defer` will be deprecated, please use short hand syntax instead
+- Remove parameters `--enable-tcp-reset` and `--idle-timeout`
 
-### `az network watcher connection-monitor create`
+### `az network application-gateway ssl-profile remove`
+### `az network application-gateway client-cert remove`
+### `az network private-endpoint dns-zone-group remove`
+### `az network private-endpoint ip-config remove`
+### `az network private-endpoint asg remove`
 
-- Parameter breaking-change will apply to all parameter sets
-   - Deprecate classic connection monitor creation, please use the new connection monitor
+- Output will be deprecated.
 
-## Service Bus
+## ServiceBus
 
-### `az servicebus namespace create`
+### `az servicebus georecovery-alias fail-over`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--default-action` will be deprecated. Please use `az servicebus namespace network-rule update`
+- Parameters argument will be removed. 
 
-### `az servicebus namespace update`
+### `az servicebus namespace network-rule`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--default-action` will be deprecated. Please use `az servicebus namespace network-rule update`
+- Deprecated. Redirect to `az servicebus namespace network-rule-set`
 
-### `az servicebus migration`
+## EventHub
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--config-name` will be deprecated. There is no replacement for this parameter.
+### `az eventhubs namespace application-group policy remove`
+
+- Remove parameters `metric-id` and `rate-limit-threshold` from `--throttling-policy-config` object. Additionally changing `throttling-policy-config` to `policy`.
+
+### `az eventhubs eventhub create`
+### `az eventhubs eventhub update`
+
+- The parameter `–message-retention` will be deprecated and replaced by `–retention-time-in-hours`.
+
+## NetAppFiles
+
+### `az netappfiles vault list command`
+
+- Deprecated.
+
+### `az netappfiles volume update`
+### `az netappfiles volume create`
+
+- Remove parameter `--vault-id`. 
+
+## RDBMS
+
+### `az mysql flexible-server create`
+### `az mysql flexible-server update`
+### `az postgres flexible-server create`
+### `az postgres flexible-server update`
+
+- The parameter `Enabled` for `--high-availability` will be deprecated, as it's the same as `ZoneRedundant`.
