@@ -45,6 +45,10 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 
 ### `az network application-gateway ssl-profile remove`
 ### `az network application-gateway client-cert remove`
+### `az network cross-region-lb address-pool address remove`
+### `az network lb address-pool tunnel-interface remove`
+### `az network nic ip-config address-pool remove`
+### `az network nic ip-config inbound-nat-rule remove`
 ### `az network private-endpoint dns-zone-group remove`
 ### `az network private-endpoint ip-config remove`
 ### `az network private-endpoint asg remove`
