@@ -1,0 +1,539 @@
+### YamlMime:AzureCLIGroup
+uid: az_containerapp_job
+name: az containerapp job
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **containerapp** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az containerapp job** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Commands to manage Container Apps jobs.
+description: ''
+directCommands:
+- uid: az_containerapp_job_create
+  name: az containerapp job create
+  summary: Create a container apps job.
+  description: ''
+  syntax: >-
+    az containerapp job create --name
+                               --resource-group
+                               [--args]
+                               [--command]
+                               [--container-name]
+                               [--cpu]
+                               [--cron-expression]
+                               [--env-vars]
+                               [--environment]
+                               [--image]
+                               [--max-executions]
+                               [--memory]
+                               [--min-executions]
+                               [--no-wait]
+                               [--parallelism]
+                               [--polling-interval]
+                               [--rcc]
+                               [--registry-identity]
+                               [--registry-password]
+                               [--registry-server]
+                               [--registry-username]
+                               [--replica-retry-limit]
+                               [--replica-timeout]
+                               [--scale-rule-auth]
+                               [--scale-rule-metadata]
+                               [--scale-rule-name]
+                               [--scale-rule-type]
+                               [--secrets]
+                               [--system-assigned]
+                               [--tags]
+                               [--trigger-type]
+                               [--user-assigned]
+                               [--workload-profile-name]
+                               [--yaml]
+  examples:
+  - summary: Create a container apps job with Trigger Type as Manual.
+    syntax: >-
+      az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --trigger-type Manual \
+          --replica-timeout 5 \
+          --replica-retry-limit 2 \
+          --replica-completion-count 1 \
+          --parallelism 1 \
+          --image imageName \
+          --workload-profile-name my-wlp
+  - summary: Create a container apps job with Trigger Type as Schedule.
+    syntax: >-
+      az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --trigger-type Schedule \
+          --replica-timeout 5 \
+          --replica-retry-limit 2 \
+          --replica-completion-count 1 \
+          --parallelism 1 \
+          --cron-expression "*/1 * * * *" \
+          --image imageName
+  - summary: Create a container apps job with Trigger Type as Event.
+    syntax: >-
+      az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --trigger-type Event \
+          --replica-timeout 5 \
+          --replica-retry-limit 2 \
+          --replica-completion-count 1 \
+          --parallelism 1 \
+          --polling-interval 30 \
+          --min-executions 0 \
+          --max-executions 1 \
+          --scale-rule-name queueJob \
+          --scale-rule-type azure-queue \
+          --scale-rule-metadata "accountName=mystorageaccountname" \
+                                "cloud=AzurePublicCloud" \
+                                "queueLength": "5" "queueName": "foo" \
+          --scale-rule-auth "connection=my-connection-string-secret-name" \
+          --image imageName
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --args
+    summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --command
+    summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --container-name
+    summary: Name of the container.
+    description: ''
+  - name: --cpu
+    summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    description: ''
+  - name: --cron-expression
+    summary: Cron expression. Only supported for trigger type "Schedule".
+    description: ''
+  - name: --env-vars
+    summary: A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    description: ''
+  - name: --environment
+    summary: Name or resource ID of the container app's environment.
+    description: ''
+  - name: --image
+    summary: Container image, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --max-executions
+    summary: Maximum number of job executions to run per polling interval.
+    description: ''
+  - name: --memory
+    summary: Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    description: ''
+  - name: --min-executions
+    summary: Minimum number of job executions to run per polling interval.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --parallelism
+    summary: Maximum number of replicas to run per execution.
+    description: ''
+  - name: --polling-interval
+    summary: Interval to check each event source in seconds. Defaults to 30s.
+    description: ''
+  - name: --rcc --replica-completion-count
+    summary: Number of replicas that need to complete successfully for execution to succeed.
+    description: ''
+  - name: --registry-identity
+    summary: A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
+    description: ''
+  - name: --registry-password
+    summary: The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --registry-server
+    summary: The container registry server hostname, e.g. myregistry.azurecr.io.
+    description: ''
+  - name: --registry-username
+    summary: The username to log in to container registry.
+    description: ''
+  - name: --replica-retry-limit
+    summary: Maximum number of retries before the replica fails.
+    description: ''
+  - name: --replica-timeout
+    summary: Maximum number of seconds a replica can execute.
+    description: ''
+  - name: --scale-rule-auth --sra
+    summary: Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+    description: ''
+  - name: --scale-rule-metadata --srm
+    summary: Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
+    description: ''
+  - name: --scale-rule-name --srn
+    summary: The name of the scale rule.
+    description: ''
+  - name: --scale-rule-type --srt
+    summary: The type of the scale rule.
+    description: ''
+  - name: --secrets -s
+    summary: A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+    description: ''
+  - name: --system-assigned
+    defaultValue: "False"
+    summary: System assigned identity.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --trigger-type
+    summary: Trigger type. Schedule | Event | Manual.
+    description: ''
+  - name: --user-assigned
+    summary: User assigned identity.
+    description: ''
+  - name: --workload-profile-name -w
+    summary: The friendly name for the workload profile.
+    description: ''
+  - name: --yaml
+    summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+    description: ''
+- uid: az_containerapp_job_delete
+  name: az containerapp job delete
+  summary: Delete a Container Apps Job.
+  description: ''
+  syntax: >-
+    az containerapp job delete [--ids]
+                               [--name]
+                               [--no-wait]
+                               [--resource-group]
+                               [--subscription]
+                               [--yes]
+  examples:
+  - summary: Delete a job.
+    syntax: az containerapp job delete -n MyContainerAppJob -g MyResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_containerapp_job_list
+  name: az containerapp job list
+  summary: List Container Apps Job by subscription or resource group.
+  description: ''
+  syntax: az containerapp job list [--resource-group]
+  examples:
+  - summary: List jobs in the current subscription.
+    syntax: az containerapp job list
+  - summary: List environments by resource group.
+    syntax: az containerapp job list -g MyResourceGroup
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_containerapp_job_show
+  name: az containerapp job show
+  summary: Show details of a Container Apps Job.
+  description: ''
+  syntax: >-
+    az containerapp job show [--ids]
+                             [--name]
+                             [--resource-group]
+                             [--subscription]
+  examples:
+  - summary: Show the details of a job.
+    syntax: az containerapp job show -n MyContainerAppJob -g MyResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_containerapp_job_start
+  name: az containerapp job start
+  summary: Start a Container Apps Job execution.
+  description: ''
+  syntax: >-
+    az containerapp job start [--args]
+                              [--command]
+                              [--container-name]
+                              [--cpu]
+                              [--env-vars]
+                              [--ids]
+                              [--image]
+                              [--memory]
+                              [--name]
+                              [--no-wait]
+                              [--registry-identity]
+                              [--resource-group]
+                              [--subscription]
+  examples:
+  - summary: Start a job execution.
+    syntax: az containerapp job start -n MyContainerAppJob -g MyResourceGroup
+  - summary: Start a job with different image and configurations.
+    syntax: az containerapp job start -n MyContainerAppJob -g MyResourceGroup --image MyImageName --cpu 0.5 --memory 1.0Gi
+  optionalParameters:
+  - name: --args
+    summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --command
+    summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --container-name
+    summary: Name of the container.
+    description: ''
+  - name: --cpu
+    summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    description: ''
+  - name: --env-vars
+    summary: A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --image
+    summary: Container image, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --memory
+    summary: Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    description: ''
+  - name: --name -n
+    summary: The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --registry-identity
+    summary: A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_containerapp_job_stop
+  name: az containerapp job stop
+  summary: Stops a Container Apps Job execution.
+  description: ''
+  syntax: >-
+    az containerapp job stop [--execution-name-list]
+                             [--ids]
+                             [--job-execution-name]
+                             [--name]
+                             [--no-wait]
+                             [--resource-group]
+                             [--subscription]
+  examples:
+  - summary: Stop a job execution.
+    syntax: az containerapp job stop -n MyContainerAppJob -g MyResourceGroup
+  - summary: Stop a job execution giving a specific job execution name.
+    syntax: az containerapp job stop -n MyContainerAppJob -g MyResourceGroup --job-execution-name MyContainerAppJob-66v9xh0
+  - summary: Stop multiple job executions giving a list of execution names.
+    syntax: az containerapp job stop -n MyContainerAppJob -g MyResourceGroup --execution-name-list MyContainerAppJob-66v9xh0,MyContainerAppJob-66v9xh1
+  optionalParameters:
+  - name: --execution-name-list
+    summary: Comma separated list of job execution names.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --job-execution-name
+    summary: Name of the specific job execution which needs to be stopped.
+    description: ''
+  - name: --name -n
+    summary: The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_containerapp_job_update
+  name: az containerapp job update
+  summary: Update a Container Apps Job.
+  description: ''
+  syntax: >-
+    az containerapp job update [--args]
+                               [--command]
+                               [--container-name]
+                               [--cpu]
+                               [--cron-expression]
+                               [--ids]
+                               [--image]
+                               [--max-executions]
+                               [--memory]
+                               [--min-executions]
+                               [--name]
+                               [--no-wait]
+                               [--parallelism]
+                               [--polling-interval]
+                               [--rcc]
+                               [--remove-all-env-vars]
+                               [--remove-env-vars]
+                               [--replace-env-vars]
+                               [--replica-retry-limit]
+                               [--replica-timeout]
+                               [--resource-group]
+                               [--scale-rule-auth]
+                               [--scale-rule-metadata]
+                               [--scale-rule-name]
+                               [--scale-rule-type]
+                               [--set-env-vars]
+                               [--subscription]
+                               [--tags]
+                               [--workload-profile-name]
+                               [--yaml]
+  examples:
+  - summary: Update a job's replica timeout.
+    syntax: >-
+      az containerapp job update -n MyContainerAppJob -g MyResourceGroup \
+          --replica-timeout 10
+  optionalParameters:
+  - name: --args
+    summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --command
+    summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+    description: ''
+  - name: --container-name
+    summary: Name of the container.
+    description: ''
+  - name: --cpu
+    summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+    description: ''
+  - name: --cron-expression
+    summary: Cron expression. Only supported for trigger type "Schedule".
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --image
+    summary: Container image, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --max-executions
+    summary: Maximum number of job executions to run per polling interval.
+    description: ''
+  - name: --memory
+    summary: Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+    description: ''
+  - name: --min-executions
+    summary: Minimum number of job executions to run per polling interval.
+    description: ''
+  - name: --name -n
+    summary: The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --parallelism
+    summary: Maximum number of replicas to run per execution.
+    description: ''
+  - name: --polling-interval
+    summary: Interval to check each event source in seconds. Defaults to 30s.
+    description: ''
+  - name: --rcc --replica-completion-count
+    summary: Number of replicas that need to complete successfully for execution to succeed.
+    description: ''
+  - name: --remove-all-env-vars
+    defaultValue: "False"
+    summary: Remove all environment variable(s) from container..
+    description: ''
+  - name: --remove-env-vars
+    summary: Remove environment variable(s) from container. Space-separated environment variable names.
+    description: ''
+  - name: --replace-env-vars
+    summary: Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --replica-retry-limit
+    summary: Maximum number of retries before the replica fails.
+    description: ''
+  - name: --replica-timeout
+    summary: Maximum number of seconds a replica can execute.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --scale-rule-auth --sra
+    summary: Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+    description: ''
+  - name: --scale-rule-metadata --srm
+    summary: Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
+    description: ''
+  - name: --scale-rule-name --srn
+    summary: The name of the scale rule.
+    description: ''
+  - name: --scale-rule-type --srt
+    summary: The type of the scale rule.
+    description: ''
+  - name: --set-env-vars
+    summary: Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --workload-profile-name -w
+    summary: The friendly name for the workload profile.
+    description: ''
+  - name: --yaml
+    summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+    description: ''
+commands:
+- az_containerapp_job_create
+- az_containerapp_job_delete
+- az_containerapp_job_execution
+- az_containerapp_job_execution_list
+- az_containerapp_job_execution_show
+- az_containerapp_job_list
+- az_containerapp_job_show
+- az_containerapp_job_start
+- az_containerapp_job_stop
+- az_containerapp_job_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Commands to manage Container Apps jobs.
