@@ -52,7 +52,7 @@ Although most Azure CLI documentation is written and tested in a Bash shell, you
 - Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
 - [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
 
-Start PowerShell **as administrator** and run the following command:
+To install the Azure CLI using PowerShell, start PowerShell **as administrator** and run the following command:
 
    ```PowerShell
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
