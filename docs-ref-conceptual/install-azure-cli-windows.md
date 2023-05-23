@@ -88,7 +88,7 @@ You can now run the Azure CLI with the `az` command from either Windows Command 
 
 ## Enable Tab Completion on PowerShell
 
-When typing in a command followed by a parameter, pressing the tab key will display a list of available options for that parameter. This saves you time and effort in remembering specific arguments or looking them up in the reference documentation.  This capability applies to commands and parameters and also extends to values such as account name and subscription name.
+When typing in a command followed by a parameter, pressing the tab key will trigger the completion. This saves you time and effort in remembering specific arguments or looking them up in the reference documentation. This capability applies to commands and parameters and also extends to values such as account name and subscription name.
 
 To enable tab completion for the Azure CLI on PowerShell, you need to have version 2.49 or higher installed.
 
@@ -108,7 +108,6 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
     $env:_ARGCOMPLETE_SUPPRESS_SPACE = 0
     $env:_ARGCOMPLETE_IFS = "`n"
     az 2>&1 | Out-Null
-
     Get-Content $completion_file | Sort-Object | ForEach-Object {
         [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
     }
@@ -116,7 +115,7 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
 }
 ```
 
-To get a bash like completion style, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` in `$PROFILE`.
+To display all available options in the menu, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` in `$PROFILE`.
 
 ## Troubleshooting
 
