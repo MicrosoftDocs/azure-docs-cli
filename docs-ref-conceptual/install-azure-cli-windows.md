@@ -46,7 +46,7 @@ To download the MSI installer for specific version, change the version segment i
 
 ### PowerShell
 
-You can also install the Azure CLI using PowerShell. Most Azure CLI documentation is written and tested in a Bash shell.  If you prefer to use PowerShell, syntax differences are explained in these articles:
+Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtile syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
 - [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 - [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
 - Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
