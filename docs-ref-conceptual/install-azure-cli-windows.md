@@ -27,7 +27,7 @@ for the list of supported package managers or how to install manually under WSL.
 The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.
 
 > [!IMPORTANT]
-> After the installation is complete, **you will need to close and reopen any active terminal window to use the Azure CLI**.
+> After the installation is complete, you will need to **close and reopen any active terminal window to use the Azure CLI**.
 
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
@@ -46,7 +46,7 @@ To download the MSI installer for specific version, change the version segment i
 
 ### PowerShell
 
-Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtile syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
+Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
 - [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 - [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
 - Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
