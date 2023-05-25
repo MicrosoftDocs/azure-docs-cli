@@ -115,7 +115,7 @@ Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
 }
 ```
 
-To display all available options in the menu, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` in `$PROFILE`.
+To display all available options in a menu, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` in `$PROFILE`.
 
 ## Troubleshooting
 
