@@ -41,6 +41,8 @@ directCommands:
   syntax: >-
     az container create --resource-group
                         [--acr-identity]
+                        [--add-capabilities]
+                        [--allow-escalation]
                         [--assign-identity]
                         [--azure-file-volume-account-key]
                         [--azure-file-volume-account-name]
@@ -50,6 +52,7 @@ directCommands:
                         [--command-line]
                         [--cpu]
                         [--dns-name-label]
+                        [--drop-capabilities]
                         [--environment-variables]
                         [--file]
                         [--gitrepo-dir]
@@ -67,13 +70,17 @@ directCommands:
                         [--os-type {Linux, Windows}]
                         [--ports]
                         [--priority]
+                        [--privileged]
                         [--protocol {TCP, UDP}]
                         [--registry-login-server]
                         [--registry-password]
                         [--registry-username]
                         [--restart-policy {Always, Never, OnFailure}]
                         [--role]
+                        [--run-as-group]
+                        [--run-as-user]
                         [--scope]
+                        [--seccomp-profile]
                         [--secrets]
                         [--secrets-mount-path]
                         [--secure-environment-variables]
@@ -124,6 +131,13 @@ directCommands:
   - name: --acr-identity
     summary: The identity with access to the container registry.
     description: ''
+  - name: --add-capabilities
+    summary: A List of security context capabilities to be added.
+    description: ''
+  - name: --allow-escalation
+    defaultValue: "False"
+    summary: Allow whether a process can gain more privileges than its parent process.
+    description: ''
   - name: --assign-identity
     summary: Space-separated list of assigned identities. Assigned identities are either user assigned identities (resource IDs) and / or the system assigned identity ('[system]'). See examples for more info.
     description: ''
@@ -151,6 +165,9 @@ directCommands:
     description: ''
   - name: --dns-name-label
     summary: The dns name label for container group with public IP.
+    description: ''
+  - name: --drop-capabilities
+    summary: A List of security context capabilities to be dropped.
     description: ''
   - name: --environment-variables -e
     summary: A list of environment variable for the container. Space-separated values in 'key=value' format.
@@ -210,6 +227,10 @@ directCommands:
   - name: --priority
     summary: The priority of the container group.
     description: ''
+  - name: --privileged
+    defaultValue: "False"
+    summary: The flag to determine if the contianer permissions is elevated to Privileged.
+    description: ''
   - name: --protocol
     parameterValueGroup: "TCP, UDP"
     summary: The network protocol to use.
@@ -232,8 +253,17 @@ directCommands:
     defaultValue: "Contributor"
     summary: Role name or id the system assigned identity will have.
     description: ''
+  - name: --run-as-group
+    summary: Set the User UID for the container.
+    description: ''
+  - name: --run-as-user
+    summary: Set the User GID for the container.
+    description: ''
   - name: --scope
     summary: Scope that the system assigned identity can access.
+    description: ''
+  - name: --seccomp-profile
+    summary: A base64 encoded string containing the contents of the JSON in the seccomp profile.
     description: ''
   - name: --secrets
     summary: Space-separated secrets in 'key=value' format.

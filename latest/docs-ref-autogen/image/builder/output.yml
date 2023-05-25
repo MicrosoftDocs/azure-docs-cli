@@ -22,6 +22,8 @@ directCommands:
                                 [--output-name]
                                 [--resource-group]
                                 [--subscription]
+                                [--versioning {Latest, Source}]
+                                [--vhd-uri]
   examples:
   - summary: Add a managed image distributor to an image template in the cli object cache. Specify a run output name.
     syntax: >-
@@ -36,6 +38,10 @@ directCommands:
     syntax: >-
       az image builder output add -n mytemplate -g my-group \
           --output-name my_vhd_image --is-vhd  --defer
+  - summary: Add a VHD distributor with specifying storage uri to an image template in the cli object cache.
+    syntax: >-
+      az image builder output add -n mytemplate -g my-group \
+          --output-name my_vhd_image --is-vhd --vhd-uri https://mystorageaccount.blob.core.windows.net/container/path_to_vhd_file --defer
   optionalParameters:
   - name: --artifact-tags
     summary: 'Tags that will be applied to the output artifact once it has been created by the distributor. space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -75,6 +81,13 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --versioning
+    parameterValueGroup: "Latest, Source"
+    summary: Describe how to generate new x.y.z version number for distribution.
+    description: ''
+  - name: --vhd-uri
+    summary: Optional Azure Storage URI for the distributed VHD blob. Omit to use the default (empty string) in which case VHD would be published to the storage account in the staging resource group.
     description: ''
 - uid: az_image_builder_output_clear
   name: az image builder output clear
@@ -138,6 +151,10 @@ commands:
 - az_image_builder_output_add
 - az_image_builder_output_clear
 - az_image_builder_output_remove
+- az_image_builder_output_versioning
+- az_image_builder_output_versioning_remove
+- az_image_builder_output_versioning_set
+- az_image_builder_output_versioning_show
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

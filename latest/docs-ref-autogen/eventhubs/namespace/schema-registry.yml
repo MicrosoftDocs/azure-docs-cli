@@ -6,49 +6,44 @@ description: ''
 directCommands:
 - uid: az_eventhubs_namespace_schema-registry_create
   name: az eventhubs namespace schema-registry create
-  summary: Creates a schema group for an EventHub namespace.
+  summary: Create an EventHub schema group.
   description: ''
   syntax: >-
     az eventhubs namespace schema-registry create --name
                                                   --namespace-name
                                                   --resource-group
-                                                  --schema-compatibility {Backward, Forward, None}
-                                                  --schema-type {Avro}
                                                   [--group-properties]
-  examples:
-  - summary: Create a schema group mySchemaGroup for eventhub namespace mynamespace
-    syntax: az eventhubs namespace schema-registry create --namespace-name mynamespace -g MyResourceGroup --name mySchemaGroup --schema-compatibility Forward --schema-type Avro --group-properties k1=v1 k2=v2
+                                                  [--schema-compatibility {Backward, Forward, None}]
+                                                  [--schema-type {Avro, Unknown}]
   requiredParameters:
   - isRequired: true
-    name: --name -n
-    summary: Name of schema group.
+    name: --name --schema-group-name -n
+    summary: The Schema Group name.
     description: ''
   - isRequired: true
     name: --namespace-name
-    summary: Name of Namespace.
+    summary: The Namespace name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --schema-compatibility
+  optionalParameters:
+  - name: --group-properties
+    summary: Dictionary object for SchemaGroup group properties  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --schema-compatibility
     parameterValueGroup: "Backward, Forward, None"
     summary: Compatibility of Schema.
     description: ''
-  - isRequired: true
-    name: --schema-type
-    parameterValueGroup: "Avro"
-    summary: Type of Schema.
-    description: ''
-  optionalParameters:
-  - name: --group-properties
+  - name: --schema-type
+    parameterValueGroup: "Avro, Unknown"
     summary: Type of Schema.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventhubs/_help.py
 - uid: az_eventhubs_namespace_schema-registry_delete
   name: az eventhubs namespace schema-registry delete
-  summary: Deletes a schema group from a namespace.
+  summary: Delete an EventHub schema group.
   description: ''
   syntax: >-
     az eventhubs namespace schema-registry delete [--ids]
@@ -56,18 +51,15 @@ directCommands:
                                                   [--namespace-name]
                                                   [--resource-group]
                                                   [--subscription]
-  examples:
-  - summary: Deletes a schema group mySchemaGroup from a namespace
-    syntax: az eventhubs namespace schema-registry delete --namespace-name mynamespace -g MyResourceGroup --name mySchemaGroup
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of schema group.
+  - name: --name --schema-group-name -n
+    summary: The Schema Group name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The Namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -78,20 +70,17 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventhubs/_help.py
 - uid: az_eventhubs_namespace_schema-registry_list
   name: az eventhubs namespace schema-registry list
-  summary: Lists all schema groups of the EventHub Namespace.
+  summary: List all the Schema Groups in a Namespace.
   description: ''
   syntax: >-
     az eventhubs namespace schema-registry list --namespace-name
                                                 --resource-group
                                                 [--skip]
                                                 [--top]
-  examples:
-  - summary: List all schema groups within eventhub namespace mynamespace.
-    syntax: az eventhubs namespace schema-registry list --namespace-name mynamespace -g MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --namespace-name
-    summary: Name of Namespace.
+    summary: The Namespace name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -99,15 +88,15 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --skip
-    summary: Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. Default value is None.
+    summary: Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls.
     description: ''
   - name: --top
-    summary: May be used to limit the number of results to the most recent N usageDetails. Default value is None.
+    summary: May be used to limit the number of results to the most recent N usageDetails.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventhubs/_help.py
 - uid: az_eventhubs_namespace_schema-registry_show
   name: az eventhubs namespace schema-registry show
-  summary: Get a specific schema group from an EventHub namespace.
+  summary: Get the details of an EventHub schema group.
   description: ''
   syntax: >-
     az eventhubs namespace schema-registry show [--ids]
@@ -115,21 +104,76 @@ directCommands:
                                                 [--namespace-name]
                                                 [--resource-group]
                                                 [--subscription]
-  examples:
-  - summary: Get mySchemaGroup from namespace mynamespace
-    syntax: az eventhubs namespace schema-registry show --namespace-name mynamespace -g MyResourceGroup --name mySchemaGroup
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of schema group.
+  - name: --name --schema-group-name -n
+    summary: The Schema Group name.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The Namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/eventhubs/_help.py
+- uid: az_eventhubs_namespace_schema-registry_update
+  name: az eventhubs namespace schema-registry update
+  summary: Update an EventHub schema group.
+  description: ''
+  syntax: >-
+    az eventhubs namespace schema-registry update [--add]
+                                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                  [--group-properties]
+                                                  [--ids]
+                                                  [--name]
+                                                  [--namespace-name]
+                                                  [--remove]
+                                                  [--resource-group]
+                                                  [--schema-compatibility {Backward, Forward, None}]
+                                                  [--schema-type {Avro, Unknown}]
+                                                  [--set]
+                                                  [--subscription]
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --group-properties
+    summary: Dictionary object for SchemaGroup group properties  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --schema-group-name -n
+    summary: The Schema Group name.
+    description: ''
+  - name: --namespace-name
+    summary: The Namespace name.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --schema-compatibility
+    parameterValueGroup: "Backward, Forward, None"
+    summary: Compatibility of Schema.
+    description: ''
+  - name: --schema-type
+    parameterValueGroup: "Avro, Unknown"
+    summary: Type of Schema.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -140,6 +184,7 @@ commands:
 - az_eventhubs_namespace_schema-registry_delete
 - az_eventhubs_namespace_schema-registry_list
 - az_eventhubs_namespace_schema-registry_show
+- az_eventhubs_namespace_schema-registry_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -159,5 +204,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/02/2023
+  ms.date: 05/17/2023
   description: Manages eventhubs namespace schema registry.
