@@ -6,22 +6,25 @@ description: ''
 directCommands:
 - uid: az_servicebus_migration_abort
   name: az servicebus migration abort
-  summary: Disable the Service Bus Migration of Standard to Premium namespace.
-  description: Abort command stops the replication of entities from standard to premium namespaces. The entities replicated to premium namespace before abort command will be available under premium namespace. The aborted migration can not be resumed, its has to restarted.
+  summary: This operation reverts Migration.
+  description: ''
   syntax: >-
-    az servicebus migration abort [--ids]
+    az servicebus migration abort [--config-name {$default}]
+                                  [--ids]
                                   [--name]
                                   [--resource-group]
                                   [--subscription]
-  examples:
-  - summary: Disable Service Bus Migration of Standard to Premium namespace
-    syntax: az servicebus migration abort --resource-group myresourcegroup --name standardnamespace
   optionalParameters:
+  - name: --config-name
+    defaultValue: "$default"
+    parameterValueGroup: "$default"
+    summary: The configuration name. Should always be "$default".
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Standard Namespace.
+  - name: --name --namespace-name -n
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -32,22 +35,25 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_migration_complete
   name: az servicebus migration complete
-  summary: Completes the Service Bus Migration of Standard to Premium namespace.
-  description: After completing migration, the existing connection strings to standard namespace will connect to premium namespace automatically. Post migration name is the name that can be used to connect to standard namespace after migration is complete.
+  summary: This operation Completes Migration of entities by pointing the connection strings to Premium namespace and any entities created after the operation will be under Premium Namespace. CompleteMigration operation will fail when entity migration is in-progress.
+  description: ''
   syntax: >-
-    az servicebus migration complete [--ids]
+    az servicebus migration complete [--config-name {$default}]
+                                     [--ids]
                                      [--name]
                                      [--resource-group]
                                      [--subscription]
-  examples:
-  - summary: Completes the Service Bus Migration of Standard to Premium namespace
-    syntax: az servicebus migration complete --resource-group myresourcegroup --name standardnamespace
   optionalParameters:
+  - name: --config-name
+    defaultValue: "$default"
+    parameterValueGroup: "$default"
+    summary: The configuration name. Should always be "$default".
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Standard Namespace.
+  - name: --name --namespace-name -n
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -56,24 +62,73 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
-- uid: az_servicebus_migration_show
-  name: az servicebus migration show
-  summary: Shows properties of properties of Service Bus Migration.
+- uid: az_servicebus_migration_delete
+  name: az servicebus migration delete
+  summary: Delete a MigrationConfiguration.
   description: ''
   syntax: >-
-    az servicebus migration show [--ids]
-                                 [--name]
-                                 [--resource-group]
-                                 [--subscription]
-  examples:
-  - summary: shows properties of properties of Service Bus Migration
-    syntax: az servicebus migration show --resource-group myresourcegroup --name standardnamespace
+    az servicebus migration delete [--config-name {$default}]
+                                   [--ids]
+                                   [--name]
+                                   [--resource-group]
+                                   [--subscription]
   optionalParameters:
+  - name: --config-name
+    defaultValue: "$default"
+    parameterValueGroup: "$default"
+    summary: The configuration name. Should always be "$default".
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Standard Namespace.
+  - name: --name --namespace-name -n
+    summary: The namespace name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
+- uid: az_servicebus_migration_list
+  name: az servicebus migration list
+  summary: List all migrationConfigurations.
+  description: ''
+  syntax: >-
+    az servicebus migration list --name
+                                 --resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --name --namespace-name -n
+    summary: The namespace name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
+- uid: az_servicebus_migration_show
+  name: az servicebus migration show
+  summary: Get Migration Config.
+  description: ''
+  syntax: >-
+    az servicebus migration show [--config-name {$default}]
+                                 [--ids]
+                                 [--namespace-name]
+                                 [--resource-group]
+                                 [--subscription]
+  optionalParameters:
+  - name: --config-name
+    defaultValue: "$default"
+    parameterValueGroup: "$default"
+    summary: The configuration name. Should always be "$default".
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --namespace-name
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -84,33 +139,35 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_migration_start
   name: az servicebus migration start
-  summary: Create and Start Service Bus Migration of Standard to Premium namespace.
-  description: Service Bus Migration requires an empty Premium namespace to replicate entities from Standard namespace.
+  summary: Create Migration configuration and starts migration of entities from Standard to Premium namespace.
+  description: ''
   syntax: >-
-    az servicebus migration start --post-migration-name
-                                  --target-namespace
+    az servicebus migration start [--config-name {$default}]
                                   [--ids]
                                   [--name]
+                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--post-migration-name]
                                   [--resource-group]
                                   [--subscription]
-  examples:
-  - summary: Create and Start Service Bus Migration of Standard to Premium namespace
-    syntax: az servicebus migration start --resource-group myresourcegroup --name standardnamespace --target-namespace ARMIDpremiumnamespace --post-migration-name mypostmigrationname
-  requiredParameters:
-  - isRequired: true
-    name: --post-migration-name
-    summary: Post migration name is the name that can be used to connect to standard namespace after migration is complete.
-    description: ''
-  - isRequired: true
-    name: --target-namespace
-    summary: Name (if within the same resource group) or ARM Id of empty Premium Service Bus namespace name that will be target of the migration.
-    description: ''
+                                  [--target-namespace]
   optionalParameters:
+  - name: --config-name
+    defaultValue: "$default"
+    parameterValueGroup: "$default"
+    summary: The configuration name. Should always be "$default".
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Name of Standard Namespace used as source of the migration.
+  - name: --name --namespace-name -n
+    summary: The namespace name.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --post-migration-name
+    summary: Name to access Standard Namespace after migration.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -118,12 +175,140 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --target-namespace
+    summary: Existing premium Namespace ARM Id name which has no entities, will be used for migration.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
+- uid: az_servicebus_migration_update
+  name: az servicebus migration update
+  summary: Update Migration configuration and starts migration of entities from Standard to Premium namespace.
+  description: ''
+  syntax: >-
+    az servicebus migration update [--add]
+                                   [--config-name {$default}]
+                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--ids]
+                                   [--namespace-name]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--post-migration-name]
+                                   [--remove]
+                                   [--resource-group]
+                                   [--set]
+                                   [--subscription]
+                                   [--target-namespace]
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --config-name --name -n
+    parameterValueGroup: "$default"
+    summary: The configuration name. Should always be "$default".
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --namespace-name
+    summary: The namespace name.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --post-migration-name
+    summary: Name to access Standard Namespace after migration.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --target-namespace
+    summary: Existing premium Namespace ARM Id name which has no entities, will be used for migration.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
+- uid: az_servicebus_migration_wait
+  name: az servicebus migration wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az servicebus migration wait [--config-name {$default}]
+                                 [--created]
+                                 [--custom]
+                                 [--deleted]
+                                 [--exists]
+                                 [--ids]
+                                 [--interval]
+                                 [--namespace-name]
+                                 [--resource-group]
+                                 [--subscription]
+                                 [--timeout]
+                                 [--updated]
+  optionalParameters:
+  - name: --config-name
+    defaultValue: "$default"
+    parameterValueGroup: "$default"
+    summary: The configuration name. Should always be "$default".
+    description: ''
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --namespace-name
+    summary: The namespace name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 commands:
 - az_servicebus_migration_abort
 - az_servicebus_migration_complete
+- az_servicebus_migration_delete
+- az_servicebus_migration_list
 - az_servicebus_migration_show
 - az_servicebus_migration_start
+- az_servicebus_migration_update
+- az_servicebus_migration_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -143,5 +328,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/02/2023
+  ms.date: 05/16/2023
   description: Manage Azure Service Bus Migration of Standard to Premium.

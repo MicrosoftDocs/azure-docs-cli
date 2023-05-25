@@ -4,8 +4,8 @@ name: az devcenter dev environment
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **devcenter** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az devcenter dev environment** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Manage environment with devcenter.
+  > This reference is part of the **devcenter** extension for the Azure CLI  (version 2.48.0 or higher).  The extension will automatically install the first time you run an **az devcenter dev environment** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage environments.
 description: ''
 directCommands:
 - uid: az_devcenter_dev_environment_create
@@ -13,33 +13,29 @@ directCommands:
   summary: Create an environment.
   description: ''
   syntax: >-
-    az devcenter dev environment create --catalog-item-name
-                                        --catalog-name
-                                        --dev-center
+    az devcenter dev environment create --catalog-name
+                                        --environment-definition-name
                                         --environment-name
                                         --environment-type
                                         --project
-                                        [--description]
+                                        [--dev-center]
+                                        [--endpoint]
                                         [--no-wait]
                                         [--parameters]
-                                        [--tags]
-                                        [--user]
                                         [--user-id]
   examples:
-  - summary: Environments_CreateByCatalogItem
-    syntax: az devcenter dev environment create --description "Personal Dev Environment" --catalog-item-name "helloworld" --catalog-name "main" --environment-type "DevTest" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}" --dev-center-name "{devCenterName}" --name "{environmentName}" --project-name "{projectName}" --user-id "{userId}"
+  - summary: Create using dev center
+    syntax: az devcenter dev environment create --dev-center-name "ContosoDevCenter" --project-name "DevProject" --catalog-name "main" --environment-definition-name "helloworld" --environment-type "DevTest" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}" --name "mydevenv" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Create using endpoint
+    syntax: az devcenter dev environment create --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --catalog-name "main" --environment-definition-name "helloworld" --environment-type "DevTest" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}" --name "mydevenv" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
-  - isRequired: true
-    name: --catalog-item-name
-    summary: Name of the catalog item.
-    description: ''
   - isRequired: true
     name: --catalog-name
     summary: Name of the catalog.
     description: ''
   - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    name: --environment-definition-name -e
+    summary: Name of the environment definition.
     description: ''
   - isRequired: true
     name: --environment-name --name -n
@@ -54,45 +50,41 @@ directCommands:
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
-  - name: --description
-    summary: Description of the Environment.
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
     description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --parameters
-    summary: 'Parameters object for the deploy action Expected value: json-string/json-file/@json-file.'
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --user
-    summary: The AAD object id of the owner of this Environment.
+    summary: 'Parameters object for the environment. Expected value: json-string/json-file/@json-file.'
     description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
 - uid: az_devcenter_dev_environment_delete
   name: az devcenter dev environment delete
-  summary: Deletes an environment and all it's associated resources.
+  summary: Deletes an environment and all its associated resources.
   description: ''
   syntax: >-
-    az devcenter dev environment delete --dev-center
-                                        --environment-name
+    az devcenter dev environment delete --environment-name
                                         --project
+                                        [--dev-center]
+                                        [--endpoint]
                                         [--no-wait]
                                         [--user-id]
                                         [--yes]
   examples:
-  - summary: Environments_Delete
-    syntax: az devcenter dev environment delete --dev-center-name "{devCenterName}"                --name "{environmentName}" --project-name "{projectName}" --user-id "{userId}"
+  - summary: Delete using dev center
+    syntax: az devcenter dev environment delete --dev-center-name "ContosoDevCenter"                --name "mydevenv" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Delete using endpoint
+    syntax: az devcenter dev environment delete --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --name "mydevenv" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
   - isRequired: true
     name: --environment-name --name -n
     summary: The name of the environment.
@@ -102,57 +94,63 @@ directCommands:
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
-- uid: az_devcenter_dev_environment_deploy-action
-  name: az devcenter dev environment deploy-action
-  summary: Executes a deploy action.
+- uid: az_devcenter_dev_environment_deploy
+  name: az devcenter dev environment deploy
+  summary: Updates an environment.
   description: ''
   syntax: >-
-    az devcenter dev environment deploy-action --action-id
-                                               --dev-center
-                                               --environment-name
-                                               --project-name
-                                               [--no-wait]
-                                               [--parameters]
-                                               [--user-id]
+    az devcenter dev environment deploy --environment-name
+                                        --project
+                                        [--dev-center]
+                                        [--endpoint]
+                                        [--no-wait]
+                                        [--parameters]
+                                        [--user-id]
   examples:
-  - summary: Environments_DeployAction
-    syntax: az devcenter dev environment deploy-action --action-id "deploy" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}" --name "{environmentName}" --project-name "myProject" --user-id "me" --dev-center-name "{devCenterName}"
+  - summary: Update using dev center
+    syntax: az devcenter dev environment deploy --dev-center-name "ContosoDevCenter" --project-name "DevProject" --name "mydevenv" --user-id "00000000-0000-0000-0000-000000000000" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}"
+  - summary: Update using endpoint
+    syntax: az devcenter dev environment deploy --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --name "mydevenv" --user-id "00000000-0000-0000-0000-000000000000" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}"
   requiredParameters:
-  - isRequired: true
-    name: --action-id
-    summary: The Catalog Item action id to execute.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
   - isRequired: true
     name: --environment-name --name -n
     summary: The name of the environment.
     description: ''
   - isRequired: true
-    name: --project-name
-    summary: The DevCenter Project upon which to execute operations.
+    name: --project --project-name
+    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --parameters
-    summary: 'Parameters object for the Action Expected value: json-string/json-file/@json-file.'
+    summary: 'Parameters object for the environment. Expected value: json-string/json-file/@json-file.'
     description: ''
   - name: --user-id
     defaultValue: "me"
@@ -160,27 +158,35 @@ directCommands:
     description: ''
 - uid: az_devcenter_dev_environment_list
   name: az devcenter dev environment list
-  summary: Lists the environments for a project.
+  summary: Lists the environments for a project or lists the environments for a user within a project.
   description: ''
   syntax: >-
-    az devcenter dev environment list --dev-center
-                                      --project
+    az devcenter dev environment list --project
+                                      [--dev-center]
+                                      [--endpoint]
                                       [--user-id]
   examples:
-  - summary: Environments_ListByProject
-    syntax: az devcenter dev environment list --dev-center-name "{devCenterName}" --project-name "{projectName}" --user-id "me"
+  - summary: List by project using dev center
+    syntax: az devcenter dev environment list --dev-center-name "ContosoDevCenter" --project-name "DevProject"
+  - summary: List by project using endpoint
+    syntax: az devcenter dev environment list --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject"
+  - summary: List by user and project using dev center
+    syntax: az devcenter dev environment list --dev-center-name "ContosoDevCenter" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: List by user and project using endpoint
+    syntax: az devcenter dev environment list --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
   - isRequired: true
     name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --user-id
-    defaultValue: "me"
     summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
 - uid: az_devcenter_dev_environment_show
@@ -188,18 +194,15 @@ directCommands:
   summary: Gets an environment.
   description: ''
   syntax: >-
-    az devcenter dev environment show --dev-center
-                                      --environment-name
+    az devcenter dev environment show --environment-name
                                       --project
+                                      [--dev-center]
+                                      [--endpoint]
                                       [--user-id]
   examples:
-  - summary: Environments_Get
-    syntax: az devcenter dev environment show --dev-center-name "{devCenterName}" --name "{environmentName}" --project-name "{projectName}" --user-id "{userId}"
+  - summary: Get using endpoint
+    syntax: az devcenter dev environment show --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --name "mydevenv" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
   - isRequired: true
     name: --environment-name --name -n
     summary: The name of the environment.
@@ -209,33 +212,34 @@ directCommands:
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
 - uid: az_devcenter_dev_environment_update
   name: az devcenter dev environment update
-  summary: Partially updates an environment.
+  summary: Updates an environment.
   description: ''
   syntax: >-
-    az devcenter dev environment update --dev-center
-                                        --environment-name
+    az devcenter dev environment update --environment-name
                                         --project
-                                        [--catalog-item-name]
-                                        [--catalog-name]
-                                        [--description]
+                                        [--dev-center]
+                                        [--endpoint]
+                                        [--no-wait]
                                         [--parameters]
-                                        [--scheduled-tasks]
-                                        [--tags]
                                         [--user-id]
   examples:
-  - summary: Environments_Update
-    syntax: az devcenter dev environment update --description "Personal Dev Environment 2" --dev-center-name "{devCenterName}" --name "{environmentName}" --project-name "{projectName}" --user-id "{userId}"
+  - summary: Update using dev center
+    syntax: az devcenter dev environment update --dev-center-name "ContosoDevCenter" --project-name "DevProject" --name "mydevenv" --user-id "00000000-0000-0000-0000-000000000000" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}"
+  - summary: Update using endpoint
+    syntax: az devcenter dev environment update --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --name "mydevenv" --user-id "00000000-0000-0000-0000-000000000000" --parameters "{\"functionAppRuntime\":\"node\",\"storageAccountType\":\"Standard_LRS\"}"
   requiredParameters:
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
   - isRequired: true
     name: --environment-name --name -n
     summary: The name of the environment.
@@ -245,103 +249,30 @@ directCommands:
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
-  - name: --catalog-item-name
-    summary: Name of the catalog item.
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
     description: ''
-  - name: --catalog-name
-    summary: Name of the catalog.
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
     description: ''
-  - name: --description
-    summary: Description of the Environment.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --parameters
-    summary: 'Parameters object for the deploy action Expected value: json-string/json-file/@json-file.'
-    description: ''
-  - name: --scheduled-tasks
-    summary: 'Set of supported scheduled tasks to help manage cost. Expected value: json-string/json-file/@json-file.'
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --user-id
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context. Default is 'me'.
-    description: ''
-- uid: az_devcenter_dev_environment_wait
-  name: az devcenter dev environment wait
-  summary: Place the CLI in a waiting state until a condition of the devcenter environment is met.
-  description: ''
-  syntax: >-
-    az devcenter dev environment wait --dev-center
-                                      --environment-name
-                                      --project
-                                      [--created]
-                                      [--custom]
-                                      [--deleted]
-                                      [--exists]
-                                      [--interval]
-                                      [--timeout]
-                                      [--updated]
-                                      [--user-id]
-  examples:
-  - summary: Pause executing next line of CLI script until the devcenter environment is successfully created.
-    syntax: az devcenter dev environment wait --dev-center-name "{devCenterName}" --name "{environmentName}" --project-name "{projectName}" --user-id "{userId}" --created
-  - summary: Pause executing next line of CLI script until the devcenter environment is successfully updated.
-    syntax: az devcenter dev environment wait --dev-center-name "{devCenterName}" --name "{environmentName}" --project-name "{projectName}" --user-id "{userId}" --updated
-  - summary: Pause executing next line of CLI script until the devcenter environment is successfully deleted.
-    syntax: az devcenter dev environment wait --dev-center-name "{devCenterName}" --name "{environmentName}" --project-name "{projectName}" --user-id "{userId}" --deleted
-  requiredParameters:
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
-  - isRequired: true
-    name: --environment-name --name -n
-    summary: The name of the environment.
-    description: ''
-  - isRequired: true
-    name: --project --project-name
-    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
-    description: ''
-  optionalParameters:
-  - name: --created
-    defaultValue: "False"
-    summary: Wait until created with 'provisioningState' at 'Succeeded'.
-    description: ''
-  - name: --custom
-    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
-    description: ''
-  - name: --deleted
-    defaultValue: "False"
-    summary: Wait until deleted.
-    description: ''
-  - name: --exists
-    defaultValue: "False"
-    summary: Wait until the resource exists.
-    description: ''
-  - name: --interval
-    defaultValue: "30"
-    summary: Polling interval in seconds.
-    description: ''
-  - name: --timeout
-    defaultValue: "3600"
-    summary: Maximum wait in seconds.
-    description: ''
-  - name: --updated
-    defaultValue: "False"
-    summary: Wait until updated with provisioningState at 'Succeeded'.
+    summary: 'Parameters object for the environment. Expected value: json-string/json-file/@json-file.'
     description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
 commands:
 - az_devcenter_dev_environment_create
 - az_devcenter_dev_environment_delete
-- az_devcenter_dev_environment_deploy-action
+- az_devcenter_dev_environment_deploy
 - az_devcenter_dev_environment_list
 - az_devcenter_dev_environment_show
 - az_devcenter_dev_environment_update
-- az_devcenter_dev_environment_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -360,4 +291,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage environment with devcenter.
+  description: Manage environments.

@@ -13,23 +13,25 @@ directCommands:
   summary: Initialize restore request object to recover all backed up data in a backup vault.
   description: ''
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk}
+    az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
                                                                            --restore-location
                                                                            --source-datastore {ArchiveStore, OperationalStore, VaultStore}
-                                                                           --target-resource-id
+                                                                           [--backup-instance-id]
                                                                            [--point-in-time]
                                                                            [--recovery-point-id]
                                                                            [--rehydration-duration]
                                                                            [--rehydration-priority {Standard}]
+                                                                           [--restore-configuration]
                                                                            [--secret-store-type {AzureKeyVault}]
                                                                            [--secret-store-uri]
+                                                                           [--target-resource-id]
   examples:
   - summary: initialize restore request for azure disk backup instance
     syntax: az dataprotection backup-instance restore initialize-for-data-recovery --datasource-type AzureDisk --restore-location centraluseuap --source-datastore OperationalStore --target-resource-id {restore_disk_id} --recovery-point-id b7e6f082-b310-11eb-8f55-9cfce85d4fae
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
     summary: Specify the datasource type.
     description: ''
   - isRequired: true
@@ -41,11 +43,10 @@ directCommands:
     parameterValueGroup: "ArchiveStore, OperationalStore, VaultStore"
     summary: Specify the datastore type of the given recovery point or point in time.
     description: ''
-  - isRequired: true
-    name: --target-resource-id
-    summary: Specify the resource ID to which the data will be restored.
-    description: ''
   optionalParameters:
+  - name: --backup-instance-id
+    summary: Specify the backup instance ID.
+    description: ''
   - name: --point-in-time
     summary: Specify the point in time which will be used for restoring the data in UTC (yyyy-mm-ddTHH:MM:SS).
     description: ''
@@ -60,6 +61,9 @@ directCommands:
     parameterValueGroup: "Standard"
     summary: Specify the rehydration priority for rehydrate restore.
     description: ''
+  - name: --restore-configuration
+    summary: Restore configuration for restore. Use this parameter to restore with AzureKubernetesService.
+    description: ''
   - name: --secret-store-type
     parameterValueGroup: "AzureKeyVault"
     summary: Specify the secret store type to use for authentication.
@@ -67,12 +71,15 @@ directCommands:
   - name: --secret-store-uri
     summary: Specify the secret store uri to use for authentication.
     description: ''
+  - name: --target-resource-id
+    summary: Specify the resource ID to which the data will be restored.
+    description: ''
 - uid: az_dataprotection_backup-instance_restore_initialize-for-data-recovery-as-files
   name: az dataprotection backup-instance restore initialize-for-data-recovery-as-files
   summary: Initialize restore request object to recover all backed up data as files in a backup vault.
   description: ''
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-data-recovery-as-files --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk}
+    az dataprotection backup-instance restore initialize-for-data-recovery-as-files --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
                                                                                     --restore-location
                                                                                     --source-datastore {ArchiveStore, OperationalStore, VaultStore}
                                                                                     --target-blob-container-url
@@ -87,7 +94,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
     summary: Specify the datasource type.
     description: ''
   - isRequired: true
@@ -127,26 +134,24 @@ directCommands:
   summary: Initialize restore request object to recover specified items of backed up data in a backup vault.
   description: ''
   syntax: >-
-    az dataprotection backup-instance restore initialize-for-item-recovery --backup-instance-id
-                                                                           --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk}
+    az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
                                                                            --restore-location
                                                                            --source-datastore {ArchiveStore, OperationalStore, VaultStore}
+                                                                           [--backup-instance-id]
                                                                            [--container-list]
                                                                            [--from-prefix-pattern]
                                                                            [--point-in-time]
                                                                            [--recovery-point-id]
+                                                                           [--restore-configuration]
+                                                                           [--target-resource-id]
                                                                            [--to-prefix-pattern]
   examples:
   - summary: initialize restore request for azure blob backup instance
     syntax: az dataprotection backup-instance restore initialize-for-item-recovery --datasource-type AzureBlob --restore-location centraluseuap --source-datastore OperationalStore --backup-instance-id {backup_instance_id}  --point-in-time 2021-05-26T15:00:00 --container-list container1 container2
   requiredParameters:
   - isRequired: true
-    name: --backup-instance-id
-    summary: Specify the backup instance ID.
-    description: ''
-  - isRequired: true
     name: --datasource-type
-    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
     summary: Specify the datasource type.
     description: ''
   - isRequired: true
@@ -159,6 +164,9 @@ directCommands:
     summary: Specify the datastore type of the given recovery point or point in time.
     description: ''
   optionalParameters:
+  - name: --backup-instance-id
+    summary: Specify the backup instance ID.
+    description: ''
   - name: --container-list
     summary: Specify the list of containers to restore.
     description: ''
@@ -171,6 +179,12 @@ directCommands:
   - name: --recovery-point-id
     summary: Specify the recovery point ID which will be used for restoring the data.
     description: ''
+  - name: --restore-configuration
+    summary: Restore configuration for restore. Use this parameter to restore with AzureKubernetesService.
+    description: ''
+  - name: --target-resource-id
+    summary: Specify the resource ID to which the data will be restored.
+    description: ''
   - name: --to-prefix-pattern
     summary: Specify the prefix pattern for end range.
     description: ''
@@ -182,7 +196,6 @@ directCommands:
     az dataprotection backup-instance restore trigger --restore-request-object
                                                       [--backup-instance-name]
                                                       [--ids]
-                                                      [--no-wait]
                                                       [--resource-group]
                                                       [--subscription]
                                                       [--vault-name]
@@ -192,7 +205,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --restore-request-object
-    summary: 'Request body for operation Expected value: json-string/@json-file.'
+    summary: 'Gets or sets the restore request object. Expected value: json-string/@json-file.'
     description: ''
   optionalParameters:
   - name: --backup-instance-name --name -n
@@ -200,10 +213,6 @@ directCommands:
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --no-wait
-    defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.

@@ -6,7 +6,7 @@ description: ''
 directCommands:
 - uid: az_servicebus_georecovery-alias_break-pair
   name: az servicebus georecovery-alias break-pair
-  summary: Disables Service Bus Geo-Disaster Recovery Configuration Alias and stops replicating changes from primary to secondary namespaces.
+  summary: This operation disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces.
   description: ''
   syntax: >-
     az servicebus georecovery-alias break-pair [--alias]
@@ -14,18 +14,15 @@ directCommands:
                                                [--namespace-name]
                                                [--resource-group]
                                                [--subscription]
-  examples:
-  - summary: Disables the Disaster Recovery and stops replicating changes from primary to secondary namespaces
-    syntax: az servicebus georecovery-alias break-pair --resource-group myresourcegroup --namespace-name primarynamespace --alias myaliasname
   optionalParameters:
   - name: --alias -a
-    summary: Name of the Geo-Disaster Recovery Configuration Alias.
+    summary: The Disaster Recovery configuration name.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -34,9 +31,40 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
+- uid: az_servicebus_georecovery-alias_create
+  name: az servicebus georecovery-alias create
+  summary: Create a new Alias(Disaster Recovery configuration).
+  description: ''
+  syntax: >-
+    az servicebus georecovery-alias create --alias
+                                           --namespace-name
+                                           --resource-group
+                                           [--alternate-name]
+                                           [--partner-namespace]
+  requiredParameters:
+  - isRequired: true
+    name: --alias -a
+    summary: The Disaster Recovery configuration name.
+    description: ''
+  - isRequired: true
+    name: --namespace-name
+    summary: The namespace name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --alternate-name
+    summary: Primary/Secondary eventhub namespace name, which is part of GEO DR pairing.
+    description: ''
+  - name: --partner-namespace
+    summary: ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_georecovery-alias_delete
   name: az servicebus georecovery-alias delete
-  summary: Deletes Service Bus Geo-Disaster Recovery Configuration Alias request accepted.
+  summary: Delete an Alias(Disaster Recovery configuration).
   description: ''
   syntax: >-
     az servicebus georecovery-alias delete [--alias]
@@ -44,18 +72,15 @@ directCommands:
                                            [--namespace-name]
                                            [--resource-group]
                                            [--subscription]
-  examples:
-  - summary: Delete Service Bus Geo-Disaster Recovery Configuration Alias request accepted
-    syntax: az servicebus georecovery-alias delete --resource-group myresourcegroup --namespace-name secondarynamespace --alias myaliasname
   optionalParameters:
   - name: --alias -a
-    summary: Name of the Geo-Disaster Recovery Configuration Alias.
+    summary: The Disaster Recovery configuration name.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -66,7 +91,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_georecovery-alias_exists
   name: az servicebus georecovery-alias exists
-  summary: Check if Geo Recovery Alias Name is available.
+  summary: Check the give namespace name availability.
   description: ''
   syntax: >-
     az servicebus georecovery-alias exists --alias
@@ -74,20 +99,17 @@ directCommands:
                                            [--namespace-name]
                                            [--resource-group]
                                            [--subscription]
-  examples:
-  - summary: Check availability of the Geo-Disaster Recovery Configuration Alias Name
-    syntax: az servicebus georecovery-alias exists --resource-group myresourcegroup --namespace-name primarynamespace --alias myaliasname
   requiredParameters:
   - isRequired: true
     name: --alias -a
-    summary: Name of Geo-Disaster Recovery Configuration Alias to check availability.
+    summary: The Name to check the namespace name availability and The namespace name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number.
     description: ''
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -98,30 +120,28 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_georecovery-alias_fail-over
   name: az servicebus georecovery-alias fail-over
-  summary: Invokes Service Bus Geo-Disaster Recovery Configuration Alias failover and re-configure the alias to point to the secondary namespace.
+  summary: Invokes GEO DR failover and reconfigure the alias to point to the secondary namespace.
   description: ''
   syntax: >-
     az servicebus georecovery-alias fail-over [--alias]
                                               [--ids]
+                                              [--is-safe-failover {0, 1, f, false, n, no, t, true, y, yes}]
                                               [--namespace-name]
-                                              [--parameters]
                                               [--resource-group]
                                               [--subscription]
-  examples:
-  - summary: Invokes Geo-Disaster Recovery Configuration Alias failover and reconfigure the alias to point to the secondary namespace
-    syntax: az servicebus georecovery-alias fail-over --resource-group myresourcegroup --namespace-name secondarynamespace --alias myaliasname
   optionalParameters:
   - name: --alias -a
-    summary: Name of the Geo-Disaster Recovery Configuration Alias.
+    summary: The Disaster Recovery configuration name.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --namespace-name
-    summary: Name of Namespace.
+  - name: --is-safe-failover
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Safe failover is to indicate the service should wait for pending replication to finish before switching to the secondary.
     description: ''
-  - name: --parameters
-    summary: Parameters required to create an Alias(Disaster Recovery configuration). Is either a FailoverProperties type or a IO type. Default value is None.
+  - name: --namespace-name
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -132,7 +152,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_georecovery-alias_list
   name: az servicebus georecovery-alias list
-  summary: Gets all Alias(Disaster Recovery configurations).
+  summary: List all Alias(Disaster Recovery configurations).
   description: ''
   syntax: >-
     az servicebus georecovery-alias list --namespace-name
@@ -140,7 +160,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -152,11 +172,12 @@ directCommands:
   summary: Sets Service Bus Geo-Disaster Recovery Configuration Alias for the give Namespace.
   description: ''
   syntax: >-
-    az servicebus georecovery-alias set --partner-namespace
-                                        [--alias]
+    az servicebus georecovery-alias set --alias
+                                        --partner-namespace
                                         [--alternate-name]
                                         [--ids]
                                         [--namespace-name]
+                                        [--no-wait]
                                         [--resource-group]
                                         [--subscription]
   examples:
@@ -166,13 +187,14 @@ directCommands:
     syntax: az servicebus georecovery-alias set --alias myaliasname --namespace-name primarynamespace --partner-namespace armresourceid --resource-group myresourcegroup --subscription MySubscription
   requiredParameters:
   - isRequired: true
+    name: --alias -a
+    summary: Name of the Geo-Disaster Recovery Configuration Alias.
+    description: ''
+  - isRequired: true
     name: --partner-namespace
     summary: Name (if within the same resource group) or ARM Id of Primary/Secondary Service Bus  namespace name, which is part of GEO DR pairing.
     description: ''
   optionalParameters:
-  - name: --alias -a
-    summary: Name of the Geo-Disaster Recovery Configuration Alias.
-    description: ''
   - name: --alternate-name
     summary: Alternate Name (Post failover) for Primary Namespace, when Namespace name and Alias name are same.
     description: ''
@@ -181,6 +203,10 @@ directCommands:
     description: ''
   - name: --namespace-name
     summary: Name of Namespace.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -191,7 +217,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
 - uid: az_servicebus_georecovery-alias_show
   name: az servicebus georecovery-alias show
-  summary: Shows properties of Service Bus Geo-Disaster Recovery Configuration Alias for Primay/Secondary Namespace.
+  summary: Get Alias(Disaster Recovery configuration) for primary or secondary namespace.
   description: ''
   syntax: >-
     az servicebus georecovery-alias show [--alias]
@@ -199,25 +225,70 @@ directCommands:
                                          [--namespace-name]
                                          [--resource-group]
                                          [--subscription]
-  examples:
-  - summary: show properties Geo-Disaster Recovery Configuration Alias of the Primary Namespace
-    syntax: az servicebus georecovery-alias show  --resource-group myresourcegroup --namespace-name primarynamespace --alias myaliasname
-  - summary: Get details of Alias (Geo DR Configuration)  of the Secondary Namespace
-    syntax: az servicebus georecovery-alias show  --resource-group myresourcegroup --namespace-name secondarynamespace --alias myaliasname
-  - summary: shows properties of Service Bus Geo-Disaster Recovery Configuration Alias for Primay/Secondary Namespace (autogenerated)
-    syntax: az servicebus georecovery-alias show --alias myaliasname --namespace-name primarynamespace --resource-group myresourcegroup --subscription MySubscription
   optionalParameters:
   - name: --alias -a
-    summary: Name of the Geo-Disaster Recovery Configuration Alias.
+    summary: The Disaster Recovery configuration name.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --namespace-name
-    summary: Name of Namespace.
+    summary: The namespace name.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/servicebus/_help.py
+- uid: az_servicebus_georecovery-alias_update
+  name: az servicebus georecovery-alias update
+  summary: Update a new Alias(Disaster Recovery configuration).
+  description: ''
+  syntax: >-
+    az servicebus georecovery-alias update [--add]
+                                           [--alias]
+                                           [--alternate-name]
+                                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--ids]
+                                           [--namespace-name]
+                                           [--partner-namespace]
+                                           [--remove]
+                                           [--resource-group]
+                                           [--set]
+                                           [--subscription]
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --alias -a
+    summary: The Disaster Recovery configuration name.
+    description: ''
+  - name: --alternate-name
+    summary: Primary/Secondary eventhub namespace name, which is part of GEO DR pairing.
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --namespace-name
+    summary: The namespace name.
+    description: ''
+  - name: --partner-namespace
+    summary: ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -230,12 +301,14 @@ commands:
 - az_servicebus_georecovery-alias_authorization-rule_list
 - az_servicebus_georecovery-alias_authorization-rule_show
 - az_servicebus_georecovery-alias_break-pair
+- az_servicebus_georecovery-alias_create
 - az_servicebus_georecovery-alias_delete
 - az_servicebus_georecovery-alias_exists
 - az_servicebus_georecovery-alias_fail-over
 - az_servicebus_georecovery-alias_list
 - az_servicebus_georecovery-alias_set
 - az_servicebus_georecovery-alias_show
+- az_servicebus_georecovery-alias_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -255,5 +328,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/02/2023
+  ms.date: 05/16/2023
   description: Manage Azure Service Bus Geo-Disaster Recovery Configuration Alias.
