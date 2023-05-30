@@ -26,8 +26,8 @@ for the list of supported package managers or how to install manually under WSL.
 
 The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.
 
-> [!Note]
-> After the installation is complete, you will need to close and reopen any active terminal window to use the Azure CLI.
+> [!IMPORTANT]
+> After the installation is complete, you will need to **close and reopen any active terminal window to use the Azure CLI**.
 
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
@@ -46,12 +46,13 @@ To download the MSI installer for specific version, change the version segment i
 
 ### PowerShell
 
-You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
+Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
+- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+- [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
 
-> [!Note]
-> PowerShell must be run as administrator.
-
-Start PowerShell as administrator and run the following command:
+To install the Azure CLI using PowerShell, start PowerShell **as administrator** and run the following command:
 
    ```PowerShell
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
