@@ -9,7 +9,7 @@ ms.custom: devx-track-azurecli
 
 ## Overview
 
-RPMs are released for [CBL-Mariner](https://github.com/microsoft/CBL-Mariner) 2.0.
+RPMs are released for [Azure Linux](https://github.com/microsoft/CBL-Mariner).
 
 > [!NOTE]
 >
