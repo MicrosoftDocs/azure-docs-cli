@@ -27,7 +27,7 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
   * [Install on RHEL/CentOS with dnf](./install-azure-cli-linux.md?pivots=dnf)
   * [Install on SLES/OpenSUSE with zypper](./install-azure-cli-linux.md?pivots=zypper)
   * [Install on Ubuntu/Debian with apt](./install-azure-cli-linux.md?pivots=apt)
-  * [Install on Mariner with tdnf](./install-azure-cli-linux.md?pivots=tdnf)
+  * [Install on Azure Linux with tdnf](./install-azure-cli-linux.md?pivots=tdnf)
   * [Install from script](./install-azure-cli-linux.md?pivots=script)
 * [Run in Docker container](run-azure-cli-docker.md)
 * [Run in Azure Cloud Shell](/azure/cloud-shell/quickstart)

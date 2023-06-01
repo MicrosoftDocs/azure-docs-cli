@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/30/2023
+ms.date: 06/01/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -48,7 +48,7 @@ You will be prompted to install an extension on first use.
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.26.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.45.0 | Manage Azure Firewall resources. | Preview | [0.14.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
-|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.21.2](https://github.com/azure/azure-iot-cli-extension) |
+|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.21.3](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
 |[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.43.0 | Microsoft Azure Command-Line Tools Bastion Extension. | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
@@ -73,7 +73,7 @@ You will be prompted to install an extension on first use.
 |[custom-providers](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers) | 2.3.1 | Microsoft Azure Command-Line Tools Custom Providers Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers/HISTORY.rst) |
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.3](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
 |[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.48.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
-|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.45.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.10.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
+|[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.45.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.10.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog) | 2.17.0 | Microsoft Azure Command-Line Tools MicrosoftDatadogClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Experimental | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
@@ -111,7 +111,7 @@ You will be prompted to install an extension on first use.
 |[image-gallery](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery) | 2.3.0 | Support for Azure Image Gallery | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery/HISTORY.rst) |
 |[import-export](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions) |
 |[init](https://github.com/Azure/azure-cli-extensions/tree/master/src/init) | 2.0.67 | Microsoft Azure Command-Line Tools Init Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/init/HISTORY.rst) |
-|[interactive](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive) | 2.0.62 | Microsoft Azure Command-Line Interactive Shell | Preview | [0.4.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive/HISTORY.rst) |
+|[interactive](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive) | 2.0.62 | Microsoft Azure Command-Line Interactive Shell | Preview | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive/HISTORY.rst) |
 |[internet-analyzer](https://github.com/Azure/azure-cli-extensions/tree/master/src/internet-analyzer) | 2.0.67 | Microsoft Azure Command-Line Tools Internet Analyzer Extension | Preview | [0.1.0rc6](https://github.com/Azure/azure-cli-extensions/tree/master/src/internet-analyzer/HISTORY.rst) |
 |[ip-group](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools IpGroup Extension | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions) |
 |[k8s-configuration](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration) | 2.15.0 | Microsoft Azure Command-Line Tools K8s-configuration Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration/HISTORY.rst) |
@@ -154,12 +154,12 @@ You will be prompted to install an extension on first use.
 |[sap-hana](https://github.com/Azure/azure-hanaonazure-cli-extension) | 2.0.46 | Additional commands for working with SAP HanaOnAzure instances. | GA | [0.6.5](https://github.com/Azure/azure-hanaonazure-cli-extension) |
 |[scenario-guide](https://github.com/Azure/azure-cli-extensions/tree/main/src/scenario-guide) | 2.20.0 | Microsoft Azure Command-Line Tools Scenario Guidance Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/scenario-guide/HISTORY.rst) |
 |[scheduled-query](https://github.com/Azure/azure-cli-extensions/tree/main/src/scheduled-query) | 2.38.0 | Microsoft Azure Command-Line Tools Scheduled_query Extension | Preview | [0.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/scheduled-query/HISTORY.rst) |
-|[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | Preview | [0.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
+|[scvmm](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm) | 2.15.0 | Microsoft Azure Command-Line Tools SCVMM Extension | Preview | [0.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/scvmm/HISTORY.rst) |
 |[self-help](https://github.com/Azure/azure-cli-extensions/tree/main/src/self-help) | 2.45.0 | Microsoft Azure Command-Line Tools SelfHelp Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/self-help/HISTORY.rst) |
 |[sentinel](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight) | 2.37.0 | Microsoft Azure Command-Line Tools Sentinel Extension. | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/securityinsight/HISTORY.rst) |
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/serialconsole) |
 |[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.46.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | Preview | [0.3.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
-|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.12.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
+|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.13.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.45.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [1.1.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.45.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [0.1.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
