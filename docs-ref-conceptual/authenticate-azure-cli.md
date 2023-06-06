@@ -130,7 +130,7 @@ The Azure CLI now offers preview support for Web Account Manager (WAM).  WAM is 
 
 _ Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
 _ Support for Windows Hello, conditional access policies, and FIDO keys.
-_ Fast single sign-on.
+_ Streamlined single sign-on.
 _ Bug fixes and enhancements shipped with Windows.
 
 Signing in with WAM is a preview, opt-in feature. Once enabled, it will replace the previous browser-based user interface. 
