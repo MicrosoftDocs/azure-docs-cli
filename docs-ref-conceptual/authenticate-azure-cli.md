@@ -136,7 +136,7 @@ _ Bug fixes and enhancements shipped with Windows.
 Signing in with WAM is a preview, opt-in feature. Once enabled, it will replace the previous browser-based user interface. 
 
 ```azurecli-interactive
-az config set core-allow_broker=true
+az config set core.allow_broker=true
 az account clear
 az login
 ```
