@@ -129,7 +129,7 @@ To learn more about managed identities for Azure resources, see [Configure manag
 The Azure CLI now offers preview support for Web Account Manager (WAM).  WAM is a Windows 10+ component that acts as an authentication broker.  Using WAM has several benefits:
 
 _ Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
-_ Support for Windows Hello, conditional access, and FIDO keys.
+_ Support for Windows Hello, conditional access policies, and FIDO keys.
 _ Fast single sign-on.
 _ Bug fixes and enhancements shipped with Windows.
 
