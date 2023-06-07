@@ -12,9 +12,30 @@ directCommands:
   name: az iot device send-d2c-message
   summary: Send an mqtt device-to-cloud message.
   description: >-
-    The command supports sending messages with application and system properties.
+    The command supports sending messages with custom payload in unicode
 
-    Note: If using x509 authentication methods, the certificate and key files (and passphrase if needed) must be provided.
+    string or binary format. When intending to send binary, the data should
+
+    come from a file (via `--data-file-path`) and content type should be set
+
+    to `application/octet-stream`.
+
+
+    Note: The command only works for symmetric key auth (SAS) based devices.
+
+    To enable querying on a message body in message routing, the contentType
+
+    system property must be application/JSON and the contentEncoding system
+
+    property must be one of the UTF encoding values supported by that system
+
+    property(UTF-8, UTF-16 or UTF-32). If the content encoding isn't set when
+
+    Azure Storage is used as routing endpoint, then IoT Hub writes the messages
+
+    in base 64 encoded format. If using x509 authentication methods, the
+
+    certificate and key files (and passphrase if needed) must be provided.
   syntax: >-
     az iot device send-d2c-message --device-id
                                    [--certificate-file-path]
@@ -44,6 +65,12 @@ directCommands:
     syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --props 'key0=value0;key1=value1'
   - summary: Send system properties (Message Id and Correlation Id)
     syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --props '$.mid=<id>;$.cid=<id>'
+  - summary: Send custom data by specifying content-type and content-encoding in system properties
+    syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --props '$.ct=<content-type>;$.ce=<content-encoding>' --data {message_body}
+  - summary: Send custom data in binary format by specifying content-encoding in system properties
+    syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --props '$.ct=application/octet-stream' --data-file-path {file_path}
+  - summary: Send custom data in JSON format by specifying content-type and content-encoding in system properties
+    syntax: az iot device send-d2c-message -n {iothub_name} -d {device_id} --props '$.ct=application/json;$.ce=utf-8' --data-file-path {file_path}
   requiredParameters:
   - isRequired: true
     name: --device-id -d
@@ -58,9 +85,7 @@ directCommands:
     summary: Message body. Provide text or raw json.
     description: ''
   - name: --data-file-path --dfp
-    summary: >-
-      Provide path to file for message body payload. Please note when the payload needs
-                  to be sent in binary format, set the content type to application/octet-stream.
+    summary: Provide path to file for message body payload. Please note when the payload needs to be sent in binary format, set the content type to application/octet-stream.
     description: ''
   - name: --dtmi --model-id
     summary: The Digital Twin Model Id the device will report when connecting to the hub. See https://docs.microsoft.com/en-us/azure/iot-develop/overview-iot-plug-and-play for more details.

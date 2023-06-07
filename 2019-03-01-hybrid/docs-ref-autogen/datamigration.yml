@@ -219,6 +219,46 @@ directCommands:
   - name: --ir-path
     summary: Path of Integration Runtime MSI.
     description: ''
+- uid: az_datamigration_sql-server-schema
+  name: az datamigration sql-server-schema
+  summary: Migrate schema from the source Sql Servers to the target Azure Sql Servers.
+  description: ''
+  syntax: >-
+    az datamigration sql-server-schema [--action {DeploySchema, GenerateScript, MigrateSchema}]
+                                       [--config-file-path]
+                                       [--input-script-file-path]
+                                       [--output-folder]
+                                       [--src-sql-connection-str]
+                                       [--tgt-sql-connection-str]
+  examples:
+  - summary: Run Migrate database objects from the source SQL Server to the target Azure SQL Database using Parameters.
+    syntax: az datamigration sql-server-schema --action "MigrateSchema" --src-sql-connection-str "Server=;Initial Catalog=;User ID=;Password=" --tgt-sql-connection-str "Server=;Initial Catalog=;User ID=;Password="
+  - summary: Run Generate TSQL schema script from the source SQL Server using Parameters.
+    syntax: az datamigration sql-server-schema --action "GenerateScript" --src-sql-connection-str "Server=;Initial Catalog=;User ID=;Password=" --tgt-sql-connection-str "Server=;Initial Catalog=;User ID=;Password="  --output-folder "C:\OutputFolder"
+  - summary: Run Deploy TSQL script to the target Azure SQL Database using Parameters.
+    syntax: az datamigration sql-server-schema --action "GenerateScript" --src-sql-connection-str "Server=;Initial Catalog=;User ID=;Password=" --tgt-sql-connection-str "Server=;Initial Catalog=;User ID=;Password="  --input-script-file-path "C:\OutputFolder\script.sql"
+  - summary: Run Migrate database objects from the source SQL Server to the target Azure SQL Database using ConfigFile.
+    syntax: az datamigration sql-server-schema --config-file-path "C:\configfile.json"
+  optionalParameters:
+  - name: --action
+    parameterValueGroup: "DeploySchema, GenerateScript, MigrateSchema"
+    summary: Select one schema migration action. MigrateSchema is to migrate the database objects to Azure SQL Database target. GenerateScript is to generate an editable TSQL schema script that can be used to run on the target to deploy the objects. DeploySchema is to run the TSQL script generated from -GenerateScript action on the target to deploy the objects.
+    description: ''
+  - name: --config-file-path
+    summary: Path of the ConfigFile. Accepted parameter names in configfile.json is Action, sourceConnectionString, targetConnectionString, inputScriptFilePath and outputFolder.
+    description: ''
+  - name: --input-script-file-path
+    summary: Location of an editable TSQL schema script. Use this parameter only with DeploySchema Action.
+    description: ''
+  - name: --output-folder
+    summary: 'Default: %LocalAppData%/Microsoft/SqlSchemaMigration) Folder where logs will be written and the generated TSQL schema script by GenerateScript Action.'
+    description: ''
+  - name: --src-sql-connection-str
+    summary: Connection string for the source SQL instance, using the formal connection string format.
+    description: ''
+  - name: --tgt-sql-connection-str
+    summary: Connection string for the target SQL instance, using the formal connection string format.
+    description: ''
 - uid: az_datamigration_tde-migration
   name: az datamigration tde-migration
   summary: Migrate TDE certificate from source SQL Server to the target Azure SQL Server.
@@ -282,6 +322,7 @@ commands:
 - az_datamigration_sql-managed-instance_cutover
 - az_datamigration_sql-managed-instance_show
 - az_datamigration_sql-managed-instance_wait
+- az_datamigration_sql-server-schema
 - az_datamigration_sql-service
 - az_datamigration_sql-service_create
 - az_datamigration_sql-service_delete
