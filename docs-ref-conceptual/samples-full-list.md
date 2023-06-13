@@ -22,9 +22,9 @@ Azure CLI samples provide end-to-end scenarios for jobs to be done. This article
 
 # [List by Azure service](#tab/service)
 
-This list is organized by the Azure service that has _published_ the script.  Many Azure CLI scripts use reference commands from more than one Azure service.
+This list is organized by the Azure service that has _published_ the script.  Many Azure CLI scripts use reference commands from more than one Azure service.  For space considerations, some common Azure CLI commands, like `az group` have been removed from the comma-delimited list of reference commands.
 
-| Azure Service | Sample name | Reference commands used in sample |
+| Azure Service | Sample name &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; | Reference commands used in sample |
 |---|---|---|
 | application-gateway | [Azure CLI examples for Azure Application Gateway](/azure/application-gateway/cli-samples) |   |
 |  | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) | az network application-gateway create,  az network public-ip create,  az network public-ip show,  az network vnet create,  az network vnet subnet create,  az vmss create |
@@ -200,7 +200,7 @@ This list is organized by the Azure service that has _published_ the script.  Ma
 
 If you are looking for samples that demonstrate a particular command, search this list.  Some common Azure CLI commands, like `az group` have been removed for space considerations.
 
-| Reference command | Reference name | Sample name |
+| Reference group | Reference name | Sample name |
 |---|---|---|
 | az acr| az acr create | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | | az acr credential show | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
