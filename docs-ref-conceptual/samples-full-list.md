@@ -12,13 +12,11 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI samples list
 
-Azure CLI samples provide end-to-end scenarios for jobs to be done. This article provides an A - Z list of Azure CLI samples written for Bash environments. Not every Azure CLI reference command has been used in a sample. For a complete list of commands, see the [A - Z reference list](/cli/azure/reference-index).
+Azure CLI samples provide end-to-end scenarios for jobs to be done. This article provides an A - Z list of Azure CLI samples written for Bash environments. Not every Azure CLI reference command has been used in a sample. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
 
 ## Samples
-
-The following table includes links to Azure CLI articles containing sample scripts.
 
 # [List by Azure service](#tab/service)
 
@@ -173,31 +171,10 @@ NULL
 |  | [Configure a failover group for a group of databases in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/setup-geodr-failover-group-cli) | az sql failover-group create,  az sql failover-group delete,  az sql failover-group set-primary,  az sql failover-group show |
 |  | [Configure active geo-replication for a pooled database in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/setup-geodr-failover-pool-cli) |   |
 |  | [Configure active geo-replication for a single database in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/setup-geodr-failover-database-cli) |   |
-|  | [Copy a database in Azure SQL Database to a new server using the Azure CLI](/azure/azure-sql/database/scripts/copy-database-to-new-server-cli) | az sql db copy |
-|  | [Create a single database and configure a firewall rule using the Azure CLI](/azure/azure-sql/database/scripts/create-and-configure-database-cli) |   |
-|  | [Create an Azure SQL Managed Instance using the Azure CLI](/azure/azure-sql/managed-instance/scripts/create-configure-managed-instance-cli) |   |
-|  | [Import a BACPAC file into a database in SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/import-from-bacpac-cli) | az sql db import |
-|  | [Monitor and scale a single database in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/monitor-and-scale-database-cli) | az sql db op cancel,  az sql db op list |
-|  | [Move a database in SQL Database in a SQL elastic pool using the Azure CLI](/azure/azure-sql/database/scripts/move-database-between-elastic-pools-cli) |   |
-|  | [Restore a single database in Azure SQL Database to an earlier point in time using the Azure CLI](/azure/azure-sql/database/scripts/restore-database-cli) | az sql db restore |
-|  | [Scale an elastic pool in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/scale-pool-cli) |   |
-| storage | [Azure Storage samples](/azure/storage/common/storage-samples) |   |
-|  | [Calculate the size of a Blob storage container](/azure/storage/scripts/storage-blobs-container-calculate-size-cli) | az storage blob list,  az storage blob upload |
-|  | [Create a storage account and rotate its account access keys](/azure/storage/scripts/storage-common-rotate-account-keys-cli) | az storage account create,  az storage account keys list,  az storage account keys renew |
-|  | [Use an Azure CLI script to delete containers based on container name prefix](/azure/storage/scripts/storage-blobs-container-delete-by-prefix-cli) | az storage account create,  az storage container create,  az storage container delete,  az storage container list |
-| traffic-manager | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) | az appservice plan create,  az network traffic-manager endpoint create,  az network traffic-manager profile create |
-| virtual-machines | [Copy managed disks to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-managed-disks-to-same-or-different-subscription) | az account set,  az disk create,  az disk show,  az disk-encryption-set show |
-|  | [Copy snapshot of a managed disk to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-same-or-different-subscription) | az account set,  az disk-encryption-set show,  az snapshot create,  az snapshot show |
-|  | [Create a managed disk from a snapshot with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-snapshot) | az account set,  az disk create,  az disk-encryption-set show,  az snapshot show |
-|  | [Create a managed disk from a VHD file in a storage account in the same subscription with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-vhd) | az disk create |
-|  | [Create a virtual machine from a snapshot with CLI](/azure/virtual-machines/scripts/create-vm-from-snapshot) | az disk create,  az snapshot show,  az vm create |
-|  | [Create a virtual machine using an existing managed OS disk with CLI](/azure/virtual-machines/scripts/create-vm-from-managed-os-disks) | az disk show,  az vm create |
-|  | [Export/Copy a managed disk to a storage account using the Azure CLI](/azure/virtual-machines/scripts/copy-managed-disks-vhd-to-storage-account) | az disk grant-access,  az storage blob copy start |
-|  | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account) | az snapshot grant-access,  az storage blob copy start |
-|  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) | az account set,  az disk create,  az resource move,  az snapshot create,  az vm create,  az vm deallocate,  az vm delete,  az vm get-instance-view,  az vm image terms accept,  az vm image terms show,  az vm show |
-| virtual-network | [Peer two virtual networks with an Azure CLI script sample](/azure/virtual-network/scripts/virtual-network-cli-sample-peer-two-virtual-networks) | az network vnet create,  az network vnet peering create |
 
 # [List by Reference command](#tab/command)
+
+If you are looking for samples that demonstrate a particular command, search this list.  Some common Azure CLI commands, like `az group` have been removed for space considerations.
 
 | Reference command | Reference name | Sample name |
 |---|---|---|
