@@ -90,8 +90,8 @@ directCommands:
                   [--enable-apiserver-vnet-integration]
                   [--enable-asm]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
-                  [--enable-azuremonitormetrics]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-custom-ca-trust]
@@ -122,6 +122,9 @@ directCommands:
                   [--gmsa-root-domain-name]
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--grafana-resource-id]
+                  [--guardrails-excluded-ns]
+                  [--guardrails-level {Enforcement, Off, Warning}]
+                  [--guardrails-version]
                   [--host-group-id]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
@@ -257,6 +260,10 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
   - summary: Create a kubernetes cluster with Custom CA Trust enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
+  - summary: Create a kubernetes cluster with guardrails set to "Warning"
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --enable-addons azure-policy
+  - summary: Create a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2 --enable-addons azure-policy
   - summary: Create a kubernetes cluster with Azure Service Mesh enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
   - summary: Create a kubernetes cluster with Azure Monitor Metrics enabled.
@@ -408,7 +415,7 @@ directCommands:
                                             If monitoring addon is enabled --no-wait argument will have no effect
           virtual-node                    - enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use.
                                             aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
-          azure-policy                    - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+          azure-policy                    - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling Guardrails
                                             Learn more at aka.ms/aks/policy.
           ingress-appgw                   - enable Application Gateway Ingress Controller addon (PREVIEW).
           confcom                         - enable confcom addon, this will enable SGX device plugin by default(PREVIEW).
@@ -431,13 +438,13 @@ directCommands:
     defaultValue: "False"
     summary: Enable Azure KeyVault Key Management Service.
     description: ''
+  - name: --enable-azure-monitor-metrics
+    defaultValue: "False"
+    summary: Enable Azure Monitor Metrics Profile.
+    description: ''
   - name: --enable-azure-rbac
     defaultValue: "False"
     summary: Enable Azure RBAC to control authorization checks on cluster.
-    description: ''
-  - name: --enable-azuremonitormetrics
-    defaultValue: "False"
-    summary: Enable Azure Monitor Metrics Profile.
     description: ''
   - name: --enable-blob-driver
     summary: Enable AzureBlob CSI Driver.
@@ -561,6 +568,16 @@ directCommands:
     description: ''
   - name: --grafana-resource-id
     summary: Resource ID of the Azure Managed Grafana Workspace.
+    description: ''
+  - name: --guardrails-excluded-ns
+    summary: Comma-separated list of Kubernetes namespaces to exclude from Guardrails.
+    description: ''
+  - name: --guardrails-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
+    description: ''
+  - name: --guardrails-version
+    summary: The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
     description: ''
   - name: --host-group-id
     summary: (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
@@ -1352,8 +1369,8 @@ directCommands:
                   [--detach-acr]
                   [--disable-ahub]
                   [--disable-azure-keyvault-kms]
+                  [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
-                  [--disable-azuremonitormetrics]
                   [--disable-blob-driver]
                   [--disable-cluster-autoscaler]
                   [--disable-defender]
@@ -1375,8 +1392,8 @@ directCommands:
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
-                  [--enable-azuremonitormetrics]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-defender]
@@ -1401,6 +1418,9 @@ directCommands:
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--grafana-resource-id]
+                  [--guardrails-excluded-ns]
+                  [--guardrails-level {Enforcement, Off, Warning}]
+                  [--guardrails-version]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
                   [--ksm-metric-annotations-allow-list]
@@ -1493,6 +1513,12 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   - summary: Update a existing managed cluster to a managed cluster snapshot.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
+  - summary: Update a kubernetes cluster with guardrails set to "Warning". Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning
+  - summary: Update a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2
+  - summary: Update a kubernetes cluster to clear any namespaces excluded from guardrails. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-excluded-ns ""
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1567,13 +1593,13 @@ directCommands:
     defaultValue: "False"
     summary: Disable Azure KeyVault Key Management Service.
     description: ''
+  - name: --disable-azure-monitor-metrics
+    defaultValue: "False"
+    summary: Disable Azure Monitor Metrics Profile. This will delete all DCRA's associated with the cluster, any linked DCRs with the data stream = prometheus-stream and the recording rule groups created by the addon for this AKS cluster.
+    description: ''
   - name: --disable-azure-rbac
     defaultValue: "False"
     summary: Disable Azure RBAC to control authorization checks on cluster.
-    description: ''
-  - name: --disable-azuremonitormetrics
-    defaultValue: "False"
-    summary: Disable Azure Monitor Metrics Profile. This will delete all DCRA's associated with the cluster, any linked DCRs with the data stream = prometheus-stream and the recording rule groups created by the addon for this AKS cluster.
     description: ''
   - name: --disable-blob-driver
     summary: Disable AzureBlob CSI Driver.
@@ -1658,13 +1684,13 @@ directCommands:
     defaultValue: "False"
     summary: Enable Azure KeyVault Key Management Service.
     description: ''
+  - name: --enable-azure-monitor-metrics
+    defaultValue: "False"
+    summary: Enable Azure Monitor Metrics Profile.
+    description: ''
   - name: --enable-azure-rbac
     defaultValue: "False"
     summary: Enable Azure RBAC to control authorization checks on cluster.
-    description: ''
-  - name: --enable-azuremonitormetrics
-    defaultValue: "False"
-    summary: Enable Azure Monitor Metrics Profile.
     description: ''
   - name: --enable-blob-driver
     summary: Enable AzureBlob CSI Driver.
@@ -1763,6 +1789,16 @@ directCommands:
       You must set or not set --gmsa-dns-server and --gmsa-root-domain-name at the same time when setting --enable-windows-gmsa.
   - name: --grafana-resource-id
     summary: Resource ID of the Azure Managed Grafana Workspace.
+    description: ''
+  - name: --guardrails-excluded-ns
+    summary: Comma-separated list of Kubernetes namespaces to exclude from Guardrails. Use "" to clear a previously non-empty list.
+    description: ''
+  - name: --guardrails-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
+    description: ''
+  - name: --guardrails-version
+    summary: The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
     description: ''
   - name: --http-proxy-config
     summary: HTTP Proxy configuration for this cluster.
