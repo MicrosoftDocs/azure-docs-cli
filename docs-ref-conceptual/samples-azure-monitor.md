@@ -12,7 +12,11 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI samples for Azure Monitor
 
-The following table includes links to Bash scripts built using the Azure CLI that create and manage Azure Monitor.
+[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
+
+## Samples
+
+The following table includes links to Azure CLI scripts written for a Bash environment that manage Azure Monitor.
 
 | Script | Description |
 |---|---|
