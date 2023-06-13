@@ -40,7 +40,7 @@ directCommands:
   syntax: >-
     az containerapp ingress enable --target-port
                                    --type {external, internal}
-                                   [--allow-insecure]
+                                   [--allow-insecure {false, true}]
                                    [--exposed-port]
                                    [--ids]
                                    [--name]
@@ -65,6 +65,7 @@ directCommands:
   optionalParameters:
   - name: --allow-insecure
     defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Allow insecure connections for ingress traffic.
     description: ''
   - name: --exposed-port
@@ -112,6 +113,57 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_containerapp_ingress_update
+  name: az containerapp ingress update
+  summary: Update ingress for a container app.
+  description: ''
+  syntax: >-
+    az containerapp ingress update [--allow-insecure {false, true}]
+                                   [--exposed-port]
+                                   [--ids]
+                                   [--name]
+                                   [--resource-group]
+                                   [--subscription]
+                                   [--target-port]
+                                   [--transport {auto, http, http2, tcp}]
+                                   [--type {external, internal}]
+  examples:
+  - summary: Update ingress for a container app.
+    syntax: >-
+      az containerapp ingress update -n MyContainerapp -g MyResourceGroup \
+          --target-port 8080
+  optionalParameters:
+  - name: --allow-insecure
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Allow insecure connections for ingress traffic.
+    description: ''
+  - name: --exposed-port
+    summary: Additional exposed port. Only supported by tcp transport protocol. Must be unique per environment if the app ingress is external.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --target-port
+    summary: The application port used for ingress traffic.
+    description: ''
+  - name: --transport
+    parameterValueGroup: "auto, http, http2, tcp"
+    summary: The transport protocol used for ingress traffic.
+    description: ''
+  - name: --type
+    parameterValueGroup: "external, internal"
+    summary: The ingress type.
+    description: ''
 commands:
 - az_containerapp_ingress_access-restriction
 - az_containerapp_ingress_access-restriction_list
@@ -120,9 +172,13 @@ commands:
 - az_containerapp_ingress_disable
 - az_containerapp_ingress_enable
 - az_containerapp_ingress_show
+- az_containerapp_ingress_sticky-sessions
+- az_containerapp_ingress_sticky-sessions_set
+- az_containerapp_ingress_sticky-sessions_show
 - az_containerapp_ingress_traffic
 - az_containerapp_ingress_traffic_set
 - az_containerapp_ingress_traffic_show
+- az_containerapp_ingress_update
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

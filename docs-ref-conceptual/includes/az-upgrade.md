@@ -4,6 +4,7 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 09/25/2020
 ms.topic: include
+ms.custom: devx-track-azurecli
 ---
 The CLI provides an in-tool command to update to the latest version:
 

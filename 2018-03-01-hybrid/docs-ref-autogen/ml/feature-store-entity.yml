@@ -1,0 +1,267 @@
+### YamlMime:AzureCLIGroup
+uid: az_ml_feature-store-entity
+name: az ml feature-store-entity
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **ml** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az ml feature-store-entity** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage Azure ML feature store entities.
+description: A collection of feature store entities on a source.
+directCommands:
+- uid: az_ml_feature-store-entity_archive
+  name: az ml feature-store-entity archive
+  summary: Archive a feature store entity.
+  description: Archiving a feature store entity will hide it by default from list queries (`az ml feature-store-entity list`).
+  syntax: >-
+    az ml feature-store-entity archive --name
+                                       --version
+                                       [--resource-group]
+                                       [--workspace-name]
+                                       [--yes]
+  examples:
+  - summary: Archive a specific feature store entity version
+    syntax: az ml feature-store-entity archive --name my-feature-store-entity --version 1 --resource-group my-resource-group --workspace-name my-feature-store
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the feature store entity.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the feature store entity.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_ml_feature-store-entity_create
+  name: az ml feature-store-entity create
+  summary: Create a feature store entity.
+  description: >-
+    Feature-store entities can be defined from files on your local machine. The created feature store entity will be tracked in the feature store under the specified name and version.
+
+
+    To create a feature store entity from file(s) on your local machine, specify the 'path' field in your YAML config. Azure ML will upload these file(s) to the blob container that backs the feature store's default datastore (named 'workspaceblobstore'). The created feature store entity will then point to that uploaded feature store entity.
+  syntax: >-
+    az ml feature-store-entity create [--description]
+                                      [--file]
+                                      [--name]
+                                      [--no-wait]
+                                      [--resource-group]
+                                      [--set]
+                                      [--version]
+                                      [--workspace-name]
+  examples:
+  - summary: Create a feature store entity from a YAML specification file
+    syntax: az ml feature-store-entity create --file feature-store-entity.yml --resource-group my-resource-group --workspace-name my-feature-store
+  optionalParameters:
+  - name: --description -d
+    summary: Description of the feature store entity.
+    description: ''
+  - name: --file -f
+    summary: 'Local path to the YAML file containing the Azure ML feature-store-entity specification. The YAML reference docs for feature-store-entity can be found at: https://aka.ms/ml-cli-v2-featurestore-entity-yaml-reference.'
+    description: ''
+  - name: --name -n
+    summary: Name of the feature store entity.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for feature store entity creation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --version -v
+    summary: Version of the feature store entity.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+- uid: az_ml_feature-store-entity_list
+  name: az ml feature-store-entity list
+  summary: List feature store entity in a feature store.
+  description: ''
+  syntax: >-
+    az ml feature-store-entity list [--archived-only]
+                                    [--include-archived]
+                                    [--max-results]
+                                    [--name]
+                                    [--resource-group]
+                                    [--workspace-name]
+  examples:
+  - summary: List all the feature store entity in a feature store
+    syntax: az ml feature-store-entity list --resource-group my-resource-group --workspace-name my-feature-store
+  - summary: List all the feature store entity versions for the specified name in a feature store
+    syntax: az ml feature-store-entity list --name my-feature-store-entity --resource-group my-resource-group --workspace-name my-feature-store
+  - summary: List all the feature store entity assets in a feature store using --query argument to execute a JMESPath query on the results of commands.
+    syntax: az ml feature-store-entity list --query "[].{Name:name}" --output table --resource-group my-resource-group --workspace-name my-feature-store
+  optionalParameters:
+  - name: --archived-only
+    defaultValue: "False"
+    summary: List archived feature store entity assets only.
+    description: ''
+  - name: --include-archived
+    defaultValue: "False"
+    summary: List archived feature store entity assets and active feature store entity assets.
+    description: ''
+  - name: --max-results -r
+    summary: Max number of results to return.
+    description: ''
+  - name: --name -n
+    summary: Name of the feature store entity. If provided, all the feature store entity versions under this name will be returned.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+- uid: az_ml_feature-store-entity_restore
+  name: az ml feature-store-entity restore
+  summary: Restore an archived feature store entity.
+  description: When an archived featurestore-entity is restored, it will no longer be hidden from list queries (`az ml feature-store-entity list`).
+  syntax: >-
+    az ml feature-store-entity restore --name
+                                       --version
+                                       [--resource-group]
+                                       [--workspace-name]
+                                       [--yes]
+  examples:
+  - summary: Restore a specific archived feature store entity version
+    syntax: az ml feature-store-entity restore --name my-feature-store-entity --version 1 --resource-group my-resource-group --workspace-name my-feature-store
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the feature store entity.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the feature store entity.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_ml_feature-store-entity_show
+  name: az ml feature-store-entity show
+  summary: Shows details for a feature store entity.
+  description: ''
+  syntax: >-
+    az ml feature-store-entity show --name
+                                    --version
+                                    [--resource-group]
+                                    [--workspace-name]
+  examples:
+  - summary: Show details for a feature store entity with the specified name and version in a feature store
+    syntax: az ml feature-store-entity show --name my-feature-store-entity --version 1 --resource-group my-resource-group --workspace-name my-feature-store
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the feature store entity.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the feature store entity.
+    description: ''
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+- uid: az_ml_feature-store-entity_update
+  name: az ml feature-store-entity update
+  summary: Update a feature store entity.
+  description: Update a feature store entity.
+  syntax: >-
+    az ml feature-store-entity update --name
+                                      --resource-group
+                                      --version
+                                      --workspace-name
+                                      [--add]
+                                      [--force-string]
+                                      [--no-wait]
+                                      [--remove]
+                                      [--set]
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the feature store entity.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the feature store entity.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --add
+    defaultValue: "[]"
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    defaultValue: "False"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for feature store entity update to finish.
+    description: ''
+  - name: --remove
+    defaultValue: "[]"
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --set
+    defaultValue: "[]"
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+commands:
+- az_ml_feature-store-entity_archive
+- az_ml_feature-store-entity_create
+- az_ml_feature-store-entity_list
+- az_ml_feature-store-entity_restore
+- az_ml_feature-store-entity_show
+- az_ml_feature-store-entity_update
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: A collection of feature store entities on a source.

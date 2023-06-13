@@ -43,9 +43,9 @@ directCommands:
     description: ''
 - uid: az_ml_data_create
   name: az ml data create
-  summary: Create a data asset.
+  summary: Create a data asset in a workspace/registry. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
   description: >-
-    Data assets can be defined from files on your local machine or as references to files in cloud storage. The created data asset will be tracked in the workspace under the specified name and version.
+    Data assets can be defined from files on your local machine or as references to files in cloud storage. The created data asset will be tracked in the workspace/registry under the specified name and version.
 
 
     To create a data asset from file(s) on your local machine, specify the 'path' field in your YAML config. Azure ML will upload these file(s) to the blob container that backs the workspace's default datastore (named 'workspaceblobstore'). The created data asset will then point to that uploaded data.
@@ -55,12 +55,16 @@ directCommands:
 
 
     You can also create a data asset directly from a storage URL or public URL. To do so, specify the URL to the 'path' field in your YAML config.
+
+    If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <my-registry-name>` option.
   syntax: >-
     az ml data create [--datastore]
                       [--description]
                       [--file]
                       [--name]
+                      [--no-wait]
                       [--path]
+                      [--registry-name]
                       [--resource-group]
                       [--set]
                       [--skip-validation]
@@ -68,10 +72,14 @@ directCommands:
                       [--version]
                       [--workspace-name]
   examples:
-  - summary: Create a data asset from a YAML specification file
+  - summary: Create a data asset from a YAML specification file in a workspace
     syntax: az ml data create --file data.yml --resource-group my-resource-group --workspace-name my-workspace
-  - summary: Create a data asset without using a YAML specification file
+  - summary: Create a data asset from a YAML specification file in a registry
+    syntax: az ml data create --file data.yml --registry-name my-registry-name
+  - summary: Create a data asset without using a YAML specification file in a workspace
     syntax: az ml data create --name my-data --version 1 --path ./my-data.csv --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Create a data asset without using a YAML specification file in a registry
+    syntax: az ml data create --name my-data --version 1 --path ./my-data.csv --registry-name my-registry-name
   optionalParameters:
   - name: --datastore
     summary: The datastore to upload the local artifact to.
@@ -85,8 +93,15 @@ directCommands:
   - name: --name -n
     summary: Name of the data asset.
     description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running-operation to finish. Default is False.
+    description: ''
   - name: --path -p
     summary: Path to the data asset, can be local or remote.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -108,24 +123,29 @@ directCommands:
   - name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
-- uid: az_ml_data_list
-  name: az ml data list
-  summary: List data assets in a workspace.
-  description: ''
+- uid: az_ml_data_import
+  name: az ml data import
+  summary: Import data and create a data asset.
+  description: >-
+    Data asset can be created by first importing data from database or filesystem to cloud storage. The created data asset will be tracked in the workspace under the specified name and version.
+
+
+    Specify 'query' of database table or 'path' on filesystem fields in your YAML config. Azure ML will run a job to copy the data to cloud storage first .
   syntax: >-
-    az ml data list --resource-group
-                    --workspace-name
-                    [--archived-only]
-                    [--include-archived]
-                    [--max-results]
-                    [--name]
+    az ml data import --resource-group
+                      --workspace-name
+                      [--datastore]
+                      [--description]
+                      [--file]
+                      [--name]
+                      [--path]
+                      [--set]
+                      [--skip-validation]
+                      [--type {mltable, uri_file, uri_folder}]
+                      [--version]
   examples:
-  - summary: List all the data assets in a workspace
-    syntax: az ml data list --resource-group my-resource-group --workspace-name my-workspace
-  - summary: List all the data asset versions for the specified name in a workspace
-    syntax: az ml data list --name my-data --resource-group my-resource-group --workspace-name my-workspace
-  - summary: List all the data assets in a workspace using --query argument to execute a JMESPath query on the results of commands.
-    syntax: az ml data list --query "[].{Name:name}" --output table --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Import a data asset from a YAML specification file
+    syntax: az ml data import --file dataimport.yml --resource-group my-resource-group --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -135,6 +155,59 @@ directCommands:
     name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
+  optionalParameters:
+  - name: --datastore
+    summary: The datastore to upload the local artifact to.
+    description: ''
+  - name: --description -d
+    summary: Description of the data asset.
+    description: ''
+  - name: --file -f
+    summary: 'Local path to the YAML file containing the Azure ML data specification. The YAML reference docs for data can be found at: https://aka.ms/ml-cli-v2-data-yaml-reference.'
+    description: ''
+  - name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - name: --path -p
+    summary: Path to the data asset on cloud storage.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --skip-validation
+    defaultValue: "False"
+    summary: Skip validation of compute resource referenced by underlying data import materialization job.
+    description: ''
+  - name: --type -t
+    parameterValueGroup: "mltable, uri_file, uri_folder"
+    summary: Type of the data asset.
+    description: ''
+  - name: --version -v
+    summary: Version of the data asset.
+    description: ''
+- uid: az_ml_data_list
+  name: az ml data list
+  summary: List data assets in a workspace/registry. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
+  description: ''
+  syntax: >-
+    az ml data list [--archived-only]
+                    [--include-archived]
+                    [--max-results]
+                    [--name]
+                    [--registry-name]
+                    [--resource-group]
+                    [--workspace-name]
+  examples:
+  - summary: List all the data assets in a workspace
+    syntax: az ml data list --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List all the data asset versions for the specified name in a workspace
+    syntax: az ml data list --name my-data --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List all the data assets in a workspace using --query argument to execute a JMESPath query on the results of commands.
+    syntax: az ml data list --query "[].{Name:name}" --output table --resource-group my-resource-group --workspace-name my-workspace
+  - summary: List all the data assets in a registry
+    syntax: az ml data list --registry-name my-registry-name
+  - summary: List all the data asset versions for the specified name in a registry
+    syntax: az ml data list --name my-data --registry-name my-registry-name
   optionalParameters:
   - name: --archived-only
     defaultValue: "False"
@@ -149,6 +222,60 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the data asset. If provided, all the data versions under this name will be returned.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+- uid: az_ml_data_list-materialization-status
+  name: az ml data list-materialization-status
+  summary: Show status of list of data import materialization jobs that create versions of a data asset.
+  description: Show status of list of data import materialization jobs that create versions of a data asset.
+  syntax: >-
+    az ml data list-materialization-status --resource-group
+                                           --workspace-name
+                                           [--all-results {false, true}]
+                                           [--archived-only]
+                                           [--include-archived]
+                                           [--max-results]
+                                           [--name]
+  examples:
+  - summary: Show materialization status of a data asset from a YAML specification file
+    syntax: az ml data list-materialization-status --name asset-name --resource-group my-resource-group --workspace-name my-workspace
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --all-results
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Returns all results.
+    description: ''
+  - name: --archived-only
+    defaultValue: "False"
+    summary: List archived jobs only.
+    description: ''
+  - name: --include-archived
+    defaultValue: "False"
+    summary: List archived jobs and active jobs.
+    description: ''
+  - name: --max-results -r
+    defaultValue: "50"
+    summary: Max number of results to return. Default is 50.
+    description: ''
+  - name: --name -p
+    summary: Name of the asset. Will list all materialization jobs that create versions of the asset matching the given name.
     description: ''
 - uid: az_ml_data_restore
   name: az ml data restore
@@ -183,21 +310,68 @@ directCommands:
   - name: --workspace-name -w
     summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
     description: ''
+- uid: az_ml_data_share
+  name: az ml data share
+  summary: Share a specific data asset from workspace to registry.
+  description: Copy an existing data asset from a workspace to a registry for cross-workspace reuse.
+  syntax: >-
+    az ml data share --name
+                     --registry-name
+                     --resource-group
+                     --share-with-name
+                     --share-with-version
+                     --version
+                     --workspace-name
+  examples:
+  - summary: Share an existing data asset from workspace to registry
+    syntax: az ml data share --name my-data --version my-version --resource-group my-resource-group --workspace-name my-workspace --share-with-name new-name-in-registry --share-with-version new-version-in-registry --registry-name my-registry
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the data asset.
+    description: ''
+  - isRequired: true
+    name: --registry-name
+    summary: Destination registry.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --share-with-name
+    summary: Name  of the data asset to be created with.
+    description: ''
+  - isRequired: true
+    name: --share-with-version
+    summary: Version  of the data asset to be created with.
+    description: ''
+  - isRequired: true
+    name: --version -v
+    summary: Version of the data asset.
+    description: ''
+  - isRequired: true
+    name: --workspace-name -w
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
 - uid: az_ml_data_show
   name: az ml data show
-  summary: Shows details for a data asset.
+  summary: Shows details for a data asset in a workspace/registry. If you are using a registry, replace `--workspace-name my-workspace` with the `--registry-name <registry-name>` option.
   description: ''
   syntax: >-
     az ml data show --name
                     [--label]
+                    [--registry-name]
                     [--resource-group]
                     [--version]
                     [--workspace-name]
   examples:
-  - summary: Show details for a data asset with the specified name and version
+  - summary: Show details for a data asset with the specified name and version in a workspace
     syntax: az ml data show --name my-data --version 1 --resource-group my-resource-group --workspace-name my-workspace
   - summary: Show details for a data asset with the specified name and label
     syntax: az ml data show --name my-data --label latest --resource-group my-resource-group --workspace-name my-workspace
+  - summary: Show details for a data asset with the specified name and version in a registry
+    syntax: az ml data show --name my-data --version 1 --registry-name my-registry-name
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -206,6 +380,9 @@ directCommands:
   optionalParameters:
   - name: --label -l
     summary: Label of the data asset. Must be provided, if version is not provided. Mutually exclusive with version.
+    description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -227,6 +404,7 @@ directCommands:
                       [--add]
                       [--force-string]
                       [--label]
+                      [--registry-name]
                       [--remove]
                       [--set]
                       [--version]
@@ -255,6 +433,9 @@ directCommands:
   - name: --label -l
     summary: Label of the data asset. Must be provided, if version is not provided. Mutually exclusive with version.
     description: ''
+  - name: --registry-name
+    summary: If provided, the command will target the registry instead of a workspace. Hence resource group and workspace won't be required.
+    description: ''
   - name: --remove
     defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -269,8 +450,11 @@ directCommands:
 commands:
 - az_ml_data_archive
 - az_ml_data_create
+- az_ml_data_import
 - az_ml_data_list
+- az_ml_data_list-materialization-status
 - az_ml_data_restore
+- az_ml_data_share
 - az_ml_data_show
 - az_ml_data_update
 globalParameters:

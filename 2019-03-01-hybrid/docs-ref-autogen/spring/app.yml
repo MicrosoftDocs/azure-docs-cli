@@ -55,6 +55,7 @@ directCommands:
                                             --resource-group
                                             --service
                                             --storage-name
+                                            [--enable-sub-path {false, true}]
                                             [--mount-options]
                                             [--read-only {false, true}]
                                             [--share-name]
@@ -87,6 +88,11 @@ directCommands:
     summary: Name of the storage resource you created in Azure Spring Apps.
     description: ''
   optionalParameters:
+  - name: --enable-sub-path
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: '[optional] If true, will mount in separate subdirectories with the same path for each app instance .'
+    description: ''
   - name: --mount-options
     summary: '[optional] The mount options for the persistent storage volume.'
     description: ''
@@ -177,6 +183,7 @@ directCommands:
                          [--startup-probe-config]
                          [--system-assigned {false, true}]
                          [--user-assigned]
+                         [--workload-profile]
   examples:
   - summary: Create an app with the default configuration.
     syntax: az spring app create -n MyApp -s MyCluster -g MyResourceGroup
@@ -320,6 +327,9 @@ directCommands:
   - name: --user-assigned
     summary: Space-separated user-assigned managed identity resource IDs to assgin to an app.
     description: ''
+  - name: --workload-profile
+    summary: The workload profile used in the managed environment. Default to "Consumption".
+    description: ''
 - uid: az_spring_app_delete
   name: az spring app delete
   summary: Delete an app in the Azure Spring Apps.
@@ -349,7 +359,9 @@ directCommands:
     az spring app deploy --name
                          --resource-group
                          --service
+                         [--apms]
                          [--artifact-path]
+                         [--build-certificates]
                          [--build-cpu]
                          [--build-env]
                          [--build-memory]
@@ -410,8 +422,14 @@ directCommands:
     summary: The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
     description: ''
   optionalParameters:
+  - name: --apms
+    summary: (Enterprise Tier Only) Space-separated APM names.
+    description: ''
   - name: --artifact-path
     summary: Deploy the specified pre-built artifact (jar or netcore zip).
+    description: ''
+  - name: --build-certificates
+    summary: (Enterprise Tier Only) Space-separated certificate names, the certificates are used during build time.
     description: ''
   - name: --build-cpu
     defaultValue: "1"
@@ -1003,6 +1021,7 @@ directCommands:
                          [--session-affinity {Cookie, None}]
                          [--session-max-age]
                          [--startup-probe-config]
+                         [--workload-profile]
   examples:
   - summary: Add an environment variable for the app.
     syntax: az spring app update -n MyApp -s MyCluster -g MyResourceGroup --env foo=bar
@@ -1072,7 +1091,6 @@ directCommands:
     summary: Optional duration in seconds the app instance needs to terminate gracefully.
     description: ''
   - name: --https-only
-    defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: If true, access app via https.
     description: ''
@@ -1120,6 +1138,9 @@ directCommands:
     description: ''
   - name: --startup-probe-config
     summary: A json file path indicates the startup probe config.
+    description: ''
+  - name: --workload-profile
+    summary: The workload profile used in the managed environment. Default to "Consumption".
     description: ''
 commands:
 - az_spring_app_append-loaded-public-certificate

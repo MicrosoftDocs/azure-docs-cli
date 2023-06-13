@@ -12,6 +12,8 @@ directCommands:
     az storage share close-handle --name
                                   [--account-key]
                                   [--account-name]
+                                  [--auth-mode {key, login}]
+                                  [--backup-intent]
                                   [--close-all {false, true}]
                                   [--connection-string]
                                   [--file-endpoint]
@@ -44,6 +46,14 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: "key, login"
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --backup-intent --enable-file-backup-request-intent
+    defaultValue: "False"
+    summary: Required parameter to use with OAuth (Azure AD) Authentication for Files. This will bypass any file/directory level permission checks and allow access, based on the allowed data actions, even if there are ACLs in place for those files/directories.
     description: ''
   - name: --close-all
     parameterValueGroup: "false, true"
@@ -372,6 +382,8 @@ directCommands:
     az storage share list-handle --name
                                  [--account-key]
                                  [--account-name]
+                                 [--auth-mode {key, login}]
+                                 [--backup-intent]
                                  [--connection-string]
                                  [--file-endpoint]
                                  [--marker]
@@ -399,6 +411,14 @@ directCommands:
     description: ''
   - name: --account-name
     summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: "key, login"
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --backup-intent --enable-file-backup-request-intent
+    defaultValue: "False"
+    summary: Required parameter to use with OAuth (Azure AD) Authentication for Files. This will bypass any file/directory level permission checks and allow access, based on the allowed data actions, even if there are ACLs in place for those files/directories.
     description: ''
   - name: --connection-string
     summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
@@ -682,5 +702,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 11/28/2022
+  ms.date: 05/17/2023
   description: Manage file shares.

@@ -214,10 +214,10 @@ directCommands:
                                  [--vault-name]
   optionalParameters:
   - name: --id
-    summary: Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    summary: Full URI of the Vault. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    summary: Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
     description: ''
   - name: --vault-name
     summary: Name of the Key Vault. Required if --id is not specified.
@@ -225,23 +225,21 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_certificate_list-deleted
   name: az keyvault certificate list-deleted
-  summary: Lists the deleted certificates in the specified vault currently available for recovery.
-  description: The GetDeletedCertificates operation retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information. This operation requires the certificates/get/list permission. This operation can only be enabled on soft-delete enabled vaults.
+  summary: Lists the currently-recoverable deleted certificates.
+  description: Possible only if vault is soft-delete enabled.  Requires certificates/get/list permission. Retrieves the certificates in the current vault which are in a deleted state and ready for recovery or purging. This operation includes deletion-specific information.
   syntax: >-
-    az keyvault certificate list-deleted --vault-name
-                                         [--id]
+    az keyvault certificate list-deleted [--id]
                                          [--maxresults]
-  requiredParameters:
-  - isRequired: true
-    name: --vault-name
-    summary: Name of the Vault.
-    description: ''
+                                         [--vault-name]
   optionalParameters:
   - name: --id
     summary: Full URI of the Vault. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    summary: Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
+    description: ''
+  - name: --vault-name
+    summary: Name of the Key Vault. Required if --id is not specified.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_certificate_list-versions
@@ -258,7 +256,7 @@ directCommands:
     summary: Id of the certificate. If specified all other 'Id' arguments should be omitted.
     description: ''
   - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    summary: Maximum number of results to return in a page. If not specified, the service will return up to 25 results.
     description: ''
   - name: --name -n
     summary: Name of the certificate. Required if --id is not specified.
@@ -288,8 +286,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_certificate_recover
   name: az keyvault certificate recover
-  summary: Recovers the deleted certificate back to its current version under /certificates.
-  description: The RecoverDeletedCertificate operation performs the reversal of the Delete operation. The operation is applicable in vaults enabled for soft-delete, and must be issued during the retention interval (available in the deleted certificate's attributes). This operation requires the certificates/recover permission.
+  summary: Recover a deleted certificate to its latest version.
+  description: Possible only in a vault with soft-delete enabled.  Requires certificates/recover permission. When this method returns Key Vault has begun recovering the certificate. Recovery may take several seconds. This method therefore returns a poller enabling you to wait for recovery to complete. Waiting is only necessary when you want to use the recovered certificate in another operation immediately.
   syntax: >-
     az keyvault certificate recover [--id]
                                     [--name]
@@ -366,8 +364,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
 - uid: az_keyvault_certificate_show-deleted
   name: az keyvault certificate show-deleted
-  summary: Retrieves information about the specified deleted certificate.
-  description: The GetDeletedCertificate operation retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion and the current deletion recovery level. This operation requires the certificates/get permission.
+  summary: Get a deleted certificate.
+  description: Possible only in a vault with soft-delete enabled.  Requires certificates/get permission. Retrieves the deleted certificate information plus its attributes, such as retention interval, scheduled permanent deletion, and the current deletion recovery level.
   syntax: >-
     az keyvault certificate show-deleted [--id]
                                          [--name]
@@ -434,5 +432,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 02/01/2023
+  ms.date: 05/17/2023
   description: Manage certificates.

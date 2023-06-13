@@ -4,46 +4,51 @@ name: az devcenter dev dev-box
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **devcenter** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az devcenter dev dev-box** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Manage dev box with devcenter.
+  > This reference is part of the **devcenter** extension for the Azure CLI  (version 2.48.0 or higher).  The extension will automatically install the first time you run an **az devcenter dev dev-box** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage dev boxes.
 description: ''
 directCommands:
 - uid: az_devcenter_dev_dev-box_create
   name: az devcenter dev dev-box create
-  summary: Creates or updates a dev box.
+  summary: Create a dev box.
   description: ''
   syntax: >-
     az devcenter dev dev-box create --dev-box-name
-                                    --dev-center
                                     --pool
                                     --project
+                                    [--dev-center]
+                                    [--endpoint]
                                     [--local-administrator {Disabled, Enabled}]
                                     [--no-wait]
                                     [--user-id]
   examples:
-  - summary: createDevBox
-    syntax: az devcenter dev dev-box create --pool-name "LargeDevWorkStationPool" --name "MyDevBox" --dev-center-name "{devCenterName}" --project-name "{projectName}" --user-id "me"
+  - summary: Create using dev center
+    syntax: az devcenter dev dev-box create --pool-name "LargeDevWorkStationPool" --name "MyDevBox" --dev-center-name "ContosoDevCenter" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Create using endpoint
+    syntax: az devcenter dev dev-box create --pool-name "LargeDevWorkStationPool" --name "MyDevBox" --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
     name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    summary: The name of a dev box.
     description: ''
   - isRequired: true
     name: --pool --pool-name
-    summary: The name of the Dev Box pool this machine belongs to.
+    summary: The name of the dev box pool this machine belongs to.
     description: ''
   - isRequired: true
     name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --local-administrator
     parameterValueGroup: "Disabled, Enabled"
-    summary: Indicates whether the owner of the Dev Box is a local administrator.
+    summary: Indicates whether the owner of the dev box is a local administrator.
     description: ''
   - name: --no-wait
     defaultValue: "False"
@@ -51,83 +56,133 @@ directCommands:
     description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
-- uid: az_devcenter_dev_dev-box_delay-upcoming-action
-  name: az devcenter dev dev-box delay-upcoming-action
-  summary: Delays an Upcoming Action.
+- uid: az_devcenter_dev_dev-box_delay-action
+  name: az devcenter dev dev-box delay-action
+  summary: Delay an action.
   description: ''
   syntax: >-
-    az devcenter dev dev-box delay-upcoming-action --delay-time
-                                                   --dev-box-name
-                                                   --dev-center
-                                                   --project
-                                                   --upcoming-action-id
-                                                   [--user-id]
+    az devcenter dev dev-box delay-action --action-name
+                                          --delay-time
+                                          --dev-box-name
+                                          --project
+                                          [--dev-center]
+                                          [--endpoint]
+                                          [--user-id]
   examples:
-  - summary: DevBoxes_DelayUpcomingAction
-    syntax: az devcenter dev dev-box delay-upcoming-action --dev-center-name "{devCenterName}" --project-name "{projectName}" --delay-time "04:30" --name "myDevBox" --upcoming-action-id "cae4d1f4-94b8-75f2-406d-5f00ae4c1da7 --user-id "00000000-0000-0000-0000-000000000000""
+  - summary: Delay action using dev center
+    syntax: az devcenter dev dev-box delay-action --dev-center-name "ContosoDevCenter" --project-name "DevProject" --delay-time "04:30" --name "myDevBox" --action-name "schedule-default" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Delay action using endpoint
+    syntax: az devcenter dev dev-box delay-action --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --delay-time "04:30" --name "myDevBox" --action-name "schedule-default" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
+    name: --action-name
+    summary: The name of an action that will take place on a dev box.
+    description: ''
+  - isRequired: true
     name: --delay-time
-    summary: The delayed timespan from the most recent scheduled time. Format HH:MM.
+    summary: The delayed timespan from the scheduled action time. Format HH:MM.
     description: ''
   - isRequired: true
     name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    summary: The name of a dev box.
     description: ''
   - isRequired: true
     name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
+  optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
+  - name: --user-id
+    defaultValue: "me"
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
+    description: ''
+- uid: az_devcenter_dev_dev-box_delay-all-actions
+  name: az devcenter dev dev-box delay-all-actions
+  summary: Delay all actions.
+  description: ''
+  syntax: >-
+    az devcenter dev dev-box delay-all-actions --delay-time
+                                               --dev-box-name
+                                               --project
+                                               [--dev-center]
+                                               [--endpoint]
+                                               [--user-id]
+  examples:
+  - summary: Delay all actions using dev center
+    syntax: az devcenter dev dev-box delay-all-actions --dev-center-name "ContosoDevCenter" --project-name "DevProject" --delay-time "04:30" --name "myDevBox" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Delay all actions using endpoint
+    syntax: az devcenter dev dev-box delay-all-actions --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --delay-time "04:30" --name "myDevBox" --user-id "00000000-0000-0000-0000-000000000000"
+  requiredParameters:
   - isRequired: true
-    name: --upcoming-action-id
-    summary: The upcoming action id.
+    name: --delay-time
+    summary: The delayed timespan from the earliest scheduled time of all actions. Format HH:MM.
+    description: ''
+  - isRequired: true
+    name: --dev-box-name --name -n
+    summary: The name of a dev box.
+    description: ''
+  - isRequired: true
+    name: --project --project-name
+    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --user-id
     defaultValue: "me"
     summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
 - uid: az_devcenter_dev_dev-box_delete
   name: az devcenter dev dev-box delete
-  summary: Deletes a dev box.
+  summary: Delete a dev box.
   description: ''
   syntax: >-
     az devcenter dev dev-box delete --dev-box-name
-                                    --dev-center
                                     --project
+                                    [--dev-center]
+                                    [--endpoint]
                                     [--no-wait]
                                     [--user-id]
                                     [--yes]
   examples:
-  - summary: deleteDevBox
-    syntax: az devcenter dev dev-box delete --name "MyDevBox" --dev-center-name "{devCenterName}"                 --project-name "{projectName}" --user-id "me"
+  - summary: Delete using dev center
+    syntax: az devcenter dev dev-box delete --name "MyDevBox" --dev-center-name "ContosoDevCenter"                --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Delete using endpoint
+    syntax: az devcenter dev dev-box delete --name "MyDevBox" --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
     name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    summary: The name of a dev box.
     description: ''
   - isRequired: true
     name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
   - name: --yes -y
     defaultValue: "False"
@@ -135,254 +190,337 @@ directCommands:
     description: ''
 - uid: az_devcenter_dev_dev-box_list
   name: az devcenter dev dev-box list
-  summary: Lists dev boxes in the project for a particular user, lists dev boxes in the dev center for a particular user, or lists dev boxes that the caller has access to in the dev center.
+  summary: List dev boxes for a user, list dev boxes in the dev center for a project and user, or list dev boxes that the caller has access to in the dev center.
   description: ''
   syntax: >-
-    az devcenter dev dev-box list --dev-center
+    az devcenter dev dev-box list [--dev-center]
+                                  [--endpoint]
                                   [--project]
                                   [--user-id]
   examples:
-  - summary: DevBox_ListByUserByProject
-    syntax: az devcenter dev dev-box list --dev-center-name "{devCenterName}" --project-name "{projectName}" --user-id "me"
-  - summary: DevBox_ListByUser
-    syntax: az devcenter dev dev-box list --dev-center-name "{devCenterName}" --user-id "me"
-  - summary: DevBox_List
-    syntax: az devcenter dev dev-box list --dev-center-name "{devCenterName}"
-  requiredParameters:
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
+  - summary: List all dev boxes in the dev center
+    syntax: az devcenter dev dev-box list --dev-center-name "ContosoDevCenter"
+  - summary: List all dev boxes in the dev center using endpoint
+    syntax: az devcenter dev dev-box list --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/"
+  - summary: List by user using dev center
+    syntax: az devcenter dev dev-box list --dev-center-name "ContosoDevCenter" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: List by user using endpoint
+    syntax: az devcenter dev dev-box list --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: List by user and project using dev center
+    syntax: az devcenter dev dev-box list --dev-center-name "ContosoDevCenter" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: List by user and project using endpoint
+    syntax: az devcenter dev dev-box list --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  optionalParameters:
+  - name: --dev-center --dev-center-name -d
     summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
     description: ''
-  optionalParameters:
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   - name: --user-id
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
-- uid: az_devcenter_dev_dev-box_list-upcoming-action
-  name: az devcenter dev dev-box list-upcoming-action
-  summary: Lists upcoming actions on a Dev Box.
+- uid: az_devcenter_dev_dev-box_list-action
+  name: az devcenter dev dev-box list-action
+  summary: List actions on a dev box.
   description: ''
   syntax: >-
-    az devcenter dev dev-box list-upcoming-action --dev-box-name
-                                                  --dev-center
-                                                  --project
-                                                  [--user-id]
+    az devcenter dev dev-box list-action --dev-box-name
+                                         --project
+                                         [--dev-center]
+                                         [--endpoint]
+                                         [--user-id]
   examples:
-  - summary: DevBoxes_ListUpcomingActions
-    syntax: az devcenter dev dev-box list-upcoming-action --dev-center-name "{devCenterName}" --project-name "{projectName}" --name "myDevBox" --user-id "me"
+  - summary: List actions using dev center
+    syntax: az devcenter dev dev-box list-action --dev-center-name "ContosoDevCenter" --project-name "DevProject" --name "myDevBox" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: List actions using endpoint
+    syntax: az devcenter dev dev-box list-action --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --name "myDevBox" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
     name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    summary: The name of a dev box.
     description: ''
   - isRequired: true
     name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --user-id
     defaultValue: "me"
     summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
-- uid: az_devcenter_dev_dev-box_show
-  name: az devcenter dev dev-box show
-  summary: Gets a dev box.
+- uid: az_devcenter_dev_dev-box_restart
+  name: az devcenter dev dev-box restart
+  summary: Restart a dev box.
   description: ''
   syntax: >-
-    az devcenter dev dev-box show --dev-box-name
-                                  --dev-center
-                                  --project
-                                  [--user-id]
+    az devcenter dev dev-box restart --dev-box-name
+                                     --project
+                                     [--dev-center]
+                                     [--endpoint]
+                                     [--no-wait]
+                                     [--user-id]
   examples:
-  - summary: getDevBoxForUser
-    syntax: az devcenter dev dev-box show --name "MyDevBox" --dev-center-name "{devCenterName}"                --project-name "{projectName}" --user-id "me"
+  - summary: Restart using dev center
+    syntax: az devcenter dev dev-box restart --name "MyDevBox" --dev-center-name "ContosoDevCenter"                --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Restart using endpoint
+    syntax: az devcenter dev dev-box restart --name "MyDevBox" --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
     name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    summary: The name of a dev box.
     description: ''
   - isRequired: true
     name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
-  - name: --user-id
-    defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
-    description: ''
-- uid: az_devcenter_dev_dev-box_show-remote-connection
-  name: az devcenter dev dev-box show-remote-connection
-  summary: Gets Connection info.
-  description: ''
-  syntax: >-
-    az devcenter dev dev-box show-remote-connection --dev-box-name
-                                                    --dev-center
-                                                    --project
-                                                    [--user-id]
-  examples:
-  - summary: DevBox_GetRemoteConnection
-    syntax: az devcenter dev dev-box show-remote-connection --name "MyDevBox" --dev-center-name "{devCenterName}"                --project-name "{projectName}" --user-id "me"
-  requiredParameters:
-  - isRequired: true
-    name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
+  - name: --dev-center --dev-center-name -d
     summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
     description: ''
-  - isRequired: true
-    name: --project --project-name
-    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
     description: ''
-  optionalParameters:
-  - name: --user-id
-    defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
-    description: ''
-- uid: az_devcenter_dev_dev-box_show-upcoming-action
-  name: az devcenter dev dev-box show-upcoming-action
-  summary: Gets an Upcoming Action.
-  description: ''
-  syntax: >-
-    az devcenter dev dev-box show-upcoming-action --dev-box-name
-                                                  --dev-center
-                                                  --project
-                                                  --upcoming-action-id
-                                                  [--user-id]
-  examples:
-  - summary: DevBoxes_GetUpcomingAction
-    syntax: az devcenter dev dev-box show-upcoming-action --dev-center-name "{devCenterName}" --project-name "{projectName}" --name "myDevBox" --upcoming-action-id "cae4d1f4-94b8-75f2-406d-5f00ae4c1da7" --user-id "me"
-  requiredParameters:
-  - isRequired: true
-    name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
-  - isRequired: true
-    name: --project --project-name
-    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
-    description: ''
-  - isRequired: true
-    name: --upcoming-action-id
-    summary: The upcoming action id.
-    description: ''
-  optionalParameters:
-  - name: --user-id
-    defaultValue: "me"
-    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
-    description: ''
-- uid: az_devcenter_dev_dev-box_skip-upcoming-action
-  name: az devcenter dev dev-box skip-upcoming-action
-  summary: Skips an Upcoming Action.
-  description: ''
-  syntax: >-
-    az devcenter dev dev-box skip-upcoming-action --dev-box-name
-                                                  --dev-center
-                                                  --project
-                                                  --upcoming-action-id
-                                                  [--user-id]
-  examples:
-  - summary: DevBoxes_SkipUpcomingAction
-    syntax: az devcenter dev dev-box skip-upcoming-action --dev-center-name "{devCenterName}" --project-name "{projectName}" --name "myDevBox" --upcoming-action-id "cae4d1f4-94b8-75f2-406d-5f00ae4c1da7" --user-id "me"
-  requiredParameters:
-  - isRequired: true
-    name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
-  - isRequired: true
-    name: --project --project-name
-    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
-    description: ''
-  - isRequired: true
-    name: --upcoming-action-id
-    summary: The upcoming action id.
-    description: ''
-  optionalParameters:
-  - name: --user-id
-    defaultValue: "me"
-    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
-    description: ''
-- uid: az_devcenter_dev_dev-box_start
-  name: az devcenter dev dev-box start
-  summary: Starts a dev box.
-  description: ''
-  syntax: >-
-    az devcenter dev dev-box start --dev-box-name
-                                   --dev-center
-                                   --project
-                                   [--no-wait]
-                                   [--user-id]
-  examples:
-  - summary: startDevBoxForUser
-    syntax: az devcenter dev dev-box start --name "MyDevBox" --dev-center-name "{devCenterName}"                --project-name "{projectName}" --user-id "me"
-  requiredParameters:
-  - isRequired: true
-    name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
-    description: ''
-  - isRequired: true
-    name: --project --project-name
-    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
-    description: ''
-  optionalParameters:
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
-- uid: az_devcenter_dev_dev-box_stop
-  name: az devcenter dev dev-box stop
-  summary: Stops a dev box.
+- uid: az_devcenter_dev_dev-box_show
+  name: az devcenter dev dev-box show
+  summary: Get a dev box.
   description: ''
   syntax: >-
-    az devcenter dev dev-box stop --dev-box-name
-                                  --dev-center
+    az devcenter dev dev-box show --dev-box-name
                                   --project
-                                  [--hibernate {false, true}]
-                                  [--no-wait]
+                                  [--dev-center]
+                                  [--endpoint]
                                   [--user-id]
   examples:
-  - summary: stopDevBoxForUser
-    syntax: az devcenter dev dev-box stop --name "MyDevBox" --dev-center-name "{devCenterName}"                --project-name "{projectName}" --user-id "me"
+  - summary: Get using dev center
+    syntax: az devcenter dev dev-box show --name "MyDevBox" --dev-center-name "ContosoDevCenter"                --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Get using endpoint
+    syntax: az devcenter dev dev-box show --name "MyDevBox" --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
   requiredParameters:
   - isRequired: true
     name: --dev-box-name --name -n
-    summary: The name of a Dev Box.
-    description: ''
-  - isRequired: true
-    name: --dev-center --dev-center-name -d
-    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    summary: The name of a dev box.
     description: ''
   - isRequired: true
     name: --project --project-name
     summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
     description: ''
   optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
+  - name: --user-id
+    defaultValue: "me"
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
+    description: ''
+- uid: az_devcenter_dev_dev-box_show-action
+  name: az devcenter dev dev-box show-action
+  summary: Get an action.
+  description: ''
+  syntax: >-
+    az devcenter dev dev-box show-action --action-name
+                                         --dev-box-name
+                                         --project
+                                         [--dev-center]
+                                         [--endpoint]
+                                         [--user-id]
+  examples:
+  - summary: Get action using dev center
+    syntax: az devcenter dev dev-box show-action --dev-center-name "ContosoDevCenter" --project-name "DevProject" --name "myDevBox" --action-name "schedule-default" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Get action using endpoint
+    syntax: az devcenter dev dev-box show-action --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --name "myDevBox" --action-name "schedule-default" --user-id "00000000-0000-0000-0000-000000000000"
+  requiredParameters:
+  - isRequired: true
+    name: --action-name
+    summary: The name of an action that will take place on a dev box.
+    description: ''
+  - isRequired: true
+    name: --dev-box-name --name -n
+    summary: The name of a dev box.
+    description: ''
+  - isRequired: true
+    name: --project --project-name
+    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
+    description: ''
+  optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
+  - name: --user-id
+    defaultValue: "me"
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
+    description: ''
+- uid: az_devcenter_dev_dev-box_show-remote-connection
+  name: az devcenter dev dev-box show-remote-connection
+  summary: Get remote connection info.
+  description: ''
+  syntax: >-
+    az devcenter dev dev-box show-remote-connection --dev-box-name
+                                                    --project
+                                                    [--dev-center]
+                                                    [--endpoint]
+                                                    [--user-id]
+  examples:
+  - summary: Get remote connection using dev center
+    syntax: az devcenter dev dev-box show-remote-connection --name "MyDevBox" --dev-center-name "ContosoDevCenter" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Get remote connection using dev center
+    syntax: az devcenter dev dev-box show-remote-connection --name "MyDevBox" --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  requiredParameters:
+  - isRequired: true
+    name: --dev-box-name --name -n
+    summary: The name of a dev box.
+    description: ''
+  - isRequired: true
+    name: --project --project-name
+    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
+    description: ''
+  optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
+  - name: --user-id
+    defaultValue: "me"
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
+    description: ''
+- uid: az_devcenter_dev_dev-box_skip-action
+  name: az devcenter dev dev-box skip-action
+  summary: Skip an action.
+  description: ''
+  syntax: >-
+    az devcenter dev dev-box skip-action --action-name
+                                         --dev-box-name
+                                         --project
+                                         [--dev-center]
+                                         [--endpoint]
+                                         [--user-id]
+  examples:
+  - summary: Skip action using dev center
+    syntax: az devcenter dev dev-box skip-action --dev-center-name "ContosoDevCenter" --project-name "DevProject" --name "myDevBox" --action-name "schedule-default" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Skip action using endpoint
+    syntax: az devcenter dev dev-box skip-action --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --name "myDevBox" --action-name "schedule-default" --user-id "00000000-0000-0000-0000-000000000000"
+  requiredParameters:
+  - isRequired: true
+    name: --action-name
+    summary: The name of an action that will take place on a dev box.
+    description: ''
+  - isRequired: true
+    name: --dev-box-name --name -n
+    summary: The name of a dev box.
+    description: ''
+  - isRequired: true
+    name: --project --project-name
+    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
+    description: ''
+  optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
+  - name: --user-id
+    defaultValue: "me"
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
+    description: ''
+- uid: az_devcenter_dev_dev-box_start
+  name: az devcenter dev dev-box start
+  summary: Start a dev box.
+  description: ''
+  syntax: >-
+    az devcenter dev dev-box start --dev-box-name
+                                   --project
+                                   [--dev-center]
+                                   [--endpoint]
+                                   [--no-wait]
+                                   [--user-id]
+  examples:
+  - summary: Start using dev center
+    syntax: az devcenter dev dev-box start --name "MyDevBox" --dev-center-name "ContosoDevCenter"                --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Start using endpoint
+    syntax: az devcenter dev dev-box start --name "MyDevBox" --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  requiredParameters:
+  - isRequired: true
+    name: --dev-box-name --name -n
+    summary: The name of a dev box.
+    description: ''
+  - isRequired: true
+    name: --project --project-name
+    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
+    description: ''
+  optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --user-id
+    defaultValue: "me"
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
+    description: ''
+- uid: az_devcenter_dev_dev-box_stop
+  name: az devcenter dev dev-box stop
+  summary: Stop a dev box.
+  description: ''
+  syntax: >-
+    az devcenter dev dev-box stop --dev-box-name
+                                  --project
+                                  [--dev-center]
+                                  [--endpoint]
+                                  [--hibernate {false, true}]
+                                  [--no-wait]
+                                  [--user-id]
+  examples:
+  - summary: Stop using dev center
+    syntax: az devcenter dev dev-box stop --name "MyDevBox" --dev-center-name "ContosoDevCenter"                --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  - summary: Stop using endpoint
+    syntax: az devcenter dev dev-box stop --name "MyDevBox" --endpoint "https://8a40af38-3b4c-4672-a6a4-5e964b1870ed-contosodevcenter.centralus.devcenter.azure.com/" --project-name "DevProject" --user-id "00000000-0000-0000-0000-000000000000"
+  requiredParameters:
+  - isRequired: true
+    name: --dev-box-name --name -n
+    summary: The name of a dev box.
+    description: ''
+  - isRequired: true
+    name: --project --project-name
+    summary: The name of the project. Use az configure -d project=<project_name> to configure a default.
+    description: ''
+  optionalParameters:
+  - name: --dev-center --dev-center-name -d
+    summary: The name of the dev center. Use az configure -d dev-center=<dev_center_name> to configure a default.
+    description: ''
+  - name: --endpoint
+    summary: The API endpoint for the developer resources. Use az configure -d endpoint=<endpoint_uri> to configure a default.
+    description: ''
   - name: --hibernate
     parameterValueGroup: "false, true"
     summary: Optional parameter to hibernate the dev box.
@@ -393,18 +531,20 @@ directCommands:
     description: ''
   - name: --user-id
     defaultValue: "me"
-    summary: The id of the user. If value is 'me', the identity is taken from the authentication context.
+    summary: The AAD object id of the user. If value is 'me', the identity is taken from the authentication context.
     description: ''
 commands:
 - az_devcenter_dev_dev-box_create
-- az_devcenter_dev_dev-box_delay-upcoming-action
+- az_devcenter_dev_dev-box_delay-action
+- az_devcenter_dev_dev-box_delay-all-actions
 - az_devcenter_dev_dev-box_delete
 - az_devcenter_dev_dev-box_list
-- az_devcenter_dev_dev-box_list-upcoming-action
+- az_devcenter_dev_dev-box_list-action
+- az_devcenter_dev_dev-box_restart
 - az_devcenter_dev_dev-box_show
+- az_devcenter_dev_dev-box_show-action
 - az_devcenter_dev_dev-box_show-remote-connection
-- az_devcenter_dev_dev-box_show-upcoming-action
-- az_devcenter_dev_dev-box_skip-upcoming-action
+- az_devcenter_dev_dev-box_skip-action
 - az_devcenter_dev_dev-box_start
 - az_devcenter_dev_dev-box_stop
 globalParameters:
@@ -425,4 +565,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage dev box with devcenter.
+  description: Manage dev boxes.

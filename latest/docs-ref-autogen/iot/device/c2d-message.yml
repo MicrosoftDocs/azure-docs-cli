@@ -91,7 +91,19 @@ directCommands:
 - uid: az_iot_device_c2d-message_receive
   name: az iot device c2d-message receive
   summary: Receive a cloud-to-device message.
-  description: 'Note: Only one message ack argument [--complete, --reject, --abandon] will be accepted.'
+  description: >-
+    The received message body will only be decoded when its content-encoding
+
+    is set to 'utf-8', 'utf-16' or 'utf-32'. The message payload will be
+
+    displayed as {{non-decodable payload}} when content-encoding is not
+
+    set to one of the above, or fails to decode even when content-encoding
+
+    is set to one of the above.
+
+
+    Note: Only one message ack argument [--complete, --reject, --abandon] will be accepted.
   syntax: >-
     az iot device c2d-message receive --device-id
                                       [--abandon {false, true}]
@@ -178,7 +190,21 @@ directCommands:
   description: >-
     This command relies on and may install dependent Cython package (uamqp) upon first execution.
 
-    https://github.com/Azure/azure-uamqp-python.
+    https://github.com/Azure/azure-uamqp-python
+
+
+    Note: Content-encoding is defaulted to utf-8. The command will send the message body
+
+    with encoding action when the content-encoding property is either utf-8, utf-16 or
+
+    utf-32. If the content-encoding value is not one of these, the property will still
+
+    be sent with no encoding action taken.
+
+
+    When sending a binary message body, the content must be provided from a file
+
+    (via `--data-file-path`) and content-type must be set to `application/octet-stream`.
   syntax: >-
     az iot device c2d-message send --device-id
                                    [--ack {full, negative, positive}]
@@ -187,6 +213,7 @@ directCommands:
                                    [--cid]
                                    [--content-type]
                                    [--da]
+                                   [--data-file-path]
                                    [--expiry]
                                    [--hub-name]
                                    [--login]
@@ -204,6 +231,10 @@ directCommands:
     syntax: az iot device c2d-message send -d {device_id} -n {iothub_name} --data 'Hello World' --props 'key0=value0;key1=value1'
   - summary: Send a C2D message and wait for device acknowledgement
     syntax: az iot device c2d-message send -d {device_id} -n {iothub_name} --ack full --wait
+  - summary: Send a C2D message in binary format from a file.
+    syntax: az iot device c2d-message send -d {device_id} -n {iothub_name} --data-file-path {file_path} --content-type 'application/octet-stream'
+  - summary: Send a C2D message in JSON format from a file.
+    syntax: az iot device c2d-message send -d {device_id} -n {iothub_name} --data-file-path {file_path} --content-type 'application/json'
   requiredParameters:
   - isRequired: true
     name: --device-id -d
@@ -231,7 +262,10 @@ directCommands:
     description: ''
   - name: --da --data
     defaultValue: "Ping from Az CLI IoT Extension"
-    summary: Message body.
+    summary: Message body. Provide text or raw json.
+    description: ''
+  - name: --data-file-path --dfp
+    summary: Provide path to file for message body payload. Please note when the payload needs to be sent in binary format, set the content type to application/octet-stream.
     description: ''
   - name: --expiry --expiry-time-utc
     summary: Units are milliseconds since unix epoch. If no time is indicated the default IoT Hub C2D message TTL is used.

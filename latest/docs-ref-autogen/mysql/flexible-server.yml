@@ -60,7 +60,7 @@ directCommands:
                                     [--backup-retention]
                                     [--database-name]
                                     [--geo-redundant-backup {Disabled, Enabled}]
-                                    [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
+                                    [--high-availability {Disabled, SameZone, ZoneRedundant}]
                                     [--identity]
                                     [--iops]
                                     [--key]
@@ -228,7 +228,7 @@ directCommands:
     summary: 'The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.'
     description: ''
   - name: --admin-user -u
-    defaultValue: "playfulabalone5"
+    defaultValue: "typicalwigeon0"
     summary: Administrator username for the server. Once set, it cannot be changed.
     description: ''
   - name: --auto-scale-iops
@@ -256,7 +256,7 @@ directCommands:
     description: ''
   - name: --high-availability
     defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled, SameZone, ZoneRedundant"
+    parameterValueGroup: "Disabled, SameZone, ZoneRedundant"
     summary: Enable (ZoneRedundant or SameZone) or disable high availability feature.
     description: ''
   - name: --identity
@@ -310,7 +310,7 @@ directCommands:
     description: ''
   - name: --tier
     defaultValue: "Burstable"
-    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, Memory Optimized.'
+    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.'
     description: ''
   - name: --version
     defaultValue: "5.7"
@@ -399,15 +399,21 @@ directCommands:
     az mysql flexible-server geo-restore --location
                                          --source-server
                                          [--address-prefixes]
+                                         [--backup-retention]
+                                         [--geo-redundant-backup {Disabled, Enabled}]
                                          [--ids]
                                          [--name]
                                          [--no-wait]
                                          [--private-dns-zone]
                                          [--public-access {Disabled, Enabled}]
                                          [--resource-group]
+                                         [--sku-name]
+                                         [--storage-auto-grow {Disabled, Enabled}]
+                                         [--storage-size]
                                          [--subnet]
                                          [--subnet-prefixes]
                                          [--subscription]
+                                         [--tier]
                                          [--vnet]
                                          [--yes]
                                          [--zone]
@@ -435,6 +441,13 @@ directCommands:
   - name: --address-prefixes
     summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
     description: ''
+  - name: --backup-retention
+    summary: The number of days a backup is retained. Range of 1 to 35 days. Default is 7 days.
+    description: ''
+  - name: --geo-redundant-backup
+    parameterValueGroup: "Disabled, Enabled"
+    summary: Whether or not geo redundant backup is enabled.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -455,6 +468,16 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --sku-name
+    summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.'
+    description: ''
+  - name: --storage-auto-grow
+    parameterValueGroup: "Disabled, Enabled"
+    summary: Enable or disable autogrow of the storage. Default value is Enabled.
+    description: ''
+  - name: --storage-size
+    summary: The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
+    description: ''
   - name: --subnet
     summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
     description: ''
@@ -463,6 +486,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tier
+    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.'
     description: ''
   - name: --vnet
     summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
@@ -543,6 +569,8 @@ directCommands:
   syntax: >-
     az mysql flexible-server restore --source-server
                                      [--address-prefixes]
+                                     [--backup-retention]
+                                     [--geo-redundant-backup {Disabled, Enabled}]
                                      [--ids]
                                      [--name]
                                      [--no-wait]
@@ -550,9 +578,13 @@ directCommands:
                                      [--public-access {Disabled, Enabled}]
                                      [--resource-group]
                                      [--restore-time]
+                                     [--sku-name]
+                                     [--storage-auto-grow {Disabled, Enabled}]
+                                     [--storage-size]
                                      [--subnet]
                                      [--subnet-prefixes]
                                      [--subscription]
+                                     [--tier]
                                      [--vnet]
                                      [--yes]
                                      [--zone]
@@ -578,6 +610,13 @@ directCommands:
   - name: --address-prefixes
     summary: The IP address prefix to use when creating a new virtual network in CIDR format. Default value is 10.0.0.0/16.
     description: ''
+  - name: --backup-retention
+    summary: The number of days a backup is retained. Range of 1 to 35 days. Default is 7 days.
+    description: ''
+  - name: --geo-redundant-backup
+    parameterValueGroup: "Disabled, Enabled"
+    summary: Whether or not geo redundant backup is enabled.
+    description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
@@ -599,8 +638,18 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --restore-time
-    defaultValue: "2023-03-26T12:09:46+00:00"
+    defaultValue: "2023-06-13T12:13:59+00:00"
     summary: The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
+    description: ''
+  - name: --sku-name
+    summary: 'The name of the compute SKU. Follows the convention Standard_{VM name}. Examples: Standard_B1ms.'
+    description: ''
+  - name: --storage-auto-grow
+    parameterValueGroup: "Disabled, Enabled"
+    summary: Enable or disable autogrow of the storage. Default value is Enabled.
+    description: ''
+  - name: --storage-size
+    summary: The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
     description: ''
   - name: --subnet
     summary: Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
@@ -610,6 +659,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tier
+    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.'
     description: ''
   - name: --vnet
     summary: Name or ID of a new or existing virtual network. If you want to use a vnet from different resource group or subscription, please provide a resource ID. The name must be between 2 to 64 characters. The name must begin with a letter or number, end with a letter, number or underscore, and may contain only letters, numbers, underscores, periods, or hyphens.
@@ -757,13 +809,14 @@ directCommands:
                                     [--disable-data-encryption {false, true}]
                                     [--force-string]
                                     [--geo-redundant-backup {Disabled, Enabled}]
-                                    [--high-availability {Disabled, Enabled, SameZone, ZoneRedundant}]
+                                    [--high-availability {Disabled, SameZone, ZoneRedundant}]
                                     [--identity]
                                     [--ids]
                                     [--iops]
                                     [--key]
                                     [--maintenance-window]
                                     [--name]
+                                    [--public-access {Disabled, Enabled}]
                                     [--remove]
                                     [--replication-role]
                                     [--resource-group]
@@ -847,7 +900,7 @@ directCommands:
     summary: Whether or not geo redundant backup is enabled.
     description: ''
   - name: --high-availability
-    parameterValueGroup: "Disabled, Enabled, SameZone, ZoneRedundant"
+    parameterValueGroup: "Disabled, SameZone, ZoneRedundant"
     summary: Enable (ZoneRedundant or SameZone) or disable high availability feature.
     description: ''
   - name: --identity
@@ -867,6 +920,10 @@ directCommands:
     description: ''
   - name: --name -n
     summary: Name of the server. The name can contain only lowercase letters, numbers, and the hyphen (-) character. Minimum 3 characters and maximum 63 characters.
+    description: ''
+  - name: --public-access
+    parameterValueGroup: "Disabled, Enabled"
+    summary: Enable or disable the public access on a server.
     description: ''
   - name: --remove
     defaultValue: "[]"
@@ -902,7 +959,7 @@ directCommands:
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --tier
-    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, Memory Optimized.'
+    summary: 'Compute tier of the server. Accepted values: Burstable, GeneralPurpose, MemoryOptimized.'
     description: ''
 - uid: az_mysql_flexible-server_upgrade
   name: az mysql flexible-server upgrade
@@ -1037,6 +1094,8 @@ commands:
 - az_mysql_flexible-server_firewall-rule_show
 - az_mysql_flexible-server_firewall-rule_update
 - az_mysql_flexible-server_geo-restore
+- az_mysql_flexible-server_gtid
+- az_mysql_flexible-server_gtid_reset
 - az_mysql_flexible-server_identity
 - az_mysql_flexible-server_identity_assign
 - az_mysql_flexible-server_identity_list

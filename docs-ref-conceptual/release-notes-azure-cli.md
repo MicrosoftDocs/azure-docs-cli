@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: mkluck
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 03/07/2023
+ms.date: 05/23/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,320 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## May 23, 2023
+
+Version 2.49.0
+
+### ACR
+
+* `az acr create`: Remove `Classic` from `sku` option
+
+### AKS
+
+* [BREAKING CHANGE] `az aks create`: Specify `--pod-cidr` with Azure CNI will return an error instead of logging a warning when not use `overlay` mode
+* [BREAKING CHANGE] `az aks create`: Change the default value of `--enable-msi-auth-for-monitoring` to true and add check for airgap clouds
+* `az aks update`: Support updating user assigned control plane identity for parameter `--assign-identity`
+* `az aks install-cli`: Add validation for installation path and update help message for parameters `--install-location` and `--kubelogin-install-location`
+* Fix #26353: `az aks install-cli`: Fix incorrect architecture detection on Darwin/arm64
+* `az aks create/update`: Add parameter `--enable-azure-monitor-metrics` to enable managed prometheus (Azure Monitor Metrics Addon)
+* `az aks create/update`: Add parameter `--azure-monitor-workspace-resource-id` to store metrics for the managed prometheus addon
+* `az aks create/update`: Add parameter `--grafana-resource-id` to link the Azure Monitor Workspace with a Grafana instance for viewing metrics and dashboards
+* `az aks create/update`: Add parameter `--enable-windows-recording-rules` to enable windows recording rule groups on the Azure Monitor Workspace (by default they get created but are disabled)
+* `az aks create/update`: Add parameter `--ksm-metric-labels-allow-list` to support the additional Kubernetes label keys that will be used in the resource's labels metric
+* `az aks create/update`: Add parameter `--ksm-metric-annotations-allow-list` to support the Kubernetes annotations keys that will be used in the resource's labels metric
+* `az aks update`: Add parameter `--disable-azure-monitor-metrics` to disable the Azure Monitor Metrics addon
+* `az aks create` and `az aks nodepool add`: Add warning message when specifying `--os-sku` to `Mariner` or `CBLMariner`
+
+### App Config
+
+* [BREAKING CHANGE] `az appconfig feature`: Update feature name validation to disallow the colon character
+* [BREAKING CHANGE] `az appconfig kv import`: Update feature name validation. Invalid feature flags will be skipped during import
+* [BREAKING CHANGE] `az appconfig`: Update default connection string resolution logic
+
+### App Service
+
+* `az functionapp create`: Add new parameter `--min-replicas` and `--max-replicas` to support minimum and maximum replicas
+* `az functionapp create`: Add new parameter `--registry-server` to support Centauri function app
+* `az functionapp create`: Update the default image to `mcr.microsoft.com` for Centauri
+* Fix #26445: `az webapp deploy`: Fix deployment failing with HTTP 400
+
+### ARM
+
+* Fix #26216: `az bicep format`: Fix the TypeError `expected str, bytes or os.PathLike object, not bool`
+* Fix #26256: `az bicep publish/restore/generate-params`: Fix version checks without bicep installed
+* `az bicep publish`: Add new parameter `--force` to allow overwriting existing module
+* Fix #26352: `az ts create`: Fix for the TypeError `string indices must be integers`
+
+### Backup
+
+* `az backup`: Add support for HANA HSR workload
+
+### Compute
+
+* `az vm create`: Support new license type `UBUNTU_PRO` and `UBUNTU`
+* `az vm extension set`: Enable auto-upgrade by default for GuestAttestation extension
+* `az image builder trigger`: Add subgroup to manage image builder template trigger
+* `az image builder output versioning`: Add subgroup to manage image builder template output versioning
+* `az image builder output add`: Add parameter `--versioning` to support describing how to generate new x.y.z version number for distribution
+* `az image builder output add`: Add parameter `--vhd-uri` to support specifying storage uri for the distributed VHD blob
+
+### Container
+
+* `az container create`: Add new parameters for container security context for confidential ContainerGroupSku
+
+### Cosmos DB
+
+* [BREAKING CHANGE] `az cosmosdb create/update`: Rename `--enable-public-network true/false` to `--public-network-access ENABLED/DISABLED/SECUREDBYPERIMETER`
+* `az cosmosdb create/update`: Add `--continuous-tier` to support continuous backup tier
+* `az cosmosdb create/update`: Enable Partition Merge feature for CosmosDB
+
+### Eventhub
+
+* [BREAKING CHANGE] `az eventhubs namespace network-rule`: This command group is removed and replaced by `az eventhubs namespace network-rule-set`
+* [BREAKING CHANGE] `az eventhubs namespace network-rule add`: This command is removed and replaced by `az eventhubs namespace network-rule-set ip-rule/virtual-network-rule add`
+* [BREAKING CHANGE] `az eventhubs namespace network-rule remove`: This command is removed and replaced by `az eventhubs namespace network-rule-set ip-rule/virtual-network-rule remove`
+* [BREAKING CHANGE] `az eventhubs eventhub create/update`: Remove `--message-retention` parameter, it is replaced by `--retention-time-in-hours`
+* [BREAKING CHANGE] `az eventhubs namespace application-group policy remove`: Rename `--throttling-policy-config` to `--policy` and remove `metric-id` and `rate-limit-threshold` properties in it
+* `az eventhubs eventhub create/update`: Add `--cleanup-policy`, `--retention-time-in-hours` and `--tombstone-retention-time-in-hours` to support `Retention-Description` feature
+
+### IoT
+
+* `az iot hub create/update/delete`: Fix poller issues
+
+### Key Vault
+
+* [BREAKING CHANGE] `az keyvault create`: `--retention-days` becomes required for MHSM creation
+* [BREAKING CHANGE] `az keyvault backup start`: The output will only contain `folderUrl`
+* [BREAKING CHANGE] `az keyvault restore start`: Nothing will return for successful run
+* [BREAKING CHANGE] `az keyvault role assignment delete`: Nothing will return for successful run
+* [BREAKING CHANGE] `az keyvault certificate show/set-attributes/import`: No longer return `x509CertificateProperties.basicConstraints`, `pending`
+* [BREAKING CHANGE] `az keyvault certificate contact delete`: Return an empty list instead of the deleted contact for consistency if the operation would remove the last contact
+* [BREAKING CHANGE] `az keyvault certificate issuer create`: `organizationDetails.zip` is no longer returned by serivce, use 0 as the default
+* `az keyvault security-domain upload`: Fix sd warpping keys with passwords
+* `az keyvault setting`: New command group to manage MHSM settings
+
+### Monitor
+
+* `az monitor`: Add new subgroup `account` to support managing monitor workspace
+* `az monitor log-analytics workspace table create/update`: Max `--total-retention-time` changed from 2555 to 2556
+
+### NetAppFiles
+
+* [BREAKING CHANGE] `az netappfiles volume create`: Remove optional parameter `--vault-id` as this is not longer needed
+* [BREAKING CHANGE] `az netappfiles vault list`: Remove command `vault list` as this is not longer needed
+* `az netappfiles account create`: Add optional parameter `--identity-type`
+* `az netappfiles account ad add`: Add optional parameter `--preferred-servers-for-ldap-client`
+* `az netappfiles volume create`: Add optional parameter `--is-large-volume`
+* `az netappfiles volume account create`: Add optional parameter `--identity-type`
+* `az netappfiles volume quota-rule update`: Add optional parameter `--tags`
+* `az netappfiles volume`: Add new command `break-file-locks` to break all the file locks on a volume
+
+### Network
+
+* [BREAKING CHANGE] `az network cross-region-lb rule`: Remove parameters `--enable-tcp-reset` and `--idle-timeout`
+* [BREAKING CHANGE] `az network application-gateway http-settings update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network application-gateway settings update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network application-gateway url-path-map update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network nic update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network nic ip-config update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network nsg rule update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network vnet update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network vnet subnet update`: Use `null` instead of `""` to detach
+* [BREAKING CHANGE] `az network application-gateway client-cert remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network application-gateway ssl-profile remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network private-endpoint dns-zone-group remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network private-endpoint ip-config remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network private-endpoint asg remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network nic ip-config address-pool remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network nic ip-config inbound-nat-rule remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network lb address-pool tunnel-interface remove`: Deprecate the output of command
+* [BREAKING CHANGE] `az network cross-region-lb address-pool address remove`: Deprecate the output of command
+* `az network private-endpoint-connection`: Add provider `Microsoft.HardwareSecurityModules/cloudHsmClusters`
+* Fix #26248: `az network dns record-set cname set-record`: Declare TTL as integer type
+* Fix #26326: `az network vnet subnet update`: `--nat-gateway` cannot be set to null
+* Fix #26318: `az network vnet subnet create`: `--nsg` and `--route-table` cannot be used as name from Azure Stack
+
+### RDBMS
+
+* [BREAKING CHANGE] `az mysql/postgres flexible-server create/update`: Deprecate `Enabled` for `--high-availability` argument
+* `az mysql flexible-server restore/georestore/replica create`: Add `--public-access` parameter for restore, replication and georestore
+
+### Service Bus
+
+* [BREAKING CHANGE] `az servicebus georecovery-alias fail-over`: Remove `--parameters` argument
+* [BREAKING CHANGE] `az servicebus namespace network-rule`: This command group is removed and replaced by `az servicebus namespace network-rule-set`
+* [BREAKING CHANGE] `az servicebus namespace network-rule add`: This command is removed and replaced by `az servicebus namespace network-rule-set ip-rule/virtual-network-rule add`
+* [BREAKING CHANGE] `az servicebus namespace network-rule remove`: This is removed and replaced by by `az servicebus namespace network-rule-set ip-rule/virtual-network-rule remove`
+* [BREAKING CHANGE] `az servicebus queue update`: Remove deprecated parameters `--enable-partitioning`, `--enable-session` and `--duplicate-detection`
+
+### Service Connector
+
+* `az spring connection create`: Enable user-assigned managed identity for spring apps and deprecate Postgresql single server
+
+### SQL
+
+* [BREAKING CHANGE] `az sql mi link create`: Remove `--replication-mode` argument
+* `az sql elastic-pool`: Add `--preferred-enclave-type` argument
+* `az sql mi link update`: Fix update command to use PATCH api
+
+### Storage
+
+* `az storage account blob-service-properties cors-rule`: Add new command group to manage blob cors rules
+
+## April 25, 2023
+
+Version 2.48.1
+
+### App Service
+
+* Hotfix: Use basic auth with SCM sites if supported, else use AAD auth
+
+## April 25, 2023
+
+Version 2.48.0
+
+### App Service
+
+* Fix #25642: `az functionapp deployment user show`: Fix the AttributeError `'function' object has no attribute 'metadata'`
+* `az staticwebapp appsettings`: Add `--environment-name` parameter to allow app setting operation on preview environments
+* `az functionapp create`: Update 'kind' attribute for Centauri function apps
+
+### Compute
+
+* Fix #26118: `az vm list-ip-addresses`: Fix the KeyError when attributes missing in public IP address
+* Fix #26164: `az vmss update`: Fix unexpected error while running the update instance protection command on VMSS flex instances
+* Fix #26185: `az sig update`: Fix issues that `is_soft_delete_enabled` may not exist
+* `az vm host resize`: Add new command to support resizing dedicated host
+* `az vm host list-resize-options`: Add new command to support getting possible resize options
+
+### DMS
+
+* `az dms project tack create`: Add support for database schema migration
+
+### Eventhub
+
+* `az eventhubs namespace application-group policy remove`: Add upcoming breaking change notification
+
+### Network
+
+* `az network nic update`: Add `--ip-configurations` to support shorthand syntax
+* `az network public-ip prefix create`: Add parameter `--ip-tags`
+* `az network cross-region-lb rule create`: Set default value for `--enable-tcp-reset` and `--idle-timeout`
+
+### RDBMS
+
+* `az mysql flexible-server create/update/gtid reset`: Add GTID reset and fix public-access
+
+### SQL
+
+* `az sql midb ledger-digest-uploads`: Support SQL Ledger
+* `az sql mi server-configuration-option`: New command group to manage server configuration options
+
+### SQL VM
+
+* `az sql vm enable-azure-ad-auth/validate-azure-ad-auth`: Single mode improvement
+
+### Storage
+
+* `az storage file/directory`: Add `--auth-mode login` and `--backup-intent` to support OAuth
+* `az storage blob sync`: Add positional argument `extra_options` to pass through options to `azcopy`
+
+## April 04, 2023
+
+Version 2.47.0
+
+### AKS
+
+* `az aks create/update`: Add `--tier` argument will specify the sku tier that customer wants
+* `az aks nodepool operation-abort`: Add new command to support aborting last running operation on nodepool
+* `az aks operation-abort`: Add new command to support aborting last running operation on managed cluster
+* `az aks create`: Raise a ClientRequestError when creating the same cluster again
+* `az aks create/update`: Add new parameter `--enable-image-cleaner` to enable Image Cleaner service
+* `az aks create/update`: Add new parameter `--image-cleaner-interval-hours` to set Image Cleaner scanning interval
+* `az aks create`: Add new parameter `--network-plugin-mode` to support creating Azure CNI Overlay clusters
+* `az aks create/update`: Add new parameter `--enable-workload-identity` to support enabling workload identity addon
+* `az aks create`: Add new parameter `--network-dataplane` to support creating Cilium clusters
+* `az aks update`: Add prameter `--network-plugin-mode` to update the mode of a network plugin
+* `az aks update`: Add prameter `--pod-cidr` to update the pod CIDR for a cluster
+
+### App Config
+
+* `az appconfig import/export`: Add warning log info to output even when `--yes` flag is set
+* `az appconfig kv import`: Ensure the case of imported boolean values does not change for string conversion from file
+
+### App Service
+
+* Fix #25375: `az functionapp deployment source config-zip`: Fix the `Could not find a 'AzureWebJobsStorage' application setting` error
+* Fix #25876: `az webapp config ssl import`: Fix the UnboundLocalError `local variable 'cert_name' referenced before assignment`
+* `az functionapp create`: Support container app deployments
+* `az functionapp delete`: Add a validation to check whether Azure Functions is not in the Azure Container app environments
+
+### ARM
+
+* `az deployment group create`: Support deployment with bicepparam files
+* `az resource patch`: Add new command to support updating resource by PATCH request
+* Fix #25706: `az bicep format`: Fix the TypeError `ensure_bicep_installation() missing 1 required positional argument 'cli_ctx'`
+* Fix #25715: `az bicep install/upgrade`: Fix the `configparser.NoSectionError: No section: 'bicep'`
+
+### Compute
+
+* `az vm reimage`: Add new command to support reimaging a virtual machine
+* `az vm/vmss create`: Deprecate image alias `UbuntuLTS` and `Win2008R2SP1`. Please use the image alias including the version of the distribution you want to use. For example: Please use `Ubuntu2204` instead of `UbuntuLTS`
+
+### Cosmos DB
+
+* `az cosmosdb identity assign`: Allow refreshing user assigned identities if they're reassigned to an account
+
+### Extension
+
+* `az extension add`: Add actionable message for extension not found error
+
+### Key Vault
+
+* `az keyvault region`: GA MHSM region commands
+
+### Monitor
+
+* `az monitor activity-log alert`: Adjust help message
+
+### NetAppFiles
+
+* `az netappfiles volume update`: Patch assign snapshotpolicyID
+
+### Network
+
+* [BREAKING CHANGE] `az network`: Clean up irrelevant commands in azure-stack profiles.
+* [BREAKING CHANGE] `az network application-gateway waf-policy custom-rule`: Rename output property `applicationGatewayIpConfigurations` to `applicationGatewayIPConfigurations` to keep consistent with the name in API
+* `az network routeserver create/update`: Add parameter `--hub-routing-preference`
+* Drop `azure-mgmt-network` SDK
+* Fix #25784: `az network private-link-service update`: `--lb-frontend-ip-configs` cannot be used
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres flexible-server replica create`: Fix the behavior of AZ selection in case zone is not passed as parameter
+* Fix #368903181: Fix zone selection during creation of replica
+* `az mysql flexible-server restore/geo-restore`: Add parameters to enhance PITR
+* `az mysql flexible-server replica create`: Add parameters to support cross region paired vnet
+
+### Service Bus
+
+* `az servicebus namespace/topic/queue authorization-rule keys renew/list`: Add `-n` option for `--authorization-rule-name` to create auth rule
+
+### SQL
+
+* `az sql server refresh-external-governance-status`: New command for refreshing external governance status
+* `az sql db geo/ltr-backup restore`: Add more parameters to geo restore and ltr restore
+
+### Storage
+
+* `az storage blob copy start`: Fix auth issue when providing source uri containing sas token
+* `az storage container/blob list`: Fix MemoryError when service returns less num than requested
+* `az storage account create`: GA partition DNS account support
+
+### Synapse
+
+* `az synapse spark pool create/update`: Update `--node-size-family` and `--node-size` allowed values
 
 ## March 07, 2023
 

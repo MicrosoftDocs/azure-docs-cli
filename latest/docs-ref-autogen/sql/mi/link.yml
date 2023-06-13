@@ -6,30 +6,32 @@ description: ''
 directCommands:
 - uid: az_sql_mi_link_create
   name: az sql mi link create
-  summary: Create a distributed availability group between Sql On-Prem and Sql Managed Instance.
-  description: ''
+  summary: Creates a new instance link.
+  description: This command creates an Azure SQL Managed Instance link by joining distributed availability group on SQL Server based on the parameters passed.
   syntax: >-
     az sql mi link create --distributed-availability-group-name
                           --instance-name
                           --resource-group
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--primary-ag]
-                          [--replication-mode {Async, Sync}]
                           [--secondary-ag]
                           [--source-endpoint]
                           [--target-database]
+  examples:
+  - summary: Creates an instance link.
+    syntax: az sql mi link create -g 'rg1' --instance-name 'mi1' --name 'link1' --primary-availability-group-name 'primaryag1' --secondary-availability-group-name 'secondaryag1' --source-endpoint '"tcp://server1:5022" --target-database 'db1' --no-wait')
   requiredParameters:
   - isRequired: true
-    name: --distributed-availability-group-name --name -n
-    summary: Distributed availability group name.
+    name: --distributed-availability-group-name --link --name -n
+    summary: Name of the instance link.
     description: ''
   - isRequired: true
     name: --instance-name --managed-instance --managed-instance-name --mi
-    summary: Name of the managed instance.
+    summary: Name of Azure SQL Managed Instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Name of the resource group.
     description: ''
   optionalParameters:
   - name: --no-wait
@@ -37,17 +39,13 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --primary-ag --primary-availability-group-name
-    summary: Primary availability group name.
-    description: ''
-  - name: --replication-mode
-    parameterValueGroup: "Async, Sync"
-    summary: Replication mode of a distributed availability group. Parameter will be ignored during link creation.
+    summary: Name of the primary availability group.
     description: ''
   - name: --secondary-ag --secondary-availability-group-name
-    summary: Secondary availability group name.
+    summary: Name of the secondary availability group.
     description: ''
   - name: --source-endpoint
-    summary: Source endpoint.
+    summary: IP adress of the source endpoint.
     description: ''
   - name: --target-database --target-db
     summary: Name of the target database.
@@ -55,8 +53,8 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_link_delete
   name: az sql mi link delete
-  summary: Drop a distributed availability group between Sql On-Prem and Sql Managed Instance.
-  description: ''
+  summary: Removes an instance link.
+  description: This command may cause data loss if the link is dropped and replica's LSNs are not synchronized with the primary, thus user must explicitly confirm the command when prompted, or use --yes parameter.
   syntax: >-
     az sql mi link delete [--distributed-availability-group-name]
                           [--ids]
@@ -65,22 +63,25 @@ directCommands:
                           [--resource-group]
                           [--subscription]
                           [--yes]
+  examples:
+  - summary: Forcefully deletes an instance link.
+    syntax: az sql mi link delete -g 'rg1' --instance-name 'mi1' -n 'link1' --yes
   optionalParameters:
-  - name: --distributed-availability-group-name --name -n
-    summary: Distributed availability group name.
+  - name: --distributed-availability-group-name --link --name -n
+    summary: Name of the instance link.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --instance-name --managed-instance --managed-instance-name --mi
-    summary: Name of the managed instance.
+    summary: Name of Azure SQL Managed Instance.
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Name of the resource group.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -92,24 +93,27 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_link_list
   name: az sql mi link list
-  summary: Get a list of a distributed availability groups in instance.
+  summary: Returns information about link feature for Azure SQL Managed Instance.
   description: ''
   syntax: >-
     az sql mi link list --instance-name
                         --resource-group
+  examples:
+  - summary: List all instance links on a specific managed instance.
+    syntax: az sql mi link list -g {rg} --instance-name {mi}
   requiredParameters:
   - isRequired: true
     name: --instance-name --managed-instance --managed-instance-name --mi
-    summary: Name of the managed instance.
+    summary: Name of Azure SQL Managed Instance.
     description: ''
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Name of the resource group.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_link_show
   name: az sql mi link show
-  summary: Get a distributed availability group info.
+  summary: Returns information about link feature for Azure SQL Managed Instance.
   description: ''
   syntax: >-
     az sql mi link show [--distributed-availability-group-name]
@@ -117,18 +121,21 @@ directCommands:
                         [--instance-name]
                         [--resource-group]
                         [--subscription]
+  examples:
+  - summary: Show the information about a specific instance link
+    syntax: az sql mi link show -g 'rg1' --instance-name 'mi1' --name 'link1'
   optionalParameters:
-  - name: --distributed-availability-group-name --name -n
-    summary: Distributed availability group name.
+  - name: --distributed-availability-group-name --link --name -n
+    summary: Name of the instance link.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --instance-name --managed-instance --managed-instance-name --mi
-    summary: Name of the managed instance.
+    summary: Name of Azure SQL Managed Instance.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    summary: Name of the resource group.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -136,72 +143,42 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_mi_link_update
   name: az sql mi link update
-  summary: Update a distributed availability group between Sql On-Prem and Sql Managed Instance.
+  summary: Updates the properties of an instance link.
   description: ''
   syntax: >-
-    az sql mi link update [--add]
-                          [--distributed-availability-group-name]
-                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+    az sql mi link update [--distributed-availability-group-name]
                           [--ids]
                           [--instance-name]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                          [--primary-ag]
-                          [--remove]
                           [--replication-mode {Async, Sync}]
                           [--resource-group]
-                          [--secondary-ag]
-                          [--set]
-                          [--source-endpoint]
                           [--subscription]
-                          [--target-database]
+  examples:
+  - summary: Change replication mode to Sync
+    syntax: az sql mi link update -g 'rg1' --mi 'mi1' -n 'link1' --replication-mode 'Sync'
   optionalParameters:
-  - name: --add
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
-  - name: --distributed-availability-group-name --name -n
-    summary: Distributed availability group name.
-    description: ''
-  - name: --force-string
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --distributed-availability-group-name --link --name -n
+    summary: Name of the instance link.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --instance-name --managed-instance --managed-instance-name --mi
-    summary: Name of the managed instance.
+    summary: Name of Azure SQL Managed Instance.
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --primary-ag --primary-availability-group-name
-    summary: Primary availability group name.
-    description: ''
-  - name: --remove
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
   - name: --replication-mode
     parameterValueGroup: "Async, Sync"
-    summary: Replication mode of a distributed availability group. Parameter will be ignored during link creation.
+    summary: Replication mode value. Possible values include 'Sync' and 'Async'.
     description: ''
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --secondary-ag --secondary-availability-group-name
-    summary: Secondary availability group name.
-    description: ''
-  - name: --set
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
-  - name: --source-endpoint
-    summary: Source endpoint.
+    summary: Name of the resource group.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --target-database --target-db
-    summary: Name of the target database.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 commands:
@@ -229,5 +206,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/01/2023
+  ms.date: 04/12/2023
   description: Instance link management commands.

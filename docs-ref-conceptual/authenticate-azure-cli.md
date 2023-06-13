@@ -64,7 +64,7 @@ az login -u <username> -p <password>
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 pre-defined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
 allowing you to apply both permissions restrictions and locally stored static credential information. To learn more
-about service principals, see [Create an Azure service principal with the Azure CLI](./create-an-azure-service-principal-azure-cli.md#4-sign-in-using-a-service-principal).
+about service principals, see [Working with Azure service principals using the Azure CLI](./create-an-azure-service-principal-azure-cli.md#4-sign-in-using-a-service-principal).
 
 To sign in with a service principal, you need:
 
@@ -73,7 +73,7 @@ To sign in with a service principal, you need:
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 > [!NOTE]
-> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
 
 > [!IMPORTANT]
 >
@@ -98,6 +98,8 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
+See [Working with service principals](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication) for more information on PEM file formats.
+
 ## Sign in with a different tenant
 
 You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both
@@ -121,6 +123,27 @@ az login --identity --username <client_id|object_id|resource_id>
 ```
 
 To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm) and [Use managed identities for Azure resources for sign in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
+
+## Sign in with Web Account Manager (WAM)
+
+The Azure CLI now offers preview support for Web Account Manager (WAM).  WAM is a Windows 10+ component that acts as an authentication broker.  Using WAM has several benefits:
+
+_ Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
+_ Support for Windows Hello, conditional access policies, and FIDO keys.
+_ Streamlined single sign-on.
+_ Bug fixes and enhancements shipped with Windows.
+
+Signing in with WAM is a preview, opt-in feature. Once enabled, it will replace the previous browser-based user interface. 
+
+```azurecli-interactive
+az config set core.allow_broker=true
+az account clear
+az login
+```
+
+At the current stage of development, there are a few known limitations to WAM:
+_ WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac , Linux, and earlier versions of Windows, we automatically fall back to a browser.  
+_ Microsoft Accounts (for example @outlook.com or @live.com) are not supported for the time being  . We are working with the Microsoft  Identity team to bring the support in the near future.
 
 ## See also
 

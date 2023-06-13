@@ -62,9 +62,10 @@ items:
         ```azurecli-interactive
         az vm create --resource-group TutorialResources \
           --name TutorialVM1 \
-          --image UbuntuLTS \
+          --image Ubuntu2204 \
           --generate-ssh-keys \
           --output json \
+          --public-ip-sku Standard
           --verbose 
         ```
 
@@ -160,7 +161,7 @@ items:
 
         ```azurecli-interactive
         az network nic show --ids $NIC_ID \
-          --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
+          --query '{IP:ipConfigurations[].publicIPAddress.id, Subnet:ipConfigurations[].subnet.id}' \
           -o json
         ```
 
@@ -185,7 +186,7 @@ items:
         ```azurecli-interactive
         read -d '' IP_ID SUBNET_ID <<< $(az network nic show \
           --ids $NIC_ID \
-          --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
+          --query '[ipConfigurations[].publicIPAddress.id, ipConfigurations[].subnet.id]' \
           -o tsv)
         ```
 
@@ -214,10 +215,11 @@ items:
         ```azurecli
         VM2_IP_ADDR=$(az vm create -g TutorialResources \
           -n TutorialVM2 \
-          --image UbuntuLTS \
+          --image Ubuntu2204 \
           --generate-ssh-keys \
           --subnet $SUBNET_ID \
-          --query publicIpAddress \
+          --query publicIPAddress \
+          --public-ip-sku Standard
           -o tsv)
         ```
 

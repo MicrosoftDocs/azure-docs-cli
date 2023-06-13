@@ -94,13 +94,25 @@ directCommands:
                                  --dest-resource-group
                                  --dest-server
                                  [--assign-identity {false, true}]
+                                 [--auto-pause-delay]
+                                 [--availability-zone]
                                  [--backup-storage-redundancy]
+                                 [--capacity]
+                                 [--compute-model {Provisioned, Serverless}]
+                                 [--edition]
+                                 [--elastic-pool]
                                  [--encryption-protector]
+                                 [--family]
                                  [--federated-client-id]
                                  [--ha-replicas]
                                  [--keys]
+                                 [--license-type {BasePrice, LicenseIncluded}]
+                                 [--min-capacity]
                                  [--no-wait]
+                                 [--preferred-enclave-type {Default, VBS}]
+                                 [--read-scale {Disabled, Enabled}]
                                  [--service-level-objective]
+                                 [--tags]
                                  [--umi]
                                  [--zone-redundant {false, true}]
   examples:
@@ -130,15 +142,36 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --assign-identity -i
-    defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: Assign identity for database.
+    description: ''
+  - name: --auto-pause-delay
+    summary: Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled.
+    description: ''
+  - name: --availability-zone
+    summary: Availability zone.
     description: ''
   - name: --backup-storage-redundancy --bsr
     summary: 'Backup storage redundancy used to store backups. Allowed values include: Local, Zone, Geo, GeoZone.'
     description: ''
+  - name: --capacity -c
+    summary: The capacity component of the sku in integer number of DTUs or vcores.
+    description: ''
+  - name: --compute-model
+    parameterValueGroup: "Provisioned, Serverless"
+    summary: The compute model of the database.
+    description: ''
+  - name: --edition --tier -e
+    summary: 'The edition component of the sku. Allowed values include: Basic, Standard, Premium, GeneralPurpose, BusinessCritical, Hyperscale.'
+    description: ''
+  - name: --elastic-pool
+    summary: The name or resource id of the elastic pool to create the database in.
+    description: ''
   - name: --encryption-protector
     summary: Specifies the Azure key vault key to be used as database encryption protector key.
+    description: ''
+  - name: --family -f
+    summary: 'The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.'
     description: ''
   - name: --federated-client-id
     summary: The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
@@ -149,19 +182,37 @@ directCommands:
   - name: --keys
     summary: The list of AKV keys for the SQL Database.
     description: ''
+  - name: --license-type
+    parameterValueGroup: "BasePrice, LicenseIncluded"
+    summary: The license type to apply for this database.``LicenseIncluded`` if you need a license, or ``BasePrice``if you have a license and are eligible for the Azure HybridBenefit.
+    description: ''
+  - name: --min-capacity
+    summary: Minimal capacity that database will always have allocated, if not paused.
+    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --preferred-enclave-type
+    parameterValueGroup: "Default, VBS"
+    summary: Specifies type of enclave for this resource.
+    description: ''
+  - name: --read-scale
+    parameterValueGroup: "Disabled, Enabled"
+    summary: If enabled, connections that have application intent set to readonly in their connection string may be routed to a readonly secondary replica. This property is only settable for Premium and Business Critical databases.
+    description: ''
   - name: --service-level-objective --service-objective
-    summary: The name of the service objective for the restored database.
+    summary: 'The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.'
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
   - name: --umi --user-assigned-identity-id
     summary: The list of user assigned identity for the SQL Database.
     description: ''
   - name: --zone-redundant -z
     parameterValueGroup: "false, true"
-    summary: Specifies whether to enable zone redundancy.
+    summary: Specifies whether to enable zone redundancy. Default is true if no value is specified.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
 - uid: az_sql_db_ltr-backup_show
@@ -288,5 +339,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/01/2023
+  ms.date: 04/12/2023
   description: Manage SQL database long term retention backups.

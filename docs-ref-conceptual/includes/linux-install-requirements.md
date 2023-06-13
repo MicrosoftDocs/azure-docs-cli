@@ -4,6 +4,7 @@ ms.author: sttramer
 manager: carmonm
 ms.date: 02/19/2019
 ms.topic: include
+ms.custom: devx-track-azurecli
 ---
 > [!NOTE]
 > To install the CLI, you need the following software:

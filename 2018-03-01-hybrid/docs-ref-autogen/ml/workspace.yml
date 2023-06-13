@@ -26,14 +26,18 @@ directCommands:
                            [--container-registry]
                            [--description]
                            [--display-name]
+                           [--enable-data-isolation]
                            [--file]
                            [--image-build-compute]
+                           [--key-vault]
                            [--location]
+                           [--managed-network]
                            [--name]
                            [--no-wait]
                            [--primary-user-assigned-identity]
                            [--public-network-access]
                            [--set]
+                           [--storage-account]
                            [--tags]
                            [--update-dependent-resources]
   examples:
@@ -57,14 +61,24 @@ directCommands:
   - name: --display-name
     summary: Display name for the workspace.
     description: ''
+  - name: --enable-data-isolation -e
+    defaultValue: "False"
+    summary: A flag to determine if a workspace has data isolation enabled. The flag can only be set at the creation stage, it can't be updated.
+    description: ''
   - name: --file -f
     summary: 'Local path to the YAML file containing the Azure ML workspace specification. The YAML reference docs for workspace can be found at: https://aka.ms/ml-cli-v2-workspace-yaml-reference.'
     description: ''
   - name: --image-build-compute -i
     summary: The name of the compute target to use for building environment Docker images when the container registry is behind a VNet.
     description: ''
+  - name: --key-vault -k
+    summary: ARM id of the key vault associated with this workspace.
+    description: ''
   - name: --location -l
     summary: The location to be used for the new workspace.
+    description: ''
+  - name: --managed-network -m
+    summary: Managed Network Isolation Mode for the workspace.
     description: ''
   - name: --name -n
     summary: Name of the Azure ML workspace.
@@ -82,6 +96,9 @@ directCommands:
   - name: --set
     summary: 'Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.'
     description: ''
+  - name: --storage-account -s
+    summary: ARM id of the storage account associated with this workspace.
+    description: ''
   - name: --tags
     summary: Space-separated key-value pairs for the tags of the object.
     description: ''
@@ -98,6 +115,7 @@ directCommands:
                            --resource-group
                            [--all-resources]
                            [--no-wait]
+                           [--permanently-delete]
                            [--yes]
   requiredParameters:
   - isRequired: true
@@ -116,6 +134,10 @@ directCommands:
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running-operation to finish. Default is False.
+    description: ''
+  - name: --permanently-delete -p
+    defaultValue: "False"
+    summary: Workspaces are soft-deleted state by default to allow recovery of workspace data. Set this flag to override the soft-delete behavior and permanently delete your workspace.
     description: ''
   - name: --yes -y
     defaultValue: "False"
@@ -181,6 +203,36 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_ml_workspace_provision-network
+  name: az ml workspace provision-network
+  summary: Provision workspace managed network.
+  description: Triggers the workspace to provision the managed network. Specifying spark enabled flag prepares the  workspace managed network for supporting Spark. The default is false if not specified but can be  enabled later by running this command again with this flag. Once enabled it cannot be disabled.
+  syntax: >-
+    az ml workspace provision-network --name
+                                      --resource-group
+                                      [--include-spark]
+                                      [--no-wait]
+  examples:
+  - summary: provision managed network.
+    syntax: az ml workspace provision-network --include-spark --name my-workspace-name --no-wait -g my-resource-group
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --include-spark
+    defaultValue: "False"
+    summary: Boolean [true/false] for if managed network should be provisioned to account for spark jobs. The default is false if flag not set. It can be enabled later by running this command again with this flag.
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running-operation to finish. Default is False.
+    description: ''
 - uid: az_ml_workspace_show
   name: az ml workspace show
   summary: Show details for a workspace.
@@ -234,6 +286,7 @@ directCommands:
                            [--file]
                            [--force-string]
                            [--image-build-compute]
+                           [--managed-network]
                            [--no-wait]
                            [--primary-user-assigned-identity]
                            [--public-network-access]
@@ -279,6 +332,9 @@ directCommands:
   - name: --image-build-compute -i
     summary: The name of the compute target to use for building environment Docker images when the container registry is behind a VNet.
     description: ''
+  - name: --managed-network -m
+    summary: Managed Network Isolation Mode for the workspace.
+    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running-operation to finish. Default is False.
@@ -307,6 +363,11 @@ commands:
 - az_ml_workspace_diagnose
 - az_ml_workspace_list
 - az_ml_workspace_list-keys
+- az_ml_workspace_outbound-rule
+- az_ml_workspace_outbound-rule_list
+- az_ml_workspace_outbound-rule_remove
+- az_ml_workspace_outbound-rule_show
+- az_ml_workspace_provision-network
 - az_ml_workspace_show
 - az_ml_workspace_sync-keys
 - az_ml_workspace_update

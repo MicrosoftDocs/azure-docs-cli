@@ -65,6 +65,7 @@ directCommands:
                   [--azure-keyvault-kms-key-id]
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
+                  [--azure-monitor-workspace-resource-id]
                   [--ca-certs]
                   [--ca-profile]
                   [--client-secret]
@@ -82,16 +83,16 @@ directCommands:
                   [--dns-name-prefix]
                   [--dns-service-ip]
                   [--dns-zone-resource-id]
-                  [--docker-bridge-address]
                   [--edge-zone]
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-asm]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
-                  [--enable-cilium-dataplane]
                   [--enable-cluster-autoscaler]
                   [--enable-custom-ca-trust]
                   [--enable-defender]
@@ -113,16 +114,23 @@ directCommands:
                   [--enable-ultra-ssd]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
+                  [--enable-windows-recording-rules]
                   [--enable-workload-identity {false, true}]
                   [--fqdn-subdomain]
                   [--generate-ssh-keys]
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
+                  [--grafana-resource-id]
+                  [--guardrails-excluded-ns]
+                  [--guardrails-level {Enforcement, Off, Warning}]
+                  [--guardrails-version]
                   [--host-group-id]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
                   [--ip-families]
+                  [--ksm-metric-annotations-allow-list]
+                  [--ksm-metric-labels-allow-list]
                   [--kube-proxy-config]
                   [--kubelet-config]
                   [--kubernetes-version]
@@ -142,6 +150,7 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-dataplane {azure, cilium}]
                   [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode {overlay}]
                   [--network-policy]
@@ -162,7 +171,7 @@ directCommands:
                   [--nodepool-name]
                   [--nodepool-tags]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
-                  [--os-sku {CBLMariner, Mariner, Ubuntu}]
+                  [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
@@ -177,7 +186,7 @@ directCommands:
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
-                  [--uptime-sla]
+                  [--tier {free, standard}]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -251,6 +260,14 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
   - summary: Create a kubernetes cluster with Custom CA Trust enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
+  - summary: Create a kubernetes cluster with guardrails set to "Warning"
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --enable-addons azure-policy
+  - summary: Create a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2 --enable-addons azure-policy
+  - summary: Create a kubernetes cluster with Azure Service Mesh enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
+  - summary: Create a kubernetes cluster with Azure Monitor Metrics enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azuremonitormetrics
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -322,6 +339,9 @@ directCommands:
   - name: --azure-keyvault-kms-key-vault-resource-id
     summary: Resource ID of Azure Key Vault.
     description: ''
+  - name: --azure-monitor-workspace-resource-id
+    summary: Resource ID of the Azure Monitor Workspace.
+    description: ''
   - name: --ca-certs --custom-ca-trust-certificates
     summary: Path to a file containing up to 10 blank line separated certificates. Only valid for linux nodes.
     description: These certificates are used by Custom CA Trust features and will be added to trust stores of nodes. Requires Custom CA Trust to be enabled on the node.
@@ -379,9 +399,6 @@ directCommands:
   - name: --dns-zone-resource-id
     summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
     description: ''
-  - name: --docker-bridge-address
-    summary: A specific IP address and netmask for the Docker bridge, using standard CIDR notation.
-    description: This address must not be in any Subnet IP ranges, or the Kubernetes service address range. For example, 172.17.0.1/16.
   - name: --edge-zone
     summary: The name of edge zone.
     description: ''
@@ -398,7 +415,7 @@ directCommands:
                                             If monitoring addon is enabled --no-wait argument will have no effect
           virtual-node                    - enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use.
                                             aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
-          azure-policy                    - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+          azure-policy                    - enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling Guardrails
                                             Learn more at aka.ms/aks/policy.
           ingress-appgw                   - enable Application Gateway Ingress Controller addon (PREVIEW).
           confcom                         - enable confcom addon, this will enable SGX device plugin by default(PREVIEW).
@@ -414,9 +431,16 @@ directCommands:
     defaultValue: "False"
     summary: Enable integration of user vnet with control plane apiserver pods.
     description: ''
+  - name: --enable-asm --enable-azure-service-mesh
+    summary: Enable Azure Service Mesh.
+    description: ''
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: Enable Azure KeyVault Key Management Service.
+    description: ''
+  - name: --enable-azure-monitor-metrics
+    defaultValue: "False"
+    summary: Enable Azure Monitor Metrics Profile.
     description: ''
   - name: --enable-azure-rbac
     defaultValue: "False"
@@ -425,13 +449,6 @@ directCommands:
   - name: --enable-blob-driver
     summary: Enable AzureBlob CSI Driver.
     description: ''
-  - name: --enable-cilium-dataplane
-    defaultValue: "False"
-    summary: Use Cilium as the networking dataplane for the Kubernetes cluster.
-    description: >-
-      Used together with the "azure" network plugin.
-
-      Requires either --pod-subnet-id or --network-plugin-mode=overlay.
   - name: --enable-cluster-autoscaler
     defaultValue: "False"
     summary: Enable cluster autoscaler, default value is false.
@@ -465,7 +482,7 @@ directCommands:
     summary: Using managed identity to manage cluster resource group. Default value is true, you can explicitly specify "--client-id" and "--secret" to disable managed identity.
     description: ''
   - name: --enable-msi-auth-for-monitoring
-    defaultValue: "False"
+    defaultValue: "1"
     parameterValueGroup: "false, true"
     summary: Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
     description: ''
@@ -518,6 +535,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Windows gmsa.
     description: ''
+  - name: --enable-windows-recording-rules
+    defaultValue: "False"
+    summary: Enable Windows Recording Rules when enabling the Azure Monitor Metrics addon.
+    description: ''
   - name: --enable-workload-identity
     parameterValueGroup: "false, true"
     summary: (PREVIEW) Enable workload identity addon.
@@ -545,6 +566,19 @@ directCommands:
     parameterValueGroup: "MIG1g, MIG2g, MIG3g, MIG4g, MIG7g"
     summary: GPU instance profile to partition multi-gpu Nvidia GPUs.
     description: ''
+  - name: --grafana-resource-id
+    summary: Resource ID of the Azure Managed Grafana Workspace.
+    description: ''
+  - name: --guardrails-excluded-ns
+    summary: Comma-separated list of Kubernetes namespaces to exclude from Guardrails.
+    description: ''
+  - name: --guardrails-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
+    description: ''
+  - name: --guardrails-version
+    summary: The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
+    description: ''
   - name: --host-group-id
     summary: (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
     description: ''
@@ -557,6 +591,12 @@ directCommands:
   - name: --ip-families
     summary: A comma separated list of IP versions to use for cluster networking.
     description: Each IP version should be in the format IPvN. For example, IPv4.
+  - name: --ksm-metric-annotations-allow-list
+    summary: Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
+    description: ''
+  - name: --ksm-metric-labels-allow-list
+    summary: Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g. '=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
+    description: ''
   - name: --kube-proxy-config
     summary: Kube-proxy configuration for this cluster.
     description: ''
@@ -617,6 +657,13 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-dataplane
+    parameterValueGroup: "azure, cilium"
+    summary: The network dataplane to use.
+    description: >-
+      Network dataplane used in the Kubernetes cluster.
+
+      Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --network-plugin
     parameterValueGroup: "azure, kubenet, none"
     summary: The Kubernetes network plugin to use.
@@ -696,7 +743,7 @@ directCommands:
     summary: Restriction level on the managed node resource group.
     description: The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --os-sku
-    parameterValueGroup: "CBLMariner, Mariner, Ubuntu"
+    parameterValueGroup: "AzureLinux, CBLMariner, Mariner, Ubuntu"
     summary: The os-sku of the agent node pool. Ubuntu or CBLMariner.
     description: ''
   - name: --outbound-type
@@ -744,9 +791,9 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
     description: ''
   - name: --vm-set-type
     summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet.
@@ -934,7 +981,7 @@ directCommands:
     summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
     description: ''
   - name: --enable-msi-auth-for-monitoring
-    defaultValue: "False"
+    defaultValue: "1"
     parameterValueGroup: "false, true"
     summary: Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
     description: ''
@@ -1322,8 +1369,8 @@ directCommands:
                   [--detach-acr]
                   [--disable-ahub]
                   [--disable-azure-keyvault-kms]
+                  [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
-                  [--disable-azuremonitormetrics]
                   [--disable-blob-driver]
                   [--disable-cluster-autoscaler]
                   [--disable-defender]
@@ -1345,8 +1392,8 @@ directCommands:
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
                   [--enable-azure-keyvault-kms]
+                  [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
-                  [--enable-azuremonitormetrics]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
                   [--enable-defender]
@@ -1371,6 +1418,9 @@ directCommands:
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--grafana-resource-id]
+                  [--guardrails-excluded-ns]
+                  [--guardrails-level {Enforcement, Off, Warning}]
+                  [--guardrails-version]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
                   [--ksm-metric-annotations-allow-list]
@@ -1387,18 +1437,21 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
-                  [--no-uptime-sla]
+                  [--network-plugin-mode]
                   [--no-wait]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--nodepool-labels]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
+                  [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--ssh-key-value]
                   [--tags]
+                  [--tier {free, standard}]
                   [--update-cluster-autoscaler]
-                  [--uptime-sla]
+                  [--upgrade-override-until]
+                  [--upgrade-settings]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -1460,6 +1513,12 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
   - summary: Update a existing managed cluster to a managed cluster snapshot.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
+  - summary: Update a kubernetes cluster with guardrails set to "Warning". Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning
+  - summary: Update a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2
+  - summary: Update a kubernetes cluster to clear any namespaces excluded from guardrails. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-excluded-ns ""
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1534,13 +1593,13 @@ directCommands:
     defaultValue: "False"
     summary: Disable Azure KeyVault Key Management Service.
     description: ''
+  - name: --disable-azure-monitor-metrics
+    defaultValue: "False"
+    summary: Disable Azure Monitor Metrics Profile. This will delete all DCRA's associated with the cluster, any linked DCRs with the data stream = prometheus-stream and the recording rule groups created by the addon for this AKS cluster.
+    description: ''
   - name: --disable-azure-rbac
     defaultValue: "False"
     summary: Disable Azure RBAC to control authorization checks on cluster.
-    description: ''
-  - name: --disable-azuremonitormetrics
-    defaultValue: "False"
-    summary: Disable Azure Monitor Metrics Profile.
     description: ''
   - name: --disable-blob-driver
     summary: Disable AzureBlob CSI Driver.
@@ -1625,13 +1684,13 @@ directCommands:
     defaultValue: "False"
     summary: Enable Azure KeyVault Key Management Service.
     description: ''
+  - name: --enable-azure-monitor-metrics
+    defaultValue: "False"
+    summary: Enable Azure Monitor Metrics Profile.
+    description: ''
   - name: --enable-azure-rbac
     defaultValue: "False"
     summary: Enable Azure RBAC to control authorization checks on cluster.
-    description: ''
-  - name: --enable-azuremonitormetrics
-    defaultValue: "False"
-    summary: Enable Azure Monitor Metrics Profile.
     description: ''
   - name: --enable-blob-driver
     summary: Enable AzureBlob CSI Driver.
@@ -1731,6 +1790,16 @@ directCommands:
   - name: --grafana-resource-id
     summary: Resource ID of the Azure Managed Grafana Workspace.
     description: ''
+  - name: --guardrails-excluded-ns
+    summary: Comma-separated list of Kubernetes namespaces to exclude from Guardrails. Use "" to clear a previously non-empty list.
+    description: ''
+  - name: --guardrails-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
+    description: ''
+  - name: --guardrails-version
+    summary: The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
+    description: ''
   - name: --http-proxy-config
     summary: HTTP Proxy configuration for this cluster.
     description: ''
@@ -1779,10 +1848,12 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
-  - name: --no-uptime-sla
-    defaultValue: "False"
-    summary: Change a paid managed cluster to a free one.
-    description: ''
+  - name: --network-plugin-mode
+    summary: The network plugin mode to use.
+    description: >-
+      Used to control the mode the network plugin should operate in. For example, "overlay" used with
+
+      --network-plugin=azure will use an overlay network (non-VNET IPs) for pods in the cluster.
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
@@ -1802,6 +1873,9 @@ directCommands:
     parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
     summary: How outbound traffic will be configured for a cluster.
     description: This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
+  - name: --pod-cidr
+    summary: A CIDR notation IP range from which to assign pod IPs when kubenet is used.
+    description: This range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
   - name: --private-dns-zone
     summary: The private dns zone mode for private cluster.
     description: ''
@@ -1814,14 +1888,20 @@ directCommands:
   - name: --tags
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
+  - name: --tier
+    parameterValueGroup: "free, standard"
+    summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' changes a standard managed cluster to a free one.
+    description: ''
   - name: --update-cluster-autoscaler -u
     defaultValue: "False"
     summary: Update min-count or max-count for cluster autoscaler.
     description: ''
-  - name: --uptime-sla
-    defaultValue: "False"
-    summary: Enable a paid managed cluster service with a financially backed SLA.
+  - name: --upgrade-override-until
+    summary: Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --upgrade-settings is set to IgnoreKubernetesDeprecations and --upgrade-override-until is not set, by default it will be set to 3 days from now.
     description: ''
+  - name: --upgrade-settings
+    summary: A comma separated list of supported cluster upgrade settings. E.g., IgnoreKubernetesDeprecations.
+    description: Allowed value is "IgnoreKubernetesDeprecations". If set as "", upgrade settings will be set to default and the existing overrides will no longer be effective.
   - name: --windows-admin-password
     summary: User account password to use on windows node VMs.
     description: >-
@@ -2029,6 +2109,11 @@ commands:
 - az_aks_maintenanceconfiguration_list
 - az_aks_maintenanceconfiguration_show
 - az_aks_maintenanceconfiguration_update
+- az_aks_mesh
+- az_aks_mesh_disable
+- az_aks_mesh_disable-ingress-gateway
+- az_aks_mesh_enable
+- az_aks_mesh_enable-ingress-gateway
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_delete

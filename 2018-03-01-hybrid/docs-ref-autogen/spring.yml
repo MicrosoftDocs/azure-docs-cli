@@ -18,12 +18,13 @@ directCommands:
                      [--app-subnet]
                      [--build-pool-size {S1, S2, S3, S4, S5, S6, S7, S8, S9}]
                      [--disable-app-insights {false, true}]
+                     [--disable-build-service {false, true}]
                      [--enable-acs]
                      [--enable-alv]
                      [--enable-api-portal]
                      [--enable-app-acc]
+                     [--enable-dataplane-public-endpoint {false, true}]
                      [--enable-gateway]
-                     [--enable-log-stream-public-endpoint {false, true}]
                      [--enable-service-registry]
                      [--gateway-instance-count]
                      [--infra-resource-group]
@@ -33,6 +34,9 @@ directCommands:
                      [--marketplace-plan-id]
                      [--no-wait]
                      [--outbound-type]
+                     [--registry-password]
+                     [--registry-server]
+                     [--registry-username]
                      [--reserved-cidr-range]
                      [--sampling-rate]
                      [--service-runtime-network-resource-group]
@@ -103,6 +107,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Disable Application Insights, if not disabled and no existing Application Insights specified with --app-insights-key or --app-insights, will create a new Application Insights instance in the same resource group.
     description: ''
+  - name: --disable-build-service
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: (Enterprise Tier Only) Disable build service.
+    description: ''
   - name: --enable-acs --enable-application-configuration-service
     defaultValue: "False"
     summary: (Enterprise Tier Only) Enable Application Configuration Service.
@@ -119,13 +128,13 @@ directCommands:
     defaultValue: "False"
     summary: (Enterprise Tier Only) Enable Application Accelerator.
     description: ''
+  - name: --enable-dataplane-public-endpoint --enable-dppa
+    parameterValueGroup: "false, true"
+    summary: If true, assign public endpoint for log streaming, remote debugging, app connect in vnet injection instance which could be accessed out of virtual network.
+    description: ''
   - name: --enable-gateway
     defaultValue: "False"
     summary: (Enterprise Tier Only) Enable Spring Cloud Gateway.
-    description: ''
-  - name: --enable-log-stream-public-endpoint --enable-lspa
-    parameterValueGroup: "false, true"
-    summary: If true, assign public endpoint for log streaming in vnet injection instance which could be accessed out of virtual network.
     description: ''
   - name: --enable-service-registry --enable-sr
     defaultValue: "False"
@@ -157,6 +166,15 @@ directCommands:
     defaultValue: "loadBalancer"
     summary: The outbound type of Azure Spring Apps VNet instance.
     description: ''
+  - name: --registry-password
+    summary: (Enterprise Tier Only) The container registry password used in build service.
+    description: ''
+  - name: --registry-server
+    summary: (Enterprise Tier Only) The container registry server used in build service.
+    description: ''
+  - name: --registry-username
+    summary: (Enterprise Tier Only) The container registry username used in build service.
+    description: ''
   - name: --reserved-cidr-range
     summary: Comma-separated list of IP address ranges in CIDR format. The IP ranges are reserved to host underlying Azure Spring Apps infrastructure, which should be 3 at least /16 unused IP ranges, must not overlap with any Subnet IP ranges.
     description: ''
@@ -172,7 +190,7 @@ directCommands:
   - name: --sku
     defaultValue: "Standard"
     parameterValueGroup: "Basic, Enterprise, Standard, StandardGen2"
-    summary: Name of SKU. Enterprise is still in Preview.
+    summary: Name of SKU.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -292,7 +310,7 @@ directCommands:
     az spring update --name
                      --resource-group
                      [--build-pool-size {S1, S2, S3, S4, S5, S6, S7, S8, S9}]
-                     [--enable-log-stream-public-endpoint {false, true}]
+                     [--enable-dataplane-public-endpoint {false, true}]
                      [--ingress-read-timeout]
                      [--no-wait]
                      [--sku {Basic, Enterprise, Standard, StandardGen2}]
@@ -316,9 +334,9 @@ directCommands:
     parameterValueGroup: "S1, S2, S3, S4, S5, S6, S7, S8, S9"
     summary: (Enterprise Tier Only) Size of build agent pool. See https://aka.ms/azure-spring-cloud-build-service-docs for size info.
     description: ''
-  - name: --enable-log-stream-public-endpoint --enable-lspa
+  - name: --enable-dataplane-public-endpoint --enable-dppa
     parameterValueGroup: "false, true"
-    summary: If true, assign public endpoint for log streaming in vnet injection instance which could be accessed out of virtual network.
+    summary: If true, assign public endpoint for log streaming, remote debugging, app connect in vnet injection instance which could be accessed out of virtual network.
     description: ''
   - name: --ingress-read-timeout
     summary: Ingress read timeout value in seconds. Minimum is 1, maximum is 1800.
@@ -329,7 +347,7 @@ directCommands:
     description: ''
   - name: --sku
     parameterValueGroup: "Basic, Enterprise, Standard, StandardGen2"
-    summary: Name of SKU. Enterprise is still in Preview.
+    summary: Name of SKU.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
@@ -347,6 +365,16 @@ commands:
 - az_spring_api-portal_delete
 - az_spring_api-portal_show
 - az_spring_api-portal_update
+- az_spring_apm
+- az_spring_apm_create
+- az_spring_apm_delete
+- az_spring_apm_disable-globally
+- az_spring_apm_enable-globally
+- az_spring_apm_list
+- az_spring_apm_list-enabled-globally
+- az_spring_apm_list-support-types
+- az_spring_apm_show
+- az_spring_apm_update
 - az_spring_app
 - az_spring_app_append-loaded-public-certificate
 - az_spring_app_append-persistent-storage
@@ -412,6 +440,7 @@ commands:
 - az_spring_application-accelerator_customized-accelerator_delete
 - az_spring_application-accelerator_customized-accelerator_list
 - az_spring_application-accelerator_customized-accelerator_show
+- az_spring_application-accelerator_customized-accelerator_sync-cert
 - az_spring_application-accelerator_customized-accelerator_update
 - az_spring_application-accelerator_delete
 - az_spring_application-accelerator_predefined-accelerator
@@ -438,6 +467,15 @@ commands:
 - az_spring_application-live-view_delete
 - az_spring_application-live-view_show
 - az_spring_build-service
+- az_spring_build-service_build
+- az_spring_build-service_build_create
+- az_spring_build-service_build_delete
+- az_spring_build-service_build_list
+- az_spring_build-service_build_result
+- az_spring_build-service_build_result_list
+- az_spring_build-service_build_result_show
+- az_spring_build-service_build_show
+- az_spring_build-service_build_update
 - az_spring_build-service_builder
 - az_spring_build-service_builder_buildpack-binding
 - az_spring_build-service_builder_buildpack-binding_create
@@ -450,6 +488,8 @@ commands:
 - az_spring_build-service_builder_show
 - az_spring_build-service_builder_show-deployments
 - az_spring_build-service_builder_update
+- az_spring_build-service_show
+- az_spring_build-service_update
 - az_spring_certificate
 - az_spring_certificate_add
 - az_spring_certificate_list
@@ -458,6 +498,8 @@ commands:
 - az_spring_certificate_show
 - az_spring_config-server
 - az_spring_config-server_clear
+- az_spring_config-server_disable
+- az_spring_config-server_enable
 - az_spring_config-server_git
 - az_spring_config-server_git_repo
 - az_spring_config-server_git_repo_add
@@ -523,6 +565,12 @@ commands:
 - az_spring_connection_update_webpubsub
 - az_spring_connection_validate
 - az_spring_connection_wait
+- az_spring_container-registry
+- az_spring_container-registry_create
+- az_spring_container-registry_delete
+- az_spring_container-registry_list
+- az_spring_container-registry_show
+- az_spring_container-registry_update
 - az_spring_create
 - az_spring_delete
 - az_spring_dev-tool
@@ -530,6 +578,10 @@ commands:
 - az_spring_dev-tool_delete
 - az_spring_dev-tool_show
 - az_spring_dev-tool_update
+- az_spring_eureka-server
+- az_spring_eureka-server_disable
+- az_spring_eureka-server_enable
+- az_spring_eureka-server_show
 - az_spring_gateway
 - az_spring_gateway_clear
 - az_spring_gateway_create
@@ -547,6 +599,7 @@ commands:
 - az_spring_gateway_route-config_show
 - az_spring_gateway_route-config_update
 - az_spring_gateway_show
+- az_spring_gateway_sync-cert
 - az_spring_gateway_update
 - az_spring_list
 - az_spring_list-marketplace-plan

@@ -4,7 +4,7 @@ name: az dataprotection backup-instance
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **dataprotection** extension for the Azure CLI  (version 2.43.0 or higher).  The extension will automatically install the first time you run an **az dataprotection backup-instance** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dataprotection** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az dataprotection backup-instance** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage backup instance with dataprotection.
 description: ''
 directCommands:
@@ -89,7 +89,7 @@ directCommands:
   syntax: >-
     az dataprotection backup-instance delete [--backup-instance-name]
                                              [--ids]
-                                             [--no-wait]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--resource-group]
                                              [--subscription]
                                              [--vault-name]
@@ -105,7 +105,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -128,8 +128,10 @@ directCommands:
   syntax: >-
     az dataprotection backup-instance initialize --datasource-id
                                                  --datasource-location
-                                                 --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk}
+                                                 --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
                                                  --policy-id
+                                                 [--backup-configuration]
+                                                 [--friendly-name]
                                                  [--secret-store-type {AzureKeyVault}]
                                                  [--secret-store-uri]
                                                  [--snapshot-resource-group-name]
@@ -148,7 +150,7 @@ directCommands:
     description: ''
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
     summary: Specify the datasource type of the resource to be backed up.
     description: ''
   - isRequired: true
@@ -156,6 +158,12 @@ directCommands:
     summary: Id of the backup policy the datasource will be associated.
     description: ''
   optionalParameters:
+  - name: --backup-configuration
+    summary: Backup configuration for backup. Use this parameter to configure protection for AzureKubernetesService.
+    description: ''
+  - name: --friendly-name
+    summary: User-defined friendly name for the backup instance.
+    description: ''
   - name: --secret-store-type
     parameterValueGroup: "AzureKeyVault"
     summary: Specify the secret store type to use for authentication.
@@ -168,6 +176,107 @@ directCommands:
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: az_dataprotection_backup-instance_initialize-backupconfig
+  name: az dataprotection backup-instance initialize-backupconfig
+  summary: Initialize JSON request body for initializing and configuring backup of an AzureKubernetesService resource.
+  description: ''
+  syntax: >-
+    az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
+                                                              [--excluded-namespaces]
+                                                              [--excluded-resource-type]
+                                                              [--include-cluster-scope {false, true}]
+                                                              [--included-namespaces]
+                                                              [--included-resource-type]
+                                                              [--label-selectors]
+                                                              [--snapshot-volumes {false, true}]
+  examples:
+  - summary: Initialize backup configuration
+    syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type AzureKubernetesService --label-selectors key=val foo=bar --excluded-namespaces excludeNS1 excludeNS2
+  requiredParameters:
+  - isRequired: true
+    name: --datasource-type
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
+    summary: Specify the datasource type of the resource to be backed up.
+    description: ''
+  optionalParameters:
+  - name: --excluded-namespaces
+    summary: List of namespaces to be excluded for backup.
+    description: ''
+  - name: --excluded-resource-type --excluded-resource-types
+    summary: List of resource types to be excluded for backup.
+    description: ''
+  - name: --include-cluster-scope --include-cluster-scope-resources
+    parameterValueGroup: "false, true"
+    summary: Boolean parameter to decide whether cluster scope resources are included for restore. By default this is taken as true.
+    description: ''
+  - name: --included-namespaces
+    summary: List of namespaces to be included for backup.
+    description: ''
+  - name: --included-resource-type --included-resource-types
+    summary: List of resource types to be included for backup.
+    description: ''
+  - name: --label-selectors
+    summary: List of labels for internal filtering for backup.
+    description: ''
+  - name: --snapshot-volumes
+    parameterValueGroup: "false, true"
+    summary: Boolean parameter to decide whether snapshot volumes are included for backup. By default this is taken as true.
+    description: ''
+- uid: az_dataprotection_backup-instance_initialize-restoreconfig
+  name: az dataprotection backup-instance initialize-restoreconfig
+  summary: Initialize JSON request body for initializing and configuring restore of an AzureKubernetesService resource.
+  description: ''
+  syntax: >-
+    az dataprotection backup-instance initialize-restoreconfig --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
+                                                               [--conflict-policy {Patch, Skip}]
+                                                               [--excluded-namespaces]
+                                                               [--excluded-resource-type]
+                                                               [--include-cluster-scope {false, true}]
+                                                               [--included-namespaces]
+                                                               [--included-resource-type]
+                                                               [--label-selectors]
+                                                               [--namespace-mappings]
+                                                               [--persistent-restoremode {RestoreWithVolumeData, RestoreWithoutVolumeData}]
+  examples:
+  - summary: Initialize restore configuration
+    syntax: az dataprotection backup-instance initialize-restoreconfig --datasource-type AzureKubernetesService
+  requiredParameters:
+  - isRequired: true
+    name: --datasource-type
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
+    summary: Specify the datasource type of the resource to be backed up.
+    description: ''
+  optionalParameters:
+  - name: --conflict-policy
+    parameterValueGroup: "Patch, Skip"
+    summary: Conflict policy for restore. Allowed values are Skip, Patch. Default value is Skip.
+    description: ''
+  - name: --excluded-namespaces
+    summary: List of namespaces to be excluded for restore.
+    description: ''
+  - name: --excluded-resource-type --excluded-resource-types
+    summary: List of resource types to be excluded for restore.
+    description: ''
+  - name: --include-cluster-scope --include-cluster-scope-resources
+    parameterValueGroup: "false, true"
+    summary: Boolean parameter to decide whether cluster scope resources are included for restore. By default this is taken as true.
+    description: ''
+  - name: --included-namespaces
+    summary: List of namespaces to be included for restore.
+    description: ''
+  - name: --included-resource-type --included-resource-types
+    summary: List of resource types to be included for restore.
+    description: ''
+  - name: --label-selectors
+    summary: List of labels for internal filtering for restore.
+    description: ''
+  - name: --namespace-mappings
+    summary: Namespaces mapping from source namespaces to target namespaces to resolve namespace naming conflicts in the target cluster.
+    description: ''
+  - name: --persistent-restoremode --persistent-volume-restore-mode
+    parameterValueGroup: "RestoreWithVolumeData, RestoreWithoutVolumeData"
+    summary: Restore mode for persistent volumes. Allowed values are RestoreWithVolumeData, RestoreWithoutVolumeData. Default value is RestoreWithVolumeData.
     description: ''
 - uid: az_dataprotection_backup-instance_list
   name: az dataprotection backup-instance list
@@ -193,7 +302,7 @@ directCommands:
   summary: List backup instances across subscriptions, resource groups and vaults.
   description: ''
   syntax: >-
-    az dataprotection backup-instance list-from-resourcegraph --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk}
+    az dataprotection backup-instance list-from-resourcegraph --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
                                                               [--datasource-id]
                                                               [--protection-status {ProtectionConfigured, ProtectionError}]
                                                               [--resource-groups]
@@ -207,7 +316,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
     summary: Specify the datasource type.
     description: ''
   optionalParameters:
@@ -263,7 +372,7 @@ directCommands:
     description: ''
 - uid: az_dataprotection_backup-instance_show
   name: az dataprotection backup-instance show
-  summary: Gets a backup instance with name in a backup vault.
+  summary: Get a backup instance with name in a backup vault.
   description: ''
   syntax: >-
     az dataprotection backup-instance show [--backup-instance-name]
@@ -358,31 +467,116 @@ directCommands:
   - name: --vault-name
     summary: The name of the backup vault.
     description: ''
+- uid: az_dataprotection_backup-instance_update
+  name: az dataprotection backup-instance update
+  summary: Update a backup instance in a backup vault.
+  description: ''
+  syntax: >-
+    az dataprotection backup-instance update [--add]
+                                             [--backup-instance-name]
+                                             [--data-source-info]
+                                             [--data-source-set-info]
+                                             [--datasource-auth-credentials]
+                                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--friendly-name]
+                                             [--ids]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--object-type]
+                                             [--policy-info]
+                                             [--remove]
+                                             [--resource-group]
+                                             [--set]
+                                             [--subscription]
+                                             [--tags]
+                                             [--validation-type {DeepValidation, ShallowValidation}]
+                                             [--vault-name]
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --backup-instance-name --name -n
+    summary: The name of the backup instance.
+    description: ''
+  - name: --data-source-info
+    summary: Gets or sets the data source information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --data-source-set-info
+    summary: Gets or sets the data source set information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --datasource-auth-credentials --datasource-auth-creds
+    summary: Credentials to use to authenticate with data source provider.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --friendly-name
+    summary: Gets or sets the Backup Instance friendly name.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --object-type
+    summary: Type of Backup or Restore Instance for request body.
+    description: ''
+  - name: --policy-info
+    summary: Gets or sets the policy information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: Proxy Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --validation-type
+    parameterValueGroup: "DeepValidation, ShallowValidation"
+    summary: Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again.
+    description: ''
+  - name: --vault-name
+    summary: The name of the backup vault.
+    description: ''
 - uid: az_dataprotection_backup-instance_update-msi-permissions
   name: az dataprotection backup-instance update-msi-permissions
   summary: Assign the required permissions needed to successfully enable backup for the datasource.
   description: ''
   syntax: >-
-    az dataprotection backup-instance update-msi-permissions --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk}
-                                                             --operation {Backup}
+    az dataprotection backup-instance update-msi-permissions --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
+                                                             --operation {Backup, Restore}
                                                              --permissions-scope {Resource, ResourceGroup, Subscription}
                                                              --resource-group
                                                              --vault-name
                                                              [--backup-instance]
                                                              [--keyvault-id]
+                                                             [--restore-request-object]
+                                                             [--snapshot-resource-group-id]
                                                              [--yes]
   examples:
   - summary: Assign the required permissions needed to successfully enable backup for the datasource.
     syntax: az dataprotection backup-instance update-msi-permissions --backup-instance backup_inst.json --resource-group samarth_resource_group --vault-name samarthbackupvault --datasource-type AzureDisk --operation Backup --permissions-scope ResourceGroup
+  - summary: Assign the required permissions needed to successfully enable restore for the datasource.
+    syntax: az dataprotection backup-instance update-msi-permissions --datasource-type AzureKubernetesService --operation Restore --permissions-scope Resource --resource-group sampleRG --vault-name samplevault --restore-request-object aksrestore.json --snapshot-resource-group-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sampleRG
   requiredParameters:
   - isRequired: true
     name: --datasource-type
-    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk"
+    parameterValueGroup: "AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService"
     summary: Specify the datasource type of the resource to be backed up.
     description: ''
   - isRequired: true
     name: --operation
-    parameterValueGroup: "Backup"
+    parameterValueGroup: "Backup, Restore"
     summary: List of possible operations.
     description: ''
   - isRequired: true
@@ -400,10 +594,16 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --backup-instance
-    summary: 'Request body for operation Expected value: json-string/@json-file. Required when --operation is Backup.'
+    summary: 'Request body for operation "Backup" Expected value: json-string/@json-file. Required when --operation is Backup.'
     description: ''
   - name: --keyvault-id
     summary: ARM id of the key vault. Required when --datasource-type is AzureDatabaseForPostgreSQL.
+    description: ''
+  - name: --restore-request-object
+    summary: 'Request body for operation "Restore" Expected value: json-string/@json-file. Required when --operation is Restore.'
+    description: ''
+  - name: --snapshot-resource-group-id --snapshot-rg-id
+    summary: ARM id of the snapshot resource group. Required when assigning permissions over snapshot resource group and the --operation is Restore.
     description: ''
   - name: --yes -y
     defaultValue: "False"
@@ -590,6 +790,8 @@ commands:
 - az_dataprotection_backup-instance_create
 - az_dataprotection_backup-instance_delete
 - az_dataprotection_backup-instance_initialize
+- az_dataprotection_backup-instance_initialize-backupconfig
+- az_dataprotection_backup-instance_initialize-restoreconfig
 - az_dataprotection_backup-instance_list
 - az_dataprotection_backup-instance_list-from-resourcegraph
 - az_dataprotection_backup-instance_restore
@@ -601,6 +803,7 @@ commands:
 - az_dataprotection_backup-instance_show
 - az_dataprotection_backup-instance_stop-protection
 - az_dataprotection_backup-instance_suspend-backup
+- az_dataprotection_backup-instance_update
 - az_dataprotection_backup-instance_update-msi-permissions
 - az_dataprotection_backup-instance_update-policy
 - az_dataprotection_backup-instance_validate-for-backup

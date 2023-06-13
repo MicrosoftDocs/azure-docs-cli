@@ -16,113 +16,219 @@ keywords: azure cli updates, azure cli notes, azure cli versions, azure cli brea
 
 ## AKS
 
-### `az acs`
+### `az aks create`
 
-- The `acs` command group has been deprecated and as of 2.41.0, `acs` will be removed. For more information, please refer to [this doc](https://azure.microsoft.com/updates/azure-container-service-will-retire-on-january-31-2020/)
-  
-## App Config
+- Specifying `--pod-cidr` with Azure CNI will return an error instead of logging a warning when not using overlay mode.
+- Change the default value of `--enable-msi-auth-for-monitoring` to true and add check for airgap clouds.
 
-### `az appconfig kv export`
+## APP Config
 
-- Validations will be added to JSON file imports to ensure that only valid JSON objects are imported. Other JSON primitives will be rejected. 
+### `az appconfig feature`
+
+- Update feature name validation to disallow the colon character.
 
 ### `az appconfig kv import`
 
-- Validations will be added to JSON file imports to ensure that only valid JSON objects are imported. Other JSON primitives will be rejected. 
+- Update feature name validation. Invalid feature flags will be skipped during import.
 
-## App Service
+### `az appconfig`
 
-### `az logicapp create`
-
-- Parameter breaking-change will happen to the parameter sets
-  - `--consumption-plan-location` and `--os-type` parameter will be deprecated. 
+- Update default connection string resolution logic.
 
 ## Compute
 
 ### `az vm create`
 
-- Parameter breaking-change will apply to all parameter sets
-  - Make the default value of  `--enable-secure-boot` to `True` for Trusted Launch VM. 
-    - This will lower the barrier to entry even further and provide customers the full set of Trusted Launch features by default.
+- Make the default value of `--enable-secure-boot` to `True` for Trusted Launch VM. 
+  - This will lower the barrier to entry even further and provide customers the full set of Trusted Launch features by default.
+- Make the default value of `--public-ip-sku` from `Basic` to `Standard`.
 
 ### `az vmss create`
 
-- Parameter breaking-change will apply to all parameter sets
-  - Make the default value of  `--enable-secure-boot` to `True` for Trusted Launch VMSS.
-    - This will lower the barrier to entry even further and provide customers the full set of Trusted Launch features by default.
+- Make the default value of `--enable-secure-boot` to `True` for Trusted Launch VMSS.
+  - This will lower the barrier to entry even further and provide customers the full set of Trusted Launch features by default.
 
-## Event Hubs
+## Cosmos DB
 
-### `az eventhubs namespace update`
+### `az cosmosdb create/update`
 
-The following parameters will be deprecated in 2.41.0. Please use `az eventhubs namespace encryption` to manage keys.
+- Rename `--enable-public-network true/false` to `--public-network-access ENABLED/DISABLED/SECUREDBYPERIMETER`.
 
--  `--key-source`
--  `--key-name`
--  `--key-vault-uri`
--  `--key-version`
+## EventHub
 
-### `az eventhubs namespace create`
+### `az eventhubs namespace network-rule`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--identity` will be deprecated, please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead
-  - `-default-action` and `--enable-trusted-service-access` will be deprecated, please use `az eventhubs namespace network-rule update` instead
+- This command group is removed and replaced by `az eventhubs namespace network-rule-set`.
 
-### `az eventhubs namespace update`
+### `az eventhubs namespace network-rule add`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--identity` will be deprecated. Please use `--mi-user-identity` and `--mi-system-assigned` together with `az eventhubs namespace identity` command group instead.
-  - `-default-action` and `--enable-trusted-service-access` will be deprecated. Please use `az eventhubs namespace network-rule update` instead
+- This command is removed and replaced by `az eventhubs namespace network-rule-set ip-rule/virtual-network-rule add`.
 
-## Key Vault
+### `az eventhubs namespace network-rule remove`
+
+- This command is removed and replaced by `az eventhubs namespace network-rule-set ip-rule/virtual-network-rule remove`.
+
+### `az eventhubs eventhub create/update`
+
+- Remove `--message-retention` parameter, it is replaced by `--retention-time-in-hours`.
+- The parameter `–message-retention` will be deprecated and replaced by `–retention-time-in-hours`.
+
+### `az eventhubs namespace application-group policy remove`
+
+- Rename `--throttling-policy-config` to `--policy` and remove `metric-id` and `rate-limit-threshold` properties in it.
+
+## KeyVault
 
 ### `az keyvault create`
 
-- Parameter breaking-change will happen to the parameter sets
-  - `--enable-soft-delete` will be deprecated and all keyvault will be created with soft delete enabled.
+- `--retention-days` becomes required for MHSM creation.
 
-## Monitor
+### `az keyvault backup start`
 
-### `az monitor diagnostic-settings list`
+- The output will only contain `folderUrl`.
 
-- `value` property will be dropped from output.
--  New output will return a list instead of a dict
+### `az keyvault restore start`
+
+- Nothing will return for successful run. Because according to the CLI command design specification, start commands do not need output.
+
+### `az keyvault role assignment delete`
+
+- Nothing will return for successful run. Because according to the CLI command design specification, remove/delete commands do not need output.
+
+### `az keyvault certificate show/set-attributes/import`
+
+- No longer return `x509CertificateProperties.basicConstraints`, `pending`.
+
+### `az keyvault certificate contact delete`
+
+- Return an empty list instead of the deleted contact for consistency if the operation would remove the last contact.
+
+### `az keyvault certificate issuer create`
+
+- `organizationDetails.zip` is no longer returned by serivce, use 0 as the default.
+
+## NetAppFiles
+
+### `az netappfiles vault list command`
+
+- Remove command `vault list` as this is not longer needed.
+
+### `az netappfiles volume create/update`
+
+- Remove optional parameter `--vault-id` as this is not longer needed. 
 
 ## Network
 
-### `az network vnet create`
+### `az network application-gateway settings update`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--defer` will be deprecated, please use short hand syntax instead
+- Use `null` instead of `""`  to detach.
+
+### `az network application-gateway url-path-map update`
+
+- Use `null` instead of `""`  to detach.
+
+### `az network nic update`
+
+- Use `null` instead of `""`  to detach.
+
+### `az network nic ip-config update`
+
+- Use `null` instead of `""`  to detach.
+
+### `az network nsg rule update`
+
+- Use `null` instead of `""`  to detach.
 
 ### `az network vnet update`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--defer` will be deprecated, please use short hand syntax instead
+- Use `null` instead of `""`  to detach.
 
-### `az network vnet subnet create`
+### `az network vnet subnet update`
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--defer` will be deprecated, please use short hand syntax instead
+- Use `null` instead of `""`  to detach.
 
-### `az network watcher connection-monitor create`
+### `az network cross-region-lb rule`
 
-- Parameter breaking-change will apply to all parameter sets
-   - Deprecate classic connection monitor creation, please use the new connection monitor
+- Remove parameters `--enable-tcp-reset` and `--idle-timeout`
 
-## Service Bus
+### `az network application-gateway ssl-profile remove`
 
-### `az servicebus namespace create`
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--default-action` will be deprecated. Please use `az servicebus namespace network-rule update`
+### `az network application-gateway client-cert remove`
 
-### `az servicebus namespace update`
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--default-action` will be deprecated. Please use `az servicebus namespace network-rule update`
+### `az network cross-region-lb address-pool address remove`
 
-### `az servicebus migration`
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
 
-- Parameter breaking-change will apply to all parameter sets
-  - `--config-name` will be deprecated. There is no replacement for this parameter.
+### `az network lb address-pool tunnel-interface remove`
+
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
+
+### `az network nic ip-config address-pool remove`
+
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
+
+### `az network nic ip-config inbound-nat-rule remove`
+
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
+
+### `az network private-endpoint dns-zone-group remove`
+
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
+
+### `az network private-endpoint ip-config remove`
+
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
+
+### `az network private-endpoint asg remove`
+
+- Output will be deprecated. Because according to the CLI command design specification, remove/delete commands do not need output.
+
+## RDBMS
+
+### `az mysql flexible-server create`
+
+- The parameter `Enabled` for `--high-availability` will be deprecated, as it's the same as `ZoneRedundant`.
+
+### `az mysql flexible-server update`
+
+- The parameter `Enabled` for `--high-availability` will be deprecated, as it's the same as `ZoneRedundant`.
+
+### `az postgres flexible-server create`
+
+- The parameter `Enabled` for `--high-availability` will be deprecated, as it's the same as `ZoneRedundant`.
+
+### `az postgres flexible-server update`
+
+- The parameter `Enabled` for `--high-availability` will be deprecated, as it's the same as `ZoneRedundant`.
+
+## ServiceBus
+
+### `az servicebus georecovery-alias fail-over`
+
+- Remove `--parameters` argument.
+
+### `az servicebus namespace network-rule`
+
+- This command group is removed and replaced by `az servicebus namespace network-rule-set`.
+
+### `az servicebus namespace network-rule add`
+
+- This command is removed and replaced by `az servicebus namespace network-rule-set ip-rule/virtual-network-rule add`.
+
+### `az servicebus namespace network-rule remove`
+
+- This is removed and replaced by by `az servicebus namespace network-rule-set ip-rule/virtual-network-rule remove`.
+
+### `az servicebus queue update`
+
+- Remove deprecated parameters `--enable-partitioning`, `--enable-session` and `--duplicate-detection`.
+
+## SQL
+
+### `az sql mi link create`
+
+- Remove `--replication-mode` argument.

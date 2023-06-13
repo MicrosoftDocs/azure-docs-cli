@@ -1,6 +1,6 @@
 ---
 title: Install the Azure CLI for Windows | Microsoft Docs
-description: To install the Azure CLI on Windows, you must use Powershell, or an MSI installer, which gives you access to the CLI through the Windows Command Prompt (CMD).
+description: To install the Azure CLI on Windows, you must use PowerShell, or an MSI installer, which gives you access to the CLI through the Windows Command Prompt (CMD).
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
@@ -26,8 +26,8 @@ for the list of supported package managers or how to install manually under WSL.
 
 The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.
 
-> [!Note]
-> After the installation is complete, you will need to close and reopen any active terminal window to use the Azure CLI.
+> [!IMPORTANT]
+> After the installation is complete, you will need to **close and reopen any active terminal window to use the Azure CLI**.
 
 # [Microsoft Installer (MSI)](#tab/azure-cli)
 
@@ -44,14 +44,15 @@ To download the MSI installer for specific version, change the version segment i
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
-### Powershell
+### PowerShell
 
-You can also install the Azure CLI using PowerShell. Start PowerShell as administrator and run the following command:
+Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
+- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+- [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
 
-> [!Note]
-> PowerShell must be run as administrator.
-
-Start PowerShell as administrator and run the following command:
+To install the Azure CLI using PowerShell, start PowerShell **as administrator** and run the following command:
 
    ```PowerShell
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
@@ -85,6 +86,38 @@ The `-e` option is to ensure the official Azure CLI package is installed. This c
 ## Run the Azure CLI
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
+
+## Enable Tab Completion on PowerShell
+
+PowerShell provides completion on inputs to provide hints, enable discovery and speed up input entry. Command names, command group names, parameters and certain parameter values can be completed by pressing the <kbd>Tab</kbd> key.
+
+> [!Note]
+> Azure CLI version 2.49 or higher is required to enable tab completion for Azure CLI on PowerShell.
+
+To enable tab completion in PowerShell, create or edit the profile stored in the variable `$PROFILE`. The simplest way is to run `notepad $PROFILE` in PowerShell. For more information, see [How to create your profile](/powershell/module/microsoft.powershell.core/about/about_profiles#how-to-create-a-profile) and [Profiles and execution policy](/powershell/module/microsoft.powershell.core/about/about_profiles#profiles-and-execution-policy).
+
+Then add the following code to your PowerShell profile:
+
+```powershell
+Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
+    param($commandName, $wordToComplete, $cursorPosition)
+    $completion_file = New-TemporaryFile
+    $env:ARGCOMPLETE_USE_TEMPFILES = 1
+    $env:_ARGCOMPLETE_STDOUT_FILENAME = $completion_file
+    $env:COMP_LINE = $wordToComplete
+    $env:COMP_POINT = $cursorPosition
+    $env:_ARGCOMPLETE = 1
+    $env:_ARGCOMPLETE_SUPPRESS_SPACE = 0
+    $env:_ARGCOMPLETE_IFS = "`n"
+    az 2>&1 | Out-Null
+    Get-Content $completion_file | Sort-Object | ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
+    }
+    Remove-Item $completion_file, Env:\_ARGCOMPLETE_STDOUT_FILENAME, Env:\ARGCOMPLETE_USE_TEMPFILES, Env:\COMP_LINE, Env:\COMP_POINT, Env:\_ARGCOMPLETE, Env:\_ARGCOMPLETE_SUPPRESS_SPACE, Env:\_ARGCOMPLETE_IFS
+}
+```
+
+To display all available options in the  menu, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` to your PowerShell profile.
 
 ## Troubleshooting
 
