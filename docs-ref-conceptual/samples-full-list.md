@@ -1,6 +1,6 @@
 ---
-title: Azure CLI samples for Azure Monitor
-description: See links to Azure CLI samples for working with Azure Monitor.
+title: Azure CLI samples full list
+description: See links to Azure CLI samples grouped by Azure service.
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 06/13/2023
