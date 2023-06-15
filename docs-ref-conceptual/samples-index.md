@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI sample scripts
 
-Azure CLI samples provide end-to-end scenarios for jobs to be done. This article provides an A - Z list of Azure CLI samples written for Bash environments. Not every Azure CLI reference command has been used in a sample script. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).
+Azure CLI samples provide end-to-end scenarios for jobs to be done. This article provides an A - Z list of Azure CLI samples written for Bash environments. Not every Azure CLI reference command has been used in a sample script. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index). For space considerations, some common Azure CLI commands, like `az group` have been removed from the delimited list of reference commands.
 
 [!INCLUDE [prerequisites](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
 
@@ -21,19 +21,19 @@ Azure CLI samples provide end-to-end scenarios for jobs to be done. This article
 
 # [List by Azure service](#tab/service)
 
-This list is organized by the Azure service that has _published_ the script as many Azure CLI scripts use reference commands from more than one Azure service.  For space considerations, some common Azure CLI commands, like `az group` have been removed from the delimited list of reference commands.
+This list is organized by the Azure service that has _published_ the script as many Azure CLI scripts use reference commands from more than one Azure service.
 
 [!INCLUDE [sample-list-azure-service](includes/samples-azure-service.md)]
 
 # [List by Reference command](#tab/command)
 
-Use this list to find sample scripts that demonstrate a particular command.  Some common Azure CLI commands, like `az group` have been removed for space considerations.
+Use this list to find sample scripts that demonstrate a particular command.
 
 [!INCLUDE [sample-list-reference-group](includes/samples-reference-group.md)]
 
 # [Azure CLI samples GitHub repo](#tab/github)
 
-Several Azure services store their Azure CLI sample scripts in the [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples) GitHub repository.  Most of these samples have a conceptual article published that provides additional explanation.  However, if you prefer to go straight to the GitHub source, use the file links provided here.  For space considerations, some common Azure CLI commands, like `az group` have been removed from the delimited list of reference commands.
+Several Azure services store their Azure CLI sample scripts in the [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples) GitHub repository.  Most of these samples have a conceptual article published that provides additional explanation.  However, if you prefer to go straight to the GitHub source, use the file links provided here.  
 
 [!INCLUDE [samples-azure-cli-samples-repo](includes/samples-azure-cli-samples-repo.md)]
 
