@@ -26,13 +26,10 @@ This list is organized by the Azure service that has _published_ the script as m
 
 | Azure Service | <br> Sample name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| Reference commands used in sample |
 |---|---|---|
-| **application-gateway** | [Azure CLI examples for Azure Application Gateway](/azure/application-gateway/cli-samples) |   |
-|  | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) | az network application-gateway create * az network public-ip create * az network public-ip show * az network vnet create * az network vnet subnet create * az vmss create |
+| **application-gateway** | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) | az network application-gateway create * az network public-ip create * az network public-ip show * az network vnet create * az network vnet subnet create * az vmss create |
 |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) | az monitor diagnostic-settings create * az network application-gateway create * az network public-ip create * az network public-ip show * az network vnet create * az network vnet subnet create * az storage account create * az vmss create |
 | **app-service** | [Backup and restore a web app from a backup using CLI](/azure/app-service/scripts/cli-backup-schedule-restore) | az webapp config backup list * az webapp config backup restore |
 |  | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate) | az appservice plan create * az webapp config hostname add * az webapp config ssl bind * az webapp config ssl upload * az webapp create |
-|  | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-php) | az appservice plan create * az webapp create * az webapp deployment source config-zip |
-|  | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-javascript) | az appservice plan create * az webapp config appsettings set * az webapp create * az webapp deployment source config-zip |
 |  | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) | az appservice plan create * az storage account create * az storage account show-connection-string * az webapp config appsettings set * az webapp create |
 |  | [Connect an App Service app to an Azure Cache for Redis using CLI](/azure/app-service/scripts/cli-connect-to-redis) | az appservice plan create * az redis create * az redis list-keys * az webapp config appsettings set * az webapp create |
 |  | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) | az appservice plan create * az cosmosdb create * az cosmosdb list-connection-strings * az webapp config appsettings set * az webapp create |
@@ -41,11 +38,9 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) | az appservice plan create * az webapp create * az webapp deployment slot create * az webapp deployment slot swap * az webapp deployment source config |
 |  | [Create an App Service app and deploy files with FTP using Azure CLI](/azure/app-service/scripts/cli-deploy-ftp) | az appservice plan create * az webapp create * az webapp deployment list-publishing-profiles |
 |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) | az appservice plan create * az network private-dns link vnet create * az network private-dns zone create * az network private-endpoint create * az network private-endpoint dns-zone-group create * az network vnet create * az network vnet subnet update * az webapp create |
-|  | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) | az appservice plan create * az webapp create * az webapp deployment source config |
 |  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) | az appservice plan create * az webapp create * az webapp deployment source config |
 |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) | az appservice plan create * az webapp create * az webapp deployment source config |
 |  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) | az appservice plan create * az webapp config container set * az webapp create |
-|  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) | az acr create * az acr credential show * az appservice plan create * az webapp config container set * az webapp create |
 |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) | az appservice plan create * az network application-gateway create * az network application-gateway http-settings update * az network public-ip create * az network public-ip show * az network vnet create * az webapp config access-restriction add * az webapp create * az webapp show |
 |  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain) | az appservice plan create * az webapp config hostname add * az webapp create |
 |  | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) | az appservice plan create * az webapp create * az webapp log config * az webapp log download |
@@ -83,43 +78,10 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) | az batch account create * az batch account login * az batch node delete * az batch node list * az batch node reboot * az batch pool create * az batch pool resize * az batch pool show |
 |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) | az batch account create * az batch account login * az batch pool autoscale disable * az batch pool autoscale enable * az batch pool create * az batch pool set * az batch pool show |
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) | az batch account create * az batch account login * az batch job create * az batch job set * az batch job show * az batch pool create * az batch task create * az batch task show |
-| **cdn** | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) | az cdn custom-domain create * az cdn custom-domain enable-https * az cdn endpoint create * az cdn endpoint update * az cdn origin create * az cdn origin-group create * az cdn profile create |
-| **cosmos-db** | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) | az cosmosdb create * az cosmosdb failover-priority-change * az cosmosdb update |
-|  | [Azure CLI samples for Azure Cosmos DB for MongoDB](/azure/cosmos-db/mongodb/cli-samples) |   |
-|  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) | az cosmosdb create * az network vnet create * az network vnet subnet create * az network vnet subnet show * az network vnet subnet update |
-|  | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) | az cosmosdb create * az cosmosdb mongodb collection create * az cosmosdb mongodb database create |
-|  | [Create a database with autoscale and shared collections for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/autoscale) | az cosmosdb create * az cosmosdb mongodb collection create * az cosmosdb mongodb database create |
-|  | [Create a resource lock for Azure Cosmos DB Cassandra API keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/lock) | az lock create * az lock delete * az lock list * az lock show |
-|  | [Create a resource lock for Azure Cosmos DB for Gremlin database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/lock) | az lock create * az lock delete * az lock list * az lock show |
-|  | [Create a resource lock for Azure Cosmos DB's API for MongoDB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/lock) | az lock create * az lock delete * az lock list * az lock show |
-|  | [Create a serverless database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/serverless) | az cosmosdb create * az cosmosdb mongodb collection create * az cosmosdb mongodb database create |
-|  | [Create an Azure Cosmos DB account with IP firewall using Azure CLI](/azure/cosmos-db/scripts/cli/common/ipfirewall) | az cosmosdb create |
-|  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints) | az cosmosdb create * az network vnet create * az network vnet subnet create * az network vnet subnet show |
-|  | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/create) | az cosmosdb cassandra keyspace create * az cosmosdb cassandra table create * az cosmosdb create |
-|  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless) | az cosmosdb cassandra keyspace create * az cosmosdb cassandra table create * az cosmosdb create |
-|  | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) | az cosmosdb create * az cosmosdb gremlin database create * az cosmosdb gremlin graph create |
-|  | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create) | az cosmosdb create * az cosmosdb sql container create * az cosmosdb sql database create |
-|  | [Create an Azure Cosmos DB for NoSQL account, database, and container with autoscale](/azure/cosmos-db/scripts/cli/nosql/autoscale) | az account set * az cosmosdb create * az cosmosdb sql container create * az cosmosdb sql database create |
-|  | [Create an Azure Cosmos DB for NoSQL serverless account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/serverless) | az cosmosdb create * az cosmosdb sql container create * az cosmosdb sql database create |
-|  | [Create an Azure Cosmos DB Table API account and table using Azure CLI](/azure/cosmos-db/scripts/cli/table/create) | az cosmosdb create * az cosmosdb table create |
-|  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/lock) | az lock create * az lock delete * az lock list * az lock show |
-|  | [Find an existing Azure Cosmos DB free-tier account in a subscription using Azure CLI](/azure/cosmos-db/scripts/cli/common/free-tier) | az cosmosdb list |
+| **cosmos-db** | [Azure CLI samples for Azure Cosmos DB for MongoDB](/azure/cosmos-db/mongodb/cli-samples) |   |
 |  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) | az cosmosdb create * az cosmosdb keys list * az cosmosdb table create |
-|  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) | az cosmosdb create * az cosmosdb sql container create * az cosmosdb sql container throughput migrate * az cosmosdb sql container throughput update * az cosmosdb sql database create * az cosmosdb sql database throughput migrate * az cosmosdb sql database throughput update |
-|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) | az cosmosdb create * az cosmosdb gremlin database create * az cosmosdb gremlin database throughput migrate * az cosmosdb gremlin database throughput update * az cosmosdb gremlin graph create * az cosmosdb gremlin graph throughput migrate * az cosmosdb gremlin graph throughput update |
-|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) | az cosmosdb create * az cosmosdb mongodb collection create * az cosmosdb mongodb collection throughput migrate * az cosmosdb mongodb collection throughput update * az cosmosdb mongodb database create * az cosmosdb mongodb database throughput migrate * az cosmosdb mongodb database throughput update |
-|  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) | az cosmosdb cassandra keyspace create * az cosmosdb cassandra keyspace throughput migrate * az cosmosdb cassandra keyspace throughput update * az cosmosdb cassandra table create * az cosmosdb cassandra table throughput migrate * az cosmosdb cassandra table throughput update * az cosmosdb create |
-|  | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) | az cosmosdb create * az cosmosdb table create * az cosmosdb table throughput migrate * az cosmosdb table throughput update |
-|  | [Use Azure CLI for resource lock operations on Azure Cosmos DB for Table tables](/azure/cosmos-db/scripts/cli/table/lock) | az account set * az lock create * az lock delete * az lock list * az lock show |
-|  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](/azure/cosmos-db/scripts/cli/cassandra/autoscale) | az cosmosdb cassandra keyspace create * az cosmosdb cassandra table create * az cosmosdb create |
-|  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](/azure/cosmos-db/scripts/cli/gremlin/autoscale) | az cosmosdb create * az cosmosdb gremlin database create * az cosmosdb gremlin graph create |
-|  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](/azure/cosmos-db/scripts/cli/gremlin/serverless) | az cosmosdb create * az cosmosdb gremlin database create * az cosmosdb gremlin graph create |
-|  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](/azure/cosmos-db/scripts/cli/table/autoscale) | az account set * az cosmosdb create * az cosmosdb table create |
-|  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](/azure/cosmos-db/scripts/cli/table/serverless) | az account set * az cosmosdb create * az cosmosdb table create |
-|  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) | az cosmosdb create * az cosmosdb keys list * az cosmosdb list-connection-strings * az cosmosdb list-read-only-keys * az cosmosdb regenerate-key |
 | **devtest-labs** | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) | az lab vm create * az lab vm delete * az lab vm show * az lab vm start * az lab vm stop |
-| **dns** | [Azure CLI script example: Create a DNS zone and record](/azure/dns/scripts/dns-cli-create-dns-zone-record) | az network dns record-set a add-record * az network dns record-set list * az network dns zone create |
-| **event-grid** | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) | az eventgrid event-subscription create |
+| **event-grid** | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/event-grid-cli-subscribe-custom-topic) | az eventgrid event-subscription create |
 | **event-hubs** | [Git repositories with samples for Azure Event Hubs](/azure/event-hubs/event-hubs-samples) |   |
 | **frontdoor** | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain) | az network front-door create * az storage account create * az storage account show * az storage blob service-properties update * az storage blob upload |
 | **hdinsight** | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) | az account set * az hdinsight application create * az hdinsight create * az hdinsight script-action execute |
@@ -155,7 +117,7 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [Restore an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-point-in-time-restore) | az mysql server create * az mysql server restore |
 | **networking** | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) | az network lb address-pool create * az network lb create * az network lb frontend-ip create * az network lb probe create * az network lb rule create * az network nic create * az network nic ip-config create * az network public-ip create * az network vnet create * az vm availability-set create * az vm create |
 |  | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) | az appservice plan create * az network traffic-manager endpoint create * az network traffic-manager profile create * az webapp create |
-| **operator-nexus** | [ms.prod: used for on prem applications](/azure/operator-nexus/template-cloud-native-network-function-deployment) | az account set * az hybridaks create * az hybridaks vnet create |
+| **operator-nexus** | [Sample: CNF deployment script](/azure/operator-nexus/template-cloud-native-network-function-deployment) | az account set * az hybridaks create * az hybridaks vnet create |
 | **postgresql** | [Azure CLI samples for Azure Database for PostgreSQL - Single Server](/azure/postgresql/single-server/sample-scripts-azure-cli) |   |
 |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) | az network vnet create * az network vnet list-endpoint-services * az network vnet subnet create * az network vnet subnet show |
 |  | [Create an Azure Database for PostgreSQL server and configure a firewall rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-and-firewall-rule) | az postgres server create |
@@ -167,6 +129,7 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [Create a secure Service Fabric Linux cluster via the Azure CLI](/azure/service-fabric/scripts/cli-create-cluster) | az sf cluster create |
 | **sql-server** | [Add a database to a failover group using the Azure CLI](/azure/azure-sql/database/scripts/add-database-to-failover-group-cli) |   |
 |  | [Add an Azure SQL Database elastic pool to a failover group using the Azure CLI](/azure/azure-sql/database/scripts/add-elastic-pool-to-failover-group-cli) |   |
+|  | [Azure CLI samples for Azure SQL Database and SQL Managed Instance](/azure/azure-sql/database/az-cli-script-samples-content-guide) |   |
 |  | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |   |
 |  | [Backup an Azure SQL single database to an Azure storage container using the Azure CLI](/azure/azure-sql/database/scripts/backup-database-cli) |   |
 |  | [Configure a failover group for a group of databases in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/setup-geodr-failover-group-cli) | az sql failover-group create * az sql failover-group delete * az sql failover-group set-primary * az sql failover-group show |
@@ -191,8 +154,6 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [Create a managed disk from a VHD file in a storage account in the same subscription with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-vhd) | az disk create |
 |  | [Create a virtual machine from a snapshot with CLI](/azure/virtual-machines/scripts/create-vm-from-snapshot) | az disk create * az snapshot show * az vm create |
 |  | [Create a virtual machine using an existing managed OS disk with CLI](/azure/virtual-machines/scripts/create-vm-from-managed-os-disks) | az disk show * az vm create |
-|  | [Export/Copy a managed disk to a storage account using the Azure CLI](/azure/virtual-machines/scripts/copy-managed-disks-vhd-to-storage-account) | az disk grant-access * az storage blob copy start |
-|  | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account) | az snapshot grant-access * az storage blob copy start |
 |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) | az account set * az disk create * az resource move * az snapshot create * az vm create * az vm deallocate * az vm delete * az vm get-instance-view * az vm image terms accept * az vm image terms show * az vm show |
 | **virtual-network** | [Peer two virtual networks with an Azure CLI script sample](/azure/virtual-network/scripts/virtual-network-cli-sample-peer-two-virtual-networks) | az network vnet create * az network vnet peering create |
 
@@ -202,8 +163,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 
 | Reference group | Reference name | Sample name |
 |---|---|---|
-| **az acr**| az acr create | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
-| | az acr credential show | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | **az aks**| az aks create | [Automate operational tasks](/azure/architecture/framework/devops/automation-tasks) |
 | | az aks update | [Automate operational tasks](/azure/architecture/framework/devops/automation-tasks) |
 | **az appconfig**| az appconfig create | [Create an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-create-service) |
@@ -216,8 +175,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az appconfig kv set | [Work with key-values in an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-work-with-keys) |
 | | az appconfig kv set-keyvault | [Work with key-values in an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-work-with-keys) |
 | **az appservice**| az appservice plan create | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate) |
-| |  | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-php) |
-| |  | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-javascript) |
 | |  | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) |
 | |  | [Connect an App Service app to an Azure Cache for Redis using CLI](/azure/app-service/scripts/cli-connect-to-redis) |
 | |  | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) |
@@ -228,11 +185,9 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
 | |  | [Create an App Service app and deploy files with FTP using Azure CLI](/azure/app-service/scripts/cli-deploy-ftp) |
 | |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
-| |  | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
 | |  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) |
 | |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) |
 | |  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) |
-| |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | |  | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
 | |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
 | |  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain) |
@@ -278,107 +233,14 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
 | | az batch task create | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | | az batch task show | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| **az cdn**| az cdn custom-domain create | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | az cdn custom-domain enable-https | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | az cdn endpoint create | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | az cdn endpoint update | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | az cdn origin create | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | az cdn origin-group create | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | az cdn profile create | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| **az cosmosdb**| az cosmosdb cassandra keyspace create | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/create) |
-| |  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-| |  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](/azure/cosmos-db/scripts/cli/cassandra/autoscale) |
-| | az cosmosdb cassandra keyspace throughput migrate | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-| | az cosmosdb cassandra keyspace throughput update | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-| | az cosmosdb cassandra table create | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/create) |
-| |  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-| |  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](/azure/cosmos-db/scripts/cli/cassandra/autoscale) |
-| | az cosmosdb cassandra table throughput migrate | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-| | az cosmosdb cassandra table throughput update | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-| | az cosmosdb create | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
-| |  | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) |
-| |  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
-| |  | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) |
-| |  | [Create a database with autoscale and shared collections for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/autoscale) |
-| |  | [Create a serverless database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/serverless) |
-| |  | [Create an Azure Cosmos DB account with IP firewall using Azure CLI](/azure/cosmos-db/scripts/cli/common/ipfirewall) |
-| |  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints) |
-| |  | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/create) |
-| |  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless) |
-| |  | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) |
-| |  | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create) |
-| |  | [Create an Azure Cosmos DB for NoSQL account, database, and container with autoscale](/azure/cosmos-db/scripts/cli/nosql/autoscale) |
-| |  | [Create an Azure Cosmos DB for NoSQL serverless account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/serverless) |
-| |  | [Create an Azure Cosmos DB Table API account and table using Azure CLI](/azure/cosmos-db/scripts/cli/table/create) |
+| **az cosmosdb**| az cosmosdb create | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) |
 | |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
 | |  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) |
-| |  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](/azure/cosmos-db/scripts/cli/cassandra/autoscale) |
-| |  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](/azure/cosmos-db/scripts/cli/gremlin/autoscale) |
-| |  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](/azure/cosmos-db/scripts/cli/gremlin/serverless) |
-| |  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](/azure/cosmos-db/scripts/cli/table/autoscale) |
-| |  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](/azure/cosmos-db/scripts/cli/table/serverless) |
-| |  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
-| | az cosmosdb failover-priority-change | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
-| | az cosmosdb gremlin database create | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
-| |  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](/azure/cosmos-db/scripts/cli/gremlin/autoscale) |
-| |  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](/azure/cosmos-db/scripts/cli/gremlin/serverless) |
-| | az cosmosdb gremlin database throughput migrate | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
-| | az cosmosdb gremlin database throughput update | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
-| | az cosmosdb gremlin graph create | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
-| |  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](/azure/cosmos-db/scripts/cli/gremlin/autoscale) |
-| |  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](/azure/cosmos-db/scripts/cli/gremlin/serverless) |
-| | az cosmosdb gremlin graph throughput migrate | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
-| | az cosmosdb gremlin graph throughput update | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
 | | az cosmosdb keys list | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
-| |  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
-| | az cosmosdb list | [Find an existing Azure Cosmos DB free-tier account in a subscription using Azure CLI](/azure/cosmos-db/scripts/cli/common/free-tier) |
 | | az cosmosdb list-connection-strings | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) |
-| |  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
 | | az cosmosdb list-keys | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
-| | az cosmosdb list-read-only-keys | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
-| | az cosmosdb mongodb collection create | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) |
-| |  | [Create a database with autoscale and shared collections for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/autoscale) |
-| |  | [Create a serverless database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/serverless) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-| | az cosmosdb mongodb collection throughput migrate | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-| | az cosmosdb mongodb collection throughput update | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-| | az cosmosdb mongodb database create | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) |
-| |  | [Create a database with autoscale and shared collections for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/autoscale) |
-| |  | [Create a serverless database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/serverless) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-| | az cosmosdb mongodb database throughput migrate | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-| | az cosmosdb mongodb database throughput update | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-| | az cosmosdb regenerate-key | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
 | | az cosmosdb show | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
-| | az cosmosdb sql container create | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create) |
-| |  | [Create an Azure Cosmos DB for NoSQL account, database, and container with autoscale](/azure/cosmos-db/scripts/cli/nosql/autoscale) |
-| |  | [Create an Azure Cosmos DB for NoSQL serverless account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/serverless) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-| | az cosmosdb sql container throughput migrate | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-| | az cosmosdb sql container throughput update | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-| | az cosmosdb sql database create | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create) |
-| |  | [Create an Azure Cosmos DB for NoSQL account, database, and container with autoscale](/azure/cosmos-db/scripts/cli/nosql/autoscale) |
-| |  | [Create an Azure Cosmos DB for NoSQL serverless account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/serverless) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-| | az cosmosdb sql database throughput migrate | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-| | az cosmosdb sql database throughput update | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-| | az cosmosdb table create | [Create an Azure Cosmos DB Table API account and table using Azure CLI](/azure/cosmos-db/scripts/cli/table/create) |
-| |  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
-| |  | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) |
-| |  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](/azure/cosmos-db/scripts/cli/table/autoscale) |
-| |  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](/azure/cosmos-db/scripts/cli/table/serverless) |
-| | az cosmosdb table throughput migrate | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) |
-| | az cosmosdb table throughput update | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) |
-| | az cosmosdb update | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
+| | az cosmosdb table create | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
 | **az devops**| az devops configure | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | az devops login | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | az devops project create | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
@@ -390,13 +252,12 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Create a managed disk from a VHD file in a storage account in the same subscription with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-vhd) |
 | |  | [Create a virtual machine from a snapshot with CLI](/azure/virtual-machines/scripts/create-vm-from-snapshot) |
 | |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
-| | az disk grant-access | [Export/Copy a managed disk to a storage account using the Azure CLI](/azure/virtual-machines/scripts/copy-managed-disks-vhd-to-storage-account) |
 | | az disk show | [Copy managed disks to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-managed-disks-to-same-or-different-subscription) |
 | |  | [Create a virtual machine using an existing managed OS disk with CLI](/azure/virtual-machines/scripts/create-vm-from-managed-os-disks) |
 | **az disk-encryption-set**| az disk-encryption-set show | [Copy managed disks to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-managed-disks-to-same-or-different-subscription) |
 | |  | [Copy snapshot of a managed disk to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-same-or-different-subscription) |
 | |  | [Create a managed disk from a snapshot with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-snapshot) |
-| **az eventgrid**| az eventgrid event-subscription create | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
+| **az eventgrid**| az eventgrid event-subscription create | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/event-grid-cli-subscribe-custom-topic) |
 | **az extension**| az extension add | [Azure CLI script sample - create a logic app](/azure/logic-apps/sample-logic-apps-cli-script) |
 | |  | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | **az functionapp**| az functionapp config appsettings set | [Create a function app with a named Storage account connection](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-storage-account) |
@@ -414,8 +275,8 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | **az hdinsight**| az hdinsight application create | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | | az hdinsight create | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | | az hdinsight script-action execute | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
-| **az hybridaks**| az hybridaks create | [ms.prod: used for on prem applications](/azure/operator-nexus/template-cloud-native-network-function-deployment) |
-| | az hybridaks vnet create | [ms.prod: used for on prem applications](/azure/operator-nexus/template-cloud-native-network-function-deployment) |
+| **az hybridaks**| az hybridaks create | [Sample: CNF deployment script](/azure/operator-nexus/template-cloud-native-network-function-deployment) |
+| | az hybridaks vnet create | [Sample: CNF deployment script](/azure/operator-nexus/template-cloud-native-network-function-deployment) |
 | **az iot**| az iot hub device-identity connection-string show | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | **az keyvault**| az keyvault create | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
 | | az keyvault set-policy | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
@@ -424,26 +285,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az lab vm show | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
 | | az lab vm start | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
 | | az lab vm stop | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
-| **az lock**| az lock create | [Create a resource lock for Azure Cosmos DB Cassandra API keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB for Gremlin database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB's API for MongoDB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/lock) |
-| |  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/lock) |
-| |  | [Use Azure CLI for resource lock operations on Azure Cosmos DB for Table tables](/azure/cosmos-db/scripts/cli/table/lock) |
-| | az lock delete | [Create a resource lock for Azure Cosmos DB Cassandra API keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB for Gremlin database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB's API for MongoDB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/lock) |
-| |  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/lock) |
-| |  | [Use Azure CLI for resource lock operations on Azure Cosmos DB for Table tables](/azure/cosmos-db/scripts/cli/table/lock) |
-| | az lock list | [Create a resource lock for Azure Cosmos DB Cassandra API keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB for Gremlin database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB's API for MongoDB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/lock) |
-| |  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/lock) |
-| |  | [Use Azure CLI for resource lock operations on Azure Cosmos DB for Table tables](/azure/cosmos-db/scripts/cli/table/lock) |
-| | az lock show | [Create a resource lock for Azure Cosmos DB Cassandra API keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB for Gremlin database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/lock) |
-| |  | [Create a resource lock for Azure Cosmos DB's API for MongoDB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/lock) |
-| |  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/lock) |
-| |  | [Use Azure CLI for resource lock operations on Azure Cosmos DB for Table tables](/azure/cosmos-db/scripts/cli/table/lock) |
 | **az logic**| az logic workflow create | [Azure CLI script sample - create a logic app](/azure/logic-apps/sample-logic-apps-cli-script) |
 | **az mariadb**| az mariadb server configuration list | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
 | |  | [List and update configurations of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-change-server-configuration) |
@@ -552,9 +393,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
 | |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | | az network application-gateway http-settings update | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
-| | az network dns record-set a add-record | [Azure CLI script example: Create a DNS zone and record](/azure/dns/scripts/dns-cli-create-dns-zone-record) |
-| | az network dns record-set list | [Azure CLI script example: Create a DNS zone and record](/azure/dns/scripts/dns-cli-create-dns-zone-record) |
-| | az network dns zone create | [Azure CLI script example: Create a DNS zone and record](/azure/dns/scripts/dns-cli-create-dns-zone-record) |
 | | az network front-door create | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain) |
 | | az network lb address-pool create | [Azure CLI script example: Load balance multiple websites](/azure/load-balancer/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | |  | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
@@ -616,11 +454,9 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Azure CLI script example: Load balance traffic to VMs for high availability](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-nlb) |
 | |  | [Azure CLI script example: Load balance traffic to VMs within a specific availability zone](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-zonal-frontend) |
 | |  | [Azure CLI script example: Load balance VMs across availability zones](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-zone-redundant-frontend) |
-| |  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
 | |  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
-| |  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints) |
 | |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
 | |  | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | |  | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
@@ -629,19 +465,14 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az network vnet list-endpoint-services | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
 | | az network vnet peering create | [Peer two virtual networks with an Azure CLI script sample](/azure/virtual-network/scripts/virtual-network-cli-sample-peer-two-virtual-networks) |
-| | az network vnet subnet create | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
-| |  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
+| | az network vnet subnet create | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
-| |  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints) |
 | |  | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
 | |  | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
 | |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
-| | az network vnet subnet show | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
-| |  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
+| | az network vnet subnet show | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
-| |  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints) |
-| | az network vnet subnet update | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
-| |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
+| | az network vnet subnet update | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
 | **az pipelines**| az pipelines create | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | az pipelines delete | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | az pipelines run | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
@@ -682,7 +513,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
 | **az snapshot**| az snapshot create | [Copy snapshot of a managed disk to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-same-or-different-subscription) |
 | |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
-| | az snapshot grant-access | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account) |
 | | az snapshot show | [Copy snapshot of a managed disk to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-same-or-different-subscription) |
 | |  | [Create a managed disk from a snapshot with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-snapshot) |
 | |  | [Create a virtual machine from a snapshot with CLI](/azure/virtual-machines/scripts/create-vm-from-snapshot) |
@@ -719,8 +549,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az storage account show | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain) |
 | | az storage account show-connection-string | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) |
 | |  | [Create a function app with a named Storage account connection](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-storage-account) |
-| | az storage blob copy start | [Export/Copy a managed disk to a storage account using the Azure CLI](/azure/virtual-machines/scripts/copy-managed-disks-vhd-to-storage-account) |
-| |  | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account) |
 | | az storage blob list | [Calculate the size of a Blob storage container](/azure/storage/scripts/storage-blobs-container-calculate-size-cli) |
 | | az storage blob service-properties update | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain) |
 | | az storage blob upload | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain) |
@@ -758,8 +586,7 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | **az vmss**| az vmss create | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
 | |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | **az webapp**| az webapp config access-restriction add | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
-| | az webapp config appsettings set | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-javascript) |
-| |  | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) |
+| | az webapp config appsettings set | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) |
 | |  | [Connect an App Service app to an Azure Cache for Redis using CLI](/azure/app-service/scripts/cli-connect-to-redis) |
 | |  | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) |
 | |  | [Connect an App Service app to SQL Database using CLI](/azure/app-service/scripts/cli-connect-to-sql) |
@@ -768,7 +595,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az webapp config backup list | [Backup and restore a web app from a backup using CLI](/azure/app-service/scripts/cli-backup-schedule-restore) |
 | | az webapp config backup restore | [Backup and restore a web app from a backup using CLI](/azure/app-service/scripts/cli-backup-schedule-restore) |
 | | az webapp config container set | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) |
-| |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | | az webapp config hostname add | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate) |
 | |  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain) |
 | | az webapp config ssl bind | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate) |
@@ -776,8 +602,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az webapp config storage-account add | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
 | | az webapp config storage-account list | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
 | | az webapp create | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate) |
-| |  | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-javascript) |
-| |  | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-php) |
 | |  | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) |
 | |  | [Connect an App Service app to an Azure Cache for Redis using CLI](/azure/app-service/scripts/cli-connect-to-redis) |
 | |  | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) |
@@ -788,11 +612,9 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
 | |  | [Create an App Service app and deploy files with FTP using Azure CLI](/azure/app-service/scripts/cli-deploy-ftp) |
 | |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
-| |  | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
 | |  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) |
 | |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) |
 | |  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) |
-| |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
 | |  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain) |
 | |  | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) |
@@ -803,13 +625,10 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az webapp deployment slot create | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
 | | az webapp deployment slot swap | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
 | | az webapp deployment source config | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
-| |  | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
 | |  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) |
 | |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) |
 | | az webapp deployment source config-local-git | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
 | |  | [Create an App Service app and deploy code into a local Git repository using Azure CLI](/azure/app-service/scripts/cli-deploy-local-git) |
-| | az webapp deployment source config-zip | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-javascript) |
-| |  | [Clone and prepare sample application](/azure/app-service/tutorial-connect-msi-key-vault-php) |
 | | az webapp deployment user set | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
 | |  | [Create an App Service app and deploy code into a local Git repository using Azure CLI](/azure/app-service/scripts/cli-deploy-local-git) |
 | | az webapp log config | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) |
