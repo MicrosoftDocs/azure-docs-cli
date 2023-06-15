@@ -463,4 +463,4 @@ For more information about PowerShell error handling, see [Everything you wanted
 - [Learn to use Bash with Azure CLI](./azure-cli-learn-bash.md)
 - [Query Azure CLI command output](./query-azure-cli.md)
 - [Use variables in Azure CLI commands](./azure-cli-variables.md)
-- [Find Azure CLI samples](./samples-full-list.md)
+- [Find Azure CLI samples](./samples-index.md)

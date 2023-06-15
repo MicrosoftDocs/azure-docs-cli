@@ -23,12 +23,12 @@ Azure CLI samples provide end-to-end scenarios for jobs to be done. This article
 
 This list is organized by the Azure service that has _published_ the script as many Azure CLI scripts use reference commands from more than one Azure service.  For space considerations, some common Azure CLI commands, like `az group` have been removed from the delimited list of reference commands.
 
-[!INCLUDE [sample-list-azure-service](includes/sample-list-azure-service.md)]
+[!INCLUDE [sample-list-azure-service](includes/samples-azure-service.md)]
 
 # [List by Reference command](#tab/command)
 
 Use this list to find sample scripts that demonstrate a particular command.  Some common Azure CLI commands, like `az group` have been removed for space considerations.
 
-[!INCLUDE [sample-list-reference-group](includes/sample-list-reference-group.md)]
+[!INCLUDE [sample-list-reference-group](includes/samples-reference-group.md)]
 
 ---
