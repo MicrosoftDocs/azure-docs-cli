@@ -25,7 +25,7 @@ This list of Azure CLI samples is organized by the Azure service that has _publi
 
 [!INCLUDE [sample-list-azure-service](includes/samples-azure-service.md)]
 
-# [List by Reference command](#tab/command)
+# [List by reference command](#tab/command)
 
 Use this list of Azure CLI samples to find scripts that demonstrate a particular command.
 
@@ -33,7 +33,7 @@ Use this list of Azure CLI samples to find scripts that demonstrate a particular
 
 # [Azure CLI samples GitHub repository](#tab/github)
 
-_Some_ Azure services store their Azure CLI samples in the [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples) GitHub repository.  Most of these samples have a conceptual article published that provides additional explanation.  However, if you prefer to go straight to the script source, use the GitHub file links provided here.  For a more complete list of Azure CLI samples, use the [List by Azure service](#list-by-azure-service) or [List by Reference command](#list-by-reference-command) tabs.
+_Some_ Azure services store their Azure CLI samples in the [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples) GitHub repository.  Most of these samples have a conceptual article published that provides additional explanation.  However, if you prefer to go straight to the script source, use the GitHub file links provided here.  For a more complete list of Azure CLI samples, use the [List by Azure service](#list-by-azure-service) or [List by reference command](#list-by-reference-command) tabs.
 
 [!INCLUDE [samples-azure-cli-samples-repo](includes/samples-azure-cli-samples-repo.md)]
 
