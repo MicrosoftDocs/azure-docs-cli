@@ -37,7 +37,6 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [Create an App Service app and deploy code into a local Git repository using Azure CLI](/azure/app-service/scripts/cli-deploy-local-git) | az appservice plan create * az webapp create * az webapp deployment source config-local-git * az webapp deployment user set |
 |  | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) | az appservice plan create * az webapp create * az webapp deployment slot create * az webapp deployment slot swap * az webapp deployment source config |
 |  | [Create an App Service app and deploy files with FTP using Azure CLI](/azure/app-service/scripts/cli-deploy-ftp) | az appservice plan create * az webapp create * az webapp deployment list-publishing-profiles |
-|  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) | az appservice plan create * az network private-dns link vnet create * az network private-dns zone create * az network private-endpoint create * az network private-endpoint dns-zone-group create * az network vnet create * az network vnet subnet update * az webapp create |
 |  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) | az appservice plan create * az webapp create * az webapp deployment source config |
 |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) | az appservice plan create * az webapp create * az webapp deployment source config |
 |  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) | az appservice plan create * az webapp config container set * az webapp create |
@@ -46,8 +45,7 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) | az appservice plan create * az webapp create * az webapp log config * az webapp log download |
 |  | [Scale an App Service app manually using Azure CLI](/azure/app-service/scripts/cli-scale-manual) | az appservice plan create * az appservice plan update * az webapp create |
 |  | [Scale an App Service app worldwide with a high-availability architecture using Azure CLI](/azure/app-service/scripts/cli-scale-high-availability) | az appservice plan create * az network traffic-manager endpoint create * az network traffic-manager profile create * az webapp create |
-| **automation** | [Automate operational tasks](/azure/architecture/framework/devops/automation-tasks) | az aks create * az aks update |
-|  | [Configure infrastructure](/azure/architecture/framework/devops/automation-configuration) | az vm create * az vm extension set |
+| **automation** | [Configure infrastructure](/azure/architecture/framework/devops/automation-configuration) | az vm create * az vm extension set |
 | **azure-app-configuration** | [Azure CLI samples](/azure/azure-app-configuration/cli-samples) |   |
 |  | [Create an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-create-service) | az appconfig create * az appconfig credential list |
 |  | [Delete an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-delete-service) | az appconfig delete |
@@ -66,8 +64,6 @@ This list is organized by the Azure service that has _published_ the script as m
 |  | [Create a serverless Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-create-serverless-python) | az functionapp create * az storage account create |
 |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) | az cosmosdb create * az cosmosdb list-keys * az cosmosdb show * az functionapp config appsettings set * az functionapp create |
 |  | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) | az functionapp create * az storage account create * az storage directory create * az storage share create * az webapp config storage-account add * az webapp config storage-account list |
-| **azure-monitor** | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) | az appservice plan create * az appservice plan show * az monitor action-group create * az monitor metrics alert condition create * az monitor metrics alert create * az monitor metrics alert delete * az monitor metrics alert dimension create * az monitor metrics list-definitions * az vm create * az vm show |
-|  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) | az monitor log-analytics workspace create * az monitor log-analytics workspace data-export create * az monitor log-analytics workspace data-export delete * az monitor log-analytics workspace data-export list * az monitor log-analytics workspace delete * az monitor log-analytics workspace linked-service create * az monitor log-analytics workspace linked-service delete * az monitor log-analytics workspace linked-service list * az monitor log-analytics workspace linked-storage create * az monitor log-analytics workspace linked-storage delete * az monitor log-analytics workspace linked-storage list * az monitor log-analytics workspace pack disable * az monitor log-analytics workspace pack enable * az monitor log-analytics workspace pack list * az monitor log-analytics workspace recover * az monitor log-analytics workspace saved-search create * az monitor log-analytics workspace saved-search delete * az monitor log-analytics workspace saved-search list * az monitor log-analytics workspace saved-search show * az monitor log-analytics workspace table delete * az monitor log-analytics workspace table list * az monitor log-analytics workspace table update |
 | **azure-signalr** | [Create a SignalR Service](/azure/azure-signalr/scripts/signalr-cli-create-service) | az signalr create * az signalr key list |
 |  | [Create a SignalR Service with an App Service](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service) | az appservice plan create * az signalr create * az signalr key list * az webapp config appsettings set * az webapp create |
 |  | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) | az appservice plan create * az signalr create * az signalr key list * az webapp config appsettings set * az webapp create * az webapp deployment source config-local-git * az webapp deployment user set |
@@ -163,8 +159,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 
 | Reference group | Reference name | Sample name |
 |---|---|---|
-| **az aks**| az aks create | [Automate operational tasks](/azure/architecture/framework/devops/automation-tasks) |
-| | az aks update | [Automate operational tasks](/azure/architecture/framework/devops/automation-tasks) |
 | **az appconfig**| az appconfig create | [Create an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-create-service) |
 | | az appconfig credential list | [Create an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-create-service) |
 | | az appconfig delete | [Delete an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-delete-service) |
@@ -184,11 +178,9 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Create an App Service app and deploy code into a local Git repository using Azure CLI](/azure/app-service/scripts/cli-deploy-local-git) |
 | |  | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
 | |  | [Create an App Service app and deploy files with FTP using Azure CLI](/azure/app-service/scripts/cli-deploy-ftp) |
-| |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
 | |  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) |
 | |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) |
 | |  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) |
-| |  | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
 | |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
 | |  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain) |
 | |  | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) |
@@ -196,7 +188,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
 | |  | [Scale an App Service app manually using Azure CLI](/azure/app-service/scripts/cli-scale-manual) |
 | |  | [Scale an App Service app worldwide with a high-availability architecture using Azure CLI](/azure/app-service/scripts/cli-scale-high-availability) |
-| | az appservice plan show | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
 | | az appservice plan update | [Scale an App Service app manually using Azure CLI](/azure/app-service/scripts/cli-scale-manual) |
 | **az batch**| az batch account create | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
 | |  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
@@ -303,39 +294,11 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az mariadb server-logs download | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
 | | az mariadb server-logs list | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
 | **az ml**| az ml workspace create | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
-| **az monitor**| az monitor action-group create | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| | az monitor diagnostic-settings create | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
-| | az monitor log-analytics workspace create | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace data-export create | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace data-export delete | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace data-export list | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace delete | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace linked-service create | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace linked-service delete | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace linked-service list | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace linked-storage create | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace linked-storage delete | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace linked-storage list | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace pack disable | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace pack enable | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace pack list | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace recover | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace saved-search create | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace saved-search delete | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace saved-search list | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace saved-search show | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace table delete | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace table list | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor log-analytics workspace table update | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | az monitor metrics alert condition create | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| | az monitor metrics alert create | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| | az monitor metrics alert delete | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| | az monitor metrics alert dimension create | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| **az monitor**| az monitor diagnostic-settings create | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | | az monitor metrics list | [Monitor and scale a single PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-scale-server-up-or-down) |
 | |  | [Monitor and scale an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-scale-server) |
 | |  | [Monitor and scale an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-monitor-and-scale) |
 | |  | [Monitor and scale an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-scale-server) |
-| | az monitor metrics list-definitions | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
 | **az mysql**| az mysql flexible-server connect | [Create an Azure Database for MySQL - Flexible Server and enable public access connectivity using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-public-access) |
 | | az mysql flexible-server create | [Configure audit logs on an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-audit-logs) |
 | |  | [Configure same-zone high availability in an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-same-zone-ha) |
@@ -429,10 +392,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az network nsg rule create | [Azure CLI script example: Load balance traffic to VMs for high availability](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-nlb) |
 | |  | [Azure CLI script example: Load balance traffic to VMs within a specific availability zone](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-zonal-frontend) |
 | |  | [Azure CLI script example: Load balance VMs across availability zones](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-zone-redundant-frontend) |
-| | az network private-dns link vnet create | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
-| | az network private-dns zone create | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
-| | az network private-endpoint create | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
-| | az network private-endpoint dns-zone-group create | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
 | | az network public-ip create | [Azure CLI script example: Load balance multiple websites](/azure/load-balancer/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | |  | [Azure CLI script example: Load balance traffic to VMs for high availability](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-nlb) |
 | |  | [Azure CLI script example: Load balance traffic to VMs within a specific availability zone](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-zonal-frontend) |
@@ -456,7 +415,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Azure CLI script example: Load balance VMs across availability zones](/azure/load-balancer/scripts/load-balancer-linux-cli-sample-zone-redundant-frontend) |
 | |  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
-| |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
 | |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
 | |  | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | |  | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
@@ -472,7 +430,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | | az network vnet subnet show | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
-| | az network vnet subnet update | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
 | **az pipelines**| az pipelines create | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | az pipelines delete | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | az pipelines run | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
@@ -569,7 +526,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Create a virtual machine from a snapshot with CLI](/azure/virtual-machines/scripts/create-vm-from-snapshot) |
 | |  | [Create a virtual machine using an existing managed OS disk with CLI](/azure/virtual-machines/scripts/create-vm-from-managed-os-disks) |
 | |  | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
-| |  | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
 | |  | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
 | | az vm deallocate | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
@@ -581,8 +537,7 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | | az vm list-ip-addresses | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
 | | az vm open-port | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
 | | az vm run-command invoke | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
-| | az vm show | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
+| | az vm show | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
 | **az vmss**| az vmss create | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
 | |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | **az webapp**| az webapp config access-restriction add | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
@@ -611,7 +566,6 @@ Use this list to find sample scripts that demonstrate a particular command.  Som
 | |  | [Create an App Service app and deploy code into a local Git repository using Azure CLI](/azure/app-service/scripts/cli-deploy-local-git) |
 | |  | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
 | |  | [Create an App Service app and deploy files with FTP using Azure CLI](/azure/app-service/scripts/cli-deploy-ftp) |
-| |  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
 | |  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) |
 | |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) |
 | |  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) |
