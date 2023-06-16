@@ -32,12 +32,11 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 * [Run in Docker container](run-azure-cli-docker.md)
 * [Run in Azure Cloud Shell](/azure/cloud-shell/quickstart)
 
-
 > [!NOTE]
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
 ## See also
 
-* [Choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
-* [Update the Azure CLI](./update-azure-cli.md)
-* [What is Azure CLI?](./what-is-azure-cli.md)
+- [Update the Azure CLI](./update-azure-cli.md)
+- [How to use the Azure CLI successfully](use-cli-effectively.md)
+- [Find Azure CLI samples](./samples-index.md)
