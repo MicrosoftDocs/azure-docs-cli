@@ -9,7 +9,6 @@ ms.custom: devx-track-azurecli
 
 | Reference group | Reference name | Sample name |
 |---|---|---|
-MarkdownTable
 | **az acr**| [az acr create](/cli/azure/acr#az-acr-create) | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | | [az acr credential show](/cli/azure/acr/credential#az-acr-credential-show) | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | **az appconfig**| [az appconfig create](/cli/azure/appconfig#az-appconfig-create) | [Create an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-create-service) |
