@@ -429,5 +429,6 @@ fi
 
 ## See also
 
-* [How to use the Azure CLI effectively](use-cli-effectively.md)
-* [How to query Azure CLI command output](query-azure-cli.md)
+- [How to use the Azure CLI successfully](use-cli-effectively.md)
+- [How to query Azure CLI command output](query-azure-cli.md)
+- [Find Azure CLI samples](./samples-index.md)
