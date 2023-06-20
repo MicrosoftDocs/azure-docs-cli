@@ -91,7 +91,6 @@ ms.custom: devx-track-azurecli
 |  |  | [Create a token with repository-scoped permissions](/azure/container-registry/container-registry-repository-scoped-permissions)
 |  |  | [Pull images from a connected registry on IoT Edge device](/azure/container-registry/pull-images-from-connected-registry)
 |  |  | [How to consume and maintain public content with Azure Container Registry Tasks](/azure/container-registry/tasks-consume-public-content)
-|  |  | [How to refer to public container images in content](https://review.learn.microsoft.com/en-us/help/contribute/contribute-how-to-reference-public-container-images?branch=main)
 |  | [az acr token credential ](/cli/azure/acr/token/credential) | [Create a token with repository-scoped permissions](/azure/container-registry/container-registry-repository-scoped-permissions)
 |  |  | [Pull images from a connected registry on IoT Edge device](/azure/container-registry/pull-images-from-connected-registry)
 |  | [az acr webhook ](/cli/azure/acr/webhook) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
