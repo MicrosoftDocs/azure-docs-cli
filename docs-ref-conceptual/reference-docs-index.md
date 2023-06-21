@@ -15,7 +15,7 @@ zone_pivot_groups: reference-doc-index
 
 # Azure CLI reference articles
 
-When learning a new reference command it is often helpful to see how different Azure services have used the command.  This article provides an A - Z list of published content for each reference subgroup.  Use these links to review tested code snippets and scripts that show the use of parameter values for different tasks.  For common Azure CLI commands, like `az account` and `az group`, only the top 5 most popular articles have been listed.
+When learning a new reference command it is often helpful to see how different Azure services have used the command.  This article provides an A - Z list of published content for each reference subgroup.  Use these links to review tested code snippets and scripts that show the use of parameter values for different tasks.  For common Azure CLI commands, like `az group`, only the top five most popular articles have been listed.
 
 With over 9,000 reference commands, not every Azure CLI command has been used in Azure published content. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).  
 
