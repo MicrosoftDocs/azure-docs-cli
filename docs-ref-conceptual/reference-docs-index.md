@@ -21,7 +21,7 @@ With over 9,000 reference commands, not every Azure CLI command has been used in
 
 [!INCLUDE [prerequisites](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
 
-## List of docs showing Azure CLI reference implementations
+## List of articles showing Azure CLI reference use
 
 ::: zone pivot="ref-zone1"
 
