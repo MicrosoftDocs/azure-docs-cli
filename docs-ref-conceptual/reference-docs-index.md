@@ -19,7 +19,7 @@ When learning a new reference command it is often helpful to see how different A
 
 With over 9,000 reference commands, not every Azure CLI command has been used in an Azure service article. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).
 
-[!INCLUDE [prerequisites](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
+If this is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) to learn about installation and login.
 
 ## List of articles showing Azure CLI reference use
 
