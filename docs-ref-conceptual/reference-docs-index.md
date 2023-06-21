@@ -28,24 +28,27 @@ If this is your first time working with the Azure CLI, see [Get started with Azu
 [!INCLUDE [reference-docs-zone1](includes/reference-docs-zone1.md)]
 
 ::: zone-end
+
 ::: zone pivot="ref-zone2"
 
 [!INCLUDE [reference-docs-zone2](includes/reference-docs-zone2.md)]
 
 ::: zone-end
+
 ::: zone pivot="ref-zone3"
 
 [!INCLUDE [reference-docs-zone3](includes/reference-docs-zone3.md)]
 
 ::: zone-end
+
 ::: zone pivot="ref-zone4"
 
 [!INCLUDE [reference-docs-zone4](includes/reference-docs-zone4.md)]
 
 ::: zone-end
+
 ::: zone pivot="ref-zone5"
 
 [!INCLUDE [reference-docs-zone5](includes/reference-docs-zone5.md)]
 
 ::: zone-end
----
