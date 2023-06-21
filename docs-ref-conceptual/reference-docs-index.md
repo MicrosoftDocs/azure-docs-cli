@@ -1,6 +1,6 @@
 ---
 title: Azure CLI reference command article list | Microsoft Docs
-description: Find links to Azure CLI articles demonstrating the use of reference commands.  Search by Azure service or command name..
+description: Find links to Azure CLI articles demonstrating the use of reference commands.  Search by reference group or command name.
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 06/05/2023
@@ -15,7 +15,7 @@ zone_pivot_groups: reference-doc-index
 
 # Azure CLI reference articles
 
-When learning a new reference command it is often helpful to see how different Azure services have used the command.  This articles provides an A - Z list of published content organized by reference group. Use these links to review tested code snippets and scripts that show the use of parameter values for different tasks.
+When learning a new reference command it is often helpful to see how different Azure services have used the command.  This articles provides an A - Z list of popular published content organized by reference group. Use these links to review tested code snippets and scripts that show the use of parameter values for different tasks.
 
 With over 9,000 reference commands, not every Azure CLI command has been used in an Azure service article. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).
 
