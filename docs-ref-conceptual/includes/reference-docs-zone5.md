@@ -9,16 +9,6 @@ ms.custom: devx-track-azurecli
 
 | Reference | Reference subgroup | Article name
 |---|---|---|
-| **role** | [az role assignment ](/cli/azure/role/assignment) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
-|  |  | [Clear StrongAuthenticationRequirements from a user](/azure/active-directory/devices/howto-vm-sign-in-azure-ad-windows)
-|  |  | [Elevate access to manage all Azure subscriptions and management groups](/azure/role-based-access-control/elevate-access-global-admin)
-|  |  | [Provide access to Key Vault keys, certificates, and secrets with an Azure role-based access control](/azure/key-vault/general/rbac-guide)
-|  |  | [Assign an Azure role for access to blob data](/azure/storage/blobs/assign-azure-role-data-access)
-|  | [az role definition ](/cli/azure/role/definition) | [Provide access to Key Vault keys, certificates, and secrets with an Azure role-based access control](/azure/key-vault/general/rbac-guide)
-|  |  | [Transfer an Azure subscription to a different Azure AD directory](/azure/role-based-access-control/transfer-subscription)
-|  |  | [List Azure role definitions](/azure/role-based-access-control/role-definitions-list)
-|  |  | [Remediate non-compliant resources with Azure Policy](/azure/governance/policy/how-to/remediate-resources)
-|  |  | [Use Azure role-based access control for Kubernetes Authorization](/azure/aks/manage-azure-rbac)
 | **search** | [az search admin-key ](/cli/azure/search/admin-key) | [Connect to Cognitive Search using key authentication](/azure/search/search-security-api-keys)
 |  |  | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
 |  | [az search private-endpoint-connection ](/cli/azure/search/private-endpoint-connection) | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
