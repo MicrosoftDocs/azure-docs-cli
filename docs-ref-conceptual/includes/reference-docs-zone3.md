@@ -75,7 +75,6 @@ ms.custom: devx-track-azurecli
 |  | [az eventhubs namespace application-group policy ](/cli/azure/eventhubs/namespace/application-group/policy) | [Govern resources for client applications with application groups](/azure/event-hubs/resource-governance-with-app-groups)
 |  | [az eventhubs namespace authorization-rule keys ](/cli/azure/eventhubs/namespace/authorization-rule/keys) | [Get an Event Hubs connection string](/azure/event-hubs/event-hubs-get-connection-string)
 |  |  | [Use Spring Kafka with Azure Event Hubs for Kafka API](/azure/developer/java/spring-framework/configure-spring-cloud-stream-binder-java-app-kafka-azure-event-hub)
-|  | [az eventhubs namespace network-rule ](/cli/azure/eventhubs/namespace/network-rule) | [Quickstart: Deploy your first Azure update resource with the AzAPI Terraform provider](/azure/developer/terraform/get-started-azapi-update-resource)
 | **extension** | [az extension ](/cli/azure/extension) | [Use and manage extensions with the Azure CLI](/cli/azure/azure-cli-extensions-overview)
 |  |  | [Azure CLI configuration](/cli/azure/azure-cli-configuration)
 |  |  | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)

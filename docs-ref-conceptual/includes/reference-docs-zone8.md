@@ -229,7 +229,6 @@ ms.custom: devx-track-azurecli
 |  |  | [Deploy a Node.js web app in Azure](/azure/app-service/quickstart-nodejs)
 |  |  | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
 |  |  | [Enable streaming execution logs in Azure Functions](/azure/azure-functions/streaming-logs)
-|  | [az webapp remote-connection ](/cli/azure/webapp/remote-connection) | [Configure a Java app for Azure App Service](/azure/app-service/configure-language-java)
 |  | [az webapp traffic-routing ](/cli/azure/webapp/traffic-routing) | [Set up staging environments in Azure App Service](/azure/app-service/deploy-staging-slots)
 |  | [az webapp vnet-integration ](/cli/azure/webapp/vnet-integration) | [Enable virtual network integration in Azure App Service](/azure/app-service/configure-vnet-integration-enable)
 |  |  | [Tutorial: Deploy Django app with App Service and Azure Database for PostgreSQL - Flexible Server](/azure/postgresql/flexible-server/tutorial-django-app-service-postgres)
