@@ -63,7 +63,6 @@ See [az network](../latest/docs-ref-autogen/network.yml) for an alphabetic list 
 | VPN | [az network vpn-gateway](../latest/docs-ref-autogen/network/vpn-gateway.yml) | Manage VPN gateways. | yes
 | VPN | [az network vpn-server-config](../latest/docs-ref-autogen/network/vpn-server-config.yml) | Manage  VPN server configurations. | yes
 | VPN | [az network vpn-site](../latest/docs-ref-autogen/network/vpn-site.yml) | Manage VPN site configurations. | yes
-| vRouter | [az network vrouter](../latest/docs-ref-autogen/network/vrouter.yml) | Manage virtual routers. |
 | vWAN | [az network vwan](../latest/docs-ref-autogen/network/vwan.yml) | Manage virtual WANs. | yes
 
 ## Load balancing and IP references
