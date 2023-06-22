@@ -1,12 +1,12 @@
 ---
 title: Azure CLI references for Azure SQL | Microsoft Docs
 description: Find Azure CLI core and extension reference commands to manage Azure SQL.  Follow links to popular articles to learn how to use the Azure CLI for Azure SQL
-manager: mkluck
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.tool: azure-cli
 ms.topic: reference
-ms.date: 09/21/2021
+ms.date: 06/19/2023
 ms.service: azure-cli
 ms.reviewer: robb
 ms.custom: devx-track-azurecli, seo-azure-cli

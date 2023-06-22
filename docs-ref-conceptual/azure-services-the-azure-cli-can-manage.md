@@ -1,10 +1,10 @@
 ---
 title: List of Azure services the Azure CLI can manage | Microsoft Docs
 description: The Azure CLI can create and manage various Azure resources — view links to Azure services the Azure CLI can manage, organized by groups.
-manager: mkluck
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/01/2021
+ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

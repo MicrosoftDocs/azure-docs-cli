@@ -1,8 +1,8 @@
 ---
 title: Create virtual machine (VM) on a virtual network (VNet) prerequisites – Azure CLI | Microsoft Docs
 description: Prerequisites for creating a virtual machines (VM) on a virtual network (VNet) with the Azure CLI.
-ms.date: 11/12/2021
-manager: mkluck
+ms.date: 06/19/2023
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.tool: azure-cli

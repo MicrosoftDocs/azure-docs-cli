@@ -1,8 +1,8 @@
 ---
 title: Create virtual network (VNet) – Azure CLI | Microsoft Docs
 description: Learn how to create a virtual network (VNet) and subnet with the Azure CLI .
-ms.date: 11/12/2021
-manager: mkluck
+ms.date: 06/19/2023
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.tool: azure-cli
