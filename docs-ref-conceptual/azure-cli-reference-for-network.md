@@ -1,11 +1,11 @@
 ---
 title: Azure CLI references for Azure Network | Microsoft Docs
 description: Find Azure CLI core and extension reference commands to manage Azure Network. Effectively manage the networking services and capabilities in Azure from a command line. 
-manager: mkluck
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.topic: reference
-ms.date: 09/21/2021
+ms.date: 06/19/2023
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.reviewer: mohnader

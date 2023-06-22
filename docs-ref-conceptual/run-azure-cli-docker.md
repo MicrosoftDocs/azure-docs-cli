@@ -4,7 +4,7 @@ description: Learn how to run a Docker container hosting the Azure CLI. Docker g
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 04/08/2022
+ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
