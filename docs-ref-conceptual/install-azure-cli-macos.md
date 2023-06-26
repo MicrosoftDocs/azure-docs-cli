@@ -4,7 +4,7 @@ description: Learn how to install and run the Azure CLI on macOS using the homeb
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 08/19/2021
+ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli

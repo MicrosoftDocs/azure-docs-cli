@@ -4,7 +4,7 @@ description: Learn about the MSAL-based Azure CLI.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 10/28/2021
+ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli

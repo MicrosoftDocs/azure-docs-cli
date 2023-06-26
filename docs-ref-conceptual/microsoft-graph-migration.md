@@ -4,7 +4,7 @@ description: Learn about the Microsoft Graph migration of Azure CLI.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 05/25/2022
+ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli

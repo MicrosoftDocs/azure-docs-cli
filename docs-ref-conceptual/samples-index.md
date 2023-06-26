@@ -13,11 +13,11 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI sample scripts
 
-Azure CLI samples provide end-to-end scenarios for jobs to be done. This article provides an A - Z list of Azure CLI samples written for Bash environments. 
+Azure CLI samples provide end-to-end scenarios for jobs to be done. This article provides an A - Z list of Azure CLI samples written for Bash environments.
 
-Not every Azure CLI reference command has been used in a sample script. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index). 
+Not every Azure CLI reference command has been used in a sample script. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).  For a list of popular conceptual content for each reference group, see [Azure CLI conceptual article list](./reference-docs-index.md).
 
-[!INCLUDE [prerequisites](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
+If this is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) to learn about installation and login.
 
 ## List of samples
 
