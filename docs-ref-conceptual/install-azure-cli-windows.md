@@ -36,11 +36,12 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, click the "Yes" box.
 
 > [!div class="nextstepaction"]
-> [Latest release of the Azure CLI](https://aka.ms/installazurecliwindows)
+> [Latest release of the Azure CLI (32-bit)](https://aka.ms/installazurecliwindows)
+> [Latest release of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowsx64)
 
 ### Specific version
 
-To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
+To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) and download it. 64-bit version is available from 2.xx. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
@@ -58,9 +59,9 @@ To install the Azure CLI using PowerShell, start PowerShell **as administrator**
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
-This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
+This will download and install the latest 32-bit version of the Azure CLI for Windows. If you prefer 64-bit one, please change URL to `https://aka.ms/installazurecliwindowsx64`. If you already have a version installed, the installer will update the existing version.
 
-To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
+To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
 ### Azure CLI Command (for update only)
 
@@ -143,6 +144,17 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 
 * `https://aka.ms/`
 * `https://azcliprod.blob.core.windows.net/`
+
+### Migrate to 64-bit CLI
+Starting from 2.xx, Azure CLI also releases 64-bit version which is recommended for better performance.
+
+If you are using 32-bit version, you can migrate to 64-bit version by following these steps:
+1. Check your current CLI version and installed extensions by running `az --version`.
+2. If the extension folder `~\.azure\cliextensions` exists, backup it by renaming it. This folder will be created again after migration.
+3. Download and install 64-bit version from [here](https://aka.ms/installazurecliwindowsx64). Please note that this will uninstall 32-bit version automatically.
+4. Install extensions by running `az extension add --name <extension> --version <version>`.
+
+If you have any issue after migration, you can roll back to 32-bit version by uninstalling 64-bit version, installing 32-bit one and restoring the extension folder.
 
 ## Uninstall
 
