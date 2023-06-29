@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/28/2023
+ms.date: 06/29/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -36,7 +36,7 @@ You will be prompted to install an extension on first use.
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.48.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
-|[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.38.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [1.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
+|[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.38.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [1.2.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.38.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [0.1.19](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.41.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | Preview | [0.2.31](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
@@ -126,10 +126,10 @@ You will be prompted to install an extension on first use.
 |[logz](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz) | 2.15.0 | Microsoft Azure Command-Line Tools MicrosoftLogz Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz/HISTORY.rst) |
 |[maintenance](https://github.com/Azure/azure-cli-extensions/tree/master/src/maintenance) | 2.15.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Experimental | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/maintenance/HISTORY.rst) |
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
-|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.45.0 | Support for managednetworkfabric commands based on 2023-02-01-preview API version. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
+|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.45.0 | Support for managednetworkfabric commands based on 2023-02-01-preview API version. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Support for Management Partner preview | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/master/src/mesh) | 2.0.67 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [0.10.7](https://github.com/Azure/azure-cli-extensions/tree/master/src/mesh/HISTORY.rst) |
-|[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/master/src/mixed-reality) | 2.15.0 | Mixed Reality Azure CLI Extension. | Preview | [0.0.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/mixed-reality/HISTORY.rst) |
+|[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality) | 2.49.0 | Mixed Reality Azure CLI Extension. | Preview | [0.0.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality/HISTORY.rst) |
 |[ml](https://github.com/Azure/azureml-examples) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension | GA | [2.18.0](https://github.com/Azure/azureml-examples) |
 |[mobile-network](https://github.com/Azure/azure-cli-extensions/tree/main/src/mobile-network) | 2.43.0 | Microsoft Azure Command-Line Tools MobileNetwork Extension. | Preview | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mobile-network/HISTORY.rst) |
 |[monitor-control-service](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service) | 2.15.0 | Microsoft Azure Command-Line Tools MonitorClient Extension | GA | [0.3.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service/HISTORY.rst) |
