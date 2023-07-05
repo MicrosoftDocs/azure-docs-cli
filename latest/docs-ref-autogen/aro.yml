@@ -42,7 +42,7 @@ directCommands:
   - summary: Create a cluster with a supported OpenShift version.
     syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --version X.Y.Z
   - summary: Create a cluster with 5 compute nodes and Red Hat pull secret.
-    syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --worker-count 5 --pull-secret @pullsecret.txt
+    syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --worker-count 5 --pull-secret pullsecret.txt
   - summary: Create a private cluster.
     syntax: az aro create --resource-group MyResourceGroup --name MyCluster --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --apiserver-visibility Private --ingress-visibility Private
   requiredParameters:
@@ -170,6 +170,32 @@ directCommands:
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
+- uid: az_aro_get-admin-kubeconfig
+  name: az aro get-admin-kubeconfig
+  summary: List admin kubeconfig of a cluster.
+  description: ''
+  syntax: >-
+    az aro get-admin-kubeconfig --name
+                                --resource-group
+                                [--file]
+  examples:
+  - summary: List admin kubeconfig of a cluster. The default is to save it in a file named "kubeconfig".
+    syntax: az aro get-admin-kubeconfig --name MyCluster --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --file -f
+    defaultValue: "kubeconfig"
+    summary: 'Path to the file where kubeconfig should be saved. Default: kubeconfig in local directory.'
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_get-versions
@@ -338,6 +364,7 @@ directCommands:
 commands:
 - az_aro_create
 - az_aro_delete
+- az_aro_get-admin-kubeconfig
 - az_aro_get-versions
 - az_aro_list
 - az_aro_list-credentials
@@ -363,5 +390,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/02/2023
+  ms.date: 06/13/2023
   description: Manage Azure Red Hat OpenShift clusters.
