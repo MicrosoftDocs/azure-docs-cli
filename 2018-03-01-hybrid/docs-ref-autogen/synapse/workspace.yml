@@ -91,6 +91,9 @@ directCommands:
                                 [--root-folder]
                                 [--tags]
                                 [--tenant-id]
+                                [--uami-id]
+                                [--uami-id-in-encrypt]
+                                [--use-sami-in-encrypt]
   examples:
   - summary: Create a Synapse workspace
     syntax: >-
@@ -107,7 +110,8 @@ directCommands:
       az synapse workspace create --name testworkspace --resource-group rg \
         --storage-account testadlsgen2 --file-system testfilesystem \
         --sql-admin-login-user cliuser1 --sql-admin-login-password Password123! --location "East US" \
-        --key-identifier https://{keyvaultname}.vault.azure.net/keys/{keyname} --key-name testcmk
+        --key-identifier https://{keyvaultname}.vault.azure.net/keys/{keyname} --key-name testcmk \
+        --use-sami-in-encrypt True
   - summary: Create a Synapse workspace connecting to azure devops
     syntax: >-
       az synapse workspace create --name testworkspace --resource-group rg \
@@ -121,6 +125,12 @@ directCommands:
         --managed-rg-name managedrg \
         --storage-account testadlsgen2 --file-system testfilesystem \
         --sql-admin-login-user cliuser1 --sql-admin-login-password Password123! --location "East US"
+  - summary: Create a Synapse workspace with user assigned managed identity
+    syntax: >-
+      az synapse workspace create --name testworkspace --resource-group rg \
+        --storage-account testadlsgen2 --file-system testfilesystem \
+        --sql-admin-login-user cliuser1 --sql-admin-login-password Password123! --location "East US" \
+        --uami-id "{your-first-uami-resourceid}" "{your-second-uami-resourceid}"
   requiredParameters:
   - isRequired: true
     name: --file-system
@@ -206,6 +216,15 @@ directCommands:
     description: ''
   - name: --tenant-id
     summary: The tenant id used to connect Azure devops.
+    description: ''
+  - name: --uami-id
+    summary: The list of User-assigned Managed Identity Id for workspace.
+    description: ''
+  - name: --uami-id-in-encrypt
+    summary: User assigned identity resource Id used in Workspace Encryption.
+    description: ''
+  - name: --use-sami-in-encrypt
+    summary: Whether use System assigned identity in Workspace Encryption. If use uami, please set True.If not, set False.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/synapse/_help.py
 - uid: az_synapse_workspace_delete
@@ -308,11 +327,35 @@ directCommands:
                                 [--subscription]
                                 [--tags]
                                 [--tenant-id]
+                                [--uami-action {Add, Remove, Set}]
+                                [--uami-id]
+                                [--uami-id-in-encrypt]
+                                [--use-sami-in-encrypt]
   examples:
   - summary: Update a Synapse workspace
     syntax: >-
       az synapse workspace update --name fromcli4 --resource-group rg \
         --tags key1=value1
+  - summary: Update a Synapse workspace, add user assigned managed identity
+    syntax: >-
+      az synapse workspace update --name fromcli4 --resource-group rg \
+
+      --uami-action Add --uami-id "{your-first-uami-resourceid}" "{your-second-uami-resourceid}"
+  - summary: Update a Synapse workspace, remove user assigned managed identity
+    syntax: >-
+      az synapse workspace update --name fromcli4 --resource-group rg \
+
+      --uami-action Remove --uami-id "{your-first-uami-resourceid}" "{your-second-uami-resourceid}"
+  - summary: Update a Synapse workspace, rewrite user assigned managed identity
+    syntax: >-
+      az synapse workspace update --name fromcli4 --resource-group rg \
+
+      --uami-action Set --uami-id "{your-first-uami-resourceid}" "{your-second-uami-resourceid}"
+  - summary: Update a Synapse workspace, set workspace encryption uami
+    syntax: >-
+      az synapse workspace update --name fromcli4 --resource-group rg \
+
+      --uami-id-in-encrypt "{your-encrytion-uami-resourceid}" --use-sami-in-encrypt False
   optionalParameters:
   - name: --account-name
     summary: GitHub account name used for the repository or Azure devops organization name.
@@ -369,6 +412,19 @@ directCommands:
     description: ''
   - name: --tenant-id
     summary: The tenant id used to connect Azure devops.
+    description: ''
+  - name: --uami-action
+    parameterValueGroup: "Add, Remove, Set"
+    summary: Action must be specified when you add/remove/set user assigned managed identities for workspace.The supported actions are:Add,Remove,Set.Add means to add user assigned managed identities for workspace, Remove means to remove user assigned managed identities from workspace, Set can be used when you want to add and remove user assigned managed identities at the same time, current identities will be coverd by specified ones.
+    description: ''
+  - name: --uami-id
+    summary: The list of User-assigned Managed Identity Id for workspace.
+    description: ''
+  - name: --uami-id-in-encrypt
+    summary: User assigned identity resource Id used in Workspace Encryption.
+    description: ''
+  - name: --use-sami-in-encrypt
+    summary: Whether use System assigned identity in Workspace Encryption. If use uami, please set True.If not, set False.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/synapse/_help.py
 - uid: az_synapse_workspace_wait

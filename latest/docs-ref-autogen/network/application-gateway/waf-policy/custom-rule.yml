@@ -14,8 +14,11 @@ directCommands:
                                                                  --policy-name
                                                                  --priority
                                                                  --resource-group
-                                                                 --rule-type {Invalid, MatchRule}
+                                                                 --rule-type {Invalid, MatchRule, RateLimitRule}
+                                                                 [--group-by-user-session]
                                                                  [--match-conditions]
+                                                                 [--rate-limit-duration {FiveMins, OneMin}]
+                                                                 [--rate-limit-threshold]
                                                                  [--state {Disabled, Enabled}]
   examples:
   - summary: Create an application gateway WAF policy custom rule.
@@ -44,13 +47,23 @@ directCommands:
     description: ''
   - isRequired: true
     name: --rule-type
-    parameterValueGroup: "Invalid, MatchRule"
+    parameterValueGroup: "Invalid, MatchRule, RateLimitRule"
     summary: Type of rule.
     description: ''
   optionalParameters:
+  - name: --group-by-user-session
+    summary: List of user session identifier group by clauses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --match-conditions
     defaultValue: "[]"
     summary: List of match conditions.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --rate-limit-duration
+    parameterValueGroup: "FiveMins, OneMin"
+    summary: Duration over which Rate Limit policy will be applied. Applies only when ruleType is RateLimitRule.
+    description: ''
+  - name: --rate-limit-threshold
+    summary: Rate Limit threshold to apply in case ruleType is RateLimitRule. Must be greater than or equal to 1.
     description: ''
   - name: --state
     defaultValue: "Enabled"
@@ -139,10 +152,13 @@ directCommands:
                                                                  [--action {Allow, Block, Log}]
                                                                  [--add]
                                                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                 [--group-by-user-session]
                                                                  [--match-conditions]
                                                                  [--priority]
+                                                                 [--rate-limit-duration {FiveMins, OneMin}]
+                                                                 [--rate-limit-threshold]
                                                                  [--remove]
-                                                                 [--rule-type {Invalid, MatchRule}]
+                                                                 [--rule-type {Invalid, MatchRule, RateLimitRule}]
                                                                  [--set]
                                                                  [--state {Disabled, Enabled}]
   examples:
@@ -173,17 +189,27 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --group-by-user-session
+    summary: List of user session identifier group by clauses.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --match-conditions
     summary: List of match conditions.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --priority
     summary: Rule priority. Lower values are evaluated prior to higher values.
     description: ''
+  - name: --rate-limit-duration
+    parameterValueGroup: "FiveMins, OneMin"
+    summary: Duration over which Rate Limit policy will be applied. Applies only when ruleType is RateLimitRule.
+    description: ''
+  - name: --rate-limit-threshold
+    summary: Rate Limit threshold to apply in case ruleType is RateLimitRule. Must be greater than or equal to 1.
+    description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --rule-type
-    parameterValueGroup: "Invalid, MatchRule"
+    parameterValueGroup: "Invalid, MatchRule, RateLimitRule"
     summary: Type of rule.
     description: ''
   - name: --set
@@ -223,5 +249,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/03/2023
+  ms.date: 06/27/2023
   description: Manage application gateway web application firewall (WAF) policy custom rules.
