@@ -25,7 +25,7 @@ Three common output formats are used with Azure CLI commands:
    - JSON gives you the most comprehensive information.
    - This format is the default but you can use the `--output` parameter to specify a different option.
    - Change the global default format to one of your personal preference by using [az config](../latest/docs-ref-autogen/config.yml) such as `az config set core.output=table`.
-   - Note that JSON format preserves the double quotes, generally making in unsuitable for scripting purposes.
+   - Note that JSON format preserves the double quotes, generally making it unsuitable for scripting purposes.
 
 2. The `table` format presents output as a readable table. You can specify which values appear in the table and use queries to customize the output as shown here:
 
