@@ -4,24 +4,27 @@ name: az communication
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **communication** extension for the Azure CLI  (version 2.40.0 or higher).  The extension will automatically install the first time you run an **az communication** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **communication** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az communication** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage communication service with communication.
 description: ''
 directCommands:
 - uid: az_communication_create
   name: az communication create
-  summary: Creates a new Communication Service or update an existing one.
+  summary: Create a new CommunicationService or update an existing CommunicationService.
   description: ''
   syntax: >-
     az communication create --name
                             --resource-group
                             [--data-location]
+                            [--linked-domains]
                             [--location]
-                            [--no-wait]
+                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                             [--tags]
+                            [--type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
+                            [--user-assigned-identities]
   examples:
-  - summary: Create or update resource
-    syntax: az communication create --name "MyCommunicationResource" --location "Global" --data-location "United States" --resource-group "MyResourceGroup"
+  - summary: Create a communication resource with tags
+    syntax: az communication create -n ResourceName -g ResourceGroup --location global --data-location unitedstates --tags "{tag:tag}"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -35,30 +38,40 @@ directCommands:
   - name: --data-location
     summary: The location where the communication service stores its data at rest.
     description: ''
+  - name: --linked-domains
+    summary: List of email Domain resource Ids.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    summary: The geo-location where the resource lives  When not specified, the location of the resource group will be used.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --type
+    parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
+    summary: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+    description: ''
+  - name: --user-assigned-identities -i
+    summary: "The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
     description: ''
 - uid: az_communication_delete
   name: az communication delete
-  summary: Deletes an existing Communication Service.
+  summary: Delete to delete a CommunicationService.
   description: ''
   syntax: >-
     az communication delete [--ids]
                             [--name]
-                            [--no-wait]
+                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                             [--resource-group]
                             [--subscription]
                             [--yes]
   examples:
-  - summary: Delete resource
-    syntax: az communication delete --name "MyCommunicationResource" --resource-group "MyResourceGroup"
+  - summary: Delete a communication resource
+    syntax: az communication delete -n ResourceName -g ResourceGroup
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -67,7 +80,7 @@ directCommands:
     summary: The name of the CommunicationService resource.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -92,8 +105,8 @@ directCommands:
                                            [--resource-id]
                                            [--subscription]
   examples:
-  - summary: Link notification hub
-    syntax: az communication link-notification-hub --name "MyCommunicationResource" --connection-string "Endpoint=sb://MyNamespace.servicebus.windows.net/;SharedAccessKey=abcd1234" --resource-id "/subscriptions/12345/resourceGroups/MyOtherResourceGroup/providers/Microsoft.NotificationHubs/namespaces/MyNamespace/notificationHubs/MyHub" --resource-group "MyResourceGroup"
+  - summary: Create a communication resource
+    syntax: az communication link-notification-hub -n ResourceName -g ResourceGroup --resource-id /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/testResource/providers/Microsoft.NotificationHubs/namespaces/my-hub/NotificationHubs/testHub
   optionalParameters:
   - name: --connection-string
     summary: Connection string for the notification hub.
@@ -115,40 +128,44 @@ directCommands:
     description: ''
 - uid: az_communication_list
   name: az communication list
-  summary: Handles requests to list all resources in a resource group or a subscription.
+  summary: List requests to list all resources in a resource group.
   description: ''
   syntax: az communication list [--resource-group]
   examples:
-  - summary: List by resource group
-    syntax: az communication list --resource-group "MyResourceGroup"
-  - summary: List by subscription
-    syntax: az communication list
+  - summary: Get all resources from a resource group
+    syntax: az communication list -g ResourceGroup
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: az_communication_list-key
   name: az communication list-key
-  summary: Gets the access keys of the Communication Service resource.
+  summary: Get the access keys of the CommunicationService resource.
   description: ''
   syntax: >-
-    az communication list-key --name
-                              --resource-group
+    az communication list-key [--ids]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
   examples:
-  - summary: List keys
-    syntax: az communication list-key --name "MyCommunicationResource" --resource-group "MyResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  - summary: Get resource access keys
+    syntax: az communication list-keys -n ResourceName -g ResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
     summary: The name of the CommunicationService resource.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_communication_regenerate-key
   name: az communication regenerate-key
-  summary: Regenerates Communication Service access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
+  summary: Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
   description: ''
   syntax: >-
     az communication regenerate-key [--ids]
@@ -157,8 +174,8 @@ directCommands:
                                     [--resource-group]
                                     [--subscription]
   examples:
-  - summary: Regenerate key
-    syntax: az communication regenerate-key --name "MyCommunicationResource" --key-type "Primary" --resource-group "MyResourceGroup"
+  - summary: Regenerate secondary key for a resource
+    syntax: az communication regenrate-key -n ResourceName -g ResourceGroup --key-type secondary
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -178,7 +195,7 @@ directCommands:
     description: ''
 - uid: az_communication_show
   name: az communication show
-  summary: Gets the Communication Service and its properties.
+  summary: Get the CommunicationService and its properties.
   description: ''
   syntax: >-
     az communication show [--ids]
@@ -186,8 +203,8 @@ directCommands:
                           [--resource-group]
                           [--subscription]
   examples:
-  - summary: Get resource
-    syntax: az communication show --name "MyCommunicationResource" --resource-group "MyResourceGroup"
+  - summary: Get a communication service's properties
+    syntax: az communication show -n ResourceName -g ResourceGroup
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -203,44 +220,68 @@ directCommands:
     description: ''
 - uid: az_communication_update
   name: az communication update
-  summary: Updates an existing Communication Service.
+  summary: Update a new CommunicationService or update an existing CommunicationService.
   description: ''
   syntax: >-
-    az communication update [--data-location]
+    az communication update [--add]
+                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                             [--ids]
-                            [--location]
+                            [--linked-domains]
                             [--name]
+                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                            [--remove]
                             [--resource-group]
+                            [--set]
                             [--subscription]
                             [--tags]
-  examples:
-  - summary: Update resource
-    syntax: az communication update --name "MyCommunicationResource" --tags newTag="newVal" --resource-group "MyResourceGroup"
+                            [--type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
+                            [--user-assigned-identities]
   optionalParameters:
-  - name: --data-location
-    summary: The location where the communication service stores its data at rest.
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+  - name: --linked-domains
+    summary: List of email Domain resource Ids.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --name -n
     summary: The name of the CommunicationService resource.
     description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --type
+    parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
+    summary: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
+    description: ''
+  - name: --user-assigned-identities -i
+    summary: "The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
     description: ''
 - uid: az_communication_wait
   name: az communication wait
-  summary: Places the CLI in a waiting state until a condition of the communication is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az communication wait [--created]
@@ -254,11 +295,6 @@ directCommands:
                           [--subscription]
                           [--timeout]
                           [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the communication is successfully created.
-    syntax: az communication wait --name "MyCommunicationResource" --resource-group "MyResourceGroup" --created
-  - summary: Pause executing next line of CLI script until the communication is successfully deleted.
-    syntax: az communication wait --name "MyCommunicationResource" --resource-group "MyResourceGroup" --deleted
   optionalParameters:
   - name: --created
     defaultValue: "False"
