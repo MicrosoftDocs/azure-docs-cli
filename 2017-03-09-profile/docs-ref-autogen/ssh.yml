@@ -6,7 +6,7 @@ extensionInformation: >-
 
   > This reference is part of the **ssh** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az ssh** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: SSH into resources (Azure VMs, Arc servers, etc) using AAD issued openssh certificates.
-description: ''
+description: SSH into Arc-enabled servers without requiring a public IP address or SSH into Azure Virtual Machines. AAD issued openssh certificates for authentication currently only supported for Linux.
 directCommands:
 - uid: az_ssh_arc
   name: az ssh arc
@@ -24,6 +24,7 @@ directCommands:
                [--resource-type]
                [--ssh-client-folder]
                [--ssh-proxy-folder]
+               [--yes]
                [<SSH_ARGS>]
   examples:
   - summary: Give a resource group name and machine name to SSH using AAD issued certificates
@@ -77,6 +78,10 @@ directCommands:
   - name: --ssh-proxy-folder
     summary: Path to the folder where the ssh proxy should be saved. Default to .clientsshproxy folder in user's home directory if not provided.
     description: ''
+  - name: --yes --yes-without-prompt -y
+    defaultValue: "False"
+    summary: Update service configuration without prompting user.
+    description: ''
   - name: <SSH_ARGS>
     summary: Additional arguments passed to OpenSSH.
     description: ''
@@ -123,6 +128,7 @@ directCommands:
                   [--resource-type]
                   [--ssh-client-folder]
                   [--ssh-proxy-folder]
+                  [--yes]
   examples:
   - summary: Give the resource group and machine name for which to create a config using AAD issued certificates, save in a local file, and then ssh into that resource
     syntax: >-
@@ -162,7 +168,7 @@ directCommands:
   - summary: Give a SSH Client Folder to use the ssh executables in that folder, like ssh-keygen.exe. If not provided, the extension attempts to use pre-installed OpenSSH client (on Windows, extension looks for pre-installed executables under C:\Windows\System32\OpenSSH).
     syntax: az ssh config --file ./myconfig --resource-group myResourceGroup --name myVM --ssh-client-folder "C:\Program Files\OpenSSH"
   - summary: Give the Resource Type of the target. Useful when there is an Azure VM and an Arc Server with the same name in the same resource group. Resource type can be either "Microsoft.HybridCompute" for Arc Servers or "Microsoft.Compute" for Azure Virtual Machines.
-    syntax: az ssh config --resource-type [Microsoft.Compute|Microsoft.HybridCompute] --resource-group myResourceGroup --name myVM --file ./myconfig
+    syntax: az ssh config --resource-type [Microsoft.Compute/virtualMachines|Microsoft.HybridCompute/machines] --resource-group myResourceGroup --name myVM --file ./myconfig
   requiredParameters:
   - isRequired: true
     name: --file -f
@@ -213,6 +219,10 @@ directCommands:
   - name: --ssh-proxy-folder
     summary: Path to the folder where the ssh proxy should be saved. Default to .clientsshproxy folder in user's home directory if not provided.
     description: ''
+  - name: --yes --yes-without-prompt -y
+    defaultValue: "False"
+    summary: Update service configuration without prompting user.
+    description: ''
 - uid: az_ssh_vm
   name: az ssh vm
   summary: SSH into Azure VMs or Arc Servers.
@@ -231,6 +241,7 @@ directCommands:
               [--resource-type]
               [--ssh-client-folder]
               [--ssh-proxy-folder]
+              [--yes]
               [<SSH_ARGS>]
   examples:
   - summary: Give a resource group name and machine name to SSH using AAD issued certificates
@@ -245,7 +256,7 @@ directCommands:
   - summary: Using additional ssh arguments
     syntax: az ssh vm --ip 1.2.3.4 -- -A -o ForwardX11=yes
   - summary: Give the Resource Type of the target. Useful when there is an Azure VM and an Arc Server with the same name in the same resource group. Resource type can be either "Microsoft.HybridCompute" for Arc Servers or "Microsoft.Compute" for Azure Virtual Machines.
-    syntax: az ssh vm --resource-type [Microsoft.Compute|Microsoft.HybridCompute] --resource-group myResourceGroup --name myVM
+    syntax: az ssh vm --resource-type [Microsoft.Compute/virtualMachines|Microsoft.HybridCompute/machines] --resource-group myResourceGroup --name myVM
   - summary: Give a local user name to SSH with local user credentials using certificate based authentication.
     syntax: az ssh vm --local-user username --ip 1.2.3.4 --certificate-file cert.pub --private-key-file key
   - summary: Give a local user name to SSH with local user credentials using key based authentication.
@@ -298,6 +309,10 @@ directCommands:
   - name: --ssh-proxy-folder
     summary: Path to the folder where the ssh proxy should be saved. Default to .clientsshproxy folder in user's home directory if not provided.
     description: ''
+  - name: --yes --yes-without-prompt -y
+    defaultValue: "False"
+    summary: Update service configuration without prompting user.
+    description: ''
   - name: <SSH_ARGS>
     summary: Additional arguments passed to OpenSSH.
     description: ''
@@ -324,4 +339,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: SSH into resources (Azure VMs, Arc servers, etc) using AAD issued openssh certificates.
+  description: SSH into Arc-enabled servers without requiring a public IP address or SSH into Azure Virtual Machines. AAD issued openssh certificates for authentication currently only supported for Linux.

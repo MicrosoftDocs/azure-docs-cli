@@ -4,7 +4,7 @@ name: az elastic monitor tag-rule
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **elastic** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az elastic monitor tag-rule** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **elastic** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az elastic monitor tag-rule** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage tag rule with elastic.
 description: ''
 directCommands:
@@ -14,59 +14,28 @@ directCommands:
   description: ''
   syntax: >-
     az elastic monitor tag-rule create --monitor-name
+                                       --name
                                        --resource-group
-                                       --rule-set-name
-                                       [--filtering-tags]
-                                       [--provisioning-state {Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating}]
-                                       [--send-aad-logs {false, true}]
-                                       [--send-activity-logs {false, true}]
-                                       [--send-subscription-logs {false, true}]
+                                       [--log-rules]
   examples:
-  - summary: TagRules_CreateOrUpdate
-    syntax: az elastic monitor tag-rule create --monitor-name "myMonitor" --filtering-tags name="Environment" action="Include" value="Prod" --filtering-tags name="Environment" action="Exclude" value="Dev" --send-aad-logs false --send-activity-logs true --send-subscription-logs true --resource-group "myResourceGroup" --rule-set-name "default"
+  - summary: Create monitor tag-rule
+    syntax: az elastic monitor tag-rule create -n default -g rg --monitor-name monitor --log-rules "{filteringTags:[{name:Environment,value:Prod,action:Include}]}"
   requiredParameters:
   - isRequired: true
     name: --monitor-name
     summary: Monitor resource name.
     description: ''
   - isRequired: true
+    name: --name --rule-set-name -n
+    summary: Tag Rule Set resource name.
+    description: ''
+  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --rule-set-name
-    summary: Tag Rule Set resource name.
-    description: ''
   optionalParameters:
-  - name: --filtering-tags
-    summary: List of filtering tags to be used for capturing logs. This only takes effect if SendActivityLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
-    description: >-
-      Usage: --filtering-tags name=XX value=XX action=XX
-
-
-      name: The name (also known as the key) of the tag.
-
-      value: The value of the tag.
-
-      action: Valid actions for a filtering tag.
-
-
-      Multiple actions can be specified by using more than one --filtering-tags argument.
-  - name: --provisioning-state
-    parameterValueGroup: "Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating"
-    summary: Provisioning state of the monitoring tag rules.
-    description: ''
-  - name: --send-aad-logs
-    parameterValueGroup: "false, true"
-    summary: Flag specifying if AAD logs should be sent for the Monitor resource.
-    description: ''
-  - name: --send-activity-logs
-    parameterValueGroup: "false, true"
-    summary: Flag specifying if activity logs from Azure resources should be sent for the Monitor resource.
-    description: ''
-  - name: --send-subscription-logs
-    parameterValueGroup: "false, true"
-    summary: Flag specifying if subscription logs should be sent for the Monitor resource.
+  - name: --log-rules
+    summary: Rules for sending logs.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_elastic_monitor_tag-rule_delete
   name: az elastic monitor tag-rule delete
@@ -75,14 +44,14 @@ directCommands:
   syntax: >-
     az elastic monitor tag-rule delete [--ids]
                                        [--monitor-name]
-                                       [--no-wait]
+                                       [--name]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--resource-group]
-                                       [--rule-set-name]
                                        [--subscription]
                                        [--yes]
   examples:
-  - summary: TagRules_Delete
-    syntax: az elastic monitor tag-rule delete --monitor-name "myMonitor" --resource-group "myResourceGroup" --rule-set-name "default"
+  - summary: Delete tag rule
+    syntax: az elastic monitor tag-rule delete --monitor-name name -n name -g rg
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -90,15 +59,15 @@ directCommands:
   - name: --monitor-name
     summary: Monitor resource name.
     description: ''
+  - name: --name --rule-set-name -n
+    summary: Tag Rule Set resource name.
+    description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --rule-set-name
-    summary: Tag Rule Set resource name.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -115,8 +84,8 @@ directCommands:
     az elastic monitor tag-rule list --monitor-name
                                      --resource-group
   examples:
-  - summary: TagRules_List
-    syntax: az elastic monitor tag-rule list --monitor-name "myMonitor" --resource-group "myResourceGroup"
+  - summary: List monitor tag rule
+    syntax: az elastic monitor tag-rule list -g rg --monitor-name name
   requiredParameters:
   - isRequired: true
     name: --monitor-name
@@ -133,12 +102,12 @@ directCommands:
   syntax: >-
     az elastic monitor tag-rule show [--ids]
                                      [--monitor-name]
+                                     [--name]
                                      [--resource-group]
-                                     [--rule-set-name]
                                      [--subscription]
   examples:
-  - summary: TagRules_Get
-    syntax: az elastic monitor tag-rule show --monitor-name "myMonitor" --resource-group "myResourceGroup" --rule-set-name "default"
+  - summary: Show tag rule
+    syntax: az elastic monitor tag-rule show --monitor-name name -g rg -n name
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -146,11 +115,11 @@ directCommands:
   - name: --monitor-name
     summary: Monitor resource name.
     description: ''
+  - name: --name --rule-set-name -n
+    summary: Tag Rule Set resource name.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --rule-set-name
-    summary: Tag Rule Set resource name.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -161,76 +130,42 @@ directCommands:
   description: ''
   syntax: >-
     az elastic monitor tag-rule update [--add]
-                                       [--filtering-tags]
-                                       [--force-string]
+                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--ids]
+                                       [--log-rules]
                                        [--monitor-name]
-                                       [--provisioning-state {Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating}]
+                                       [--name]
                                        [--remove]
                                        [--resource-group]
-                                       [--rule-set-name]
-                                       [--send-aad-logs {false, true}]
-                                       [--send-activity-logs {false, true}]
-                                       [--send-subscription-logs {false, true}]
                                        [--set]
                                        [--subscription]
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
-  - name: --filtering-tags
-    summary: List of filtering tags to be used for capturing logs. This only takes effect if SendActivityLogs flag is enabled. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags.
-    description: >-
-      Usage: --filtering-tags name=XX value=XX action=XX
-
-
-      name: The name (also known as the key) of the tag.
-
-      value: The value of the tag.
-
-      action: Valid actions for a filtering tag.
-
-
-      Multiple actions can be specified by using more than one --filtering-tags argument.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --log-rules
+    summary: Rules for sending logs.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --monitor-name
     summary: Monitor resource name.
     description: ''
-  - name: --provisioning-state
-    parameterValueGroup: "Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating"
-    summary: Provisioning state of the monitoring tag rules.
+  - name: --name --rule-set-name -n
+    summary: Tag Rule Set resource name.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --rule-set-name
-    summary: Tag Rule Set resource name.
-    description: ''
-  - name: --send-aad-logs
-    parameterValueGroup: "false, true"
-    summary: Flag specifying if AAD logs should be sent for the Monitor resource.
-    description: ''
-  - name: --send-activity-logs
-    parameterValueGroup: "false, true"
-    summary: Flag specifying if activity logs from Azure resources should be sent for the Monitor resource.
-    description: ''
-  - name: --send-subscription-logs
-    parameterValueGroup: "false, true"
-    summary: Flag specifying if subscription logs should be sent for the Monitor resource.
-    description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
@@ -238,7 +173,7 @@ directCommands:
     description: ''
 - uid: az_elastic_monitor_tag-rule_wait
   name: az elastic monitor tag-rule wait
-  summary: Place the CLI in a waiting state until a condition of the elastic monitor tag-rule is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az elastic monitor tag-rule wait [--created]
@@ -248,14 +183,11 @@ directCommands:
                                      [--ids]
                                      [--interval]
                                      [--monitor-name]
+                                     [--name]
                                      [--resource-group]
-                                     [--rule-set-name]
                                      [--subscription]
                                      [--timeout]
                                      [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the elastic monitor tag-rule is successfully deleted.
-    syntax: az elastic monitor tag-rule wait --monitor-name "myMonitor" --resource-group "myResourceGroup" --rule-set-name "default" --deleted
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -282,11 +214,11 @@ directCommands:
   - name: --monitor-name
     summary: Monitor resource name.
     description: ''
+  - name: --name --rule-set-name -n
+    summary: Tag Rule Set resource name.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --rule-set-name
-    summary: Tag Rule Set resource name.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
