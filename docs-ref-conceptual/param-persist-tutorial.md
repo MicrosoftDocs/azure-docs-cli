@@ -5,7 +5,7 @@ manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-cli
-ms.date: 06/19/2023
+ms.date: 07/13/2023
 ms.topic: tutorial
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
@@ -256,7 +256,7 @@ az functionapp create \
 
 ## 6. Delete persisted parameters
 
-Use the [az config param-persist delete](/cli/azure/param-persist#az_param_persist_delete) command to remove entries.
+Use the [az config param-persist delete](/cli/azure/config/param-persist#az-config-param-persist-delete) command to remove entries.
 
 ```azurecli
 # Remove a single persisted parameters entry by specifying the name, not the value
@@ -283,7 +283,7 @@ az config param-persist delete --all --yes
 
 ## 7. Turn persisted parameters off
 
-You can turn persisted parameters off by using the [az config param-persist off](/cli/azure/param-persist#az_param_persist_off) command, but your saved persisted parameters data won't be deleted.
+You can turn persisted parameters off by using the [az config param-persist off](/cli/azure/config/param-persist#az-config-param-persist-off) command, but your saved persisted parameters data won't be deleted.
 
 ```azurecli
 # Turn persisted parameters off

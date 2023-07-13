@@ -6,7 +6,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-supportability
 ms.topic: how-to
-ms.date: 06/19/2023
+ms.date: 07/13/2023
 ms.tool: azure-cli
 ms.custom: template-how-to, devx-track-azurecli, seo-azure-cli
 keywords: azure support request, azure support, azure support ticket, support ticket management
@@ -54,7 +54,7 @@ To create a support request, you must be an [Owner](/azure/role-based-access-con
       --contact-country US --contact-language English --contact-timezone "Pacific Standard Time"
    ```
 
-A support engineer will contact you using the method you indicated. For information about initial response times, see [Support scope and responsiveness](/support/plans/response/).
+A support engineer will contact you using the method you indicated. For information about initial response times, see [Support scope and responsiveness](https://azure.microsoft.com/support/plans/response/).
 
 ## Manage support tickets
 
@@ -101,5 +101,5 @@ az support tickets communications list --ticket-name VM012 \
 ## Next steps
 
 - [Azure Support FAQs](https://azure.microsoft.com/support/faq/)
-- [Azure severity and levels](https://azure.microsoft.com/support/plans/response/)
+- [Azure support scope and responsiveness](https://azure.microsoft.com/support/plans/response/)
 - [How to create a support ticket via Azure portal](/azure/azure-portal/supportability/how-to-create-azure-support-request)
