@@ -2,7 +2,7 @@
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 12/19/2022
+ms.date: 07/13/2023
 ms.topic: include
 ms.service: azure-cli
 ms.devlang: azurecli

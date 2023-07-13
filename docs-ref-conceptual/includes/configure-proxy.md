@@ -1,10 +1,8 @@
 ---
-author: sptramer
-ms.author: sttramer
-manager: carmonm
-ms.date: 05/28/2019
+author: dbradish-microsoft
+ms.author: dbradish
+ms.date: 07/05/2023
 ms.topic: include
-ms.service: azure-cli
 ms.custom: devx-track-azurecli
 ---
 If you're unable to connect to an external resource due to a proxy, make sure that you've correctly set the `HTTP_PROXY` and `HTTPS_PROXY` variables in your shell. You will need to contact your system administrator

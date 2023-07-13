@@ -2,7 +2,7 @@
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 12/19/2022
+ms.date: 07/13/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -160,7 +160,7 @@ Acquire {
 
 If your proxy does not use basic auth, __remove__ the `[username]:[password]@` portion of the proxy URI. If you require more information for proxy configuration, see the official Ubuntu documentation:
 
-* [apt.conf manpage](http://manpages.ubuntu.com/manpages/bionic/en/man5/apt.conf.5.html)
+* [apt.conf manpage](https://manpages.ubuntu.com/manpages/lunar/en/man5/apt.conf.5.html)
 * [Ubuntu wiki - apt-get howto](https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy)
 
 In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
