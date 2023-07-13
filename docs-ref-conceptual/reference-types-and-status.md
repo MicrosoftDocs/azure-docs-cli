@@ -28,7 +28,7 @@ The Azure CLI syntax is a combination of groups, references, commands, and param
 
 A **reference subgroup** can have multiple levels such as `az network application-gateway private-link ip-config add`
 
-| Reference Group | Subgroups | || Command|
+| Reference Group | Subgroup 1 | Subgroup 2 | Subgroup 3| Command|
 |-|-|-|-|-|
 |network|application-gateway|private-link|ip-config|add
 
