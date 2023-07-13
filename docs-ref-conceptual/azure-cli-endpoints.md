@@ -25,9 +25,9 @@ The following tables provide lists of the endpoints and suffixes used by the Azu
 
 |Endpoint group | Endpoint
 |-|-|
-management | https://management.core.windows.net/
-resource_manager | https://management.azure.com/
-sql_management | https://management.core.windows.net:8443/
+management | `https://management.core.windows.net/`
+resource_manager | _https://management.azure.com/_
+sql_management | \https://management.core.windows.net:8443/
 batch_resource_id | https://batch.core.windows.net/
 gallery | https://gallery.azure.com/
 active_directory | https://login.microsoftonline.com
