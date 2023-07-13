@@ -67,23 +67,23 @@ attestation_endpoint | *.attest.azure.net
 
 |Endpoint group | Endpoint
 |-|-|
-management | https://management.core.usgovcloudapi.net/
-resource_manager | https://management.usgovcloudapi.net/
-sql_management | https://management.core.usgovcloudapi.net:8443/
-batch_resource_id | https://batch.core.usgovcloudapi.net/
-gallery | https://gallery.usgovcloudapi.net/
-active_directory | https://login.microsoftonline.us
-active_directory_resource_id | https://management.core.usgovcloudapi.net/
-active_directory_graph_resource_id | https://graph.windows.net/
-microsoft_graph_resource_id | https://graph.microsoft.us/
-vm_image_alias_doc | https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json
-media_resource_id | https://rest.media.usgovcloudapi.net
-ossrdbms_resource_id | https://ossrdbms-aad.database.usgovcloudapi.net
-app_insights_resource_id | https://api.applicationinsights.us
-log_analytics_resource_id | https://api.loganalytics.us
-app_insights_telemetry_channel_resource_id | https://dc.applicationinsights.us/v2/track
-synapse_analytics_resource_id | https://dev.azuresynapse.usgovcloudapi.net
-portal | https://portal.azure.us
+management | `https://management.core.usgovcloudapi.net/`
+resource_manager | `https://management.usgovcloudapi.net/`
+sql_management | `https://management.core.usgovcloudapi.net:8443/`
+batch_resource_id | `https://batch.core.usgovcloudapi.net/`
+gallery | `https://gallery.usgovcloudapi.net/`
+active_directory | `https://login.microsoftonline.us`
+active_directory_resource_id | `https://management.core.usgovcloudapi.net/`
+active_directory_graph_resource_id | `https://graph.windows.net/`
+microsoft_graph_resource_id | `https://graph.microsoft.us/`
+vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json`
+media_resource_id | `https://rest.media.usgovcloudapi.net`
+ossrdbms_resource_id | `https://ossrdbms-aad.database.usgovcloudapi.net`
+app_insights_resource_id | `https://api.applicationinsights.us`
+log_analytics_resource_id | `https://api.loganalytics.us`
+app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.us/v2/track`
+synapse_analytics_resource_id | `https://dev.azuresynapse.usgovcloudapi.net`
+portal | `https://portal.azure.us`
 
 ### Endpoint suffixes
 
@@ -104,23 +104,23 @@ synapse_analytics_endpoint | *.dev.azuresynapse.usgovcloudapi.net'
 
 |Endpoint group | Endpoint
 |-|-|
-management | https://management.core.chinacloudapi.cn/
-resource_manager | https://management.chinacloudapi.cn
-sql_management | https://management.core.chinacloudapi.cn:8443/
-batch_resource_id | https://batch.chinacloudapi.cn/
-gallery | https://gallery.chinacloudapi.cn/
-active_directory | https://login.chinacloudapi.cn
-active_directory_resource_id | https://management.core.chinacloudapi.cn/
-active_directory_graph_resource_id | https://graph.chinacloudapi.cn/
-microsoft_graph_resource_id | https://microsoftgraph.chinacloudapi.cn
-vm_image_alias_doc | https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json
-media_resource_id | https://rest.media.chinacloudapi.cn
-ossrdbms_resource_id | https://ossrdbms-aad.database.chinacloudapi.cn
-app_insights_resource_id | https://api.applicationinsights.azure.cn
-log_analytics_resource_id | https://api.loganalytics.azure.cn
-app_insights_telemetry_channel_resource_id | https://dc.applicationinsights.azure.cn/v2/rack
-synapse_analytics_resource_id | https://dev.azuresynapse.azure.cn
-portal | https://portal.azure.cn
+management | `https://management.core.chinacloudapi.cn/`
+resource_manager | `https://management.chinacloudapi.cn`
+sql_management | `https://management.core.chinacloudapi.cn:8443/`
+batch_resource_id | `https://batch.chinacloudapi.cn/`
+gallery | `https://gallery.chinacloudapi.cn/`
+active_directory | `https://login.chinacloudapi.cn`
+active_directory_resource_id | `https://management.core.chinacloudapi.cn/`
+active_directory_graph_resource_id | `https://graph.chinacloudapi.cn/`
+microsoft_graph_resource_id | `https://microsoftgraph.chinacloudapi.cn`
+vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json`
+media_resource_id | `https://rest.media.chinacloudapi.cn`
+ossrdbms_resource_id | `https://ossrdbms-aad.database.chinacloudapi.cn`
+app_insights_resource_id | `https://api.applicationinsights.azure.cn`
+log_analytics_resource_id | `https://api.loganalytics.azure.cn`
+app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.azure.cn/v2/rack`
+synapse_analytics_resource_id | `https://dev.azuresynapse.azure.cn`
+portal | `https://portal.azure.cn`
 
 ### Endpoint suffixes
 
@@ -140,7 +140,7 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 ## Extensions
 
-Azure CLI extensions are optional and installed separately.  The Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This _aka.ms_ link points to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
+Azure CLI extensions are optional and installed separately.  The Azure CLI uses `https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This _aka.ms_ link points to `https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
 
 All extensions install with endpoint **azcliprod.blob.core.windows.net** with the following exceptions:
 
