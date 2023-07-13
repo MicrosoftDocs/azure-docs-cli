@@ -8,7 +8,7 @@ ms.service: azure-cli
 ms.date: 07/13/2023
 ms.topic: tutorial
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: build-test, devx-track-azurecli, seo-azure-cli
 keywords: persisted parameter tutorial
 ---
 

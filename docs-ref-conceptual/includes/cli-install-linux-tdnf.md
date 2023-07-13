@@ -4,7 +4,7 @@ ms.author: chasecrum
 manager: mamccrea
 ms.date: 07/13/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: build-test, devx-track-azurecli
 ---
 
 ## Overview

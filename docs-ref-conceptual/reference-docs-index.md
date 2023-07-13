@@ -7,7 +7,7 @@ ms.date: 06/05/2023
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.topic: sample 
-ms.custom: devx-track-azurecli
+ms.custom: build-test, devx-track-azurecli
 zone_pivot_group_filename: azure/zone-pivot-groups.json
 zone_pivot_groups: reference-doc-index
 ---

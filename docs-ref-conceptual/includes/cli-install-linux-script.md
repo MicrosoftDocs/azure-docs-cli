@@ -6,7 +6,7 @@ ms.date: 07/13/2023
 ms.topic: include
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: build-test, devx-track-azurecli
 ---
 
 ## Overview

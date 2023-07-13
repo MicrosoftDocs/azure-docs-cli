@@ -8,7 +8,7 @@ ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: build-test, devx-track-azurecli, seo-azure-cli
 keywords: microsoft graph, ms graph, active directory graph, ad graph
 ---
 

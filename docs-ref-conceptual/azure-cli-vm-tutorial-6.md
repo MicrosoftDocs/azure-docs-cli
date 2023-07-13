@@ -8,7 +8,7 @@ ms.author: dbradish
 ms.tool: azure-cli
 ms.topic: tutorial
 ms.service: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: build-test, devx-track-azurecli, seo-azure-cli
 keywords: azure cli clean up resources, virtual machine in azure cli
 ---
 

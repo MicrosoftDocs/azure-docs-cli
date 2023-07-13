@@ -3,7 +3,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 07/05/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: build-test, devx-track-azurecli
 ---
 
 Azure CLI uses queries to select and modify the output of Azure CLI commands. Queries are executed client-side on the Azure CLI command's returned JSON object before any display formatting.
