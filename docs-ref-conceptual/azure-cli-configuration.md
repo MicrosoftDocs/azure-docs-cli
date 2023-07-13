@@ -4,7 +4,7 @@ description: The Azure CLI allows user configuration for various settings. Manag
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 06/19/2023 
+ms.date: 07/13/2023 
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -100,7 +100,7 @@ When you provide a default value, that argument is no longer required by any com
 |---------|-----------|------|------------|
 | __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
-| | display\_region\_identified | boolean | Azure customers can choose to deploy resources in many different regions.  In some cases, customers may be able to reduce costs by selecting nearby regions offering the same services.  If a nearby region is identified, a message will display the region to select for future deployments. |This setting controls if the message will be displayed.
+| | display\_region\_identified | boolean | Azure customers can choose to deploy resources in many different regions.  In some cases, customers may be able to reduce costs by selecting nearby regions offering the same services.  If a nearby region is identified, a message will display the region to select for future deployments. This setting controls if the message will be displayed.
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI MIT license](https://github.com/Azure/azure-cli/blob/dev/LICENSE). |
 | | only\_show\_errors | boolean | Only show errors during command invocation. In other words, only errors will be written to `stderr`. It suppresses warnings from preview, deprecated and experimental commands. It is also available for individual commands with the `--only-show-errors` parameter. |
 | | no\_color | boolean | Disable color. Originally colored messages will be prefixed with `DEBUG`, `INFO`, `WARNING` and `ERROR`. This bypasses the issue of a third-party library where the terminal's color cannot revert back after a `stdout` redirection. |

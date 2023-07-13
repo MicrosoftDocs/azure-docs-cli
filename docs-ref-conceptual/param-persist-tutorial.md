@@ -5,7 +5,7 @@ manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-cli
-ms.date: 06/19/2023
+ms.date: 07/13/2023
 ms.topic: tutorial
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
