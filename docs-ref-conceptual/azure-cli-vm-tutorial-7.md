@@ -24,9 +24,10 @@ in depth on the features covered in this tutorial.
 
 If you want to get started right away with specific tasks, look at some sample scripts.
 
+* [A - Z list of Azure CLI samples](samples-index.md)
 * Working with [Linux VMs](/azure/virtual-machines/linux/cli-samples?toc=%2fcli%2fazure%2ftoc.json) and [Windows VMs](/azure/virtual-machines/windowcli-samples?toc=%2fcli%2fazure%2ftoc.json)
-* Working with [webapps](/azure/app-service/app-service-cli-samples?toc=%2Fcli%2Fazure%2Ftoc.json) and [Azure Functions](/azure/azure-functionfunctions-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
-* Working with databases - [Azure SQL databases](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json), [PostgreSQL](/azurpostgresql/sample-scripts-azure-cli?toc=%2fcli%2fazure%2ftoc.json), [MySQL](/azure/mysql/sample-scripts-azure-cli?toc=%2fcli%2fazure%2ftoc.json), an[CosmosDB](/azure/cosmos-db/cli-samples?toc=%2fcli%2fazure%2ftoc.json).
+* Working with [webapps](/azure/app-service/samples-cli?toc=%2Fcli%2Fazure%2Ftoc.json) and [Azure Functions](/azure/azure-functions/functions-cli-samples?toc=%2fcli%2fazure%2ftoc.json)
+* Working with databases - [Azure SQL databases](/azure/sql-database/sql-database-cli-samples?toc=%2fcli%2fazure%2ftoc.json), [PostgreSQL](/azure/postgresql/single-server/sample-scripts-azure-cli?toc=%2fcli%2fazure%2ftoc.json), [MySQL](/azure/mysql/flexible-server/sample-scripts-azure-cli?toc=%2fcli%2fazure%2ftoc.json), an[CosmosDB](/azure/cosmos-db/nosql/cli-samples?toc=%2fcli%2fazure%2ftoc.json).
 
 ## Get support
 

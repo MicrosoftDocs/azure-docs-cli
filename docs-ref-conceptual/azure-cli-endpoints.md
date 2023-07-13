@@ -25,25 +25,25 @@ The following tables provide lists of the endpoints and suffixes used by the Azu
 
 |Endpoint group | Endpoint
 |-|-|
-management | _https://management.core.windows.net/_
-resource_manager | _https://management.azure.com/_
-sql_management | _https://management.core.windows.net:8443/_
-batch_resource_id | _https://batch.core.windows.net/_
-gallery | _https://gallery.azure.com/_
-active_directory | _https://login.microsoftonline.com_
-active_directory_resource_id | _https://management.core.windows.net/_
-active_directory_graph_resource_id | _https://graph.windows.net/_
-microsoft_graph_resource_id | _https://graph.microsoft.com/_
-active_directory_data_lake_resource_id | _https://datalake.azure.net/_
-vm_image_alias_doc | _https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/arm-compute/quickstart-templates/aliases.json_
-media_resource_id | _https://rest.media.azure.net_
-ossrdbms_resource_id | _https://ossrdbms-aad.database.windows.net_
-app_insights_resource_id | _https://api.applicationinsights.io_
-log_analytics_resource_id | _https://api.loganalytics.io_
-app_insights_telemetry_channel_resource_id | _https://dc.applicationinsights.azure.com/v2/track_
-synapse_analytics_resource_id | _https://dev.azuresynapse.net_
-attestation_resource_id | _https://attest.azure.net_
-portal | _https://portal.azure.com_
+management | `https://management.core.windows.net/`
+resource_manager | `https://management.azure.com/`
+sql_management | `https://management.core.windows.net:8443/`
+batch_resource_id | `https://batch.core.windows.net/`
+gallery | `https://gallery.azure.com/`
+active_directory | `https://login.microsoftonline.com_`
+active_directory_resource_id | `https://management.core.windows.net/`
+active_directory_graph_resource_id | `https://graph.windows.net/`
+microsoft_graph_resource_id | `https://graph.microsoft.com/`
+active_directory_data_lake_resource_id | `https://datalake.azure.net/`
+vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/arm-compute/quickstart-templates/aliases.json_`
+media_resource_id | `https://rest.media.azure.net_`
+ossrdbms_resource_id | `https://ossrdbms-aad.database.windows.net_`
+app_insights_resource_id | `https://api.applicationinsights.io_`
+log_analytics_resource_id | `https://api.loganalytics.io_`
+app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.azure.com/v2/track_`
+synapse_analytics_resource_id | `https://dev.azuresynapse.net_`
+attestation_resource_id | `https://attest.azure.net_`
+portal | `https://portal.azure.com_`
 
 ### Endpoint suffixes
 
