@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/05/2023
+ms.date: 07/05/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -27,7 +27,7 @@ ms.custom: devx-track-azurecli
 |  |  | [Manage your Azure subscriptions at scale with management groups](/azure/governance/management-groups/manage)
 |  | [az account subscription ](/cli/azure/account/subscription) | [Quickstart: Create an Azure Front Door Standard/Premium - Azure CLI](/azure/frontdoor/create-front-door-cli)
 |  | [az account tenant ](/cli/azure/account/tenant) | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-|  |  | [How to find your Azure Active Directory tenant ID](/azure/active-directory/fundamentals/active-directory-how-to-find-tenant)
+|  |  | [How to find your Azure Active Directory tenant ID](/azure/active-directory/fundamentals/how-to-find-tenant)
 | **acr** | [az acr ](/cli/azure/acr) | [Create an ingress controller in Azure Kubernetes Service (AKS)](/azure/aks/ingress-basic)
 |  |  | [Push your first image to your Azure container registry using the Docker CLI](/azure/container-registry/container-registry-get-started-docker-cli)
 |  |  | [Authenticate with an Azure container registry](/azure/container-registry/container-registry-authentication)
