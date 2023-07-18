@@ -21,52 +21,10 @@ With over 9,000 reference commands, not every Azure CLI command has been used in
 
 If this is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) to learn about installation and login.
 
-## List of articles showing Azure CLI reference use
+# [List by reference command](#tab/command)
 
-::: zone pivot="ref-zone1"
+[!INCLUDE [reference-docs-subgroup](includes/reference-docs-subgroup.md)]
 
-[!INCLUDE [reference-docs-zone1](includes/reference-docs-zone1.md)]
+# [List by Azure service](#tab/service)
 
-::: zone-end
-
-::: zone pivot="ref-zone2"
-
-[!INCLUDE [reference-docs-zone2](includes/reference-docs-zone2.md)]
-
-::: zone-end
-
-::: zone pivot="ref-zone3"
-
-[!INCLUDE [reference-docs-zone3](includes/reference-docs-zone3.md)]
-
-::: zone-end
-
-::: zone pivot="ref-zone4"
-
-[!INCLUDE [reference-docs-zone4](includes/reference-docs-zone4.md)]
-
-::: zone-end
-
-::: zone pivot="ref-zone5"
-
-[!INCLUDE [reference-docs-zone5](includes/reference-docs-zone5.md)]
-
-::: zone-end
-
-::: zone pivot="ref-zone6"
-
-[!INCLUDE [reference-docs-zone6](includes/reference-docs-zone6.md)]
-
-::: zone-end
-
-::: zone pivot="ref-zone7"
-
-[!INCLUDE [reference-docs-zone7](includes/reference-docs-zone7.md)]
-
-::: zone-end
-
-::: zone pivot="ref-zone8"
-
-[!INCLUDE [reference-docs-zone8](includes/reference-docs-zone8.md)]
-
-::: zone-end
+[!INCLUDE [reference-docs-azure-service](includes/reference-docs-azure-service.md)]
