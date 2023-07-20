@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/19/2023
+ms.date: 07/20/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -36,7 +36,7 @@ You will be prompted to install an extension on first use.
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.48.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
-|[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.38.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [1.2.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
+|[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.38.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [1.2.7](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
 |[amlfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs) | 2.49.0 | Microsoft Azure Command-Line Tools Amlfs Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.38.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | Preview | [0.1.19](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
@@ -50,10 +50,10 @@ You will be prompted to install an extension on first use.
 |[azure-cli-ml](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py) | 2.3.1 | Microsoft Azure Command-Line Tools AzureML Command Module | GA | [1.41.0](https://docs.microsoft.com/python/api/overview/azure/ml/?view=azure-ml-py/HISTORY.rst) |
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.26.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.45.0 | Manage Azure Firewall resources. | Preview | [0.14.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
-|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.21.3](https://github.com/azure/azure-iot-cli-extension) |
+|[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.21.4](https://github.com/azure/azure-iot-cli-extension) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
-|[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.43.0 | Microsoft Azure Command-Line Tools Bastion Extension. | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
+|[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.43.0 | Microsoft Azure Command-Line Tools Bastion Extension. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
 |[billing-benefits](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits) | 2.43.0 | Microsoft Azure Command-Line Tools BillingBenefits Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits/HISTORY.rst) |
 |[blockchain](https://github.com/Azure/azure-cli-extensions/tree/master/src/blockchain) | 2.3.1 | Microsoft Azure Command-Line Tools BlockchainManagementClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/blockchain/HISTORY.rst) |
 |[blueprint](https://github.com/Azure/azure-cli-extensions/tree/master/src/blueprint) | 2.3.0 | Microsoft Azure Command-Line Tools Blueprint Extension | Experimental | [0.3.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/blueprint/HISTORY.rst) |
@@ -175,7 +175,7 @@ You will be prompted to install an extension on first use.
 |[staticwebapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp) | 2.39.0 | Microsoft Azure Command-Line Tools Staticwebapp Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp/HISTORY.rst) |
 |[storage-blob-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview) | 2.27.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Preview | [0.7.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview/HISTORY.rst) |
 |[storage-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover) | 2.45.0 | Microsoft Azure Command-Line Tools StorageMover Extension. | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover/HISTORY.rst) |
-|[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.25.0 | Provides a preview for upcoming storage features. | Preview | [0.8.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
+|[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.25.0 | Provides a preview for upcoming storage features. | Preview | [0.9.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync) | 2.3.1 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync/HISTORY.rst) |
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.15.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
 |[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
