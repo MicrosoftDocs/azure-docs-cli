@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli
 
 # Azure CLI conceptual article list
 
-When learning a new reference command it is often helpful to see how different Azure services have used the command.  This article provides an A - Z list of published content for each reference subgroup.  Use these links to review tested code snippets and scripts that show the use of parameter values for different tasks.  For common Azure CLI commands, like `az group`, only the top five most popular articles have been listed.
+When learning a new reference command it is often helpful to see how different Azure services have used the command.  This article provides an A - Z list of published content for each reference subgroup and Azure service.  Use these links to find tested code snippets and scripts that show the use of parameter values for different tasks.  For common Azure CLI commands, like `az group`, only the top five most popular articles have been listed.
 
 With over 9,000 reference commands, not every Azure CLI command has been used in Azure published content. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).  
 
@@ -23,6 +23,6 @@ If this is your first time working with the Azure CLI, see [Get started with Azu
 
 [!INCLUDE [reference-docs-subgroup](includes/reference-docs-subgroup.md)]
 
-# [List by Azure service](#tab/service)
+# [List by subject area](#tab/subject)
 
-[!INCLUDE [reference-docs-azure-service](includes/reference-docs-azure-service.md)]
+[!INCLUDE [reference-docs-subject](includes/reference-docs-azure-service.md)]
