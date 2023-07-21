@@ -86,11 +86,16 @@ If you are not ready for the migration yet, such as lacking Microsoft Graph perm
 
 ## Troubleshooting
 
-### Graph command fails with `AADSTS50005` or `AADSTS53000`
+### Cannot access Microsoft Graph using device code flow
 
-Your tenant may have Conditional Access policies that block using device code flow to access Microsoft Graph. In such cases, use authorization code flow or a service principal to sign in instead. For more information about sign in methods, please see [Sign in with Azure CLI](authenticate-azure-cli.md).
+Your tenant may have Conditional Access policies that block using device code flow to access Microsoft Graph. Error may occur in following scenarios:
 
-Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Access policies configured.
+- First run `az login --use-device-code` with a scope (such as the default ARM scope `https://management.core.windows.net//.default`) that doesn't have such Conditional Access policies configured, then call `az ad` commands which silently acquire an access token for Microsoft Graph, or call `az account get-access-token --scope https://graph.microsoft.com//.default`. You will see `AADSTS50005` or `AADSTS53000` error in the terminal.
+- Directly log in with Microsoft Graph as the scope by running `az login --use-device-code --scope https://graph.microsoft.com//.default`. In such case, you will see error "Help us keep your device secure" in the web browser.
+
+To solve these errors, use authorization code flow (without `--use-device-code`) or a service principal to sign. For more information about sign in methods, please see [Sign in with Azure CLI](authenticate-azure-cli.md).
+
+Microsoft tenant (`72f988bf-86f1-41af-91ab-2d7cd011db47`) has such Conditional Access policies configured.
 
 ## More information
 
