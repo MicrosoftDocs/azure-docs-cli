@@ -38,7 +38,7 @@ brew update && brew install azure-cli
 
 ## Troubleshooting
 
-If you encounter a problem when installing the CLI through Homebrew, here are some common errors. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+If you encounter a problem when installing the CLI through Homebrew, here are some common errors. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### Completion is not working
 
