@@ -9,12 +9,11 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-## Overview
+## Before you begin
 
-> [!NOTE]
-> It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
-> and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
-> installing manually.
+It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
+and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
+installing manually.
 
 The CLI requires the following software:
 
@@ -22,10 +21,8 @@ The CLI requires the following software:
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
-> [!IMPORTANT]
->
-> The Azure CLI has dropped support for Python 2.7 since version `2.1.0`. Newer versions may not
-> run correctly using Python 2.7.
+The Azure CLI has dropped support for Python 2.7 since version `2.1.0`. Newer versions may not
+run correctly using Python 2.7.
 
 ## Install or update
 

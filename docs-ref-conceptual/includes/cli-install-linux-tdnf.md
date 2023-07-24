@@ -7,13 +7,10 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Overview
+## Before you begin
 
-RPMs are released for [Azure Linux](https://github.com/microsoft/CBL-Mariner).
-
-> [!NOTE]
->
-> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
+- RPMs are released for [Azure Linux](https://github.com/microsoft/CBL-Mariner). 
+- The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
 ## Install
 
