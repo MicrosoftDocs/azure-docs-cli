@@ -78,9 +78,7 @@ To install a specific version, first configure the `azure-cli` repository inform
    sudo dnf install azure-cli-<version>-1.el7
    ```
 
----
-
-## Troubleshooting
+# [Troubleshooting](#tab/troubleshooting)
 
 Here are some common problems seen when installing with `dnf`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
@@ -164,6 +162,8 @@ allow HTTPS connections to the following address:
 * `https://packages.microsoft.com`
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
+
+---
 
 ## Update Azure CLI
 
