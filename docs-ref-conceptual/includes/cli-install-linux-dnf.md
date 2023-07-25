@@ -7,7 +7,7 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Important install information
+# [Important notes](#tab/notes)
 
 - For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
 
@@ -21,7 +21,7 @@ ms.custom: devx-track-azurecli
 
 [!INCLUDE [rpm-warning](rpm-warning.md)]
 
-## Install Azure CLI
+# [Install Azure CLI](#tab/install)
 
 1. Import the Microsoft repository key.
 
@@ -191,3 +191,5 @@ sudo dnf update azure-cli
    MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
    sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
    ```
+   ---
+   
