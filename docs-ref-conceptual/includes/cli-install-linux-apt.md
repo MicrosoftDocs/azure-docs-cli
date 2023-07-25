@@ -7,7 +7,7 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Important install information
+## Before you begin
 
 - The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions.
 
