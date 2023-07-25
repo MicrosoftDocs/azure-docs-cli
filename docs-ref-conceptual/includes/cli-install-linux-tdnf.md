@@ -7,12 +7,11 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Important install information
-
-- RPMs are released for [Azure Linux](https://github.com/microsoft/CBL-Mariner). 
-- The `azure-cli` package supports ARM64 architecture from `2.46.0`.
-
 ## Install Azure CLI
+
+RPMs are released for Azure Linux through [CBL-Mariner](https://github.com/microsoft/CBL-Mariner).  The `azure-cli` package supports ARM64 architecture from `2.46.0`.
+
+To install the Azure CLI, follow these steps:
 
 1. Install the official Microsoft curated set of trusted root certificates:
 
