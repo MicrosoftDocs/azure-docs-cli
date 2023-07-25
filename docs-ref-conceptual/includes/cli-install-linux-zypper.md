@@ -17,7 +17,7 @@ Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivo
 
 In Azure, SUSE and OpenSUSE virtual machines (VMs) based on Azure Marketplace images, the Azure CLI is already installed.
 
-## Install the Azure CLI
+## Install Azure CLI
 
 To install Azure CLI on SUSE/OpenSUSE, please chose one of the following methods:
 

@@ -7,30 +7,26 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Overview
+## Important install information
 
-The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions.
+- The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions.
 
 | Distribution | Version                                                                     |
 |:-------------|:----------------------------------------------------------------------------|
 | Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
 | Debian       | 10 (Buster), 11 (Bullseye), 12 (Bookworm)                                   |
 
-> [!WARNING]
-> You may continue to use historical versions of Azure CLI on old systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
+- You may continue to use historical versions of Azure CLI on old systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
 
-> [!WARNING]
-> Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  See [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove) for more information on `apt remove`.
+- Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  See [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove) for more information on `apt remove`.
 
-> [!NOTE]
->
-> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
+- The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
-## Installation Options
+## Install the Azure CLI
 
 There are two options to install the Azure CLI on your system.  You can download an install script that will run the install commands for you, or you can execute the install commands yourself in a step-by-step process if you prefer.  Both methods are provided below.
 
-## Option 1: Install with one command
+### Option 1: Install with one command
 
 The Azure CLI team maintains a script to run all installation commands in one step.  This script is downloaded via `curl` and piped directly to `bash` to install the CLI.
 
@@ -40,7 +36,7 @@ If you wish to inspect the contents of the script yourself before executing, sim
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
-## Option 2: Step-by-step installation instructions
+### Option 2: Step-by-step installation instructions
 
 If you prefer a step-by-step installation process, complete the following steps to install the Azure CLI.
 
@@ -98,7 +94,7 @@ Here are some common problems seen when installing with `apt`. If you experience
 
 ### No module issue on Ubuntu 20.04 (Focal)/WSL
 
-If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#option-1-install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install) to install the latest `azure-cli` package.
+If you installed `azure-cli` on `Focal` without adding the Azure CLI software repository in [step 3](#set-release) of the manual install instructions or using our [script](#option-1-install-with-one-command), you may encounter issues such as no module named 'decorator' or 'antlr4' as the package you installed is the outdated `azure-cli 2.0.81` from the `focal/universe` repository. Please remove it first by running `sudo apt remove azure-cli -y && sudo apt autoremove -y`, then follow the above [instructions](#install-azure-cli) to install the latest `azure-cli` package.
 
 ### lsb_release does not return the correct base distribution version
 
@@ -170,7 +166,7 @@ allow HTTPS connections to the following address:
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
-## Update
+## Update Azure CLI
 [!INCLUDE [az-upgrade](az-upgrade.md)]
 
 You can also use `apt-get upgrade` to update the CLI package.
@@ -187,7 +183,7 @@ You can also use `apt-get upgrade` to update the CLI package.
 > sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
 > ```
 
-## Uninstall
+## Uninstall Azure CLI
 
 [!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 

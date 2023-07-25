@@ -21,7 +21,7 @@ ms.custom: devx-track-azurecli
 
 [!INCLUDE [rpm-warning](rpm-warning.md)]
 
-## Install the Azure CLI
+## Install Azure CLI
 
 1. Import the Microsoft repository key.
 
@@ -58,7 +58,7 @@ ms.custom: devx-track-azurecli
    sudo dnf install azure-cli
    ```
 
-## Instal specific version 
+## Instal specific version
 
 You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
@@ -120,7 +120,7 @@ make
 sudo make install
 ```
 
-Finally, follow steps 1 and 2 of the [install instruction](#install) to add the Azure CLI repository. You can now download the package and install it without dependency.
+Finally, follow steps 1 and 2 of the [install instruction](#install-azure-cli) to add the Azure CLI repository. You can now download the package and install it without dependency.
 
 > [!NOTE]
 >
@@ -159,7 +159,7 @@ allow HTTPS connections to the following address:
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
-## Update the Azure CLI
+## Update Azure CLI
 
 [!INCLUDE [az-upgrade](az-upgrade.md)]
 
@@ -169,7 +169,7 @@ You can also update the Azure CLI with the `dnf update` command.
 sudo dnf update azure-cli
 ```
 
-## Uninstall the Azure CLI
+## Uninstall Azure CLI
 
 [!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 

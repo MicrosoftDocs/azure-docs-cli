@@ -24,7 +24,7 @@ The CLI requires the following software:
 The Azure CLI has dropped support for Python 2.7 since version `2.1.0`. Newer versions may not
 run correctly using Python 2.7.
 
-## Install or update the Azure CLI
+## Install or update Azure CLI
 
 Both installing and updating the Azure CLI requires re-running the install script.
 
