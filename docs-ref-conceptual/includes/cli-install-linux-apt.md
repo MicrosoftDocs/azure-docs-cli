@@ -11,10 +11,10 @@ ms.custom: devx-track-azurecli
 
 - The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions.
 
-| Distribution | Version                                                                     |
-|:-------------|:----------------------------------------------------------------------------|
-| Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
-| Debian       | 10 (Buster), 11 (Bullseye), 12 (Bookworm)                                   |
+    | Distribution | Version                                                                     |
+    |:-------------|:----------------------------------------------------------------------------|
+    | Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
+    | Debian       | 10 (Buster), 11 (Bullseye), 12 (Bookworm)                                   |
 
 - You may continue to use historical versions of Azure CLI on old systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
 
@@ -22,7 +22,7 @@ ms.custom: devx-track-azurecli
 
 - The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
-## Install the Azure CLI
+## Install Azure CLI
 
 There are two options to install the Azure CLI on your system.  You can download an install script that will run the install commands for you, or you can execute the install commands yourself in a step-by-step process if you prefer.  Both methods are provided below.
 
@@ -72,7 +72,7 @@ If you prefer a step-by-step installation process, complete the following steps 
     sudo apt-get install azure-cli
     ```
 
-## Installing a specific version
+## Installing specific version
 
 Configure the `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 

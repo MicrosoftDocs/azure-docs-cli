@@ -76,7 +76,7 @@ following addresses:
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
-## Uninstall the Azure CLI
+## Uninstall Azure CLI
 
 [!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
