@@ -4,6 +4,88 @@ name: az storage share
 summary: Manage file shares.
 description: ''
 directCommands:
+- uid: az_storage_share_close-handle
+  name: az storage share close-handle
+  summary: Close file handles of a file share.
+  description: ''
+  syntax: >-
+    az storage share close-handle --name
+                                  [--account-key]
+                                  [--account-name]
+                                  [--auth-mode {key, login}]
+                                  [--backup-intent]
+                                  [--close-all {false, true}]
+                                  [--connection-string]
+                                  [--disallow-trailing-dot {false, true}]
+                                  [--handle-id]
+                                  [--path]
+                                  [--recursive {false, true}]
+                                  [--sas-token]
+                                  [--snapshot]
+                                  [--timeout]
+  examples:
+  - summary: Close all file handles of a file share recursively.
+    syntax: >-
+      az storage share close-handle --account-name MyAccount --name MyFileShare --close-all --recursive
+
+      az storage share close-handle --account-name MyAccount --name MyFileShare --handle-id "*" --recursive
+  - summary: Close all file handles of a file directory recursively.
+    syntax: az storage share close-handle --account-name MyAccount --name MyFileShare --path 'dir1' --close-all --recursive
+  - summary: Close all file handles of a file.
+    syntax: az storage share close-handle --account-name MyAccount --name MyFileShare --path 'dir1/test.txt' --close-all
+  - summary: Close file handle with a specific handle-id of a file.
+    syntax: az storage share close-handle --account-name MyAccount --name MyFileShare --path 'dir1/test.txt' --handle-id "id"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The file share name.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: "key, login"
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --backup-intent --enable-file-backup-request-intent
+    defaultValue: "False"
+    summary: Required parameter to use with OAuth (Azure AD) Authentication for Files. This will bypass any file/directory level permission checks and allow access, based on the allowed data actions, even if there are ACLs in place for those files/directories.
+    description: ''
+  - name: --close-all
+    parameterValueGroup: "false, true"
+    summary: Whether or not to close all the file handles. Specify close-all or a specific handle-id.
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --disallow-trailing-dot
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: If true, the trailing dot will be trimmed from the target URI. Default to False.
+    description: ''
+  - name: --handle-id
+    summary: Specifies handle ID opened on the file or directory to be closed. Astrix (‘*’) is a wildcard that specifies all handles.
+    description: ''
+  - name: --path -p
+    summary: The path to the file/directory within the file share.
+    description: ''
+  - name: --recursive
+    parameterValueGroup: "false, true"
+    summary: Boolean that specifies if operation should apply to the directory specified in the URI, its files, with its subdirectories and their files.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
 - uid: az_storage_share_create
   name: az storage share create
   summary: Creates a new share under the specified account.
@@ -259,6 +341,82 @@ directCommands:
     summary: Request timeout in seconds. Applies to each call to the service.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
+- uid: az_storage_share_list-handle
+  name: az storage share list-handle
+  summary: List file handles of a file share.
+  description: ''
+  syntax: >-
+    az storage share list-handle --name
+                                 [--account-key]
+                                 [--account-name]
+                                 [--auth-mode {key, login}]
+                                 [--backup-intent]
+                                 [--connection-string]
+                                 [--disallow-trailing-dot {false, true}]
+                                 [--marker]
+                                 [--max-results]
+                                 [--path]
+                                 [--recursive {false, true}]
+                                 [--sas-token]
+                                 [--snapshot]
+                                 [--timeout]
+  examples:
+  - summary: List all file handles of a file share recursively.
+    syntax: az storage share list-handle --account-name MyAccount --name MyFileShare --recursive
+  - summary: List all file handles of a file directory recursively.
+    syntax: az storage share list-handle --account-name MyAccount --name MyFileShare --path 'dir1' --recursive
+  - summary: List all file handles of a file.
+    syntax: az storage share list-handle --account-name MyAccount --name MyFileShare --path 'dir1/test.txt'
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The file share name.
+    description: ''
+  optionalParameters:
+  - name: --account-key
+    summary: 'Storage account key. Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_KEY.'
+    description: ''
+  - name: --account-name
+    summary: 'Storage account name. Related environment variable: AZURE_STORAGE_ACCOUNT. Must be used in conjunction with either storage account key or a SAS token. If neither are present, the command will try to query the storage account key using the authenticated Azure account. If a large number of storage commands are executed the API quota may be hit.'
+    description: ''
+  - name: --auth-mode
+    parameterValueGroup: "key, login"
+    summary: 'The mode in which to run the command. "login" mode will directly use your login credentials for the authentication. The legacy "key" mode will attempt to query for an account key if no authentication parameters for the account are provided. Environment variable: AZURE_STORAGE_AUTH_MODE.'
+    description: ''
+  - name: --backup-intent --enable-file-backup-request-intent
+    defaultValue: "False"
+    summary: Required parameter to use with OAuth (Azure AD) Authentication for Files. This will bypass any file/directory level permission checks and allow access, based on the allowed data actions, even if there are ACLs in place for those files/directories.
+    description: ''
+  - name: --connection-string
+    summary: 'Storage account connection string. Environment variable: AZURE_STORAGE_CONNECTION_STRING.'
+    description: ''
+  - name: --disallow-trailing-dot
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: If true, the trailing dot will be trimmed from the target URI. Default to False.
+    description: ''
+  - name: --marker
+    summary: An opaque continuation token. This value can be retrieved from the next_marker field of a previous generator object if max_results was specified and that generator has finished enumerating results. If specified, this generator will begin returning results from the point where the previous generator stopped.
+    description: ''
+  - name: --max-results
+    summary: Specifies the maximum number of handles taken on files and/or directories to return. If the request does not specify max_results or specifies a value greater than 5,000, the server will return up to 5,000 items. Setting max_results to a value less than or equal to zero results in error response code 400 (Bad Request).
+    description: ''
+  - name: --path -p
+    summary: The path to the file/directory within the file share.
+    description: ''
+  - name: --recursive
+    parameterValueGroup: "false, true"
+    summary: Boolean that specifies if operation should apply to the directory specified in the URI, its files, with its subdirectories and their files.
+    description: ''
+  - name: --sas-token
+    summary: 'A Shared Access Signature (SAS). Must be used in conjunction with storage account name. Environment variable: AZURE_STORAGE_SAS_TOKEN.'
+    description: ''
+  - name: --snapshot
+    summary: A string that represents the snapshot version, if applicable.
+    description: ''
+  - name: --timeout
+    summary: Request timeout in seconds. Applies to each call to the service.
+    description: ''
 - uid: az_storage_share_show
   name: az storage share show
   summary: Return all user-defined metadata and system properties for the specified share.
@@ -406,11 +564,13 @@ directCommands:
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/storage/_help.py
 commands:
+- az_storage_share_close-handle
 - az_storage_share_create
 - az_storage_share_delete
 - az_storage_share_exists
 - az_storage_share_generate-sas
 - az_storage_share_list
+- az_storage_share_list-handle
 - az_storage_share_metadata
 - az_storage_share_metadata_show
 - az_storage_share_metadata_update
@@ -442,6 +602,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/07/2023
   description: Manage file shares.

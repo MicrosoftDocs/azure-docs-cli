@@ -13,19 +13,23 @@ directCommands:
   summary: Create a new CommunicationService or update an existing CommunicationService.
   description: ''
   syntax: >-
-    az communication create --name
+    az communication create --data-location
+                            --name
                             --resource-group
-                            [--data-location]
                             [--linked-domains]
                             [--location]
+                            [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
+                            [--mi-user-assigned]
                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                             [--tags]
-                            [--type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
-                            [--user-assigned-identities]
   examples:
   - summary: Create a communication resource with tags
     syntax: az communication create -n ResourceName -g ResourceGroup --location global --data-location unitedstates --tags "{tag:tag}"
   requiredParameters:
+  - isRequired: true
+    name: --data-location
+    summary: The location where the communication service stores its data at rest.
+    description: ''
   - isRequired: true
     name: --name -n
     summary: The name of the CommunicationService resource.
@@ -35,14 +39,18 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --data-location
-    summary: The location where the communication service stores its data at rest.
-    description: ''
   - name: --linked-domains
     summary: List of email Domain resource Ids.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --location -l
     summary: The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+    description: ''
+  - name: --mi-system-assigned
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Enable system assigned identity.
+    description: ''
+  - name: --mi-user-assigned
+    summary: Space separated resource IDs to add user-assigned identities.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -50,13 +58,6 @@ directCommands:
     description: ''
   - name: --tags
     summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
-    description: ''
-  - name: --type
-    parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
-    summary: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-    description: ''
-  - name: --user-assigned-identities -i
-    summary: "The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more."
     description: ''
 - uid: az_communication_delete
   name: az communication delete
@@ -359,10 +360,10 @@ commands:
 - az_communication_delete
 - az_communication_email
 - az_communication_email_send
-- az_communication_email_status
-- az_communication_email_status_get
 - az_communication_identity
-- az_communication_identity_issue-access-token
+- az_communication_identity_assign
+- az_communication_identity_remove
+- az_communication_identity_show
 - az_communication_identity_token
 - az_communication_identity_token_get-for-teams-user
 - az_communication_identity_token_issue
@@ -370,6 +371,7 @@ commands:
 - az_communication_identity_user
 - az_communication_identity_user_create
 - az_communication_identity_user_delete
+- az_communication_identity_wait
 - az_communication_link-notification-hub
 - az_communication_list
 - az_communication_list-key
@@ -395,6 +397,15 @@ commands:
 - az_communication_sms_send
 - az_communication_sms_send-sms
 - az_communication_update
+- az_communication_user-identity
+- az_communication_user-identity_issue-access-token
+- az_communication_user-identity_token
+- az_communication_user-identity_token_get-for-teams-user
+- az_communication_user-identity_token_issue
+- az_communication_user-identity_token_revoke
+- az_communication_user-identity_user
+- az_communication_user-identity_user_create
+- az_communication_user-identity_user_delete
 - az_communication_wait
 globalParameters:
 - name: --debug

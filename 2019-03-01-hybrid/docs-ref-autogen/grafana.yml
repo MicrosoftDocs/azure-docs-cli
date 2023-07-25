@@ -19,6 +19,11 @@ directCommands:
                       [--folders-to-exclude]
                       [--folders-to-include]
                       [--resource-group]
+  examples:
+  - summary: backup dashboards under 2 folders (data sources are included to enable name remapping when restore dashboards to another worksapce)
+    syntax: az grafana backup -g MyResourceGroup -n MyGrafana -d c:\temp --folders-to-include "Prod" "Compute Gateway" --components datasources dashboards folders
+  - summary: backup dashboards and skip a few folders
+    syntax: az grafana backup -g MyResourceGroup -n MyGrafana -d c:\temp  --folders-to-exclude General "Azure Monitor" --components datasources dashboards folders
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -132,6 +137,9 @@ directCommands:
                        [--components {annotations, dashboards, datasources, folders, snapshots}]
                        [--remap-data-sources {false, true}]
                        [--resource-group]
+  examples:
+  - summary: Restore dashboards. If they are under folders, include "folders" in the components list; use "--remap-data-sources" so CLI will update dashboards to point to same data sourceses at target workspace
+    syntax: az grafana restore -g MyResourceGroup -n MyGrafana --archive-file backup\dashboards\ServiceHealth-202307051036.tar.gz --components dashboards folders --remap-data-sources
   requiredParameters:
   - isRequired: true
     name: --archive-file -a

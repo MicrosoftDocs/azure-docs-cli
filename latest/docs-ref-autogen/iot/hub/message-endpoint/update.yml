@@ -1,0 +1,347 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_hub_message-endpoint_update
+name: az iot hub message-endpoint update
+extensionInformation: >-
+  > [!Note]
+
+  > This reference is part of the **azure-iot** extension for the Azure CLI  (version 2.37.0 or higher).  The extension will automatically install the first time you run an **az iot hub message-endpoint update** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Update the properties of an existing endpoint for an IoT Hub.
+description: ''
+directCommands:
+- uid: az_iot_hub_message-endpoint_update_cosmosdb-container
+  name: az iot hub message-endpoint update cosmosdb-container
+  summary: Update the properties of an existing Cosmos DB Container endpoint for an IoT Hub.
+  description: >-
+    If updating the authentication type from a key-based to identity-based Cosmos DB Container endpoint, you must provide the identity (via --identity) and the endpoint uri (via --endpoint-uri). The old primary key and secondary key will be nulled out.
+
+
+    If updating the authentication type from an identity-based to key-based Cosmos DB Container endpoint, you must provide the connection string (via --connection-string), the primary key (via --primary-key) or the secondary key (via --secondary-key).
+
+
+    Container name for the endpoint cannot be changed. Account names can only be changed if containers with the same name exist in both accounts.
+  syntax: >-
+    az iot hub message-endpoint update cosmosdb-container --en
+                                                          --hub-name
+                                                          [--connection-string]
+                                                          [--database-name]
+                                                          [--endpoint-resource-group]
+                                                          [--endpoint-subscription-id]
+                                                          [--endpoint-uri]
+                                                          [--identity]
+                                                          [--partition-key-name]
+                                                          [--partition-key-template]
+                                                          [--pk]
+                                                          [--resource-group]
+                                                          [--secondary-key]
+  examples:
+  - summary: Update a key-based or identity-based Cosmos DB Container endpoint for an IoT Hub to use a new specified connection string.
+    syntax: az iot hub message-endpoint update cosmosdb-container -n {iothub_name} --en {endpoint_name} --connection-string {connection_string}
+  - summary: Update a Cosmos DB Container endpoint for an IoT Hub to use a specified primary key and secondary key.
+    syntax: az iot hub message-endpoint update cosmosdb-container -n {iothub_name} --en {endpoint_name} --pk {primary_key} --sk {secondary_key}
+  - summary: Update a Cosmos DB Container endpoint for an IoT Hub to use system assigned identity and a partition key name. The partition key template will be the default.
+    syntax: az iot hub message-endpoint update cosmosdb-container -n {iothub_name} --en {endpoint_name} --pkn {partition_key_name} --identity [system]
+  - summary: Update a key-based Cosmos DB Container endpoint for an IoT Hub to use user assigned identity (you can omit --endpoint-uri if the endpoint is already identity-based).
+    syntax: az iot hub message-endpoint update cosmosdb-container -n {iothub_name} --en {endpoint_name} --identity {user_identity_resource_id} --endpoint-uri {endpoint_uri}
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint --endpoint-name
+    summary: Name of the routing endpoint.
+    description: ''
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  optionalParameters:
+  - name: --connection-string -c
+    summary: Connection string of the routing endpoint.
+    description: ''
+  - name: --database-name --db
+    summary: The name of the cosmos DB database in the cosmos DB account.
+    description: ''
+  - name: --endpoint-resource-group --erg -r
+    summary: Resource group of the Endpoint resoure. If not provided, the IoT Hub's resource group will be used.
+    description: ''
+  - name: --endpoint-subscription-id -s
+    summary: Subscription Id of the Endpoint resource. If not provided, the IoT Hub's subscription will be used.
+    description: ''
+  - name: --endpoint-uri
+    summary: The uri of the endpoint resource.
+    description: ''
+  - name: --identity
+    summary: Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+    description: ''
+  - name: --partition-key-name --pkn
+    summary: The name of the partition key associated with this Cosmos DB SQL Container if one exists. To clear this property, set this to "".
+    description: ''
+  - name: --partition-key-template --pkt
+    summary: 'The template for generating a synthetic partition key value for use with this Cosmos DB SQL Container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. If partition key name is provided, partition key template defaults to {deviceid}-{YYYY}-{MM}. To clear this property, set this to "".'
+    description: ''
+  - name: --pk --primary-key
+    summary: The primary key of the cosmos DB account.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --secondary-key --sk
+    summary: The secondary key of the cosmos DB account.
+    description: ''
+- uid: az_iot_hub_message-endpoint_update_eventhub
+  name: az iot hub message-endpoint update eventhub
+  summary: Update the properties of an existing Event Hub endpoint for an IoT Hub.
+  description: >-
+    If updating the authentication type from a key-based to identity-based Event Hub endpoint, you must provide the identity (via --identity), the endpoint uri (via --endpoint-uri) and the entity path (via --entity-path). The old connection string will be nulled out.
+
+
+    If updating the authentication type from an identity-based to key-based Event Hub endpoint, you must provide the connection string (via --connection-string). The old endpoint uri and entity path will be nulled out.
+  syntax: >-
+    az iot hub message-endpoint update eventhub --en
+                                                --hub-name
+                                                [--connection-string]
+                                                [--endpoint-resource-group]
+                                                [--endpoint-subscription-id]
+                                                [--endpoint-uri]
+                                                [--entity-path]
+                                                [--identity]
+                                                [--resource-group]
+  examples:
+  - summary: Update a key-based or identity-based Event Hub endpoint for an IoT Hub to use a new specified connection string.
+    syntax: az iot hub message-endpoint update eventhub -n {iothub_name} --en {endpoint_name} -c {connection_string}
+  - summary: Update an Event Hub endpoint for an IoT Hub to use system assigned identity and a different entity path.
+    syntax: az iot hub message-endpoint update eventhub -n {iothub_name} --en {endpoint_name} --entity-path {entity_path} --identity [system]
+  - summary: Update a key-based Event Hub endpoint for an IoT Hub to use user assigned identity (you can omit --endpoint-uri if the endpoint is already identity-based).
+    syntax: az iot hub message-endpoint update eventhub -n {iothub_name} --en {endpoint_name} --identity {user_identity_resource_id} --endpoint-uri {endpoint_uri} --entity-path {entity_path}
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint --endpoint-name
+    summary: Name of the routing endpoint.
+    description: ''
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  optionalParameters:
+  - name: --connection-string -c
+    summary: Connection string of the routing endpoint.
+    description: ''
+  - name: --endpoint-resource-group --erg -r
+    summary: Resource group of the Endpoint resoure. If not provided, the IoT Hub's resource group will be used.
+    description: ''
+  - name: --endpoint-subscription-id -s
+    summary: Subscription Id of the Endpoint resource. If not provided, the IoT Hub's subscription will be used.
+    description: ''
+  - name: --endpoint-uri
+    summary: The uri of the endpoint resource.
+    description: ''
+  - name: --entity-path
+    summary: The entity path of the endpoint resource.
+    description: ''
+  - name: --identity
+    summary: Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_iot_hub_message-endpoint_update_servicebus-queue
+  name: az iot hub message-endpoint update servicebus-queue
+  summary: Update the properties of an existing Service Bus Queue endpoint for an IoT Hub.
+  description: >-
+    If updating the authentication type from a key-based to identity-based Service Bus Queue endpoint, you must provide the identity (via --identity), the endpoint uri (via --endpoint-uri) and the entity path (via --entity-path). The old connection string will be nulled out.
+
+
+    If updating the authentication type from an identity-based to key-based Service Bus Queue endpoint, you must provide the connection string (via --connection-string). The old endpoint uri and entity path will be nulled out.
+  syntax: >-
+    az iot hub message-endpoint update servicebus-queue --en
+                                                        --hub-name
+                                                        [--connection-string]
+                                                        [--endpoint-resource-group]
+                                                        [--endpoint-subscription-id]
+                                                        [--endpoint-uri]
+                                                        [--entity-path]
+                                                        [--identity]
+                                                        [--resource-group]
+  examples:
+  - summary: Update a key-based or identity-based Service Bus Queue endpoint for an IoT Hub to use a new specified connection string.
+    syntax: az iot hub message-endpoint update servicebus-queue -n {iothub_name} --en {endpoint_name} -c {connection_string}
+  - summary: Update a Service Bus Queue endpoint for an IoT Hub to use system assigned identity and a different entity path.
+    syntax: az iot hub message-endpoint update servicebus-queue -n {iothub_name} --en {endpoint_name} --entity-path {entity_path} --identity [system]
+  - summary: Update a key-based Service Bus Queue endpoint for an IoT Hub to use user assigned identity (you can omit --endpoint-uri if the endpoint is already identity-based).
+    syntax: az iot hub message-endpoint update servicebus-queue -n {iothub_name} --en {endpoint_name} --identity {user_identity_resource_id} --endpoint-uri {endpoint_uri} --entity-path {entity_path}
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint --endpoint-name
+    summary: Name of the routing endpoint.
+    description: ''
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  optionalParameters:
+  - name: --connection-string -c
+    summary: Connection string of the routing endpoint.
+    description: ''
+  - name: --endpoint-resource-group --erg -r
+    summary: Resource group of the Endpoint resoure. If not provided, the IoT Hub's resource group will be used.
+    description: ''
+  - name: --endpoint-subscription-id -s
+    summary: Subscription Id of the Endpoint resource. If not provided, the IoT Hub's subscription will be used.
+    description: ''
+  - name: --endpoint-uri
+    summary: The uri of the endpoint resource.
+    description: ''
+  - name: --entity-path
+    summary: The entity path of the endpoint resource.
+    description: ''
+  - name: --identity
+    summary: Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_iot_hub_message-endpoint_update_servicebus-topic
+  name: az iot hub message-endpoint update servicebus-topic
+  summary: Update the properties of an existing Service Bus Topic endpoint for an IoT Hub.
+  description: >-
+    If updating the authentication type from a key-based to identity-based Service Bus Topic endpoint, you must provide the identity (via --identity), the endpoint uri (via --endpoint-uri) and the entity path (via --entity-path). The old connection string will be nulled out.
+
+
+    If updating the authentication type from an identity-based to key-based Service Bus Topic endpoint, you must provide the connection string (via --connection-string). The old endpoint uri and entity path will be nulled out.
+  syntax: >-
+    az iot hub message-endpoint update servicebus-topic --en
+                                                        --hub-name
+                                                        [--connection-string]
+                                                        [--endpoint-resource-group]
+                                                        [--endpoint-subscription-id]
+                                                        [--endpoint-uri]
+                                                        [--entity-path]
+                                                        [--identity]
+                                                        [--resource-group]
+  examples:
+  - summary: Update a key-based or identity-based Service Bus Topic endpoint for an IoT Hub to use a new specified connection string.
+    syntax: az iot hub message-endpoint update servicebus-topic -n {iothub_name} --en {endpoint_name} -c {connection_string}
+  - summary: Update a Service Bus Topic endpoint for an IoT Hub to use system assigned identity and a different entity path.
+    syntax: az iot hub message-endpoint update servicebus-topic -n {iothub_name} --en {endpoint_name} --entity-path {entity_path} --identity [system]
+  - summary: Update a key-based Service Bus Topic endpoint for an IoT Hub to use user assigned identity (you can omit --endpoint-uri if the endpoint is already identity-based).
+    syntax: az iot hub message-endpoint update servicebus-topic -n {iothub_name} --en {endpoint_name}  --identity {user_identity_resource_id} --endpoint-uri {endpoint_uri} --entity-path {entity_path}
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint --endpoint-name
+    summary: Name of the routing endpoint.
+    description: ''
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  optionalParameters:
+  - name: --connection-string -c
+    summary: Connection string of the routing endpoint.
+    description: ''
+  - name: --endpoint-resource-group --erg -r
+    summary: Resource group of the Endpoint resoure. If not provided, the IoT Hub's resource group will be used.
+    description: ''
+  - name: --endpoint-subscription-id -s
+    summary: Subscription Id of the Endpoint resource. If not provided, the IoT Hub's subscription will be used.
+    description: ''
+  - name: --endpoint-uri
+    summary: The uri of the endpoint resource.
+    description: ''
+  - name: --entity-path
+    summary: The entity path of the endpoint resource.
+    description: ''
+  - name: --identity
+    summary: Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_iot_hub_message-endpoint_update_storage-container
+  name: az iot hub message-endpoint update storage-container
+  summary: Update the properties of an existing Storage Container endpoint for an IoT Hub.
+  description: >-
+    If updating the authentication type from a key-based to identity-based Storage Container endpoint, you must provide the identity (via --identity) and the endpoint uri (via --endpoint-uri). The old connection string will be nulled out.
+
+
+    If updating the authentication type from an identity-based to key-based Storage Container endpoint, you must provide the connection string (via --connection-string).
+
+
+    Container name and encoding for the endpoint cannot be changed. Account names can only be changed if containers with the same name exist in both accounts.
+  syntax: >-
+    az iot hub message-endpoint update storage-container --en
+                                                         --hub-name
+                                                         [--batch-frequency]
+                                                         [--chunk-size]
+                                                         [--connection-string]
+                                                         [--endpoint-resource-group]
+                                                         [--endpoint-subscription-id]
+                                                         [--endpoint-uri]
+                                                         [--ff]
+                                                         [--identity]
+                                                         [--resource-group]
+  examples:
+  - summary: Update a key-based or identity-based Storage Container endpoint for an IoT Hub to use a new specified connection string.
+    syntax: az iot hub message-endpoint update storage-container -n {iothub_name} --en {endpoint_name} -c {connection_string}
+  - summary: Update a Storage Container endpoint for an IoT Hub to use system assigned identity with the given batch frequency, chunk size, and file name format.
+    syntax: az iot hub message-endpoint update storage-container -n {iothub_name} --en {endpoint_name}  -b {batch_frequency} -w {chunk_size} --ff {file_format} --identity [system]
+  - summary: Update a key-based Storage Container endpoint for an IoT Hub to use user assigned identity (you can omit --endpoint-uri if the endpoint is already identity-based).
+    syntax: az iot hub message-endpoint update storage-container -n {iothub_name} --en {endpoint_name} --identity {user_identity_resource_id} --endpoint-uri {endpoint_uri}
+  requiredParameters:
+  - isRequired: true
+    name: --en --endpoint --endpoint-name
+    summary: Name of the routing endpoint.
+    description: ''
+  - isRequired: true
+    name: --hub-name -n
+    summary: IoT Hub name.
+    description: ''
+  optionalParameters:
+  - name: --batch-frequency -b
+    summary: Request batch frequency in seconds. The maximum amount of time that can elapse before data is written to a blob, between 60 and 720 seconds.
+    description: ''
+  - name: --chunk-size -w
+    summary: Request chunk size in megabytes(MB). The maximum size of blobs, between 10 and 500 MB.
+    description: ''
+  - name: --connection-string -c
+    summary: Connection string of the routing endpoint.
+    description: ''
+  - name: --endpoint-resource-group --erg -r
+    summary: Resource group of the Endpoint resoure. If not provided, the IoT Hub's resource group will be used.
+    description: ''
+  - name: --endpoint-subscription-id -s
+    summary: Subscription Id of the Endpoint resource. If not provided, the IoT Hub's subscription will be used.
+    description: ''
+  - name: --endpoint-uri
+    summary: The uri of the endpoint resource.
+    description: ''
+  - name: --ff --file-name-format
+    summary: File name format for the blob. The file name format must contain {iothub}, {partition}, {YYYY}, {MM}, {DD}, {HH} and {mm} fields. All parameters are mandatory but can be reordered with or without delimiters.
+    description: ''
+  - name: --identity
+    summary: Use a system-assigned or user-assigned managed identity for endpoint authentication. Use "[system]" to refer to the system-assigned identity or a resource ID to refer to a user-assigned identity.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+commands:
+- az_iot_hub_message-endpoint_update_cosmosdb-container
+- az_iot_hub_message-endpoint_update_eventhub
+- az_iot_hub_message-endpoint_update_servicebus-queue
+- az_iot_hub_message-endpoint_update_servicebus-topic
+- az_iot_hub_message-endpoint_update_storage-container
+globalParameters:
+- name: --debug
+  summary: Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: Show this help message and exit.
+- name: --only-show-errors
+  summary: Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, table, tsv"
+  summary: Output format.
+- name: --query
+  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Update the properties of an existing endpoint for an IoT Hub.
