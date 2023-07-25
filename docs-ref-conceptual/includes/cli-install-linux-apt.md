@@ -9,12 +9,12 @@ ms.custom: devx-track-azurecli
 
 ## Overview
 
-The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions. There is no ARM64 package for Ubuntu 18.04.
+The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions.
 
-| Distribution | Version |
-|:-------------|:--------|
+| Distribution | Version                                                                     |
+|:-------------|:----------------------------------------------------------------------------|
 | Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
-| Debian       | 10 (Buster), 11 (Bullseye) |
+| Debian       | 10 (Buster), 11 (Bullseye), 12 (Bookworm)                                   |
 
 > [!WARNING]
 > You may continue to use historical versions of Azure CLI on old systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
@@ -44,7 +44,7 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 If you prefer a step-by-step installation process, complete the following steps to install the Azure CLI.
 
-1. Get packages needed for the install process:
+1. Get packages needed for the installation process:
 
     ```bash
     sudo apt-get update
@@ -94,7 +94,7 @@ Configure the `azure-cli` repository information as shown above. Available versi
 
 ## Troubleshooting
 
-Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### No module issue on Ubuntu 20.04 (Focal)/WSL
 
@@ -116,10 +116,10 @@ To do this, set the value of `AZ_REPO` manually when [adding the repository](#se
 AZ_REPO="jammy"
 ```
 
-For Debian distributions, use the latest `bullseye` repository:
+For Debian distributions, use the latest `bookworm` repository:
 
 ```bash
-AZ_REPO="bullseye"
+AZ_REPO="bookworm"
 ```
 
 > [!IMPORTANT]

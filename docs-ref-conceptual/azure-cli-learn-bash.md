@@ -1,7 +1,7 @@
 --- 
 title: How-to learn Bash with Azure CLI | Microsoft Docs
 description: Learn how to use Bash with Azure CLI.  Query, format output, filter, use variables, and use Bash constructs of loops, if/exists/then and case statements.
-manager: jasongroceroce
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.prod: non-product-specific
