@@ -94,7 +94,7 @@ Configure the `azure-cli` repository information as shown above. Available versi
 
 ## Troubleshooting
 
-Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### No module issue on Ubuntu 20.04 (Focal)/WSL
 
