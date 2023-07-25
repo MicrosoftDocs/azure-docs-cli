@@ -7,12 +7,12 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Before you begin
+## Important install information
 
 - RPMs are released for [Azure Linux](https://github.com/microsoft/CBL-Mariner). 
 - The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
-## Install
+## Install the Azure CLI
 
 1. Install the official Microsoft curated set of trusted root certificates:
 
@@ -42,7 +42,7 @@ To install specific version:
 sudo tdnf install azure-cli-<version>-1
 ```
 
-## Update
+## Update the Azure CLI
 
 Update the Azure CLI with the `tdnf update` command:
 
@@ -50,7 +50,7 @@ Update the Azure CLI with the `tdnf update` command:
 sudo tdnf update azure-cli
 ```
 
-## Uninstall
+## Uninstall the Azure CLI
 
 [!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 

@@ -7,17 +7,21 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Before you begin
+## Important install information
 
 - For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
+
 - Azure CLI 2.38.0 (released on 07/05/2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft will not provide any other updates or bug fixes on this version.
+
 - Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
+
 - Use the `yum` package manager if you are using a Linux systems that doed not support the `dnf` package manager.
+
 - The `azure-cli` package supports ARM64 architecture from `2.46.0`.
 
 [!INCLUDE [rpm-warning](rpm-warning.md)]
 
-## Install
+## Install the Azure CLI
 
 1. Import the Microsoft repository key.
 
@@ -54,7 +58,7 @@ ms.custom: devx-track-azurecli
    sudo dnf install azure-cli
    ```
 
-## Installing a specific version
+## Instal specific version 
 
 You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
@@ -155,7 +159,7 @@ allow HTTPS connections to the following address:
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
-## Update
+## Update the Azure CLI
 
 [!INCLUDE [az-upgrade](az-upgrade.md)]
 
@@ -165,7 +169,7 @@ You can also update the Azure CLI with the `dnf update` command.
 sudo dnf update azure-cli
 ```
 
-## Uninstall
+## Uninstall the Azure CLI
 
 [!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 

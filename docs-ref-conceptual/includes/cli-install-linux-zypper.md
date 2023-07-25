@@ -9,7 +9,7 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-## Before you begin
+## Important install information
 
 The last Azure CLI package developed by Microsoft for SUSE Linux Enterprise Server (SLES), and OpenSUSE (Leap), is version 2.38.0 (released on 07/05/2022). You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bug fixes from Microsoft for those versions.
 
@@ -17,7 +17,7 @@ Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivo
 
 In Azure, SUSE and OpenSUSE virtual machines (VMs) based on Azure Marketplace images, the Azure CLI is already installed.
 
-## Install
+## Install the Azure CLI
 
 To install Azure CLI on SUSE/OpenSUSE, please chose one of the following methods:
 
@@ -149,7 +149,7 @@ When a certificate is broken or outdated on a machine, you might receive an erro
 sudo zypper update-ca-certificates
 ```
 
-## Update
+## Update the Azure CLI
 
 [!INCLUDE [az-upgrade](az-upgrade.md)]
 
@@ -160,7 +160,7 @@ sudo zypper refresh
 sudo zypper update azure-cli
 ```
 
-## Uninstall
+## Uninstall the Azure CLI
 
 [!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
 
