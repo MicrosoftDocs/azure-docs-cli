@@ -14,7 +14,7 @@ keywords: azure cli references, reference types, reference status
 
 # Overview: Azure CLI terminology and support levels
 
-This article explains Azure CLI terminologies.  There are syntax components, reference types, and statuses.  It is the status that determines the support level.
+This article explains Azure CLI terminologies.  There are syntax components, reference types, and statuses.  it's the status that determines the support level.
 
 ## Azure CLI syntax components
 
@@ -32,7 +32,7 @@ A **reference subgroup** can have multiple levels such as `az network applicatio
 |-|-|-|-|-|
 |network|application-gateway|private-link|ip-config|add
 
-See [Reference list A -Z](../latest/docs-ref-autogen/reference-index.yml) for a complete list of reference commands.
+See [Reference list A to Z](../latest/docs-ref-autogen/reference-index.yml) for a complete list of reference commands.
 
 ## What is reference type?
 
@@ -74,7 +74,7 @@ You can learn more about extension references including installation and updatin
 
 ## What is reference status?
 
-Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It is the reference command status, not type, that determines stability and support level.
+Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. it's the reference command status, not type, that determines stability and support level.
 
 | | GA  | Public preview | Experimental
 |-|-|-|-|
