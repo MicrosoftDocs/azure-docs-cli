@@ -41,7 +41,7 @@ Download and install the latest release of the Azure CLI. When the installer ask
 
 ### Specific version
 
-To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) and download it. 64-bit version is available from 2.xx. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
+To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) and download it. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). (64-bit version is available from 2.51.0.)
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
@@ -146,15 +146,15 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 * `https://azcliprod.blob.core.windows.net/`
 
 ### Migrate to 64-bit CLI
-Starting from 2.xx, Azure CLI also releases 64-bit version which is recommended for better performance.
+Starting from 2.51.0, Azure CLI also provides 64-bit version which is recommended for better performance.
 
 If you are using 32-bit version, you can migrate to 64-bit version by following these steps:
 1. Check your current CLI version and installed extensions by running `az --version`.
-2. If the extension folder `~\.azure\cliextensions` exists, backup it by renaming it. This folder will be created again after migration.
-3. Download and install 64-bit version from [here](https://aka.ms/installazurecliwindowsx64). Please note that this will uninstall 32-bit version automatically.
+2. If the extension folder `%userprofile%\.azure\cliextensions` exists, backup it by renaming. This folder will be created again after migration.
+3. Download and install latest 64-bit version from [here](https://aka.ms/installazurecliwindowsx64). Please note that this will uninstall 32-bit version automatically.
 4. Install extensions by running `az extension add --name <extension> --version <version>`.
 
-If you have any issue after migration, you can roll back to 32-bit version by uninstalling 64-bit version, installing 32-bit one and restoring the extension folder.
+If you have any issue after migration, you can uninstall the 64-bit version and reinstall 32-bit one, then restore the extension folder.
 
 ## Uninstall
 
