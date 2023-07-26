@@ -7,7 +7,7 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-# Install Azure CLI
+## Install Azure CLI
 
 # [Install requirements](#tab/requirements)
 
