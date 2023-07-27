@@ -9,7 +9,7 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-## Please note!
+## Prerequisites
 
 - The last Azure CLI package developed by Microsoft for SUSE Linux Enterprise Server (SLES), and OpenSUSE (Leap), is version 2.38.0 (released on 07/05/2022). You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bug fixes from Microsoft for those versions.
 
@@ -87,6 +87,44 @@ You must first configure `azure-cli` repository information as shown above. Avai
    sudo zypper install --from azure-cli azure-cli=<version>-1.el7
    ```
 
+## Update Azure CLI
+
+[!INCLUDE [az-upgrade](az-upgrade.md)]
+
+You can also update the package with the `zypper update` command.
+
+```bash
+sudo zypper refresh
+sudo zypper update azure-cli
+```
+
+## Uninstall Azure CLI
+
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
+
+1. Remove the package from your system.
+
+    ```bash
+    sudo zypper remove -y azure-cli
+    ```
+
+2. If you don't plan to reinstall the CLI, remove the repository information.
+
+   ```bash
+   sudo zypper removerepo azure-cli
+   ```
+
+3. If you don't use other Microsoft packages, remove the Microsoft signing key.
+
+   ```bash
+   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
+   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
+   ```
+
+## Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
 ## Troubleshooting
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
@@ -148,37 +186,3 @@ When a certificate is broken or outdated on a machine, you might receive an erro
 ```bach
 sudo zypper update-ca-certificates
 ```
-
-## Update Azure CLI
-
-[!INCLUDE [az-upgrade](az-upgrade.md)]
-
-You can also update the package with the `zypper update` command.
-
-```bash
-sudo zypper refresh
-sudo zypper update azure-cli
-```
-
-## Uninstall Azure CLI
-
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-1. Remove the package from your system.
-
-    ```bash
-    sudo zypper remove -y azure-cli
-    ```
-
-2. If you don't plan to reinstall the CLI, remove the repository information.
-
-   ```bash
-   sudo zypper removerepo azure-cli
-   ```
-
-3. If you don't use other Microsoft packages, remove the Microsoft signing key.
-
-   ```bash
-   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
-   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
-   ```

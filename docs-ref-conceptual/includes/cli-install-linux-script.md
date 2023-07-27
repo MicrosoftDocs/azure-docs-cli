@@ -34,6 +34,35 @@ curl -L https://aka.ms/InstallAzureCli | bash
 
 The script can also be downloaded and run locally. You may have to restart your shell in order for the changes to take effect.
 
+## Uninstall Azure CLI
+
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
+
+Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is the user's home directory ($HOME).
+
+1. Remove the installed CLI files.
+
+   ```bash
+   rm -r <install location>/lib/azure-cli
+   rm <install location>/bin/az
+   ```
+
+2. Modify your `$HOME/.bash_profile` file to remove the following line:
+
+   ```text
+   <install location>/lib/azure-cli/az.completion
+   ```
+
+3. If using `bash` or `zsh`, reload your shell's command cache.
+
+   ```bash
+   hash -r
+   ```
+
+## Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
 ## Troubleshooting
 
 Here are some common problems seen during a manual installation. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
@@ -76,27 +105,3 @@ following addresses:
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
-## Uninstall Azure CLI
-
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is the user's home directory ($HOME).
-
-1. Remove the installed CLI files.
-
-   ```bash
-   rm -r <install location>/lib/azure-cli
-   rm <install location>/bin/az
-   ```
-
-2. Modify your `$HOME/.bash_profile` file to remove the following line:
-
-   ```text
-   <install location>/lib/azure-cli/az.completion
-   ```
-
-3. If using `bash` or `zsh`, reload your shell's command cache.
-
-   ```bash
-   hash -r
-   ```

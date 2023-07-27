@@ -58,3 +58,7 @@ Remove the package from your system:
 ```bash
 sudo tdnf remove azure-cli
 ```
+
+## Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]

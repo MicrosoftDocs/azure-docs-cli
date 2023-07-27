@@ -52,14 +52,6 @@ When you are ready to install, select the appropriate package manager for your d
 
 ::: zone-end
 
-## Remove data
-
-If you don't plan to reinstall Azure CLI, remove its data.
-
-```bash
-rm -rf ~/.azure
-```
-
 ## Next Steps
 
 Now that you've installed the Azure CLI, take a short tour of its features and common commands.
