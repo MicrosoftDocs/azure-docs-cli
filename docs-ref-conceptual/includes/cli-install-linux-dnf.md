@@ -11,15 +11,15 @@ ms.custom: devx-track-azurecli
 
 # [Install requirements](#tab/requirements)
 
-- For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
+For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
 
 - Azure CLI 2.38.0 (released on 07/05/2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft will not provide any other updates or bug fixes on this version.
 
 - Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
 
-- Use the `yum` package manager if you are using a Linux systems that doed not support the `dnf` package manager.
+Use the `yum` package manager if you are using a Linux systems that don't support the `dnf` package manager.
 
-- The `azure-cli` package supports ARM64 architecture from `2.46.0`.
+The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](release-notes-azure-cli.md#march-07-2023).
 
 [!INCLUDE [rpm-warning](rpm-warning.md)]
 
