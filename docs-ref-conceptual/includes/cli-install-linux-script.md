@@ -9,7 +9,7 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-## Important install information
+## Before you begin
 
 It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
 and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
@@ -20,9 +20,6 @@ The CLI requires the following software:
 * [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/).
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
-
-The Azure CLI has dropped support for Python 2.7 since version `2.1.0`. Newer versions may not
-run correctly using Python 2.7.
 
 ## Install or update Azure CLI
 
@@ -66,6 +63,11 @@ Uninstall the CLI by directly deleting the files from the location chosen at the
 ## Troubleshooting
 
 Here are some common problems seen during a manual installation. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+
+### Python version 2.7
+
+The Azure CLI has dropped support for Python 2.7 since version [2.1.0](release-notes-azure-cli.md#february-18-2020). Newer versions may not
+run correctly using Python 2.7.
 
 ### curl "Object Moved" error
 

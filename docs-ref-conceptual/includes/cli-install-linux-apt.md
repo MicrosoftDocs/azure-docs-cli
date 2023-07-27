@@ -92,19 +92,17 @@ Configure the `azure-cli` repository information as shown above. Available versi
 
 [!INCLUDE [az-upgrade](az-upgrade.md)]
 
-You can also use `apt-get upgrade` to update the CLI package.
+You can also use `apt-get upgrade` to update the CLI package. This command upgrades all of the installed packages on your system that have not had a dependency change.
 
    ```bash
    sudo apt-get update && sudo apt-get upgrade
    ```
 
-> [!NOTE]
-> This command upgrades all of the installed packages on your system that have not had a dependency change.
-> To upgrade the CLI only, use `apt-get install`.
->
-> ```bash
-> sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
-> ```
+ To upgrade the CLI only, use `apt-get install`.
+
+   ```bash
+   sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
+   ```
 
 ## Uninstall Azure CLI
 

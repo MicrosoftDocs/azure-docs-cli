@@ -7,9 +7,7 @@ ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Install Azure CLI
-
-# [Install requirements](#tab/requirements)
+## Before you begin
 
 For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
 
@@ -21,9 +19,7 @@ Use the `yum` package manager if you are using a Linux systems that don't suppor
 
 The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](release-notes-azure-cli.md#march-07-2023).
 
-[!INCLUDE [rpm-warning](rpm-warning.md)]
-
-# [Install steps](#tab/install)
+## Install Azure CLI
 
 To install the Azure CLI, follow these steps:
 
@@ -62,7 +58,7 @@ To install the Azure CLI, follow these steps:
    sudo dnf install azure-cli
    ```
 
-### Install specific version
+## Install specific version
 
 To install a specific version, first configure the `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
@@ -78,11 +74,50 @@ To install a specific version, first configure the `azure-cli` repository inform
    sudo dnf install azure-cli-<version>-1.el7
    ```
 
-# [Troubleshooting](#tab/troubleshooting)
+## Update Azure CLI
+
+[!INCLUDE [az-upgrade](az-upgrade.md)]
+
+You can also update the Azure CLI with the `dnf update` command.
+
+```bash
+sudo dnf update azure-cli
+```
+
+## Uninstall Azure CLI
+
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
+
+1. Remove the package from your system.
+
+   ```bash
+   sudo dnf remove azure-cli
+   ```
+
+2. If you don't plan to reinstall the CLI, remove the repository information.
+
+   ```bash
+   sudo rm /etc/yum.repos.d/azure-cli.repo
+   ```
+
+3. If you don't use any other Microsoft packages, remove the signing key.
+
+   ```bash
+   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
+   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
+   ```
+
+## Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
+## Troubleshooting
 
 Here are some common problems seen when installing with `dnf`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### Install on RHEL 7.6 or other systems without Python 3
+
+[!INCLUDE [rpm-warning](rpm-warning.md)]
 
 If you are able, upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
 
@@ -162,41 +197,3 @@ allow HTTPS connections to the following address:
 * `https://packages.microsoft.com`
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
-
----
-
-## Update Azure CLI
-
-[!INCLUDE [az-upgrade](az-upgrade.md)]
-
-You can also update the Azure CLI with the `dnf update` command.
-
-```bash
-sudo dnf update azure-cli
-```
-
-## Uninstall Azure CLI
-
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-1. Remove the package from your system.
-
-   ```bash
-   sudo dnf remove azure-cli
-   ```
-
-2. If you don't plan to reinstall the CLI, remove the repository information.
-
-   ```bash
-   sudo rm /etc/yum.repos.d/azure-cli.repo
-   ```
-
-3. If you don't use any other Microsoft packages, remove the signing key.
-
-   ```bash
-   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
-   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
-   ```
-## Remove data
-
-[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
