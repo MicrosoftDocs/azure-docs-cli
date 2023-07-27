@@ -24,11 +24,11 @@ ms.custom: devx-track-azurecli
 
 ## Install Azure CLI
 
-There are two options to install the Azure CLI on your system.  You can download an install script that will run the install commands for you, or you can execute the install commands yourself in a step-by-step process if you prefer.  Both methods are provided below.
+There are two options to install the Azure CLI on your system.  You can download an install script that will run the install commands for you, or you can execute the install commands yourself in a step-by-step process.  Both methods are provided below.
 
 ### Option 1: Install with one command
 
-The Azure CLI team maintains a script to run all installation commands in one step.  This script is downloaded via `curl` and piped directly to `bash` to install the CLI.
+The easiest way to install the Azure CLI is through a script maintained by the Azure CLI team.  This script runs all installation commands in one step.  This script is downloaded via `curl` and piped directly to `bash` to install the CLI.
 
 If you wish to inspect the contents of the script yourself before executing, simply download the script first using `curl` and inspect it in your favorite text editor.
 
@@ -72,7 +72,7 @@ If you prefer a step-by-step installation process, complete the following steps 
     sudo apt-get install azure-cli
     ```
 
-## Installing specific version
+## Install specific version
 
 Configure the `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
@@ -88,9 +88,59 @@ Configure the `azure-cli` repository information as shown above. Available versi
     sudo apt-get install azure-cli=<version>-1~bullseye
     ```
 
+## Update Azure CLI
+
+[!INCLUDE [az-upgrade](az-upgrade.md)]
+
+You can also use `apt-get upgrade` to update the CLI package.
+
+   ```bash
+   sudo apt-get update && sudo apt-get upgrade
+   ```
+
+> [!NOTE]
+> This command upgrades all of the installed packages on your system that have not had a dependency change.
+> To upgrade the CLI only, use `apt-get install`.
+>
+> ```bash
+> sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
+> ```
+
+## Uninstall Azure CLI
+
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
+
+1. Uninstall with `apt-get remove`:
+
+    ```bash
+    sudo apt-get remove -y azure-cli
+    ```
+
+2. If you don't plan to reinstall the CLI, remove the Azure CLI repository information:
+
+   ```bash
+   sudo rm /etc/apt/sources.list.d/azure-cli.list
+   ```
+
+3. If you are not using other packages from Microsoft, remove the signing key:
+
+    ```bash
+    sudo rm /etc/apt/trusted.gpg.d/microsoft.gpg
+    ```
+
+4. Remove any unneeded packages:
+
+   ```bash
+   sudo apt autoremove
+   ```
+
+## Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
 ## Troubleshooting
 
-Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on github](https://github.com/Azure/azure-cli/issues).
+Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### No module issue on Ubuntu 20.04 (Focal)/WSL
 
@@ -165,48 +215,3 @@ allow HTTPS connections to the following address:
 * `https://packages.microsoft.com`
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
-
-## Update Azure CLI
-[!INCLUDE [az-upgrade](az-upgrade.md)]
-
-You can also use `apt-get upgrade` to update the CLI package.
-
-   ```bash
-   sudo apt-get update && sudo apt-get upgrade
-   ```
-
-> [!NOTE]
-> This command upgrades all of the installed packages on your system that have not had a dependency change.
-> To upgrade the CLI only, use `apt-get install`.
->
-> ```bash
-> sudo apt-get update && sudo apt-get install --only-upgrade -y azure-cli
-> ```
-
-## Uninstall Azure CLI
-
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-1. Uninstall with `apt-get remove`:
-
-    ```bash
-    sudo apt-get remove -y azure-cli
-    ```
-
-2. If you don't plan to reinstall the CLI, remove the Azure CLI repository information:
-
-   ```bash
-   sudo rm /etc/apt/sources.list.d/azure-cli.list
-   ```
-
-3. If you are not using other packages from Microsoft, remove the signing key:
-
-    ```bash
-    sudo rm /etc/apt/trusted.gpg.d/microsoft.gpg
-    ```
-
-4. Remove any unneeded packages:
-
-   ```bash
-   sudo apt autoremove
-   ```
