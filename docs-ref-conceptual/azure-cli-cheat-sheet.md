@@ -54,11 +54,13 @@ There are several reference commands that provide prompts to help you learn the 
 | [az next](/cli/azure/reference-index#az-next) | **TO DO:** What's the future of this command.  How is it different than `az scenario`?
 | [az find](/cli/azure/reference-index#az-find) | An AI robot that will return reference examples for keywords | `az find "active subscription"`
 
-> [TIP!]
+> [!TIP]
 >
 > Go to [Azure CLI sample list A-Z](samples-index.md) or [Azure CLI doc list A-Z](reference-docs-index.md) to immediately find
 > tested scripts and code snippets for popular command groups. The Azure CLI in-line help has also been published in article-format.
 > See [Reference index A-Z](/cli/azure/reference-index).
+
+Another great way to learn to use the Azure CLI is through [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis).  When the module provides a sandbox environment, use the sandox to try new commands without worrying about cost.
 
 ## Common usage questions
 
