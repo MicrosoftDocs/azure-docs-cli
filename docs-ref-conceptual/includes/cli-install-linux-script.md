@@ -66,7 +66,7 @@ Here are some common problems seen during a manual installation. If you experien
 
 ### Install without Python 3
 
-The Azure CLI has dropped support for Python 2.7 since version [2.1.0](release-notes-azure-cli.md#february-18-2020).
+The Azure CLI has dropped support for Python 2.7 since version [2.1.0](/cli/azure/release-notes-azure-cli#february-18-2020).
 On your system, there may be a Python version which predates the requirement of Python 3.6.x.
 If this affects you, find a replacement `python3` package.
 

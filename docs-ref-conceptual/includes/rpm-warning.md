@@ -12,6 +12,6 @@ ms.custom: devx-track-azurecli
 > replacement `python3` package.
 >
 > Be aware that Python 2 has reached end of life (EOL) on January 1, 2020, and will no longer receive
-> updates. Azure CLI has dropped support for Python 2.7 since version [2.1.0](release-notes-azure-cli.md#february-18-2020).
+> updates. Azure CLI has dropped support for Python 2.7 since version [2.1.0](/cli/azure/release-notes-azure-cli#february-18-2020).
 > Newer versions of the CLI may not run correctly using Python 2.7.
 >

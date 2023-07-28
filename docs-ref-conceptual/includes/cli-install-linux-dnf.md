@@ -17,7 +17,7 @@ ms.custom: devx-track-azurecli
 
 - Use the `yum` package manager if you are using a Linux system that doesn't support the `dnf` package manager.
 
-- The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](release-notes-azure-cli.md#march-07-2023).
+- The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](/cli/azure/release-notes-azure-cli#march-07-2023).
 
 ## Install Azure CLI
 
