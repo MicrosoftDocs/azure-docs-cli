@@ -1,14 +1,14 @@
 ---
-title: Get started with Azure Command-Line Interface (CLI) | Microsoft Docs
-description: Learn how to start using the Azure CLI by completing common commands. You can begin using the Azure CLI by running it in an Azure Cloud shell environment.
+title: Azure CLI cheat sheet | Microsoft Docs
+description: Onboard with the Azure CLI is record time.  Get quick answers to common CLI questions.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 07/28/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 # Azure CLI cheat sheet
@@ -22,9 +22,11 @@ Here is a quick reference chart of common questions and short answers.
 
 | Question | Answer | Learn more
 |-|-|-|
-| What advantage do I get by using Azure CLI? | You can manage Azure resources from a flexible command-line UI. For example, create 50 Azure storage accounts, or update multiple user permissions through a script. | [Choose the right command-line tool](choose-the-right-azure-command-line-tool.md)
+| What advantage is there to using Azure CLI? | You can manage Azure resources from a flexible command-line UI. For example, create 50 Azure storage accounts, or update multiple user permissions through a script. | [Choose the right command-line tool](choose-the-right-azure-command-line-tool.md)
 | Where can I run the Azure CLI? | The Azure CLI runs in Windows (CMD or PowerShell), Linux, maxOS, Docker containers, and Azure Cloud Shell.  Using Azure Cloud Shell is the quickest way to get started. | [Run Azure Cloud Shell](/azure/cloud-shell/quickstart?toc=%2fcli%2fazure%2ftoc.json&bc=%2fcli%2fazure%2fbreadcrumb%2ftoc.json)
-| Do I have to install the Azure CLI? | Azure Cloud Shell and some Linux distributions have the Azure CLI preinstalled. For all other applications, you must install the Azure CLI. | [Install the Azure CLI](install-azure-cli.md)
+| Do I have to install the Azure CLI? | Azure Cloud Shell and some Linux distributions have the Azure CLI preinstalled. For all other environments, you must install the Azure CLI. | [Install the Azure CLI](install-azure-cli.md)
+| How do I run the Azure CLI in a Docker container? | `docker run -it mcr.microsoft.com/azure-cli` | [How to run the Azure CLI in a Docker container](run-azure-cli-docker.md)
+| What URLs do I need for proxy bypass? | This depends on the Cloud you are using.  For a complete list see... | [Azure CLI endpoints for proxy bypass](azure-cli-endpoints.md)
 | How do I sign in? | Use `az login` inside your console window. Use your own Azure user name and password, a service principal, managed identity or WAM. | [Sign in with Azure CLI](authenticate-azure-cli.md)
 
 ## Using reference commands
@@ -32,7 +34,7 @@ Here is a quick reference chart of common questions and short answers.
 | Question | Answer | Learn more
 |-|-|-|
 | What is the Azure CLI syntax pattern? | "`command group` + _command subgroup_ + **command** + --parameters" Example: "`az storage` _account_ **create** --name myStorageAccount" | [Azure CLI syntax components](cli/azure/reference-types-and-status#azure-cli-syntax-components).
-| What is difference between a command group, cmdlet, command, alias, module, reference and Mt. Rushmore? | Good question!  The Azure CLI only has command groups, references, commands and user-defined aliases. Mr. Rushmore is, of course, a US National Park. You may be thinking of Azure PowerShell if you are looking for cmdlets and modules. |  [Azure CLI syntax components](cli/azure/reference-types-and-status#azure-cli-syntax-components).
+| What is difference between a command group, cmdlet, command, alias, module, reference and Mt. Rushmore? | Good question!  The Azure CLI only has command groups, references, commands and user-defined aliases. Mr. Rushmore is, of course, a US National Park with 4 very large US presidential cmdlets carved from stone. You may be thinking of Azure PowerShell if you are looking for cmdlets and modules. |  [Azure CLI syntax components](cli/azure/reference-types-and-status#azure-cli-syntax-components).
 | What is an extension and why does it have to be installed separately? | Extensions are reference group add-ins that are not shipped as part of the core Azure CLI. You are prompted to install an extension the first time you use it. Get a list of available extensions by running `az extension list-available -output table`. | [Use and manage extensions with the Azure CLI](azure-cli-extensions-overview.md)
 | How do I get a list of all commands, both core and extension? | For a list of command groups, in your console type `az` and <kbd>Enter</kbd>. For a list of subgroups and commands, use the `--help` parameter.  Example: `az account --help` or `az account subscription --help` will output a command list for just the group or subgroup. ||
 | Does the Azure CLI have tab completion | Yes!  When typing a command in PowerShell, press your <kbd>Tab</kbd> key. This feature is only available in PowerShell. | [Enable Tab Completion on PowerShell](/cli/azure/install-azure-cli-windows#enable-tab-completion-on-powershell)
@@ -57,3 +59,14 @@ There are several reference commands that provide prompts to help you learn the 
 > Go to [Azure CLI sample list A-Z](samples-index.md) or [Azure CLI doc list A-Z](reference-docs-index.md) to immediately find
 > tested scripts and code snippets for popular command groups. The Azure CLI in-line help has also been published in article-format.
 > See [Reference index A-Z](../reference-index.yml).
+
+## Common usage questions
+
+| Question | Answer | Learn more
+|-|-|-|
+| How do I change my subscription? | `az account set --subscription "mySubscriptionName` | [How to manage Azure subscriptions with the Azure CLI](manage-azure-subscriptions-azure-cli.md)
+| How do I know what subscription I'm using? | `az account show --output table` | |
+| How can I set a default resource group, location etc.? | `az config set defaults.location=westus2 defaults.group=MyResourceGroup` | [Configure settings using az config](/cli/azure/azure-cli-configuration#configure-settings-using-az-config)
+| How do I query command output? | `az account show --query "{tenantId:tenantId,subscriptionid:id}"` | See [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md) for `--query` examples in Bash, PowerShell and Cmd.
+| How do I format output from a command? | `az account list --ouput table` | [Output formats for Azure CLI commands](format-output-azure-cli.md)
+| Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different backgrounds, and for that reason Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md)
