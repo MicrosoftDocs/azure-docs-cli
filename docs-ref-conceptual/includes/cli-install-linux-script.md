@@ -64,10 +64,11 @@ Uninstall the CLI by directly deleting the files from the location chosen at the
 
 Here are some common problems seen during a manual installation. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
-### Python version 2.7
+### Install without Python 3
 
-The Azure CLI has dropped support for Python 2.7 since version [2.1.0](release-notes-azure-cli.md#february-18-2020). Newer versions may not
-run correctly using Python 2.7.
+The Azure CLI has dropped support for Python 2.7 since version [2.1.0](release-notes-azure-cli.md#february-18-2020).
+On your system, there may be a Python version which predates the requirement of Python 3.6.x.
+If this affects you, find a replacement `python3` package.
 
 ### curl "Object Moved" error
 

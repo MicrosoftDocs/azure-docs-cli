@@ -9,15 +9,18 @@ ms.custom: devx-track-azurecli
 
 ## Before you begin
 
-For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
+- For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.  These packages depend on the `python3` package.
 
-- Azure CLI 2.38.0 (released on 07/05/2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft will not provide any other updates or bug fixes on this version.
+> [!IMPORTANT]
+> Azure CLI 2.38.0 (released on 07/05/2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life
+> of the operating systems. Microsoft will not provide additional updates or bug fixes on this version.
+>
+> Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft.
+> Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
 
-- Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
+- Use the `yum` package manager if you are using a Linux system that doesn't support the `dnf` package manager.
 
-Use the `yum` package manager if you are using a Linux systems that don't support the `dnf` package manager.
-
-The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](release-notes-azure-cli.md#march-07-2023).
+- The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](release-notes-azure-cli.md#march-07-2023).
 
 ## Install Azure CLI
 
@@ -117,9 +120,8 @@ Here are some common problems seen when installing with `dnf`. If you experience
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
-[!INCLUDE [rpm-warning](rpm-warning.md)]
-
-If you are able, upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
+The RPM package of the Azure CLI depends on the `python3` package. If you are able, upgrade your system to a version with official support for the `python 3.6+` package. 
+Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
 
 You can use the following command to download and install the Azure CLI install script with `python 3.6` built from source:
 

@@ -5,7 +5,7 @@ ms.date: 07/05/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
-> [!NOTE]
+> [!IMPORTANT]
 >
 > The RPM package of the Azure CLI depends on the `python3` package. On your system, this may be
 > a Python version which predates the requirement of Python 3.6.x. If this affects you, find a

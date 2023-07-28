@@ -29,7 +29,7 @@ To install Azure CLI on SUSE/OpenSUSE, please chose one of the following methods
 
 ### Install from SUSE or OpenSUSE repositories
 
-[!INCLUDE [rpm-warning](rpm-warning.md)]
+The RPM package of the Azure CLI depends on the `python3` package.
 
    ```bash
    sudo zypper install -y azure-cli
@@ -130,6 +130,10 @@ sudo zypper update azure-cli
 ## Troubleshooting
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+
+### Install without Python 3
+
+[!INCLUDE [rpm-warning](rpm-warning.md)]
 
 ### NotImplementedError on OpenSUSE 15 VM
 
