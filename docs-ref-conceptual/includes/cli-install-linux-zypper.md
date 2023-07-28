@@ -21,11 +21,11 @@ ms.custom: devx-track-azurecli
 
 To install Azure CLI on SUSE/OpenSUSE, please chose one of the following methods:
 
-1. Use the Enterprise package provided by SUSE in the SUSE/OpenSUSE repositories.
+1. [Use the Enterprise package provided by SUSE](#install-from-suse-or-opensuse-repositories) in the SUSE/OpenSUSE repositories.
 
-1. Use the installation method described in the “Install script (any)” tab.
+1. [Use the installation method described in the “Install script (any)” tab](#install-from-microsoft-repositories).
 
-1. Install from Microsoft repositories
+1. [Install from Microsoft repositories](#install-from-microsoft-repositories)
 
 ### Install from SUSE or OpenSUSE repositories
 
@@ -123,7 +123,7 @@ sudo zypper update azure-cli
    sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
    ```
 
-## Remove data
+### Remove data
 
 [!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
 

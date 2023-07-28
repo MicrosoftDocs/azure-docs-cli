@@ -56,7 +56,7 @@ Uninstall the CLI by directly deleting the files from the location chosen at the
    hash -r
    ```
 
-## Remove data
+### Remove data
 
 [!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
 

@@ -132,7 +132,7 @@ You can also use `apt-get upgrade` to update the CLI package. This command upgra
    sudo apt autoremove
    ```
 
-## Remove data
+### Remove data
 
 [!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
 

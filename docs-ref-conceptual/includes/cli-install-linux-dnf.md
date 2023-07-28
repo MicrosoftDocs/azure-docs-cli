@@ -108,7 +108,7 @@ sudo dnf update azure-cli
    sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
    ```
 
-## Remove data
+### Remove data
 
 [!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
 
