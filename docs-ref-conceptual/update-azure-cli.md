@@ -54,7 +54,7 @@ az config set auto-upgrade.enable=no
 ```
 ## Update Assistance
 
-Azure cli also provided a command line tool `command-change` [link](https://github.com/Azure/azure-cli-extensions/blob/main/src/command-change/README.md) and a site [azure-cli-diff-site](https://azure-cli-diff-site.azurewebsites.net/) to help users justify whether a cli upgrade is safe, how to adjust current command usage by checking the changelist between two cli versions. For detailed usage doc and result analysis, please refer to this [doc](https://github.com/Azure/azure-cli/blob/17d0b0ecb6ab4cedeca04d1a0cedcebad58ae227/doc/breaking_change_detection_guidelines.md).
+Azure cli also provides a command line tool [command-change](https://github.com/Azure/azure-cli-extensions/blob/main/src/command-change/README.md) and a [azure-cli-diff-site](https://azure-cli-diff-site.azurewebsites.net/) to help users justify whether a cli upgrade is safe, how to adjust current command usage by checking the changelist between two cli versions. For detailed usage doc and result analysis, please refer to this [doc](https://github.com/Azure/azure-cli/blob/897a4cd2874e315558d1f1925e866a80ab945f18/doc/breaking_change_detection_guidelines.md).
 
 ### command-change
 
