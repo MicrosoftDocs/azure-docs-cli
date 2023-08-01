@@ -9,28 +9,27 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-> [!WARNING]
-> The last Azure CLI package developed by Microsoft for SUSE Linux Enterprise Server (SLES), and OpenSUSE (Leap), is version 2.38.0 (released on 07/05/2022). You may continue to use historical versions of Azure CLI on these systems, but there will be no further updates or bug fixes from Microsoft for those versions.
->
-> Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by SUSE/OpenSUSE repositories are maintained and supported by SUSE.
-> 
+## Before you begin
 
+- Azure CLI [2.38.0](/cli/azure/release-notes-azure-cli#july-05-2022) (released on 07/05/2022) is the last version supported on SUSE Linux Enterprise Server (SLES), and OpenSUSE (Leap).  Microsoft will not provide additional updates or bug fixes for these products.
 
-## Overview
+- Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by SUSE/OpenSUSE repositories are maintained and supported by SUSE.
 
-In Azure, SUSE and OpenSUSE virtual machines (VMs) based on Azure Marketplace images already have the Azure Command-Line Interface (Azure CLI) installed.
-
-To install Azure CLI on SUSE/OpenSUSE, please chose one of the following methods:
-
-1. Use the Enterprise package provided by SUSE in the SUSE/OpenSUSE repositories.
-
-2. Use the installation method described in the “Install script (any)” tab.
+- In Azure, SUSE and OpenSUSE virtual machines (VMs) based on Azure Marketplace images already have the Azure CLI installed.
 
 ## Install Azure CLI
 
+To install Azure CLI on SUSE/OpenSUSE, please chose one of the following methods:
+
+1. [Use the Enterprise package provided by SUSE](#install-from-suse-or-opensuse-repositories) in the SUSE/OpenSUSE repositories.
+
+1. [Use the installation method described in the “Install script (any)” tab](#install-from-microsoft-repositories).
+
+1. [Install from Microsoft repositories](#install-from-microsoft-repositories)
+
 ### Install from SUSE or OpenSUSE repositories
 
-[!INCLUDE [rpm-warning](rpm-warning.md)]
+The RPM package of the Azure CLI depends on the `python3` package.
 
    ```bash
    sudo zypper install -y azure-cli
@@ -90,11 +89,54 @@ You must first configure `azure-cli` repository information as shown above. Avai
    sudo zypper install --from azure-cli azure-cli=<version>-1.el7
    ```
 
+## Update Azure CLI
+
+[!INCLUDE [az-upgrade](az-upgrade.md)]
+
+You can also update the package with the `zypper update` command.
+
+```bash
+sudo zypper refresh
+sudo zypper update azure-cli
+```
+
+## Uninstall Azure CLI
+
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
+
+1. Remove the package from your system.
+
+    ```bash
+    sudo zypper remove -y azure-cli
+    ```
+
+2. If you don't plan to reinstall the CLI, remove the repository information.
+
+   ```bash
+   sudo zypper removerepo azure-cli
+   ```
+
+3. If you don't use other Microsoft packages, remove the Microsoft signing key.
+
+   ```bash
+   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
+   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
+   ```
+
+### Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
 ## Troubleshooting
 
 Here are some common problems seen when installing with `zypper`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
+### Install without Python 3
+
+[!INCLUDE [rpm-warning](rpm-warning.md)]
+
 ### NotImplementedError on OpenSUSE 15 VM
+
 The OpenSUSE 15 VM has a pre-installed Azure CLI with version 2.0.45, which is outdated and has issues with `az login`. Please remove this version along with its dependencies before following the [Install](#install-azure-cli) instruction to add the latest Azure CLI:
 
 ```bash
@@ -151,37 +193,3 @@ When a certificate is broken or outdated on a machine, you might receive an erro
 ```bach
 sudo zypper update-ca-certificates
 ```
-
-## Update
-
-[!INCLUDE [az-upgrade](az-upgrade.md)]
-
-You can also update the package with the `zypper update` command.
-
-```bash
-sudo zypper refresh
-sudo zypper update azure-cli
-```
-
-## Uninstall
-
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-1. Remove the package from your system.
-
-    ```bash
-    sudo zypper remove -y azure-cli
-    ```
-
-2. If you don't plan to reinstall the CLI, remove the repository information.
-
-   ```bash
-   sudo zypper removerepo azure-cli
-   ```
-
-3. If you don't use other Microsoft packages, remove the Microsoft signing key.
-
-   ```bash
-   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
-   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
-   ```

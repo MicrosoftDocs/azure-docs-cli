@@ -9,12 +9,9 @@ ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
-## Overview
+## Before you begin
 
-> [!NOTE]
-> It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates,
-> and guarantees the stability of CLI components. Check and see if there is a package for your distribution before
-> installing manually.
+It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates, and guarantees the stability of CLI components. Check and see if there is a package for your distribution before installing manually.
 
 The CLI requires the following software:
 
@@ -22,12 +19,7 @@ The CLI requires the following software:
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
-> [!IMPORTANT]
->
-> The Azure CLI has dropped support for Python 2.7 since version `2.1.0`. Newer versions may not
-> run correctly using Python 2.7.
-
-## Install or update
+## Install or update Azure CLI
 
 Both installing and updating the Azure CLI requires re-running the install script.
 
@@ -37,9 +29,44 @@ curl -L https://aka.ms/InstallAzureCli | bash
 
 The script can also be downloaded and run locally. You may have to restart your shell in order for the changes to take effect.
 
+## Uninstall Azure CLI
+
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
+
+Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is the user's home directory ($HOME).
+
+1. Remove the installed CLI files.
+
+   ```bash
+   rm -r <install location>/lib/azure-cli
+   rm <install location>/bin/az
+   ```
+
+2. Modify your `$HOME/.bash_profile` file to remove the following line:
+
+   ```text
+   <install location>/lib/azure-cli/az.completion
+   ```
+
+3. If using `bash` or `zsh`, reload your shell's command cache.
+
+   ```bash
+   hash -r
+   ```
+
+### Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
 ## Troubleshooting
 
 Here are some common problems seen during a manual installation. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+
+### Install without Python 3
+
+The Azure CLI has dropped support for Python 2.7 since version [2.1.0](/cli/azure/release-notes-azure-cli#february-18-2020).
+On your system, there may be a Python version which predates the requirement of Python 3.6.x.
+If this affects you, find a replacement `python3` package.
 
 ### curl "Object Moved" error
 
@@ -79,27 +106,3 @@ following addresses:
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
 
-## Uninstall
-
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-Uninstall the CLI by directly deleting the files from the location chosen at the time of installation. The default install location is the user's home directory ($HOME).
-
-1. Remove the installed CLI files.
-
-   ```bash
-   rm -r <install location>/lib/azure-cli
-   rm <install location>/bin/az
-   ```
-
-2. Modify your `$HOME/.bash_profile` file to remove the following line:
-
-   ```text
-   <install location>/lib/azure-cli/az.completion
-   ```
-
-3. If using `bash` or `zsh`, reload your shell's command cache.
-
-   ```bash
-   hash -r
-   ```
