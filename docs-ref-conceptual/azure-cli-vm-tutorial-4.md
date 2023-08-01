@@ -1,7 +1,7 @@
 ---
 title: Get virtual machines information with queries (VM) – Azure CLI | Microsoft Docs
 description: Learn how to get virtual machines (VM) information with Azure CLI queries.
-ms.date: 06/19/2023
+ms.date: 08/1/2023
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -21,7 +21,7 @@ Now that a VM has been created, detailed information about it can be retrieved. 
 az vm show --name $vmName --resource-group $resourceGroup
 ```
 
-Virtual Machines have many properties which can be difficult to parse visually The returned JSON contains information on authentication, network interface storage,
+Virtual Machines have many properties which can be difficult to parse visually. The returned JSON contains information on authentication, network interface storage,
 and more. Most importantly, it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow accessing these resources directly
 to get more information about the VM's configuration and capabilities.
 

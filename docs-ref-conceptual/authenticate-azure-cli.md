@@ -1,24 +1,24 @@
 ---
-title: Login with Azure CLI — Login and Authentication | Microsoft Docs
+title: Sign in with Azure CLI — Login and Authentication | Microsoft Docs
 description: Learn the different authentication types for your Azure CLI login — sign in with Azure CLI automatically, locally, or interactively using the az login command.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 06/19/2023
+ms.date: 08/1/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login
+keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in 
 ---
 
 # Sign in with Azure CLI
 
-There are several authentication types for the Azure Command-Line Interface (CLI), so how do you log in?  The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in.
+There are several authentication types for the Azure Command-Line Interface (CLI), so how do you sign in?  The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in.
 Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az-login) command. When you write scripts, the recommended approach is
 to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 
-Azure CLI doesn't store any of your login information. Instead, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). As of August 2018 this token is revoked after 90 days of inactivity. Contact your Microsoft or tenant administrator to change this value. Once the token is revoked, you get a message from the CLI saying you need to log in again.
+Azure CLI doesn't store any of your login information. Instead, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). As of August 2018 this token is revoked after 90 days of inactivity. Contact your Microsoft or tenant administrator to change this value. Once the token is revoked, you get a message from the CLI saying you need to sign in again.
 
 After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can [change your default subscription](manage-azure-subscriptions-azure-cli.md).
 
