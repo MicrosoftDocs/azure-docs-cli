@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 07/29/2023
+ms.date: 08/01/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -81,7 +81,7 @@ You will be prompted to install an extension on first use.
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.45.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.10.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog) | 2.17.0 | Microsoft Azure Command-Line Tools MicrosoftDatadogClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
-|[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Experimental | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
+|[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Experimental | [0.6.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
 |[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.49.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | Experimental | [0.9.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up/HISTORY.rst) |
@@ -91,7 +91,7 @@ You will be prompted to install an extension on first use.
 |[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.48.0 | Microsoft Azure Command-Line Tools DevCenter Extension | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
-|[dnc](https://github.com/Azure/azure-cli-extensions/tree/master/src/dnc) | 2.15.0 | Microsoft Azure Command-Line Tools DNC Extension | Preview | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/master/src/dnc/HISTORY.rst) |
+|[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.49.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.39.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.41.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
@@ -131,7 +131,7 @@ You will be prompted to install an extension on first use.
 |[logz](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz) | 2.15.0 | Microsoft Azure Command-Line Tools MicrosoftLogz Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz/HISTORY.rst) |
 |[maintenance](https://github.com/Azure/azure-cli-extensions/tree/master/src/maintenance) | 2.15.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Experimental | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/maintenance/HISTORY.rst) |
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
-|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.45.0 | Support for managednetworkfabric commands based on 2023-02-01-preview API version. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
+|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.45.0 | Support for managednetworkfabric commands based on 2023-06-15 API version. | Preview | [3.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Support for Management Partner preview | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/master/src/mesh) | 2.0.67 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [0.10.7](https://github.com/Azure/azure-cli-extensions/tree/master/src/mesh/HISTORY.rst) |
 |[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality) | 2.49.0 | Mixed Reality Azure CLI Extension. | Preview | [0.0.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality/HISTORY.rst) |
