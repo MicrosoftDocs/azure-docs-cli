@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli create vm, virtual machine in azure cli
 ---
 
-# Three - Create a virtual machine on a virtual network
+# 3 - Create a virtual machine on a virtual network
 
 Virtual machines (VM) in Azure have a large number of dependencies. The CLI creates these resources for you based on
 the command-line arguments you specify. In this section, you learn how to deploy a VM to a VNet.
