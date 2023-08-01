@@ -4,7 +4,7 @@ description: Learn about the Azure CLI reference types, statuses and support lev
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/1/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
