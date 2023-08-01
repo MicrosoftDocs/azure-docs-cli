@@ -2,7 +2,7 @@
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 07/13/2023
+ms.date: 08/01/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
