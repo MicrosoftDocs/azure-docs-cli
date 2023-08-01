@@ -4,7 +4,7 @@ description: Quickly onboard with the Azure CLI.  Get answers to common CLI ques
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/28/2023
+ms.date: 08/02/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
@@ -56,7 +56,7 @@ There are several reference commands that provide prompts to help you learn the 
 
 > [!TIP]
 >
-> Go to [Azure CLI sample list A-Z](samples-index.md) or [Azure CLI doc list A-Z](reference-docs-index.md) to immediately find
+> Go to [Azure CLI sample index A-Z](samples-index.md) or [Azure CLI doc index A-Z](reference-docs-index.md) to immediately find
 > tested scripts and code snippets for popular command groups. The Azure CLI in-line help has also been published in article-format in
 > [Reference index A-Z](/cli/azure/reference-index).
 
@@ -73,4 +73,4 @@ Another great way to learn to use the Azure CLI is through [Microsoft Learn Modu
 | How do I format output from a command? | `az account list --ouput table` | [Output formats for Azure CLI commands](format-output-azure-cli.md)
 | Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different backgrounds, and for that reason Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md)
 
-Would you like to see additional onboarding tips in this article?  Please use the `Feedback for this page` link below and let us know!
+Would you like to see additional onboarding tips in this article?  Please use the [Feedback for this page](https://github.com/MicrosoftDocs/azure-docs-cli/issues/new?title=&body=%F0%9F%9A%A8%20Looks%20like%20you%20arrived%20from%20the%20internal%20review%20site%20%0A%F0%9F%9A%A8%20Do%20not%20enter%20Microsoft%20confidential%20information%20here%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23%23%23%23%20Document%20Details%0A%0A%E2%9A%A0%20*Do%20not%20edit%20this%20section.%20It%20is%20required%20for%20learn.microsoft.com%20%E2%9E%9F%20GitHub%20issue%20linking.*%0A%0A*%20ID%3A%207e619320-8638-7beb-48ce-fa00a5d67779%0A*%20Version%20Independent%20ID%3A%20e5d2a07f-afd9-e985-abda-0840ac5f59b0%0A*%20Content%3A%20%5BAzure%20CLI%20onboarding%20cheat%20sheet%5D(https%3A%2F%2Freview.learn.microsoft.com%2Fen-us%2Fcli%2Fazure%2Fcheat-sheet-onboarding%3Fbranch%3Dpr-en-us-3776)%0A*%20Content%20Source%3A%20%5Bdocs-ref-conceptual%2Fcheat-sheet-onboarding.md%5D(https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fazure-docs-cli%2Fblob%2Fmain%2Fdocs-ref-conceptual%2Fcheat-sheet-onboarding.md)%0A*%20Service%3A%20**azure-cli**%0A*%20GitHub%20Login%3A%20%40dbradish-microsoft%0A*%20Microsoft%20Alias%3A%20**dbradish**) link below and let us know!
