@@ -4,59 +4,56 @@ name: az notification-hub
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **notification-hub** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az notification-hub** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Manage Notification Hubs.
+  > This reference is part of the **notification-hub** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az notification-hub** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: Manage notification hubs.
 description: ''
 directCommands:
 - uid: az_notification-hub_check-availability
   name: az notification-hub check-availability
-  summary: Check the availability of the given notificationHub in a namespace.
+  summary: Checks the availability of the given notification hub in a namespace.
   description: ''
   syntax: >-
     az notification-hub check-availability --name
-                                           --namespace-name
-                                           --resource-group
+                                           [--ids]
+                                           [--namespace-name]
+                                           [--resource-group]
+                                           [--subscription]
   examples:
-  - summary: Check the availability of the given notificationHub name
-    syntax: >-
-      az notification-hub check-availability --resource-group MyResourceGroup \
-
-      --namespace-name "locp-newns" --name my-hub
+  - summary: Check the availability of the given notification hub name
+    syntax: az notification-hub check-availability --resource-group MyResourceGroup --namespace-name "locp-newns" --name my-hub
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The notification hub name to check.
+    summary: Resource name.
     description: ''
-  - isRequired: true
-    name: --namespace-name
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --namespace-name
     summary: The namespace name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_notification-hub_create
   name: az notification-hub create
-  summary: Create a NotificationHub in a namespace.
+  summary: Create a notification hub in a namespace.
   description: ''
   syntax: >-
-    az notification-hub create --location
-                               --name
+    az notification-hub create --name
                                --namespace-name
                                --resource-group
+                               [--location]
                                [--registration-ttl]
                                [--tags]
   examples:
-  - summary: Create a Notification Hub
-    syntax: >-
-      az notification-hub create --resource-group MyResourceGroup --namespace-name my-namespace \
-
-      --name my-hub --location "South Central US"
+  - summary: Create a notification hub
+    syntax: az notification-hub create --resource-group MyResourceGroup --namespace-name my-namespace --name my-hub --location "South Central US"
   requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
   - isRequired: true
     name: --name -n
     summary: The notification hub name.
@@ -70,11 +67,14 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --location -l
+    summary: Resource location  When not specified, the location of the resource group will be used.
+    description: ''
   - name: --registration-ttl
     summary: The RegistrationTtl of the created NotificationHub.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_notification-hub_delete
   name: az notification-hub delete
@@ -89,10 +89,7 @@ directCommands:
                                [--yes]
   examples:
   - summary: Delete a notification hub
-    syntax: >-
-      az notification-hub delete --resource-group MyResourceGroup --namespace-name my-namespace \
-
-      --name my-hub
+    syntax: az notification-hub delete --resource-group MyResourceGroup --namespace-name my-namespace --name my-hub
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -120,6 +117,8 @@ directCommands:
   syntax: >-
     az notification-hub list --namespace-name
                              --resource-group
+                             [--max-items]
+                             [--next-token]
   examples:
   - summary: List the notification hubs
     syntax: az notification-hub list --resource-group MyResourceGroup --namespace-name my-namespace
@@ -132,6 +131,13 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
 - uid: az_notification-hub_show
   name: az notification-hub show
   summary: Show the notification hub information.
@@ -142,12 +148,6 @@ directCommands:
                              [--namespace-name]
                              [--resource-group]
                              [--subscription]
-  examples:
-  - summary: Show the Notification Hub info
-    syntax: >-
-      az notification-hub show --resource-group MyResourceGroup --namespace-name my-namespace \
-
-      --name my-hub
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -232,35 +232,57 @@ directCommands:
     description: ''
 - uid: az_notification-hub_update
   name: az notification-hub update
-  summary: Update a Notification Hub in a namespace.
+  summary: Update a notification hub in a namespace.
   description: ''
   syntax: >-
-    az notification-hub update --name
-                               --namespace-name
-                               --resource-group
+    az notification-hub update [--add]
+                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--ids]
+                               [--location]
+                               [--name]
+                               [--namespace-name]
+                               [--remove]
+                               [--resource-group]
+                               [--set]
+                               [--subscription]
                                [--tags]
   examples:
-  - summary: Update the Notification Hub
-    syntax: >-
-      az notification-hub update --resource-group MyResourceGroup --namespace-name \
-
-      my-namespace --name "sdk-notificationHubs-8708"
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+  - summary: Update the notification hub
+    syntax: az notification-hub update --resource-group MyResourceGroup --namespace-name my-namespace --name "sdk-notificationHubs-8708"
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
+    summary: Resource location.
+    description: ''
+  - name: --name --notification-hub-name -n
     summary: The notification hub name.
     description: ''
-  - isRequired: true
-    name: --namespace-name
+  - name: --namespace-name
     summary: The namespace name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 commands:
 - az_notification-hub_authorization-rule
@@ -324,4 +346,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage Notification Hubs.
+  description: Manage notification hubs.

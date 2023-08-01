@@ -18,22 +18,24 @@ directCommands:
                                             --resource-group
                                             --resource-name
                                             [--annotation]
+                                            [--export-route-policy]
                                             [--export-route-policy-id]
+                                            [--import-route-policy]
                                             [--import-route-policy-id]
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--option-a-properties]
                                             [--option-b-properties]
   examples:
   - summary: Create a External Network with option B properties
-    syntax: az networkfabric externalnetwork create --resource-group "example-rg" --l3domain "example-l3domain" --resource-name "example-externalNetwork" --peering-option "OptionB" --import-route-policy-id "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy" --export-route-policy-id "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy" --option-b-properties "{importRouteTargets:['65541:2001','65542:2002'],exportRouteTargets:['65531:2001','65532:2002']}"
+    syntax: az networkfabric externalnetwork create --resource-group "example-rg" --l3domain "example-l3domain" --resource-name "example-externalNetwork" --peering-option "OptionB" --option-b-properties "{routeTargets:{exportIpv4RouteTargets:['65046:10039'],exportIpv6RouteTargets:['65046:10039'],importIpv4RouteTargets:['65046:10039'],importIpv6RouteTargets:['65046:10039']}}" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}"
   - summary: Create a External Network with option A properties
-    syntax: az networkfabric externalnetwork create --resource-group "example-rg" --l3domain "example-l3domain" --resource-name "example-externalNetwork" --peering-option "OptionA" --import-route-policy-id "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy" --export-route-policy-id "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy" --option-a-properties "{peerASN:65234,vlanId:501,mtu:1500,primaryIpv4Prefix:'172.23.1.0/31',secondaryIpv4Prefix:'172.23.1.2/31'}"
+    syntax: az networkfabric externalnetwork create --resource-group "example-rg" --l3domain "example-l3domain" --resource-name "example-externalNetwork" --peering-option "OptionA" --option-a-properties "{peerASN:65234,vlanId:501,mtu:1500,primaryIpv4Prefix:'172.23.1.0/31',secondaryIpv4Prefix:'172.23.1.2/31',bfdConfiguration:{multiplier:5,intervalInMilliSeconds:300}}" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}"
   - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
     syntax: az networkfabric externalnetwork create --option-a-properties ??
   requiredParameters:
   - isRequired: true
     name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - isRequired: true
     name: --peering-option
@@ -46,17 +48,23 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of the ExternalNetwork.
+    summary: Name of the External Network.
     description: ''
   optionalParameters:
   - name: --annotation
-    summary: Switch configuration description.
+    summary: Description for underlying resource.
+    description: ''
+  - name: --export-route-policy
+    summary: Export Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --export-route-policy-id
-    summary: ARM resource ID of exportRoutePolicy.
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
+    description: ''
+  - name: --import-route-policy
+    summary: Import Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --import-route-policy-id
-    summary: ARM resource ID of importRoutePolicy.
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -87,7 +95,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -97,7 +105,7 @@ directCommands:
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the ExternalNetwork.
+    summary: Name of the External Network.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -115,7 +123,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -139,13 +147,84 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - name: --resource-group -g
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the ExternalNetwork.
+    summary: Name of the External Network.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_networkfabric_externalnetwork_update
+  name: az networkfabric externalnetwork update
+  summary: Update the External Networks resource.
+  description: ''
+  syntax: >-
+    az networkfabric externalnetwork update [--annotation]
+                                            [--export-route-policy]
+                                            [--export-route-policy-id]
+                                            [--ids]
+                                            [--import-route-policy]
+                                            [--import-route-policy-id]
+                                            [--l3-isolation-domain-name]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--option-a-properties]
+                                            [--option-b-properties]
+                                            [--peering-option {OptionA, OptionB}]
+                                            [--resource-group]
+                                            [--resource-name]
+                                            [--subscription]
+  examples:
+  - summary: Update the External Network with option B properties
+    syntax: az networkfabric externalnetwork update --resource-group "example-rg" --l3domain "example-l3domain" --resource-name "example-externalNetwork" --peering-option "OptionB" --option-b-properties "{routeTargets:{exportIpv4RouteTargets:['65046:10039'],exportIpv6RouteTargets:['65046:10039'],importIpv4RouteTargets:['65046:10039'],importIpv6RouteTargets:['65046:10039']}}" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}"
+  - summary: Update the External Network with option A properties
+    syntax: az networkfabric externalnetwork update --resource-group "example-rg" --l3domain "example-l3domain" --resource-name "example-externalNetwork" --peering-option "OptionA" --option-a-properties "{peerASN:65234,vlanId:501,mtu:1500,primaryIpv4Prefix:'172.23.1.0/31',secondaryIpv4Prefix:'172.23.1.2/31',bfdConfiguration:{multiplier:5,intervalInMilliSeconds:300}}" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}"
+  - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
+    syntax: az networkfabric externalnetwork update --option-a-properties ??
+  optionalParameters:
+  - name: --annotation
+    summary: Description for underlying resource.
+    description: ''
+  - name: --export-route-policy
+    summary: Export Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --export-route-policy-id
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --import-route-policy
+    summary: Import Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --import-route-policy-id
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
+    description: ''
+  - name: --l3-isolation-domain-name --l3domain
+    summary: Name of the L3 Isolation Domain.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --option-a-properties
+    summary: Option A properties object.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --option-b-properties
+    summary: Option B properties object.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --peering-option
+    parameterValueGroup: "OptionA, OptionB"
+    summary: Peering option list.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of the resource group.
+    description: ''
+  - name: --resource-name
+    summary: Name of the External Network.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -191,13 +270,13 @@ directCommands:
     summary: Polling interval in seconds.
     description: ''
   - name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - name: --resource-group -g
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the ExternalNetwork.
+    summary: Name of the External Network.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -215,6 +294,7 @@ commands:
 - az_networkfabric_externalnetwork_delete
 - az_networkfabric_externalnetwork_list
 - az_networkfabric_externalnetwork_show
+- az_networkfabric_externalnetwork_update
 - az_networkfabric_externalnetwork_wait
 globalParameters:
 - name: --debug

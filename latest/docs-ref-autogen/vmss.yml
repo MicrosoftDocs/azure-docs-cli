@@ -36,6 +36,7 @@ directCommands:
                    [--data-disk-mbps]
                    [--data-disk-sizes-gb]
                    [--disable-integrity-monitoring]
+                   [--disable-integrity-monitoring-autoupgrade]
                    [--disable-overprovision]
                    [--disk-controller-type {NVMe, SCSI}]
                    [--dns-servers]
@@ -98,7 +99,7 @@ directCommands:
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
                    [--scope]
                    [--secrets]
-                   [--security-type {ConfidentialVM, TrustedLaunch}]
+                   [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--single-placement-group {false, true}]
                    [--specialized {false, true}]
                    [--spot-restore-timeout]
@@ -264,6 +265,10 @@ directCommands:
   - name: --disable-integrity-monitoring
     defaultValue: "False"
     summary: Disable the default behavior of installing guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
+    description: ''
+  - name: --disable-integrity-monitoring-autoupgrade
+    defaultValue: "False"
+    summary: Disable auto upgrade of guest attestation extension for Trusted Launch enabled VMs and VMSS.
     description: ''
   - name: --disable-overprovision
     summary: Overprovision option (see https://azure.microsoft.com/documentation/articles/virtual-machine-scale-sets-overview/ for details).
@@ -482,7 +487,7 @@ directCommands:
     summary: 'One or many Key Vault secrets as JSON strings or files via `@{path}` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.'
     description: ''
   - name: --security-type
-    parameterValueGroup: "ConfidentialVM, TrustedLaunch"
+    parameterValueGroup: "ConfidentialVM, Standard, TrustedLaunch"
     summary: Specify the security type of the virtual machine.
     description: ''
   - name: --single-placement-group
@@ -858,7 +863,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --vm-instance-i-ds
-    summary: A list of virtual machine instance IDs from the VM scale set. Is either a model type or a IO type. Default value is None.
+    summary: A list of virtual machine instance IDs from the VM scale set. Is either a VirtualMachineScaleSetVMInstanceIDs type or a IO type. Default value is None.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_reimage
@@ -1542,5 +1547,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/27/2023
+  ms.date: 07/26/2023
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

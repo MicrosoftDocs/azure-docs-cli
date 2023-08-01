@@ -4,7 +4,7 @@ name: az dnc controller
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **dnc** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az dnc controller** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dnc** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az dnc controller** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage controller with dnc.
 description: ''
 directCommands:
@@ -13,61 +13,69 @@ directCommands:
   summary: Create a dnc controller.
   description: ''
   syntax: >-
-    az dnc controller create --resource-group
-                             --resource-name
+    az dnc controller create --name
+                             --resource-group
                              [--location]
-                             [--no-wait]
+                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--purpose {prod, test}]
                              [--tags]
   examples:
-  - summary: Create controller
+  - summary: Create a controller
     syntax: az dnc controller create --location "West US" --resource-group "TestRG" --resource-name "testcontroller"
+  - summary: Create a test controller
+    syntax: az dnc controller create --location "West US" --resource-group "TestRG" --resource-name "testcontroller" --purpose "test"
   requiredParameters:
+  - isRequired: true
+    name: --name --resource-name -n
+    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --resource-name
-    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
-    description: ''
   optionalParameters:
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    summary: Location of the resource.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
+  - name: --purpose
+    defaultValue: "prod"
+    parameterValueGroup: "prod, test"
+    summary: The purpose of the dnc controller resource.
+    description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: The resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_dnc_controller_delete
   name: az dnc controller delete
-  summary: Deletes the DNC controller.
+  summary: Delete the DNC controller.
   description: ''
   syntax: >-
     az dnc controller delete [--ids]
-                             [--no-wait]
+                             [--name]
+                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                              [--resource-group]
-                             [--resource-name]
                              [--subscription]
                              [--yes]
   examples:
-  - summary: Delete controller
+  - summary: Delete a controller
     syntax: az dnc controller delete --resource-group "TestRG" --resource-name "testcontroller"
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --name --resource-name -n
+    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
+    description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --resource-name
-    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -78,12 +86,12 @@ directCommands:
     description: ''
 - uid: az_dnc_controller_show
   name: az dnc controller show
-  summary: Gets details about the specified dnc controller.
+  summary: Get details about the specified dnc controller.
   description: ''
   syntax: >-
     az dnc controller show [--ids]
+                           [--name]
                            [--resource-group]
-                           [--resource-name]
                            [--subscription]
   examples:
   - summary: Get details of a controller
@@ -92,18 +100,18 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --name --resource-name -n
+    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --resource-name
-    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_dnc_controller_wait
   name: az dnc controller wait
-  summary: Place the CLI in a waiting state until a condition of the dnc controller is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az dnc controller wait [--created]
@@ -112,16 +120,11 @@ directCommands:
                            [--exists]
                            [--ids]
                            [--interval]
+                           [--name]
                            [--resource-group]
-                           [--resource-name]
                            [--subscription]
                            [--timeout]
                            [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the dnc controller is successfully created.
-    syntax: az dnc controller wait --resource-group "TestRG" --resource-name "testcontroller" --created
-  - summary: Pause executing next line of CLI script until the dnc controller is successfully deleted.
-    syntax: az dnc controller wait --resource-group "TestRG" --resource-name "testcontroller" --deleted
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -145,11 +148,11 @@ directCommands:
     defaultValue: "30"
     summary: Polling interval in seconds.
     description: ''
+  - name: --name --resource-name -n
+    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - name: --resource-name
-    summary: The name of the resource. It must be a minimum of 3 characters, and a maximum of 63.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.

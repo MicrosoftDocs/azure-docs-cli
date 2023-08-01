@@ -13,19 +13,23 @@ directCommands:
   summary: Create a L2 Isolation Domain resource.
   description: ''
   syntax: >-
-    az networkfabric l2domain create --resource-group
+    az networkfabric l2domain create --nf-id
+                                     --resource-group
                                      --resource-name
+                                     --vlan-id
                                      [--annotation]
                                      [--location]
                                      [--mtu]
-                                     [--nf-id]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--tags]
-                                     [--vlan-id]
   examples:
   - summary: Create a L2 Isolation Domain
     syntax: az networkfabric l2domain create --resource-group "example-rg" --resource-name "example-l2domain" --location "westus3" --nf-id "/subscriptions/xxxxxx-xxxxxx-xxxx-xxxx-xxxxxx/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/NetworkFabrics/example-fabricName" --vlan-id  501 --mtu 1500
   requiredParameters:
+  - isRequired: true
+    name: --nf-id
+    summary: ARM Resource ID of the Network Fabric.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of the resource group.
@@ -34,18 +38,19 @@ directCommands:
     name: --resource-name
     summary: Name of the L2 Isolation Domain.
     description: ''
+  - isRequired: true
+    name: --vlan-id
+    summary: 'Vlan Identifier of the Network Fabric. The value should be between 100 to 4094. Example: 501.'
+    description: ''
   optionalParameters:
   - name: --annotation
-    summary: Switch configuration description.
+    summary: Description for underlying resource.
     description: ''
   - name: --location -l
     summary: Location of Azure region  When not specified, the location of the resource group will be used.
     description: ''
   - name: --mtu
-    summary: 'Maximum transmission unit: The value should be between 1500-9000. Default value is 1500.'
-    description: ''
-  - name: --nf-id
-    summary: Resource ID of the Network Fabric resource.
+    summary: 'Maximum transmission unit. The value should be between 64 to 9200. Default value is 1500. Example: 1500.'
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -53,9 +58,6 @@ directCommands:
     description: ''
   - name: --tags
     summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
-    description: ''
-  - name: --vlan-id
-    summary: 'Vlan identifier value. The value should be between 501-4095. Example: 501.'
     description: ''
 - uid: az_networkfabric_l2domain_delete
   name: az networkfabric l2domain delete
@@ -126,6 +128,48 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_networkfabric_l2domain_update
+  name: az networkfabric l2domain update
+  summary: Update the L2 Isolation Domain resource.
+  description: ''
+  syntax: >-
+    az networkfabric l2domain update [--annotation]
+                                     [--ids]
+                                     [--mtu]
+                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--resource-group]
+                                     [--resource-name]
+                                     [--subscription]
+                                     [--tags]
+  examples:
+  - summary: Update the L2 Isolation Domain
+    syntax: az networkfabric l2domain update --resource-group "example-rg" --resource-name "example-l2domain" --mtu 1500
+  optionalParameters:
+  - name: --annotation
+    summary: Description for underlying resource.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --mtu
+    summary: 'Maximum transmission unit. The value should be between 64 to 9200. Default value is 1500. Example: 1500.'
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of the resource group.
+    description: ''
+  - name: --resource-name
+    summary: Name of the L2 Isolation Domain.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: Resource tags  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
 - uid: az_networkfabric_l2domain_update-admin-state
   name: az networkfabric l2domain update-admin-state
   summary: Enables isolation domain across the fabric or on specified racks.
@@ -156,7 +200,7 @@ directCommands:
     summary: Network Fabrics or Network Rack resource Id.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --resource-name
-    summary: Name of the L2IsolationDomain.
+    summary: Name of the L2 Isolation Domain.
     description: ''
   - name: --state
     parameterValueGroup: "Disable, Enable"
@@ -226,6 +270,7 @@ commands:
 - az_networkfabric_l2domain_delete
 - az_networkfabric_l2domain_list
 - az_networkfabric_l2domain_show
+- az_networkfabric_l2domain_update
 - az_networkfabric_l2domain_update-admin-state
 - az_networkfabric_l2domain_wait
 globalParameters:

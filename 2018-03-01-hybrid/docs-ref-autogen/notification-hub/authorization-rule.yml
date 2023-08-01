@@ -4,32 +4,27 @@ name: az notification-hub authorization-rule
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **notification-hub** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az notification-hub authorization-rule** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **notification-hub** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az notification-hub authorization-rule** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage notification hubs authorization rule.
 description: ''
 directCommands:
 - uid: az_notification-hub_authorization-rule_create
   name: az notification-hub authorization-rule create
-  summary: Create an authorization rule for a NotificationHub.
+  summary: Create an authorization rule for a notification hub.
   description: ''
   syntax: >-
     az notification-hub authorization-rule create --name
                                                   --namespace-name
                                                   --notification-hub-name
                                                   --resource-group
-                                                  --rights
+                                                  [--rights]
   examples:
   - summary: Create an authorization rule
-    syntax: >-
-      az notification-hub authorization-rule create --resource-group MyResourceGroup \
-
-      --namespace-name my-namespace --notification-hub-name my-hub --name \
-
-      DefaultListenSharedAccessSignature --rights Listen Send
+    syntax: az notification-hub authorization-rule create --resource-group MyResourceGroup --namespace-name my-namespace --notification-hub-name my-hub --name DefaultListenSharedAccessSignature --rights Listen Send
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The authorization rule name.
+    summary: Authorization Rule Name.
     description: ''
   - isRequired: true
     name: --namespace-name
@@ -43,9 +38,9 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --rights
-    summary: The rights associated with the rule.
+  optionalParameters:
+  - name: --rights
+    summary: The rights associated with the rule.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_notification-hub_authorization-rule_delete
   name: az notification-hub authorization-rule delete
@@ -58,20 +53,16 @@ directCommands:
                                                   [--notification-hub-name]
                                                   [--resource-group]
                                                   [--subscription]
+                                                  [--yes]
   examples:
-  - summary: Delete the authorization rule
-    syntax: >-
-      az notification-hub authorization-rule delete --resource-group MyResourceGroup \
-
-      --namespace-name my-namespace --notification-hub-name my-hub --name \
-
-      DefaultListenSharedAccessSignature
+  - summary: Delete a notificationHub authorization rule
+    syntax: az notification-hub authorization-rule delete --resource-group MyResourceGroup --namespace-name my-namespace --notification-hub-name my-hub --name DefaultListenSharedAccessSignature
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The authorization rule name.
+    summary: Authorization Rule Name.
     description: ''
   - name: --namespace-name
     summary: The namespace name.
@@ -85,20 +76,23 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
 - uid: az_notification-hub_authorization-rule_list
   name: az notification-hub authorization-rule list
-  summary: List the authorization rules for a NotificationHub.
+  summary: List the authorization rules for a notification hub.
   description: ''
   syntax: >-
     az notification-hub authorization-rule list --namespace-name
                                                 --notification-hub-name
                                                 --resource-group
+                                                [--max-items]
+                                                [--next-token]
   examples:
-  - summary: List authorization rules
-    syntax: >-
-      az notification-hub authorization-rule list --resource-group MyResourceGroup \
-
-      --namespace-name my-namespace --notification-hub-name my-hub
+  - summary: List the authorization rules for a notification hub.
+    syntax: az notification-hub authorization-rule list --resource-group MyResourceGroup --namespace-name my-namespace --notification-hub-name my-hub
   requiredParameters:
   - isRequired: true
     name: --namespace-name
@@ -111,82 +105,90 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
 - uid: az_notification-hub_authorization-rule_list-keys
   name: az notification-hub authorization-rule list-keys
-  summary: List the Primary and Secondary ConnectionStrings to the NotificationHub.
+  summary: List the primary and secondary connection strings to the notification hub.
   description: ''
   syntax: >-
-    az notification-hub authorization-rule list-keys --name
-                                                     --namespace-name
-                                                     --notification-hub-name
-                                                     --resource-group
+    az notification-hub authorization-rule list-keys [--ids]
+                                                     [--name]
+                                                     [--namespace-name]
+                                                     [--notification-hub-name]
+                                                     [--resource-group]
+                                                     [--subscription]
   examples:
-  - summary: List connectionStrings of the authorization rule
-    syntax: >-
-      az notification-hub authorization-rule list-keys --resource-group MyResourceGroup --namespace-name my-namespace \
-
-      --notification-hub-name my-hub --name "sdk-AuthRules-5800"
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The authorization rule name.
+  - summary: List connection strings of the authorization rule
+    syntax: az notification-hub authorization-rule list-keys --resource-group MyResourceGroup --namespace-name my-namespace --notification-hub-name my-hub --name "sdk-AuthRules-5800"
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --namespace-name
+  - name: --name -n
+    summary: The connection string of the NotificationHub for the specified authorizationRule.
+    description: ''
+  - name: --namespace-name
     summary: The namespace name.
     description: ''
-  - isRequired: true
-    name: --notification-hub-name
+  - name: --notification-hub-name
     summary: The notification hub name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_notification-hub_authorization-rule_regenerate-keys
   name: az notification-hub authorization-rule regenerate-keys
-  summary: Regenerate the Primary/Secondary Keys to the NotificationHub Authorization Rule.
+  summary: Regenerates the primary/secondary keys to the notification hub authorization rule.
   description: ''
   syntax: >-
-    az notification-hub authorization-rule regenerate-keys --name
-                                                           --namespace-name
-                                                           --notification-hub-name
-                                                           --policy-key {Primary Key, Secondary Key}
-                                                           --resource-group
+    az notification-hub authorization-rule regenerate-keys --policy-key {Primary Key, Secondary Key}
+                                                           [--ids]
+                                                           [--name]
+                                                           [--namespace-name]
+                                                           [--notification-hub-name]
+                                                           [--resource-group]
+                                                           [--subscription]
   examples:
-  - summary: Regenerate the Notification Hub authorization rule
-    syntax: >-
-      az notification-hub authorization-rule regenerate-keys --resource-group MyResourceGroup --namespace-name \
-
-      my-namespace --notification-hub-name my-hub --name \
-
-      DefaultListenSharedAccessSignature --policy-key "Secondary Key"
+  - summary: Regenerate the notification hub authorization rule
+    syntax: az notification-hub authorization-rule regenerate-keys --resource-group MyResourceGroup --namespace-name my-namespace --notification-hub-name my-hub --name DefaultListenSharedAccessSignature --policy-key "Secondary Key"
   requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The authorization rule name.
-    description: ''
-  - isRequired: true
-    name: --namespace-name
-    summary: The namespace name.
-    description: ''
-  - isRequired: true
-    name: --notification-hub-name
-    summary: The notification hub name.
-    description: ''
   - isRequired: true
     name: --policy-key
     parameterValueGroup: "Primary Key, Secondary Key"
-    summary: Name of the key that has to be regenerated for the Notification Hub Authorization Rule.
+    summary: Name of the key that has to be regenerated for the Namespace/Notification Hub Authorization Rule. The value can be Primary Key/Secondary Key.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: The connection string of the NotificationHub for the specified authorizationRule.
+    description: ''
+  - name: --namespace-name
+    summary: The namespace name.
+    description: ''
+  - name: --notification-hub-name
+    summary: The notification hub name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_notification-hub_authorization-rule_show
   name: az notification-hub authorization-rule show
-  summary: Show an authorization rule for a NotificationHub by name.
+  summary: Show an authorization rule for a notification hub by name.
   description: ''
   syntax: >-
     az notification-hub authorization-rule show [--ids]
@@ -197,18 +199,13 @@ directCommands:
                                                 [--subscription]
   examples:
   - summary: Show the authorization rule information
-    syntax: >-
-      az notification-hub authorization-rule show --resource-group MyResourceGroup \
-
-      --namespace-name my-namespace --notification-hub-name my-hub --name \
-
-      DefaultListenSharedAccessSignature
+    syntax: az notification-hub authorization-rule show --resource-group MyResourceGroup --namespace-name my-namespace --notification-hub-name my-hub --name DefaultListenSharedAccessSignature
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name -n
-    summary: The authorization rule name.
+    summary: Authorization Rule Name.
     description: ''
   - name: --namespace-name
     summary: The namespace name.

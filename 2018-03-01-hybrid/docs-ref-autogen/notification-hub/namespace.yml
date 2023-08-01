@@ -4,13 +4,13 @@ name: az notification-hub namespace
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **notification-hub** extension for the Azure CLI  (version 2.3.1 or higher).  The extension will automatically install the first time you run an **az notification-hub namespace** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **notification-hub** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az notification-hub namespace** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage notification hub namespace.
 description: ''
 directCommands:
 - uid: az_notification-hub_namespace_check-availability
   name: az notification-hub namespace check-availability
-  summary: Check the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
+  summary: Checks the availability of the given service namespace across all Azure subscriptions. This is useful because the domain name is created based on the service namespace name.
   description: ''
   syntax: az notification-hub namespace check-availability --name
   examples:
@@ -19,7 +19,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The namespace name to check.
+    summary: Resource name.
     description: ''
 - uid: az_notification-hub_namespace_create
   name: az notification-hub namespace create
@@ -33,10 +33,7 @@ directCommands:
                                          [--tags]
   examples:
   - summary: Create a namespace
-    syntax: >-
-      az notification-hub namespace create --resource-group MyResourceGroup --name \
-
-      my-namespace --location "South Central US" --sku Standard
+    syntax: az notification-hub namespace create --resource-group MyResourceGroup --name my-namespace --location "South Central US" --sku Standard
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -53,28 +50,25 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    summary: Resource location  When not specified, the location of the resource group will be used.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_notification-hub_namespace_delete
   name: az notification-hub namespace delete
-  summary: Delete an existing namespace. This operation also removes all associated notification hubs under the namespace.
+  summary: Delete an existing namespace. This operation also removes all associated notificationHubs under the namespace.
   description: ''
   syntax: >-
     az notification-hub namespace delete [--ids]
                                          [--name]
-                                         [--no-wait]
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--resource-group]
                                          [--subscription]
                                          [--yes]
   examples:
   - summary: Delete the namespace
-    syntax: >-
-      az notification-hub namespace delete --resource-group MyResourceGroup --name \
-
-      my-namespace
+    syntax: az notification-hub namespace delete --resource-group MyResourceGroup --name my-namespace
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -83,7 +77,7 @@ directCommands:
     summary: The namespace name.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -100,13 +94,22 @@ directCommands:
   name: az notification-hub namespace list
   summary: List available namespaces.
   description: ''
-  syntax: az notification-hub namespace list [--resource-group]
+  syntax: >-
+    az notification-hub namespace list [--max-items]
+                                       [--next-token]
+                                       [--resource-group]
   examples:
   - summary: List available namespaces within a resource group
     syntax: az notification-hub namespace list --resource-group MyResourceGroup
-  - summary: List all the available namespaces within the subscription irrespective of the resourceGroups
+  - summary: List all the available namespaces within the subscription irrespective of the resource groups
     syntax: az notification-hub namespace list
   optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -121,10 +124,7 @@ directCommands:
                                        [--subscription]
   examples:
   - summary: Show namespace info
-    syntax: >-
-      az notification-hub namespace show --resource-group MyResourceGroup --name \
-
-      my-namespace
+    syntax: az notification-hub namespace show --resource-group MyResourceGroup --name  my-namespace
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -143,59 +143,72 @@ directCommands:
   summary: Update a service namespace. The namespace's resource manifest is immutable and cannot be modified.
   description: ''
   syntax: >-
-    az notification-hub namespace update --name
-                                         --resource-group
+    az notification-hub namespace update [--add]
+                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--ids]
+                                         [--location]
+                                         [--name]
+                                         [--remove]
+                                         [--resource-group]
+                                         [--set]
                                          [--sku {Basic, Free, Standard}]
+                                         [--subscription]
                                          [--tags]
   examples:
   - summary: Update the namespace
-    syntax: >-
-      az notification-hub namespace update --resource-group MyResourceGroup --name \
-
-      my-namespace --sku Standard
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+    syntax: az notification-hub namespace update --resource-group MyResourceGroup --name my-namespace --sku Standard
+  optionalParameters:
+  - name: --add
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
+    summary: Resource location.
+    description: ''
+  - name: --name -n
     summary: The namespace name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --remove
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
+  - name: --set
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
   - name: --sku
     parameterValueGroup: "Basic, Free, Standard"
     summary: Name of the notification hub sku.
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Resource tags  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_notification-hub_namespace_wait
   name: az notification-hub namespace wait
-  summary: Place the CLI in a waiting state until a condition of the Notification Hub Namesapce is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
-    az notification-hub namespace wait --name
-                                       --resource-group
-                                       [--created]
+    az notification-hub namespace wait [--created]
                                        [--custom]
                                        [--deleted]
                                        [--exists]
+                                       [--ids]
                                        [--interval]
+                                       [--name]
+                                       [--resource-group]
+                                       [--subscription]
                                        [--timeout]
                                        [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the Notification Hub Namesapce is successfully provisioned.
-    syntax: az notification-hub namespace wait --resource-group MyResourceGroup --name \ my-namespace --created
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The namespace name.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -212,9 +225,21 @@ directCommands:
     defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: The namespace name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"

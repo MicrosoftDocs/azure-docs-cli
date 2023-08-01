@@ -21,14 +21,20 @@ directCommands:
                                             [--bgp-configuration]
                                             [--connected-ipv4-subnets]
                                             [--connected-ipv6-subnets]
+                                            [--egress-acl-id]
+                                            [--export-route-policy]
                                             [--export-route-policy-id]
+                                            [--extension {NPB, NoExtension}]
+                                            [--import-route-policy]
                                             [--import-route-policy-id]
+                                            [--ingress-acl-id]
+                                            [--is-monitoring-enabled {False, True}]
                                             [--mtu]
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--static-route-configuration]
   examples:
   - summary: Create a Internal Network
-    syntax: az networkfabric internalnetwork create --resource-group "example-rg" --l3-isolation-domain-name "example-l3domain" --resource-name "example-internalNetwork" --vlan-id 2600 --mtu 1500 --connected-ipv4-subnets "[{prefix:'10.0.0.1/21'},{prefix:'10.0.0.1/22'}]" --static-route-configuration "{ipv4Routes:[{prefix:'10.1.0.0/24',nextHop:['10.0.0.1','10.0.0.2']},{prefix:'10.1.0.0/24',nextHop:['10.0.0.1','10.0.0.2']}]}" --bgp-configuration  "{defaultRouteOriginate:True,allowAS:2,allowASOverride:Enable,peerASN:65047,ipv4ListenRangePrefixes:['10.1.0.0/28','10.1.0.1/28'],ipv4NeighborAddress:[{address:'10.0.0.11'},{address:'10.0.0.12'}]}" --export-route-policy-id "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy" --import-route-policy-id "/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy"
+    syntax: az networkfabric internalnetwork create --resource-group "example-rg" --l3-isolation-domain-name "example-l3domain" --resource-name "example-internalNetwork" --vlan-id 2600 --mtu 1500 --extension "NoExtension" --is-monitoring-enabled "True" --connected-ipv4-subnets "[{prefix:'10.0.0.1/21'},{prefix:'10.1.1.1/22'}]" --connected-ipv6-subnets "[{prefix:'2fff::/64'}]" --static-route-configuration "{extension:NPB,bfdConfiguration:{multiplier:5,intervalInMilliSeconds:300},ipv4Routes:[{prefix:'10.1.0.0/24',nextHop:['10.0.0.1','10.0.0.2']},{prefix:'10.1.0.0/24',nextHop:['10.0.0.1','10.0.0.2']}],ipv6Routes:[{prefix:'2fff::/64',nextHop:['3fff::1']}]}" --bgp-configuration  "{bfdConfiguration:{multiplier:5,intervalInMilliSeconds:300},defaultRouteOriginate:True,allowAS:2,allowASOverride:Enable,peerASN:65047,ipv4ListenRangePrefixes:['10.1.1.1/28','10.0.0.1/28'],ipv6ListenRangePrefixes:['2fff::/66'],ipv4NeighborAddress:[{address:'10.0.0.11'},{address:'10.0.0.12'}],ipv6NeighborAddress:[{address:'2fff::'}]}" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}"
   - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
     syntax: >-
       az networkfabric internalnetwork create --static-route-configuration ??
@@ -37,7 +43,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -45,40 +51,60 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of the InternalNetwork.
+    summary: Name of the Internal Network.
     description: ''
   - isRequired: true
     name: --vlan-id
-    summary: 'Vlan identifier value. The value should be between 501-4095. Example: 501.'
+    summary: 'Vlan identifier. The value should be between 100-4094. Example: 1001.'
     description: ''
   optionalParameters:
   - name: --annotation
-    summary: Switch configuration description.
+    summary: Description for underlying resource.
     description: ''
   - name: --bgp-configuration
-    summary: BGP configuration properties  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: BGP configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --connected-ipv4-subnets
-    summary: List with object connectedIPv4Subnets.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: List of Connected IPv4 Subnets.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --connected-ipv6-subnets
-    summary: List with object connectedIPv6Subnets.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: List of connected IPv6 Subnets.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --egress-acl-id
+    summary: Egress Acl ARM resource ID.
+    description: ''
+  - name: --export-route-policy
+    summary: Export Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --export-route-policy-id
-    summary: ARM resource ID of importRoutePolicy.
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
+    description: ''
+  - name: --extension
+    parameterValueGroup: "NPB, NoExtension"
+    summary: 'Internal Network Extension type. Default value is NoExtension. Example: NoExtension.'
+    description: ''
+  - name: --import-route-policy
+    summary: Import Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --import-route-policy-id
-    summary: ARM resource ID of importRoutePolicy.
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
+    description: ''
+  - name: --ingress-acl-id
+    summary: Ingress Acl ARM resource ID.
+    description: ''
+  - name: --is-monitoring-enabled
+    parameterValueGroup: "False, True"
+    summary: 'To check whether monitoring of internal network is enabled or not. Default value is False. Example: False.'
     description: ''
   - name: --mtu
-    summary: 'Maximum transmission unit: The value should be between 1500-9000. Default value is 1500.'
+    summary: 'Maximum transmission unit. The value should be between 64 to 9200. Default value is 1500. Example: 1500.'
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --static-route-configuration
-    summary: StaticRouteConfiguration model.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Static Route Configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_networkfabric_internalnetwork_delete
   name: az networkfabric internalnetwork delete
@@ -99,7 +125,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -109,7 +135,7 @@ directCommands:
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the InternalNetwork.
+    summary: Name of the Internal Network.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -127,7 +153,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -151,13 +177,105 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - name: --resource-group -g
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the InternalNetwork.
+    summary: Name of the Internal Network.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_networkfabric_internalnetwork_update
+  name: az networkfabric internalnetwork update
+  summary: Update the Internal Network resource.
+  description: ''
+  syntax: >-
+    az networkfabric internalnetwork update [--annotation]
+                                            [--bgp-configuration]
+                                            [--connected-ipv4-subnets]
+                                            [--connected-ipv6-subnets]
+                                            [--egress-acl-id]
+                                            [--export-route-policy]
+                                            [--export-route-policy-id]
+                                            [--ids]
+                                            [--import-route-policy]
+                                            [--import-route-policy-id]
+                                            [--ingress-acl-id]
+                                            [--is-monitoring-enabled {False, True}]
+                                            [--l3-isolation-domain-name]
+                                            [--mtu]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--resource-group]
+                                            [--resource-name]
+                                            [--static-route-configuration]
+                                            [--subscription]
+  examples:
+  - summary: Update the Internal Network resource
+    syntax: az networkfabric internalnetwork update --resource-group "example-rg" --l3-isolation-domain-name "example-l3domain" --resource-name "example-internalNetwork" --mtu 1500 --is-monitoring-enabled "True" --connected-ipv4-subnets "[{prefix:'10.0.0.1/21'},{prefix:'10.0.0.1/22'}]" --static-route-configuration "{bfdConfiguration:{multiplier:5,intervalInMilliSeconds:300},ipv4Routes:[{prefix:'10.1.0.0/24',nextHop:['10.0.0.1','10.0.0.2']},{prefix:'10.1.0.0/24',nextHop:['10.0.0.1','10.0.0.2']}]}" --bgp-configuration  "{bfdConfiguration:{multiplier:5,intervalInMilliSeconds:300},defaultRouteOriginate:True,allowAS:2,allowASOverride:Enable,peerASN:65047,ipv4ListenRangePrefixes:['10.1.0.0/28','10.1.0.1/28'],ipv4NeighborAddress:[{address:'10.0.0.11'},{address:'10.0.0.12'}]}" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}"
+  - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
+    syntax: >-
+      az networkfabric internalnetwork update --static-route-configuration ??
+
+      az networkfabric internalnetwork update --static-route-configuration "{ipv4-routes:??"
+  optionalParameters:
+  - name: --annotation
+    summary: Description for underlying resource.
+    description: ''
+  - name: --bgp-configuration
+    summary: BGP configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --connected-ipv4-subnets
+    summary: List of Connected IPv4 Subnets.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --connected-ipv6-subnets
+    summary: List of connected IPv6 Subnets.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --egress-acl-id
+    summary: Egress Acl ARM resource ID.
+    description: ''
+  - name: --export-route-policy
+    summary: Export Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --export-route-policy-id
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --import-route-policy
+    summary: Import Route Policy either IPv4 or IPv6.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --import-route-policy-id
+    summary: ARM Resource ID of the RoutePolicy. This is used for the backward compatibility.
+    description: ''
+  - name: --ingress-acl-id
+    summary: Ingress Acl ARM resource ID.
+    description: ''
+  - name: --is-monitoring-enabled
+    parameterValueGroup: "False, True"
+    summary: 'To check whether monitoring of internal network is enabled or not. Default value is False. Example: False.'
+    description: ''
+  - name: --l3-isolation-domain-name --l3domain
+    summary: Name of the L3 Isolation Domain.
+    description: ''
+  - name: --mtu
+    summary: 'Maximum transmission unit. The value should be between 64 to 9200. Default value is 1500. Example: 1500.'
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of the resource group.
+    description: ''
+  - name: --resource-name
+    summary: Name of the Internal Network.
+    description: ''
+  - name: --static-route-configuration
+    summary: Static Route Configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -203,13 +321,13 @@ directCommands:
     summary: Polling interval in seconds.
     description: ''
   - name: --l3-isolation-domain-name --l3domain
-    summary: Name of the L3IsolationDomain.
+    summary: Name of the L3 Isolation Domain.
     description: ''
   - name: --resource-group -g
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the InternalNetwork.
+    summary: Name of the Internal Network.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -227,6 +345,7 @@ commands:
 - az_networkfabric_internalnetwork_delete
 - az_networkfabric_internalnetwork_list
 - az_networkfabric_internalnetwork_show
+- az_networkfabric_internalnetwork_update
 - az_networkfabric_internalnetwork_wait
 globalParameters:
 - name: --debug

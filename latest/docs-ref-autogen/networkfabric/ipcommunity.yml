@@ -13,19 +13,23 @@ directCommands:
   summary: Create a Ip Community resource.
   description: ''
   syntax: >-
-    az networkfabric ipcommunity create --resource-group
+    az networkfabric ipcommunity create --ip-community-rules
+                                        --resource-group
                                         --resource-name
-                                        [--action {Deny, Permit}]
                                         [--annotation]
-                                        [--community-members]
                                         [--location]
                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--tags]
-                                        [--well-known-communities]
   examples:
   - summary: Create a Ip Community
-    syntax: az networkfabric ipcommunity create --resource-group "example-rg" --location "westus3" --resource-name "example-ipcommunity" --action "Deny" --well-known-communities "LocalAS" "GShut" --community-members "100:200" "101:201"
+    syntax: az networkfabric ipcommunity create --resource-group "example-rg" --location "westus3" --resource-name "example-ipcommunity" --ip-community-rules "[{action:Permit,communityMembers:['1:1'],sequenceNumber:1234,wellKnownCommunities:[Internet,GShut]}]"
+  - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
+    syntax: az networkfabric ipcommunity create --ip-community-rules ??
   requiredParameters:
+  - isRequired: true
+    name: --ip-community-rules
+    summary: List of IP Community Rules.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of the resource group.
@@ -35,15 +39,8 @@ directCommands:
     summary: Name of the IP Community.
     description: ''
   optionalParameters:
-  - name: --action
-    parameterValueGroup: "Deny, Permit"
-    summary: 'Action to be taken on the configuration. Example: Permit | Deny.'
-    description: ''
   - name: --annotation
-    summary: Switch configuration description.
-    description: ''
-  - name: --community-members
-    summary: List the communityMembers of IP Community.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Description for underlying resource.
     description: ''
   - name: --location -l
     summary: Location of Azure region  When not specified, the location of the resource group will be used.
@@ -54,9 +51,6 @@ directCommands:
     description: ''
   - name: --tags
     summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
-    description: ''
-  - name: --well-known-communities
-    summary: Supported well known Community List.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_networkfabric_ipcommunity_delete
   name: az networkfabric ipcommunity delete
