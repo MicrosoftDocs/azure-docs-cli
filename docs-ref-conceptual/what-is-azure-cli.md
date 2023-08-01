@@ -4,7 +4,7 @@ description: The Azure Command-Line Interface (CLI) is a command-line tool desig
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/1/2023
 ms.topic: overview
 ms.service: azure-cli
 ms.tool: azure-cli
