@@ -21,7 +21,7 @@ Now that a VM has been created, detailed information about it can be retrieved. 
 az vm show --name $vmName --resource-group $resourceGroup
 ```
 
-You see numerous information, which can be difficult to parse visually. The returned JSON contains information on authentication, network interface storage,
+Virtual Machines have many properties which can be difficult to parse visually The returned JSON contains information on authentication, network interface storage,
 and more. Most importantly, it contains the Azure object IDs for resources that the VM is connected to. Object IDs allow accessing these resources directly
 to get more information about the VM's configuration and capabilities.
 

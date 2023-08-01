@@ -1,5 +1,5 @@
 ---
-title: Sign in with Azure CLI — Login and Authentication | Microsoft Docs
+title: Login with Azure CLI — Login and Authentication | Microsoft Docs
 description: Learn the different authentication types for your Azure CLI login — sign in with Azure CLI automatically, locally, or interactively using the az login command.
 author: jiasli
 ms.author: jiasli
@@ -18,7 +18,7 @@ There are several authentication types for the Azure Command-Line Interface (CLI
 Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az-login) command. When you write scripts, the recommended approach is
 to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 
-Azure CLI doesn't store any of your login information. Instead, Azure CLI generates and stores a [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). As of August 2018 this token is revoked after 90 days of inactivity. Contact your Microsoft or tenant administrator to change this value. Once the token is revoked, you get a message from the CLI saying you need to log in again.
+Azure CLI doesn't store any of your login information. Instead, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). As of August 2018 this token is revoked after 90 days of inactivity. Contact your Microsoft or tenant administrator to change this value. Once the token is revoked, you get a message from the CLI saying you need to log in again.
 
 After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can [change your default subscription](manage-azure-subscriptions-azure-cli.md).
 
@@ -131,7 +131,7 @@ _ Support for Windows Hello, conditional access policies, and FIDO keys.
 _ Streamlined single sign-on.
 _ Bug fixes and enhancements shipped with Windows.
 
-Signing in with WAM is a preview, opt-in feature. Once enabled, replaces the previous browser-based user interface. 
+Signing in with WAM is a preview, opt-in feature. Once enabled, the previous browser-based user interface is replaced.
 
 ```azurecli-interactive
 az config set core.allow_broker=true
@@ -141,7 +141,7 @@ az login
 
 At the current stage of development, there are a few known limitations to WAM:
 _ WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, we automatically fall back to a browser.  
-_ Microsoft Accounts (for example @outlook.com or @live.com) aren't supported for the time being. We're working with the Microsoft  Identity team to bring the support soon.
+_ Microsoft Accounts (for example @outlook.com or @live.com) aren't supported for the time being. We're working with the Microsoft Identity team to bring the support later.
 
 ## See also
 
