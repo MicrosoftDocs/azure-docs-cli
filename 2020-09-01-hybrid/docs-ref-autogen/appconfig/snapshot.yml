@@ -103,10 +103,10 @@ directCommands:
                                [--auth-mode {key, login}]
                                [--connection-string]
                                [--endpoint]
-                               [--fields {composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, status_code, tags}]
+                               [--fields {composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, tags}]
                                [--name]
                                [--snapshot-name]
-                               [--status]
+                               [--status {archived, failed, provisioning, ready}]
                                [--top]
   examples:
   - summary: List all snapshots with names starting with the prefix 'abc'.
@@ -115,6 +115,8 @@ directCommands:
     syntax: az appconfig snapshot list --status archived -n MyAppConfiguration
   - summary: List all provisioning snapshots with names starting with the prefix 'app'.
     syntax: az appconfig snapshot list -s app* --status provisioning -n MyAppConfiguration
+  - summary: List all failed and provisioning snapshots.
+    syntax: az appconfig snapshot list --status failed provisioning -n MyAppConfiguration
   optionalParameters:
   - name: --all
     summary: List all items.
@@ -131,7 +133,7 @@ directCommands:
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --fields
-    parameterValueGroup: "composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, status_code, tags"
+    parameterValueGroup: "composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, tags"
     summary: Customize output fields for Snapshots.
     description: ''
   - name: --name -n
@@ -142,8 +144,8 @@ directCommands:
     summary: If no name specified, return all snapshots by default. Support star sign as filters, for instance abc* means snapshots with abc as prefix to the name.
     description: ''
   - name: --status
-    defaultValue: "*"
-    summary: Value used to filter snapshots by their status.
+    parameterValueGroup: "archived, failed, provisioning, ready"
+    summary: Filter snapshots by their status. If no status specified, return all snapshots by default.
     description: ''
   - name: --top -t
     summary: Maximum number of items to return. Must be a positive integer. Default to 100.
@@ -192,7 +194,7 @@ directCommands:
                                [--auth-mode {key, login}]
                                [--connection-string]
                                [--endpoint]
-                               [--fields {composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, status_code, tags}]
+                               [--fields {composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, tags}]
                                [--name]
   examples:
   - summary: Show an app configuration snapshot with name MySnapshot in configuration store MyAppConfiguration.
@@ -215,7 +217,7 @@ directCommands:
     summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
     description: ''
   - name: --fields
-    parameterValueGroup: "composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, status_code, tags"
+    parameterValueGroup: "composition_type, created, etag, expires, filters, items_count, name, retention_period, size, status, tags"
     summary: Customize output fields for Snapshots.
     description: ''
   - name: --name -n
@@ -247,5 +249,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/27/2023
+  ms.date: 07/25/2023
   description: Manage snapshots associated with an app configuration store.

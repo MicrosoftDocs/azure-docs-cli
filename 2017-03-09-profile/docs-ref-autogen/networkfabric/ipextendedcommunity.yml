@@ -13,18 +13,23 @@ directCommands:
   summary: Create a Ip Extended Community resource.
   description: ''
   syntax: >-
-    az networkfabric ipextendedcommunity create --resource-group
+    az networkfabric ipextendedcommunity create --ip-extended-community-rules
+                                                --resource-group
                                                 --resource-name
-                                                [--action {Deny, Permit}]
                                                 [--annotation]
                                                 [--location]
                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                [--route-targets]
                                                 [--tags]
   examples:
   - summary: Create a Ip Extended Community
-    syntax: az networkfabric ipextendedcommunity create --resource-group "example-rg" --location "westus3" --resource-name "example-ipextendedcommunity" --action "Deny" --route-targets "1024:219" "1001:200"
+    syntax: az networkfabric ipextendedcommunity create --resource-group "example-rg" --location "westus3" --resource-name "example-ipextendedcommunity" --ip-extended-community-rules "[{action:Permit,sequenceNumber:1234,routeTargets:['1024:219','1001:200']}]"
+  - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
+    syntax: az networkfabric ipextendedcommunity create --ip-extended-community-rules ??
   requiredParameters:
+  - isRequired: true
+    name: --ip-extended-community-rules
+    summary: List of IP Extended Community Rules.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of the resource group.
@@ -34,12 +39,8 @@ directCommands:
     summary: Name of the IP Extended Community.
     description: ''
   optionalParameters:
-  - name: --action
-    parameterValueGroup: "Deny, Permit"
-    summary: 'Action to be taken on the configuration. Example: Permit | Deny.'
-    description: ''
   - name: --annotation
-    summary: Switch configuration description.
+    summary: Description for underlying resource.
     description: ''
   - name: --location -l
     summary: Location of Azure region  When not specified, the location of the resource group will be used.
@@ -47,9 +48,6 @@ directCommands:
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
-    description: ''
-  - name: --route-targets
-    summary: Route Target List.The expected formats are ASN(plain):NN >> example 4294967294:50, ASN.ASN:NN >> example 65533.65333:40, IP-address:NN >> example 10.10.10.10:65535. The possible values of ASN,NN are in range of 0-65535, ASN(plain) is in range of 0-4294967295.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --tags
     summary: Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
@@ -108,7 +106,7 @@ directCommands:
                                               [--resource-name]
                                               [--subscription]
   examples:
-  - summary: Show the Ip Community
+  - summary: Show the Ip Extended Community
     syntax: az networkfabric ipextendedcommunity show --resource-group "example-rg" --resource-name "example-ipextendedcommunity"
   optionalParameters:
   - name: --ids

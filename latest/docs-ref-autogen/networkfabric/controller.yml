@@ -19,14 +19,16 @@ directCommands:
                                        [--infra-er-connections]
                                        [--ipv4-address-space]
                                        [--ipv6-address-space]
+                                       [--is-workload-management-network-enabled {False, True}]
                                        [--location]
                                        [--managed-resource-group-configuration]
+                                       [--nfc-sku {Basic, HighPerformance, Standard}]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--tags]
                                        [--workload-er-connections]
   examples:
   - summary: Create a Network Fabric Controller. For RE-PUT with 'mrg' parameter, both name and location properties are required.
-    syntax: az networkfabric controller create --resource-group "example-rg" --location "westus3"  --resource-name "example-nfc" --ipv4-address-space "10.0.0.0/19" --infra-er-connections "[{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'},{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'}]" --workload-er-connections "[{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'},{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'}]" --mrg name=example-mrgName location=eastus
+    syntax: az networkfabric controller create --resource-group "example-rg" --location "westus3"  --resource-name "example-nfc" --ipv4-address-space "10.0.0.0/19" --is-workload-management-network-enabled "True" --nfc-sku "Basic" --infra-er-connections "[{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'},{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'}]" --workload-er-connections "[{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'},{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'}]" --mrg name=example-mrgName location=eastus
   - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
     syntax: az networkfabric controller create --infra-er-connections ??
   requiredParameters:
@@ -40,7 +42,7 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --annotation
-    summary: Switch configuration description.
+    summary: Description for underlying resource.
     description: ''
   - name: --infra-er-connections
     summary: Infra ER connections to manage infra resources.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
@@ -51,11 +53,19 @@ directCommands:
   - name: --ipv6-address-space
     summary: IPv6 Network Fabric Controller Address Space.
     description: ''
+  - name: --is-workload-management-network-enabled
+    parameterValueGroup: "False, True"
+    summary: A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. Default value is True.
+    description: ''
   - name: --location -l
     summary: Location of Azure region  When not specified, the location of the resource group will be used.
     description: ''
   - name: --managed-resource-group-configuration --mrg
     summary: Managed Resource Group configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --nfc-sku
+    parameterValueGroup: "Basic, HighPerformance, Standard"
+    summary: Network Fabric Controller SKU.
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -104,11 +114,8 @@ directCommands:
   syntax: az networkfabric controller list [--resource-group]
   examples:
   - summary: List the Network Fabric Controllers for Resource group
-    syntax: >-
-      az networkfabric controller list --resource-group "example-rg"
-
-      az networkfabric controller list -g "example-rg"
-  - summary: List the Network Fabric Controllers for Subscription.
+    syntax: az networkfabric controller list --resource-group "example-rg"
+  - summary: List the Network Fabric Controllers for Subscription
     syntax: az networkfabric controller list --subscription "<subscriptionId>"
   optionalParameters:
   - name: --resource-group -g
@@ -138,6 +145,50 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_networkfabric_controller_update
+  name: az networkfabric controller update
+  summary: Update the Network Fabric Controller resource.
+  description: ''
+  syntax: >-
+    az networkfabric controller update [--ids]
+                                       [--infra-er-connections]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--resource-group]
+                                       [--resource-name]
+                                       [--subscription]
+                                       [--tags]
+                                       [--workload-er-connections]
+  examples:
+  - summary: Update the Network Fabric Controller
+    syntax: az networkfabric controller update --resource-group "example-rg"   --resource-name "example-nfc" --infra-er-connections "[{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'}]" --workload-er-connections "[{expressRouteCircuitId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/example-expressRouteCircuit',expressRouteAuthorizationKey:'auth-key'}]"
+  - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
+    syntax: az networkfabric controller update --infra-er-connections ??
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --infra-er-connections
+    summary: Infra ER connections to manage infra resources.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of the resource group.
+    description: ''
+  - name: --resource-name
+    summary: Name of the Network Fabric Controller.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: Resource tags  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --workload-er-connections
+    summary: As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute).  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_networkfabric_controller_wait
   name: az networkfabric controller wait
@@ -200,6 +251,7 @@ commands:
 - az_networkfabric_controller_delete
 - az_networkfabric_controller_list
 - az_networkfabric_controller_show
+- az_networkfabric_controller_update
 - az_networkfabric_controller_wait
 globalParameters:
 - name: --debug

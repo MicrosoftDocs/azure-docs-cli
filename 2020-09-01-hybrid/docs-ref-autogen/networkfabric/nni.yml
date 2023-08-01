@@ -16,15 +16,20 @@ directCommands:
     az networkfabric nni create --fabric
                                 --resource-group
                                 --resource-name
+                                --use-option-b {False, True}
+                                [--egress-acl-id]
+                                [--export-route-policy]
+                                [--import-route-policy]
+                                [--ingress-acl-id]
                                 [--is-management-type {False, True}]
                                 [--layer2-configuration]
-                                [--layer3-configuration]
                                 [--nni-type {CE, NPB}]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                [--use-option-b {False, True}]
+                                [--npb-static-route-configuration]
+                                [--option-b-layer3-configuration]
   examples:
   - summary: Create a Network To Network Interconnect
-    syntax: az networkfabric nni create --resource-group "example-rg" --fabric "example-fabric" --resource-name "example-nni" --nni-type "CE" --is-management-type "True" --use-option-b "True" --layer2-configuration "{portCount:3,mtu:1500}" --layer3-configuration "{importRoutePolicyId:'importRoutePolicyId',exportRoutePolicyId:'exportRoutePolicyId',peerASN:28,vlanId:501,primaryIpv4Prefix:'172.31.0.0/31',secondaryIpv4Prefix:'172.31.0.20/31'}"
+    syntax: az networkfabric nni create --resource-group "example-rg" --fabric "example-fabric" --resource-name "example-nni" --nni-type "CE" --is-management-type "True" --use-option-b "True" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --layer2-configuration "{interfaces:['resourceId'],mtu:1500}" --option-b-layer3-configuration "{peerASN:28,vlanId:501,primaryIpv4Prefix:'172.31.0.0/31',secondaryIpv4Prefix:'172.31.0.20/31'}"
   - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
     syntax: az networkfabric nni create --layer2-configuration ??
   requiredParameters:
@@ -38,30 +43,46 @@ directCommands:
     description: ''
   - isRequired: true
     name: --resource-name
-    summary: Name of the NetworkToNetworkInterconnect Name.
+    summary: Name of the Network to Network Interconnect.
+    description: ''
+  - isRequired: true
+    name: --use-option-b
+    parameterValueGroup: "False, True"
+    summary: 'Selection of option B for NNI. Example: True.'
     description: ''
   optionalParameters:
+  - name: --egress-acl-id
+    summary: Egress Acl ARM resource ID.
+    description: ''
+  - name: --export-route-policy
+    summary: Export Route Policy configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --import-route-policy
+    summary: Import Route Policy configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --ingress-acl-id
+    summary: Ingress Acl ARM resource ID.
+    description: ''
   - name: --is-management-type
     parameterValueGroup: "False, True"
-    summary: 'Configuration to use NNI for Infrastructure Management. Example: True/False.'
+    summary: 'Configuration to use NNI for Infrastructure Management. Default value is True. Example: True.'
     description: ''
   - name: --layer2-configuration
-    summary: Common properties for Layer2Configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
-    description: ''
-  - name: --layer3-configuration
-    summary: Common properties for Layer3Configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Common properties for Layer2 Configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --nni-type
     parameterValueGroup: "CE, NPB"
-    summary: 'Type of NNI used. Example: CE | NPB.'
+    summary: 'Usage type of NNI. Default value is CE. Example: CE.'
     description: ''
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --use-option-b
-    parameterValueGroup: "False, True"
-    summary: Parameter to configure option B for NNI. If set to True, Layer3 configuration is mandatory.
+  - name: --npb-static-route-configuration
+    summary: NPB Static Route Configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --option-b-layer3-configuration
+    summary: Common properties for Layer3Configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_networkfabric_nni_delete
   name: az networkfabric nni delete
@@ -92,7 +113,7 @@ directCommands:
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the NetworkToNetworkInterconnect Name.
+    summary: Name of the Network to Network Interconnect.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -140,7 +161,71 @@ directCommands:
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the NetworkToNetworkInterconnect Name.
+    summary: Name of the Network to Network Interconnect.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_networkfabric_nni_update
+  name: az networkfabric nni update
+  summary: Update the Network to Network interconnect resource.
+  description: ''
+  syntax: >-
+    az networkfabric nni update [--egress-acl-id]
+                                [--export-route-policy]
+                                [--fabric]
+                                [--ids]
+                                [--import-route-policy]
+                                [--ingress-acl-id]
+                                [--layer2-configuration]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--npb-static-route-configuration]
+                                [--option-b-layer3-configuration]
+                                [--resource-group]
+                                [--resource-name]
+                                [--subscription]
+  examples:
+  - summary: Update the Network To Network Interconnect
+    syntax: az networkfabric nni update --resource-group "example-rg" --fabric "example-fabric" --resource-name "example-nni" --import-route-policy "{importIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',importIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --export-route-policy "{exportIpv4RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy',exportIpv6RoutePolicyId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourceGroups/example-rg/providers/microsoft.managednetworkfabric/routePolicies/example-routepolicy'}" --layer2-configuration "{interfaces:['resourceId'],mtu:1500}" --option-b-layer3-configuration "{peerASN:28,vlanId:501,primaryIpv4Prefix:'172.31.0.0/31',secondaryIpv4Prefix:'172.31.0.20/31'}"
+  - summary: Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
+    syntax: az networkfabric nni update --layer2-configuration ??
+  optionalParameters:
+  - name: --egress-acl-id
+    summary: Egress Acl ARM resource ID.
+    description: ''
+  - name: --export-route-policy
+    summary: Export Route Policy information  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --fabric --fabric-name
+    summary: Name of the Network Fabric.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --import-route-policy
+    summary: Import Route Policy information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --ingress-acl-id
+    summary: Ingress Acl ARM resource ID.
+    description: ''
+  - name: --layer2-configuration
+    summary: Common properties for Layer2Configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --npb-static-route-configuration
+    summary: NPB Static Route Configuration properties.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --option-b-layer3-configuration
+    summary: Common properties for Layer3Configuration.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of the resource group.
+    description: ''
+  - name: --resource-name
+    summary: Name of the Network to Network Interconnect.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -192,7 +277,7 @@ directCommands:
     summary: Name of the resource group.
     description: ''
   - name: --resource-name
-    summary: Name of the NetworkToNetworkInterconnect Name.
+    summary: Name of the Network to Network Interconnect.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -210,6 +295,7 @@ commands:
 - az_networkfabric_nni_delete
 - az_networkfabric_nni_list
 - az_networkfabric_nni_show
+- az_networkfabric_nni_update
 - az_networkfabric_nni_wait
 globalParameters:
 - name: --debug

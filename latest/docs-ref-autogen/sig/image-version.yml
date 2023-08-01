@@ -343,26 +343,35 @@ directCommands:
   summary: Delete a gallery image version.
   description: ''
   syntax: >-
-    az sig image-version delete --gallery-image-definition
-                                --gallery-image-version
-                                --gallery-name
-                                --resource-group
-  requiredParameters:
-  - isRequired: true
-    name: --gallery-image-definition -i
-    summary: Gallery image definition.
+    az sig image-version delete [--gallery-image-definition]
+                                [--gallery-image-version]
+                                [--gallery-name]
+                                [--ids]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--resource-group]
+                                [--subscription]
+  optionalParameters:
+  - name: --gallery-image-definition --gallery-image-name -i
+    summary: The name of the gallery image definition in which the Image Version resides.
     description: ''
-  - isRequired: true
-    name: --gallery-image-version -e
-    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
+  - name: --gallery-image-version --gallery-image-version-name -e
+    summary: The name of the gallery image version to be deleted.
     description: ''
-  - isRequired: true
-    name: --gallery-name -r
-    summary: Gallery name.
+  - name: --gallery-name -r
+    summary: The name of the Shared Image Gallery in which the Image Definition resides.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_sig_image-version_list
   name: az sig image-version list
@@ -372,9 +381,11 @@ directCommands:
     az sig image-version list --gallery-image-definition
                               --gallery-name
                               --resource-group
+                              [--max-items]
+                              [--next-token]
   requiredParameters:
   - isRequired: true
-    name: --gallery-image-definition -i
+    name: --gallery-image-definition --gallery-image-name -i
     summary: Gallery image definition.
     description: ''
   - isRequired: true
@@ -384,6 +395,13 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
 - uid: az_sig_image-version_list-community
   name: az sig image-version list-community
@@ -518,11 +536,11 @@ directCommands:
                                         [--public-gallery-name]
                                         [--subscription]
   optionalParameters:
-  - name: --gallery-image-definition -i
+  - name: --gallery-image-definition --gallery-image-name -i
     summary: The name of the community gallery image definition from which the image versions are to be listed.
     description: ''
-  - name: --gallery-image-version -e
-    summary: 'The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: <MajorVersion>.<MinorVersion>.<Patch>.'
+  - name: --gallery-image-version --gallery-image-version-name -e
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -531,7 +549,7 @@ directCommands:
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
   - name: --public-gallery-name
-    summary: The public name of community gallery.
+    summary: The public name of the community gallery.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -539,7 +557,7 @@ directCommands:
 - uid: az_sig_image-version_show-shared
   name: az sig image-version show-shared
   summary: Get an image version in a gallery shared directly to your subscription or tenant.
-  description: Get an image version in a gallery shared directly to your subscription or tenant.
+  description: ''
   syntax: >-
     az sig image-version show-shared [--gallery-image-definition]
                                      [--gallery-image-version]
@@ -549,15 +567,12 @@ directCommands:
                                      [--subscription]
   examples:
   - summary: Get an image version in a gallery shared directly to your subscription or tenant in the given location.
-    syntax: >-
-      az sig image-version show-shared --gallery-unique-name galleryUniqueName \
-
-      --gallery-image-definition MyImage --gallery-image-version 1.0.0 --location myLocation
+    syntax: az sig image-version show-shared --gallery-unique-name galleryUniqueName --gallery-image-definition MyImage --gallery-image-version 1.0.0 --location myLocation
   optionalParameters:
-  - name: --gallery-image-definition -i
+  - name: --gallery-image-definition --gallery-image-name -i
     summary: The name of the Shared Gallery Image Definition from which the Image Versions are to be listed.
     description: ''
-  - name: --gallery-image-version -e
+  - name: --gallery-image-version --gallery-image-version-name -e
     summary: 'The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: <MajorVersion>.<MinorVersion>.<Patch>.'
     description: ''
   - name: --gallery-unique-name
@@ -571,6 +586,59 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_sig_image-version_undelete
+  name: az sig image-version undelete
+  summary: Restore soft deleted Image Version.
+  description: Operation will only be successful if used within a Gallery with soft-deletion on.
+  syntax: >-
+    az sig image-version undelete --gallery-image-definition
+                                  --gallery-image-version
+                                  --gallery-name
+                                  --resource-group
+                                  [--allow-replicated-location-deletion {false, true}]
+                                  [--location]
+                                  [--no-wait]
+                                  [--tags]
+  examples:
+  - summary: Restore a soft deleted Image Version
+    syntax: >-
+      az sig image-version undelete --resource-group MyResourceGroup \
+
+      --gallery-name MyGallery --gallery-image-definition MyImage \
+
+      --gallery-image-version 1.1.1
+  requiredParameters:
+  - isRequired: true
+    name: --gallery-image-definition -i
+    summary: Gallery image definition.
+    description: ''
+  - isRequired: true
+    name: --gallery-image-version -e
+    summary: Gallery image version in semantic version pattern. The allowed characters are digit and period. Digits must be within the range of a 32-bit integer, e.g. `<MajorVersion>.<MinorVersion>.<Patch>`.
+    description: ''
+  - isRequired: true
+    name: --gallery-name -r
+    summary: Gallery name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --allow-replicated-location-deletion
+    parameterValueGroup: "false, true"
+    summary: Indicate whether or not removing this gallery image version from replicated regions is allowed.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --no-wait
+    defaultValue: "False"
+    summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
 - uid: az_sig_image-version_update
   name: az sig image-version update
@@ -767,7 +835,7 @@ directCommands:
     summary: Wait until the resource exists.
     description: ''
   - name: --expand
-    summary: The expand expression to apply on the operation. "ReplicationStatus" Default value is None.
+    summary: The expand expression to apply on the operation. 'ReplicationStatus' Default value is None.
     description: ''
   - name: --interval
     defaultValue: "30"
@@ -790,6 +858,7 @@ commands:
 - az_sig_image-version_show
 - az_sig_image-version_show-community
 - az_sig_image-version_show-shared
+- az_sig_image-version_undelete
 - az_sig_image-version_update
 - az_sig_image-version_wait
 globalParameters:
