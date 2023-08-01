@@ -78,7 +78,7 @@ Regardless of reference type, Azure CLI references fall into three status catego
 
 | | GA  | Public preview | Experimental
 |-|-|-|-|
-| **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback. Can migrate to public preview.  Can be removed.
+| **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback. Often migrates to public preview.  Can be removed.
 | **Support level** | Full | Partial | None
 
 > [!NOTE]
