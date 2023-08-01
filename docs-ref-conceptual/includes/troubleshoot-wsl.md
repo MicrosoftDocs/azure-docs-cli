@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/05/2023
+ms.date: 08/1/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -15,13 +15,13 @@ there's a good chance it's an issue with WSL and not with the CLI install proces
 To troubleshoot your WSL installation and possibly resolve issues:
 
 * If you can, run an identical install process on a Linux machine or VM to see if it succeeds. If it does,
-  your issue is almost certainly related to WSL. To start a Linux VM in Azure, see the
-  [create a Linux VM in the Azure Portal](/azure/virtual-machines/linux/quick-create-portal) documentation.
+  your issue is almost related to WSL. To start a Linux VM in Azure, see the
+  [create a Linux VM in the Azure portal](/azure/virtual-machines/linux/quick-create-portal) documentation.
 * Make sure that you're running the latest version of WSL. To get the latest version,
   [update your Windows 10 installation](https://support.microsoft.com/help/4027667/windows-10-update).
-* Check for any [open issues](https://github.com/Microsoft/WSL/issues) with WSL which might address your problem.
-  Often there will be suggestions on how to work around the problem, or information about a release where 
-  the issue will be fixed.
+* Check for any [open issues](https://github.com/Microsoft/WSL/issues) with WSL that might address your problem.
+  Often there are suggestions on how to work around the problem, or information about a release where 
+  the issue is fixed.
 * If there are no existing issues for your problem, [file a new issue with WSL](https://github.com/Microsoft/WSL/issues/new)
   and make sure that you include as much information as possible.
 

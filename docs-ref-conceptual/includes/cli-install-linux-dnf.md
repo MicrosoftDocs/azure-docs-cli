@@ -2,7 +2,7 @@
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 07/13/2023
+ms.date: 08/1/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -67,7 +67,7 @@ For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there
 
 ## Installing a specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
+You must first configure `azure-cli` repository information as shown previously. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
 1. To view available versions with command:
 
@@ -87,7 +87,7 @@ Here are some common problems seen when installing with `dnf`. If you experience
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
-If you are able, upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
+If you're able, upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package, then install Azure CLI without dependency.
 
 You can use the following command to download and install the Azure CLI install script with `python 3.6` built from source:
 
@@ -97,7 +97,7 @@ curl -sL https://azurecliprod.blob.core.windows.net/rhel7_6_install.sh | sudo ba
 
 You can also do it step by step:
 
-First, Azure CLI requires `SSL 1.1+` and you will need to build `openssl 1.1` from source before building `python3`:
+First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
 
 ```bash
 sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
@@ -131,14 +131,14 @@ Finally, follow steps 1 and 2 of the [install instruction](#install) to add the 
 
 > [!NOTE]
 >
-> If the dnf download plugin isn't already installed, you will encounter a `command not found` error when executing the code below. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
+> If the dnf download plugin isn't already installed, you will encounter a `command not found` error when executing the following code. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
 
 ```bash
 sudo dnf download azure-cli
 sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
-As an alternative, you can also install Python 3 using an [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Use this method, if you have set up `python3` but are still getting the error `python3: command not found`. Make sure it has been include it in your path.
+As an alternative, you can also install Python 3 using an [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Use this method, if you have set up `python3` but are still getting the error `python3: command not found`. Make sure it has been included it in your path.
 
 ```bash
 scl enable rh-python36 bash
@@ -148,7 +148,7 @@ scl enable rh-python36 bash
 
 [!INCLUDE[configure-proxy](configure-proxy.md)]
 
-You may also want to explicitly configure `dnf` to use this proxy at all times. Make sure that the following
+You may also want to explicitly configure `dnf` to always use this proxy. Make sure that the following
 lines appear under the `[main]` section of `/etc/dnf/dnf.conf`:
 
 ```dnf.conf
