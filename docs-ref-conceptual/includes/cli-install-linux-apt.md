@@ -11,16 +11,12 @@ ms.custom: devx-track-azurecli
 
 - The `apt` package manager contains x86_64 and ARM64 packages for the Azure CLI that has been tested on the following distributions.
 
-    | Distribution | Version                                                                     |
-    |:-------------|:----------------------------------------------------------------------------|
-    | Ubuntu       | 18.04 LTS (Bionic Beaver), 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
-    | Debian       | 10 (Buster), 11 (Bullseye), 12 (Bookworm)                                   |
-
-- You may continue to use historical versions of Azure CLI on old systems, but there will be no updates or bugfixes. Consider upgrading to newer versions of Ubuntu or Debian to use the latest Azure CLI.
+    | Distribution | Version |
+    |:-------------|:-------------------------------------------------|
+    | Ubuntu       | 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish) |
+    | Debian       | 10 (Buster), 11 (Bullseye), 12 (Bookworm) |
 
 - Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  See [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove) for more information on `apt remove`.
-
-- The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](/cli/azure/release-notes-azure-cli#march-07-2023).
 
 ## Install Azure CLI
 
@@ -139,6 +135,8 @@ You can also use `apt-get upgrade` to update the CLI package. This command upgra
 ## Troubleshooting
 
 Here are some common problems seen when installing with `apt`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
+
+The `azure-cli` package supports ARM64 architecture from CLI version [2.46.0](/cli/azure/release-notes-azure-cli#march-07-2023).
 
 ### No module issue on Ubuntu 20.04 (Focal)/WSL
 
