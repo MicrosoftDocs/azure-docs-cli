@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli show vm information, queries in azure cli
 ---
 
-# Four - Get VM information with queries
+# 4 - Get VM information with queries
 
 Now that a VM has been created, detailed information about it can be retrieved. The common command for getting information from a resource is
 `show`.
