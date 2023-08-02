@@ -151,7 +151,7 @@ Starting from 2.51.0, Azure CLI also provides 64-bit MSI which is recommended fo
 
 If you are using 32-bit version, you can migrate to 64-bit version by following these steps:
 1. Check your current CLI version and installed extensions by running `az --version`.
-2. If the extension folder `%userprofile%\.azure\cliextensions` exists, make a backup by renaming it. This folder will be created again after migration.
+2. Extensions will need to be reinstalled. It is recommended to perform a backup of the current extension folder `%userprofile%\.azure\cliextensions` by renaming it in case you need to revert to the 32-bit version. This folder will be created again after migration.
 3. Download and install latest 64-bit version following the [Install or update](#install-or-update) guide. Please note that 32-bit MSI will be uninstalled automatically.
 4. Install extensions by running `az extension add --name <extension> --version <version>`.
 
