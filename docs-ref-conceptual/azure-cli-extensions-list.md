@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/01/2023
+ms.date: 08/02/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -84,7 +84,7 @@ You will be prompted to install an extension on first use.
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Experimental | [0.6.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
 |[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.49.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | Experimental | [0.9.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
-|[db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up/HISTORY.rst) |
+|[db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up/HISTORY.rst) |
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
 |[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.15.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
@@ -117,7 +117,7 @@ You will be prompted to install an extension on first use.
 |[image-gallery](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery) | 2.3.0 | Support for Azure Image Gallery | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery/HISTORY.rst) |
 |[import-export](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions) |
 |[init](https://github.com/Azure/azure-cli-extensions/tree/master/src/init) | 2.0.67 | Microsoft Azure Command-Line Tools Init Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/init/HISTORY.rst) |
-|[interactive](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive) | 2.0.62 | Microsoft Azure Command-Line Interactive Shell | Preview | [0.5.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive/HISTORY.rst) |
+|[interactive](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive) | 2.0.62 | Microsoft Azure Command-Line Interactive Shell | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/interactive/HISTORY.rst) |
 |[internet-analyzer](https://github.com/Azure/azure-cli-extensions/tree/master/src/internet-analyzer) | 2.0.67 | Microsoft Azure Command-Line Tools Internet Analyzer Extension | Preview | [0.1.0rc6](https://github.com/Azure/azure-cli-extensions/tree/master/src/internet-analyzer/HISTORY.rst) |
 |[ip-group](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools IpGroup Extension | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions) |
 |[k8s-configuration](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration) | 2.15.0 | Microsoft Azure Command-Line Tools K8s-configuration Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration/HISTORY.rst) |
@@ -182,7 +182,7 @@ You will be prompted to install an extension on first use.
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.15.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
 |[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
 |[support](https://github.com/azure/azure-cli-extensions/tree/master/src/support) | 2.0.81 | Microsoft Azure Command-Line Tools Support Extension | GA | [1.0.3](https://github.com/azure/azure-cli-extensions/tree/master/src/support) |
-|[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights) | 2.11.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/timeseriesinsights/HISTORY.rst) |
+|[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights) | 2.50.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights/HISTORY.rst) |
 |[traffic-collector](https://github.com/Azure/azure-cli-extensions/tree/main/src/traffic-collector) | 2.40.0 | Microsoft Azure Command-Line Tools TrafficCollector Extension. | Preview | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/traffic-collector/HISTORY.rst) |
 |[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.43.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) |
@@ -190,5 +190,5 @@ You will be prompted to install an extension on first use.
 |[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [0.5.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
 |[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.11.0 | Azure VMware Solution commands. | GA | [5.0.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
-|[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.39.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
+|[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.39.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
 |[workloads](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads) | 2.45.0 | Microsoft Azure Command-Line Tools Workloads Extension. | Preview | [0.1.0a1](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads/HISTORY.rst) |
