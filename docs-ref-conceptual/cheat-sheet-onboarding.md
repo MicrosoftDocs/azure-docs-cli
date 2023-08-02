@@ -14,13 +14,13 @@ keywords: azure cli, onboarding, how to use azure cli, azure command line interf
 # Azure CLI onboarding cheat sheet
 
 If you are looking to onboard quickly with the Azure CLI, you have come to the right place!
-This page is a cheat sheet of tips and techniques to help you onboard with the Azure CLI in record time.
+This page is a cheat sheet of tips and techniques to help you quickly onboard with the Azure CLI.
 
 ## Content indexes
 
 Jump straight to reference command examples, sample scripts, and tutorials using these links:
 
-- Find an index of quickstarts, how-to guies and tutorials in [Azure CLI doc index A-Z](reference-docs-index.md).
+- Find an index of quickstarts, how-to guides and tutorials in [Azure CLI doc index A-Z](reference-docs-index.md).
 - Choose a tested script and make it your own from the [Azure CLI sample index A-Z](samples-index.md).
 - For a published format of in-line help, go to the [Reference index A-Z](/cli/azure/reference-index).
 - Go to [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis) for free on-line training with a sandbox environment.
@@ -60,10 +60,10 @@ There are several reference commands that provide interactive prompts to help yo
 |-|-|-|
 | [az interactive](interactive-azure-cli.md) | In a PowerShell console, get auto-completion, command descriptions, and examples as you type | See [Work in interactive mode](interactive-azure-cli.md) for more information.  Example: Type `az interactive` in your console window then <kbd>Enter</kbd>.
 | [az scenario](/cli/azure/scenario) | Get end to end (E2E) examples and execute them with walk-through prompts. | Type `az scenario guide "keywords of interest"` in your console then <kbd>Enter</kbd>.  The Azure CLI will return scenarios based on your keyword(s).  Example: `az scenario guide "virtual machines"`
-| [az next](/cli/azure/reference-index#az-next) | Get recommendations for the "next step".  You will be prompted to select a command path. | Type `az next` in your console then <kbd>Enter</kbd>.  Pick from 1 of 7 preset command paths.
+| [az next](/cli/azure/reference-index#az-next) | Get recommendations for the next Azure CLI command based on customer execution patterns.  You will be prompted to select a command path. | Type `az next` in your console then <kbd>Enter</kbd>.  Pick from 1 of 7 preset command paths.
 | [az find](/cli/azure/reference-index#az-find) | This is an AI robot that will return reference examples for keywords. | Type `az find "active subscription"` in your console then <kbd>Enter</kbd>.
 
-Another great way to learn to use the Azure CLI is through [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis).  When the module provides a sandbox environment, use the sandox to try new commands without incuring costs.
+Another great way to learn to use the Azure CLI is through [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis).  When the module provides a sandbox environment, use the sandbox to try new commands without incurring costs.
 
 ## Common usage questions
 
