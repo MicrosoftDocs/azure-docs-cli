@@ -513,7 +513,7 @@ This section will go over `tsv` and `table` formatting and some use cases for ea
 
 ### TSV output format
 
-The `tsv` output format returns tab- and newline-separated values without extra formatting, keys, or other symbols. This format is useful when the output is used another command.
+The `tsv` output format returns tab- and newline-separated values without extra formatting, keys, or other symbols. This format is useful when the output is stored in a parameter and used in another command.
 
 One use case for `tsv` formatting is queries that retrieve a value out of a CLI command, such as an Azure resource ID or resource name, and store the value in a local environment variable. By default the results are returned in JSON format, which may be an issue when dealing with JSON strings that are enclosed in `"` characters. The quotes may __not__ be interpreted by the shell if the command output is directly assigned to the environment variable. This issue be seen in the following example that assigns a query result to an environment variable:
 
