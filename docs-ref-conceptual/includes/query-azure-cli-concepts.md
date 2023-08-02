@@ -14,7 +14,7 @@ The escape characters needed in queries differ for different environments. It's 
 
 CLI command results are first treated as JSON for queries, even when the output format is something other than JSON. CLI results are either a JSON array or dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are unordered objects accessed with keys.
 
-This JSON is an example of an array:
+This is an example of an array:
 ```json
 [ 
   1,
