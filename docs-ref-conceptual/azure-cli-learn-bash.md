@@ -12,7 +12,7 @@ ms.tool: azure-cli
 ---
 # Learn to use Bash with the Azure CLI
 
-Azure CLI reference commands can execute in several different [shell environments](choose-the-right-azure-command-line-tool.md#different-shell-environments), but Microsoft Docs primarily use the Bash environment. If you're new to Bash and also the Azure CLI, this article a great place to begin your learning journey.  Work through this article much like you would a tutorial, to learn how to use the Azure CLI in a Bash environment with ease.
+Azure CLI reference commands can execute in several different [shell environments](choose-the-right-azure-command-line-tool.md#different-shell-environments), but Microsoft Docs primarily use the Bash environment. If you're new to Bash and also the Azure CLI, this article a great place to begin your learning journey.  Work through this article much like you would a tutorial to learn how to use the Azure CLI in a Bash environment with ease.
 
 In this article, you learn how to:
 
