@@ -5,7 +5,7 @@ manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-cli
-ms.date: 07/13/2023
+ms.date: 08/2/2023
 ms.topic: tutorial
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
@@ -16,7 +16,7 @@ keywords: persisted parameter tutorial
 
 Azure CLI offers persisted parameters that enable you to store parameter values for continued use.  In this tutorial, you learn how to work with persisted values, and use these local values to efficiently execute sequential commands.
 
-In this tutorial, you will learn to:
+In this tutorial, you learn to:
 
 > [!div class="checklist"]
 > * Use `az config param-persist` reference commands
@@ -45,7 +45,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
    - Select the **Cloud Shell** button on the menu bar at the upper right corner in the [Azure portal](https://portal.azure.com)
 
-1. If you are using a local install of the Azure CLI, complete the following:
+1. If you're using a local install of the Azure CLI, complete these steps:
    - Sign in using the [az login](/cli/azure/reference-index#az_login) command, then follow the steps displayed in your terminal to complete the authentication process.
 
      ```azurecli
@@ -55,7 +55,7 @@ If you don't have an Azure subscription, create a [free account](https://azure.m
 
 ## 1. Determine your local directory
 
-Persisted parameter values are stored in the working directory of the Azure storage account used by Azure Cloud Shell.  If you are using a local install of the Azure CLI, values are stored in the working directory on your machine.
+Persisted parameter values are stored in the working directory of the Azure storage account used by Azure Cloud Shell.  If you're using a local install of the Azure CLI, values are stored in the working directory on your machine.
 
 To find, create or change the working directory being used by the Azure CLI, use these familiar CLI commands.
 
@@ -72,7 +72,7 @@ cd azCLI
 
 ## 2. Turn on Persisted parameters
 
-[Persisted parameters](../latest/docs-ref-autogen/config/param-persist.yml) must be turned on before parameter values can be stored.  You will receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](./reference-types-and-status.md) to learn about the Azure CLI reference types, status, and support levels.
+[Persisted parameters](../latest/docs-ref-autogen/config/param-persist.yml) must be turned on before parameter values can be stored.  You receive a warning until `az config param-persist` moves out of the experimental stage.  See [Overview: Azure CLI reference types and status](./reference-types-and-status.md) to learn about the Azure CLI reference types, status, and support levels.
 
 ```azurecli
 az config param-persist on
@@ -122,7 +122,7 @@ To store values for persisted parameters, execute an Azure CLI command of your c
 
 1. Create a persisted parameter without creating a new resource.
 
-   If you do not want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using non-create commands like `show` or `list`.   See [Azure CLI persisted parameters](./param-persist-howto.md) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az_param_persist_delete) command.
+   If you don't want to create a new Azure resource, `resource_group_name` and `location` parameters can be stored by using noncreate commands like `show` or `list`.   See [Azure CLI persisted parameters](./param-persist-howto.md) for a full list of supported parameters,   and the action needed to retain values.  This example also removes all parameter values by using the [az config param-persist delete](/cli/azure/config/param-persist#az_param_persist_delete) command.
 
    ```azurecli
    # Clear all persisted parameters for demonstration.
@@ -281,9 +281,9 @@ az config param-persist delete --all --yes
 > az config param-persist show
 > ```
 
-## 7. Turn persisted parameters off
+## 7. Turn off persisted parameters
 
-You can turn persisted parameters off by using the [az config param-persist off](/cli/azure/config/param-persist#az-config-param-persist-off) command, but your saved persisted parameters data won't be deleted.
+You can turn off persisted parameters by using the [az config param-persist off](/cli/azure/config/param-persist#az-config-param-persist-off) command, but your saved persisted parameters data aren't be deleted.
 
 ```azurecli
 # Turn persisted parameters off
