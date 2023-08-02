@@ -23,7 +23,7 @@ This JSON is an example of an array:
 ]
 ```
 
-This JSON is an example of a dictionary:
+This is an example of a dictionary:
 ```json
 {
   "isRunning": false,
