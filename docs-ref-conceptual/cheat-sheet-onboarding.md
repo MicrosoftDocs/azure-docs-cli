@@ -16,7 +16,14 @@ keywords: azure cli, onboarding, how to use azure cli, azure command line interf
 If you are looking to onboard quickly with the Azure CLI, you have come to the right place!
 This page is a cheat sheet of tips and techniques to help you onboard with the Azure CLI in record time.
 
-Here are quick FAQ tables of common questions with short answers.
+## Content indexes
+
+Jump straight to reference command examples, sample scripts, and tutorials using these links:
+
+- Find an index of quickstarts, how-to guies and tutorials in [Azure CLI doc index A-Z](reference-docs-index.md).
+- Choose a tested script and make it your own from the [Azure CLI sample index A-Z](samples-index.md).
+- For a published format of in-line help, go to the [Reference index A-Z](/cli/azure/reference-index).
+- Go to [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis) for free on-line training with a sandbox environment.
 
 ## Getting started
 
@@ -41,11 +48,13 @@ Here are quick FAQ tables of common questions with short answers.
 | How do I get in-line help? | Every command has a `--help` parameter that will result in descriptions and tips to display in your console. Example: `az account ---help` or `az vm create --help` | You can also [Request support](azure-cli-support-request.md).
 | How can I learn to use reference commands that cross multiple Azure services for a single job to be done? | We're glad you asked!  The Azure CLI provides several interactive commands that provide syntax and next steps.  In the next section, learn about `az interactive`, `az scenario`, `az next`, and `az find`. | [Learning Azure CLI](#learning-azure-cli)
 
-For side-by-side comparison examples of the Azure CLI and Azure PowerShell, see [Azure CLI vs Azure PowerShell: Side-by-side Command Comparison](/cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison).  There are also script comparisons between Bash, PowerShell and Cmd in [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md).
+For side-by-side comparison examples of the Azure CLI and Azure PowerShell, see [Azure CLI vs Azure PowerShell: Side-by-side Command Comparison](/cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison).
+
+See script comparisons between Bash, PowerShell and Cmd in [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md).
 
 ## Learning Azure CLI
 
-There are several reference commands that provide prompts to help you learn the Azure CLI.
+There are several reference commands that provide interactive prompts to help you learn the Azure CLI.
 
 | Command | Description | Example
 |-|-|-|
@@ -53,12 +62,6 @@ There are several reference commands that provide prompts to help you learn the 
 | [az scenario](/cli/azure/scenario) | Get end to end (E2E) examples and execute them with walk-through prompts. | Type `az scenario guide "keywords of interest"` in your console then <kbd>Enter</kbd>.  The Azure CLI will return scenarios based on your keyword(s).  Example: `az scenario guide "virtual machines"`
 | [az next](/cli/azure/reference-index#az-next) | Get recommendations for the "next step".  You will be prompted to select a command path. | Type `az next` in your console then <kbd>Enter</kbd>.  Pick from 1 of 7 preset command paths.
 | [az find](/cli/azure/reference-index#az-find) | This is an AI robot that will return reference examples for keywords. | Type `az find "active subscription"` in your console then <kbd>Enter</kbd>.
-
-> [!TIP]
->
-> Go to [Azure CLI sample index A-Z](samples-index.md) or [Azure CLI doc index A-Z](reference-docs-index.md) to immediately find
-> tested scripts and code snippets for popular command groups. The Azure CLI in-line help has also been published in article-format in
-> [Reference index A-Z](/cli/azure/reference-index).
 
 Another great way to learn to use the Azure CLI is through [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis).  When the module provides a sandbox environment, use the sandox to try new commands without incuring costs.
 
