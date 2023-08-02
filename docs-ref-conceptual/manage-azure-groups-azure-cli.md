@@ -4,7 +4,7 @@ description: Learn how to manage Azure resource groups in the Azure CLI, a cross
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -16,7 +16,7 @@ keywords: Azure resource groups, resource group in azure
 
 An Azure resource group is a container that holds related resources for an Azure solution. A resource group might contain storage, virtual machines, apps, dashboards, services, or almost anything you deal with in Azure.
 
-The Azure Command-Line Interface (CLI) allows you to create, persist, and set default Azure resource groups. The CLI will also allow you clean up resources after creating them. 
+The Azure Command-Line Interface (CLI) allows you to create, persist, and set default Azure resource groups. The CLI will also allow you to clean up resources after creating them. 
 
 ## Azure Region Identification
 
@@ -65,7 +65,7 @@ To remove a resource group, run the [az group delete](/cli/azure/group#az_group_
 az group delete --name MyResourceGroup
 ```
 
-When you remove a resource group, you delete all the resources that belong to it. There's no option to undelete resources. If you try any of the commands in this article, deleting the resource groups you create cleans up your account.
+When you remove a resource group, you delete all the resources that belong to it. You can't undo this action. If you try any of the commands in this article, deleting the resource groups you create cleans up your account.
 
 ## Persist a resource group
 
@@ -89,7 +89,7 @@ As long as persistence is on, your can leave the `--resource-group` parameter ou
 az storage account create --name storage135 --location eastus --sku Standard_LRS
 ```
 
-If you specify a resource group in the command, that takes precedence. The following command creates a storage group in a resource group called **StorageGroups**:
+Specifying a resource group in the command takes precedence. The following command creates a storage group in a resource group called **StorageGroups**:
 
 ```azurecli
 az storage account create --resource-group StorageGroups --name storage136 --location eastus --sku Standard_LRS
@@ -141,7 +141,7 @@ az storage account create --resource-group MyResourceGroup --name storage01  --l
 az storage account create --name storage01 --location eastus --sku Standard_LRS
 ```
 
-A resource group belongs to a subscription. If your organization has more than one subscription, you need to set that subscription before working with a resource group in the subscription. If the default value of a resource group does not belong to your current subscription, an error results. For more information about multiple subscriptions, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
+A resource group belongs to a subscription. If your organization has more than one subscription, you need to set that subscription before working with a resource group in the subscription. If the default value of a resource group doesn't belong to your current subscription, an error results. For more information about multiple subscriptions, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
 
 You don't have to reset the default to use other resource groups. Instead, specify the resource group:
 
@@ -150,9 +150,9 @@ az group create --name OtherResourceGroup --location eastus
 az storage account create --resource-group StorageGroups --name storage03  --location westus --sku Standard_LRS
 ```
 
-The default value is for you only. It won't affect other users or changes you make through the Azure portal.
+The default value is for you only. It doesn't affect other users or changes you make through the Azure portal.
 
-If you are using persisted parameter values, as described in this article, those values take precedence over defaults set in the *config* file.
+If you're using persisted parameter values, as described in this article, those values take precedence over defaults set in the *config* file.
 
 ## Clean up resources
 

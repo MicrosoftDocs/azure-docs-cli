@@ -5,7 +5,7 @@ author: jiasli
 ms.author: jiasli
 manager: yonzhan
 ms.service: azure-cli
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 ms.topic: conceptual
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
@@ -16,15 +16,15 @@ keywords: Install azure cli, azure cli download, cli for windows, install azure 
 
 The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container.
 
-For Windows, the Azure CLI is installed via a MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
-When installing for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
+For Windows, the Azure CLI is installed via an MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
+When you perform an installation for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
 [!INCLUDE [current-version](includes/current-version.md)]
 
 ## Install or update
 
-The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI will update any existing version.
+The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI updates any existing version.
 
 > [!IMPORTANT]
 > After the installation is complete, you will need to **close and reopen any active terminal window to use the Azure CLI**.
@@ -33,7 +33,7 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 
 ### Latest version
 
-Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, click the "Yes" box.
+Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, select the "Yes" box.
 
 > [!div class="nextstepaction"]
 > [Latest release of the Azure CLI](https://aka.ms/installazurecliwindows)
@@ -58,7 +58,7 @@ To install the Azure CLI using PowerShell, start PowerShell **as administrator**
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
-This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
+This command downloads and installs the latest version of the Azure CLI for Windows. If you already have a version installed, the installer updates the existing version.
 
 To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
@@ -79,7 +79,7 @@ You can also use `winget`, Microsoft's Package manager for Windows, to install a
    winget install -e --id Microsoft.AzureCLI
    ```
 
-The `-e` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, simply add a `-v <version>` with your desired version to the command.
+The `-e` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `-v <version>` with your desired version to the command.
 
 ---
 
@@ -157,7 +157,7 @@ You uninstall the Azure CLI from the Windows "Apps and Features" list. To uninst
 | Windows 10 | Start > Settings > System > Apps & Features |
 | Windows 8 and Windows 7 | Start > Control Panel > Programs > Uninstall a program |
 
-Once on this screen type __Azure CLI__ into the program search bar. The program to uninstall is listed as __Microsoft CLI 2.0 for Azure__. Select this application, then click the `Uninstall` button.
+Once on this screen type __Azure CLI__ into the program search bar. The program to uninstall is listed as __Microsoft CLI 2.0 for Azure__. Select this application, then select the `Uninstall` button.
 
 ## Remove data
 
