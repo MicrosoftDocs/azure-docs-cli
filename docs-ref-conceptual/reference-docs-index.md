@@ -4,7 +4,7 @@ description: Find links to Azure CLI articles demonstrating the use of reference
 author: dbradish-microsoft
 manager: jasongroce
 ms.author: dbradish
-ms.date: 06/05/2023
+ms.date: 08/02/2023
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.topic: reference
@@ -18,7 +18,7 @@ This article provides an A - Z list of published content for each Azure CLI refe
 
 With over 9,000 reference commands, not every Azure CLI command has been used in Azure published content. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).  For a list of Azure CIL samples, see [Azure CLI sample scripts](samples-index.md)
 
-If this is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) to learn about installation and login.
+If it is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) to learn about installation and sign in.
 
 [!INCLUDE [reference-docs-subgroup](includes/reference-docs-subgroup.md)]
 
