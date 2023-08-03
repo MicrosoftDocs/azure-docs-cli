@@ -48,7 +48,7 @@ Jump straight to reference command examples, sample scripts, and tutorials using
 | How do I get in-line help? | Every command has a `--help` parameter that results in descriptions and tips to display in your console. Example: `az account ---help` or `az vm create --help` | You can also [Request support](azure-cli-support-request.md).
 | How can I learn to use multiple reference commands to complete a single job to be done? | We're glad you asked!  The Azure CLI provides several interactive commands that provide syntax and next steps.  In the next section, learn about `az interactive`, `az scenario`, `az next`, and `az find`. | [Learning Azure CLI](#learning-azure-cli)
 
-For a side-by-side comparison of Azure CLI and Azure PowerShell examples, see [Azure CLI vs Azure PowerShell: Side-by-side Command Comparison](/cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison).
+For a side-by-side comparison of Azure CLI and Azure PowerShell syntax, see [Azure CLI vs Azure PowerShell: Side-by-side Command Comparison](/cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison).
 
 See script comparisons between Bash, PowerShell, and Cmd in [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md).
 
