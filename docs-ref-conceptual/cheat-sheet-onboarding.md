@@ -50,7 +50,7 @@ Jump straight to reference command examples, sample scripts, and tutorials using
 
 For a side-by-side comparison of Azure CLI and Azure PowerShell examples, see [Azure CLI vs Azure PowerShell: Side-by-side Command Comparison](/cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison).
 
-See script comparisons between Bash, PowerShell and Cmd in [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md).
+See script comparisons between Bash, PowerShell, and Cmd in [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md).
 
 ## Learning Azure CLI
 
@@ -63,7 +63,7 @@ There are several reference commands that provide interactive prompts to help yo
 | [az next](/cli/azure/reference-index#az-next) | Get recommendations for the next Azure CLI command based on customer execution patterns.  You are prompted to select a command path. | Type `az next` in your console then <kbd>Enter</kbd>.  Pick from 1 of 7 preset command paths.
 | [az find](/cli/azure/reference-index#az-find) | This is an AI robot that will return reference examples for keywords. | Type `az find "active subscription"` in your console then <kbd>Enter</kbd>.
 
-Another great way to learn to use the Azure CLI is through [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis).  When the module provides a sandbox environment, use the sandbox to try new commands without incurring cost.
+Another great way to learn to use the Azure CLI is through [Microsoft Learn Modules for CLI tools](/training/browse/?expanded=azure&products=azure-clis).  When the module provides a sandbox environment, use the sandbox to try new commands without incurring costs.
 
 ## Common usage questions
 
@@ -74,6 +74,6 @@ Another great way to learn to use the Azure CLI is through [Microsoft Learn Modu
 | How can I set a default resource group and location? | `az config set defaults.location=westus2 defaults.group=MyResourceGroup` | [Configure settings using az config](/cli/azure/azure-cli-configuration#configure-settings-using-az-config)
 | How do I query command output? | `az account show --query "{tenantId:tenantId,subscriptionid:id}"` | See [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md) for many `--query` examples in Bash, PowerShell and Cmd.
 | How do I format output from a command? | `az account list --ouput table` | [Output formats for Azure CLI commands](format-output-azure-cli.md)
-| Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different backgrounds, and for that reason Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md)
+| Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different technical strengths, and for that reason, Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md)
 
 Would you like to see more onboarding tips in this article?  Use the [Feedback for this page](https://github.com/MicrosoftDocs/azure-docs-cli/issues/new?title=&body=%F0%9F%9A%A8%20Looks%20like%20you%20arrived%20from%20the%20internal%20review%20site%20%0A%F0%9F%9A%A8%20Do%20not%20enter%20Microsoft%20confidential%20information%20here%0A%0A%5BEnter%20feedback%20here%5D%0A%0A%0A---%0A%23%23%23%23%20Document%20Details%0A%0A%E2%9A%A0%20*Do%20not%20edit%20this%20section.%20It%20is%20required%20for%20learn.microsoft.com%20%E2%9E%9F%20GitHub%20issue%20linking.*%0A%0A*%20ID%3A%207e619320-8638-7beb-48ce-fa00a5d67779%0A*%20Version%20Independent%20ID%3A%20e5d2a07f-afd9-e985-abda-0840ac5f59b0%0A*%20Content%3A%20%5BAzure%20CLI%20onboarding%20cheat%20sheet%5D(https%3A%2F%2Freview.learn.microsoft.com%2Fen-us%2Fcli%2Fazure%2Fcheat-sheet-onboarding%3Fbranch%3Dpr-en-us-3776)%0A*%20Content%20Source%3A%20%5Bdocs-ref-conceptual%2Fcheat-sheet-onboarding.md%5D(https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fazure-docs-cli%2Fblob%2Fmain%2Fdocs-ref-conceptual%2Fcheat-sheet-onboarding.md)%0A*%20Service%3A%20**azure-cli**%0A*%20GitHub%20Login%3A%20%40dbradish-microsoft%0A*%20Microsoft%20Alias%3A%20**dbradish**) and let us know!
