@@ -54,12 +54,12 @@ az config set auto-upgrade.enable=no
 ```
 ## Update Assistance
 
-Azure cli also provides a command line tool [command-change](https://github.com/Azure/azure-cli-extensions/blob/main/src/command-change/README.md) and a [azure-cli-diff-site](https://azure-cli-diff-site.azurewebsites.net/) to help users justify whether a cli upgrade is safe, how to adjust current command usage by checking the changelist between two cli versions. For detailed usage doc and result analysis, please refer to this [doc](https://github.com/Azure/azure-cli/blob/897a4cd2874e315558d1f1925e866a80ab945f18/doc/breaking_change_detection_guidelines.md).
+The Azure cli also provides a reference command, [az command-change](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change) and a website, [azure-cli-diff-site](https://azure-cli-diff-site.azurewebsites.net/), to help you examine changes between CLI versions. Use the version comparison list provided to prepare your scripts for a version update. See [Breaking change detection for the Azure CLI](https://github.com/Azure/azure-cli/blob/dev/doc/breaking_change_detection_guidelines.md) for more information.
 
 ### command-change
-
-![command-change](media/command-change.gif)
+Here is example output for [az command-change](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change):
+![command-change-usage-example](media/command-change.gif)
 
 ### azure-cli-diff-site
-
-![azure-cli-diff-site](media/azure-cli-diff-site.gif)
+Here is example output from the [azure-cli-diff-site](https://azure-cli-diff-site.azurewebsites.net/):
+![azure-cli-diff-site-usage-example](media/azure-cli-diff-site.gif)
