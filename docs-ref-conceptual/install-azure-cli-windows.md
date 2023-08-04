@@ -61,7 +61,7 @@ To install the Azure CLI using PowerShell, start PowerShell **as administrator**
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
-This will download and install the latest 32-bit installer of the Azure CLI for Windows. If you prefer 64-bit one, please change URL to `https://aka.ms/installazurecliwindowsx64`. If you already have a version installed, the installer will update the existing version.
+This will download and install the latest 32-bit installer of the Azure CLI for Windows. If you prefer a 64-bit install, change URL to `https://aka.ms/installazurecliwindowsx64`.  If the Azure CLI is already installed, the installer will overwrite the existing version.
 
 To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). (64-bit MSI is available from 2.51.0.)
 
@@ -151,13 +151,13 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 
 Starting from 2.51.0, Azure CLI also provides 64-bit MSI which is recommended for better performance.
 
-If you are using 32-bit version, you can migrate to 64-bit version by following these steps:
+Follow these steps to migrate to Azure CLI 64-bit:
 1. Check your current CLI version and installed extensions by running `az --version`.
-2. Extensions will need to be reinstalled. It is recommended to perform a backup of the current extension folder `%userprofile%\.azure\cliextensions` by renaming it in case you need to revert to the 32-bit version. This folder will be created again after migration.
-3. Download and install latest 64-bit version following the [Install or update](#install-or-update) guide. Please note that 32-bit MSI will be uninstalled automatically.
+1. Extensions will need to be reinstalled. It is recommended to perform a backup of the current extension folder `%userprofile%\.azure\cliextensions` by renaming it in case you choose to revert back to 32-bit. This folder is created automatically when you reinstall an extension.
+1. Download and install latest 64-bit installer as described in [Install or update](#install-or-update). The 32-bit MSI will be automatically uninstalled.
 4. Install extensions by running `az extension add --name <extension> --version <version>`.
 
-If you have issues after migration, you can uninstall the 64-bit MSI and reinstall the 32-bit MSI.  If you have made a backup of your 32-bit extension folder, restore your extension folder after the change.
+If you have issues after migration, you can uninstall the 64-bit and reinstall the 32-bit MSI.  If you have made a backup of your 32-bit extension folder, restore (rename) your extension folder after the change.
 
 ## Uninstall
 
