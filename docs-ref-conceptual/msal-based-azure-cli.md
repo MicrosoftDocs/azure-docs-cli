@@ -30,7 +30,7 @@ The MSAL token cache and service principal entries are saved as encrypted files 
 
 ## Alternatives to consider
 
-A couple alternatives you may consider for stability:
+Alternatives you may consider for stability:
 
 ### Calling `az account get-access-token`
 
