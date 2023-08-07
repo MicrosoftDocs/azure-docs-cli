@@ -9,11 +9,11 @@ ms.custom: devx-track-azurecli
 
 ## Before you begin
 
-- Azure CLI [2.38.0](/cli/azure/release-notes-azure-cli#july-05-2022) (released on 07/05/2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft will not provide additional updates or bug fixes for these distributions.
+- Azure CLI [2.38.0](/cli/azure/release-notes-azure-cli#july-05-2022) (released on July 5, 2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft isn't providing other updates or bug fixes for these distributions.
 
-- Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
+- Microsoft continues to develop and support Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script). Red Hat and CentOS distributions provide packages, while maintaining and supporting their respective repositories. 
 
-- Use the `yum` package manager if you are using a Linux system that doesn't support the `dnf` package manager.
+- Use the `yum` package manager if you're using a Linux system that doesn't support the `dnf` package manager.
 
 ## Install Azure CLI
 
@@ -164,7 +164,7 @@ sudo dnf download azure-cli
 sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
-As an alternative, you can also install Python 3 using an [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Use this method, if you have set up `python3` but are still getting the error `python3: command not found`. Make sure it has been included it in your path.
+As an alternative, you can also install Python 3 using [another repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Use this method, if you have set up `python3` but are still getting the error `python3: command not found`. Make sure it has been included it in your path.
 
 ```bash
 scl enable rh-python36 bash
