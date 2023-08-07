@@ -21,7 +21,7 @@ Starting in version 2.30.0, Azure CLI uses [MSAL](https://github.com/AzureAD/mic
 
 ## `accessTokens.json` deprecation
 
-Previous versions of Azure CLI save Microsoft Authentication Library tokens and service principal entries to `~/.azure/accessToken.json`. Latest versions of Azure CLI use MSAL and no longer generate `accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer works.
+Previous versions of Azure CLI saved Azure AD Authentication Library (ADAL) tokens and service principal entries to `~/.azure/accessToken.json`. The latest versions of the Azure CLI use MSAL and no longer generate `accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer works.
 
 The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and macOS.
 
