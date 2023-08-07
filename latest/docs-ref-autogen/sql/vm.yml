@@ -403,6 +403,7 @@ directCommands:
   description: ''
   syntax: >-
     az sql vm update [--add]
+                     [--agent-rg]
                      [--am-day {Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday}]
                      [--am-month-occ {-1, 1, 2, 3, 4}]
                      [--am-schedule {false, true}]
@@ -448,6 +449,7 @@ directCommands:
                      [--tags]
                      [--workspace-name]
                      [--workspace-rg]
+                     [--workspace-sub]
                      [--yes]
   examples:
   - summary: Add or update a tag.
@@ -478,14 +480,19 @@ directCommands:
     syntax: az sql vm update -n sqlvm -g myresourcegroup --enable-assessment-schedule false
   - summary: Update a SQL virtual machine to enable schedule with weekly interval for SQL best practice assessment when VM is already associated with a Log Analytics workspace.
     syntax: az sql vm update -n sqlvm -g myresourcegroup --assessment-weekly-interval 1 --assessment-day-of-week monday --assessment-start-time-local '19:30'
-  - summary: Update a SQL virtual machine to enable schedule with monthly occurrence for SQL best practice assessment while associating with a Log Analytics workspace.
-    syntax: az sql vm update -n sqlvm -g myresourcegroup --workspace-name myLogAnalyticsWorkspace --workspace-rg myRg --assessment-monthly-occurrence 1 --assessment-day-of-week monday --assessment-start-time-local '19:30'
-  - summary: Update a SQL virtual machine to enable SQL best practices assessment without setting a schedule for running assessment on-demand
-    syntax: az sql vm update -n sqlvm -g myresourcegroup --enable-assessment true
+  - summary: Update a SQL virtual machine to enable schedule with monthly occurrence for SQL best practice assessment while associating with a Log Analytics workspace and assigning a Resource group for the Agent resources.
+    syntax: az sql vm update -n sqlvm -g myresourcegroup --workspace-name myLogAnalyticsWorkspace --workspace-rg myRg --agent-rg myRg2 --assessment-monthly-occurrence 1 --assessment-day-of-week monday --assessment-start-time-local '19:30'
+  - summary: Update a SQL virtual machine to enable SQL best practices assessment without setting a schedule for running assessment on-demand. Must provide Log Analytics workspace and a Resource group for deploying the Agent resources.
+    syntax: az sql vm update -n sqlvm -g myresourcegroup --enable-assessment true --workspace-name myLogAnalyticsWorkspace --workspace-rg myRg --agent-rg myRg2
+  - summary: Update a SQL virtual machine to enable SQL best practices assessment while associating with a Log Analytics Workspace in a different subscription
+    syntax: az sql vm update -n sqlvm -g myresourcegroup --enable-assessment true --workspace-name myLogAnalyticsWorkspace --workspace-rg myRg --workspace-sub myLogAnalyticsWorkspaceSubName --agent-rg myRg2
   optionalParameters:
   - name: --add
     defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --agent-rg
+    summary: Resource group containing the AMA resources DCE and DCR.
     description: ''
   - name: --am-day --assessment-day-of-week
     parameterValueGroup: "Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday"
@@ -647,8 +654,11 @@ directCommands:
   - name: --workspace-rg
     summary: Resource group containing the Log Analytics workspace.
     description: ''
+  - name: --workspace-sub
+    summary: Subscription containing the Log Analytics workspace.
+    description: ''
   - name: --yes -y
-    defaultValue: "1"
+    defaultValue: "True"
     summary: Do not prompt for confirmation. Requires --sql-mgmt-type.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
@@ -726,5 +736,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 04/12/2023
+  ms.date: 06/21/2023
   description: Manage SQL virtual machines.

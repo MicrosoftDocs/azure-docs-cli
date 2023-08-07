@@ -157,19 +157,24 @@ directCommands:
     description: ''
 - uid: az_image_delete
   name: az image delete
-  summary: Deletes an Image.
+  summary: Delete an Image.
   description: ''
   syntax: >-
     az image delete [--ids]
-                    [--name]
+                    [--image-name]
+                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                     [--resource-group]
                     [--subscription]
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: The name of the image. Required.
+  - name: --image-name --name -n
+    summary: The name of the image.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -179,32 +184,41 @@ directCommands:
     description: ''
 - uid: az_image_list
   name: az image list
-  summary: List custom VM images.
+  summary: List the list of images under a resource group.
   description: ''
-  syntax: az image list [--resource-group]
+  syntax: >-
+    az image list [--max-items]
+                  [--next-token]
+                  [--resource-group]
   optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
 - uid: az_image_show
   name: az image show
-  summary: Gets an image.
+  summary: Get an image.
   description: ''
   syntax: >-
     az image show [--expand]
                   [--ids]
-                  [--name]
+                  [--image-name]
                   [--resource-group]
                   [--subscription]
   optionalParameters:
   - name: --expand
-    summary: The expand expression to apply on the operation. Default value is None.
+    summary: The expand expression to apply on the operation.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: The name of the image. Required.
+  - name: --image-name --name -n
+    summary: The name of the image.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -263,6 +277,66 @@ directCommands:
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
+- uid: az_image_wait
+  name: az image wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az image wait [--created]
+                  [--custom]
+                  [--deleted]
+                  [--exists]
+                  [--expand]
+                  [--ids]
+                  [--image-name]
+                  [--interval]
+                  [--resource-group]
+                  [--subscription]
+                  [--timeout]
+                  [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --expand
+    summary: The expand expression to apply on the operation.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --image-name --name -n
+    summary: The name of the image.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
+    description: ''
 commands:
 - az_image_builder
 - az_image_builder_cancel
@@ -277,6 +351,11 @@ commands:
 - az_image_builder_identity_remove
 - az_image_builder_identity_show
 - az_image_builder_list
+- az_image_builder_optimizer
+- az_image_builder_optimizer_add
+- az_image_builder_optimizer_remove
+- az_image_builder_optimizer_show
+- az_image_builder_optimizer_update
 - az_image_builder_output
 - az_image_builder_output_add
 - az_image_builder_output_clear
@@ -300,6 +379,7 @@ commands:
 - az_image_list
 - az_image_show
 - az_image_update
+- az_image_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

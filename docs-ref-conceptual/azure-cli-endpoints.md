@@ -1,13 +1,13 @@
 --- 
 title: Endpoints used when installing the Azure CLI  | Microsoft Docs
 description: Learn what endpoints are used when installing the Azure CLI.  These URLs are sometimes added to allowlists when working behind a firewall.
-manager: mkluck
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: conceptual
 ms.custom: devx-track-azurecli
-ms.date: 11/14/2022
+ms.date: 08/1/2023
 ms.tool: azure-cli
 ---
 
@@ -17,7 +17,7 @@ If your organization is secured with a firewall or proxy server, you must add ce
 
 Two URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.
 
-The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
+The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We don't recommend adding other Azure CLI-related URLs aside from the URLs needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
 ## Endpoints
 
@@ -25,25 +25,25 @@ The following tables provide lists of the endpoints and suffixes used by the Azu
 
 |Endpoint group | Endpoint
 |-|-|
-management | https://management.core.windows.net/
-resource_manager | https://management.azure.com/
-sql_management | https://management.core.windows.net:8443/
-batch_resource_id | https://batch.core.windows.net/
-gallery | https://gallery.azure.com/
-active_directory | https://login.microsoftonline.com
-active_directory_resource_id | https://management.core.windows.net/
-active_directory_graph_resource_id | https://graph.windows.net/
-microsoft_graph_resource_id | https://graph.microsoft.com/
-active_directory_data_lake_resource_id | https://datalake.azure.net/
-vm_image_alias_doc | https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/arm-compute/quickstart-templates/aliases.json
-media_resource_id | https://rest.media.azure.net
-ossrdbms_resource_id | https://ossrdbms-aad.database.windows.net
-app_insights_resource_id | https://api.applicationinsights.io
-log_analytics_resource_id | https://api.loganalytics.io
-app_insights_telemetry_channel_resource_id | https://dc.applicationinsights.azure.com/v2/track
-synapse_analytics_resource_id | https://dev.azuresynapse.net
-attestation_resource_id | https://attest.azure.net
-portal | https://portal.azure.com
+management | `https://management.core.windows.net/`
+resource_manager | `https://management.azure.com/`
+sql_management | `https://management.core.windows.net:8443/`
+batch_resource_id | `https://batch.core.windows.net/`
+gallery | `https://gallery.azure.com/`
+active_directory | `https://login.microsoftonline.com_`
+active_directory_resource_id | `https://management.core.windows.net/`
+active_directory_graph_resource_id | `https://graph.windows.net/`
+microsoft_graph_resource_id | `https://graph.microsoft.com/`
+active_directory_data_lake_resource_id | `https://datalake.azure.net/`
+vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/arm-compute/quickstart-templates/aliases.json_`
+media_resource_id | `https://rest.media.azure.net_`
+ossrdbms_resource_id | `https://ossrdbms-aad.database.windows.net_`
+app_insights_resource_id | `https://api.applicationinsights.io_`
+log_analytics_resource_id | `https://api.loganalytics.io_`
+app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.azure.com/v2/track_`
+synapse_analytics_resource_id | `https://dev.azuresynapse.net_`
+attestation_resource_id | `https://attest.azure.net_`
+portal | `https://portal.azure.com_`
 
 ### Endpoint suffixes
 
@@ -67,23 +67,23 @@ attestation_endpoint | *.attest.azure.net
 
 |Endpoint group | Endpoint
 |-|-|
-management | https://management.core.usgovcloudapi.net/
-resource_manager | https://management.usgovcloudapi.net/
-sql_management | https://management.core.usgovcloudapi.net:8443/
-batch_resource_id | https://batch.core.usgovcloudapi.net/
-gallery | https://gallery.usgovcloudapi.net/
-active_directory | https://login.microsoftonline.us
-active_directory_resource_id | https://management.core.usgovcloudapi.net/
-active_directory_graph_resource_id | https://graph.windows.net/
-microsoft_graph_resource_id | https://graph.microsoft.us/
-vm_image_alias_doc | https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json
-media_resource_id | https://rest.media.usgovcloudapi.net
-ossrdbms_resource_id | https://ossrdbms-aad.database.usgovcloudapi.net
-app_insights_resource_id | https://api.applicationinsights.us
-log_analytics_resource_id | https://api.loganalytics.us
-app_insights_telemetry_channel_resource_id | https://dc.applicationinsights.us/v2/track
-synapse_analytics_resource_id | https://dev.azuresynapse.usgovcloudapi.net
-portal | https://portal.azure.us
+management | `https://management.core.usgovcloudapi.net/`
+resource_manager | `https://management.usgovcloudapi.net/`
+sql_management | `https://management.core.usgovcloudapi.net:8443/`
+batch_resource_id | `https://batch.core.usgovcloudapi.net/`
+gallery | `https://gallery.usgovcloudapi.net/`
+active_directory | `https://login.microsoftonline.us`
+active_directory_resource_id | `https://management.core.usgovcloudapi.net/`
+active_directory_graph_resource_id | `https://graph.windows.net/`
+microsoft_graph_resource_id | `https://graph.microsoft.us/`
+vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json`
+media_resource_id | `https://rest.media.usgovcloudapi.net`
+ossrdbms_resource_id | `https://ossrdbms-aad.database.usgovcloudapi.net`
+app_insights_resource_id | `https://api.applicationinsights.us`
+log_analytics_resource_id | `https://api.loganalytics.us`
+app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.us/v2/track`
+synapse_analytics_resource_id | `https://dev.azuresynapse.usgovcloudapi.net`
+portal | `https://portal.azure.us`
 
 ### Endpoint suffixes
 
@@ -104,23 +104,23 @@ synapse_analytics_endpoint | *.dev.azuresynapse.usgovcloudapi.net'
 
 |Endpoint group | Endpoint
 |-|-|
-management | https://management.core.chinacloudapi.cn/
-resource_manager | https://management.chinacloudapi.cn
-sql_management | https://management.core.chinacloudapi.cn:8443/
-batch_resource_id | https://batch.chinacloudapi.cn/
-gallery | https://gallery.chinacloudapi.cn/
-active_directory | https://login.chinacloudapi.cn
-active_directory_resource_id | https://management.core.chinacloudapi.cn/
-active_directory_graph_resource_id | https://graph.chinacloudapi.cn/
-microsoft_graph_resource_id | https://microsoftgraph.chinacloudapi.cn
-vm_image_alias_doc | https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json
-media_resource_id | https://rest.media.chinacloudapi.cn
-ossrdbms_resource_id | https://ossrdbms-aad.database.chinacloudapi.cn
-app_insights_resource_id | https://api.applicationinsights.azure.cn
-log_analytics_resource_id | https://api.loganalytics.azure.cn
-app_insights_telemetry_channel_resource_id | https://dc.applicationinsights.azure.cn/v2/rack
-synapse_analytics_resource_id | https://dev.azuresynapse.azure.cn
-portal | https://portal.azure.cn
+management | `https://management.core.chinacloudapi.cn/`
+resource_manager | `https://management.chinacloudapi.cn`
+sql_management | `https://management.core.chinacloudapi.cn:8443/`
+batch_resource_id | `https://batch.chinacloudapi.cn/`
+gallery | `https://gallery.chinacloudapi.cn/`
+active_directory | `https://login.chinacloudapi.cn`
+active_directory_resource_id | `https://management.core.chinacloudapi.cn/`
+active_directory_graph_resource_id | `https://graph.chinacloudapi.cn/`
+microsoft_graph_resource_id | `https://microsoftgraph.chinacloudapi.cn`
+vm_image_alias_doc | `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/rm-compute/quickstart-templates/aliases.json`
+media_resource_id | `https://rest.media.chinacloudapi.cn`
+ossrdbms_resource_id | `https://ossrdbms-aad.database.chinacloudapi.cn`
+app_insights_resource_id | `https://api.applicationinsights.azure.cn`
+log_analytics_resource_id | `https://api.loganalytics.azure.cn`
+app_insights_telemetry_channel_resource_id | `https://dc.applicationinsights.azure.cn/v2/rack`
+synapse_analytics_resource_id | `https://dev.azuresynapse.azure.cn`
+portal | `https://portal.azure.cn`
 
 ### Endpoint suffixes
 

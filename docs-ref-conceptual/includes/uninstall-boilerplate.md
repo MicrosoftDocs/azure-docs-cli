@@ -1,8 +1,7 @@
 ---
-author: sptramer
-ms.author: sttramer
-manager: carmonm
-ms.date: 09/07/2018
+author: dbradish-microsoft
+ms.author: dbradish
+ms.date: 07/05/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---

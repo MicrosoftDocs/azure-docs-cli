@@ -4,10 +4,39 @@ name: az elastic monitor
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **elastic** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az elastic monitor** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **elastic** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az elastic monitor** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage monitor with elastic.
 description: ''
 directCommands:
+- uid: az_elastic_monitor_associate-traffic-filter
+  name: az elastic monitor associate-traffic-filter
+  summary: Associate traffic filter.
+  description: ''
+  syntax: >-
+    az elastic monitor associate-traffic-filter [--ids]
+                                                [--monitor-name]
+                                                [--resource-group]
+                                                [--ruleset-id]
+                                                [--subscription]
+  examples:
+  - summary: Monitor associate traffic filter
+    syntax: az elastic monitor associate-traffic-filter --monitor-name name -g rg --ruleset-id
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --ruleset-id
+    summary: Ruleset Id of the filter.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_elastic_monitor_create
   name: az elastic monitor create
   summary: Create a monitor resource.
@@ -15,18 +44,17 @@ directCommands:
   syntax: >-
     az elastic monitor create --monitor-name
                               --resource-group
-                              [--elastic-properties]
-                              [--identity]
+                              [--generate-api-key {0, 1, f, false, n, no, t, true, y, yes}]
                               [--location]
                               [--monitoring-status {Disabled, Enabled}]
-                              [--no-wait]
-                              [--provisioning-state {Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating}]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--sku]
                               [--tags]
                               [--user-info]
+                              [--version]
   examples:
-  - summary: Monitors_Create
-    syntax: az elastic monitor create --name "myMonitor" --location "West US 2" --user-info "{\"companyInfo\":{\"business\":\"Technology\",\"country\":\"US\",\"domain\":\"microsoft.com\",\"employeeNumber\":\"10000\",\"state\":\"WA\"},\"companyName\":\"Microsoft\",\"emailAddress\":\"alice@microsoft.com\",\"firstName\":\"Alice\",\"lastName\":\"Bob\"}" --sku "free_Monthly" --tags Environment="Dev" --resource-group "myResourceGroup"
+  - summary: Create monitor
+    syntax: az elastic monitor create -n monitor-name -g rg --user-info "{firstName:Alice,lastName:bob,companyName:Micosoft,emailAddress:alice@microsoft.com}" --sku "{name:ess-monthly-consumption_Monthly}"
   requiredParameters:
   - isRequired: true
     name: --monitor-name --name -n
@@ -37,35 +65,147 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --elastic-properties
-    summary: 'Elastic cloud properties. Expected value: json-string/json-file/@json-file.'
-    description: ''
-  - name: --identity
-    summary: Identity of the monitor.
+  - name: --generate-api-key
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Flag to determine if User API Key has to be generated and shared.
     description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    summary: The location of the monitor resource.
     description: ''
   - name: --monitoring-status
     parameterValueGroup: "Disabled, Enabled"
     summary: Flag specifying if the resource monitoring is enabled or disabled.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
-  - name: --provisioning-state
-    parameterValueGroup: "Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating"
-    summary: Provisioning state of the monitor resource.
-    description: ''
   - name: --sku
-    summary: Name of the SKU.
+    summary: SKU of the monitor resource.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: The tags of the monitor resource.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --user-info
-    summary: 'User information. Expected value: json-string/json-file/@json-file.'
+    summary: User information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --version
+    summary: Version of elastic of the monitor resource.
+    description: ''
+- uid: az_elastic_monitor_create-and-associate-ip-filter
+  name: az elastic monitor create-and-associate-ip-filter
+  summary: Create and associate ip filter.
+  description: ''
+  syntax: >-
+    az elastic monitor create-and-associate-ip-filter [--ids]
+                                                      [--ips]
+                                                      [--monitor-name]
+                                                      [--name]
+                                                      [--resource-group]
+                                                      [--subscription]
+  examples:
+  - summary: Create and associate ip filter
+    syntax: az elastic monitor create-and-associate-ip-filter --monitor-name name -g rg --name name --ips  192.168.131.0, 192.168.132.6/22
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --ips
+    summary: List of ips.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --name
+    summary: Name of the traffic filter.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_elastic_monitor_create-and-associate-pl-filter
+  name: az elastic monitor create-and-associate-pl-filter
+  summary: Create and associate pl filter.
+  description: ''
+  syntax: >-
+    az elastic monitor create-and-associate-pl-filter [--ids]
+                                                      [--monitor-name]
+                                                      [--name]
+                                                      [--private-endpoint-guid]
+                                                      [--private-endpoint-name]
+                                                      [--resource-group]
+                                                      [--subscription]
+  examples:
+  - summary: Create and associate pl filter
+    syntax: az elastic monitor create-and-associate-pl-filter --monitor-name monitor -g rg --name name
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --name
+    summary: Name of the traffic filter.
+    description: ''
+  - name: --private-endpoint-guid
+    summary: Guid of the private endpoint.
+    description: ''
+  - name: --private-endpoint-name
+    summary: Name of the private endpoint.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_elastic_monitor_create-or-update-external-user
+  name: az elastic monitor create-or-update-external-user
+  summary: Create or update external user.
+  description: ''
+  syntax: >-
+    az elastic monitor create-or-update-external-user [--email-id]
+                                                      [--full-name]
+                                                      [--ids]
+                                                      [--monitor-name]
+                                                      [--password]
+                                                      [--resource-group]
+                                                      [--roles]
+                                                      [--subscription]
+                                                      [--user-name]
+  examples:
+  - summary: Create or update external user
+    syntax: az monitor create-or-update-external-user --monitor-name {monitor} -g {rg} --user-name newuser --full-name fullname --password password --email-id email@outlook.com --roles [admin,other_role]
+  optionalParameters:
+  - name: --email-id
+    summary: Email id of the user to be created or updated.
+    description: ''
+  - name: --full-name
+    summary: Full name of the user to be created or updated.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --password
+    summary: Password of the user to be created or updated.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --roles
+    summary: Roles to be assigned for  created or updated user  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --user-name
+    summary: Username of the user to be created or updated.
     description: ''
 - uid: az_elastic_monitor_delete
   name: az elastic monitor delete
@@ -74,13 +214,13 @@ directCommands:
   syntax: >-
     az elastic monitor delete [--ids]
                               [--monitor-name]
-                              [--no-wait]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--resource-group]
                               [--subscription]
                               [--yes]
   examples:
-  - summary: Monitors_Delete
-    syntax: az elastic monitor delete --name "myMonitor" --resource-group "myResourceGroup"
+  - summary: Delete monitor
+    syntax: az elastic monitor delete -n monitor -g rg
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -89,7 +229,7 @@ directCommands:
     summary: Monitor resource name.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -102,90 +242,237 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
+- uid: az_elastic_monitor_delete-traffic-filter
+  name: az elastic monitor delete-traffic-filter
+  summary: Delete traffic filter.
+  description: ''
+  syntax: >-
+    az elastic monitor delete-traffic-filter [--ids]
+                                             [--monitor-name]
+                                             [--resource-group]
+                                             [--ruleset-id]
+                                             [--subscription]
+  examples:
+  - summary: Delete traffic filter
+    syntax: az elastic monitor delete-traffic-filter --monitor-name name -g rg --ruleset-id id
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --ruleset-id
+    summary: Ruleset Id of the filter.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_elastic_monitor_detach-and-delete-traffic-filter
+  name: az elastic monitor detach-and-delete-traffic-filter
+  summary: Detach and delete traffic filter.
+  description: ''
+  syntax: >-
+    az elastic monitor detach-and-delete-traffic-filter [--ids]
+                                                        [--monitor-name]
+                                                        [--resource-group]
+                                                        [--ruleset-id]
+                                                        [--subscription]
+  examples:
+  - summary: Detach and delete traffic filter
+    syntax: az elastic monitor detach-and-delete-traffic-filter --monitor-name -g rg --ruleset-id id
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --ruleset-id
+    summary: Ruleset Id of the filter.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_elastic_monitor_detach-traffic-filter
+  name: az elastic monitor detach-traffic-filter
+  summary: Detach traffic filter.
+  description: ''
+  syntax: >-
+    az elastic monitor detach-traffic-filter [--ids]
+                                             [--monitor-name]
+                                             [--resource-group]
+                                             [--ruleset-id]
+                                             [--subscription]
+  examples:
+  - summary: Detach traffic filter
+    syntax: az elastic monitor detach-traffic-filter --monitor-name name -g rg --ruleset-id
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --ruleset-id
+    summary: Ruleset Id of the filter.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_elastic_monitor_list
   name: az elastic monitor list
-  summary: List all monitors under the specified resource group. And List all monitors under the specified subscription.
+  summary: List all monitors under the specified resource group. And List all                                monitors under the specified subscription.
   description: ''
   syntax: az elastic monitor list [--resource-group]
   examples:
-  - summary: Monitors_ListByResourceGroup
-    syntax: az elastic monitor list --resource-group "myResourceGroup"
-  - summary: Monitors_List
-    syntax: az elastic monitor list
+  - summary: List all monitors by resource group
+    syntax: az elastic monitor list -g rg
   optionalParameters:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-- uid: az_elastic_monitor_list-deployment-info
-  name: az elastic monitor list-deployment-info
-  summary: Fetch information regarding Elastic cloud deployment corresponding to the Elastic monitor resource.
+- uid: az_elastic_monitor_list-all-traffic-filter
+  name: az elastic monitor list-all-traffic-filter
+  summary: List all traffic filter.
   description: ''
   syntax: >-
-    az elastic monitor list-deployment-info --monitor-name
-                                            --resource-group
+    az elastic monitor list-all-traffic-filter [--ids]
+                                               [--monitor-name]
+                                               [--resource-group]
+                                               [--subscription]
   examples:
-  - summary: DeploymentInfo_List
-    syntax: az elastic monitor list-deployment-info --name "myMonitor" --resource-group "myResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --monitor-name --name -n
+  - summary: List all traffic filter
+    syntax: az elastic monitor list-all-traffic-filter --monitor-name name -g rg
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
     summary: Monitor resource name.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_elastic_monitor_list-associated-traffic-filter
+  name: az elastic monitor list-associated-traffic-filter
+  summary: List associated traffic filter.
+  description: ''
+  syntax: >-
+    az elastic monitor list-associated-traffic-filter [--ids]
+                                                      [--monitor-name]
+                                                      [--resource-group]
+                                                      [--subscription]
+  examples:
+  - summary: List associated traffic filter
+    syntax: az elastic monitor list-associated-traffic-filter --monitor-name name -g rg
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_elastic_monitor_list-deployment-info
+  name: az elastic monitor list-deployment-info
+  summary: Fetch information regarding Elastic cloud deployment corresponding to                                the Elastic monitor resource.
+  description: ''
+  syntax: >-
+    az elastic monitor list-deployment-info [--ids]
+                                            [--monitor-name]
+                                            [--resource-group]
+                                            [--subscription]
+  examples:
+  - summary: List deployment info
+    syntax: az elastic monitor list-deployment-info --monitor-name name -g rg
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_elastic_monitor_list-resource
   name: az elastic monitor list-resource
-  summary: List the resources currently being monitored by the Elastic monitor resource.
+  summary: List the resources currently being monitored by the Elastic monitor                                resource.
   description: ''
   syntax: >-
     az elastic monitor list-resource --monitor-name
                                      --resource-group
   examples:
-  - summary: MonitoredResources_List
-    syntax: az elastic monitor list-resource --name "myMonitor" --resource-group "myResourceGroup"
+  - summary: List resource
+    syntax: az elastic monitor list-resource --monitor-name -g rg
   requiredParameters:
   - isRequired: true
-    name: --monitor-name --name -n
+    name: --monitor-name
     summary: Monitor resource name.
     description: ''
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+- uid: az_elastic_monitor_list-upgradable-version
+  name: az elastic monitor list-upgradable-version
+  summary: List upgradable version.
+  description: ''
+  syntax: >-
+    az elastic monitor list-upgradable-version [--ids]
+                                               [--monitor-name]
+                                               [--resource-group]
+                                               [--subscription]
+  examples:
+  - summary: List upgradable version
+    syntax: az elastic monitor list-upgradable-version --monitor-name name -g rg
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_elastic_monitor_list-vm-host
   name: az elastic monitor list-vm-host
-  summary: List the vm resources currently being monitored by the Elastic monitor resource.
+  summary: List the vm resources currently being monitored by the Elastic                                monitor resource.
   description: ''
   syntax: >-
     az elastic monitor list-vm-host --monitor-name
                                     --resource-group
   examples:
-  - summary: VMHost_List
-    syntax: az elastic monitor list-vm-host --name "myMonitor" --resource-group "myResourceGroup"
+  - summary: List vm host
+    syntax: az elastic monitor list-vm-host --monitor-name name -g rg
   requiredParameters:
   - isRequired: true
-    name: --monitor-name --name -n
-    summary: Monitor resource name.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_elastic_monitor_list-vm-ingestion-detail
-  name: az elastic monitor list-vm-ingestion-detail
-  summary: List the vm ingestion details that will be monitored by the Elastic monitor resource.
-  description: ''
-  syntax: >-
-    az elastic monitor list-vm-ingestion-detail --monitor-name
-                                                --resource-group
-  examples:
-  - summary: VMIngestion_Details
-    syntax: az elastic monitor list-vm-ingestion-detail --name "myMonitor" --resource-group "myResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --monitor-name --name -n
+    name: --monitor-name
     summary: Monitor resource name.
     description: ''
   - isRequired: true
@@ -202,8 +489,8 @@ directCommands:
                             [--resource-group]
                             [--subscription]
   examples:
-  - summary: Monitors_Get
-    syntax: az elastic monitor show --name "myMonitor" --resource-group "myResourceGroup"
+  - summary: Show monitor
+    syntax: az elastic monitor show -n name -g rg
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -228,8 +515,8 @@ directCommands:
                               [--subscription]
                               [--tags]
   examples:
-  - summary: Monitors_Update
-    syntax: az elastic monitor update --name "myMonitor" --tags Environment="Dev" --resource-group "myResourceGroup"
+  - summary: Update monitor
+    syntax: az elastic monitor update -n monitor -g rg --tags "{tag:test,tag1:test1}"
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -244,11 +531,11 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Elastic monitor resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
 - uid: az_elastic_monitor_update-vm-collection
   name: az elastic monitor update-vm-collection
-  summary: Update the vm details that will be monitored by the Elastic monitor resource.
+  summary: Update the vm details that will be monitored by the Elastic monitor                                resource.
   description: ''
   syntax: >-
     az elastic monitor update-vm-collection [--ids]
@@ -258,13 +545,13 @@ directCommands:
                                             [--subscription]
                                             [--vm-resource-id]
   examples:
-  - summary: VMCollection_Update
-    syntax: az elastic monitor update-vm-collection --name "myMonitor" --operation-name "Add" --vm-resource-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Compute/virtualmachines/myVM" --resource-group "myResourceGroup"
+  - summary: Update vm collection
+    syntax: az elastic monitor update-vm-collection --monitor-name monitor1 -g rg --operation-name Add --vi-resource-id id
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --monitor-name --name -n
+  - name: --monitor-name
     summary: Monitor resource name.
     description: ''
   - name: --operation-name
@@ -280,9 +567,63 @@ directCommands:
   - name: --vm-resource-id
     summary: ARM id of the VM resource.
     description: ''
+- uid: az_elastic_monitor_upgrade
+  name: az elastic monitor upgrade
+  summary: Upgrade elastic monitor.
+  description: ''
+  syntax: >-
+    az elastic monitor upgrade [--ids]
+                               [--monitor-name]
+                               [--resource-group]
+                               [--subscription]
+                               [--version]
+  examples:
+  - summary: Monitor upgrade
+    syntax: az elastic monitor upgrade -g rg --monitor-name monitor --version 8.0.0
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --version
+    summary: Version to which the elastic monitor should be upgraded to.
+    description: ''
+- uid: az_elastic_monitor_vm-ingestion-detail
+  name: az elastic monitor vm-ingestion-detail
+  summary: List the vm ingestion details that will be monitored by the Elastic                                monitor resource.
+  description: ''
+  syntax: >-
+    az elastic monitor vm-ingestion-detail [--ids]
+                                           [--monitor-name]
+                                           [--resource-group]
+                                           [--subscription]
+  examples:
+  - summary: Vm ingestion detail
+    syntax: az elastic monitor vm-ingestion-detail --monitor-name name -g rg
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --monitor-name
+    summary: Monitor resource name.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_elastic_monitor_wait
   name: az elastic monitor wait
-  summary: Place the CLI in a waiting state until a condition of the elastic monitor is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
     az elastic monitor wait [--created]
@@ -296,11 +637,6 @@ directCommands:
                             [--subscription]
                             [--timeout]
                             [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the elastic monitor is successfully created.
-    syntax: az elastic monitor wait --name "myMonitor" --resource-group "myResourceGroup" --created
-  - summary: Pause executing next line of CLI script until the elastic monitor is successfully deleted.
-    syntax: az elastic monitor wait --name "myMonitor" --resource-group "myResourceGroup" --deleted
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -342,13 +678,22 @@ directCommands:
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
+- az_elastic_monitor_associate-traffic-filter
 - az_elastic_monitor_create
+- az_elastic_monitor_create-and-associate-ip-filter
+- az_elastic_monitor_create-and-associate-pl-filter
+- az_elastic_monitor_create-or-update-external-user
 - az_elastic_monitor_delete
+- az_elastic_monitor_delete-traffic-filter
+- az_elastic_monitor_detach-and-delete-traffic-filter
+- az_elastic_monitor_detach-traffic-filter
 - az_elastic_monitor_list
+- az_elastic_monitor_list-all-traffic-filter
+- az_elastic_monitor_list-associated-traffic-filter
 - az_elastic_monitor_list-deployment-info
 - az_elastic_monitor_list-resource
+- az_elastic_monitor_list-upgradable-version
 - az_elastic_monitor_list-vm-host
-- az_elastic_monitor_list-vm-ingestion-detail
 - az_elastic_monitor_show
 - az_elastic_monitor_tag-rule
 - az_elastic_monitor_tag-rule_create
@@ -359,6 +704,8 @@ commands:
 - az_elastic_monitor_tag-rule_wait
 - az_elastic_monitor_update
 - az_elastic_monitor_update-vm-collection
+- az_elastic_monitor_upgrade
+- az_elastic_monitor_vm-ingestion-detail
 - az_elastic_monitor_wait
 globalParameters:
 - name: --debug

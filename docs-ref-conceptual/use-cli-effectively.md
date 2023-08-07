@@ -1,10 +1,10 @@
 ---
 title: Tips for using the Azure CLI | Microsoft Docs
 description: Learn tips for using Azure CLI successfully, such as output formats, passing parameter values, and quoting rules for different shells.
-manager: mkluck
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/01/2021
+ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -25,7 +25,7 @@ Three common output formats are used with Azure CLI commands:
    - JSON gives you the most comprehensive information.
    - This format is the default but you can use the `--output` parameter to specify a different option.
    - Change the global default format to one of your personal preference by using [az config](../latest/docs-ref-autogen/config.yml) such as `az config set core.output=table`.
-   - Note that JSON format preserves the double quotes, generally making in unsuitable for scripting purposes.
+   - Note that JSON format preserves the double quotes, generally making it unsuitable for scripting purposes.
 
 2. The `table` format presents output as a readable table. You can specify which values appear in the table and use queries to customize the output as shown here:
 
@@ -463,3 +463,4 @@ For more information about PowerShell error handling, see [Everything you wanted
 - [Learn to use Bash with Azure CLI](./azure-cli-learn-bash.md)
 - [Query Azure CLI command output](./query-azure-cli.md)
 - [Use variables in Azure CLI commands](./azure-cli-variables.md)
+- [Find Azure CLI samples](./samples-index.md)

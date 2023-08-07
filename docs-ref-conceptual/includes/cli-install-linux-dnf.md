@@ -2,33 +2,22 @@
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 12/19/2022
+ms.date: 08/1/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
-## Overview
+## Before you begin
 
-For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there are RPM packages for Azure CLI.
+- Azure CLI [2.38.0](/cli/azure/release-notes-azure-cli#july-05-2022) (released on July 5, 2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft isn't providing other updates or bug fixes for these distributions.
 
-> [!WARNING]
-> Azure CLI 2.39.0 (released on 08/02/2022) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft will not provide any other updates or bug fixes on this version.
->
-> Azure CLI and the Linux [Install script](https://learn.microsoft.com/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by Red Hat and CentOS repositories are maintained and supported by their respective distributions.
+- Microsoft continues to develop and support Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script). Red Hat and CentOS distributions provide packages, while maintaining and supporting their respective repositories. 
 
-[!INCLUDE [current-version](current-version.md)]
+- Use the `yum` package manager if you're using a Linux system that doesn't support the `dnf` package manager.
 
-[!INCLUDE [rpm-warning](rpm-warning.md)]
+## Install Azure CLI
 
-> [!NOTE]
->
-> Use the `yum` package manager if you are using Linux systems that does not support the `dnf` package manager.
-
-> [!NOTE]
->
-> The `azure-cli` package supports ARM64 architecture from `2.46.0`.
-
-## Install
+To install the Azure CLI, follow these steps:
 
 1. Import the Microsoft repository key.
 
@@ -65,9 +54,9 @@ For Linux distributions with `dnf`, such as RHEL 8/9 or CentOS Stream 8/9, there
    sudo dnf install azure-cli
    ```
 
-## Installing a specific version
+## Install specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
+You must first configure `azure-cli` repository information as shown previously. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
 1. To view available versions with command:
 
@@ -81,13 +70,50 @@ You must first configure `azure-cli` repository information as shown above. Avai
    sudo dnf install azure-cli-<version>-1.el7
    ```
 
+## Update Azure CLI
+
+[!INCLUDE [az-upgrade](az-upgrade.md)]
+
+You can also update the Azure CLI with the `dnf update` command.
+
+```bash
+sudo dnf update azure-cli
+```
+
+## Uninstall Azure CLI
+
+[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
+
+1. Remove the package from your system.
+
+   ```bash
+   sudo dnf remove azure-cli
+   ```
+
+2. If you don't plan to reinstall the CLI, remove the repository information.
+
+   ```bash
+   sudo rm /etc/yum.repos.d/azure-cli.repo
+   ```
+
+3. If you don't use any other Microsoft packages, remove the signing key.
+
+   ```bash
+   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
+   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
+   ```
+
+### Remove data
+
+[!INCLUDE [remove-data-boilerplate.md](remove-data-boilerplate.md)]
+
 ## Troubleshooting
 
 Here are some common problems seen when installing with `dnf`. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
 ### Install on RHEL 7.6 or other systems without Python 3
 
-If you are able, upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package then install Azure CLI without dependency.
+If you're able, upgrade your system to a version with official support for `python 3.6+` package. Otherwise, you need to first install a `python3` package, then install Azure CLI without dependency.
 
 You can use the following command to download and install the Azure CLI install script with `python 3.6` built from source:
 
@@ -97,7 +123,7 @@ curl -sL https://azurecliprod.blob.core.windows.net/rhel7_6_install.sh | sudo ba
 
 You can also do it step by step:
 
-First, Azure CLI requires `SSL 1.1+` and you will need to build `openssl 1.1` from source before building `python3`:
+First, Azure CLI requires `SSL 1.1+` and you need to build `openssl 1.1` from source before building `python3`:
 
 ```bash
 sudo dnf install gcc gcc-c++ make ncurses patch wget tar zlib zlib-devel -y
@@ -127,18 +153,18 @@ make
 sudo make install
 ```
 
-Finally, follow steps 1 and 2 of the [install instruction](#install) to add the Azure CLI repository. You can now download the package and install it without dependency.
+Finally, follow steps 1 and 2 of the [install instruction](#install-azure-cli) to add the Azure CLI repository. You can now download the package and install it without dependency.
 
 > [!NOTE]
 >
-> If the dnf download plugin isn't already installed, you will encounter a `command not found` error when executing the code below. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
+> If the dnf download plugin isn't already installed, you will encounter a `command not found` error when executing the following code. Use `dnf install 'dnf-command(download)'` to   install the dnf download plugin.
 
 ```bash
 sudo dnf download azure-cli
 sudo rpm -ivh --nodeps azure-cli-*.rpm
 ```
 
-As an alternative, you can also install Python 3 using an [additional repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Use this method, if you have set up `python3` but are still getting the error `python3: command not found`. Make sure it has been include it in your path.
+As an alternative, you can also install Python 3 using [another repo](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/). Use this method, if you have set up `python3` but are still getting the error `python3: command not found`. Make sure it has been included it in your path.
 
 ```bash
 scl enable rh-python36 bash
@@ -148,7 +174,7 @@ scl enable rh-python36 bash
 
 [!INCLUDE[configure-proxy](configure-proxy.md)]
 
-You may also want to explicitly configure `dnf` to use this proxy at all times. Make sure that the following
+You may also want to explicitly configure `dnf` to always use this proxy. Make sure that the following
 lines appear under the `[main]` section of `/etc/dnf/dnf.conf`:
 
 ```dnf.conf
@@ -165,36 +191,3 @@ allow HTTPS connections to the following address:
 * `https://packages.microsoft.com`
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
-
-## Update
-
-[!INCLUDE [az-upgrade](az-upgrade.md)]
-
-You can also update the Azure CLI with the `dnf update` command.
-
-```bash
-sudo dnf update azure-cli
-```
-
-## Uninstall
-
-[!INCLUDE [uninstall-boilerplate.md](uninstall-boilerplate.md)]
-
-1. Remove the package from your system.
-
-   ```bash
-   sudo dnf remove azure-cli
-   ```
-
-2. If you don't plan to reinstall the CLI, remove the repository information.
-
-   ```bash
-   sudo rm /etc/yum.repos.d/azure-cli.repo
-   ```
-
-3. If you don't use any other Microsoft packages, remove the signing key.
-
-   ```bash
-   MSFT_KEY=`rpm -qa gpg-pubkey /* --qf "%{version}-%{release} %{summary}\n" | grep Microsoft | awk '{print $1}'`
-   sudo rpm -e --allmatches gpg-pubkey-$MSFT_KEY
-   ```

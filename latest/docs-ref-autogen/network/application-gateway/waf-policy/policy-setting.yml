@@ -34,17 +34,24 @@ directCommands:
                                                                     [--add]
                                                                     [--custom-body]
                                                                     [--custom-status-code]
+                                                                    [--file-upload-enforce {0, 1, f, false, n, no, t, true, y, yes}]
                                                                     [--file-upload-limit-in-mb]
                                                                     [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                    [--log-scrubbing-state {Disabled, Enabled}]
                                                                     [--max-request-body-size-in-kb]
                                                                     [--mode {Detection, Prevention}]
                                                                     [--remove]
                                                                     [--request-body-check {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                    [--request-body-enforce {0, 1, f, false, n, no, t, true, y, yes}]
+                                                                    [--request-body-inspect-limit-in-kb]
+                                                                    [--scrubbing-rule]
                                                                     [--set]
                                                                     [--state {Disabled, Enabled}]
   examples:
   - summary: Update properties of a web application firewall global configuration.
     syntax: az network application-gateway waf-policy policy-setting update --mode Prevention --policy-name MyPolicy --resource-group MyResourceGroup --state Disabled
+  - summary: Update a web application firewall global configuration with scrubbing rules.
+    syntax: az network application-gateway waf-policy policy-setting update -g MyResourceGroup --policy-name MyPolicySetting --request-body-inspect-limit-in-kb 64 --file-upload-enforcement True --request-body-enforcement False --log-scrubbing-state Enabled --scrubbing-rules [{"state":"Enabled","match-variable":"RequestArgNames","selector-match-operator":"Equals","selector":"test"},{"state":"Enabled","match-variable":"RequestIPAddress","selector-match-operator":"EqualsAny","selector":null}]
   requiredParameters:
   - isRequired: true
     name: --policy-name
@@ -64,12 +71,20 @@ directCommands:
   - name: --custom-status-code
     summary: If the action type is block, customer can override the response status code.
     description: ''
+  - name: --file-upload-enforce --file-upload-enforcement
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether allow WAF to enforce file upload limits.
+    description: ''
   - name: --file-upload-limit-in-mb
     summary: Maximum file upload size in Mb for WAF.
     description: ''
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --log-scrubbing-state
+    parameterValueGroup: "Disabled, Enabled"
+    summary: State of the log scrubbing config. Default value is Enabled.
     description: ''
   - name: --max-request-body-size-in-kb
     summary: Maximum request body size in Kb for WAF.
@@ -85,6 +100,16 @@ directCommands:
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Specified to require WAF to check request body.
+    description: ''
+  - name: --request-body-enforce --request-body-enforcement
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Whether allow WAF to enforce request body limits.
+    description: ''
+  - name: --request-body-inspect-limit-in-kb --request-limit-in-kb
+    summary: Max inspection limit in KB for request body inspection for WAF.
+    description: ''
+  - name: --scrubbing-rule --scrubbing-rules
+    summary: 'The rules that are applied to the logs for scrubbing.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.  Singular flags: `--scrubbing-rule`.'
     description: ''
   - name: --set
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
@@ -116,5 +141,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/03/2023
+  ms.date: 06/27/2023
   description: Define contents of a web application firewall global configuration.

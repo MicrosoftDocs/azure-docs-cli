@@ -4,7 +4,7 @@ description: Learn about the MSAL-based Azure CLI.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 10/28/2021
+ms.date: 08/1/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -14,23 +14,23 @@ keywords: msal, msal-based azure cli
 
 # MSAL-based Azure CLI
 
-Starting in version 2.30.0, Azure CLI uses [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python) as the underlying authentication library. MSAL uses AAD v2.0 authentication flow to provide more functionality and increases security for token cache.
+Starting in version 2.30.0, Azure CLI uses Microsoft Authentication Library [(MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-python) as the underlying authentication library. MSAL uses Azure Active Directory v2.0 authentication flow to provide more functionality and increases security for token cache.
 
 > [!WARNING]
 > BREAKING CHANGES are introduced in Azure CLI 2.30.0. Carefully read document prior to installation.
 
 ## `accessTokens.json` deprecation
 
-Previous versions of Azure CLI save ADAL tokens and service principal entries to `~/.azure/accessToken.json`. Latest versions of Azure CLI use MSAL and no longer generate `accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer works.
+Previous versions of Azure CLI saved Azure AD Authentication Library (ADAL) tokens and service principal entries to `~/.azure/accessToken.json`. The latest versions of the Azure CLI use MSAL and no longer generate `accessTokens.json`. Any existing workflow depending on `accessTokens.json` no longer works.
 
-The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and MacOS.
+The MSAL token cache and service principal entries are saved as encrypted files on Windows, and plaintext files on Linux and macOS.
 
 > [!IMPORTANT]
-> When using Azure CLI in a pipeline like Azure DevOps, ensure all tasks and stages are using versions of Azure CLI above v2.30.0 for MSAL-based Azure CLI. Azure CLI 2.30.0 is not backwards compatible with prior versions and throws an error when working with versions below 2.30.0.
+> When using Azure CLI in a pipeline like Azure DevOps, ensure all tasks and stages are using versions of Azure CLI above v2.30.0 for MSAL-based Azure CLI. Azure CLI 2.30.0 is not backwards compatible with prior versions and throws an error when working with versions prior to 2.30.0.
 
 ## Alternatives to consider
 
-Below are a couple alternatives you may consider for stability:
+Alternatives you may consider for stability:
 
 ### Calling `az account get-access-token`
 

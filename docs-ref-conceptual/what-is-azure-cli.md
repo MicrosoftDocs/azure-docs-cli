@@ -1,10 +1,10 @@
 ---
 title: What is the Azure CLI? | Microsoft Docs
 description: The Azure Command-Line Interface (CLI) is a command-line tool designed to create and manage Azure resources available in Windows, macOS, Linux, and Docker containers.
-manager: mkluck
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 9/21/2021
+ms.date: 08/1/2023
 ms.topic: overview
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -25,18 +25,18 @@ You can install the Azure CLI locally on Linux, Mac, or Windows computers. It ca
 
 ## Data collection
 
-Azure CLI collects telemetry data by default. Microsoft aggregates collected data to identify patterns of usage to identify common issues and to improve the experience of Azure CLI. Microsoft Azure CLI does not collect any private or personal data. For example, the usage data helps identify issues such as commands with low success and helps prioritize our work.
+Azure CLI collects telemetry data by default. Microsoft aggregates collected data to identify patterns of usage to identify common issues and to improve the experience of Azure CLI. Microsoft Azure CLI doesn't collect any private or personal data. For example, the usage data helps identify issues such as commands with low success and helps prioritize our work.
 
 While we appreciate the insights this data provides, we also understand that not everyone wants to send usage data. You can disable data collection with the `az config set core.collect_telemetry=false` command. You can also read our [privacy statement](https://privacy.microsoft.com/privacystatement) to learn more.
 
 ## Prepare your environment
 
-Before running Azure CLI commands, you need to setup your environment.
+Before running Azure CLI commands, you need to set up your environment.
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
 ## Azure CLI examples
-This article provides different Azure CLI examples for the following :
+This article provides different Azure CLI examples for:
 - Subscription syntax
 - Role assignment syntax
 - PowerShell syntax
@@ -44,7 +44,7 @@ This article provides different Azure CLI examples for the following :
 
 ## Subscription syntax example
 
-The Azure CLI syntax follows a simple `reference name` - `command` - `parameter` - `parameter value` pattern.  For example, switching between subscriptions is often a common task.  Here is the syntax.
+The Azure CLI syntax follows a simple `reference name` - `command` - `parameter` - `parameter value` pattern.  For example, switching between subscriptions is often a common task.  Here's the syntax.
 
 ```azurecli
 az account set --subscription "my subscription name"
@@ -61,7 +61,7 @@ az role assignment create --assignee servicePrincipalName --role Reader --scope 
 az role assignment delete --assignee userSign-inName --role Contributor
 ```
 
-See [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md) for an in-depth turorial on managing service principals and role assignments.
+See [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md) for an in-depth tutorial on managing service principals and role assignments.
 
 ## PowerShell syntax comparison
 

@@ -102,6 +102,7 @@ directCommands:
                   [--enable-keda]
                   [--enable-managed-identity]
                   [--enable-msi-auth-for-monitoring {false, true}]
+                  [--enable-network-observability]
                   [--enable-node-public-ip]
                   [--enable-node-restriction]
                   [--enable-oidc-issuer]
@@ -170,6 +171,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
+                  [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
@@ -478,13 +480,16 @@ directCommands:
     summary: Enable KEDA workload auto-scaler.
     description: ''
   - name: --enable-managed-identity
-    defaultValue: "1"
+    defaultValue: "True"
     summary: Using managed identity to manage cluster resource group. Default value is true, you can explicitly specify "--client-id" and "--secret" to disable managed identity.
     description: ''
   - name: --enable-msi-auth-for-monitoring
-    defaultValue: "1"
+    defaultValue: "True"
     parameterValueGroup: "false, true"
     summary: Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
+    description: ''
+  - name: --enable-network-observability
+    summary: Enable network observability on a cluster.
     description: ''
   - name: --enable-node-public-ip
     defaultValue: "False"
@@ -729,7 +734,7 @@ directCommands:
     summary: The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a comma-separated list of IDs.
     description: ''
   - name: --nodepool-labels
-    summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
+    summary: The node labels for all node pools in this cluster. See https://aka.ms/node-labels for syntax of labels.
     description: ''
   - name: --nodepool-name
     defaultValue: "nodepool1"
@@ -737,6 +742,9 @@ directCommands:
     description: ''
   - name: --nodepool-tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --nodepool-taints
+    summary: The node taints for all node pools in this cluster.
     description: ''
   - name: --nrg-lockdown-restriction-level
     parameterValueGroup: "ReadOnly, Unrestricted"
@@ -796,7 +804,7 @@ directCommands:
     summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
     description: ''
   - name: --vm-set-type
-    summary: Agent pool vm set type. VirtualMachineScaleSets or AvailabilitySet.
+    summary: Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(internal use only).
     description: ''
   - name: --vnet-subnet-id
     summary: The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -923,6 +931,7 @@ directCommands:
     az aks enable-addons --addons
                          --name
                          --resource-group
+                         [--aks-custom-headers]
                          [--appgw-id]
                          [--appgw-name]
                          [--appgw-subnet-cidr]
@@ -959,6 +968,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
   - name: --appgw-id
     summary: Resource Id of an existing Application Gateway to use with AGIC. Use with ingress-azure addon.
     description: ''
@@ -981,7 +993,7 @@ directCommands:
     summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
     description: ''
   - name: --enable-msi-auth-for-monitoring
-    defaultValue: "1"
+    defaultValue: "True"
     parameterValueGroup: "false, true"
     summary: Send monitoring data to Log Analytics using the cluster's assigned identity (instead of the Log Analytics Workspace's shared key).
     description: ''
@@ -1019,6 +1031,7 @@ directCommands:
     az aks get-credentials --name
                            --resource-group
                            [--admin]
+                           [--aks-custom-headers]
                            [--context]
                            [--file]
                            [--format {azure, exec}]
@@ -1041,6 +1054,9 @@ directCommands:
   - name: --admin -a
     defaultValue: "False"
     summary: 'Get cluster administrator credentials.  Default: cluster user credentials.'
+    description: ''
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
     description: ''
   - name: --context
     summary: If specified, overwrite the default context name.
@@ -1096,6 +1112,19 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_aks_get-versions
+  name: az aks get-versions
+  summary: Get the versions available for creating a managed Kubernetes cluster.
+  description: ''
+  syntax: az aks get-versions --location
+  examples:
+  - summary: Get the versions available for creating a managed Kubernetes cluster
+    syntax: az aks get-versions --location westus2
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
 - uid: az_aks_kanalyze
   name: az aks kanalyze
@@ -1256,6 +1285,7 @@ directCommands:
     az aks scale --name
                  --node-count
                  --resource-group
+                 [--aks-custom-headers]
                  [--no-wait]
                  [--nodepool-name]
   requiredParameters:
@@ -1272,6 +1302,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+    description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
@@ -1286,9 +1319,10 @@ directCommands:
   syntax: >-
     az aks show --name
                 --resource-group
+                [--aks-custom-headers]
   examples:
   - summary: Show the details for a managed Kubernetes cluster
-    syntax: az aks show --name MyManagedCluster --resource-group MyResourceGroup
+    syntax: az aks show -g MyResourceGroup -n MyManagedCluster
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1297,6 +1331,10 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --aks-custom-headers
+    summary: Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
     description: ''
 - uid: az_aks_start
   name: az aks start
@@ -1403,6 +1441,7 @@ directCommands:
                   [--enable-keda]
                   [--enable-local-accounts]
                   [--enable-managed-identity]
+                  [--enable-network-observability]
                   [--enable-node-restriction]
                   [--enable-oidc-issuer]
                   [--enable-pod-identity]
@@ -1437,10 +1476,12 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-dataplane {azure, cilium}]
                   [--network-plugin-mode]
                   [--no-wait]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--nodepool-labels]
+                  [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
@@ -1727,6 +1768,9 @@ directCommands:
     defaultValue: "False"
     summary: Update current cluster to managed identity to manage cluster resource group.
     description: ''
+  - name: --enable-network-observability
+    summary: Enable network observability on a cluster.
+    description: ''
   - name: --enable-node-restriction
     defaultValue: "False"
     summary: Enable node restriction option on cluster.
@@ -1848,6 +1892,13 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-dataplane
+    parameterValueGroup: "azure, cilium"
+    summary: The network dataplane to use.
+    description: >-
+      Network dataplane used in the Kubernetes cluster.
+
+      Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --network-plugin-mode
     summary: The network plugin mode to use.
     description: >-
@@ -1863,7 +1914,10 @@ directCommands:
     summary: Manner in which the OS on your nodes is updated. It could be NodeImage, None, SecurityPatch or Unmanaged.
     description: ''
   - name: --nodepool-labels
-    summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
+    summary: The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
+    description: ''
+  - name: --nodepool-taints
+    summary: The node taints for all node pool.
     description: ''
   - name: --nrg-lockdown-restriction-level
     parameterValueGroup: "ReadOnly, Unrestricted"
@@ -2100,6 +2154,7 @@ commands:
 - az_aks_get-credentials
 - az_aks_get-os-options
 - az_aks_get-upgrades
+- az_aks_get-versions
 - az_aks_kanalyze
 - az_aks_kollect
 - az_aks_list
@@ -2127,6 +2182,7 @@ commands:
 - az_aks_nodepool_snapshot_delete
 - az_aks_nodepool_snapshot_list
 - az_aks_nodepool_snapshot_show
+- az_aks_nodepool_snapshot_update
 - az_aks_nodepool_start
 - az_aks_nodepool_stop
 - az_aks_nodepool_update

@@ -20,6 +20,8 @@ directCommands:
                                            [--allow-password-auth {false, true}]
                                            [--computer-name]
                                            [--data-disk]
+                                           [--disable-vm-management {false, true}]
+                                           [--enable-tpm]
                                            [--extended-location]
                                            [--hardware-profile]
                                            [--image-reference]
@@ -29,7 +31,6 @@ directCommands:
                                            [--nic-id]
                                            [--os-disk]
                                            [--os-profile]
-                                           [--provision-vm-agent {false, true}]
                                            [--security-profile]
                                            [--ssh-public-keys]
                                            [--storage-profile]
@@ -39,7 +40,7 @@ directCommands:
                                            [--windows-configuration]
   examples:
   - summary: PutVirtualMachine
-    syntax: az azurestackhci virtualmachine create --resource-group "test-rg" --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocatio n/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --hardware-profile vm-size="Default" --nic-id "test-nic" --computer-name "test-machine" --admin-username xxx --admin-password xxx --ssh-public-keys /path/to/public_key.pub --provision-vm-agent true --image-reference "test-gallery-image" --storagepath-id "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.AzureStackHCI/storagecontainers/test-storagepath" --name "test-vm" --allow-password-auth true
+    syntax: az azurestackhci virtualmachine create --resource-group "test-rg" --extended-location name="/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocatio n/customLocations/dogfood-location" type="CustomLocation" --location "West US2" --hardware-profile vm-size="Default" --nic-id "test-nic" --computer-name "test-machine" --admin-username xxx --admin-password xxx --ssh-public-keys /path/to/public_key.pub --image-reference "test-gallery-image" --storagepath-id "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.AzureStackHCI/storagecontainers/test-storagepath" --name "test-vm" --allow-password-auth true --disable-vm-management true
   requiredParameters:
   - isRequired: true
     name: --name
@@ -70,6 +71,14 @@ directCommands:
   - name: --data-disk
     summary: Names of the data disk VHD's being attached to the VM.
     description: ''
+  - name: --disable-vm-management
+    parameterValueGroup: "false, true"
+    summary: To enable/disable vm Management agent. The default behaviour enables the provisioning for VM ARC agent.
+    description: ''
+  - name: --enable-tpm
+    defaultValue: "False"
+    summary: Enable tpm - Enable TPM in security settings for the VMs. If the flag is not provided, default value is False.
+    description: 'Usage: --enable-tpm=XX.'
   - name: --extended-location
     summary: ''
     description: >-
@@ -82,16 +91,16 @@ directCommands:
   - name: --hardware-profile
     summary: HardwareProfile - Specifies the hardware settings for the virtual machine.
     description: >-
-      Usage: --hardware-profile vm-size=XX processors=XX memory-gb=XX maximum-memory-gb=XX minimum-memory-gb=XX target-memory-buffer=XX
+      Usage: --hardware-profile vm-size=XX processors=XX memory-mb=XX maximum-memory-mb=XX minimum-memory-mb=XX target-memory-buffer=XX
 
 
       processors: number of processors for the virtual machine
 
-      memory-gb: RAM in gb for the virtual machine
+      memory-mb: RAM in mb for the virtual machine
 
-      maximum-memory-gb: Maximum dynamic memory in gb
+      maximum-memory-mb: Maximum dynamic memory in mb
 
-      minimum-memory-gb: Minimum dynamic memory in gb
+      minimum-memory-mb: Minimum dynamic memory in mb
 
       target-memory-buffer: Target memory buffer.
   - name: --image-reference
@@ -115,13 +124,9 @@ directCommands:
   - name: --os-profile
     summary: 'OsProfile - describes the configuration of the operating system and sets login data Expected value: json-string/@json-file.'
     description: ''
-  - name: --provision-vm-agent
-    parameterValueGroup: "false, true"
-    summary: Whether to provision Management agent.
-    description: ''
   - name: --security-profile
     summary: SecurityProfile - Specifies the security settings for the virtual machine.
-    description: 'Usage: --security-profile enable-tpm=XX secure-boot-enabled=XX.'
+    description: 'Usage: --security-profile secure-boot-enabled=XX.'
   - name: --ssh-public-keys
     summary: Path to SSH public keys.
     description: ''
@@ -291,7 +296,7 @@ directCommands:
   syntax: >-
     az azurestackhci virtualmachine update [--cpu-count]
                                            [--ids]
-                                           [--memory-gb]
+                                           [--memory-mb]
                                            [--name]
                                            [--resource-group]
                                            [--subscription]
@@ -300,7 +305,7 @@ directCommands:
                                            [--vnic-names]
   examples:
   - summary: UpdateVirtualMachine
-    syntax: az azurestackhci virtualmachine update --resource-group "test-rg" --tags additionalProperties="sample" --name "test-vm" --cpu-count XX --memory-gb XX --vhd-names vhd1 vhd2 --vnic-names vnic1 vnic2
+    syntax: az azurestackhci virtualmachine update --resource-group "test-rg" --tags additionalProperties="sample" --name "test-vm" --cpu-count XX --memory-mb XX --vhd-names vhd1 vhd2 --vnic-names vnic1 vnic2
   optionalParameters:
   - name: --cpu-count
     summary: Number of processors.
@@ -308,8 +313,8 @@ directCommands:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --memory-gb
-    summary: Amount of RAM in gb.
+  - name: --memory-mb
+    summary: Amount of RAM in mb.
     description: ''
   - name: --name
     summary: Name of the virtual machine.

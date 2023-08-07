@@ -144,6 +144,7 @@ directCommands:
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
                   [--ip-families]
+                  [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--kubelet-config]
@@ -178,6 +179,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
+                  [--nodepool-taints]
                   [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu}]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
@@ -193,7 +195,7 @@ directCommands:
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
-                  [--tier {free, standard}]
+                  [--tier {free, premium, standard}]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -270,7 +272,7 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --network-plugin none
   - summary: Create a kubernetes cluster with KEDA workload autoscaler enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-keda
-  - summary: Create a kubernetes cluster with Azure Monitor Metrics enabled.
+  - summary: Create a kubernetes cluster with the Azure Monitor managed service for Prometheus integration enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-metrics
   requiredParameters:
   - isRequired: true
@@ -419,7 +421,7 @@ directCommands:
     description: ''
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
-    summary: Enable Azure Monitor Metrics Profile.
+    summary: Enable a kubernetes cluster with the Azure Monitor managed service for Prometheus integration.
     description: ''
   - name: --enable-azure-rbac
     defaultValue: "False"
@@ -453,11 +455,11 @@ directCommands:
     summary: Enable KEDA workload auto-scaler.
     description: ''
   - name: --enable-managed-identity
-    defaultValue: "1"
+    defaultValue: "True"
     summary: Using a system assigned managed identity to manage cluster resource group.
     description: ''
   - name: --enable-msi-auth-for-monitoring
-    defaultValue: "1"
+    defaultValue: "True"
     parameterValueGroup: "false, true"
     summary: Enable Managed Identity Auth for Monitoring addon.
     description: ''
@@ -540,6 +542,10 @@ directCommands:
   - name: --ip-families
     summary: A comma separated list of IP versions to use for cluster networking.
     description: Each IP version should be in the format IPvN. For example, IPv4.
+  - name: --k8s-support-plan
+    parameterValueGroup: "AKSLongTermSupport, KubernetesOfficial"
+    summary: Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
+    description: ''
   - name: --ksm-metric-annotations-allow-list
     summary: Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
     description: ''
@@ -656,7 +662,7 @@ directCommands:
     summary: Size of Virtual Machines to create as Kubernetes nodes.
     description: ''
   - name: --nodepool-labels
-    summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
+    summary: The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
     description: ''
   - name: --nodepool-name
     defaultValue: "nodepool1"
@@ -664,6 +670,9 @@ directCommands:
     description: ''
   - name: --nodepool-tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --nodepool-taints
+    summary: The node taints for all node pool.
     description: ''
   - name: --os-sku
     parameterValueGroup: "AzureLinux, CBLMariner, Mariner, Ubuntu"
@@ -715,7 +724,7 @@ directCommands:
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
   - name: --tier
-    parameterValueGroup: "free, standard"
+    parameterValueGroup: "free, premium, standard"
     summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
     description: ''
   - name: --vm-set-type
@@ -846,10 +855,10 @@ directCommands:
                          [--appgw-subnet-id]
                          [--appgw-watch-namespace]
                          [--data-collection-settings]
-                         [--enable-msi-auth-for-monitoring]
+                         [--enable-msi-auth-for-monitoring {false, true}]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
-                         [--enable-syslog]
+                         [--enable-syslog {false, true}]
                          [--no-wait]
                          [--rotation-poll-interval]
                          [--subnet-name]
@@ -894,7 +903,8 @@ directCommands:
     summary: Path to JSON file containing data collection settings for Monitoring addon.
     description: ''
   - name: --enable-msi-auth-for-monitoring
-    defaultValue: "1"
+    defaultValue: "True"
+    parameterValueGroup: "false, true"
     summary: Enable Managed Identity Auth for Monitoring addon.
     description: ''
   - name: --enable-secret-rotation
@@ -907,6 +917,7 @@ directCommands:
     description: ''
   - name: --enable-syslog
     defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: Enable syslog data collection for Monitoring addon.
     description: ''
   - name: --no-wait
@@ -1397,6 +1408,7 @@ directCommands:
                   [--grafana-resource-id]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
+                  [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--load-balancer-idle-timeout]
@@ -1412,10 +1424,12 @@ directCommands:
                   [--network-plugin-mode]
                   [--no-wait]
                   [--nodepool-labels]
+                  [--nodepool-taints]
+                  [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--rotation-poll-interval]
                   [--tags]
-                  [--tier {free, standard}]
+                  [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
                   [--windows-admin-password]
                   [--yes]
@@ -1606,7 +1620,7 @@ directCommands:
     description: ''
   - name: --enable-azure-monitor-metrics
     defaultValue: "False"
-    summary: Enable Azure Monitor Metrics Profile.
+    summary: Enable a kubernetes cluster with the Azure Monitor managed service for Prometheus integration.
     description: ''
   - name: --enable-azure-rbac
     defaultValue: "False"
@@ -1696,6 +1710,10 @@ directCommands:
   - name: --image-cleaner-interval-hours
     summary: ImageCleaner scanning interval.
     description: ''
+  - name: --k8s-support-plan
+    parameterValueGroup: "AKSLongTermSupport, KubernetesOfficial"
+    summary: Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
+    description: ''
   - name: --ksm-metric-annotations-allow-list
     summary: Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
     description: ''
@@ -1740,8 +1758,15 @@ directCommands:
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --nodepool-labels
-    summary: 'Space-separated labels: key[=value] [key[=value] ...]. See https://aka.ms/node-labels for syntax of labels.'
+    summary: The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
     description: ''
+  - name: --nodepool-taints
+    summary: The node taints for all node pool.
+    description: ''
+  - name: --outbound-type
+    parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
+    summary: How outbound traffic will be configured for a cluster.
+    description: This option will change the way how the outbound connections are managed in the AKS cluster. Available options are loadbalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting. For custom vnet, loadbalancer, userAssignedNATGateway and userDefinedRouting are supported. For aks managed vnet, loadbalancer, managedNATGateway and userDefinedRouting are supported.
   - name: --pod-cidr
     summary: Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
     description: ''
@@ -1752,7 +1777,7 @@ directCommands:
     summary: The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
     description: ''
   - name: --tier
-    parameterValueGroup: "free, standard"
+    parameterValueGroup: "free, premium, standard"
     summary: Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' changes a standard managed cluster to a free one.
     description: ''
   - name: --update-cluster-autoscaler -u
@@ -2025,6 +2050,7 @@ commands:
 - az_aks_nodepool_snapshot_delete
 - az_aks_nodepool_snapshot_list
 - az_aks_nodepool_snapshot_show
+- az_aks_nodepool_snapshot_update
 - az_aks_nodepool_snapshot_wait
 - az_aks_nodepool_start
 - az_aks_nodepool_stop
