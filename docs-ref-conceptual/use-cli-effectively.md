@@ -122,7 +122,7 @@ To avoid unanticipated results, here are a few suggestions:
 
 - In Bash or PowerShell, both single and double quotes are interpreted correctly. In Windows Command Prompt, only double quotes are interpreted correctly -- single quotes are treated as part of the value.
 
-- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single notes are necessary when supplying inline JSON values.  For example, this JSON is correct in Bash: `'{"key": "value"}'`.
+- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single quotes are necessary when supplying inline JSON values.  For example, this JSON is correct in Bash: `'{"key": "value"}'`.
 
 - If your command runs at a Windows Command Prompt, you must use double quotes.  If the value contains double quotes, you must escape it.  The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
 
