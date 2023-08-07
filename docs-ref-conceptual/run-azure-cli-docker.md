@@ -43,7 +43,7 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
-To run a specific version of the Azure CLI in the Docker container, use the command:
+To run a specific version of the Azure CLI in the Docker container, use this command:
 
 ```bash
 docker run -it mcr.microsoft.com/azure-cli:<version>
