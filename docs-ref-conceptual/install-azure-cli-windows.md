@@ -63,7 +63,10 @@ To install the Azure CLI using PowerShell, start PowerShell **as administrator**
 
 This will download and install the latest 32-bit installer of the Azure CLI for Windows. If you prefer a 64-bit install, change URL to `https://aka.ms/installazurecliwindowsx64`.  If the Azure CLI is already installed, the installer will overwrite the existing version.
 
-To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). (64-bit MSI is available from 2.51.0.)
+To install a specific version, replace the `-Uri` argument with the URL described in [Specific version](#specific-version).  Here is an example of using the 32-bit installer of the Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023) in PowerShell:
+
+   ```PowerShell
+   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
 
 ### Azure CLI Command (for update only)
 
