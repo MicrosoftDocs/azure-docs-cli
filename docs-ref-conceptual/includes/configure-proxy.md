@@ -1,15 +1,15 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/05/2023
+ms.date: 08/1/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
-If you're unable to connect to an external resource due to a proxy, make sure that you've correctly set the `HTTP_PROXY` and `HTTPS_PROXY` variables in your shell. You will need to contact your system administrator
+If you're unable to connect to an external resource due to a proxy, make sure that you've correctly set the `HTTP_PROXY` and `HTTPS_PROXY` variables in your shell. You need to contact your system administrator
 to know what host(s) and port(s) to use for these proxies.
 
-These values are respected by many Linux programs, including those which are used in the install
-process. To set these values:
+The values in these variables are used by many Linux programs, and during the install process.
+To set these values:
 
 ```bash
 # No auth

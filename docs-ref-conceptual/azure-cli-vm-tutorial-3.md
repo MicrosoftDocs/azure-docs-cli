@@ -1,7 +1,7 @@
 ---
 title: Create a virtual machines (VM) – Azure CLI | Microsoft Docs
-description: Learn how to create virtual machines (VM) connected to a virtual network (VNet) with the Azure CLI .
-ms.date: 06/19/2023
+description: Learn how to create virtual machines (VM) connected to a virtual network (VNet) with the Azure CLI.
+ms.date: 08/1/2023
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -15,13 +15,13 @@ keywords: azure cli create vm, virtual machine in azure cli
 # 3 - Create a virtual machine on a virtual network
 
 Virtual machines (VM) in Azure have a large number of dependencies. The CLI creates these resources for you based on
-the command-line arguments you specify. In this section, you'll learn how to deploy a VM to a VNet.
+the command-line arguments you specify. In this section, you learn how to deploy a VM to a VNet.
 
-To deploy a VM on a VNet, they must have the same Azure location. Once a VM is created, you cannot change the VNet to which it is connected.
+To deploy a VM on a VNet, they must have the same Azure location. Once a VM is created, you can't change the VNet to which it's connected.
 
 ## Create a VM
 
-Use the [az vm create](/cli/azure/vm#az_vm_create) command to create a new virtual machine running Ubuntu, which uses SSH authentication for login, and is connected to the subnet and VNet you created in the previous section.
+Use the [az vm create](/cli/azure/vm#az_vm_create) command to create a new virtual machine running Ubuntu. This virtual machine uses SSH authentication for sign in, and is connected to the subnet and VNet you created in the previous section.
 
 ```azurecli-interactive
 # create shell variables
@@ -65,7 +65,7 @@ Confirm that the VM is running by connecting over SSH.
 ssh <PUBLIC_IP_ADDRESS>
 ```
 
-Go ahead and log out from the VM by typing `exit`.
+Go ahead and sign out from the VM by typing `exit`.
 
-There are other ways to get this IP address after the VM has started. In the next section you will see how to get detailed information on
+There are other ways to get this IP address after the VM has started. In the next section, you'll see how to get detailed information on
 the VM, and how to filter it.

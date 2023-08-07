@@ -4,7 +4,7 @@ description: Learn about the Microsoft Graph migration of Azure CLI.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 06/19/2023
+ms.date: 08/1/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -14,15 +14,15 @@ keywords: microsoft graph, ms graph, active directory graph, ad graph
 
 # Microsoft Graph migration
 
-Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), the underlying Active Directory Graph API will be replaced by [Microsoft Graph API](/graph/api/overview) in Azure CLI 2.37.0.
+Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), the underlying Active Directory Graph API replaces [Microsoft Graph API](/graph/api/overview) in Azure CLI 2.37.0.
 
 ## Breaking changes
 
-For differences of the underlying API and output JSON breaking changes, please refer to [Property differences between Azure AD Graph and Microsoft Graph](/graph/migrate-azure-ad-graph-property-differences).
+For differences of the underlying API and output JSON breaking changes, refer to [Property differences between Azure AD Graph and Microsoft Graph](/graph/migrate-azure-ad-graph-property-differences).
 
-For example, the most outstanding change is that the `objectId` property in the output JSON of a Graph object is replaced by `id`.
+For example, the most outstanding change is that `id` replaces the `objectId` property in the output JSON of a Graph object.
 
-Command argument and behavior breaking changes are listed below.
+Command argument and behavior breaking changes are listed in the next section.
 
 ### `az ad app create/update`
 
@@ -77,18 +77,18 @@ Command argument and behavior breaking changes are listed below.
 
 ## Known issues
 
-- Regarding generic update arguments, the only supported operation is using `--set` on the root level of a Graph object. Using `--add`, `--remove` or `--set` on sub-levels currently doesn't work (due to the underlying infrastructure change). For unsupported scenarios, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview). Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
-- Microsoft Graph related commands like `az ad` and `az role` will fail in Azure Stack environments which don't have Microsoft Graph support. Please use Azure CLI 2.36.0 or earlier versions for Azure Stack environments.
+- Regarding generic update arguments, the only supported operation is using `--set` on the root level of a Graph object. When you use `--add`, `--remove` or `--set` on sublevels currently doesn't work (due to the underlying infrastructure change). For unsupported scenarios, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview). Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
+- Microsoft Graph related commands like `az ad` and `az role` fail in Azure Stack environments that don't have Microsoft Graph support. Use Azure CLI 2.36.0 or earlier versions for Azure Stack environments.
 
 ## Install a previous version
 
-If you are not ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](./install-azure-cli.md) (except for Homebrew which doesn't support installing previous versions).
+If you aren't ready for the migration yet, such as lacking Microsoft Graph permissions, you may keep using Azure CLI versions <= 2.36.0. If you have already installed 2.37.0, you may roll back to a previous version following the "Install specific version" section under the [installation documents](./install-azure-cli.md) (except for Homebrew, which doesn't support installing previous versions).
 
 ## Troubleshooting
 
 ### Graph command fails with `AADSTS50005` or `AADSTS53000`
 
-Your tenant may have Conditional Access policies that block using device code flow to access Microsoft Graph. In such cases, use authorization code flow or a service principal to sign in instead. For more information about sign in methods, please see [Sign in with Azure CLI](authenticate-azure-cli.md).
+Your tenant may have Conditional Access policies that block using device code flow to access Microsoft Graph. In such cases, use authorization code flow or a service principal to sign in instead. For more information about sign in methods, see [Sign in with Azure CLI](authenticate-azure-cli.md).
 
 Microsoft tenant (72f988bf-86f1-41af-91ab-2d7cd011db47) has such Conditional Access policies configured.
 
@@ -98,4 +98,4 @@ You can find more information about the Microsoft Graph migration on https://git
 
 ## Give feedback
 
-If you have any questions, please reply to https://github.com/Azure/azure-cli/issues/22580 or create a new issue with the [`az feedback`](/cli/azure/reference-index#az-feedback) command.
+If you have any questions, reply to https://github.com/Azure/azure-cli/issues/22580 or create a new issue with the [`az feedback`](/cli/azure/reference-index#az-feedback) command.
