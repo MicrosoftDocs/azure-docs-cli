@@ -158,7 +158,7 @@ Follow these steps to migrate to Azure CLI 64-bit:
 1. Check your current CLI version and installed extensions by running `az --version`.
 1. Extensions will need to be reinstalled. It is recommended to perform a backup of the current extension folder `%userprofile%\.azure\cliextensions` by renaming it in case you choose to revert back to 32-bit. This folder is created automatically when you reinstall an extension.
 1. Download and install latest 64-bit installer as described in [Install or update](#install-or-update). The 32-bit MSI will be automatically uninstalled.
-4. Install extensions by running `az extension add --name <extension> --version <version>`.
+1. Install extensions by running `az extension add --name <extension> --version <version>`.  If you don't want to reinstall extensions manually, the Azure CLI will prompt you to install an extension on first use. For more information on installing extensions, see [How to install extensions](/cli/azure/azure-cli-extensions-overview#how-to-install-extensions).
 
 If you have issues after migration, you can uninstall the 64-bit and reinstall the 32-bit MSI.  If you have made a backup of your 32-bit extension folder, restore (rename) your extension folder after the change.
 
