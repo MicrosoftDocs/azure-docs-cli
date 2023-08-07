@@ -1,20 +1,20 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/05/2023
+ms.date: 08/1/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
 
 Azure CLI uses queries to select and modify the output of Azure CLI commands. Queries are executed client-side on the Azure CLI command's returned JSON object before any display formatting.
 
-The escape characters needed in queries differ for different environments. It is recommended to run queries in Azure CloudShell or cmd because these shells require less escape characters. To ensure the query examples are syntactically correct, select the tab for the shell you are using.
+The escape characters needed in queries differ for different environments. It's recommended to run queries in Azure Cloud Shell or cmd because these shells require fewer escape characters. To ensure the query examples are syntactically correct, select the tab for the shell you're using.
 
 ## Dictionary and list CLI results
 
-Even when using an output format other than JSON, CLI command results are first treated as JSON for queries. CLI results are either a JSON array or dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are unordered objects accessed with keys.
+CLI command results are first treated as JSON for queries, even when the output format is something other than JSON. CLI results are either a JSON array or dictionary. Arrays are sequences of objects that can be indexed, and dictionaries are unordered objects accessed with keys.
 
-The following is an example of an array:
+This is an example of an array:
 ```json
 [ 
   1,
@@ -23,7 +23,7 @@ The following is an example of an array:
 ]
 ```
 
-The following is an example of a dictionary:
+This is an example of a dictionary:
 ```json
 {
   "isRunning": false,
@@ -46,7 +46,7 @@ az vm show --resource-group QueryDemo --name TestVM
 
 ### [PowerShell](#tab/powershell)
 
-To avoid possible quoting issues with older versions of PowerShell, please ensure you are using the latest version. To install the latest version of PowerShell please see [Install PowerShell on Windows, Linux, and macOS](/powershell/scripting/install/installing-powershell).
+To avoid possible quoting issues with older versions of PowerShell, ensure that you're using the latest version. To install the latest version of PowerShell, see [Install PowerShell on Windows, Linux, and macOS](/powershell/scripting/install/installing-powershell).
 
 ```powershell-interactive
 az vm show --resource-group QueryDemo --name TestVM
@@ -60,7 +60,7 @@ az vm show --resource-group QueryDemo --name TestVM
 
 ---
 
-The command will output a dictionary. Some content has been omitted.
+The command outputs a dictionary. Some content has been omitted.
 
 ```json
 {
@@ -129,7 +129,7 @@ az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConf
 ]
 ```
 
-Note that query strings are case sensitive. For example, changing 'osProfile' to 'OsProfile' in the query above will not return the correct results.
+Query strings are case sensitive. For example, changing 'osProfile' to 'OsProfile' in the previous query doesn't return the correct results.
 
 ## Get multiple values
 
@@ -162,13 +162,13 @@ az vm show --resource-group QueryDemo --name TestVM --query "[name, osProfile.ad
 ]
 ```
 
-These values are listed in the result array in the order they were given in the query. Since the result is an array, there are no keys associated with the results. To get a dictionary instead of an array, see the section below.
+These values are listed in the result array in the order they were given in the query. Since the result is an array, there are no keys associated with the results. To get a dictionary instead of an array, see the next section.
 
 ## Rename properties in a query
 
 To get a dictionary instead of an array when querying for multiple values, use the `{ }` (__multiselect hash__) operator.
 The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
-`displayName` will be the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modifying the example from the
+`displayName` is the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modifying the example from the
 last section by changing the multiselect list to a hash:
 
 ### [Bash](#tab/bash)
@@ -283,9 +283,9 @@ az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin
 ## Filter arrays with boolean expressions
 
 The other operation used to get data from an array is _filtering_. Filtering is done with the `[?...]` JMESPath operator.
-This operator takes a predicate as its contents. A predicate is any statement, including Boolean properties, that can be evaluated to either `true` or `false`. Expressions where the predicate evaluates to `true` are included in the output.
+This operator takes a predicate as its contents. A predicate is any statement (including Boolean properties) that can be evaluated to either `true` or `false`. Expressions where the predicate evaluates to `true` are included in the output.
 
-The first query demonstrate how to list the names of all Azure subscriptions connected to your account whose `isDefault` property is true. The second and third queries show two different ways to list all subscriptions whose `isDefault` property is false.
+The first query demonstrates how to list the names of all Azure subscriptions connected to your account whose `isDefault` property is true. The second and third queries show two different ways to list all subscriptions whose `isDefault` property is false.
 
 ### [Bash](#tab/bash)
 
@@ -309,7 +309,7 @@ az account list --query "[?!isDefault].name"
 az account list --query "[?isDefault == ``false``].name"
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the value `false` in the command above. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be taken into consideration. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the value `false` in the previous command. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be considered. Azure CLI will only receive a symbol if it still exists after two rounds of parsing. For more information about other possible quoting issues, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
@@ -322,13 +322,13 @@ az account list --query "[?!isDefault].name"
 az account list --query "[?isDefault == `false`].name"
 ```
 
-Please note that the example above only works when using the Command Prompt interactively. To execute multiple az commands in a batch script using the Command Prompt, prefix each az command with `call`. For example use `call az account list` instead of `az account list`.
+The example above only works when using the Command Prompt interactively. To execute multiple az commands in a batch script using the Command Prompt, prefix each az command with `call`. For example, use `call az account list` instead of `az account list`.
 
 ---
 
 JMESPath offers the standard comparison and logical operators. These include `<`, `<=`, `>`, `>=`, `==`, and `!=`. JMESPath also supports logical and (`&&`), or (`||`), and not (`!`). Expressions can be grouped within parenthesis, allowing for more complex predicate expressions. For the full details on predicates and logical operations, see the [JMESPath specification](http://jmespath.org/specification.html).
 
-In the last section, you flattened an array to get the complete list of all VMs in a resource group. Using filters, this output can be restricted to only Linux VMs:
+In the last section, you flattened an array to get the complete list of all VMs in a resource group. With the use of filters, this output can be restricted to only Linux VMs:
 
 ### [Bash](#tab/bash)
 
@@ -357,7 +357,7 @@ Test-2  sttramer
 TestVM  azureuser
 ```
 
-You can also filter numerical values such as the OS disk size. The following example demonstrates how to filter the list of VMs to display those with a disk size larger than or equal to 50GB.
+You can also filter numerical values such as the OS disk size. The following example demonstrates how to filter the list of VMs to display ones with a disk size larger than or equal to 50 GB.
 
 ### [Bash](#tab/bash)
 
@@ -371,7 +371,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the 50 in the command above. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be taken into consideration. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the 50 in the previous command. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be considered. Azure CLI will only receive a symbol if it still exists after two rounds of parsing. For more information about other possible quoting issues, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
@@ -397,7 +397,7 @@ For large arrays, it may be faster to apply the filter before selecting data.
 
 JMESPath also has built-in functions that allow for more complex queries and for modifying query output. This section focuses on using JMESPath functions to create queries while the [Manipulating output with functions](#manipulating-output-with-functions) section demonstrates how to use functions to modify the output.
 
-Expressions are evaluated before calling the function, so arguments themselves can be JMESPath expressions. The following examples demonstrates this by using `contains(string, substring)`, which checks to see if a string contains a substring. This command finds all VMs using SSD storage for their OS disk:
+Expressions are evaluated before calling the function, so arguments themselves can be JMESPath expressions. The following examples demonstrate this concept by using `contains(string, substring)`, which checks to see if a string contains a substring. This command finds all VMs using SSD storage for their OS disk:
 
 ### [Bash](#tab/bash)
 
@@ -473,7 +473,7 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 
 ## Manipulating output with functions
 
-JMESPath functions also have another purpose, which is to operate on the results of a query. Any function that returns a non-boolean value changes the result of an expression. For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later as part of a function. The next example shows how to sort a VM list by OS disk size:
+JMESPath functions also have another purpose, which is to operate on the results of a query. Any function that returns a nonboolean value changes the result of an expression. For example, you can sort data by a property value with `sort_by(array, &sort_expression)`. JMESPath uses a special operator, `&`, for expressions that should be evaluated later as part of a function. The next example shows how to sort a VM list by OS disk size:
 
 ### [Bash](#tab/bash)
 
@@ -507,15 +507,15 @@ See the [JMESPath specification - Built-in Functions](http://jmespath.org/specif
 
 ## Formatting query results
 
-The Azure CLI uses JSON as its default output format, however different output formats may better suit a query depending on its purpose and results. Note that queries are always run on the `JSON` output first and then formatted.
+The Azure CLI uses JSON as its default output format, however different output formats may better suit a query depending on its purpose and results. Queries are always run on the `JSON` output first and then formatted.
 
 This section will go over `tsv` and `table` formatting and some use cases for each format. For more information about output formats, see [Output formats for Azure CLI commands](../format-output-azure-cli.md).
 
 ### TSV output format
 
-The `tsv` output format returns tab- and newline-separated values without additional formatting, keys, or other symbols. This is useful when the output is consumed by another command.
+The `tsv` output format returns tab- and newline-separated values without extra formatting, keys, or other symbols. This format is useful when the output is stored in a parameter and used in another command.
 
-One use case for `tsv` formatting is queries that retrieve a value out of a CLI command, such as an Azure resource ID or resource name, and store the value in a local environment variable. By default the results are returned in JSON format. This may be an issue when dealing with JSON strings which are enclosed in `"` characters. The quotes may __not__ be interpreted by the shell if the command output is directly assigned to the environment variable. This can be seen in the following example that assigns a query result to an environment variable:
+One use case for `tsv` formatting is queries that retrieve a value out of a CLI command, such as an Azure resource ID or resource name, and store the value in a local environment variable. By default the results are returned in JSON format, which may be an issue when dealing with JSON strings that are enclosed in `"` characters. The quotes may __not__ be interpreted by the shell if the command output is directly assigned to the environment variable. This issue be seen in the following example that assigns a query result to an environment variable:
 
 ### [Bash](#tab/bash)
 
@@ -544,7 +544,7 @@ echo %USER%
 "azureuser"
 ```
 
-To prevent enclosing return values with type information use `tsv` formatting as demonstrated in the following query:
+Use `tsv` formatting, as demonstrated in the following query, to prevent enclosing return values with type information:
 
 ### [Bash](#tab/bash)
 
@@ -575,7 +575,7 @@ azureuser
 
 ### Table output format
 
-The `table` format prints output as an ASCII table, making it easy to read and scan. Not all fields are included in the table so this format is best used as a human-searchable overview of data. Fields that are not included in the table can still be filtered for as part of a query.
+The `table` format prints output as an ASCII table, making it easy to read and scan. Not all fields are included in the table so this format is best used as a human-searchable overview of data. Fields that aren't included in the table can still be filtered for as part of a query.
 
 > [!NOTE]
 >
@@ -585,7 +585,7 @@ The `table` format prints output as an ASCII table, making it easy to read and s
 > az vm show --resource-group QueryDemo --name TestVM --query "{objectID:id}" --output table
 >```
 
-We can use a previous query to demonstrate this. The original query returned a JSON object containing the name, OS, and administrator name for each VM in the resource group:
+We can use a previous query to demonstrate this concept. The original query returned a JSON object containing the name, OS, and administrator name for each VM in the resource group:
 
 ### [Bash](#tab/bash)
 
