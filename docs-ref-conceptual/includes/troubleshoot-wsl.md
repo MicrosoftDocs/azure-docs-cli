@@ -15,7 +15,7 @@ there's a good chance it's an issue with WSL and not with the CLI install proces
 To troubleshoot your WSL installation and possibly resolve issues:
 
 * If you can, run an identical install process on a Linux machine or VM to see if it succeeds. If it does,
-  your issue is almost related to WSL. To start a Linux VM in Azure, see the
+  your issue is likely related to WSL. To start a Linux VM in Azure, see the
   [create a Linux VM in the Azure portal](/azure/virtual-machines/linux/quick-create-portal) documentation.
 * Make sure that you're running the latest version of WSL. To get the latest version,
   [update your Windows 10 installation](https://support.microsoft.com/help/4027667/windows-10-update).
