@@ -14,9 +14,7 @@ keywords: azure, cli, command line
 
 # Differences between Azure CLI products
 
-As of the end of June 2018, explicit version numbers have been removed from Azure CLI product names. This change helps eliminate
-confusion when documentation instructed to use "the Azure CLI," but was unclear what version
-of the product was being referenced. If you're familiar with the old product names, here's how they have changed:
+As of the end of June 2018, explicit version numbers have been removed from Azure CLI product names. This change helps eliminate confusion when documentation instructed to use "the Azure CLI," but was unclear what version of the product was being referenced. If you're familiar with the old product names, here's how they have changed:
 
 * Azure CLI versions 2.0 and later are now referred to only as "Azure CLI."
 * Earlier Azure CLI versions (1.x and lower) are now referred to as "Azure classic CLI."
