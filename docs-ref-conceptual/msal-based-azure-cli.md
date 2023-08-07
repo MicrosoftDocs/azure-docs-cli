@@ -14,7 +14,7 @@ keywords: msal, msal-based azure cli
 
 # MSAL-based Azure CLI
 
-Starting in version 2.30.0, Azure CLI uses [MSAL](https://github.com/AzureAD/microsoft-authentication-library-for-python) as the underlying authentication library. MSAL uses Azure Active Directory v2.0 authentication flow to provide more functionality and increases security for token cache.
+Starting in version 2.30.0, Azure CLI uses Microsoft Authentication Library [(MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-python) as the underlying authentication library. MSAL uses Azure Active Directory v2.0 authentication flow to provide more functionality and increases security for token cache.
 
 > [!WARNING]
 > BREAKING CHANGES are introduced in Azure CLI 2.30.0. Carefully read document prior to installation.
