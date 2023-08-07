@@ -20,7 +20,7 @@ applications sign in as a fully privileged user, Azure offers service principals
 
 An Azure service principal is an identity created for use with
 applications, hosted services, and automated tools to access
-Azure resources. This access restricts the roles assigned
+The roles assigned to the service principal restrict access. This gives you control over which resources can be accessed and at what level.
 to the service principal, giving you control over which resources
 can be accessed and at which level. For security reasons, it's
 always recommended to use service principals with automated
