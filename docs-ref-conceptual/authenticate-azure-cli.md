@@ -126,10 +126,10 @@ To learn more about managed identities for Azure resources, see [Configure manag
 
 The Azure CLI now offers preview support for Web Account Manager (WAM).  WAM is a Windows 10+ component that acts as an authentication broker.  Using WAM has several benefits:
 
-_ Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
-_ Support for Windows Hello, conditional access policies, and FIDO keys.
-_ Streamlined single sign-on.
-_ Bug fixes and enhancements shipped with Windows.
+- Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
+- Support for Windows Hello, conditional access policies, and FIDO keys.
+- Streamlined single sign-on.
+- Bug fixes and enhancements shipped with Windows.
 
 Signing in with WAM is a preview, opt-in feature. Once enabled, the previous browser-based user interface is replaced.
 
@@ -140,8 +140,8 @@ az login
 ```
 
 At the current stage of development, there are a few known limitations to WAM:
-_ WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, we automatically fall back to a browser.  
-_ Microsoft Accounts (for example @outlook.com or @live.com) aren't supported for the time being. We're working with the Microsoft Identity team to bring the support later.
+- WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, we automatically fall back to a browser.  
+- Microsoft Accounts (for example @outlook.com or @live.com) aren't supported for the time being. We're working with the Microsoft Identity team to bring the support later.
 
 ## See also
 
