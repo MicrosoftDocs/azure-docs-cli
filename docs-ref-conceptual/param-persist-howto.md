@@ -31,7 +31,7 @@ Persisted parameter values are kept in a file named `.param_persist` that is sto
 
 ## Persisted parameter storage and support
 
-These persisted parameters support the following Azure CLI parameters.  The `resource_group_name` and `location` parameters are stored differently so that you can add them to a persisted parameter without executing a create command.
+Only certain Azure CLI parameters can become persisted parameters. For example, the `resource_group_name` and `location` parameters are stored differently so that you can add them to a persisted parameter without executing a create command.
 
 | Persisted parameter | Storage action | Supported by
 |-|-|-|
