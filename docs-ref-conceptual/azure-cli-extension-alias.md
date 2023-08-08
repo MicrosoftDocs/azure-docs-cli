@@ -14,14 +14,14 @@ keywords: azure cli alias extension, alias extension, alias commands
 
 # How to use the Azure CLI alias extension
 
-The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Aliases help keep your workflow simple by allowing shortcuts. Since aliases are powered by the Jinja2 template engine, they even offer advanced argument processing.
+The alias extension allows users to define custom commands for the Azure CLI by using existing commands. Aliases help keep your workflow simple by allowing shortcuts. The Jinja2 template engine powers Azure CLI aliases and offers advanced argument processing.
 
 > [!NOTE]
 > The Alias Extension is in public preview. The features and configuration file format may change.
 
 ## Install the alias extension
 
-The minimum required Azure CLI version to use the alias extension is **2.0.28**. To check your CLI version, run `az --version`. If you need to update your installation,  follow the instructions in [Install the Azure CLI](./install-azure-cli.md).
+The minimum required Azure CLI version to use the alias extension is **2.0.28**. To check your CLI version, run `az --version`. If you need to update your installation, follow the instructions in [Install the Azure CLI](./install-azure-cli.md).
 
 Install the alias extension with the [az extension add](/cli/azure/extension#az_extension_add) command.
 
@@ -74,7 +74,7 @@ az rg ls
 az vm ls
 ```
 
-Do not include `az` as part of the alias command.
+Don't include `az` as part of the alias command.
 
 Aliases can also be shortcuts for complete commands. The next example lists available resource groups and their locations in table output:
 
@@ -123,7 +123,7 @@ To register the environment variables inside the command of the alias, the dolla
 
 ## Process arguments using Jinja2 templates
 
-Argument substitution in the alias extension is performed by [Jinja2](http://jinja.pocoo.org/docs/2.10/). Jinja2 templates allow for manipulating the arguments.
+[Jinja2](http://jinja.pocoo.org/docs/2.10/) performs the argument substitution in the alias extension. Jinja2 templates allow for manipulating the arguments.
 
 With Jinja2 templates, you can write aliases that take different types of arguments than the underlying command. For example, you can make an alias that takes a storage URL. Then this URL is parsed to pass the account and container names to the storage command.
 

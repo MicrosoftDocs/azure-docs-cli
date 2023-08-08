@@ -115,7 +115,7 @@ On resources configured for managed identities for Azure resources, you can sign
 az login --identity
 ```
 
-If the resource has multiple user assigned managed identities and no system assigned identity, you must specify the client id or object id or resource id of the user assigned managed identity with `--username` for login.
+If the resource has multiple user assigned managed identities and no system assigned identity, you must specify the client ID or object ID or resource ID of the user assigned managed identity with `--username` for login.
 ```azurecli-interactive
 az login --identity --username <client_id|object_id|resource_id>
 ```
