@@ -13,7 +13,7 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 ---
 # What's new in the Azure CLI
 
-This page highlights new features, articles and learning paths for the Azure CLI.  Use these quick links to jump straight to the article with detailed information:
+This page highlights new features, articles and learning paths for the Azure CLI.  Use these quick links to jump straight to the article containing detailed information:
 
 - [64-bit install](/cli/azure/install-azure-cli-windows#latest-version)
 - [Tab completion](/cli/azure/install-azure-cli-windows#enable-tab-completion-on-powershell)
