@@ -22,6 +22,7 @@ directCommands:
                                               [--partner-mirroring-url]
                                               [--partner-resource-group]
                                               [--partner-sync-mode {async, sync}]
+                                              [--primary-mirroring-url]
                                               [--resource-group]
                                               [--role {primary, secondary}]
                                               [--shared-name]
@@ -30,7 +31,9 @@ directCommands:
   - summary: Use the Kubernetes API to create a failover group resource between primary SQL managed instance sqlmi1 and partner SQL managed instance sqlmi2.The partner mirroring endpoint and cert file are required.
     syntax: az sql instance-failover-group-arc create --name fogcr --shared-name sharedname1 --mi sqlmi1 --role primary --partner-mi sqlmi2 --partner-mirroring-url 10.20.5.20:970 --partner-mirroring-cert-file ./sqlmi2.cer --use-k8s
   - summary: Use Azure Resource Manager (ARM) to create a failover group resource.
-    syntax: az sql instance-failover-group-arc create --name fogcr  --mi sqlmi1 --resource-group primary-rg-name  --partner-mi sqlmi2 --partner-resource-group partner-rg-name --partner-sync-mode async --role primary
+    syntax: az sql instance-failover-group-arc create --name fogcr  --mi sqlmi1 --resource-group primary-rg-name  --partner-mi sqlmi2 --partner-resource-group partner-rg-name --partner-sync-mode async
+  - summary: Use ARM to create a failover group with custom mirroring URLs.
+    syntax: az sql instance-failover-group-arc create --name fogcr  --mi sqlmi1 --resource-group primary-rg-name  --partner-mi sqlmi2 --partner-resource-group partner-rg-name --partner-sync-mode async --primary-mirroring-url 21.10.6.30:6603 --partner-mirroring-url 10.20.5.20:970
   requiredParameters:
   - isRequired: true
     name: --mi
@@ -64,6 +67,9 @@ directCommands:
   - name: --partner-sync-mode -m
     parameterValueGroup: "async, sync"
     summary: The partner synchronization mode of the Arc-enabled SQL managed instance.
+    description: ''
+  - name: --primary-mirroring-url
+    summary: The mirroring endpoint URL of the primary SQL managed instance.
     description: ''
   - name: --resource-group -g
     summary: The Azure resource group of the primary Arc-enabled SQL managed instance.

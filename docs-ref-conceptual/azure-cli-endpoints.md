@@ -7,7 +7,7 @@ ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: conceptual
 ms.custom: devx-track-azurecli
-ms.date: 07/13/2023
+ms.date: 08/1/2023
 ms.tool: azure-cli
 ---
 
@@ -17,7 +17,7 @@ If your organization is secured with a firewall or proxy server, you must add ce
 
 Two URLs are used during installation to download Python packages: **pypi.org** and **files.pythonhosted.org**.
 
-The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We do not recommend adding additional Azure CLI-related URLs aside from those needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
+The following tables provide lists of the endpoints and suffixes used by the Azure CLI.  These endpoints are specific to the Azure cloud where your organization is deployed.  We don't recommend adding other Azure CLI-related URLs aside from the URLs needed for specific Azure CLI reference groups, although you may want to add URLs related to other Microsoft products and services.
 
 ## Endpoints
 
