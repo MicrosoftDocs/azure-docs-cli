@@ -51,4 +51,4 @@ It's often helpful to see how different Azure services use the same reference co
 Are you looking for a tested script that completes a common job to be done? The [Azure CLI sample's list](samples-index.md) is an A to Z index of tested sample scripts.
 
 > [!NOTE]
-> The [Reference index A-Z](reference-index.md) is a list of all Azure CLI reference commands. For new Azure CLI reference commands, see [Release notes](release-notes-azure-cli.md).
+> The [Reference index A-Z](/cli/azure/reference-index) is a list of all Azure CLI reference commands. For new Azure CLI reference commands, see [Release notes](release-notes-azure-cli.md).
