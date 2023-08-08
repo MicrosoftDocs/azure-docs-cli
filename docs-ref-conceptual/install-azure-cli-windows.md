@@ -43,9 +43,7 @@ If you have previously installed the Azure CLI, running either the 32-bit or 64-
 
 ### Specific version
 
-To download the MSI installer for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) and download it. For example, to install the 32-bit MSI of Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023), your URL would be `https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi`.  The corresponding 64-bit install would be `https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0-x64.msi`.
-
-Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The 64-bit MSI is available from version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023).
+[!INCLUDE [specific version](includes/specific-version.md)]
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
@@ -65,11 +63,15 @@ To install the Azure CLI using PowerShell, start PowerShell **as administrator**
 
 This will download and install the latest 32-bit installer of the Azure CLI for Windows. If you prefer a 64-bit install, change URL to `https://aka.ms/installazurecliwindowsx64`. If the Azure CLI is already installed, the installer will overwrite the existing version.
 
-To install a specific version, replace the `-Uri` argument with the URL described in [Specific version](#tab/azure-cli/specific-version).  Here is an example of using the 32-bit installer of the Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023) in PowerShell:
+To install a specific version, replace the `-Uri` argument with the URL described in [Specific version](#specific-version-1).  Here is an example of using the 32-bit installer of the Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023) in PowerShell:
 
    ```PowerShell
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
+
+### Specific version
+
+[!INCLUDE [specific version](includes/specific-version.md)]
 
 ### Azure CLI Command (for update only)
 
