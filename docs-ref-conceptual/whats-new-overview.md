@@ -13,6 +13,8 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 ---
 # What's new in the Azure CLI
 
+This article highlights new features, articles and learning paths for the Azure CLI.
+
 ## 64-bit Windows install
 
 You can now [install the Azure CLI on Windows](install-azure-cli-windows.md) with _either_ a 32-bit or 64-bit MSI.  Previously installed versions are updated automatically.  You can reinstall your extensions by using `az extension add --name <extension> --version <version>`, or the Azure CLI prompts you to reinstall an extension on first use.
@@ -22,11 +24,6 @@ You can now [install the Azure CLI on Windows](install-azure-cli-windows.md) wit
 If you run the Azure CLI in PowerShell, tab completion is now available!  Follow the instructions in [enable tab completion on PowerShell](/cli/azure/install-azure-cli-windows#enable-tab-completion-on-powershell).  The parameter values needed for PowerShell's `Register-ArgumentCompleter` command are provided in the article.
 
 Tab completion is also available in [Azure Cloud Shell](/azure/cloud-shell/quickstart?toc=%2Fcli%2Fazure%2Ftoc.json&bc=%2Fcli%2Fazure%2Fbreadcrumb%2Ftoc.json&tabs=azurecli) and in most Linux distributions.
-
-## AAZ Development Tool
-
-azure.github.io/aaz-dev-tools/
-https://azure-cli-diff-size.azurewebsite.net/
 
 ## Sign in with Web Account Manager (WAM)
 
@@ -46,5 +43,5 @@ It's often helpful to see how different Azure services use the same reference co
 
 Are you looking for a tested script that completes a common job to be done?  The [Azure CLI sample scripts](samples-index.md) index is an A to Z list of tested sample scripts.  
 
-> !NOTE
-> For new Azure CLI reference commands, see [Release notes](release-notes-azure-cli.md)
+> [!NOTE]
+> The [Reference index A-Z](reference-index.md) is a list of all Azure CLI reference commands.  For new Azure CLI reference commands, see [Release notes](release-notes-azure-cli.md).
