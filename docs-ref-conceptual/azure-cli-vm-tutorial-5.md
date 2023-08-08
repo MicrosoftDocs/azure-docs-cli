@@ -1,7 +1,7 @@
 ---
 title: Set shell variables from CLI output – Azure CLI | Microsoft Docs
 description: Learn how to get virtual machines (VM) information and store results in an Azure CLI shell variable.
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -14,7 +14,7 @@ keywords: virtual machine in azure cli, set shell variables from cli output
 
 # 5 - Set shell variables from CLI output
 
-Now that you have the NIC ID, run `az network nic show` to get its information. Note that you don't need a resource group here, since the resource group name is contained within the Azure resource ID.
+Now that you have the NIC ID, run `az network nic show` to get its information. You don't need a resource group here, since the resource group name is contained within the Azure resource ID.
 
 ```azurecli-interactive
 az network nic show --ids $nicId
@@ -42,8 +42,7 @@ az network nic show --ids $nicId \
 This command displays a JSON object that has custom keys ('IP' and 'Subnet') for the extracted values. While this style of output might not be useful
 for command-line tools, it helps with human readability and can be used with custom scripts.
 
-In order to use command-line tools, change the command to remove the custom JSON keys and output as `tsv`. This style of output can be processed by
-the shell `read` command to load results into multiple variables. Since two values are displayed on separate lines, the `read` command
+In order to use command-line tools, change the command to remove the custom JSON keys and output as `tsv`. The `read` command processes this style of output by loading results into multiple variables. Since two values are displayed on separate lines, the `read` command
 delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
 ```azurecli
@@ -53,7 +52,7 @@ read -d '' ipId subnetId <<< $(az network nic show \
   -o tsv)
 ```
 
-Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI, it will not be needed for the rest of the tutorial.
+Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI. Therefore, it isn't be needed for the rest of the tutorial.
 
 ```azurecli
 vmIpAddress=$(az network public-ip show --ids $ipId \
@@ -61,7 +60,7 @@ vmIpAddress=$(az network public-ip show --ids $ipId \
   -o tsv)
 ```
 
-Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it is the same value that you used to initially connect to the VM.
+Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it's the same value that you used to initially connect to the VM.
 
 ```bash
 echo $vmIpAddress

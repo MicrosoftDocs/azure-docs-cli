@@ -2,7 +2,7 @@
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 08/01/2023
+ms.date: 08/2/2023
 ms.topic: include
 ms.service: azure-cli
 ms.devlang: azurecli
@@ -19,7 +19,7 @@ ms.custom: devx-track-azurecli
 
 ## Install Azure CLI
 
-To install Azure CLI on SUSE/OpenSUSE, please chose one of the following methods:
+To install Azure CLI on SUSE/OpenSUSE, choose one of the following methods:
 
 1. [Use the Enterprise package provided by SUSE](#install-from-suse-or-opensuse-repositories) in the SUSE/OpenSUSE repositories.
 
@@ -39,7 +39,7 @@ The RPM package of the Azure CLI depends on the `python3` package.
 
 You can manually install the Azure CLI on any version of Linux by using the [Install script](/cli/azure/install-azure-cli-linux?pivots=script) option.
 
-If you are *updating* to the most recent version using this method, be sure to uninstall the previous version first, as well as any repositories you may have added for that version.
+If you're *updating* to the most recent version using this method, be sure to uninstall the previous version first, and any repositories you may have added for that version.
 
 ### Install from Microsoft repositories
 
@@ -75,7 +75,7 @@ To install the most recent historical version of the Azure CLI using Microsoft r
 
 ### Install specific version
 
-You must first configure `azure-cli` repository information as shown above. Available versions can be found in the [Azure CLI release notes](../release-notes-azure-cli.md).
+You must first configure `azure-cli` repository information as shown previously. Available versions can be found in the [Azure CLI release notes](../release-notes-azure-cli.md).
 
 1. View the available versions using this command:
 
@@ -137,7 +137,7 @@ Here are some common problems seen when installing with `zypper`. If you experie
 
 ### NotImplementedError on OpenSUSE 15 VM
 
-The OpenSUSE 15 VM has a pre-installed Azure CLI with version 2.0.45, which is outdated and has issues with `az login`. Please remove this version along with its dependencies before following the [Install](#install-azure-cli) instruction to add the latest Azure CLI:
+The OpenSUSE 15 VM has a preinstalled Azure CLI with version 2.0.45, which is outdated and has issues with `az login`. Remove this version along with its dependencies before following the [Install](#install-azure-cli) instruction to add the latest Azure CLI:
 
 ```bash
 sudo zypper rm -y --clean-deps azure-cli
@@ -156,7 +156,7 @@ sudo zypper rm -y --clean-deps azure-cli
 
 On SLES 12, the default `python3` package is 3.4 and not supported by Azure CLI. You can first follow step 1-3 of the [install instruction](#install-azure-cli) to add the `azure-cli` repository. Then build a higher version `python3` from source. Finally, you can download the Azure CLI package and install it without dependency.
 
-You can use the following one command to install or update Azure CLI based on above steps. The script will install Python 3.8 under `/usr/local/azcli` and make Azure CLI use it by setting an alias of `az` to `PATH=/usr/local/azcli/bin:$PATH az`. You can also download the script and modify it according to your needs. For instance, you can change the Python version or install location.
+You can use the following one command to install or update Azure CLI based on above steps. The script installs Python 3.8 under `/usr/local/azcli` and makes Azure CLI use it by setting an alias of `az` to `PATH=/usr/local/azcli/bin:$PATH az`. You can also download the script and modify it according to your needs. For instance, you can change the Python version or install location.
 
 ```bash
 curl -sL https://azurecliprod.blob.core.windows.net/sles12_install_v2.sh | sudo bash
@@ -188,7 +188,7 @@ allow HTTPS connections to the following addresses:
 
 ### SSL certificate problem
 
-When a certificate is broken or outdated on a machine, you might receive an error indicating that curl failed to verify the legitimacy of the server and therefore could not establish a secure connection.  Update your certificate to correct the problem.
+When a certificate is broken or outdated on a machine, you might receive an error indicating that curl failed to verify the legitimacy of the server, and therefore couldn't establish a secure connection.  Update your certificate to correct the problem.
 
 ```bach
 sudo zypper update-ca-certificates

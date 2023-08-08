@@ -4,7 +4,7 @@ description: Learn tips for using Azure CLI successfully, such as output formats
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -24,8 +24,8 @@ Three common output formats are used with Azure CLI commands:
 1. The `json` format shows information as a JSON string.
    - JSON gives you the most comprehensive information.
    - This format is the default but you can use the `--output` parameter to specify a different option.
-   - Change the global default format to one of your personal preference by using [az config](../latest/docs-ref-autogen/config.yml) such as `az config set core.output=table`.
-   - Note that JSON format preserves the double quotes, generally making it unsuitable for scripting purposes.
+   - Change the global default format to one of your personal preferences by using [az config](../latest/docs-ref-autogen/config.yml) such as `az config set core.output=table`.
+   - JSON format preserves the double quotes, generally making it unsuitable for scripting purposes.
 
 2. The `table` format presents output as a readable table. You can specify which values appear in the table and use queries to customize the output as shown here:
 
@@ -41,7 +41,7 @@ Three common output formats are used with Azure CLI commands:
 
 3. The `tsv` format returns tab-separated and newline-separated values without extra formatting, keys, or other symbols.
    - The TSV format is useful for concise output and scripting purposes.
-   - The TSV will strip double quotes that the JSON format preserves.
+   - The TSV strips double quotes that the JSON format preserves.
    - To specify the format you want for TSV, use the `--query` parameter.
 
     ```bash
@@ -53,7 +53,7 @@ For more information about these and other formats, see [Output formats for Azur
 
 ## Pass values to another command
 
-If the value will be used more than once, assign it to a variable. Variables allow you to use values more than once or to create more general scripts.  This example assigns an ID found by the [az vm list](/cli/azure/vm#az-vm-list) command to a variable.
+If the value is used more than once, assign it to a variable. Variables allow you to use values more than once or to create more general scripts.  This example assigns an ID found by the [az vm list](/cli/azure/vm#az-vm-list) command to a variable.
 
   ```bash
   # assign the list of running VMs to a variable
@@ -95,7 +95,7 @@ For multi-value lists, consider the following options:
       --output tsv | xargs -I {} -P 10 az vm start --ids "{}"
     ```
 
-1. Finally, Azure CLI has built-in support to process commands with multiple `--ids` in parallel to achieve the same effect of xargs. Note that `@-` is used to get values from the pipe:
+1. Finally, Azure CLI has built-in support to process commands with multiple `--ids` in parallel to achieve the same effect of xargs. `@-` is used to get values from the pipe:
 
     ```azurecli
     az vm list --resource-group MyResourceGroup --show-details \
@@ -122,13 +122,13 @@ To avoid unanticipated results, here are a few suggestions:
 
 - In Bash or PowerShell, both single and double quotes are interpreted correctly. In Windows Command Prompt, only double quotes are interpreted correctly -- single quotes are treated as part of the value.
 
-- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. This is necessary when supplying inline JSON values.  For example, this JSON is correct in Bash: `'{"key": "value"}'`.
+- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single quotes are necessary when supplying inline JSON values.  For example, this JSON is correct in Bash: `'{"key": "value"}'`.
 
-- If your command will be run at a Windows Command Prompt, you must use double quotes.  If the value contains double quotes, you must escape it.  The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
+- If your command runs at a Windows Command Prompt, you must use double quotes.  If the value contains double quotes, you must escape it.  The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
 
-- In Powershell, if your value is an empty string, please use `'""'`.
+- In PowerShell, if your value is an empty string, use `'""'`.
 
-- In Bash or Powershell, if your value is an empty quotes string `''`, please use `"''"`.
+- In Bash or PowerShell, if your value is an empty quotes string `''`, use `"''"`.
 
 - Use Azure CLI's `@<file>` convention to load from a file and bypass the shell's interpretation mechanisms.
 
@@ -151,7 +151,7 @@ To avoid unanticipated results, here are a few suggestions:
     1. Quoted space-separated list
        `--parameterName "firstValue" "secondValue"`
 
-    This example is a string with a space in it.  It is not a space-separated list:
+    This example is a string with a space in it.  It isn't a space-separated list:
        `--parameterName "firstValue secondValue"`
 
 - There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. You can also enclose the value in single or double quotes `"`/`"`.
@@ -194,7 +194,7 @@ To avoid unanticipated results, here are a few suggestions:
 
   ### [PowerShell](#tab/powershell)
 
-  These five commands will work correctly in PowerShell:
+  These five commands work correctly in PowerShell:
 
   ```azurecli
   az version --query '\"azure-cli\"'
@@ -208,7 +208,7 @@ To avoid unanticipated results, here are a few suggestions:
 
   ### [Cmd](#tab/cmd)
 
-  These two commands will work correctly in Windows Command Prompt:
+  These two commands work correctly in Windows Command Prompt:
 
   ```azurecli
   az version --query "\"azure-cli\""
@@ -251,7 +251,7 @@ Operations in Azure can take a noticeable amount of time. For instance, configur
 az group delete --name MyResourceGroup --no-wait
 ```
 
-When deleting a resource group, all the resources that belong to it are also removed. Removing these resources can take a long time. Running the command with the `--no-wait` parameter, allows the console to accept new commands without interrupting the removal.
+When you delete a resource group, all the resources that belong to it are also removed. Removing these resources can take a long time. When you run the command with the `--no-wait` parameter, the console accepts new commands without interrupting the removal.
 
 Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az-vm-wait) command to support creating independent resources in parallel:
 
@@ -278,7 +278,7 @@ If you're using Azure CLI over a proxy server that uses self-signed certificates
 | CentOS/RHEL/SUSE Linux | `/usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem`                                      |
 | macOS                  | `/usr/local/Cellar/azure-cli/<cliversion>/libexec/lib/python<version>/site-packages/certifi/cacert.pem` |
 
-Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file.  Then set `REQUESTS_CA_BUNDLE` to the new file location.  Here is an example:
+Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file.  Then set `REQUESTS_CA_BUNDLE` to the new file location. Here's an example:
 
 ```console
 <Original cacert.pem>
@@ -294,7 +294,7 @@ Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PR
 
 If you run Azure CLI commands concurrently on the same machine, write conflicts can happen if multiple Azure CLI commands write to the same MSAL token cache.
 
-To avoid potential failures, you may isolate the Azure CLI configuration folder for each script by setting environment variable `AZURE_CONFIG_DIR` for each script to a separate directory. Azure CLI commands in that script will save the configuration and token cache to the configured location instead of the default `~/.azure` folder.
+To avoid potential failures, you may isolate the Azure CLI configuration folder for each script by setting environment variable `AZURE_CONFIG_DIR` for each script to a separate directory. Azure CLI commands in that script save the configuration and token cache to the configured location instead of the default `~/.azure` folder.
 
   ### [Bash](#tab/bash)
 
@@ -359,7 +359,7 @@ az rest --method PATCH \
     --body '{"web":{"redirectUris":["https://myapp.com"]}}'
 ```
 
-When using `--uri-parameters` for requests in the form of OData, please make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
+When using `--uri-parameters` for requests in the form of OData, make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
 
 ## Script examples
 
@@ -422,7 +422,7 @@ You can run Azure CLI commands in PowerShell, as described in [Choose the right 
 
 An alternative is to use the `$?` automatic variable. This variable contains the status of the most recent command. If the previous command fails, `$?` has the value of `$False`. For more information, see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/about/about_automatic_variables).
 
-The follow example shows how this automatic variable can work for error handling:
+The following example shows how this automatic variable can work for error handling:
 
 ```powershell
 az group create --name MyResourceGroup
@@ -431,7 +431,7 @@ if ($? -eq $false) {
 }
 ```
 
-The `az` command fails because it is missing the required `--location` parameter. The conditional statement finds that `$?` is false and writes an error.
+The `az` command fails because it's missing the required `--location` parameter. The conditional statement finds that `$?` is false and writes an error.
 
 If you want to use the `try` and `catch` keywords, you can use `throw` to create an exception for the `try` block to catch:
 
