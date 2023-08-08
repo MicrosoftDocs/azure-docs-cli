@@ -43,7 +43,9 @@ If you have previously installed the Azure CLI, running either the 32-bit or 64-
 
 ### Specific version
 
-To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) and download it. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). (64-bit MSI is available from 2.51.0.)
+To download the MSI installer for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit) and download it. For example, to install the 32-bit MSI of Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023), your URL would be `https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi`.  The corresponding 64-bit install would be `https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0x64.msi`.
+
+Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The 64-bit MSI is available from version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023).
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
