@@ -36,11 +36,14 @@ The MSI distributable is used for installing or updating the Azure CLI on Window
 Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, click the "Yes" box.
 
 > [!div class="nextstepaction"]
-> [Latest release of the Azure CLI](https://aka.ms/installazurecliwindows)
+> [Latest release of the Azure CLI (32-bit)](https://aka.ms/installazurecliwindows)
+> [Latest release of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowsx64)
+
+If you have previously installed the Azure CLI, running either the 32-bit or 64-bit MSI will overwrite an existing installation.
 
 ### Specific version
 
-To download the MSI installer for specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` and download it. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
+[!INCLUDE [specific version](includes/specific-version.md)]
 
 # [Microsoft Installer (MSI) with Command](#tab/powershell)
 
@@ -58,9 +61,17 @@ To install the Azure CLI using PowerShell, start PowerShell **as administrator**
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
-This will download and install the latest version of the Azure CLI for Windows. If you already have a version installed, the installer will update the existing version.
+This will download and install the latest 32-bit installer of the Azure CLI for Windows. If you prefer a 64-bit install, change URL to `https://aka.ms/installazurecliwindowsx64`. If the Azure CLI is already installed, the installer will overwrite the existing version.
 
-To install specific version, replace the `-Uri` argument with `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` with version segment changed. Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
+To install a specific version, replace the `-Uri` argument with the URL described in [Specific version](#specific-version-1).  Here is an example of using the 32-bit installer of the Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023) in PowerShell:
+
+   ```PowerShell
+   $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
+   ```
+
+### Specific version
+
+[!INCLUDE [specific version](includes/specific-version.md)]
 
 ### Azure CLI Command (for update only)
 
@@ -144,6 +155,18 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 
 * `https://aka.ms/`
 * `https://azcliprod.blob.core.windows.net/`
+
+### Migrate to 64-bit Azure CLI
+
+Starting from 2.51.0, Azure CLI also provides 64-bit MSI which is recommended for better performance.
+
+Follow these steps to migrate to Azure CLI 64-bit:
+1. Check your current CLI version and installed extensions by running `az --version`.
+1. Extensions will need to be reinstalled. It is recommended to perform a backup of the current extension folder `%userprofile%\.azure\cliextensions` by renaming it in case you choose to revert back to 32-bit. This folder is created automatically when you reinstall an extension.
+1. Download and install latest 64-bit installer as described in [Install or update](#install-or-update). The 32-bit MSI will be automatically uninstalled.
+1. Install extensions by running `az extension add --name <extension> --version <version>`.  If you don't want to reinstall extensions manually, the Azure CLI will prompt you to install an extension on first use. For more information on installing extensions, see [How to install extensions](/cli/azure/azure-cli-extensions-overview#how-to-install-extensions).
+
+If you have issues after migration, you can uninstall the 64-bit and reinstall the 32-bit MSI.  If you have made a backup of your 32-bit extension folder, restore (rename) your extension folder after the change.
 
 ## Uninstall
 
