@@ -40,9 +40,9 @@ brew update && brew install azure-cli
 
 If you encounter a problem when installing the CLI through Homebrew, here are some common errors. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
-### Completion is not working
+### Completion isn't working
 
-The Homebrew formula of Azure CLI installs a completion file named `az` in the Homebrew-managed completions directory (default location is `/usr/local/etc/bash_completion.d/`). To enable completion, please follow Homebrew's instructions [here](https://docs.brew.sh/Shell-Completion).
+The Homebrew formula of Azure CLI installs a completion file named `az` in the Homebrew-managed completions directory (default location is `/usr/local/etc/bash_completion.d/`). To enable completion, follow Homebrew's instructions [here](https://docs.brew.sh/Shell-Completion).
 
 For Zsh, add the following two lines to the bottom of your `.zshrc` file, then save and reload your Zsh profile.
 
@@ -114,8 +114,7 @@ rm -rf ~/.azure
 
 ## Other installation methods
 
-If you can't use homebrew to install the Azure CLI in your environment, it's possible to use the manual instructions for Linux. Note that
-this process is not officially maintained to be compatible with macOS. Using a package manager such as Homebrew is always recommended. Only use the manual
+If you can't use homebrew to install the Azure CLI in your environment, it's possible to use the manual instructions for Linux. This process isn't officially maintained to be compatible with macOS. Using a package manager such as Homebrew is always recommended. Only use the manual
 installation method if you have no other option available.
 
 For the manual installation instructions, see [Install Azure CLI on Linux manually](install-azure-cli-linux.md).

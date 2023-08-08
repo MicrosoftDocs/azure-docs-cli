@@ -4,7 +4,7 @@ description: Learn about Azure tenants, users, and subscriptions. Use Azure CLI 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -51,7 +51,7 @@ If your organization requires multi-factor authentication, you may receive this 
 Due to a configuration change made by your administrator, or because you moved to a new location, you must use multi-factor authentication to access...
 ```
 
-Using the alternative `az login --tenant` command will prompted you to open a HTTPS page and enter the code provided.  You can then use multi-factor authentication and successfully sign in.  To learn more about sign in options with the azure CLI, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
+Using the alternative `az login --tenant` command prompts you to open an HTTPS page and enter the code provided.  You can then use multi-factor authentication and successfully sign in.  To learn more about sign in options with the azure CLI, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
 
 ## Get the active subscription
 
@@ -92,7 +92,7 @@ subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
 az account set --subscription $subscriptionId
 ```
 
-You cannot change your active subscription to a subscription _within a different tenant_ using the `az account set` command.  You first must sign in as a user within the desire tenant.  If you do try and set your subscription to a subscription within a different tenant, you will receive this error:
+You can't change your active subscription to a subscription _within a different tenant_ using the `az account set` command.  You first must sign in as a user within the desire tenant.  If you do try to set your subscription to a subscription within a different tenant, you receive this error:
 
 ```output
 The subscription of 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' doesn't exist in cloud 'AzureCloud'.
