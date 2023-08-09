@@ -35,7 +35,7 @@ ways for you to get in touch.
 * `az feedback` is a built-in command for the CLI that allows providing free-form feedback to the team.
 * For personalized support, see [Create an Azure support ticket in Azure CLI](azure-cli-support-request.md)
 * File a feature request or a bug report with the CLI in the [Azure CLI repository](https://github.com/Azure/azure-cli).
-* Ask a question or get clarification by filing an issue in the [Azure CLI documentation repository](https://github.com/MicrosoftDocs/azure-docs-clissues).
+* Ask a question or get clarification by filing an issue in the [Azure CLI documentation repository](https://github.com/MicrosoftDocs/azure-docs-cli/issues).
 
 ## See also
 
