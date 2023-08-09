@@ -36,6 +36,7 @@ directCommands:
   syntax: >-
     az containerapp create --name
                            --resource-group
+                           [--allow-insecure {false, true}]
                            [--args]
                            [--bind]
                            [--command]
@@ -51,6 +52,7 @@ directCommands:
                            [--enable-dapr {false, true}]
                            [--env-vars]
                            [--environment]
+                           [--environment-type {connected, managed}]
                            [--exposed-port]
                            [--image]
                            [--ingress {external, internal}]
@@ -126,6 +128,11 @@ directCommands:
           --image my-app:v1.0 --environment MyContainerappEnv \
           --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
           --secret-volume-mount "mnt/secrets"
+  - summary: Create a container app hosted on a Connected Environment.
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --image my-app:v1.0 --environment MyContainerappConnectedEnv \
+          --environment-type connected
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -136,6 +143,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --allow-insecure
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Allow insecure connections for ingress traffic.
+    description: ''
   - name: --args
     summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
     description: ''
@@ -185,6 +197,11 @@ directCommands:
     description: ''
   - name: --environment
     summary: Name or resource ID of the container app's environment.
+    description: ''
+  - name: --environment-type
+    defaultValue: "managed"
+    parameterValueGroup: "connected, managed"
+    summary: Type of environment.
     description: ''
   - name: --exposed-port
     summary: Additional exposed port. Only supported by tcp transport protocol. Must be unique per environment if the app ingress is external.
@@ -359,15 +376,23 @@ directCommands:
   description: ''
   syntax: >-
     az containerapp list [--environment]
+                         [--environment-type {connected, managed}]
                          [--resource-group]
   examples:
   - summary: List container apps in the current subscription.
     syntax: az containerapp list
   - summary: List container apps by resource group.
     syntax: az containerapp list -g MyResourceGroup
+  - summary: List container apps by environment type.
+    syntax: az containerapp list --environment-type connected
   optionalParameters:
   - name: --environment
     summary: Name or resource ID of the container app's environment.
+    description: ''
+  - name: --environment-type
+    defaultValue: "all"
+    parameterValueGroup: "connected, managed"
+    summary: Type of environment.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -876,6 +901,9 @@ commands:
 - az_containerapp_service_kafka_create
 - az_containerapp_service_kafka_delete
 - az_containerapp_service_list
+- az_containerapp_service_mariadb
+- az_containerapp_service_mariadb_create
+- az_containerapp_service_mariadb_delete
 - az_containerapp_service_postgres
 - az_containerapp_service_postgres_create
 - az_containerapp_service_postgres_delete
