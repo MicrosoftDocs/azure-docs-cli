@@ -14,33 +14,28 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Work with Azure service principal with an existing certificate, using the Azure CLI
 
-First to create a new service principal with a certificate, and remove subscription Contributer rights, which are added by default
+You can assign a certificate to a service principal by following these steps:
+
+1. In the Azure Portal, select Active Directory
+2. Then select App Registrations on the left hand sidebar
+3. Next, select your AKS service principal
+4. Then proceed to click on "Certificates and secrets." Here, you can upload it, or download and install it on your PC you are using to connect with. Make sure the certificate is stored somewhere you can access it on your local machine for later steps.
+5. To use the Service Principal with the certificate to access the Azure Container Registry, use the following command:
 
 ```bash
-az ad sp create-for-rbac --name acme-acr --cert @C:\Certs\acme-cert.crt
-az role assignment delete --assignee http://acme-acr --role Contributor
+# Sign into Azure CLI with SP's APP_ID and TENANT_ID and use certificate as password
+az login --service-principal --username <APP_ID> --tenant <TENANT_ID> --password </path/to/cert PEM or DER file>
 ```
 
-I then went into the portal and assigned the AcrPull to the new acme-acr service principal, from the IAM blade of the Azure Container Registry instance.
-
-Now, I actually want to add a whole bunch of certs to the principal
+6. Then sign into the registry with `az acr login`, which uses the Active Directory token from the CLI login:
 
 ```bash
-az ad sp credential reset --append --name acme-acr --cert @C:\Certs\another-cert.crt
+az acr login --name <registry name>
 ```
 
-To Login: 
+> [!NOTE]
+> Certificate must be in PEM format - it won't work with PKCS#12 files (.p12/.pfx)
+>
+> You don't need to prefix the path with an @ like you do with the previous az commands
+If you have a PKCS#12 file, you can convert it to PEM format using (assuming no password, otherwise omit/change the passing argument):
 
-```bash
-az login --service-principal --username http://acme-acr --tenant TENANT_ID --password C:\Certs\acme-cert.pem
-```
-
-Couple of gotchas with this one:
-
-Certificate must be in PEM format - it won't work with PKCS#12 files (.p12/.pfx)
-You don't need to prefix the path with an @ like you do with the previous az commands
-If you have a PKCS#12 file, you can convert it to PEM format using (assuming no password, otherwise omit/change the passin argument):
-
-```bash
-openssl pkcs12 -in acme-cert.p12 -clcerts -nodes -out acme-cert.pem -passin pass:
-```
