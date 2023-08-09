@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/08/2023
+ms.date: 08/09/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -77,7 +77,7 @@ You will be prompted to install an extension on first use.
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
 |[custom-providers](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers) | 2.3.1 | Microsoft Azure Command-Line Tools Custom Providers Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers/HISTORY.rst) |
 |[customlocation](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools Customlocation Extension | GA | [0.1.3](https://msazure.visualstudio.com/AzureArcPlatform/_git/customlocation-cli-extensions) |
-|[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.48.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
+|[databox](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox) | 2.48.0 | Microsoft Azure Command-Line Tools Databox Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/databox/HISTORY.rst) |
 |[databricks](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks) | 2.45.0 | Microsoft Azure Command-Line Tools DatabricksClient Extension | GA | [0.10.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/databricks/HISTORY.rst) |
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog) | 2.17.0 | Microsoft Azure Command-Line Tools MicrosoftDatadogClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
@@ -88,7 +88,7 @@ You will be prompted to install an extension on first use.
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
 |[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.15.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
-|[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.48.0 | Microsoft Azure Command-Line Tools DevCenter Extension | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
+|[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.48.0 | Microsoft Azure Command-Line Tools DevCenter Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.49.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
@@ -176,7 +176,7 @@ You will be prompted to install an extension on first use.
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.48.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [0.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
 |[staticwebapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp) | 2.39.0 | Microsoft Azure Command-Line Tools Staticwebapp Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp/HISTORY.rst) |
 |[storage-blob-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview) | 2.27.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Preview | [0.7.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview/HISTORY.rst) |
-|[storage-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover) | 2.45.0 | Microsoft Azure Command-Line Tools StorageMover Extension. | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover/HISTORY.rst) |
+|[storage-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover) | 2.50.0 | Microsoft Azure Command-Line Tools StorageMover Extension. | Experimental | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover/HISTORY.rst) |
 |[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.25.0 | Provides a preview for upcoming storage features. | Preview | [0.9.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync) | 2.3.1 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync/HISTORY.rst) |
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.15.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
