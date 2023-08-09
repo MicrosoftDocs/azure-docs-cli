@@ -1,6 +1,6 @@
 ---
-title: Work with Azure service principals – Azure CLI | Microsoft Docs
-description: Learn how to create and use service principals with the Azure CLI. Use service principals to gain control over which Azure resources can be accessed.
+title: Work with Azure service principals with a certificate – Azure CLI | Microsoft Docs
+description: Learn how to create and use service principals with the Azure CLI. Use service principals with an existing certificate to gain control over which Azure resources can be accessed.
 manager: jasongroce
 author: daphnemamicrosoft
 ms.author: daphnema
