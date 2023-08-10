@@ -18,7 +18,7 @@ Azure CLI samples provide end-to-end scenarios for jobs to be done. This article
 
 Not every Azure CLI reference command has been used in a sample script. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index).  For a list of popular conceptual content for each reference group, see [Azure CLI conceptual article list](./reference-docs-index.md).
 
-If this is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) to learn about installation and login.
+If this is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) and [Onboarding cheat sheet](cheat-sheet-onboarding.md) to learn about installation and login.
 
 ## List of samples
 
