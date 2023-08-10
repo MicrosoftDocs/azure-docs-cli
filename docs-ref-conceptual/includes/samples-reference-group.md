@@ -734,4 +734,4 @@ ms.custom: devx-track-azurecli
 | | [az webapp log download](/cli/azure/webapp/log#az-webapp-log-download) | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) |
 | | [az webapp show](/cli/azure/webapp#az-webapp-show) | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
 | |  | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability)
+| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |

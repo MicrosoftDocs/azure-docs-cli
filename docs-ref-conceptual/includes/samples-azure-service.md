@@ -160,4 +160,4 @@ ms.custom: devx-track-azurecli
 |  | [Export/Copy a managed disk to a storage account using the Azure CLI](/azure/virtual-machines/scripts/copy-managed-disks-vhd-to-storage-account) |
 |  | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account) |
 |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
-| **virtual-network** | [Peer two virtual networks with an Azure CLI script sample](/azure/virtual-network/scripts/virtual-network-cli-sample-peer-two-virtual-networks)
+| **virtual-network** | [Peer two virtual networks with an Azure CLI script sample](/azure/virtual-network/scripts/virtual-network-cli-sample-peer-two-virtual-networks) |
