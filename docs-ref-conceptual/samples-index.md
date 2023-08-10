@@ -28,7 +28,7 @@ Use this list of Azure CLI samples to find samples for the subject area that has
 
 [!INCLUDE [sample-list-azure-service](includes/samples-azure-service.md)]
 
-# [List by reference command](#tab/command)
+# [List by reference group](#tab/command)
 
 Use this list of Azure CLI samples to find scripts that demonstrate a particular command.
 
