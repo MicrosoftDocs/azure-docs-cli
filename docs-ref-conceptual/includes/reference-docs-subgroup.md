@@ -20,13 +20,13 @@ ms.custom: devx-track-azurecli
 | [az account alias](/cli/azure/account/alias) | [Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement)
 |  | [Programmatically create Azure subscriptions for a Microsoft Customer Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-customer-agreement)
 |  | [Programmatically create Azure subscriptions for a Microsoft Partner Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-partner-agreement)
-|  | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-|  | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+| [az account lock](/cli/azure/account/lock) | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+| [az account management-group](/cli/azure/account/management-group) | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
 |  | [Manage your Azure subscriptions at scale with management groups](/azure/governance/management-groups/manage)
 |  | [Assign Azure roles using Azure CLI](/azure/role-based-access-control/role-assignments-cli)
 |  | [List Azure role assignments using Azure CLI](/azure/role-based-access-control/role-assignments-list-cli)
 |  | [Quickstart: Create a management group with the Azure CLI](/azure/governance/management-groups/create-management-group-azure-cli)
-|  | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
+| [az account management-group subscription](/cli/azure/account/management-group/subscription) | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
 |  | [Manage your Azure subscriptions at scale with management groups](/azure/governance/management-groups/manage)
 | [az account subscription](/cli/azure/account/subscription) | [Configure your local JavaScript dev environment for Azure](/azure/developer/javascript/core/configure-local-development-environment)
 |  | [Quickstart: Create an Azure Front Door Standard/Premium - Azure CLI](/azure/frontdoor/create-front-door-cli)
@@ -44,7 +44,7 @@ ms.custom: devx-track-azurecli
 |  | [Build and push Docker images to Azure Container Registry using Docker templates](/azure/devops/pipelines/ecosystems/containers/acr-template)
 |  | [Azure Container Registry roles and permissions](/azure/container-registry/container-registry-roles)
 | [az acr agentpool](/cli/azure/acr/agentpool) | [Run an ACR task on a dedicated agent pool](/azure/container-registry/tasks-agent-pools)
-|  | [Enable Cache for ACR (Preview) - Azure CLI](/azure/container-registry/tutorial-enable-registry-cache-cli)
+| [az acr cache](/cli/azure/acr/cache) | [Enable Cache for ACR (Preview) - Azure CLI](/azure/container-registry/tutorial-enable-registry-cache-cli)
 |  | [Enable Cache ACR (Preview) with authentication - Azure CLI](/azure/container-registry/tutorial-enable-registry-cache-auth-cli)
 | [az acr config authentication-as-arm](/cli/azure/acr/config/authentication-as-arm) | [Azure Container Registry (ACR) introduces the Conditional Access policy](/azure/container-registry/container-registry-enable-conditional-access-policy)
 | [az acr config content-trust](/cli/azure/acr/config/content-trust) | [Content trust in Azure Container Registry](/azure/container-registry/container-registry-content-trust)
@@ -59,13 +59,13 @@ ms.custom: devx-track-azurecli
 |  | [Create your first containerized functions on Azure Container Apps](/azure/azure-functions/functions-deploy-container-apps)
 |  | [Create your first containerized Azure Functions](/azure/azure-functions/functions-deploy-container)
 |  | [Quickstart: Use Azure App Configuration in Azure Container Apps](/azure/azure-app-configuration/quickstart-container-apps)
-|  | [Enable Cache ACR (Preview) with authentication - Azure CLI](/azure/container-registry/tutorial-enable-registry-cache-auth-cli)
+| [az acr credential-set](/cli/azure/acr/credential-set) | [Enable Cache ACR (Preview) with authentication - Azure CLI](/azure/container-registry/tutorial-enable-registry-cache-auth-cli)
 | [az acr encryption](/cli/azure/acr/encryption) | [Enable a customer-managed key](/azure/container-registry/tutorial-enable-customer-managed-keys)
 |  | [Rotate and revoke a customer-managed key](/azure/container-registry/tutorial-rotate-revoke-customer-managed-keys)
-|  | [ACR Transfer with Az CLI](/azure/container-registry/container-registry-transfer-cli)
+| [az acr export-pipeline](/cli/azure/acr/export-pipeline) | [ACR Transfer with Az CLI](/azure/container-registry/container-registry-transfer-cli)
 | [az acr helm](/cli/azure/acr/helm) | [Azure Container Registry webhook reference](/azure/container-registry/container-registry-webhook-reference)
 | [az acr identity](/cli/azure/acr/identity) | [Troubleshoot a customer-managed key](/azure/container-registry/tutorial-troubleshoot-customer-managed-keys)
-|  | [ACR Transfer with Az CLI](/azure/container-registry/container-registry-transfer-cli)
+| [az acr import-pipeline](/cli/azure/acr/import-pipeline) | [ACR Transfer with Az CLI](/azure/container-registry/container-registry-transfer-cli)
 | [az acr manifest](/cli/azure/acr/manifest) | [Push and pull Helm charts to an Azure container registry](/azure/container-registry/container-registry-helm-repos)
 |  | [Import container images to a container registry](/azure/container-registry/container-registry-import-images)
 |  | [Create a token with repository-scoped permissions](/azure/container-registry/container-registry-repository-scoped-permissions)
@@ -76,18 +76,18 @@ ms.custom: devx-track-azurecli
 |  | [Configure public IP network rules](/azure/container-registry/container-registry-access-selected-networks)
 |  | [Restrict access to a container registry using a service endpoint in an Azure virtual network](/azure/container-registry/container-registry-vnet)
 | [az acr pack](/cli/azure/acr/pack) | [Build and push an image from an app using a Cloud Native Buildpack](/azure/container-registry/container-registry-tasks-pack-build)
-|  | [ACR Transfer with Az CLI](/azure/container-registry/container-registry-transfer-cli)
+| [az acr pipeline-run](/cli/azure/acr/pipeline-run) | [ACR Transfer with Az CLI](/azure/container-registry/container-registry-transfer-cli)
 | [az acr private-endpoint-connection](/cli/azure/acr/private-endpoint-connection) | [Troubleshooting online endpoints deployment and scoring](/azure/machine-learning/how-to-troubleshoot-online-endpoints)
 |  | [Connect privately to an Azure container registry using Azure Private Link](/azure/container-registry/container-registry-private-link)
 |  | [Use network isolation with managed online endpoints](/azure/machine-learning/how-to-secure-online-endpoint)
-|  | [Geo-replication in Azure Container Registry](/azure/container-registry/container-registry-geo-replication)
+| [az acr replication](/cli/azure/acr/replication) | [Geo-replication in Azure Container Registry](/azure/container-registry/container-registry-geo-replication)
 |  | [Enable zone redundancy in Azure Container Registry for resiliency and high availability](/azure/container-registry/zone-redundancy)
 | [az acr repository](/cli/azure/acr/repository) | [Push your first image to your Azure container registry using the Docker CLI](/azure/container-registry/container-registry-get-started-docker-cli)
 |  | [Troubleshooting online endpoints deployment and scoring](/azure/machine-learning/how-to-troubleshoot-online-endpoints)
 |  | [Tutorial: Deploy a multi-container group using Docker Compose](/azure/container-instances/tutorial-docker-compose)
 |  | [Push and pull Helm charts to an Azure container registry](/azure/container-registry/container-registry-helm-repos)
 |  | [Tutorial: Deploy and use Azure Container Registry (ACR)](/azure/aks/tutorial-kubernetes-prepare-acr)
-|  | [Create a token with repository-scoped permissions](/azure/container-registry/container-registry-repository-scoped-permissions)
+| [az acr scope-map](/cli/azure/acr/scope-map) | [Create a token with repository-scoped permissions](/azure/container-registry/container-registry-repository-scoped-permissions)
 |  | [Pull images from a connected registry on IoT Edge device](/azure/container-registry/pull-images-from-connected-registry)
 | [az acr task](/cli/azure/acr/task) | [Automatically purge images from an Azure container registry](/azure/container-registry/container-registry-auto-purge)
 |  | [Tutorial: Automate container image builds in the cloud when you commit source code](/azure/container-registry/container-registry-tutorial-build-task)
@@ -99,14 +99,14 @@ ms.custom: devx-track-azurecli
 |  | [How to consume and maintain public content with Azure Container Registry Tasks](/azure/container-registry/tasks-consume-public-content)
 |  | [Cross-registry authentication in an ACR task using an Azure-managed identity](/azure/container-registry/container-registry-tasks-cross-registry-authentication)
 |  | [Tutorial: Automate container image builds when a base image is updated in another private container registry](/azure/container-registry/container-registry-tutorial-private-base-image-update)
-|  | [Tutorial: Run an ACR task on a defined schedule](/azure/container-registry/container-registry-tasks-scheduled)
+| [az acr task timer](/cli/azure/acr/task/timer) | [Tutorial: Run an ACR task on a defined schedule](/azure/container-registry/container-registry-tasks-scheduled)
 | [az acr token](/cli/azure/acr/token) | [Push and pull Helm charts to an Azure container registry](/azure/container-registry/container-registry-helm-repos)
 |  | [Create a token with repository-scoped permissions](/azure/container-registry/container-registry-repository-scoped-permissions)
 |  | [Pull images from a connected registry on IoT Edge device](/azure/container-registry/pull-images-from-connected-registry)
 |  | [How to consume and maintain public content with Azure Container Registry Tasks](/azure/container-registry/tasks-consume-public-content)
 | [az acr token credential](/cli/azure/acr/token/credential) | [Create a token with repository-scoped permissions](/azure/container-registry/container-registry-repository-scoped-permissions)
 |  | [Pull images from a connected registry on IoT Edge device](/azure/container-registry/pull-images-from-connected-registry)
-|  | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
+| [az acr webhook](/cli/azure/acr/webhook) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
 |  | [Continuous deployment with custom containers in Azure App Service](/azure/app-service/deploy-ci-cd-custom-container)
 |  | [Using Azure Container Registry webhooks](/azure/container-registry/container-registry-webhook)
 
@@ -129,11 +129,11 @@ ms.custom: devx-track-azurecli
 |  | [Configure an app to trust an external identity provider](/azure/active-directory/workload-identities/workload-identity-federation-create-trust)
 |  | [Use GitHub Actions to connect to Azure](/azure/developer/github/connect-from-azure)
 |  | [Configure cross-tenant customer-managed keys for an existing storage account](/azure/storage/common/customer-managed-keys-configure-cross-tenant-existing-account)
-|  | [Integrate Azure Active Directory with Azure Kubernetes Service (AKS) using the Azure CLI (legacy)](/azure/aks/azure-ad-integration-cli)
+| [az ad app permission](/cli/azure/ad/app/permission) | [Integrate Azure Active Directory with Azure Kubernetes Service (AKS) using the Azure CLI (legacy)](/azure/aks/azure-ad-integration-cli)
 |  | [Use Azure RBAC on Azure Arc-enabled Kubernetes clusters (preview)](/azure/azure-arc/kubernetes/azure-rbac)
 |  | [Tutorial: Using automation to set up the Azure Active Directory admin for SQL Server](/sql/relational-databases/security/authentication-access/azure-ad-authentication-sql-server-automation-setup-tutorial)
 |  | [Configure Azure Active Directory authentication for an Azure Red Hat OpenShift 4 cluster (CLI)](/azure/openshift/configure-azure-ad-cli)
-|  | [Assign a Key Vault access policy (legacy)](/azure/key-vault/general/assign-access-policy)
+| [az ad group](/cli/azure/ad/group) | [Assign a Key Vault access policy (legacy)](/azure/key-vault/general/assign-access-policy)
 |  | [AKS-managed Azure Active Directory integration](/azure/aks/managed-azure-ad)
 |  | [Tutorial: Connect to SQL Database from .NET App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-sql-database)
 |  | [Use Kubernetes role-based access control with Azure Active Directory in Azure Kubernetes Service](/azure/aks/azure-ad-rbac)
@@ -148,7 +148,7 @@ ms.custom: devx-track-azurecli
 |  | [Integrate Azure Active Directory with Azure Kubernetes Service (AKS) using the Azure CLI (legacy)](/azure/aks/azure-ad-integration-cli)
 |  | [Add Key Management Service (KMS) etcd encryption to an Azure Kubernetes Service (AKS) cluster](/azure/aks/use-kms-etcd-encryption)
 |  | [Receive change notifications through Azure Event Hubs](/graph/change-notifications-delivery-event-hubs)
-|  | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az ad sp](/cli/azure/ad/sp) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
 |  | [Application and service principal objects in Azure Active Directory](/azure/active-directory/develop/app-objects-and-service-principals)
 |  | [Assign a Key Vault access policy (legacy)](/azure/key-vault/general/assign-access-policy)
 |  | [Transfer an Azure subscription to a different Azure AD directory](/azure/role-based-access-control/transfer-subscription)
@@ -195,26 +195,31 @@ ms.custom: devx-track-azurecli
 | [az afd security-policy](/cli/azure/afd/security-policy) | [Configure a Web Application Firewall rate limit rule](/azure/web-application-firewall/afds/waf-front-door-rate-limit-configure)
 |  | [Quickstart: Create an Azure Front Door Standard/Premium - Azure CLI](/azure/frontdoor/create-front-door-cli)
 |  | [Tutorial: Add and customize delivery rules for Azure Front Door Standard/Premium (Preview) with Azure CLI](/azure/frontdoor/standard-premium/front-door-add-rules-cli)
-|  | [Supported Kubernetes versions in Azure Kubernetes Service (AKS)](/azure/aks/supported-kubernetes-versions)
+
+## az aks
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az aks](/cli/azure/aks) | [Supported Kubernetes versions in Azure Kubernetes Service (AKS)](/azure/aks/supported-kubernetes-versions)
 |  | [Quickstart: Deploy an Azure Kubernetes Service (AKS) cluster using Azure CLI](/azure/aks/learn/quick-kubernetes-deploy-cli)
 |  | [Use the Azure Key Vault Provider for Secrets Store CSI Driver in an AKS cluster](/azure/aks/csi-secrets-store-driver)
 |  | [Create a private Azure Kubernetes Service (AKS) cluster](/azure/aks/private-clusters)
 |  | [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](/azure/aks/configure-azure-cni)
-|  | [Use the Azure Key Vault Provider for Secrets Store CSI Driver in an AKS cluster](/azure/aks/csi-secrets-store-driver)
+| [az aks addon](/cli/azure/aks/addon) | [Use the Azure Key Vault Provider for Secrets Store CSI Driver in an AKS cluster](/azure/aks/csi-secrets-store-driver)
 |  | [Use the application routing add-on with Azure Kubernetes Service (AKS) clusters (preview)](/azure/aks/app-routing)
 |  | [Confidential computing plugin for Confidential VMs](/azure/confidential-computing/confidential-nodes-aks-addon)
 | [az aks command](/cli/azure/aks/command) | [Use `command invoke` to access a private Azure Kubernetes Service (AKS) cluster](/azure/aks/command-invoke)
-|  | [Draft for Azure Kubernetes Service (AKS) (preview)](/azure/aks/draft)
+| [az aks draft](/cli/azure/aks/draft) | [Draft for Azure Kubernetes Service (AKS) (preview)](/azure/aks/draft)
 | [az aks egress-endpoints](/cli/azure/aks/egress-endpoints) | [Troubleshoot connections to endpoints outside the virtual network](/troubleshoot/azure/azure-kubernetes/troubleshoot-connections-endpoints-outside-virtual-network)
-|  | [Use Planned Maintenance to schedule and control upgrades for your Azure Kubernetes Service (AKS) cluster (preview)](/azure/aks/planned-maintenance)
+| [az aks maintenanceconfiguration](/cli/azure/aks/maintenanceconfiguration) | [Use Planned Maintenance to schedule and control upgrades for your Azure Kubernetes Service (AKS) cluster (preview)](/azure/aks/planned-maintenance)
 | [az aks mesh](/cli/azure/aks/mesh) | [Deploy Istio-based service mesh add-on for Azure Kubernetes Service (preview)](/azure/aks/istio-deploy-addon)
 |  | [Deploy external or internal ingresses for Istio service mesh add-on for Azure Kubernetes Service (preview)](/azure/aks/istio-deploy-ingress)
-|  | [Upgrade an Azure Kubernetes Service (AKS) cluster](/azure/aks/upgrade-cluster)
+| [az aks nodepool](/cli/azure/aks/nodepool) | [Upgrade an Azure Kubernetes Service (AKS) cluster](/azure/aks/upgrade-cluster)
 |  | [Use a managed identity in Azure Kubernetes Service (AKS)](/azure/aks/use-managed-identity)
 |  | [Create and manage multiple node pools for a cluster in Azure Kubernetes Service (AKS)](/azure/aks/use-multiple-node-pools)
 |  | [Automatically scale a cluster to meet application demands on Azure Kubernetes Service (AKS)](/azure/aks/cluster-autoscaler)
 |  | [Configure an AKS cluster](/azure/aks/cluster-configuration)
-|  | [Azure Kubernetes Service (AKS) node pool snapshot](/azure/aks/node-pool-snapshot)
+| [az aks nodepool snapshot](/cli/azure/aks/nodepool/snapshot) | [Azure Kubernetes Service (AKS) node pool snapshot](/azure/aks/node-pool-snapshot)
 | [az aks oidc-issuer](/cli/azure/aks/oidc-issuer) | [Create an OpenID Connect provider on Azure Kubernetes Service (AKS)](/azure/aks/use-oidc-issuer)
 | [az aks pod-identity](/cli/azure/aks/pod-identity) | [Use Azure Active Directory pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
 |  | [Migrate from pod managed-identity to workload identity](/azure/aks/workload-identity-migrate-from-pod-identity)
@@ -247,10 +252,10 @@ ms.custom: devx-track-azurecli
 | [az ams account-filter](/cli/azure/ams/account-filter) | [Creating filters with CLI](/azure/media-services/latest/filters-dynamic-manifest-cli-how-to)
 | [az ams asset](/cli/azure/ams/asset) | [Tutorial: Encode a remote file based on URL and stream the video - Azure CLI](/azure/media-services/latest/stream-files-cli-quickstart)
 | [az ams asset-filter](/cli/azure/ams/asset-filter) | [Creating filters with CLI](/azure/media-services/latest/filters-dynamic-manifest-cli-how-to)
-|  | [Tutorial: Encode a remote file based on URL and stream the video - Azure CLI](/azure/media-services/latest/stream-files-cli-quickstart)
-|  | [Tutorial: Give an Azure Function app access to a Media Services account](/azure/media-services/latest/security-function-app-managed-identity-cli-tutorial)
+| [az ams job](/cli/azure/ams/job) | [Tutorial: Encode a remote file based on URL and stream the video - Azure CLI](/azure/media-services/latest/stream-files-cli-quickstart)
+| [az ams live-event](/cli/azure/ams/live-event) | [Tutorial: Give an Azure Function app access to a Media Services account](/azure/media-services/latest/security-function-app-managed-identity-cli-tutorial)
 | [az ams streaming-endpoint](/cli/azure/ams/streaming-endpoint) | [Tutorial: Encode a remote file based on URL and stream the video - Azure CLI](/azure/media-services/latest/stream-files-cli-quickstart)
-|  | [Tutorial: Encode a remote file based on URL and stream the video - Azure CLI](/azure/media-services/latest/stream-files-cli-quickstart)
+| [az ams streaming-locator](/cli/azure/ams/streaming-locator) | [Tutorial: Encode a remote file based on URL and stream the video - Azure CLI](/azure/media-services/latest/stream-files-cli-quickstart)
 |  | [Creating filters with CLI](/azure/media-services/latest/filters-dynamic-manifest-cli-how-to)
 | [az ams transform](/cli/azure/ams/transform) | [Tutorial: Encode a remote file based on URL and stream the video - Azure CLI](/azure/media-services/latest/stream-files-cli-quickstart)
 
@@ -267,12 +272,12 @@ ms.custom: devx-track-azurecli
 |  | [Import a GraphQL API](/azure/api-management/graphql-api)
 |  | [Import SOAP API to API Management](/azure/api-management/import-soap-api)
 |  | [Tutorial: Use revisions to make non-breaking API changes safely](/azure/api-management/api-management-get-started-revise-api)
-|  | [Tutorial: Mock API responses](/azure/api-management/mock-api-responses)
-|  | [Tutorial: Use revisions to make non-breaking API changes safely](/azure/api-management/api-management-get-started-revise-api)
+| [az apim api operation](/cli/azure/apim/api/operation) | [Tutorial: Mock API responses](/azure/api-management/mock-api-responses)
+| [az apim api release](/cli/azure/apim/api/release) | [Tutorial: Use revisions to make non-breaking API changes safely](/azure/api-management/api-management-get-started-revise-api)
 | [az apim api versionset](/cli/azure/apim/api/versionset) | [Tutorial: Publish multiple versions of your API](/azure/api-management/api-management-get-started-publish-versions)
-|  | [Use named values in Azure API Management policies](/azure/api-management/api-management-howto-properties)
+| [az apim nv](/cli/azure/apim/nv) | [Use named values in Azure API Management policies](/azure/api-management/api-management-howto-properties)
 | [az apim product](/cli/azure/apim/product) | [Tutorial: Create and publish a product](/azure/api-management/api-management-howto-add-products)
-|  | [Tutorial: Create and publish a product](/azure/api-management/api-management-howto-add-products)
+| [az apim product api](/cli/azure/apim/product/api) | [Tutorial: Create and publish a product](/azure/api-management/api-management-howto-add-products)
 
 ## az appconfig
 
@@ -293,7 +298,7 @@ ms.custom: devx-track-azurecli
 |  | [Import or export configuration data](/azure/azure-app-configuration/howto-import-export-data)
 |  | [Azure App Configuration support for configuration files](/azure/azure-app-configuration/concept-config-file)
 |  | [Integrate with Kubernetes Deployment using Helm](/azure/azure-app-configuration/integrate-kubernetes-deployment-helm)
-|  | [Enable geo-replication](/azure/azure-app-configuration/howto-geo-replication)
+| [az appconfig replica](/cli/azure/appconfig/replica) | [Enable geo-replication](/azure/azure-app-configuration/howto-geo-replication)
 | [az appconfig revision](/cli/azure/appconfig/revision) | [Point-in-time key-values](/azure/azure-app-configuration/concept-point-time-snapshot)
 
 ## az appservice
@@ -363,12 +368,22 @@ ms.custom: devx-track-azurecli
 | [az arcdata dc debug](/cli/azure/arcdata/dc/debug) | [Get logs to troubleshoot Azure Arc-enabled data services](/azure/azure-arc/data/troubleshooting-get-logs)
 | [az arcdata dc status](/cli/azure/arcdata/dc/status) | [Upgrade a directly connected Azure Arc data controller using the CLI](/azure/azure-arc/data/upgrade-data-controller-direct-cli)
 |  | [Upgrade an indirectly connected Azure Arc data controller using the CLI](/azure/azure-arc/data/upgrade-data-controller-indirect-cli)
-|  | [Tutorial: Create an Azure Red Hat OpenShift 4 cluster](/azure/openshift/tutorial-create-cluster)
+
+## az aro
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az aro](/cli/azure/aro) | [Tutorial: Create an Azure Red Hat OpenShift 4 cluster](/azure/openshift/tutorial-create-cluster)
 |  | [Tutorial: Connect to an Azure Red Hat OpenShift 4 cluster](/azure/openshift/tutorial-connect-cluster)
 |  | [Create an Azure Red Hat OpenShift 4 private cluster](/azure/openshift/howto-create-private-cluster-4x)
 |  | [Configure Azure Active Directory authentication for an Azure Red Hat OpenShift 4 cluster (Portal)](/azure/openshift/configure-azure-ad-ui)
 |  | [Control egress traffic for your Azure Red Hat OpenShift (ARO) cluster](/azure/openshift/howto-restrict-egress)
-|  | [Publish and download universal packages in Azure Artifacts](/azure/devops/artifacts/quickstarts/universal-packages)
+
+## az artifacts
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az artifacts universal](/cli/azure/artifacts/universal) | [Publish and download universal packages in Azure Artifacts](/azure/devops/artifacts/quickstarts/universal-packages)
 
 ## az attestation
 
@@ -396,14 +411,19 @@ ms.custom: devx-track-azurecli
 |  | [Create Azure Stack HCI VM image using images in a local share (preview)](/azure-stack/hci/manage/virtual-machine-image-local-share)
 |  | [Create Azure Stack HCI VM image using image in Azure Storage account (preview)](/azure-stack/hci/manage/virtual-machine-image-storage-account)
 |  | [Sysprep Ubuntu image for Azure Stack HCI virtual machines (preview)](/azure-stack/hci/manage/virtual-machine-image-linux-sysprep)
-|  | [Create Azure Stack HCI VM image using Azure Marketplace images (preview)](/azure-stack/hci/manage/virtual-machine-image-azure-marketplace)
+| [az azurestackhci image](/cli/azure/azurestackhci/image) | [Create Azure Stack HCI VM image using Azure Marketplace images (preview)](/azure-stack/hci/manage/virtual-machine-image-azure-marketplace)
 |  | [Create Azure Stack HCI VM image using images in a local share (preview)](/azure-stack/hci/manage/virtual-machine-image-local-share)
 |  | [Create Azure Stack HCI VM image using image in Azure Storage account (preview)](/azure-stack/hci/manage/virtual-machine-image-storage-account)
 | [az azurestackhci networkinterface](/cli/azure/azurestackhci/networkinterface) | [Use VM images to create Arc virtual machines on Azure Stack HCI (preview)](/azure-stack/hci/manage/manage-virtual-machines-in-azure-portal)
 | [az azurestackhci virtualmachine](/cli/azure/azurestackhci/virtualmachine) | [Use VM images to create Arc virtual machines on Azure Stack HCI (preview)](/azure-stack/hci/manage/manage-virtual-machines-in-azure-portal)
 | [az azurestackhci virtualnetwork](/cli/azure/azurestackhci/virtualnetwork) | [Create virtual networks for Azure Stack HCI (preview)](/azure-stack/hci/manage/create-virtual-networks)
 |  | [Uninstall Azure Arc VM management (preview)](/azure-stack/hci/manage/uninstall-arc-resource-bridge)
-|  | [Back up SQL databases in Azure VM using Azure CLI](/azure/backup/backup-azure-sql-backup-cli)
+
+## az backup
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az backup container](/cli/azure/backup/container) | [Back up SQL databases in Azure VM using Azure CLI](/azure/backup/backup-azure-sql-backup-cli)
 |  | [Restore Azure file shares with the Azure CLI](/azure/backup/restore-afs-cli)
 |  | [Back up Azure file shares with Azure CLI](/azure/backup/backup-afs-cli)
 |  | [Quickstart: Back up SAP HANA System Replication on Azure VMs using Azure CLI](/azure/backup/quick-backup-hana-cli)
@@ -418,7 +438,7 @@ ms.custom: devx-track-azurecli
 |  | [Back up a virtual machine in Azure with the Azure CLI](/azure/backup/quick-backup-vm-cli)
 |  | [Restore a VM with Azure CLI](/azure/backup/tutorial-restore-disk)
 |  | [Back up SQL databases in Azure VM using Azure CLI](/azure/backup/backup-azure-sql-backup-cli)
-|  | [Back up an Azure VM using Enhanced policy](/azure/backup/backup-azure-vms-enhanced-policy)
+| [az backup policy](/cli/azure/backup/policy) | [Back up an Azure VM using Enhanced policy](/azure/backup/backup-azure-vms-enhanced-policy)
 |  | [Update the existing VM backup policy using CLI](/azure/backup/modify-vm-policy-cli)
 |  | [Back up SQL databases in Azure VM using Azure CLI](/azure/backup/backup-azure-sql-backup-cli)
 |  | [Back up Azure file shares with Azure CLI](/azure/backup/backup-afs-cli)
@@ -438,17 +458,17 @@ ms.custom: devx-track-azurecli
 |  | [Restore SQL databases in an Azure VM using Azure CLI](/azure/backup/backup-azure-sql-restore-cli)
 |  | [Tutorial: Restore SAP HANA databases in an Azure VM using Azure CLI](/azure/backup/tutorial-sap-hana-restore-cli)
 |  | [Quickstart: Restore SAP HANA System Replication on Azure VMs using Azure CLI](/azure/backup/quick-restore-hana-cli)
-|  | [Use Archive tier support](/azure/backup/use-archive-tier-support)
+| [az backup recoverypoint](/cli/azure/backup/recoverypoint) | [Use Archive tier support](/azure/backup/use-archive-tier-support)
 |  | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
 |  | [Back up and recover Oracle Database on an Azure Linux VM by using Azure Backup](/azure/virtual-machines/workloads/oracle/oracle-database-backup-azure-backup)
 |  | [Encryption of backup data using customer-managed keys](/azure/backup/encryption-at-rest-with-cmk)
 |  | [Restore files to a virtual machine in Azure](/azure/backup/tutorial-restore-files)
-|  | [Use Archive tier support](/azure/backup/use-archive-tier-support)
+| [az backup restore](/cli/azure/backup/restore) | [Use Archive tier support](/azure/backup/use-archive-tier-support)
 |  | [Selective disk backup and restore for Azure virtual machines](/azure/backup/selective-disk-backup-restore)
 |  | [Back up and recover Oracle Database on an Azure Linux VM by using Azure Backup](/azure/virtual-machines/workloads/oracle/oracle-database-backup-azure-backup)
 |  | [Encryption of backup data using customer-managed keys](/azure/backup/encryption-at-rest-with-cmk)
 |  | [Restore a VM with Azure CLI](/azure/backup/tutorial-restore-disk)
-|  | [Restore files to a virtual machine in Azure](/azure/backup/tutorial-restore-files)
+| [az backup restore files](/cli/azure/backup/restore/files) | [Restore files to a virtual machine in Azure](/azure/backup/tutorial-restore-files)
 | [az backup vault](/cli/azure/backup/vault) | [Delete an Azure Backup Recovery Services vault](/azure/backup/backup-azure-delete-vault)
 |  | [Back up and recover Oracle Database on an Azure Linux VM by using Azure Backup](/azure/virtual-machines/workloads/oracle/oracle-database-backup-azure-backup)
 |  | [Back up a virtual machine in Azure with the Azure CLI](/azure/backup/quick-backup-vm-cli)
@@ -461,16 +481,26 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Create a Recovery Services vault using an ARM template](/azure/site-recovery/quickstart-create-vault-template)
 | [az backup vault encryption](/cli/azure/backup/vault/encryption) | [Encryption of backup data using customer-managed keys](/azure/backup/encryption-at-rest-with-cmk)
 | [az backup vault identity](/cli/azure/backup/vault/identity) | [Encryption of backup data using customer-managed keys](/azure/backup/encryption-at-rest-with-cmk)
-|  | [Configure Multi-user authorization using Resource Guard in Azure Backup](/azure/backup/multi-user-authorization)
-|  | [Connect BareMetal Infrastructure instances in Azure](/azure/baremetal-infrastructure/connect-baremetal-infrastructure)
+| [az backup vault resource-guard-mapping](/cli/azure/backup/vault/resource-guard-mapping) | [Configure Multi-user authorization using Resource Guard in Azure Backup](/azure/backup/multi-user-authorization)
+
+## az baremetalinstance
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az baremetalinstance](/cli/azure/baremetalinstance) | [Connect BareMetal Infrastructure instances in Azure](/azure/baremetal-infrastructure/connect-baremetal-infrastructure)
 |  | [Work with  Azure Large Instances in the Azure portal](/azure/azure-large-instances/work-with-azure-large-instances-in-azure-portal)
-|  | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
+
+## az batch
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az batch account](/cli/azure/batch/account) | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job)
 |  | [Use Azure Pipelines to build and deploy an HPC solution](/azure/batch/batch-ci-cd)
 |  | [Quickstart: Create an Azure Batch account using Terraform](/azure/batch/quick-create-terraform)
 |  | [Configure customer-managed keys for your Azure Batch account with Azure Key Vault and Managed Identity](/azure/batch/batch-customer-managed-key)
 | [az batch account keys](/cli/azure/batch/account/keys) | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account)
-|  | [Use Azure Pipelines to build and deploy an HPC solution](/azure/batch/batch-ci-cd)
+| [az batch application](/cli/azure/batch/application) | [Use Azure Pipelines to build and deploy an HPC solution](/azure/batch/batch-ci-cd)
 |  | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application)
 | [az batch application package](/cli/azure/batch/application/package) | [Use Azure Pipelines to build and deploy an HPC solution](/azure/batch/batch-ci-cd)
 |  | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application)
@@ -479,21 +509,26 @@ ms.custom: devx-track-azurecli
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job)
 |  | [Use Azure Batch CLI templates and file transfer](/azure/batch/batch-cli-templates)
 | [az batch location](/cli/azure/batch/location) | [Choose a VM size and image for compute nodes in an Azure Batch pool](/azure/batch/batch-pool-vm-sizes)
-|  | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool)
-|  | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
+| [az batch node](/cli/azure/batch/node) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool)
+| [az batch pool](/cli/azure/batch/pool) | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job)
 |  | [Use the Azure Compute Gallery to create a custom image pool](/azure/batch/batch-sig-images)
 |  | [Use Azure Pipelines to build and deploy an HPC solution](/azure/batch/batch-ci-cd)
 |  | [Manage Batch resources with Azure CLI](/azure/batch/batch-cli-get-started)
-|  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool)
+| [az batch pool autoscale](/cli/azure/batch/pool/autoscale) | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool)
 | [az batch pool supported-images](/cli/azure/batch/pool/supported-images) | [Choose a VM size and image for compute nodes in an Azure Batch pool](/azure/batch/batch-pool-vm-sizes)
 |  | [Provision Linux compute nodes in Batch pools](/azure/batch/batch-linux-nodes)
 |  | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool)
-|  | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
+| [az batch task](/cli/azure/batch/task) | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job)
 |  | [Manage Batch resources with Azure CLI](/azure/batch/batch-cli-get-started)
-|  | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
-|  | [Install Bicep tools](/azure/azure-resource-manager/bicep/install)
+| [az batch task file](/cli/azure/batch/task/file) | [Quickstart: Use the Azure CLI to create a Batch account and run a job](/azure/batch/quick-create-cli)
+
+## az bicep
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az bicep](/cli/azure/bicep) | [Install Bicep tools](/azure/azure-resource-manager/bicep/install)
 |  | [Decompiling ARM template JSON to Bicep](/azure/azure-resource-manager/bicep/decompile)
 |  | [Bicep CLI commands](/azure/azure-resource-manager/bicep/bicep-cli)
 |  | [Create private registry for Bicep modules](/azure/azure-resource-manager/bicep/private-module-registry)
@@ -534,7 +569,7 @@ ms.custom: devx-track-azurecli
 |  | [Add and update a work item](/azure/devops/boards/backlogs/add-work-items)
 |  | [View and add work items using the Work Items page](/azure/devops/boards/work-items/view-add-work-items)
 |  | [Move work items from one team to another team](/azure/devops/boards/work-items/move-work-items)
-|  | [Link work items and other objects](/azure/devops/boards/backlogs/add-link)
+| [az boards work-item relation](/cli/azure/boards/work-item/relation) | [Link work items and other objects](/azure/devops/boards/backlogs/add-link)
 |  | [Reference guide for link types used in Azure DevOps and Azure Boards](/azure/devops/boards/queries/link-type-reference)
 
 ## az bot
@@ -544,12 +579,12 @@ ms.custom: devx-track-azurecli
 | [az bot](/cli/azure/bot) | [Provision and publish a bot](/azure/bot-service/provision-and-publish-a-bot)
 |  | [Use Azure CLI to create or update an Azure Bot resource](/azure/bot-service/provision-azure-bot)
 | [az bot authsetting](/cli/azure/bot/authsetting) | [Identity providers](/azure/bot-service/bot-builder-concept-identity-providers)
-|  | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
-|  | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
+| [az bot directline](/cli/azure/bot/directline) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
+| [az bot email](/cli/azure/bot/email) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
 | [az bot facebook](/cli/azure/bot/facebook) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
 | [az bot msteams](/cli/azure/bot/msteams) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
-|  | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
-|  | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
+| [az bot skype](/cli/azure/bot/skype) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
+| [az bot slack](/cli/azure/bot/slack) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
 | [az bot sms](/cli/azure/bot/sms) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
 | [az bot telegram](/cli/azure/bot/telegram) | [Connect your bot to channels with Azure CLI](/azure/bot-service/bot-service-channel-azure-cli)
 
@@ -604,7 +639,12 @@ ms.custom: devx-track-azurecli
 |  | [Express.js app converts text to speech with Cognitive Services Speech](/azure/developer/javascript/tutorial/convert-text-to-speech-cognitive-services)
 |  | [Tutorial: Secure Cognitive Service connection from .NET App Service using Key Vault](/azure/app-service/tutorial-connect-msi-key-vault)
 | [az cognitiveservices account network-rule](/cli/azure/cognitiveservices/account/network-rule) | [Configure Azure AI services virtual networks](/azure/ai-services/cognitive-services-virtual-networks)
-|  | [Quickstart: Create and manage Communication Services resources](/azure/communication-services/quickstarts/create-communication-resource)
+
+## az communication
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az communication](/cli/azure/communication) | [Quickstart: Create and manage Communication Services resources](/azure/communication-services/quickstarts/create-communication-resource)
 |  | [Get started with the chat hero sample](/azure/communication-services/samples/chat-hero-sample)
 | [az communication identity token](/cli/azure/communication/identity/token) | [Quickstart: Join a room call](/azure/communication-services/quickstarts/rooms/join-rooms-call)
 |  | [Pre-Call diagnostic](/azure/communication-services/concepts/voice-video-calling/pre-call-diagnostics)
@@ -615,7 +655,12 @@ ms.custom: devx-track-azurecli
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az confcom](/cli/azure/confcom) | [Tutorial: Create an ARM template for a confidential container deployment with custom confidential computing enforcement policy](/azure/container-instances/container-instances-tutorial-deploy-confidential-containers-cce-arm)
-|  | [Quickstart: Create a confidential ledger using the Azure CLI](/azure/confidential-ledger/quickstart-cli)
+
+## az confidentialledger
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az confidentialledger](/cli/azure/confidentialledger) | [Quickstart: Create a confidential ledger using the Azure CLI](/azure/confidential-ledger/quickstart-cli)
 
 ## az config
 
@@ -676,7 +721,7 @@ ms.custom: devx-track-azurecli
 |  | [Install Azure Monitor Agent](/azure/network-watcher/connection-monitor-install-azure-monitor-agent)
 |  | [Enable Azure VM extensions using the Azure CLI](/azure/azure-arc/servers/manage-vm-extensions-cli)
 |  | [Monitor Nexus Kubernetes cluster](/azure/operator-nexus/howto-monitor-naks-cluster)
-|  | [Manage Azure Monitor Agent](/azure/azure-monitor/agents/azure-monitor-agent-manage)
+| [az connectedmachine extension](/cli/azure/connectedmachine/extension) | [Manage Azure Monitor Agent](/azure/azure-monitor/agents/azure-monitor-agent-manage)
 |  | [What are Extended Security Updates for SQL Server?](/sql/sql-server/end-of-support/sql-server-extended-security-updates)
 |  | [Manage SQL Server license and billing options](/sql/sql-server/azure-arc/manage-license-type)
 |  | [Overview of change tracking and inventory using Azure Monitoring Agent (Preview)](/azure/automation/change-tracking/overview-monitoring-agent)
@@ -705,7 +750,12 @@ ms.custom: devx-track-azurecli
 |---|---|
 | [az consumption budget](/cli/azure/consumption/budget) | [Quickstart: Create a budget with an ARM template](/azure/cost-management-billing/costs/quick-create-budget-template)
 |  | [Quickstart: Create a budget with Bicep](/azure/cost-management-billing/costs/quick-create-budget-bicep)
-|  | [Quickstart: Deploy a container instance in Azure using the Azure CLI](/azure/container-instances/container-instances-quickstart)
+
+## az container
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az container](/cli/azure/container) | [Quickstart: Deploy a container instance in Azure using the Azure CLI](/azure/container-instances/container-instances-quickstart)
 |  | [Mount an Azure file share in Azure Container Instances](/azure/container-instances/container-instances-volume-azure-files)
 |  | [Deploy container instances into an Azure virtual network](/azure/container-instances/container-instances-vnet)
 |  | [Set environment variables in container instances](/azure/container-instances/container-instances-environment-variables)
@@ -731,7 +781,7 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Connect to PostgreSQL Database from a Java Quarkus Container App without secrets using a managed identity](/azure/container-apps/tutorial-java-quarkus-connect-managed-identity-postgresql-database)
 |  | [Migrate a Java application to use passwordless connections with Azure SQL Database](/azure/developer/java/spring-framework/migrate-sql-database-to-passwordless-connection)
 | [az containerapp dapr](/cli/azure/containerapp/dapr) | [Deploy Azure Container Apps with the az containerapp up command](/azure/container-apps/containerapp-up)
-|  | [Quickstart: Deploy your first application to Azure Spring Apps](/azure/spring-apps/quickstart)
+| [az containerapp env](/cli/azure/containerapp/env) | [Quickstart: Deploy your first application to Azure Spring Apps](/azure/spring-apps/quickstart)
 |  | [Networking environment in Azure Container Apps](/azure/container-apps/networking)
 |  | [Provide a virtual network to an external Azure Container Apps environment](/azure/container-apps/vnet-custom)
 |  | [Provide a virtual network to an internal Azure Container Apps environment](/azure/container-apps/vnet-custom-internal)
@@ -747,9 +797,9 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Deploy an event-driven application to Azure Spring Apps](/azure/spring-apps/quickstart-deploy-event-driven-app)
 |  | [Quickstart: Provision an Azure Spring Apps Standard consumption and dedicated plan service instance](/azure/spring-apps/quickstart-provision-standard-consumption-service-instance)
 |  | [Quickstart: Create an Azure Spring Apps Standard consumption and dedicated plan instance in an Azure Container Apps environment with a virtual network](/azure/spring-apps/quickstart-provision-standard-consumption-app-environment-with-virtual-network)
-|  | [Set up GitHub Actions with Azure CLI in Azure Container Apps](/azure/container-apps/github-actions-cli)
+| [az containerapp github-action](/cli/azure/containerapp/github-action) | [Set up GitHub Actions with Azure CLI in Azure Container Apps](/azure/container-apps/github-actions-cli)
 |  | [Configure continuous deployment for a Python web app in Azure Container Apps](/azure/developer/python/tutorial-deploy-python-web-app-azure-container-apps-03)
-|  | [Custom domain names and free managed certificates in Azure Container Apps (preview)](/azure/container-apps/custom-domains-managed-certificates)
+| [az containerapp hostname](/cli/azure/containerapp/hostname) | [Custom domain names and free managed certificates in Azure Container Apps (preview)](/azure/container-apps/custom-domains-managed-certificates)
 | [az containerapp identity](/cli/azure/containerapp/identity) | [Deploy to Azure Container Apps from Azure Pipelines](/azure/container-apps/azure-pipelines)
 |  | [Managed identities in Azure Container Apps](/azure/container-apps/managed-identity)
 |  | [Deploy to Azure Container Apps with GitHub Actions](/azure/container-apps/github-actions)
@@ -758,7 +808,7 @@ ms.custom: devx-track-azurecli
 | [az containerapp ingress](/cli/azure/containerapp/ingress) | [Configure Ingress for your app in Azure Container Apps](/azure/container-apps/ingress-how-to)
 |  | [Deploy Azure Container Apps with the az containerapp up command](/azure/container-apps/containerapp-up)
 |  | [Custom domain names and free managed certificates in Azure Container Apps (preview)](/azure/container-apps/custom-domains-managed-certificates)
-|  | [Set up IP ingress restrictions in Azure Container Apps](/azure/container-apps/ip-restrictions)
+| [az containerapp ingress access-restriction](/cli/azure/containerapp/ingress/access-restriction) | [Set up IP ingress restrictions in Azure Container Apps](/azure/container-apps/ip-restrictions)
 | [az containerapp ingress cors](/cli/azure/containerapp/ingress/cors) | [Configure cross-origin resource sharing (CORS) for Azure Container Apps](/azure/container-apps/cors)
 | [az containerapp ingress traffic](/cli/azure/containerapp/ingress/traffic) | [Traffic splitting in Azure Container Apps](/azure/container-apps/traffic-splitting)
 |  | [Blue-Green Deployment in Azure Container Apps](/azure/container-apps/blue-green-deployment)
@@ -780,17 +830,22 @@ ms.custom: devx-track-azurecli
 |  | [Azure Container Apps image pull with managed identity](/azure/container-apps/managed-identity-image-pull)
 | [az containerapp replica](/cli/azure/containerapp/replica) | [View log streams in Azure Container Apps](/azure/container-apps/log-streaming)
 |  | [Connect to a container console in Azure Container Apps](/azure/container-apps/container-console)
-|  | [Manage revisions in Azure Container Apps](/azure/container-apps/revisions-manage)
+| [az containerapp revision](/cli/azure/containerapp/revision) | [Manage revisions in Azure Container Apps](/azure/container-apps/revisions-manage)
 |  | [Container Apps ARM template API specification](/azure/container-apps/azure-resource-manager-api-spec)
 |  | [View log streams in Azure Container Apps](/azure/container-apps/log-streaming)
 |  | [Connect to a container console in Azure Container Apps](/azure/container-apps/container-console)
-|  | [Manage revisions in Azure Container Apps](/azure/container-apps/revisions-manage)
+| [az containerapp revision label](/cli/azure/containerapp/revision/label) | [Manage revisions in Azure Container Apps](/azure/container-apps/revisions-manage)
 |  | [Blue-Green Deployment in Azure Container Apps](/azure/container-apps/blue-green-deployment)
 | [az containerapp secret](/cli/azure/containerapp/secret) | [Deploy Azure Container Apps with the az containerapp up command](/azure/container-apps/containerapp-up)
 | [az containerapp service kafka](/cli/azure/containerapp/service/kafka) | [Tutorial: Create and use an Apache Kafka service for development](/azure/container-apps/tutorial-dev-services-kafka)
 | [az containerapp service postgres](/cli/azure/containerapp/service/postgres) | [Tutorial: Use a PostgreSQL service for development](/azure/container-apps/tutorial-dev-services-postgresql)
-|  | [Tutorial: Connect services in Azure Container Apps (preview)](/azure/container-apps/connect-services)
-|  | [Quickstart: Azure Cosmos DB for NoSQL client library for .NET](/azure/cosmos-db/nosql/quickstart-dotnet)
+| [az containerapp service redis](/cli/azure/containerapp/service/redis) | [Tutorial: Connect services in Azure Container Apps (preview)](/azure/container-apps/connect-services)
+
+## az cosmosdb
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az cosmosdb](/cli/azure/cosmosdb) | [Quickstart: Azure Cosmos DB for NoSQL client library for .NET](/azure/cosmos-db/nosql/quickstart-dotnet)
 |  | [Azure role-based access control in Azure Cosmos DB](/azure/cosmos-db/role-based-access-control)
 |  | [Quickstart: Azure Cosmos DB for Table for .NET](/azure/cosmos-db/table/quickstart-dotnet)
 |  | [Azure Cosmos DB free tier](/azure/cosmos-db/free-tier)
@@ -800,7 +855,7 @@ ms.custom: devx-track-azurecli
 |  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless)
 |  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput)
 |  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](/azure/cosmos-db/scripts/cli/cassandra/autoscale)
-|  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput)
+| [az cosmosdb cassandra keyspace throughput](/cli/azure/cosmosdb/cassandra/keyspace/throughput) | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput)
 | [az cosmosdb cassandra table](/cli/azure/cosmosdb/cassandra/table) | [Getting started with databases on Azure](/azure/developer/javascript/database-developer-guide)
 |  | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/create)
 |  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless)
@@ -814,13 +869,13 @@ ms.custom: devx-track-azurecli
 |  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](/azure/cosmos-db/scripts/cli/gremlin/serverless)
 |  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](/azure/cosmos-db/scripts/cli/gremlin/autoscale)
 |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput)
-|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput)
+| [az cosmosdb gremlin database throughput](/cli/azure/cosmosdb/gremlin/database/throughput) | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput)
 | [az cosmosdb gremlin graph](/cli/azure/cosmosdb/gremlin/graph) | [Configure and use Azure Synapse Link for Azure Cosmos DB](/azure/cosmos-db/configure-synapse-link)
 |  | [Restore a deleted container or database to the same Azure Cosmos DB account (preview)](/azure/cosmos-db/how-to-restore-in-account-continuous-backup)
 |  | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create)
 |  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](/azure/cosmos-db/scripts/cli/gremlin/serverless)
 |  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](/azure/cosmos-db/scripts/cli/gremlin/autoscale)
-|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput)
+| [az cosmosdb gremlin graph throughput](/cli/azure/cosmosdb/gremlin/graph/throughput) | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput)
 | [az cosmosdb gremlin restorable-database](/cli/azure/cosmosdb/gremlin/restorable-database) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
 |  | [Restore a deleted container or database to the same Azure Cosmos DB account (preview)](/azure/cosmos-db/how-to-restore-in-account-continuous-backup)
 | [az cosmosdb gremlin restorable-graph](/cli/azure/cosmosdb/gremlin/restorable-graph) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
@@ -847,14 +902,14 @@ ms.custom: devx-track-azurecli
 |  | [Create a serverless database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/serverless)
 |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput)
 |  | [Create a database with autoscale and shared collections for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/autoscale)
-|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput)
+| [az cosmosdb mongodb database throughput](/cli/azure/cosmosdb/mongodb/database/throughput) | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput)
 | [az cosmosdb mongodb restorable-collection](/cli/azure/cosmosdb/mongodb/restorable-collection) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
 |  | [Restore a deleted container or database to the same Azure Cosmos DB account (preview)](/azure/cosmos-db/how-to-restore-in-account-continuous-backup)
 | [az cosmosdb mongodb restorable-database](/cli/azure/cosmosdb/mongodb/restorable-database) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
 |  | [Restore a deleted container or database to the same Azure Cosmos DB account (preview)](/azure/cosmos-db/how-to-restore-in-account-continuous-backup)
 | [az cosmosdb mongodb restorable-resource](/cli/azure/cosmosdb/mongodb/restorable-resource) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
 | [az cosmosdb mongodb role definition](/cli/azure/cosmosdb/mongodb/role/definition) | [Configure role-based access control in Azure Cosmos DB for MongoDB](/azure/cosmos-db/mongodb/how-to-setup-rbac)
-|  | [Configure role-based access control in Azure Cosmos DB for MongoDB](/azure/cosmos-db/mongodb/how-to-setup-rbac)
+| [az cosmosdb mongodb user definition](/cli/azure/cosmosdb/mongodb/user/definition) | [Configure role-based access control in Azure Cosmos DB for MongoDB](/azure/cosmos-db/mongodb/how-to-setup-rbac)
 | [az cosmosdb network-rule](/cli/azure/cosmosdb/network-rule) | [Configure access to Azure Cosmos DB from virtual networks (VNet)](/azure/cosmos-db/how-to-configure-vnet-service-endpoint)
 |  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet)
 | [az cosmosdb restorable-database-account](/cli/azure/cosmosdb/restorable-database-account) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
@@ -874,7 +929,7 @@ ms.custom: devx-track-azurecli
 |  | [JavaScript Tutorial: Upload and analyze a file with Azure Functions and Blob Storage](/azure/storage/blobs/blob-upload-function-trigger-javascript)
 |  | [Quickstart: Azure Cosmos DB for NoSQL client library for Python](/azure/cosmos-db/nosql/quickstart-python)
 |  | [Use system-assigned managed identities to access Azure Cosmos DB data](/azure/cosmos-db/managed-identity-based-authentication)
-|  | [Manage Azure Cosmos DB for NoSQL resources using Azure CLI](/azure/cosmos-db/nosql/manage-with-cli)
+| [az cosmosdb sql database throughput](/cli/azure/cosmosdb/sql/database/throughput) | [Manage Azure Cosmos DB for NoSQL resources using Azure CLI](/azure/cosmos-db/nosql/manage-with-cli)
 |  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput)
 | [az cosmosdb sql restorable-container](/cli/azure/cosmosdb/sql/restorable-container) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
 |  | [Restore a deleted container or database to the same Azure Cosmos DB account (preview)](/azure/cosmos-db/how-to-restore-in-account-continuous-backup)
@@ -899,8 +954,13 @@ ms.custom: devx-track-azurecli
 | [az cosmosdb table restorable-resource](/cli/azure/cosmosdb/table/restorable-resource) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
 | [az cosmosdb table restorable-table](/cli/azure/cosmosdb/table/restorable-table) | [Restore an Azure Cosmos DB account that uses continuous backup mode](/azure/cosmos-db/restore-account-continuous-backup)
 |  | [Restore a deleted container or database to the same Azure Cosmos DB account (preview)](/azure/cosmos-db/how-to-restore-in-account-continuous-backup)
-|  | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput)
-|  | [Tutorial: Create and manage exported data](/azure/cost-management-billing/costs/tutorial-export-acm-data)
+| [az cosmosdb table throughput](/cli/azure/cosmosdb/table/throughput) | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput)
+
+## az costmanagement
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az costmanagement export](/cli/azure/costmanagement/export) | [Tutorial: Create and manage exported data](/azure/cost-management-billing/costs/tutorial-export-acm-data)
 |  | [View and download your Azure usage and charges](/azure/cost-management-billing/understand/download-azure-daily-usage)
 |  | [Get usage data with the Azure CLI](/azure/cost-management-billing/automate/get-usage-data-azure-cli)
 
@@ -913,8 +973,18 @@ ms.custom: devx-track-azurecli
 |  | [Commission the AKS cluster](/azure/private-5g-core/commission-cluster)
 |  | [Quickstart: Using Azure CLI to deploy an AKS hybrid cluster on a Windows Server node in an Azure VM](/azure/aks/hybrid/aks-hybrid-preview-azure-vm)
 |  | [How to install Arc Resource Bridge on Windows Server using the command line](/azure/aks/hybrid/deploy-arc-resource-bridge-windows-server)
-|  | [Quickstart: Create Azure Custom Resource Provider and deploy custom resources](/azure/azure-resource-manager/custom-providers/create-custom-provider)
-|  | [Tutorial: Order Azure Data Box](/azure/databox/data-box-deploy-ordered)
+
+## az custom-providers
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az custom-providers resource-provider](/cli/azure/custom-providers/resource-provider) | [Quickstart: Create Azure Custom Resource Provider and deploy custom resources](/azure/azure-resource-manager/custom-providers/create-custom-provider)
+
+## az databox
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az databox job](/cli/azure/databox/job) | [Tutorial: Order Azure Data Box](/azure/databox/data-box-deploy-ordered)
 |  | [Quickstart: Deploy Azure Data Box Disk using the Azure portal](/azure/databox/data-box-disk-quickstart-portal)
 |  | [Quickstart: Deploy Azure Data Box Heavy using the Azure portal](/azure/databox/data-box-heavy-quickstart-portal)
 
@@ -924,7 +994,7 @@ ms.custom: devx-track-azurecli
 |---|---|
 | [az databoxedge device](/cli/azure/databoxedge/device) | [Tutorial: Prepare to deploy Azure Stack Edge Mini R](/azure/databox-online/azure-stack-edge-mini-r-deploy-prep)
 |  | [Tutorial: Prepare to deploy Azure Stack Edge Pro R](/azure/databox-online/azure-stack-edge-pro-r-deploy-prep)
-|  | [Tutorial: Prepare to deploy Azure Stack Edge Mini R](/azure/databox-online/azure-stack-edge-mini-r-deploy-prep)
+| [az databoxedge order](/cli/azure/databoxedge/order) | [Tutorial: Prepare to deploy Azure Stack Edge Mini R](/azure/databox-online/azure-stack-edge-mini-r-deploy-prep)
 |  | [Tutorial: Prepare to deploy Azure Stack Edge Pro R](/azure/databox-online/azure-stack-edge-pro-r-deploy-prep)
 
 ## az databricks
@@ -945,33 +1015,43 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Create an Azure Data Factory using Azure CLI](/azure/data-factory/quickstart-create-data-factory-azure-cli)
 |  | [Tutorial: Clean up resources](/azure/cloud-adoption-framework/scenarios/cloud-scale-analytics/tutorials/cleanup-instructions)
 | [az datafactory dataset](/cli/azure/datafactory/dataset) | [Quickstart: Create an Azure Data Factory using Azure CLI](/azure/data-factory/quickstart-create-data-factory-azure-cli)
-|  | [Tutorial: Clean up resources](/azure/cloud-adoption-framework/scenarios/cloud-scale-analytics/tutorials/cleanup-instructions)
+| [az datafactory integration-runtime](/cli/azure/datafactory/integration-runtime) | [Tutorial: Clean up resources](/azure/cloud-adoption-framework/scenarios/cloud-scale-analytics/tutorials/cleanup-instructions)
 | [az datafactory linked-service](/cli/azure/datafactory/linked-service) | [Quickstart: Create an Azure Data Factory using Azure CLI](/azure/data-factory/quickstart-create-data-factory-azure-cli)
-|  | [Quickstart: Create an Azure Data Factory using Azure CLI](/azure/data-factory/quickstart-create-data-factory-azure-cli)
+| [az datafactory pipeline](/cli/azure/datafactory/pipeline) | [Quickstart: Create an Azure Data Factory using Azure CLI](/azure/data-factory/quickstart-create-data-factory-azure-cli)
 | [az datafactory pipeline-run](/cli/azure/datafactory/pipeline-run) | [Quickstart: Create an Azure Data Factory using Azure CLI](/azure/data-factory/quickstart-create-data-factory-azure-cli)
-|  | [Create a trigger that runs a pipeline on a schedule](/azure/data-factory/how-to-create-schedule-trigger)
+| [az datafactory trigger](/cli/azure/datafactory/trigger) | [Create a trigger that runs a pipeline on a schedule](/azure/data-factory/how-to-create-schedule-trigger)
 |  | [Create a trigger that runs a pipeline on a tumbling window](/azure/data-factory/how-to-create-tumbling-window-trigger)
 | [az datafactory trigger-run](/cli/azure/datafactory/trigger-run) | [Create a trigger that runs a pipeline on a schedule](/azure/data-factory/how-to-create-schedule-trigger)
 |  | [Create a trigger that runs a pipeline on a tumbling window](/azure/data-factory/how-to-create-tumbling-window-trigger)
-|  | [Migrate databases at scale using automation (Preview)](/azure/dms/migration-dms-powershell-cli)
+
+## az datamigration
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az datamigration sql-managed-instance](/cli/azure/datamigration/sql-managed-instance) | [Migrate databases at scale using automation (Preview)](/azure/dms/migration-dms-powershell-cli)
 | [az datamigration sql-service](/cli/azure/datamigration/sql-service) | [Migrate databases at scale using automation (Preview)](/azure/dms/migration-dms-powershell-cli)
-|  | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
+
+## az dataprotection
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az dataprotection backup-instance](/cli/azure/dataprotection/backup-instance) | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
 |  | [Back up Azure Blobs in a storage account using Azure CLI](/azure/backup/backup-blobs-storage-account-cli)
 |  | [Back up Azure Managed Disks using Azure CLI](/azure/backup/backup-managed-disks-cli)
 |  | [Back up Azure Kubernetes Service using Azure CLI (preview)](/azure/backup/azure-kubernetes-service-cluster-backup-using-cli)
 |  | [Restore Azure Blobs to point-in-time using Azure CLI](/azure/backup/restore-blobs-storage-account-cli)
-|  | [Restore Azure Blobs to point-in-time using Azure CLI](/azure/backup/restore-blobs-storage-account-cli)
+| [az dataprotection backup-instance restore](/cli/azure/dataprotection/backup-instance/restore) | [Restore Azure Blobs to point-in-time using Azure CLI](/azure/backup/restore-blobs-storage-account-cli)
 |  | [Restore Azure PostgreSQL databases using Azure CLI](/azure/backup/restore-postgresql-database-cli)
 |  | [Restore Azure Managed Disks using Azure CLI](/azure/backup/restore-managed-disks-cli)
 |  | [Restore Azure Kubernetes Service using Azure CLI (preview)](/azure/backup/azure-kubernetes-service-cluster-restore-using-cli)
-|  | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
+| [az dataprotection backup-policy](/cli/azure/dataprotection/backup-policy) | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
 |  | [Back up Azure Blobs in a storage account using Azure CLI](/azure/backup/backup-blobs-storage-account-cli)
 |  | [Back up Azure Managed Disks using Azure CLI](/azure/backup/backup-managed-disks-cli)
 |  | [Back up Azure Kubernetes Service using Azure CLI (preview)](/azure/backup/azure-kubernetes-service-cluster-backup-using-cli)
 | [az dataprotection backup-policy retention-rule](/cli/azure/dataprotection/backup-policy/retention-rule) | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
 |  | [Back up Azure Managed Disks using Azure CLI](/azure/backup/backup-managed-disks-cli)
 |  | [Back up Azure Kubernetes Service using Azure CLI (preview)](/azure/backup/azure-kubernetes-service-cluster-backup-using-cli)
-|  | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
+| [az dataprotection backup-policy tag](/cli/azure/dataprotection/backup-policy/tag) | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
 | [az dataprotection backup-policy trigger](/cli/azure/dataprotection/backup-policy/trigger) | [Back up Azure PostgreSQL databases using Azure CLI](/azure/backup/backup-postgresql-cli)
 |  | [Back up Azure Managed Disks using Azure CLI](/azure/backup/backup-managed-disks-cli)
 |  | [Back up Azure Kubernetes Service using Azure CLI (preview)](/azure/backup/azure-kubernetes-service-cluster-backup-using-cli)
@@ -987,7 +1067,7 @@ ms.custom: devx-track-azurecli
 | [az dataprotection recovery-point](/cli/azure/dataprotection/recovery-point) | [Restore Azure PostgreSQL databases using Azure CLI](/azure/backup/restore-postgresql-database-cli)
 |  | [Restore Azure Managed Disks using Azure CLI](/azure/backup/restore-managed-disks-cli)
 |  | [Restore Azure Kubernetes Service using Azure CLI (preview)](/azure/backup/azure-kubernetes-service-cluster-restore-using-cli)
-|  | [Configure Multi-user authorization using Resource Guard in Azure Backup](/azure/backup/multi-user-authorization)
+| [az dataprotection resource-guard](/cli/azure/dataprotection/resource-guard) | [Configure Multi-user authorization using Resource Guard in Azure Backup](/azure/backup/multi-user-authorization)
 | [az dataprotection restorable-time-range](/cli/azure/dataprotection/restorable-time-range) | [Restore Azure Blobs to point-in-time using Azure CLI](/azure/backup/restore-blobs-storage-account-cli)
 
 ## az datashare
@@ -995,7 +1075,7 @@ ms.custom: devx-track-azurecli
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az datashare](/cli/azure/datashare) | [Tutorial: Share data using Azure Data Share](/azure/data-share/share-your-data)
-|  | [Tutorial: Share data using Azure Data Share](/azure/data-share/share-your-data)
+| [az datashare account](/cli/azure/datashare/account) | [Tutorial: Share data using Azure Data Share](/azure/data-share/share-your-data)
 |  | [Tutorial: Accept and receive data using Azure Data Share](/azure/data-share/subscribe-to-data-share)
 | [az datashare consumer-invitation](/cli/azure/datashare/consumer-invitation) | [Tutorial: Accept and receive data using Azure Data Share](/azure/data-share/subscribe-to-data-share)
 | [az datashare consumer-source-data-set](/cli/azure/datashare/consumer-source-data-set) | [Tutorial: Accept and receive data using Azure Data Share](/azure/data-share/subscribe-to-data-share)
@@ -1003,7 +1083,12 @@ ms.custom: devx-track-azurecli
 | [az datashare invitation](/cli/azure/datashare/invitation) | [Tutorial: Share data using Azure Data Share](/azure/data-share/share-your-data)
 | [az datashare share-subscription](/cli/azure/datashare/share-subscription) | [Tutorial: Accept and receive data using Azure Data Share](/azure/data-share/subscribe-to-data-share)
 | [az datashare trigger](/cli/azure/datashare/trigger) | [Tutorial: Accept and receive data using Azure Data Share](/azure/data-share/subscribe-to-data-share)
-|  | [Tutorial: Deploying HSMs into an existing virtual network using the Azure CLI](/azure/dedicated-hsm/tutorial-deploy-hsm-cli)
+
+## az dedicated-hsm
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az dedicated-hsm](/cli/azure/dedicated-hsm) | [Tutorial: Deploying HSMs into an existing virtual network using the Azure CLI](/azure/dedicated-hsm/tutorial-deploy-hsm-cli)
 |  | [Troubleshooting the Azure Dedicated HSM service](/azure/dedicated-hsm/troubleshoot)
 |  | [Tutorial: Create a payment HSM](/azure/payment-hsm/create-payment-hsm)
 |  | [Quickstart: Create an Azure Dedicated HSM by using the Azure CLI](/azure/dedicated-hsm/quickstart-hsm-azure-cli)
@@ -1037,7 +1122,7 @@ ms.custom: devx-track-azurecli
 | [az deployment operation tenant](/cli/azure/deployment/operation/tenant) | [View deployment history with Azure Resource Manager](/azure/azure-resource-manager/templates/deployment-history)
 |  | [Find error codes](/azure/azure-resource-manager/troubleshooting/find-error-code)
 |  | [Enable debug logging](/azure/azure-resource-manager/troubleshooting/enable-debug-logging)
-|  | [View deployment history with Azure Resource Manager](/azure/azure-resource-manager/templates/deployment-history)
+| [az deployment sub](/cli/azure/deployment/sub) | [View deployment history with Azure Resource Manager](/azure/azure-resource-manager/templates/deployment-history)
 |  | [How to deploy resources with Bicep and Azure CLI](/azure/azure-resource-manager/bicep/deploy-cli)
 |  | [How to use Azure Resource Manager (ARM) deployment templates with Azure CLI](/azure/azure-resource-manager/templates/deploy-cli)
 |  | [Onboard a customer to Azure Lighthouse](/azure/lighthouse/how-to/onboard-customer)
@@ -1056,7 +1141,7 @@ ms.custom: devx-track-azurecli
 |  | [Use Azure CLI and Azure PowerShell with Azure Virtual Desktop](/azure/virtual-desktop/cli-powershell)
 |  | [Manage application groups using PowerShell or the Azure CLI](/azure/virtual-desktop/manage-app-groups-powershell)
 |  | [Delete a host pool](/azure/virtual-desktop/delete-host-pool)
-|  | [Create a host pool in Azure Virtual Desktop](/azure/virtual-desktop/create-host-pool)
+| [az desktopvirtualization hostpool](/cli/azure/desktopvirtualization/hostpool) | [Create a host pool in Azure Virtual Desktop](/azure/virtual-desktop/create-host-pool)
 |  | [Add session hosts to a host pool](/azure/virtual-desktop/add-session-hosts-host-pool)
 |  | [Create an application group, a workspace, and assign users in Azure Virtual Desktop](/azure/virtual-desktop/create-application-group-workspace)
 |  | [Set up Private Link with Azure Virtual Desktop](/azure/virtual-desktop/private-link-setup)
@@ -1084,7 +1169,7 @@ ms.custom: devx-track-azurecli
 | [az devcenter admin project-environment-type](/cli/azure/devcenter/admin/project-environment-type) | [Tutorial: Deploy environments in CI/CD with GitHub](/azure/deployment-environments/tutorial-deploy-environments-in-cicd-github)
 |  | [Create and configure a project by using the Azure CLI](/azure/deployment-environments/how-to-create-configure-projects)
 | [az devcenter dev dev-box](/cli/azure/devcenter/dev/dev-box) | [How to hibernate your dev box](/azure/dev-box/how-to-hibernate-your-dev-box)
-|  | [Manage your deployment environment](/azure/deployment-environments/how-to-manage-environments)
+| [az devcenter dev environment](/cli/azure/devcenter/dev/environment) | [Manage your deployment environment](/azure/deployment-environments/how-to-manage-environments)
 |  | [Add and configure an environment definition in Azure Deployment Environments](/azure/deployment-environments/configure-environment-definition)
 |  | [Create and access an environment by using the Azure CLI](/azure/deployment-environments/how-to-create-access-environments)
 | [az devcenter dev environment-definition](/cli/azure/devcenter/dev/environment-definition) | [Create and access an environment by using the Azure CLI](/azure/deployment-environments/how-to-create-access-environments)
@@ -1099,32 +1184,32 @@ ms.custom: devx-track-azurecli
 |  | [Create your first pipeline](/azure/devops/pipelines/create-first-pipeline)
 |  | [Add & use variable groups](/azure/devops/pipelines/library/variable-groups)
 |  | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
-|  | [Add and manage information banners in Azure Devops](/azure/devops/organizations/settings/manage-banners)
-|  | [Install extensions](/azure/devops/marketplace/install-extension)
-|  | [Create a project in Azure DevOps](/azure/devops/organizations/projects/create-project)
+| [az devops admin banner](/cli/azure/devops/admin/banner) | [Add and manage information banners in Azure Devops](/azure/devops/organizations/settings/manage-banners)
+| [az devops extension](/cli/azure/devops/extension) | [Install extensions](/azure/devops/marketplace/install-extension)
+| [az devops project](/cli/azure/devops/project) | [Create a project in Azure DevOps](/azure/devops/organizations/projects/create-project)
 |  | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables)
 |  | [Delete a project](/azure/devops/organizations/projects/delete-project)
 | [az devops security group](/cli/azure/devops/security/group) | [Add organization users and manage access](/azure/devops/organizations/accounts/add-organization-users)
 |  | [Add and manage security groups](/azure/devops/organizations/security/add-manage-security-groups)
-|  | [Add and manage security groups](/azure/devops/organizations/security/add-manage-security-groups)
-|  | [Manage permissions with command line tool](/azure/devops/organizations/security/manage-tokens-namespaces)
-|  | [Manage permissions with command line tool](/azure/devops/organizations/security/manage-tokens-namespaces)
+| [az devops security group membership](/cli/azure/devops/security/group/membership) | [Add and manage security groups](/azure/devops/organizations/security/add-manage-security-groups)
+| [az devops security permission](/cli/azure/devops/security/permission) | [Manage permissions with command line tool](/azure/devops/organizations/security/manage-tokens-namespaces)
+| [az devops security permission namespace](/cli/azure/devops/security/permission/namespace) | [Manage permissions with command line tool](/azure/devops/organizations/security/manage-tokens-namespaces)
 | [az devops service-endpoint](/cli/azure/devops/service-endpoint) | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables)
 |  | [Azure DevOps CLI service endpoint](/azure/devops/cli/service-endpoint)
 | [az devops service-endpoint azurerm](/cli/azure/devops/service-endpoint/azurerm) | [Azure DevOps CLI service endpoint](/azure/devops/cli/service-endpoint)
 | [az devops service-endpoint github](/cli/azure/devops/service-endpoint/github) | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables)
 |  | [Azure DevOps CLI service endpoint](/azure/devops/cli/service-endpoint)
-|  | [Add users or groups to a team or project](/azure/devops/organizations/security/add-users-team-project)
+| [az devops team](/cli/azure/devops/team) | [Add users or groups to a team or project](/azure/devops/organizations/security/add-users-team-project)
 |  | [Create or add a team](/azure/devops/organizations/settings/add-teams)
 |  | [Rename or remove a team](/azure/devops/organizations/settings/rename-remove-team)
-|  | [Add organization users and manage access](/azure/devops/organizations/accounts/add-organization-users)
+| [az devops user](/cli/azure/devops/user) | [Add organization users and manage access](/azure/devops/organizations/accounts/add-organization-users)
 |  | [Export a list of users and their access levels](/azure/devops/organizations/security/export-users-audit-log)
 |  | [Remove users from Azure DevOps](/azure/devops/organizations/accounts/delete-organization-users)
 | [az devops wiki](/cli/azure/devops/wiki) | [Add and edit wiki pages](/azure/devops/project/wiki/add-edit-wiki)
 |  | [Create a wiki for your project](/azure/devops/project/wiki/wiki-create-repo)
 |  | [Publish a Git repo to a wiki](/azure/devops/project/wiki/publish-repo-to-wiki)
 |  | [Manage wikis with the CLI](/azure/devops/project/wiki/manage-wikis)
-|  | [Add and edit wiki pages](/azure/devops/project/wiki/add-edit-wiki)
+| [az devops wiki page](/cli/azure/devops/wiki/page) | [Add and edit wiki pages](/azure/devops/project/wiki/add-edit-wiki)
 |  | [Create a wiki for your project](/azure/devops/project/wiki/wiki-create-repo)
 |  | [Manage wikis with the CLI](/azure/devops/project/wiki/manage-wikis)
 
@@ -1153,17 +1238,27 @@ ms.custom: devx-track-azurecli
 |  | [Copy managed disks to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-managed-disks-to-same-or-different-subscription)
 |  | [Encrypt managed disks with cross-tenant customer-managed keys](/azure/virtual-machines/disks-cross-tenant-customer-managed-keys)
 |  | [Create a managed disk from a snapshot with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-snapshot)
-|  | [Get started with Azure Data Lake Analytics using Azure CLI](/azure/data-lake-analytics/data-lake-analytics-get-started-cli)
+
+## az dla
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az dla account](/cli/azure/dla/account) | [Get started with Azure Data Lake Analytics using Azure CLI](/azure/data-lake-analytics/data-lake-analytics-get-started-cli)
 |  | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
+| [az dla account blob-storage](/cli/azure/dla/account/blob-storage) | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
+| [az dla account data-lake-store](/cli/azure/dla/account/data-lake-store) | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
+| [az dla job](/cli/azure/dla/job) | [Get started with Azure Data Lake Analytics using Azure CLI](/azure/data-lake-analytics/data-lake-analytics-get-started-cli)
 |  | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
-|  | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
-|  | [Get started with Azure Data Lake Analytics using Azure CLI](/azure/data-lake-analytics/data-lake-analytics-get-started-cli)
-|  | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
-|  | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
+| [az dla job pipeline](/cli/azure/dla/job/pipeline) | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
 | [az dla job recurrence](/cli/azure/dla/job/recurrence) | [Manage Azure Data Lake Analytics using the Azure CLI](/azure/data-lake-analytics/data-lake-analytics-manage-use-cli)
-|  | [Get started with Azure Data Lake Storage Gen1 using the Azure CLI](/azure/data-lake-store/data-lake-store-get-started-cli-2.0)
+
+## az dls
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az dls account](/cli/azure/dls/account) | [Get started with Azure Data Lake Storage Gen1 using the Azure CLI](/azure/data-lake-store/data-lake-store-get-started-cli-2.0)
 |  | [Get started with Azure Data Lake Analytics using Azure CLI](/azure/data-lake-analytics/data-lake-analytics-get-started-cli)
-|  | [Get started with Azure Data Lake Storage Gen1 using the Azure CLI](/azure/data-lake-store/data-lake-store-get-started-cli-2.0)
+| [az dls fs](/cli/azure/dls/fs) | [Get started with Azure Data Lake Storage Gen1 using the Azure CLI](/azure/data-lake-store/data-lake-store-get-started-cli-2.0)
 |  | [Get started with Azure Data Lake Analytics using Azure CLI](/azure/data-lake-analytics/data-lake-analytics-get-started-cli)
 | [az dls fs access](/cli/azure/dls/fs/access) | [Get started with Azure Data Lake Storage Gen1 using the Azure CLI](/azure/data-lake-store/data-lake-store-get-started-cli-2.0)
 
@@ -1173,10 +1268,15 @@ ms.custom: devx-track-azurecli
 |---|---|
 | [az dms](/cli/azure/dms) | [Tutorial: Migrate PostgreSQL to Azure Database for PostgreSQL online using DMS (classic) via the Azure CLI](/azure/dms/tutorial-postgresql-azure-postgresql-online)
 | [az dms project](/cli/azure/dms/project) | [Tutorial: Migrate PostgreSQL to Azure Database for PostgreSQL online using DMS (classic) via the Azure CLI](/azure/dms/tutorial-postgresql-azure-postgresql-online)
-|  | [Tutorial: Migrate PostgreSQL to Azure Database for PostgreSQL online using DMS (classic) via the Azure CLI](/azure/dms/tutorial-postgresql-azure-postgresql-online)
-|  | [Quickstart: Create an Azure DNS Private Resolver using Bicep](/azure/dns/dns-private-resolver-get-started-bicep)
+| [az dms project task](/cli/azure/dms/project/task) | [Tutorial: Migrate PostgreSQL to Azure Database for PostgreSQL online using DMS (classic) via the Azure CLI](/azure/dms/tutorial-postgresql-azure-postgresql-online)
+
+## az dns-resolver
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az dns-resolver](/cli/azure/dns-resolver) | [Quickstart: Create an Azure DNS Private Resolver using Bicep](/azure/dns/dns-private-resolver-get-started-bicep)
 | [az dns-resolver forwarding-ruleset](/cli/azure/dns-resolver/forwarding-ruleset) | [Quickstart: Create an Azure DNS Private Resolver using Bicep](/azure/dns/dns-private-resolver-get-started-bicep)
-|  | [Quickstart: Create an Azure DNS Private Resolver using Bicep](/azure/dns/dns-private-resolver-get-started-bicep)
+| [az dns-resolver inbound-endpoint](/cli/azure/dns-resolver/inbound-endpoint) | [Quickstart: Create an Azure DNS Private Resolver using Bicep](/azure/dns/dns-private-resolver-get-started-bicep)
 | [az dns-resolver outbound-endpoint](/cli/azure/dns-resolver/outbound-endpoint) | [Quickstart: Create an Azure DNS Private Resolver using Bicep](/azure/dns/dns-private-resolver-get-started-bicep)
 | [az dns-resolver vnet-link](/cli/azure/dns-resolver/vnet-link) | [Quickstart: Create an Azure DNS Private Resolver using Bicep](/azure/dns/dns-private-resolver-get-started-bicep)
 
@@ -1197,7 +1297,7 @@ ms.custom: devx-track-azurecli
 |  | [Integrate Azure Digital Twins data into an Azure Maps indoor map](/azure/digital-twins/how-to-integrate-maps)
 |  | [Integrate Azure Digital Twins with Azure Time Series Insights](/azure/digital-twins/how-to-integrate-time-series-insights)
 |  | [Create endpoints in Azure Digital Twins](/azure/digital-twins/how-to-create-endpoints)
-|  | [Set up an Azure Digital Twins instance and authentication (CLI)](/azure/digital-twins/how-to-set-up-instance-cli)
+| [az dt identity](/cli/azure/dt/identity) | [Set up an Azure Digital Twins instance and authentication (CLI)](/azure/digital-twins/how-to-set-up-instance-cli)
 | [az dt model](/cli/azure/dt/model) | [Ingest IoT Hub telemetry into Azure Digital Twins](/azure/digital-twins/how-to-ingest-iot-hub-data)
 |  | [Automanage devices in Azure Digital Twins using Device Provisioning Service (DPS)](/azure/digital-twins/how-to-provision-using-device-provisioning-service)
 |  | [Tutorial: Create an Azure Digital Twins graph using the Azure CLI](/azure/digital-twins/tutorial-command-line-cli)
@@ -1215,7 +1315,7 @@ ms.custom: devx-track-azurecli
 |  | [Automanage devices in Azure Digital Twins using Device Provisioning Service (DPS)](/azure/digital-twins/how-to-provision-using-device-provisioning-service)
 |  | [Azure Digital Twins CLI command set](/azure/digital-twins/concepts-cli)
 |  | [Tutorial: Create an Azure Digital Twins graph using the Azure CLI](/azure/digital-twins/tutorial-command-line-cli)
-|  | [Tutorial: Create an Azure Digital Twins graph using the Azure CLI](/azure/digital-twins/tutorial-command-line-cli)
+| [az dt twin relationship](/cli/azure/dt/twin/relationship) | [Tutorial: Create an Azure Digital Twins graph using the Azure CLI](/azure/digital-twins/tutorial-command-line-cli)
 
 ## az elastic-san
 
@@ -1234,7 +1334,12 @@ ms.custom: devx-track-azurecli
 |  | [Connect to Elastic SAN Preview volumes - Linux](/azure/storage/elastic-san/elastic-san-connect-linux)
 |  | [Configure Elastic SAN networking Preview](/azure/storage/elastic-san/elastic-san-networking)
 |  | [Delete an Elastic SAN Preview](/azure/storage/elastic-san/elastic-san-delete)
-|  | [Manage topics and publish events using event domains](/azure/event-grid/how-to-event-domains)
+
+## az eventgrid
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az eventgrid domain](/cli/azure/eventgrid/domain) | [Manage topics and publish events using event domains](/azure/event-grid/how-to-event-domains)
 |  | [Assign a managed identity to an Event Grid custom topic or domain](/azure/event-grid/enable-identity-custom-topics-domains)
 | [az eventgrid domain key](/cli/azure/eventgrid/domain/key) | [Manage topics and publish events using event domains](/azure/event-grid/how-to-event-domains)
 |  | [Get access keys for Event Grid resources (topics or domains)](/azure/event-grid/get-access-keys)
@@ -1302,7 +1407,12 @@ ms.custom: devx-track-azurecli
 |  | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)
 |  | [Available Azure CLI extensions](/cli/azure/azure-cli-extensions-list)
 |  | [How to use the Azure CLI alias extension](/cli/azure/azure-cli-extension-alias)
-|  | [Create and manage multiple node pools for a cluster in Azure Kubernetes Service (AKS)](/azure/aks/use-multiple-node-pools)
+
+## az feature
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az feature](/cli/azure/feature) | [Create and manage multiple node pools for a cluster in Azure Kubernetes Service (AKS)](/azure/aks/use-multiple-node-pools)
 |  | [Use a public standard load balancer in Azure Kubernetes Service (AKS)](/azure/aks/load-balancer-standard)
 |  | [Configure an AKS cluster](/azure/aks/cluster-configuration)
 |  | [Use Azure Active Directory pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
@@ -1330,7 +1440,12 @@ ms.custom: devx-track-azurecli
 |  | [Manage an App Service Environment](/azure/app-service/environment/using-an-ase)
 |  | [Tutorial: Order Azure Data Box](/azure/databox/data-box-deploy-ordered)
 |  | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
-|  | [Quickstart: Create an Azure Kubernetes Fleet Manager resource and join member clusters (preview)](/azure/kubernetes-fleet/quickstart-create-fleet-and-members)
+
+## az fleet
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az fleet](/cli/azure/fleet) | [Quickstart: Create an Azure Kubernetes Fleet Manager resource and join member clusters (preview)](/azure/kubernetes-fleet/quickstart-create-fleet-and-members)
 |  | [Propagate Kubernetes resource objects from an Azure Kubernetes Fleet Manager resource to member clusters (preview)](/azure/kubernetes-fleet/configuration-propagation)
 |  | [Set up multi-cluster layer 4 load balancing across Azure Kubernetes Fleet Manager member clusters (preview)](/azure/kubernetes-fleet/l4-load-balancing)
 | [az fleet member](/cli/azure/fleet/member) | [Quickstart: Create an Azure Kubernetes Fleet Manager resource and join member clusters (preview)](/azure/kubernetes-fleet/quickstart-create-fleet-and-members)
@@ -1359,7 +1474,7 @@ ms.custom: devx-track-azurecli
 |  | [How to configure monitoring for Azure Functions](/azure/azure-functions/configure-monitoring)
 |  | [Migrate apps from Azure Functions version 3.x to version 4.x](/azure/azure-functions/migrate-version-3-version-4)
 |  | [Quickstart: Create a Python function in Azure from the command line](/azure/azure-functions/create-first-function-cli-python)
-|  | [Working with containers and Azure Functions](/azure/azure-functions/functions-how-to-custom-container)
+| [az functionapp config container](/cli/azure/functionapp/config/container) | [Working with containers and Azure Functions](/azure/azure-functions/functions-how-to-custom-container)
 |  | [Azure Container Apps hosting of Azure Functions](/azure/azure-functions/functions-container-apps-hosting)
 |  | [Deploy a machine learning model to Azure Functions with Azure Cache for Redis](/azure/azure-cache-for-redis/cache-ml)
 | [az functionapp cors](/cli/azure/functionapp/cors) | [Manage your function app](/azure/azure-functions/functions-how-to-use-azure-function-app-settings)
@@ -1397,13 +1512,13 @@ ms.custom: devx-track-azurecli
 |  | [Set up private access (preview)](/azure/managed-grafana/how-to-set-up-private-access)
 |  | [Generate and manage Grafana API keys in Azure Managed Grafana](/azure/managed-grafana/how-to-create-api-keys)
 |  | [Setup of Network Observability for Azure Kubernetes Service (AKS) - Azure managed Prometheus and Grafana](/azure/aks/network-observability-managed-cli)
-|  | [Generate and manage Grafana API keys in Azure Managed Grafana](/azure/managed-grafana/how-to-create-api-keys)
-|  | [Create a dashboard in Azure Managed Grafana](/azure/managed-grafana/how-to-create-dashboard)
+| [az grafana api-key](/cli/azure/grafana/api-key) | [Generate and manage Grafana API keys in Azure Managed Grafana](/azure/managed-grafana/how-to-create-api-keys)
+| [az grafana dashboard](/cli/azure/grafana/dashboard) | [Create a dashboard in Azure Managed Grafana](/azure/managed-grafana/how-to-create-dashboard)
 |  | [Generate and manage Grafana API keys in Azure Managed Grafana](/azure/managed-grafana/how-to-create-api-keys)
 | [az grafana data-source](/cli/azure/grafana/data-source) | [How to configure data sources for Azure Managed Grafana](/azure/managed-grafana/how-to-data-source-plugins-managed-identity)
 |  | [Use deterministic outbound IPs](/azure/managed-grafana/how-to-deterministic-ip)
-|  | [How to use service accounts in Azure Managed Grafana](/azure/managed-grafana/how-to-service-accounts)
-|  | [How to use service accounts in Azure Managed Grafana](/azure/managed-grafana/how-to-service-accounts)
+| [az grafana service-account](/cli/azure/grafana/service-account) | [How to use service accounts in Azure Managed Grafana](/azure/managed-grafana/how-to-service-accounts)
+| [az grafana service-account token](/cli/azure/grafana/service-account/token) | [How to use service accounts in Azure Managed Grafana](/azure/managed-grafana/how-to-service-accounts)
 
 ## az graph
 
@@ -1414,7 +1529,7 @@ ms.custom: devx-track-azurecli
 |  | [Starter Resource Graph query samples](/azure/governance/resource-graph/samples/starter)
 |  | [Get resource configuration changes](/azure/governance/resource-graph/how-to/get-resource-changes)
 |  | [Explore your Azure resources with Resource Graph](/azure/governance/resource-graph/concepts/explore-resources)
-|  | [Quickstart: Create a Resource Graph shared query using Azure CLI](/azure/governance/resource-graph/shared-query-azure-cli)
+| [az graph shared-query](/cli/azure/graph/shared-query) | [Quickstart: Create a Resource Graph shared query using Azure CLI](/azure/governance/resource-graph/shared-query-azure-cli)
 
 ## az group
 
@@ -1425,7 +1540,12 @@ ms.custom: devx-track-azurecli
 |  | [How to use variables in Azure CLI commands](/cli/azure/azure-cli-variables)
 |  | [How to manage Azure resource groups with the Azure CLI](/cli/azure/manage-azure-groups-azure-cli)
 |  | [Tutorial: Use persisted parameters to simplify sequential Azure CLI commands](/cli/azure/param-persist-tutorial)
-|  | [Manage logs for an HDInsight cluster](/azure/hdinsight/hdinsight-log-management)
+
+## az hdinsight
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az hdinsight](/cli/azure/hdinsight) | [Manage logs for an HDInsight cluster](/azure/hdinsight/hdinsight-log-management)
 |  | [Manage Azure HDInsight clusters using Azure CLI](/azure/hdinsight/hdinsight-administer-use-command-line)
 |  | [Azure HDInsight double encryption for data at rest](/azure/hdinsight/disk-encryption)
 |  | [Tutorial: Create an Apache Kafka REST proxy enabled cluster in HDInsight using Azure CLI](/azure/hdinsight/kafka/tutorial-cli-rest-proxy)
@@ -1433,8 +1553,8 @@ ms.custom: devx-track-azurecli
 | [az hdinsight application](/cli/azure/hdinsight/application) | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples)
 |  | [Install custom Apache Hadoop applications on Azure HDInsight](/azure/hdinsight/hdinsight-apps-install-custom-applications)
 | [az hdinsight azure-monitor](/cli/azure/hdinsight/azure-monitor) | [Use Azure Monitor logs to monitor HDInsight clusters](/azure/hdinsight/hdinsight-hadoop-oms-log-analytics-tutorial)
-|  | [Use Azure Monitor logs to monitor HDInsight clusters](/azure/hdinsight/hdinsight-hadoop-oms-log-analytics-tutorial)
-|  | [Customize Azure HDInsight clusters by using script actions](/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux)
+| [az hdinsight monitor](/cli/azure/hdinsight/monitor) | [Use Azure Monitor logs to monitor HDInsight clusters](/azure/hdinsight/hdinsight-hadoop-oms-log-analytics-tutorial)
+| [az hdinsight script-action](/cli/azure/hdinsight/script-action) | [Customize Azure HDInsight clusters by using script actions](/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux)
 |  | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples)
 
 ## az healthcareapis
@@ -1444,7 +1564,12 @@ ms.custom: devx-track-azurecli
 | [az healthcareapis acr](/cli/azure/healthcareapis/acr) | [Converting your data to FHIR for Azure API for FHIR](/azure/healthcare-apis/azure-api-for-fhir/convert-data)
 | [az healthcareapis service](/cli/azure/healthcareapis/service) | [Configure customer-managed keys at rest](/azure/healthcare-apis/azure-api-for-fhir/customer-managed-key)
 |  | [Quickstart: Use an ARM template to deploy Azure API for FHIR](/azure/healthcare-apis/azure-api-for-fhir/azure-api-fhir-resource-manager-template)
-|  | [Integrate Azure HPC Cache with Azure Kubernetes Service (AKS)](/azure/aks/azure-hpc-cache)
+
+## az hpc-cache
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az hpc-cache](/cli/azure/hpc-cache) | [Integrate Azure HPC Cache with Azure Kubernetes Service (AKS)](/azure/aks/azure-hpc-cache)
 |  | [Create an Azure HPC Cache](/azure/hpc-cache/hpc-cache-create)
 |  | [Manage your cache](/azure/hpc-cache/hpc-cache-manage)
 | [az hpc-cache blob-storage-target](/cli/azure/hpc-cache/blob-storage-target) | [Integrate Azure HPC Cache with Azure Kubernetes Service (AKS)](/azure/aks/azure-hpc-cache)
@@ -1453,15 +1578,20 @@ ms.custom: devx-track-azurecli
 | [az hpc-cache nfs-storage-target](/cli/azure/hpc-cache/nfs-storage-target) | [Add storage targets](/azure/hpc-cache/hpc-cache-add-storage)
 |  | [Edit storage targets](/azure/hpc-cache/hpc-cache-edit-storage)
 | [az hpc-cache skus](/cli/azure/hpc-cache/skus) | [Create an Azure HPC Cache](/azure/hpc-cache/hpc-cache-create)
-|  | [Add storage targets](/azure/hpc-cache/hpc-cache-add-storage)
+| [az hpc-cache storage-target](/cli/azure/hpc-cache/storage-target) | [Add storage targets](/azure/hpc-cache/hpc-cache-add-storage)
 |  | [View and manage storage targets](/azure/hpc-cache/manage-storage-targets)
 | [az hpc-cache usage-model](/cli/azure/hpc-cache/usage-model) | [Add storage targets](/azure/hpc-cache/hpc-cache-add-storage)
 |  | [Edit storage targets](/azure/hpc-cache/hpc-cache-edit-storage)
-|  | [Quickstart: Using Azure CLI to deploy an AKS hybrid cluster on a Windows Server node in an Azure VM](/azure/aks/hybrid/aks-hybrid-preview-azure-vm)
+
+## az hybridaks
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az hybridaks](/cli/azure/hybridaks) | [Quickstart: Using Azure CLI to deploy an AKS hybrid cluster on a Windows Server node in an Azure VM](/azure/aks/hybrid/aks-hybrid-preview-azure-vm)
 |  | [How to create AKS hybrid clusters using Az CLI](/azure/aks/hybrid/create-aks-hybrid-preview-cli)
 |  | [Troubleshooting and known issues](/azure/aks/hybrid/troubleshoot-aks-hybrid-preview)
 | [az hybridaks nodepool](/cli/azure/hybridaks/nodepool) | [Quickstart: Using Azure CLI to deploy an AKS hybrid cluster on a Windows Server node in an Azure VM](/azure/aks/hybrid/aks-hybrid-preview-azure-vm)
-|  | [Quickstart: Using Azure CLI to deploy an AKS hybrid cluster on a Windows Server node in an Azure VM](/azure/aks/hybrid/aks-hybrid-preview-azure-vm)
+| [az hybridaks vnet](/cli/azure/hybridaks/vnet) | [Quickstart: Using Azure CLI to deploy an AKS hybrid cluster on a Windows Server node in an Azure VM](/azure/aks/hybrid/aks-hybrid-preview-azure-vm)
 |  | [How to create AKS hybrid networks for Azure](/azure/aks/hybrid/create-aks-hybrid-preview-networks)
 |  | [How to create AKS hybrid clusters using Az CLI](/azure/aks/hybrid/create-aks-hybrid-preview-cli)
 |  | [Troubleshooting and known issues](/azure/aks/hybrid/troubleshoot-aks-hybrid-preview)
@@ -1545,7 +1675,7 @@ ms.custom: devx-track-azurecli
 |  | [Device implementation and best practices for IoT central](/azure/iot-central/core/concepts-device-implementation)
 |  | [Troubleshoot why data from your devices isn't showing up in Azure IoT Central](/azure/iot-central/core/troubleshoot-connection)
 | [az iot central device twin](/cli/azure/iot/central/device/twin) | [Monitor device connectivity using Azure CLI](/azure/iot-central/core/howto-monitor-devices-azure-cli)
-|  | [Troubleshoot why data from your devices isn't showing up in Azure IoT Central](/azure/iot-central/core/troubleshoot-connection)
+| [az iot central diagnostics](/cli/azure/iot/central/diagnostics) | [Troubleshoot why data from your devices isn't showing up in Azure IoT Central](/azure/iot-central/core/troubleshoot-connection)
 |  | [Monitor device connectivity using Azure CLI](/azure/iot-central/core/howto-monitor-devices-azure-cli)
 | [az iot central export](/cli/azure/iot/central/export) | [Extend Azure IoT Central with custom rules using Stream Analytics, Azure Functions, and SendGrid](/azure/iot-central/core/howto-create-custom-rules)
 | [az iot central export destination](/cli/azure/iot/central/export/destination) | [Extend Azure IoT Central with custom rules using Stream Analytics, Azure Functions, and SendGrid](/azure/iot-central/core/howto-create-custom-rules)
@@ -1583,14 +1713,14 @@ ms.custom: devx-track-azurecli
 |  | [Configure private endpoints for Device Update for IoT Hub accounts](/azure/iot-hub-device-update/configure-private-endpoints)
 | [az iot du account private-endpoint-connection](/cli/azure/iot/du/account/private-endpoint-connection) | [Configure private endpoints for Device Update for IoT Hub accounts](/azure/iot-hub-device-update/configure-private-endpoints)
 | [az iot du device](/cli/azure/iot/du/device) | [Find and fix devices missing from Device Update for IoT Hub using agent check](/azure/iot-hub-device-update/device-update-agent-check)
-|  | [Deploy an update by using Device Update for Azure IoT Hub](/azure/iot-hub-device-update/deploy-update)
+| [az iot du device deployment](/cli/azure/iot/du/device/deployment) | [Deploy an update by using Device Update for Azure IoT Hub](/azure/iot-hub-device-update/deploy-update)
 | [az iot du device group](/cli/azure/iot/du/device/group) | [Deploy an update by using Device Update for Azure IoT Hub](/azure/iot-hub-device-update/deploy-update)
 |  | [Manage device groups in Device Update for IoT Hub](/azure/iot-hub-device-update/create-update-group)
 | [az iot du device health](/cli/azure/iot/du/device/health) | [Find and fix devices missing from Device Update for IoT Hub using agent check](/azure/iot-hub-device-update/device-update-agent-check)
-|  | [Remotely collect diagnostic logs from devices using Device Update for IoT Hub](/azure/iot-hub-device-update/device-update-log-collection)
+| [az iot du device log](/cli/azure/iot/du/device/log) | [Remotely collect diagnostic logs from devices using Device Update for IoT Hub](/azure/iot-hub-device-update/device-update-log-collection)
 | [az iot du instance](/cli/azure/iot/du/instance) | [Create Device Update for IoT Hub resources](/azure/iot-hub-device-update/create-device-update-account)
 |  | [Remotely collect diagnostic logs from devices using Device Update for IoT Hub](/azure/iot-hub-device-update/device-update-log-collection)
-|  | [Import an update to Device Update for IoT Hub](/azure/iot-hub-device-update/import-update)
+| [az iot du update](/cli/azure/iot/du/update) | [Import an update to Device Update for IoT Hub](/azure/iot-hub-device-update/import-update)
 | [az iot du update init](/cli/azure/iot/du/update/init) | [Prepare an update to import into Device Update for IoT Hub](/azure/iot-hub-device-update/create-update)
 |  | [How to understand and use delta updates in Device Update for IoT Hub (Preview)](/azure/iot-hub-device-update/delta-updates)
 |  | [Use the related files feature to reference multiple update files](/azure/iot-hub-device-update/related-files)
@@ -1599,7 +1729,7 @@ ms.custom: devx-track-azurecli
 |  | [Install and run the Spatial Analysis container (Preview)](/azure/ai-services/computer-vision/spatial-analysis-container)
 |  | [Connect Azure IoT Edge devices to create a hierarchy](/azure/iot-edge/how-to-connect-downstream-iot-edge-device)
 |  | [Quickstart: Deploy a connected registry to an IoT Edge device](/azure/container-registry/quickstart-deploy-connected-registry-iot-edge-cli)
-|  | [Monitor IoT Edge deployments](/azure/iot-edge/how-to-monitor-iot-edge-deployments)
+| [az iot edge deployment](/cli/azure/iot/edge/deployment) | [Monitor IoT Edge deployments](/azure/iot-edge/how-to-monitor-iot-edge-deployments)
 |  | [Deploy and monitor IoT Edge modules at scale by using the Azure CLI](/azure/iot-edge/how-to-deploy-cli-at-scale)
 | [az iot edge devices](/cli/azure/iot/edge/devices) | [Tutorial: Create a hierarchy of IoT Edge devices](/azure/iot-edge/tutorial-nested-iot-edge)
 |  | [Tutorial: Create a hierarchy of IoT Edge devices using IoT Edge for Linux on Windows](/azure/iot-edge/tutorial-nested-iot-edge-for-linux-on-windows)
@@ -1628,7 +1758,7 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Deploy your first IoT Edge module to a Windows device](/azure/iot-edge/quickstart)
 |  | [Tutorial: Build out an end-to-end solution](/azure/digital-twins/tutorial-end-to-end)
 | [az iot hub devicestream](/cli/azure/iot/hub/devicestream) | [IoT Hub Device Streams (preview)](/azure/iot-hub/iot-hub-device-streams-overview)
-|  | [Quickstart: Send telemetry from a device to an IoT hub and monitor it with the Azure CLI](/azure/iot-hub/quickstart-send-telemetry-cli)
+| [az iot hub device-twin](/cli/azure/iot/hub/device-twin) | [Quickstart: Send telemetry from a device to an IoT hub and monitor it with the Azure CLI](/azure/iot-hub/quickstart-send-telemetry-cli)
 |  | [Quickstart: Connect an MXCHIP AZ3166 devkit to IoT Hub](/azure/iot-develop/quickstart-devkit-mxchip-az3166-iot-hub)
 |  | [Tutorial: Use a simulated device to test connectivity with your IoT hub](/azure/iot-hub/tutorial-connectivity)
 |  | [Quickstart: Connect an ESPRESSIF ESP32-Azure IoT Kit to IoT Hub](/azure/iot-develop/quickstart-devkit-espressif-esp32-freertos-iot-hub)
@@ -1637,7 +1767,7 @@ ms.custom: devx-track-azurecli
 | [az iot hub job](/cli/azure/iot/hub/job) | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)
 |  | [Schedule and broadcast jobs (Azure CLI)](/azure/iot-hub/schedule-jobs-cli)
 | [az iot hub message-endpoint](/cli/azure/iot/hub/message-endpoint) | [Create and delete routes and endpoints by using the Azure CLI](/azure/iot-hub/how-to-routing-azure-cli)
-|  | [Create and delete routes and endpoints by using the Azure CLI](/azure/iot-hub/how-to-routing-azure-cli)
+| [az iot hub message-endpoint create](/cli/azure/iot/hub/message-endpoint/create) | [Create and delete routes and endpoints by using the Azure CLI](/azure/iot-hub/how-to-routing-azure-cli)
 | [az iot hub message-enrichment](/cli/azure/iot/hub/message-enrichment) | [Tutorial: Use Azure IoT Hub message enrichments](/azure/iot-hub/tutorial-message-enrichments)
 | [az iot hub message-route](/cli/azure/iot/hub/message-route) | [Create and delete routes and endpoints by using the Azure CLI](/azure/iot-hub/how-to-routing-azure-cli)
 | [az iot hub message-route fallback](/cli/azure/iot/hub/message-route/fallback) | [Create and delete routes and endpoints by using the Azure CLI](/azure/iot-hub/how-to-routing-azure-cli)
@@ -1654,7 +1784,7 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Use Azure IoT Hub message enrichments](/azure/iot-hub/tutorial-message-enrichments)
 | [az iot hub routing-endpoint](/cli/azure/iot/hub/routing-endpoint) | [Tutorial: Send device data to Azure Storage using IoT Hub message routing](/azure/iot-hub/tutorial-routing)
 |  | [Tutorial: Use Azure IoT Hub message enrichments](/azure/iot-hub/tutorial-message-enrichments)
-|  | [How to automatically migrate an IoT hub using the Azure CLI](/azure/iot-hub/migrate-hub-state-cli)
+| [az iot hub state](/cli/azure/iot/hub/state) | [How to automatically migrate an IoT hub using the Azure CLI](/azure/iot-hub/migrate-hub-state-cli)
 | [az iot product test](/cli/azure/iot/product/test) | [How to test IoT Plug and Play devices](/azure/certification/how-to-test-pnp)
 | [az iot product test case](/cli/azure/iot/product/test/case) | [How to test IoT Plug and Play devices](/azure/certification/how-to-test-pnp)
 | [az iot product test task](/cli/azure/iot/product/test/task) | [How to test IoT Plug and Play devices](/azure/certification/how-to-test-pnp)
@@ -1668,11 +1798,16 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Implement CI/CD with GitOps using Azure Arc-enabled Kubernetes clusters](/azure/azure-arc/kubernetes/tutorial-gitops-ci-cd)
 |  | [Tutorial: Deploy configurations using GitOps on an Azure Arc-enabled Kubernetes cluster](/azure/azure-arc/kubernetes/tutorial-use-gitops-connected-cluster)
 |  | [Deploy Helm Charts using GitOps on an Azure Arc-enabled Kubernetes cluster](/azure/azure-arc/kubernetes/use-gitops-with-helm)
-|  | [Tutorial: Deploy applications using GitOps with Flux v2](/azure/azure-arc/kubernetes/tutorial-use-gitops-flux2)
+| [az k8s-configuration flux](/cli/azure/k8s-configuration/flux) | [Tutorial: Deploy applications using GitOps with Flux v2](/azure/azure-arc/kubernetes/tutorial-use-gitops-flux2)
 |  | [GitOps Flux v2 configurations with AKS and Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/conceptual-gitops-flux2)
 |  | [Tutorial: Implement CI/CD with GitOps (Flux v2)](/azure/azure-arc/kubernetes/tutorial-gitops-flux2-ci-cd)
 | [az k8s-configuration flux kustomization](/cli/azure/k8s-configuration/flux/kustomization) | [GitOps Flux v2 configurations with AKS and Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/conceptual-gitops-flux2)
-|  | [Understand Azure Policy for Kubernetes clusters](/azure/governance/policy/concepts/policy-for-kubernetes)
+
+## az k8s-extension
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az k8s-extension](/cli/azure/k8s-extension) | [Understand Azure Policy for Kubernetes clusters](/azure/governance/policy/concepts/policy-for-kubernetes)
 |  | [Enable Microsoft Defender for Containers](/azure/defender-for-cloud/defender-for-containers-enable)
 |  | [Tutorial: Deploy applications using GitOps with Flux v2](/azure/azure-arc/kubernetes/tutorial-use-gitops-flux2)
 |  | [GitOps Flux v2 configurations with AKS and Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/conceptual-gitops-flux2)
@@ -1689,12 +1824,12 @@ ms.custom: devx-track-azurecli
 |  | [Use Azure Key Vault secrets in Azure Pipelines](/azure/devops/pipelines/release/azure-key-vault)
 | [az keyvault backup](/cli/azure/keyvault/backup) | [Managed HSM disaster recovery](/azure/key-vault/managed-hsm/disaster-recovery-guide)
 |  | [Full backup and restore](/azure/key-vault/managed-hsm/backup-restore)
-|  | [Azure Key Vault recovery management with soft delete and purge protection](/azure/key-vault/general/key-vault-recovery)
+| [az keyvault certificate](/cli/azure/keyvault/certificate) | [Azure Key Vault recovery management with soft delete and purge protection](/azure/key-vault/general/key-vault-recovery)
 |  | [Tutorial: Import a certificate in Azure Key Vault](/azure/key-vault/certificates/tutorial-import-certificate)
 |  | [Export certificates from Azure Key Vault](/azure/key-vault/certificates/how-to-export-certificate)
 |  | [Tutorial - How to use cloud-init to customize a Linux virtual machine in Azure on first boot](/azure/virtual-machines/linux/tutorial-automate-vm-deployment)
 |  | [Tutorial: Use TLS/SSL certificates to secure a web server](/azure/virtual-machines/linux/tutorial-secure-web-server)
-|  | [Azure Key Vault recovery management with soft delete and purge protection](/azure/key-vault/general/key-vault-recovery)
+| [az keyvault key](/cli/azure/keyvault/key) | [Azure Key Vault recovery management with soft delete and purge protection](/azure/key-vault/general/key-vault-recovery)
 |  | [Configure cryptographic key auto-rotation in Azure Key Vault](/azure/key-vault/keys/how-to-configure-key-rotation)
 |  | [Azure OpenAI Service encryption of data at rest](/azure/ai-services/openai/encrypt-data-at-rest)
 |  | [Azure Key Vault backup and restore](/azure/key-vault/general/backup)
@@ -1704,9 +1839,9 @@ ms.custom: devx-track-azurecli
 | [az keyvault network-rule](/cli/azure/keyvault/network-rule) | [Troubleshooting online endpoints deployment and scoring](/azure/machine-learning/how-to-troubleshoot-online-endpoints)
 |  | [Use network isolation with managed online endpoints](/azure/machine-learning/how-to-secure-online-endpoint)
 |  | [Configure Azure Key Vault networking settings](/azure/key-vault/general/how-to-azure-key-vault-network-security)
-|  | [Integrate Key Vault with Azure Private Link](/azure/key-vault/general/private-link-service)
+| [az keyvault private-endpoint-connection](/cli/azure/keyvault/private-endpoint-connection) | [Integrate Key Vault with Azure Private Link](/azure/key-vault/general/private-link-service)
 |  | [Integrate Managed HSM with Azure Private Link](/azure/key-vault/managed-hsm/private-link)
-|  | [Enable multi-region replication on Azure Managed HSM](/azure/key-vault/managed-hsm/multi-region-replication)
+| [az keyvault region](/cli/azure/keyvault/region) | [Enable multi-region replication on Azure Managed HSM](/azure/key-vault/managed-hsm/multi-region-replication)
 | [az keyvault restore](/cli/azure/keyvault/restore) | [Managed HSM disaster recovery](/azure/key-vault/managed-hsm/disaster-recovery-guide)
 |  | [Full backup and restore](/azure/key-vault/managed-hsm/backup-restore)
 | [az keyvault role assignment](/cli/azure/keyvault/role/assignment) | [Use the Azure CLI to enable end-to-end encryption using encryption at host](/azure/virtual-machines/linux/disks-enable-host-based-encryption-cli)
@@ -1716,7 +1851,7 @@ ms.custom: devx-track-azurecli
 |  | [Secure access to your managed HSMs](/azure/key-vault/managed-hsm/secure-your-managed-hsm)
 | [az keyvault role definition](/cli/azure/keyvault/role/definition) | [Managed HSM role management](/azure/key-vault/managed-hsm/role-management)
 |  | [Azure Managed HSM TLS Offload Library](/azure/key-vault/managed-hsm/tls-offload-library)
-|  | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az keyvault secret](/cli/azure/keyvault/secret) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
 |  | [Use the Azure Key Vault Provider for Secrets Store CSI Driver in an AKS cluster](/azure/aks/csi-secrets-store-driver)
 |  | [Azure Key Vault configuration provider in ASP.NET Core](/aspnet/core/security/key-vault-configuration)
 |  | [Use Azure Key Vault secrets in Azure Pipelines](/azure/devops/pipelines/release/azure-key-vault)
@@ -1747,15 +1882,30 @@ ms.custom: devx-track-azurecli
 | [az lab vm](/cli/azure/lab/vm) | [Quickstart: Create a lab in Azure DevTest Labs using Terraform](/azure/devtest-labs/quickstarts/create-lab-windows-vm-terraform)
 |  | [Create and manage virtual machines with DevTest Labs using the Azure CLI](/azure/devtest-labs/devtest-lab-vmcli)
 |  | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli)
-|  | [Lock your resources to protect your infrastructure](/azure/azure-resource-manager/management/lock-resources)
+
+## az lock
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az lock](/cli/azure/lock) | [Lock your resources to protect your infrastructure](/azure/azure-resource-manager/management/lock-resources)
 |  | [Manage Azure Resource Groups by using Azure CLI](/azure/azure-resource-manager/management/manage-resource-groups-cli)
 |  | [Apply an Azure Resource Manager lock to a storage account](/azure/storage/common/lock-account-resource)
 |  | [How to protect DNS zones and records](/azure/dns/dns-protect-zones-recordsets)
 |  | [How to protect private DNS zones and records](/azure/dns/dns-protect-private-zones-recordsets)
-|  | [Create and manage integration accounts for B2B workflows in Azure Logic Apps with the Enterprise Integration Pack](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account)
+
+## az logic
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az logic integration-account](/cli/azure/logic/integration-account) | [Create and manage integration accounts for B2B workflows in Azure Logic Apps with the Enterprise Integration Pack](/azure/logic-apps/logic-apps-enterprise-integration-create-integration-account)
 | [az logic workflow](/cli/azure/logic/workflow) | [Quickstart: Create and deploy a Consumption logic app workflow in multi-tenant Azure Logic Apps with an ARM template](/azure/logic-apps/quickstart-create-deploy-azure-resource-manager-template)
 |  | [Quickstart: Create and manage workflows with Azure CLI in Azure Logic Apps](/azure/logic-apps/quickstart-logic-apps-azure-cli)
 |  | [Azure CLI script sample - create a logic app](/azure/logic-apps/sample-logic-apps-cli-script)
+
+## az logicapp
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
 | [az logicapp](/cli/azure/logicapp) | [Create and deploy single-tenant based logic app workflows with Azure Arc-enabled Logic Apps (Preview)](/azure/logic-apps/azure-arc-enabled-logic-apps-create-deploy-workflows)
 | [az logicapp config appsettings](/cli/azure/logicapp/config/appsettings) | [Edit host and app settings for Standard logic apps in single-tenant Azure Logic Apps](/azure/logic-apps/edit-app-settings-host-settings)
 |  | [Create cross-environment parameters for workflow inputs in Azure Logic Apps](/azure/logic-apps/create-parameters-workflows)
@@ -1803,7 +1953,12 @@ ms.custom: devx-track-azurecli
 | [az maintenance public-configuration](/cli/azure/maintenance/public-configuration) | [Configure maintenance window](/azure/azure-sql/database/maintenance-window-configure)
 |  | [Use Planned Maintenance pre-created configurations to schedule Azure Kubernetes Service (AKS) weekly releases (preview)](/azure/aks/aks-planned-maintenance-weekly-releases)
 | [az maintenance update](/cli/azure/maintenance/update) | [Control updates with Maintenance Configurations and the Azure CLI](/azure/virtual-machines/maintenance-configurations-cli)
-|  | [Quickstart: Deploy a service catalog managed application](/azure/azure-resource-manager/managed-applications/deploy-service-catalog-quickstart)
+
+## az managedapp
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az managedapp](/cli/azure/managedapp) | [Quickstart: Deploy a service catalog managed application](/azure/azure-resource-manager/managed-applications/deploy-service-catalog-quickstart)
 |  | [Tutorial: Create managed application with custom actions and resources](/azure/azure-resource-manager/managed-applications/tutorial-create-managed-app-with-custom-provider)
 |  | [Work with resources in the managed resource group for Azure managed application](/azure/azure-resource-manager/managed-applications/update-managed-resources)
 |  | [Quickstart: Use Bicep to deploy an Azure Managed Application definition](/azure/azure-resource-manager/managed-applications/deploy-bicep-definition)
@@ -1822,7 +1977,7 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Configure a hybrid cluster with Azure Managed Instance for Apache Cassandra](/azure/managed-instance-apache-cassandra/configure-hybrid-cluster)
 |  | [Quickstart: Create a multi-region cluster with Azure Managed Instance for Apache Cassandra](/azure/managed-instance-apache-cassandra/create-multi-region-cluster)
 |  | [How to enable LDAP authentication in Azure Managed Instance for Apache Cassandra](/azure/managed-instance-apache-cassandra/ldap)
-|  | [Quickstart: Create an Azure Managed Instance for Apache Cassandra cluster using Azure CLI](/azure/managed-instance-apache-cassandra/create-cluster-cli)
+| [az managed-cassandra datacenter](/cli/azure/managed-cassandra/datacenter) | [Quickstart: Create an Azure Managed Instance for Apache Cassandra cluster using Azure CLI](/azure/managed-instance-apache-cassandra/create-cluster-cli)
 |  | [Quickstart: Configure a hybrid cluster with Azure Managed Instance for Apache Cassandra](/azure/managed-instance-apache-cassandra/configure-hybrid-cluster)
 |  | [Quickstart: Create a multi-region cluster with Azure Managed Instance for Apache Cassandra](/azure/managed-instance-apache-cassandra/create-multi-region-cluster)
 |  | [How to enable LDAP authentication in Azure Managed Instance for Apache Cassandra](/azure/managed-instance-apache-cassandra/ldap)
@@ -1835,7 +1990,12 @@ ms.custom: devx-track-azurecli
 | [az managedservices assignment](/cli/azure/managedservices/assignment) | [Onboard a customer to Azure Lighthouse](/azure/lighthouse/how-to/onboard-customer)
 |  | [Remove access to a delegation](/azure/lighthouse/how-to/remove-delegation)
 | [az managedservices definition](/cli/azure/managedservices/definition) | [Onboard a customer to Azure Lighthouse](/azure/lighthouse/how-to/onboard-customer)
-|  | [Link a partner ID to your account thatGÇÖs used to manage customers](/azure/cost-management-billing/manage/link-partner-id)
+
+## az managementpartner
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az managementpartner](/cli/azure/managementpartner) | [Link a partner ID to your account thatGÇÖs used to manage customers](/azure/cost-management-billing/manage/link-partner-id)
 |  | [Link a partner ID to your Power Platform and Dynamics Customer Insights accounts](/azure/cost-management-billing/manage/link-partner-id-power-apps-accounts)
 
 ## az maps
@@ -1854,7 +2014,7 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Create an Azure Database for MariaDB server by using the Azure CLI](/azure/mariadb/quickstart-create-mariadb-server-database-using-azure-cli)
 |  | [How to back up and restore a server in Azure Database for MariaDB using the Azure CLI](/azure/mariadb/howto-restore-server-cli)
 |  | [Tutorial: Design an Azure Database for MariaDB using Azure CLI](/azure/mariadb/tutorial-design-database-cli)
-|  | [Configure server parameters in Azure Database for MariaDB using the Azure CLI](/azure/mariadb/howto-configure-server-parameters-cli)
+| [az mariadb server configuration](/cli/azure/mariadb/server/configuration) | [Configure server parameters in Azure Database for MariaDB using the Azure CLI](/azure/mariadb/howto-configure-server-parameters-cli)
 |  | [Configure and access Azure Database for MariaDB audit logs in the Azure CLI](/azure/mariadb/howto-configure-audit-logs-cli)
 |  | [Configure and access Azure Database for MariaDB slow query logs by using Azure CLI](/azure/mariadb/howto-configure-server-logs-cli)
 |  | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs)
@@ -1864,10 +2024,10 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Design an Azure Database for MariaDB using Azure CLI](/azure/mariadb/tutorial-design-database-cli)
 |  | [Create and manage Azure Database for MariaDB firewall rules by using the Azure CLI](/azure/mariadb/howto-manage-firewall-cli)
 |  | [Create a MariaDB server and configure a firewall rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-and-firewall-rule)
-|  | [How to create and manage read replicas in Azure Database for MariaDB using the Azure CLI and REST API](/azure/mariadb/howto-read-replicas-cli)
+| [az mariadb server replica](/cli/azure/mariadb/server/replica) | [How to create and manage read replicas in Azure Database for MariaDB using the Azure CLI and REST API](/azure/mariadb/howto-read-replicas-cli)
 | [az mariadb server vnet-rule](/cli/azure/mariadb/server/vnet-rule) | [Create and manage Azure Database for MariaDB VNet service endpoints using Azure CLI](/azure/mariadb/howto-manage-vnet-cli)
 |  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule)
-|  | [Configure and access Azure Database for MariaDB slow query logs by using Azure CLI](/azure/mariadb/howto-configure-server-logs-cli)
+| [az mariadb server-logs](/cli/azure/mariadb/server-logs) | [Configure and access Azure Database for MariaDB slow query logs by using Azure CLI](/azure/mariadb/howto-configure-server-logs-cli)
 |  | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs)
 
 ## az ml
@@ -1879,7 +2039,7 @@ ms.custom: devx-track-azurecli
 |  | [Image processing with batch model deployments](/azure/machine-learning/how-to-image-processing-batch)
 |  | [Using low priority VMs in batch deployments](/azure/machine-learning/how-to-use-low-priority-batch)
 |  | [Deploy language models in batch endpoints](/azure/machine-learning/how-to-nlp-processing-batch)
-|  | [Create and run machine learning pipelines using components with the Azure Machine Learning CLI](/azure/machine-learning/how-to-create-component-pipelines-cli)
+| [az ml component](/cli/azure/ml/component) | [Create and run machine learning pipelines using components with the Azure Machine Learning CLI](/azure/machine-learning/how-to-create-component-pipelines-cli)
 |  | [Share models, components, and environments across workspaces with registries](/azure/machine-learning/how-to-share-models-pipelines-across-workspaces-with-registries)
 | [az ml compute](/cli/azure/ml/compute) | [Troubleshooting online endpoints deployment and scoring](/azure/machine-learning/how-to-troubleshoot-online-endpoints)
 |  | [Create an Azure Machine Learning compute instance](/azure/machine-learning/how-to-create-compute-instance)
@@ -1888,7 +2048,7 @@ ms.custom: devx-track-azurecli
 |  | [Create and run machine learning pipelines using components with the Azure Machine Learning CLI](/azure/machine-learning/how-to-create-component-pipelines-cli)
 | [az ml connection](/cli/azure/ml/connection) | [Set up authentication between Azure Machine Learning and other services](/azure/machine-learning/how-to-identity-based-service-authentication)
 |  | [Create connections (preview)](/azure/machine-learning/how-to-connection)
-|  | [Create and manage data assets](/azure/machine-learning/how-to-create-data-assets)
+| [az ml data](/cli/azure/ml/data) | [Create and manage data assets](/azure/machine-learning/how-to-create-data-assets)
 |  | [Working with tables in Azure Machine Learning](/azure/machine-learning/how-to-mltable)
 |  | [Tutorial: Train an object detection model with AutoML and Python](/azure/machine-learning/tutorial-auto-train-image-models)
 |  | [CLI (v2) mltable YAML schema](/azure/machine-learning/reference-yaml-mltable)
@@ -1917,7 +2077,7 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Train an object detection model with AutoML and Python](/azure/machine-learning/tutorial-auto-train-image-models)
 |  | [Use network isolation with managed online endpoints](/azure/machine-learning/how-to-secure-online-endpoint)
 |  | [Share models, components, and environments across workspaces with registries](/azure/machine-learning/how-to-share-models-pipelines-across-workspaces-with-registries)
-|  | [Deploy and score a machine learning model by using an online endpoint](/azure/machine-learning/how-to-deploy-online-endpoints)
+| [az ml online-endpoint](/cli/azure/ml/online-endpoint) | [Deploy and score a machine learning model by using an online endpoint](/azure/machine-learning/how-to-deploy-online-endpoints)
 |  | [Troubleshooting online endpoints deployment and scoring](/azure/machine-learning/how-to-troubleshoot-online-endpoints)
 |  | [Tutorial: Train an object detection model with AutoML and Python](/azure/machine-learning/tutorial-auto-train-image-models)
 |  | [Use network isolation with managed online endpoints](/azure/machine-learning/how-to-secure-online-endpoint)
@@ -1998,16 +2158,16 @@ ms.custom: devx-track-azurecli
 |  | [Monitoring load balancer](/azure/load-balancer/monitor-load-balancer)
 |  | [Create and manage a dedicated cluster in Azure Monitor Logs](/azure/azure-monitor/logs/logs-dedicated-clusters)
 |  | [Tutorial: Troubleshoot an App Service app with Azure Monitor](/azure/app-service/tutorial-troubleshoot-monitor)
-|  | [Log Analytics workspace data export in Azure Monitor](/azure/azure-monitor/logs/logs-data-export)
+| [az monitor log-analytics workspace data-export](/cli/azure/monitor/log-analytics/workspace/data-export) | [Log Analytics workspace data export in Azure Monitor](/azure/azure-monitor/logs/logs-data-export)
 |  | [Bring your own Machine Learning (ML) into Microsoft Sentinel](/azure/sentinel/bring-your-own-ml)
 |  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample)
-|  | [Create and manage a dedicated cluster in Azure Monitor Logs](/azure/azure-monitor/logs/logs-dedicated-clusters)
+| [az monitor log-analytics workspace linked-service](/cli/azure/monitor/log-analytics/workspace/linked-service) | [Create and manage a dedicated cluster in Azure Monitor Logs](/azure/azure-monitor/logs/logs-dedicated-clusters)
 |  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample)
 | [az monitor log-analytics workspace linked-storage](/cli/azure/monitor/log-analytics/workspace/linked-storage) | [Azure Monitor customer-managed key](/azure/azure-monitor/logs/customer-managed-keys)
 |  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample)
-|  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample)
+| [az monitor log-analytics workspace pack](/cli/azure/monitor/log-analytics/workspace/pack) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample)
 | [az monitor log-analytics workspace saved-search](/cli/azure/monitor/log-analytics/workspace/saved-search) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample)
-|  | [Configure data retention and archive policies in Azure Monitor Logs](/azure/azure-monitor/logs/data-retention-archive)
+| [az monitor log-analytics workspace table](/cli/azure/monitor/log-analytics/workspace/table) | [Configure data retention and archive policies in Azure Monitor Logs](/azure/azure-monitor/logs/data-retention-archive)
 |  | [Set a table's log data plan to Basic or Analytics](/azure/azure-monitor/logs/basic-logs-configure)
 |  | [Manage tables in a Log Analytics workspace](/azure/azure-monitor/logs/manage-logs-tables)
 |  | [Run search jobs in Azure Monitor](/azure/azure-monitor/logs/search-jobs)
@@ -2046,7 +2206,7 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Connect and query with Azure CLI  with Azure Database for MySQL - Flexible Server](/azure/mysql/flexible-server/connect-azure-cli)
 |  | [Tutorial: Connect an App Services Web app to an Azure Database for MySQL - Flexible Server in a virtual network](/azure/mysql/flexible-server/tutorial-webapp-server-vnet)
 |  | [Tutorial: Deploy a Spring application to Azure Spring Apps with a passwordless connection to an Azure database](/azure/developer/java/spring-framework/deploy-passwordless-spring-database-app)
-|  | [Set up Azure Active Directory authentication for Azure Database for MySQL - Flexible Server](/azure/mysql/flexible-server/how-to-azure-ad)
+| [az mysql flexible-server ad-admin](/cli/azure/mysql/flexible-server/ad-admin) | [Set up Azure Active Directory authentication for Azure Database for MySQL - Flexible Server](/azure/mysql/flexible-server/how-to-azure-ad)
 |  | [Use Java and JDBC with Azure Database for MySQL - Flexible Server](/azure/mysql/flexible-server/connect-java)
 |  | [Migrate an application to use passwordless connections with Azure Database for MySQL](/azure/developer/java/spring-framework/migrate-mysql-to-passwordless-connection)
 |  | [Configure passwordless database connections for Java apps on Oracle WebLogic Servers](/azure/developer/java/ee/how-to-configure-passwordless-datasource)
@@ -2070,7 +2230,7 @@ ms.custom: devx-track-azurecli
 |  | [Configure server parameters in Azure Database for MySQL - Flexible Server using the Azure CLI](/azure/mysql/flexible-server/how-to-configure-server-parameters-cli)
 |  | [List and change server parameters of an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-change-server-parameters)
 |  | [Configure audit logs on an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-audit-logs)
-|  | [How to create and manage read replicas in Azure Database for MySQL - Flexible Server using the Azure CLI](/azure/mysql/flexible-server/how-to-read-replicas-cli)
+| [az mysql flexible-server replica](/cli/azure/mysql/flexible-server/replica) | [How to create and manage read replicas in Azure Database for MySQL - Flexible Server using the Azure CLI](/azure/mysql/flexible-server/how-to-read-replicas-cli)
 |  | [Create and manage read replicas in an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-read-replicas)
 | [az mysql flexible-server server-logs](/cli/azure/mysql/flexible-server/server-logs) | [List and Download Server logs using Azure CLI](/azure/mysql/flexible-server/how-to-server-logs-cli)
 | [az mysql server](/cli/azure/mysql/server) | [Configure SSL connectivity in your application to securely connect to Azure Database for MySQL](/azure/mysql/single-server/how-to-configure-ssl)
@@ -2092,7 +2252,7 @@ ms.custom: devx-track-azurecli
 |  | [Getting started with databases on Azure](/azure/developer/javascript/database-developer-guide)
 | [az mysql server key](/cli/azure/mysql/server/key) | [Validating data encryption for Azure Database for MySQL](/azure/mysql/single-server/how-to-data-encryption-validation)
 |  | [Data encryption for Azure Database for MySQL by using the Azure CLI](/azure/mysql/single-server/how-to-data-encryption-cli)
-|  | [How to create and manage read replicas in Azure Database for MySQL using the Azure CLI and REST API](/azure/mysql/single-server/how-to-read-replicas-cli)
+| [az mysql server replica](/cli/azure/mysql/server/replica) | [How to create and manage read replicas in Azure Database for MySQL using the Azure CLI and REST API](/azure/mysql/single-server/how-to-read-replicas-cli)
 | [az mysql server vnet-rule](/cli/azure/mysql/server/vnet-rule) | [Create and manage Azure Database for MySQL VNet service endpoints using Azure CLI](/azure/mysql/single-server/how-to-manage-vnet-using-cli)
 | [az mysql server-logs](/cli/azure/mysql/server-logs) | [Configure and access slow query logs by using Azure CLI](/azure/mysql/single-server/how-to-configure-server-logs-in-cli)
 |  | [Enable and download server slow query logs of an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-server-logs)
@@ -2146,12 +2306,12 @@ ms.custom: devx-track-azurecli
 |  | [Route web traffic based on the URL using the Azure CLI](/azure/application-gateway/tutorial-url-route-cli)
 |  | [Create an application gateway with HTTP to HTTPS redirection using the Azure CLI](/azure/application-gateway/redirect-http-to-https-cli)
 |  | [Create an application gateway with external redirection using the Azure CLI](/azure/application-gateway/redirect-external-site-cli)
-|  | [Tutorial: Manually install Oracle WebLogic Server on Azure Virtual Machines](/azure/developer/java/migration/migrate-weblogic-to-azure-vm-manually)
+| [az network application-gateway http-settings](/cli/azure/network/application-gateway/http-settings) | [Tutorial: Manually install Oracle WebLogic Server on Azure Virtual Machines](/azure/developer/java/migration/migrate-weblogic-to-azure-vm-manually)
 |  | [Tutorial: Manually install IBM WebSphere Application Server Network Deployment traditional on Azure Virtual Machines](/azure/developer/java/migration/migrate-websphere-to-azure-vm-manually)
 |  | [Expose applications with end-to-end TLS in a virtual network](/azure/spring-apps/expose-apps-gateway-end-to-end-tls)
 |  | [Expose applications to the internet with TLS Termination at Application Gateway](/azure/spring-apps/expose-apps-gateway-tls-termination)
 |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway)
-|  | [Configure Azure Application Gateway Private Link](/azure/application-gateway/private-link-configure)
+| [az network application-gateway private-link](/cli/azure/network/application-gateway/private-link) | [Configure Azure Application Gateway Private Link](/azure/application-gateway/private-link-configure)
 | [az network application-gateway private-link ip-config](/cli/azure/network/application-gateway/private-link/ip-config) | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)
 | [az network application-gateway probe](/cli/azure/network/application-gateway/probe) | [Tutorial: Manually install Oracle WebLogic Server on Azure Virtual Machines](/azure/developer/java/migration/migrate-weblogic-to-azure-vm-manually)
 |  | [Tutorial: Manually install IBM WebSphere Application Server Network Deployment traditional on Azure Virtual Machines](/azure/developer/java/migration/migrate-websphere-to-azure-vm-manually)
@@ -2179,10 +2339,10 @@ ms.custom: devx-track-azurecli
 | [az network application-gateway waf-policy](/cli/azure/network/application-gateway/waf-policy) | [Enable Web Application Firewall using the Azure CLI](/azure/web-application-firewall/ag/tutorial-restrict-web-traffic-cli)
 | [az network application-gateway waf-policy managed-rule exclusion](/cli/azure/network/application-gateway/waf-policy/managed-rule/exclusion) | [Web Application Firewall exclusion lists](/azure/web-application-firewall/ag/application-gateway-waf-configuration)
 | [az network application-gateway waf-policy managed-rule exclusion rule-set](/cli/azure/network/application-gateway/waf-policy/managed-rule/exclusion/rule-set) | [Web Application Firewall exclusion lists](/azure/web-application-firewall/ag/application-gateway-waf-configuration)
-|  | [Create, change, or delete a network security group](/azure/virtual-network/manage-network-security-group)
+| [az network asg](/cli/azure/network/asg) | [Create, change, or delete a network security group](/azure/virtual-network/manage-network-security-group)
 |  | [Configure an application security group (ASG) with a private endpoint](/azure/private-link/configure-asg-private-endpoint)
 |  | [Filter network traffic with a network security group using the Azure CLI](/azure/virtual-network/tutorial-filter-network-traffic-cli)
-|  | [File transfer using a native client](/azure/bastion/vm-upload-download-native)
+| [az network bastion](/cli/azure/network/bastion) | [File transfer using a native client](/azure/bastion/vm-upload-download-native)
 |  | [Connect to a VM via specified private IP address](/azure/bastion/connect-ip-address)
 |  | [Quickstart: Use Azure CLI to create a virtual network](/azure/virtual-network/quick-create-cli)
 |  | [Connect to a VM using Bastion and the Windows native client](/azure/bastion/connect-vm-native-client-windows)
@@ -2190,7 +2350,7 @@ ms.custom: devx-track-azurecli
 | [az network cross-region-lb](/cli/azure/network/cross-region-lb) | [Tutorial: Create a cross-region Azure Load Balancer using Azure CLI](/azure/load-balancer/tutorial-cross-region-cli)
 | [az network cross-region-lb ress-pool ress](/cli/azure/network/cross-region-lb) | [Tutorial: Create a cross-region Azure Load Balancer using Azure CLI](/azure/load-balancer/tutorial-cross-region-cli)
 | [az network cross-region-lb rule](/cli/azure/network/cross-region-lb/rule) | [Tutorial: Create a cross-region Azure Load Balancer using Azure CLI](/azure/load-balancer/tutorial-cross-region-cli)
-|  | [Create a custom IPv4 address prefix using the Azure CLI](/azure/virtual-network/ip-services/create-custom-ip-address-prefix-cli)
+| [az network custom-ip prefix](/cli/azure/network/custom-ip/prefix) | [Create a custom IPv4 address prefix using the Azure CLI](/azure/virtual-network/ip-services/create-custom-ip-address-prefix-cli)
 |  | [Create a custom IPv6 address prefix using Azure CLI](/azure/virtual-network/ip-services/create-custom-ip-address-prefix-ipv6-cli)
 | [az network ddos-protection](/cli/azure/network/ddos-protection) | [Quickstart: Create and configure Azure DDoS Network Protection using Terraform](/azure/ddos-protection/manage-ddos-protection-terraform)
 |  | [QuickStart: Create and configure Azure DDoS Network Protection using Azure CLI](/azure/ddos-protection/manage-ddos-protection-cli)
@@ -2219,7 +2379,7 @@ ms.custom: devx-track-azurecli
 | [az network dns record-set soa](/cli/azure/network/dns/record-set/soa) | [Manage DNS records and recordsets in Azure DNS using the Azure CLI](/azure/dns/dns-operations-recordsets-cli)
 | [az network dns record-set srv](/cli/azure/network/dns/record-set/srv) | [Manage DNS records and recordsets in Azure DNS using the Azure CLI](/azure/dns/dns-operations-recordsets-cli)
 | [az network dns record-set txt](/cli/azure/network/dns/record-set/txt) | [Manage DNS records and recordsets in Azure DNS using the Azure CLI](/azure/dns/dns-operations-recordsets-cli)
-|  | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)
+| [az network dns zone](/cli/azure/network/dns/zone) | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)
 |  | [Use the application routing add-on with Azure Kubernetes Service (AKS) clusters (preview)](/azure/aks/app-routing)
 |  | [Import and export a DNS zone file using the Azure CLI](/azure/dns/dns-import-export)
 |  | [Host reverse DNS lookup zones in Azure DNS](/azure/dns/dns-reverse-dns-hosting)
@@ -2229,15 +2389,15 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Create and modify peering for an ExpressRoute circuit using CLI](/azure/expressroute/howto-routing-cli)
 |  | [Tutorial: Connect a virtual network to an ExpressRoute circuit using Azure CLI](/azure/expressroute/expressroute-howto-linkvnet-cli)
 |  | [Configure ExpressRoute Direct by using the Azure CLI](/azure/expressroute/expressroute-howto-expressroute-direct-cli)
-|  | [Tutorial: Connect a virtual network to an ExpressRoute circuit using Azure CLI](/azure/expressroute/expressroute-howto-linkvnet-cli)
+| [az network express-route auth](/cli/azure/network/express-route/auth) | [Tutorial: Connect a virtual network to an ExpressRoute circuit using Azure CLI](/azure/expressroute/expressroute-howto-linkvnet-cli)
 |  | [Configure ExpressRoute Global Reach by using the Azure CLI](/azure/expressroute/expressroute-howto-set-global-reach-cli)
-|  | [Create and manage ExpressRoute public peering](/azure/expressroute/about-public-peering)
+| [az network express-route peering](/cli/azure/network/express-route/peering) | [Create and manage ExpressRoute public peering](/azure/expressroute/about-public-peering)
 |  | [Tutorial: Create and modify peering for an ExpressRoute circuit using CLI](/azure/expressroute/howto-routing-cli)
 |  | [Tutorial: Configure route filters for Microsoft peering: Azure CLI](/azure/expressroute/how-to-routefilter-cli)
 |  | [Add IPv6 support for private peering using Azure CLI](/azure/expressroute/expressroute-howto-add-ipv6-cli)
 | [az network express-route peering connection](/cli/azure/network/express-route/peering/connection) | [Configure ExpressRoute Global Reach by using the Azure CLI](/azure/expressroute/expressroute-howto-set-global-reach-cli)
-|  | [Configure ExpressRoute Direct by using the Azure CLI](/azure/expressroute/expressroute-howto-expressroute-direct-cli)
-|  | [Configure ExpressRoute Direct by using the Azure CLI](/azure/expressroute/expressroute-howto-expressroute-direct-cli)
+| [az network express-route port](/cli/azure/network/express-route/port) | [Configure ExpressRoute Direct by using the Azure CLI](/azure/expressroute/expressroute-howto-expressroute-direct-cli)
+| [az network express-route port location](/cli/azure/network/express-route/port/location) | [Configure ExpressRoute Direct by using the Azure CLI](/azure/expressroute/expressroute-howto-expressroute-direct-cli)
 | [az network firewall](/cli/azure/network/firewall) | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)
 |  | [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](/azure/aks/limit-egress-traffic)
 |  | [Azure Firewall DNS settings](/azure/firewall/dns-settings)
@@ -2266,12 +2426,12 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Quickly scale and protect a web application by using Azure Front Door and Azure Web Application Firewall (WAF)](/azure/frontdoor/front-door-waf)
 |  | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain)
 |  | [Quickstart: Create a Front Door for a highly available global web application using Azure CLI](/azure/frontdoor/quickstart-create-front-door-cli)
-|  | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain)
+| [az network front-door frontend-endpoint](/cli/azure/network/front-door/frontend-endpoint) | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain)
 | [az network front-door routing-rule](/cli/azure/network/front-door/routing-rule) | [Tutorial: Configure your rules engine](/azure/frontdoor/front-door-tutorial-rules-engine)
 |  | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain)
 | [az network front-door rules-engine rule](/cli/azure/network/front-door/rules-engine/rule) | [Tutorial: Configure your rules engine](/azure/frontdoor/front-door-tutorial-rules-engine)
-|  | [Tutorial: Configure your rules engine](/azure/frontdoor/front-door-tutorial-rules-engine)
-|  | [Configure an IP restriction rule with a Web Application Firewall for Azure Front Door](/azure/web-application-firewall/afds/waf-front-door-configure-ip-restriction)
+| [az network front-door rules-engine rule action](/cli/azure/network/front-door/rules-engine/rule/action) | [Tutorial: Configure your rules engine](/azure/frontdoor/front-door-tutorial-rules-engine)
+| [az network front-door waf-policy](/cli/azure/network/front-door/waf-policy) | [Configure an IP restriction rule with a Web Application Firewall for Azure Front Door](/azure/web-application-firewall/afds/waf-front-door-configure-ip-restriction)
 |  | [Configure a Web Application Firewall rate limit rule](/azure/web-application-firewall/afds/waf-front-door-rate-limit-configure)
 |  | [Tutorial: Quickly scale and protect a web application by using Azure Front Door and Azure Web Application Firewall (WAF)](/azure/frontdoor/front-door-waf)
 |  | [Quickstart: Create an Azure Front Door Standard/Premium - Azure CLI](/azure/frontdoor/create-front-door-cli)
@@ -2290,7 +2450,7 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Create a public load balancer to load balance VMs using the Azure CLI](/azure/load-balancer/quickstart-load-balancer-standard-public-cli)
 |  | [Tutorial: Configure dual stack outbound connectivity with a NAT gateway and a public load balancer](/azure/nat-gateway/tutorial-dual-stack-outbound-nat-load-balancer)
 |  | [Quickstart: Create a Private Link service using Azure CLI](/azure/private-link/create-private-link-service-cli)
-|  | [Backend pool management](/azure/load-balancer/backend-pool-management)
+| [az network lb address-pool](/cli/azure/network/lb/address-pool) | [Backend pool management](/azure/load-balancer/backend-pool-management)
 |  | [Add IPv6 to an IPv4 application in Azure virtual network using Azure CLI](/azure/load-balancer/ipv6-add-to-existing-vnet-cli)
 |  | [Deploy an IPv6 dual stack application in Azure virtual network using Azure CLI](/azure/load-balancer/virtual-network-ipv4-ipv6-dual-stack-standard-load-balancer-cli)
 |  | [Create a public load balancer with IPv6 using Azure CLI](/azure/load-balancer/load-balancer-ipv6-internet-cli)
@@ -2300,7 +2460,7 @@ ms.custom: devx-track-azurecli
 |  | [Work with a virtual network TAP using the Azure CLI](/azure/virtual-network/tutorial-tap-virtual-network-cli)
 |  | [Deploy an IPv6 dual stack application in Azure virtual network using Azure CLI](/azure/load-balancer/virtual-network-ipv4-ipv6-dual-stack-standard-load-balancer-cli)
 |  | [Tutorial: Create a gateway load balancer using the Azure CLI](/azure/load-balancer/tutorial-gateway-cli)
-|  | [Manage inbound NAT rules for Azure Load Balancer](/azure/load-balancer/manage-inbound-nat-rules)
+| [az network lb inbound-nat-rule](/cli/azure/network/lb/inbound-nat-rule) | [Manage inbound NAT rules for Azure Load Balancer](/azure/load-balancer/manage-inbound-nat-rules)
 |  | [Configure inbound NAT Rules for Virtual Machine Scale Sets](/azure/load-balancer/configure-inbound-NAT-rules-vm-scale-set)
 |  | [Create a public load balancer with IPv6 using Azure CLI](/azure/load-balancer/load-balancer-ipv6-internet-cli)
 | [az network lb outbound-rule](/cli/azure/network/lb/outbound-rule) | [Use a public standard load balancer in Azure Kubernetes Service (AKS)](/azure/aks/load-balancer-standard)
@@ -2316,7 +2476,7 @@ ms.custom: devx-track-azurecli
 |  | [Manage Upgrade Policies for Virtual Machine Scale Sets](/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-upgrade-policy)
 |  | [Tutorial: Install applications in Virtual Machine Scale Sets with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-install-apps-cli)
 |  | [Quickstart: Create a public load balancer to load balance VMs using the Azure CLI](/azure/load-balancer/quickstart-load-balancer-standard-public-cli)
-|  | [Create a virtual network with a site-to-site VPN connection using CLI](/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli)
+| [az network local-gateway](/cli/azure/network/local-gateway) | [Create a virtual network with a site-to-site VPN connection using CLI](/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli)
 |  | [How to configure BGP for Azure VPN Gateway: CLI](/azure/vpn-gateway/bgp-how-to-cli)
 | [az network manager](/cli/azure/network/manager) | [Quickstart: Create a mesh network topology with Azure Virtual Network Manager using Terraform](/azure/virtual-network-manager/create-virtual-network-manager-terraform)
 |  | [Configure a cross-tenant connection in Azure Virtual Network Manager Preview - CLI](/azure/virtual-network-manager/how-to-configure-cross-tenant-cli)
@@ -2324,9 +2484,9 @@ ms.custom: devx-track-azurecli
 | [az network manager connect-config](/cli/azure/network/manager/connect-config) | [Quickstart: Create a mesh network topology with Azure Virtual Network Manager by using the Azure CLI](/azure/virtual-network-manager/create-virtual-network-manager-cli)
 | [az network manager connection subscription](/cli/azure/network/manager/connection/subscription) | [Configure a cross-tenant connection in Azure Virtual Network Manager Preview - CLI](/azure/virtual-network-manager/how-to-configure-cross-tenant-cli)
 | [az network manager group](/cli/azure/network/manager/group) | [Quickstart: Create a mesh network topology with Azure Virtual Network Manager by using the Azure CLI](/azure/virtual-network-manager/create-virtual-network-manager-cli)
-|  | [Configure a cross-tenant connection in Azure Virtual Network Manager Preview - CLI](/azure/virtual-network-manager/how-to-configure-cross-tenant-cli)
+| [az network manager group static-member](/cli/azure/network/manager/group/static-member) | [Configure a cross-tenant connection in Azure Virtual Network Manager Preview - CLI](/azure/virtual-network-manager/how-to-configure-cross-tenant-cli)
 |  | [Quickstart: Create a mesh network topology with Azure Virtual Network Manager by using the Azure CLI](/azure/virtual-network-manager/create-virtual-network-manager-cli)
-|  | [Configure a cross-tenant connection in Azure Virtual Network Manager Preview - CLI](/azure/virtual-network-manager/how-to-configure-cross-tenant-cli)
+| [az network manager scope-connection](/cli/azure/network/manager/scope-connection) | [Configure a cross-tenant connection in Azure Virtual Network Manager Preview - CLI](/azure/virtual-network-manager/how-to-configure-cross-tenant-cli)
 | [az network nat gateway](/cli/azure/network/nat/gateway) | [Azure NAT Gateway integration](/azure/app-service/networking/nat-gateway-integration)
 |  | [Create a managed or user-assigned NAT gateway for your Azure Kubernetes Service (AKS) cluster](/azure/aks/nat-gateway)
 |  | [Scale SNAT ports with Azure NAT Gateway](/azure/firewall/integrate-with-nat-gateway)
@@ -2337,7 +2497,7 @@ ms.custom: devx-track-azurecli
 |  | [Connect privately to an Azure container registry using Azure Private Link](/azure/container-registry/container-registry-private-link)
 |  | [Integrate Key Vault with Azure Private Link](/azure/key-vault/general/private-link-service)
 |  | [Configuring Azure Files network endpoints](/azure/storage/files/storage-files-networking-endpoints)
-|  | [Associate a public IP address to a virtual machine](/azure/virtual-network/ip-services/associate-public-ip-address-vm)
+| [az network nic ip-config](/cli/azure/network/nic/ip-config) | [Associate a public IP address to a virtual machine](/azure/virtual-network/ip-services/associate-public-ip-address-vm)
 |  | [Create, change, or delete a network interface](/azure/virtual-network/virtual-network-network-interface)
 |  | [Configure IP addresses for an Azure network interface](/azure/virtual-network/ip-services/virtual-network-network-interface-addresses)
 |  | [Dissociate a public IP address from an Azure VM](/azure/virtual-network/ip-services/remove-public-ip-address-vm)
@@ -2353,7 +2513,7 @@ ms.custom: devx-track-azurecli
 |  | [Use Azure CLI to create a Windows or Linux VM with Accelerated Networking](/azure/virtual-network/create-vm-accelerated-networking-cli)
 |  | [Resource logging for a network security group](/azure/virtual-network/virtual-network-nsg-manage-log)
 |  | [Test private endpoints by deploying Azure Load Testing in an Azure virtual network](/azure/load-testing/how-to-test-private-endpoint)
-|  | [Create, change, or delete a network security group](/azure/virtual-network/manage-network-security-group)
+| [az network nsg rule](/cli/azure/network/nsg/rule) | [Create, change, or delete a network security group](/azure/virtual-network/manage-network-security-group)
 |  | [How to connect using Secure Shell (SSH) and sign on to an Azure virtual machine running Windows](/azure/virtual-machines/windows/connect-ssh)
 |  | [Create an Oracle Database in an Azure VM](/azure/virtual-machines/workloads/oracle/oracle-database-quick-create)
 |  | [Use Azure CLI to create a Windows or Linux VM with Accelerated Networking](/azure/virtual-network/create-vm-accelerated-networking-cli)
@@ -2368,7 +2528,7 @@ ms.custom: devx-track-azurecli
 |  | [Use network isolation with managed online endpoints](/azure/machine-learning/how-to-secure-online-endpoint)
 |  | [Quickstart: Create an Azure private DNS zone using the Azure CLI](/azure/dns/private-dns-getstarted-cli)
 |  | [Import and export a private DNS zone file for Azure private DNS](/azure/dns/private-dns-import-export)
-|  | [Connect privately to an Azure container registry using Azure Private Link](/azure/container-registry/container-registry-private-link)
+| [az network private-dns record-set a](/cli/azure/network/private-dns/record-set/a) | [Connect privately to an Azure container registry using Azure Private Link](/azure/container-registry/container-registry-private-link)
 |  | [Integrate Key Vault with Azure Private Link](/azure/key-vault/general/private-link-service)
 |  | [Configuring Azure Files network endpoints](/azure/storage/files/storage-files-networking-endpoints)
 |  | [Provide a virtual network to an external Azure Container Apps environment](/azure/container-apps/vnet-custom)
@@ -2399,7 +2559,7 @@ ms.custom: devx-track-azurecli
 | [az network private-link-service](/cli/azure/network/private-link-service) | [Use an internal load balancer with Azure Kubernetes Service (AKS)](/azure/aks/internal-lb)
 |  | [Quickstart: Create a Private Link service using Azure CLI](/azure/private-link/create-private-link-service-cli)
 |  | [Introduction to the Virtual Machine console service](/azure/operator-nexus/howto-use-vm-console-service)
-|  | [Deploy container instances into an Azure virtual network](/azure/container-instances/container-instances-vnet)
+| [az network profile](/cli/azure/network/profile) | [Deploy container instances into an Azure virtual network](/azure/container-instances/container-instances-vnet)
 |  | [Create and configure an Azure Kubernetes Services (AKS) cluster to use virtual nodes using the Azure CLI](/azure/aks/virtual-nodes-cli)
 | [az network public-ip](/cli/azure/network/public-ip) | [5 - Set shell variables from CLI output](/cli/azure/azure-cli-vm-tutorial-5)
 |  | [Use TLS with an ingress controller on Azure Kubernetes Service (AKS)](/azure/aks/ingress-tls)
@@ -2411,9 +2571,9 @@ ms.custom: devx-track-azurecli
 |  | [Manage NAT gateway](/azure/nat-gateway/manage-nat-gateway)
 |  | [Quickstart: Create a public IP address prefix using the Azure CLI](/azure/virtual-network/ip-services/create-public-ip-prefix-cli)
 | [az network route-filter](/cli/azure/network/route-filter) | [Tutorial: Configure route filters for Microsoft peering: Azure CLI](/azure/expressroute/how-to-routefilter-cli)
-|  | [Tutorial: Configure route filters for Microsoft peering: Azure CLI](/azure/expressroute/how-to-routefilter-cli)
-|  | [Quickstart: Create and configure Route Server using Azure CLI](/azure/route-server/quickstart-configure-route-server-cli)
-|  | [Quickstart: Create and configure Route Server using Azure CLI](/azure/route-server/quickstart-configure-route-server-cli)
+| [az network route-filter rule](/cli/azure/network/route-filter/rule) | [Tutorial: Configure route filters for Microsoft peering: Azure CLI](/azure/expressroute/how-to-routefilter-cli)
+| [az network routeserver](/cli/azure/network/routeserver) | [Quickstart: Create and configure Route Server using Azure CLI](/azure/route-server/quickstart-configure-route-server-cli)
+| [az network routeserver peering](/cli/azure/network/routeserver/peering) | [Quickstart: Create and configure Route Server using Azure CLI](/azure/route-server/quickstart-configure-route-server-cli)
 | [az network route-table](/cli/azure/network/route-table) | [Control egress traffic using Azure Firewall in Azure Kubernetes Service (AKS)](/azure/aks/limit-egress-traffic)
 |  | [Use Azure Firewall to protect Azure Kubernetes Service (AKS) clusters](/azure/firewall/protect-azure-kubernetes-service)
 |  | [Test private endpoints by deploying Azure Load Testing in an Azure virtual network](/azure/load-testing/how-to-test-private-endpoint)
@@ -2455,7 +2615,7 @@ ms.custom: devx-track-azurecli
 |  | [Configure Azure AI services virtual networks](/azure/ai-services/cognitive-services-virtual-networks)
 |  | [Use an internal load balancer with Azure Kubernetes Service (AKS)](/azure/aks/internal-lb)
 |  | [Create, change, or delete a network security group](/azure/virtual-network/manage-network-security-group)
-|  | [Work with a virtual network TAP using the Azure CLI](/azure/virtual-network/tutorial-tap-virtual-network-cli)
+| [az network vnet tap](/cli/azure/network/vnet/tap) | [Work with a virtual network TAP using the Azure CLI](/azure/virtual-network/tutorial-tap-virtual-network-cli)
 | [az network vnet-gateway](/cli/azure/network/vnet-gateway) | [About VPN Gateway configuration settings](/azure/vpn-gateway/vpn-gateway-about-vpn-gateway-settings)
 |  | [Reset a VPN gateway or a connection](/azure/vpn-gateway/reset-gateway)
 |  | [Configure a Point-to-Site (P2S) VPN on Linux for use with Azure Files](/azure/storage/files/storage-files-configure-p2s-vpn-linux)
@@ -2474,20 +2634,25 @@ ms.custom: devx-track-azurecli
 |  | [Troubleshoot connections with Azure Network Watcher using the Azure CLI](/azure/network-watcher/network-watcher-connectivity-cli)
 |  | [Diagnose network security rules](/azure/network-watcher/diagnose-network-security-rules)
 |  | [Quickstart: Diagnose a virtual machine network traffic filter problem using the Azure CLI](/azure/network-watcher/diagnose-vm-network-traffic-filtering-problem-cli)
-|  | [Manage NSG flow logs using the Azure CLI](/azure/network-watcher/network-watcher-nsg-flow-logging-cli)
-|  | [Manage packet captures with Azure Network Watcher using the Azure CLI](/azure/network-watcher/network-watcher-packet-capture-manage-cli)
+| [az network watcher flow-log](/cli/azure/network/watcher/flow-log) | [Manage NSG flow logs using the Azure CLI](/azure/network-watcher/network-watcher-nsg-flow-logging-cli)
+| [az network watcher packet-capture](/cli/azure/network/watcher/packet-capture) | [Manage packet captures with Azure Network Watcher using the Azure CLI](/azure/network-watcher/network-watcher-packet-capture-manage-cli)
 | [az network watcher troubleshooting](/cli/azure/network/watcher/troubleshooting) | [Troubleshoot virtual network gateway and connections with Azure Network Watcher using Azure CLI](/azure/network-watcher/network-watcher-troubleshoot-manage-cli)
-|  | [Manage lifecycle of Bare Metal Machines](/azure/operator-nexus/howto-baremetal-functions)
+
+## az networkcloud
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az networkcloud baremetalmachine](/cli/azure/networkcloud/baremetalmachine) | [Manage lifecycle of Bare Metal Machines](/azure/operator-nexus/howto-baremetal-functions)
 |  | [Troubleshoot BMM issues using the `az networkcloud baremetalmachine run-read-command`](/azure/operator-nexus/howto-baremetal-run-read)
 |  | [Troubleshoot bare metal machine issues using the `az networkcloud baremetalmachine run-data-extract` command](/azure/operator-nexus/howto-baremetal-run-data-extract)
 | [az networkcloud cloudservicesnetwork](/cli/azure/networkcloud/cloudservicesnetwork) | [Prerequisites for deploying tenant workloads](/azure/operator-nexus/quickstarts-tenant-workload-prerequisites)
 | [az networkcloud cluster](/cli/azure/networkcloud/cluster) | [Prerequisites for deploying tenant workloads](/azure/operator-nexus/quickstarts-tenant-workload-prerequisites)
 |  | [Create and provision a Cluster using Azure CLI](/azure/operator-nexus/howto-configure-cluster)
 |  | [Upgrading cluster runtime from Azure CLI](/azure/operator-nexus/howto-cluster-runtime-upgrade)
-|  | [Manage emergency access to a bare metal machine using the `az networkcloud cluster baremetalmachinekeyset`](/azure/operator-nexus/howto-baremetal-bmm-ssh)
-|  | [Manage emergency access to a bare metal machine using the `az networkcloud cluster bmckeyset`](/azure/operator-nexus/howto-baremetal-bmc-ssh)
-|  | [Cluster metrics configuration](/azure/operator-nexus/howto-cluster-metrics-configuration-management)
-|  | [Cluster Manager: How to manage the Cluster Manager in Operator Nexus](/azure/operator-nexus/howto-cluster-manager)
+| [az networkcloud cluster baremetalmachinekeyset](/cli/azure/networkcloud/cluster/baremetalmachinekeyset) | [Manage emergency access to a bare metal machine using the `az networkcloud cluster baremetalmachinekeyset`](/azure/operator-nexus/howto-baremetal-bmm-ssh)
+| [az networkcloud cluster bmckeyset](/cli/azure/networkcloud/cluster/bmckeyset) | [Manage emergency access to a bare metal machine using the `az networkcloud cluster bmckeyset`](/azure/operator-nexus/howto-baremetal-bmc-ssh)
+| [az networkcloud cluster metricsconfiguration](/cli/azure/networkcloud/cluster/metricsconfiguration) | [Cluster metrics configuration](/azure/operator-nexus/howto-cluster-metrics-configuration-management)
+| [az networkcloud clustermanager](/cli/azure/networkcloud/clustermanager) | [Cluster Manager: How to manage the Cluster Manager in Operator Nexus](/azure/operator-nexus/howto-cluster-manager)
 | [az networkcloud kubernetescluster](/cli/azure/networkcloud/kubernetescluster) | [Quickstart: Deploy an Azure Nexus Kubernetes cluster using Bicep](/azure/operator-nexus/quickstarts-kubernetes-cluster-deployment-bicep)
 |  | [Quickstart: Create an Azure Nexus Kubernetes cluster by using Azure CLI](/azure/operator-nexus/quickstarts-kubernetes-cluster-deployment-cli)
 |  | [Monitor Nexus Kubernetes cluster](/azure/operator-nexus/howto-monitor-naks-cluster)
@@ -2500,9 +2665,14 @@ ms.custom: devx-track-azurecli
 | [az networkcloud l3network](/cli/azure/networkcloud/l3network) | [Prerequisites for deploying tenant workloads](/azure/operator-nexus/quickstarts-tenant-workload-prerequisites)
 | [az networkcloud trunkednetwork](/cli/azure/networkcloud/trunkednetwork) | [Prerequisites for deploying tenant workloads](/azure/operator-nexus/quickstarts-tenant-workload-prerequisites)
 | [az networkcloud virtualmachine](/cli/azure/networkcloud/virtualmachine) | [Quickstart: Create an Azure Operator Nexus virtual machine by using Azure CLI](/azure/operator-nexus/quickstarts-tenant-workload-deployment)
-|  | [Introduction to the Virtual Machine console service](/azure/operator-nexus/howto-use-vm-console-service)
-|  | [Create and modify a network fabric controller by using the Azure CLI](/azure/operator-nexus/howto-configure-network-fabric-controller)
-|  | [Create and provision a network fabric by using the Azure CLI](/azure/operator-nexus/howto-configure-network-fabric)
+| [az networkcloud virtualmachine console](/cli/azure/networkcloud/virtualmachine/console) | [Introduction to the Virtual Machine console service](/azure/operator-nexus/howto-use-vm-console-service)
+
+## az networkfabric
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az networkfabric controller](/cli/azure/networkfabric/controller) | [Create and modify a network fabric controller by using the Azure CLI](/azure/operator-nexus/howto-configure-network-fabric-controller)
+| [az networkfabric device](/cli/azure/networkfabric/device) | [Create and provision a network fabric by using the Azure CLI](/azure/operator-nexus/howto-configure-network-fabric)
 | [az networkfabric externalnetwork](/cli/azure/networkfabric/externalnetwork) | [Configure L2 and L3 isolation domains by using a managed network fabric](/azure/operator-nexus/howto-configure-isolation-domain)
 | [az networkfabric fabric](/cli/azure/networkfabric/fabric) | [Configuration options for PE-CE connectivity](/azure/operator-nexus/reference-customer-edge-provider-edge-connectivity)
 |  | [Create and provision a network fabric by using the Azure CLI](/azure/operator-nexus/howto-configure-network-fabric)
@@ -2511,12 +2681,12 @@ ms.custom: devx-track-azurecli
 | [az networkfabric ipcommunity](/cli/azure/networkfabric/ipcommunity) | [Route Policy in Network Fabric](/azure/operator-nexus/how-to-route-policy)
 | [az networkfabric ipextendedcommunity](/cli/azure/networkfabric/ipextendedcommunity) | [Route Policy in Network Fabric](/azure/operator-nexus/how-to-route-policy)
 | [az networkfabric ipprefix](/cli/azure/networkfabric/ipprefix) | [Route Policy in Network Fabric](/azure/operator-nexus/how-to-route-policy)
-|  | [Configure L2 and L3 isolation domains by using a managed network fabric](/azure/operator-nexus/howto-configure-isolation-domain)
+| [az networkfabric l2domain](/cli/azure/networkfabric/l2domain) | [Configure L2 and L3 isolation domains by using a managed network fabric](/azure/operator-nexus/howto-configure-isolation-domain)
 |  | [Prerequisites for deploying tenant workloads](/azure/operator-nexus/quickstarts-tenant-workload-prerequisites)
-|  | [Configure L2 and L3 isolation domains by using a managed network fabric](/azure/operator-nexus/howto-configure-isolation-domain)
+| [az networkfabric l3domain](/cli/azure/networkfabric/l3domain) | [Configure L2 and L3 isolation domains by using a managed network fabric](/azure/operator-nexus/howto-configure-isolation-domain)
 |  | [Prerequisites for deploying tenant workloads](/azure/operator-nexus/quickstarts-tenant-workload-prerequisites)
 | [az networkfabric nni](/cli/azure/networkfabric/nni) | [Create and provision a network fabric by using the Azure CLI](/azure/operator-nexus/howto-configure-network-fabric)
-|  | [Route Policy in Network Fabric](/azure/operator-nexus/how-to-route-policy)
+| [az networkfabric routepolicy](/cli/azure/networkfabric/routepolicy) | [Route Policy in Network Fabric](/azure/operator-nexus/how-to-route-policy)
 
 ## az notification-hub
 
@@ -2531,12 +2701,22 @@ ms.custom: devx-track-azurecli
 | [az notification-hub credential gcm](/cli/azure/notification-hub/credential/gcm) | [Quickstart: Set up push notifications in a notification hub](/azure/notification-hubs/configure-notification-hub-portal-pns-settings)
 | [az notification-hub namespace](/cli/azure/notification-hub/namespace) | [Quickstart: Create a notification hub using a Resource Manager template](/azure/notification-hubs/create-notification-hub-template)
 |  | [Quickstart: Create an Azure notification hub using the Azure CLI](/azure/notification-hubs/create-notification-hub-azure-cli)
-|  | [Create, change, or delete a Peering Service connection using the Azure CLI](/azure/peering-service/cli)
+
+## az peering
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az peering service](/cli/azure/peering/service) | [Create, change, or delete a Peering Service connection using the Azure CLI](/azure/peering-service/cli)
 | [az peering service country](/cli/azure/peering/service/country) | [Create, change, or delete a Peering Service connection using the Azure CLI](/azure/peering-service/cli)
 | [az peering service location](/cli/azure/peering/service/location) | [Create, change, or delete a Peering Service connection using the Azure CLI](/azure/peering-service/cli)
-|  | [Create, change, or delete a Peering Service connection using the Azure CLI](/azure/peering-service/cli)
+| [az peering service prefix](/cli/azure/peering/service/prefix) | [Create, change, or delete a Peering Service connection using the Azure CLI](/azure/peering-service/cli)
 | [az peering service provider](/cli/azure/peering/service/provider) | [Create, change, or delete a Peering Service connection using the Azure CLI](/azure/peering-service/cli)
-|  | [Create your first pipeline](/azure/devops/pipelines/create-first-pipeline)
+
+## az pipelines
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az pipelines](/cli/azure/pipelines) | [Create your first pipeline](/azure/devops/pipelines/create-first-pipeline)
 |  | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables)
 |  | [Manage your pipeline with Azure CLI](/azure/devops/pipelines/get-started/manage-pipelines-with-azure-cli)
 | [az pipelines agent](/cli/azure/pipelines/agent) | [Overview: Azure CLI terminology and support levels](/cli/azure/reference-types-and-status)
@@ -2544,18 +2724,18 @@ ms.custom: devx-track-azurecli
 | [az pipelines build](/cli/azure/pipelines/build) | [Azure DevOps CLI in Azure Pipeline YAML](/azure/devops/cli/azure-devops-cli-in-yaml)
 | [az pipelines pool](/cli/azure/pipelines/pool) | [Azure Pipelines agents](/azure/devops/pipelines/agents/agents)
 |  | [Create and manage agent pools](/azure/devops/pipelines/agents/pools-queues)
-|  | [Create and manage agent pools](/azure/devops/pipelines/agents/pools-queues)
+| [az pipelines queue](/cli/azure/pipelines/queue) | [Create and manage agent pools](/azure/devops/pipelines/agents/pools-queues)
 | [az pipelines runs](/cli/azure/pipelines/runs) | [Pipeline run sequence](/azure/devops/pipelines/process/runs)
-|  | [Publish and download pipeline Artifacts](/azure/devops/pipelines/artifacts/pipeline-artifacts)
+| [az pipelines runs artifact](/cli/azure/pipelines/runs/artifact) | [Publish and download pipeline Artifacts](/azure/devops/pipelines/artifacts/pipeline-artifacts)
 |  | [Publish Pipeline Artifacts](/azure/devops/pipelines/publish-pipeline-artifact)
-|  | [Pipeline run sequence](/azure/devops/pipelines/process/runs)
+| [az pipelines runs tag](/cli/azure/pipelines/runs/tag) | [Pipeline run sequence](/azure/devops/pipelines/process/runs)
 | [az pipelines variable](/cli/azure/pipelines/variable) | [Define variables](/azure/devops/pipelines/process/variables)
-|  | [Add & use variable groups](/azure/devops/pipelines/library/variable-groups)
+| [az pipelines variable-group](/cli/azure/pipelines/variable-group) | [Add & use variable groups](/azure/devops/pipelines/library/variable-groups)
 |  | [Task types & usage](/azure/devops/pipelines/process/tasks)
 |  | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables)
 |  | [Azure DevOps CLI in Azure Pipeline YAML](/azure/devops/cli/azure-devops-cli-in-yaml)
 |  | [Build a data pipeline by using Azure Data Factory, DevOps, and machine learning](/azure/devops/pipelines/apps/cd/azure/build-data-pipeline)
-|  | [Add & use variable groups](/azure/devops/pipelines/library/variable-groups)
+| [az pipelines variable-group variable](/cli/azure/pipelines/variable-group/variable) | [Add & use variable groups](/azure/devops/pipelines/library/variable-groups)
 |  | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables)
 |  | [Azure DevOps CLI in Azure Pipeline YAML](/azure/devops/cli/azure-devops-cli-in-yaml)
 
@@ -2580,12 +2760,17 @@ ms.custom: devx-track-azurecli
 | [az policy set-definition](/cli/azure/policy/set-definition) | [Tutorial: Create and manage policies to enforce compliance](/azure/governance/policy/tutorials/create-and-manage)
 |  | [Export Azure Policy resources](/azure/governance/policy/how-to/export-resources)
 |  | [Built-in policies for Azure Monitor](/azure/azure-monitor/essentials/diagnostics-settings-policies-deployifnotexists)
-|  | [Get compliance data of Azure resources](/azure/governance/policy/how-to/get-compliance-data)
+| [az policy state](/cli/azure/policy/state) | [Get compliance data of Azure resources](/azure/governance/policy/how-to/get-compliance-data)
 |  | [Built-in policies for Azure Monitor](/azure/azure-monitor/essentials/diagnostics-settings-policies-deployifnotexists)
 |  | [Audit compliance of Azure container registries using Azure Policy](/azure/container-registry/container-registry-azure-policy)
 |  | [Audit compliance of Azure Web PubSub Service resources using Azure Policy](/azure/azure-web-pubsub/howto-monitor-azure-policy)
 |  | [Audit compliance of Azure SignalR Service resources using Azure Policy](/azure/azure-signalr/signalr-howto-azure-policy)
-|  | [Programmatically create Azure dashboards](/azure/azure-portal/azure-portal-dashboards-create-programmatically)
+
+## az portal
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az portal dashboard](/cli/azure/portal/dashboard) | [Programmatically create Azure dashboards](/azure/azure-portal/azure-portal-dashboards-create-programmatically)
 |  | [Quickstart: Create an Azure portal dashboard with Azure CLI](/azure/azure-portal/quickstart-portal-dashboard-azure-cli)
 
 ## az postgres
@@ -2601,7 +2786,7 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Connect to PostgreSQL Database from a Java Quarkus Container App without secrets using a managed identity](/azure/container-apps/tutorial-java-quarkus-connect-managed-identity-postgresql-database)
 |  | [Tutorial: Build a Quarkus web app with Azure App Service on Linux and PostgreSQL](/azure/app-service/tutorial-java-quarkus-postgresql-app)
 |  | [Getting started with databases on Azure](/azure/developer/javascript/database-developer-guide)
-|  | [Tutorial: Deploy Django app with App Service and Azure Database for PostgreSQL - Flexible Server](/azure/postgresql/flexible-server/tutorial-django-app-service-postgres)
+| [az postgres flexible-server](/cli/azure/postgres/flexible-server) | [Tutorial: Deploy Django app with App Service and Azure Database for PostgreSQL - Flexible Server](/azure/postgresql/flexible-server/tutorial-django-app-service-postgres)
 |  | [Quickstart: Connect and query with Azure CLI  with Azure Database for PostgreSQL - Flexible Server](/azure/postgresql/flexible-server/connect-azure-cli)
 |  | [Create and deploy a Django web app to Azure with a user-assigned managed identity](/azure/developer/python/tutorial-python-managed-identity-user-assigned-cli)
 |  | [Azure Pipelines task for Azure Database for PostgreSQL Flexible Server](/azure/postgresql/flexible-server/azure-pipelines-deploy-database-task)
@@ -2642,10 +2827,10 @@ ms.custom: devx-track-azurecli
 |  | [Getting started with databases on Azure](/azure/developer/javascript/database-developer-guide)
 | [az postgres server key](/cli/azure/postgres/server/key) | [Validating data encryption for Azure Database for PostgreSQL](/azure/postgresql/single-server/how-to-data-encryption-validation)
 |  | [Data encryption for Azure Database for PostgreSQL Single server by using the Azure CLI](/azure/postgresql/single-server/how-to-data-encryption-cli)
-|  | [Create and manage read replicas from the Azure CLI, REST API](/azure/postgresql/single-server/how-to-read-replicas-cli)
+| [az postgres server replica](/cli/azure/postgres/server/replica) | [Create and manage read replicas from the Azure CLI, REST API](/azure/postgresql/single-server/how-to-read-replicas-cli)
 | [az postgres server vnet-rule](/cli/azure/postgres/server/vnet-rule) | [Create and manage VNet service endpoints for Azure Database for PostgreSQL - Single Server using Azure CLI](/azure/postgresql/single-server/how-to-manage-vnet-using-cli)
 |  | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule)
-|  | [Scale up and down an Azure Database for PostgreSQL server using CLI (az or kubectl)](/azure/azure-arc/data/scale-up-down-postgresql-server-using-cli)
+| [az postgres server-arc](/cli/azure/postgres/server-arc) | [Scale up and down an Azure Database for PostgreSQL server using CLI (az or kubectl)](/azure/azure-arc/data/scale-up-down-postgresql-server-using-cli)
 |  | [Storage Configuration](/azure/azure-arc/data/storage-configuration)
 |  | [Create an Azure Arc-enabled PostgreSQL server from CLI](/azure/azure-arc/data/create-postgresql-server)
 |  | [Use PostgreSQL extensions in your Azure Arc-enabled PostgreSQL server](/azure/azure-arc/data/using-extensions-in-postgresql-server)
@@ -2654,7 +2839,7 @@ ms.custom: devx-track-azurecli
 |  | [View logs and metrics using Kibana and Grafana](/azure/azure-arc/data/monitor-grafana-kibana)
 |  | [Get connection endpoints & create the connection strings for your Azure Arc-enabled PostgreSQL server](/azure/azure-arc/data/get-connection-endpoints-and-connection-strings-postgresql-server)
 |  | [Migrate PostgreSQL database to Azure Arc-enabled PostgreSQL server](/azure/azure-arc/data/migrate-postgresql-data)
-|  | [Configure and access server logs by using Azure CLI](/azure/postgresql/single-server/how-to-configure-server-logs-using-cli)
+| [az postgres server-logs](/cli/azure/postgres/server-logs) | [Configure and access server logs by using Azure CLI](/azure/postgresql/single-server/how-to-configure-server-logs-using-cli)
 |  | [Enable and download server slow query logs of an Azure Database for PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-server-logs)
 
 ## az powerbi
@@ -2703,8 +2888,8 @@ ms.custom: devx-track-azurecli
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az quantum job](/cli/azure/quantum/job) | [Integrated hybrid computing](/azure/quantum//hybrid-computing-integrated)
-|  | [Manage quantum workspaces with the Azure CLI](/azure/quantum//how-to-manage-quantum-workspaces-with-the-azure-cli)
-|  | [Integrated hybrid computing](/azure/quantum//hybrid-computing-integrated)
+| [az quantum offerings](/cli/azure/quantum/offerings) | [Manage quantum workspaces with the Azure CLI](/azure/quantum//how-to-manage-quantum-workspaces-with-the-azure-cli)
+| [az quantum workspace](/cli/azure/quantum/workspace) | [Integrated hybrid computing](/azure/quantum//hybrid-computing-integrated)
 |  | [Azure Quantum Credits](/azure/quantum//azure-quantum-credits)
 |  | [Azure Quantum quotas](/azure/quantum//azure-quantum-quotas)
 |  | [Manage quantum workspaces with the Azure CLI](/azure/quantum//how-to-manage-quantum-workspaces-with-the-azure-cli)
@@ -2741,13 +2926,13 @@ ms.custom: devx-track-azurecli
 |  | [Delete a Git repo from your project](/azure/devops/repos/git/delete-existing-repo)
 |  | [Auto detect configuration and git aliases](/azure/devops/cli/auto-detect-and-git-aliases)
 | [az repos import](/cli/azure/repos/import) | [Import a Git repo](/azure/devops/repos/git/import-git-repository)
-|  | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
+| [az repos policy](/cli/azure/repos/policy) | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
 |  | [Set Git repository settings and policies](/azure/devops/repos/git/repository-settings)
 | [az repos policy approver-count](/cli/azure/repos/policy/approver-count) | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
 | [az repos policy build](/cli/azure/repos/policy/build) | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
-|  | [Set Git repository settings and policies](/azure/devops/repos/git/repository-settings)
+| [az repos policy case-enforcement](/cli/azure/repos/policy/case-enforcement) | [Set Git repository settings and policies](/azure/devops/repos/git/repository-settings)
 | [az repos policy comment-required](/cli/azure/repos/policy/comment-required) | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
-|  | [Set Git repository settings and policies](/azure/devops/repos/git/repository-settings)
+| [az repos policy file-size](/cli/azure/repos/policy/file-size) | [Set Git repository settings and policies](/azure/devops/repos/git/repository-settings)
 | [az repos policy merge-strategy](/cli/azure/repos/policy/merge-strategy) | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
 | [az repos policy required-reviewer](/cli/azure/repos/policy/required-reviewer) | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
 | [az repos policy work-item-linking](/cli/azure/repos/policy/work-item-linking) | [Branch policies and settings](/azure/devops/repos/git/branch-policies)
@@ -2758,7 +2943,7 @@ ms.custom: devx-track-azurecli
 |  | [Auto detect configuration and git aliases](/azure/devops/cli/auto-detect-and-git-aliases)
 | [az repos pr policy](/cli/azure/repos/pr/policy) | [Complete, abandon, or revert pull requests](/azure/devops/repos/git/complete-pull-requests)
 | [az repos pr reviewer](/cli/azure/repos/pr/reviewer) | [Create pull requests](/azure/devops/repos/git/pull-requests)
-|  | [Create pull requests](/azure/devops/repos/git/pull-requests)
+| [az repos pr work-item](/cli/azure/repos/pr/work-item) | [Create pull requests](/azure/devops/repos/git/pull-requests)
 
 ## az resource
 
@@ -2810,7 +2995,7 @@ ms.custom: devx-track-azurecli
 |  | [2 - Create and load Search Index with .NET](/azure/search/tutorial-csharp-create-load-index)
 |  | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
 |  | [2 - Create and load Search Index with JavaScript](/azure/search/tutorial-javascript-create-load-index)
-|  | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
+| [az search private-endpoint-connection](/cli/azure/search/private-endpoint-connection) | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
 | [az search query-key](/cli/azure/search/query-key) | [Connect to Cognitive Search using key authentication](/azure/search/search-security-api-keys)
 |  | [2 - Create and load Search Index with .NET](/azure/search/tutorial-csharp-create-load-index)
 |  | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
@@ -2819,7 +3004,7 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Deploy Cognitive Search service using Terraform](/azure/search/search-get-started-terraform)
 |  | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
 |  | [2 - Create and load Search Index with JavaScript](/azure/search/tutorial-javascript-create-load-index)
-|  | [Make outbound connections through a shared private link](/azure/search/search-indexer-howto-access-private)
+| [az search shared-private-link-resource](/cli/azure/search/shared-private-link-resource) | [Make outbound connections through a shared private link](/azure/search/search-indexer-howto-access-private)
 |  | [Manage your Azure Cognitive Search service with the Azure CLI](/azure/search/search-manage-azure-cli)
 
 ## az security
@@ -2830,7 +3015,12 @@ ms.custom: devx-track-azurecli
 | [az security pricing](/cli/azure/security/pricing) | [Enable Microsoft Defender for Storage (classic)](/azure/defender-for-cloud/defender-for-storage-classic-enable)
 |  | [Connect Azure Arc-enabled servers to Microsoft Defender for Cloud](/azure/cloud-adoption-framework/manage/hybrid/server/best-practices/arc-security-center)
 | [az security workspace-setting](/cli/azure/security/workspace-setting) | [Connect Azure Arc-enabled servers to Microsoft Defender for Cloud](/azure/cloud-adoption-framework/manage/hybrid/server/best-practices/arc-security-center)
-|  | [Migrate existing Azure Service Bus standard namespaces to the premium tier](/azure/service-bus-messaging/service-bus-migrate-standard-premium)
+
+## az servicebus
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az servicebus migration](/cli/azure/servicebus/migration) | [Migrate existing Azure Service Bus standard namespaces to the premium tier](/azure/service-bus-messaging/service-bus-migrate-standard-premium)
 | [az servicebus namespace](/cli/azure/servicebus/namespace) | [Quickstart: Send events to and receive events from Azure Event Hubs using .NET](/azure/event-hubs/event-hubs-dotnet-standard-getstarted-send)
 |  | [Send events to or receive events from event hubs by using Python](/azure/event-hubs/event-hubs-python-get-started-send)
 |  | [Use Java to send events to or receive events from Azure Event Hubs](/azure/event-hubs/event-hubs-java-get-started-send)
@@ -2892,7 +3082,7 @@ ms.custom: devx-track-azurecli
 |  | [Deploy a VM with trusted launch enabled](/azure/virtual-machines/trusted-launch-portal)
 |  | [Create a VM from a generalized image version](/azure/virtual-machines/vm-generalized-image-version)
 |  | [Create an Azure Image Builder Bicep or ARM template JSON template](/azure/virtual-machines/linux/image-builder-json)
-|  | [Share a gallery with subscriptions or tenants (preview)](/azure/virtual-machines/share-gallery-direct)
+| [az sig share](/cli/azure/sig/share) | [Share a gallery with subscriptions or tenants (preview)](/azure/virtual-machines/share-gallery-direct)
 |  | [List, update, and delete gallery resources](/azure/virtual-machines/update-image-resources)
 |  | [Share images using a community gallery (preview)](/azure/virtual-machines/share-gallery-community)
 
@@ -2920,10 +3110,15 @@ ms.custom: devx-track-azurecli
 |  | [Migrate from in-tree storage class to CSI drivers on Azure Kubernetes Service (AKS)](/azure/aks/csi-migrate-in-tree-volumes)
 |  | [Copy an incremental snapshot to a new region](/azure/virtual-machines/disks-copy-incremental-snapshot-across-regions)
 |  | [Change the disk type of an Azure managed disk](/azure/virtual-machines/disks-convert-types)
-|  | [Run the sample app: Android - Android Studio (Java or C++/NDK)](/azure/spatial-anchors/quickstarts/get-started-android)
+
+## az spatial-anchors-account
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az spatial-anchors-account](/cli/azure/spatial-anchors-account) | [Run the sample app: Android - Android Studio (Java or C++/NDK)](/azure/spatial-anchors/quickstarts/get-started-android)
 |  | [Tutorial: Step-by-step instructions to create a new Android app using Azure Spatial Anchors](/azure/spatial-anchors/tutorials/tutorial-new-android-app)
 |  | [Run the sample app: iOS - Xcode (Swift or Objective-C)](/azure/spatial-anchors/quickstarts/get-started-ios)
-|  | [Run the sample app: Android - Android Studio (Java or C++/NDK)](/azure/spatial-anchors/quickstarts/get-started-android)
+| [az spatial-anchors-account key](/cli/azure/spatial-anchors-account/key) | [Run the sample app: Android - Android Studio (Java or C++/NDK)](/azure/spatial-anchors/quickstarts/get-started-android)
 |  | [Tutorial: Step-by-step instructions to create a new Android app using Azure Spatial Anchors](/azure/spatial-anchors/tutorials/tutorial-new-android-app)
 |  | [Run the sample app: iOS - Xcode (Swift or Objective-C)](/azure/spatial-anchors/quickstarts/get-started-ios)
 
@@ -2936,11 +3131,11 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Use a managed identity to invoke Azure Functions from an Azure Spring Apps app](/azure/spring-apps/tutorial-managed-identities-functions)
 |  | [Deploy Azure Spring Apps in a virtual network](/azure/spring-apps/how-to-deploy-in-azure-virtual-network)
 |  | [Tutorial: Connect Azure Spring Apps to Key Vault using managed identities](/azure/spring-apps/tutorial-managed-identities-key-vault)
-|  | [Quickstart: Build and deploy apps to Azure Spring Apps using the Enterprise plan](/azure/spring-apps/quickstart-deploy-apps-enterprise)
+| [az spring api-portal](/cli/azure/spring/api-portal) | [Quickstart: Build and deploy apps to Azure Spring Apps using the Enterprise plan](/azure/spring-apps/quickstart-deploy-apps-enterprise)
 |  | [Quickstart: Configure single sign-on for applications using the Azure Spring Apps Enterprise plan](/azure/spring-apps/quickstart-configure-single-sign-on-enterprise)
 |  | [Use API portal for VMware Tanzu](/azure/spring-apps/how-to-use-enterprise-api-portal)
-|  | [How to configure APM integration and CA certificates](/azure/spring-apps/how-to-enterprise-configure-apm-integration-and-ca-certificates)
-|  | [Azure Spring Apps API breaking changes](/azure/spring-apps/breaking-changes)
+| [az spring apm](/cli/azure/spring/apm) | [How to configure APM integration and CA certificates](/azure/spring-apps/how-to-enterprise-configure-apm-integration-and-ca-certificates)
+| [az spring app](/cli/azure/spring/app) | [Azure Spring Apps API breaking changes](/azure/spring-apps/breaking-changes)
 |  | [Troubleshoot common Azure Spring Apps issues](/azure/spring-apps/troubleshoot)
 |  | [Quickstart: Deploy your first application to Azure Spring Apps](/azure/spring-apps/quickstart)
 |  | [Tutorial: Use a managed identity to invoke Azure Functions from an Azure Spring Apps app](/azure/spring-apps/tutorial-managed-identities-functions)
@@ -2960,10 +3155,10 @@ ms.custom: devx-track-azurecli
 |  | [Migrate an application to use passwordless connections with Azure Blob Storage](/azure/storage/common/migrate-azure-credentials)
 |  | [Migrate a Java application to use passwordless connections with Azure SQL Database](/azure/developer/java/spring-framework/migrate-sql-database-to-passwordless-connection)
 |  | [Migrate an application to use passwordless connections with Azure Cosmos DB for NoSQL](/azure/cosmos-db/nosql/migrate-passwordless)
-|  | [Use Application Insights Java In-Process Agent in Azure Spring Apps](/azure/spring-apps/how-to-application-insights)
-|  | [Use VMware Tanzu Application Accelerator with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-accelerator)
+| [az spring app-insights](/cli/azure/spring/app-insights) | [Use Application Insights Java In-Process Agent in Azure Spring Apps](/azure/spring-apps/how-to-application-insights)
+| [az spring application-accelerator](/cli/azure/spring/application-accelerator) | [Use VMware Tanzu Application Accelerator with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-accelerator)
 | [az spring application-accelerator customized-accelerator](/cli/azure/spring/application-accelerator/customized-accelerator) | [Use VMware Tanzu Application Accelerator with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-accelerator)
-|  | [Use VMware Tanzu Application Accelerator with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-accelerator)
+| [az spring application-accelerator predefined-accelerator](/cli/azure/spring/application-accelerator/predefined-accelerator) | [Use VMware Tanzu Application Accelerator with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-accelerator)
 | [az spring application-configuration-service](/cli/azure/spring/application-configuration-service) | [Quickstart: Build and deploy apps to Azure Spring Apps using the Enterprise plan](/azure/spring-apps/quickstart-deploy-apps-enterprise)
 |  | [Use Application Configuration Service for Tanzu](/azure/spring-apps/how-to-enterprise-application-configuration-service)
 |  | [Quickstart: Configure single sign-on for applications using the Azure Spring Apps Enterprise plan](/azure/spring-apps/quickstart-configure-single-sign-on-enterprise)
@@ -2971,16 +3166,16 @@ ms.custom: devx-track-azurecli
 | [az spring application-configuration-service git repo](/cli/azure/spring/application-configuration-service/git/repo) | [Quickstart: Build and deploy apps to Azure Spring Apps using the Enterprise plan](/azure/spring-apps/quickstart-deploy-apps-enterprise)
 |  | [Use Application Configuration Service for Tanzu](/azure/spring-apps/how-to-enterprise-application-configuration-service)
 |  | [Migrate an Azure Spring Apps Basic or Standard plan instance to the Enterprise plan](/azure/spring-apps/how-to-migrate-standard-tier-to-enterprise-tier)
-|  | [Use Application Live View with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-application-live-view)
+| [az spring application-live-view](/cli/azure/spring/application-live-view) | [Use Application Live View with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-application-live-view)
 | [az spring build-service](/cli/azure/spring/build-service) | [How to deploy polyglot apps in the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-enterprise-deploy-polyglot-apps)
-|  | [How to deploy polyglot apps in the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-enterprise-deploy-polyglot-apps)
+| [az spring build-service build](/cli/azure/spring/build-service/build) | [How to deploy polyglot apps in the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-enterprise-deploy-polyglot-apps)
 |  | [Deploy web static files](/azure/spring-apps/how-to-enterprise-deploy-static-file)
 | [az spring build-service builder](/cli/azure/spring/build-service/builder) | [Quickstart: Build and deploy apps to Azure Spring Apps using the Enterprise plan](/azure/spring-apps/quickstart-deploy-apps-enterprise)
-|  | [Use Application Insights Java In-Process Agent in Azure Spring Apps](/azure/spring-apps/how-to-application-insights)
+| [az spring build-service builder buildpack-binding](/cli/azure/spring/build-service/builder/buildpack-binding) | [Use Application Insights Java In-Process Agent in Azure Spring Apps](/azure/spring-apps/how-to-application-insights)
 |  | [How to configure APM integration and CA certificates](/azure/spring-apps/how-to-enterprise-configure-apm-integration-and-ca-certificates)
 |  | [Migrate an Azure Spring Apps Basic or Standard plan instance to the Enterprise plan](/azure/spring-apps/how-to-migrate-standard-tier-to-enterprise-tier)
 |  | [Quickstart: Monitor applications end-to-end](/azure/spring-apps/quickstart-monitor-end-to-end-enterprise)
-|  | [Map an existing custom domain to Azure Spring Apps](/azure/spring-apps/how-to-custom-domain)
+| [az spring certificate](/cli/azure/spring/certificate) | [Map an existing custom domain to Azure Spring Apps](/azure/spring-apps/how-to-custom-domain)
 |  | [Expose applications with end-to-end TLS in a virtual network](/azure/spring-apps/expose-apps-gateway-end-to-end-tls)
 | [az spring config-server](/cli/azure/spring/config-server) | [Quickstart: Enable and disable Spring Cloud Config Server in Azure Spring Apps](/azure/spring-apps/quickstart-standard-consumption-config-server)
 | [az spring config-server git](/cli/azure/spring/config-server/git) | [Use Azure Spring Apps CI/CD with GitHub Actions](/azure/spring-apps/how-to-github-actions)
@@ -2997,17 +3192,17 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Deploy a Spring application to Azure Spring Apps with a passwordless connection to an Azure database](/azure/developer/java/spring-framework/deploy-passwordless-spring-database-app)
 |  | [Migrate a Java application to use passwordless connections with Azure SQL Database](/azure/developer/java/spring-framework/migrate-sql-database-to-passwordless-connection)
 |  | [Connect Azure Cache for Redis to your application in Azure Spring Apps](/azure/spring-apps/how-to-bind-redis)
-|  | [How to deploy polyglot apps in the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-enterprise-deploy-polyglot-apps)
+| [az spring container-registry](/cli/azure/spring/container-registry) | [How to deploy polyglot apps in the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-enterprise-deploy-polyglot-apps)
 | [az spring dev-tool](/cli/azure/spring/dev-tool) | [Configure Tanzu Dev Tools in the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-dev-tool-portal)
 |  | [Use VMware Tanzu Application Accelerator with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-accelerator)
 |  | [Use Application Live View with the Azure Spring Apps Enterprise plan](/azure/spring-apps/how-to-use-application-live-view)
-|  | [Quickstart: Enable and disable Eureka Server in Azure Spring Apps](/azure/spring-apps/quickstart-standard-consumption-eureka-server)
+| [az spring eureka-server](/cli/azure/spring/eureka-server) | [Quickstart: Enable and disable Eureka Server in Azure Spring Apps](/azure/spring-apps/quickstart-standard-consumption-eureka-server)
 | [az spring gateway](/cli/azure/spring/gateway) | [Use Spring Cloud Gateway](/azure/spring-apps/how-to-use-enterprise-spring-cloud-gateway)
 |  | [Quickstart: Build and deploy apps to Azure Spring Apps using the Enterprise plan](/azure/spring-apps/quickstart-deploy-apps-enterprise)
 |  | [Configure VMware Spring Cloud Gateway](/azure/spring-apps/how-to-configure-enterprise-spring-cloud-gateway)
 |  | [Quickstart: Configure single sign-on for applications using the Azure Spring Apps Enterprise plan](/azure/spring-apps/quickstart-configure-single-sign-on-enterprise)
 |  | [Quickstart: Integrate with Azure Database for PostgreSQL and Azure Cache for Redis](/azure/spring-apps/quickstart-integrate-azure-database-and-redis-enterprise)
-|  | [Use Spring Cloud Gateway](/azure/spring-apps/how-to-use-enterprise-spring-cloud-gateway)
+| [az spring gateway route-config](/cli/azure/spring/gateway/route-config) | [Use Spring Cloud Gateway](/azure/spring-apps/how-to-use-enterprise-spring-cloud-gateway)
 |  | [Quickstart: Build and deploy apps to Azure Spring Apps using the Enterprise plan](/azure/spring-apps/quickstart-deploy-apps-enterprise)
 |  | [Configure VMware Spring Cloud Gateway](/azure/spring-apps/how-to-configure-enterprise-spring-cloud-gateway)
 |  | [Quickstart: Configure single sign-on for applications using the Azure Spring Apps Enterprise plan](/azure/spring-apps/quickstart-configure-single-sign-on-enterprise)
@@ -3017,7 +3212,12 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Configure single sign-on for applications using the Azure Spring Apps Enterprise plan](/azure/spring-apps/quickstart-configure-single-sign-on-enterprise)
 |  | [Migrate an Azure Spring Apps Basic or Standard plan instance to the Enterprise plan](/azure/spring-apps/how-to-migrate-standard-tier-to-enterprise-tier)
 | [az spring storage](/cli/azure/spring/storage) | [How to enable your own persistent storage in Azure Spring Apps](/azure/spring-apps/how-to-custom-persistent-storage)
-|  | [Tutorial: Deploy a Spring Boot app connected to Apache Kafka on Confluent Cloud with Service Connector in Azure Spring Apps](/azure/service-connector/tutorial-java-spring-confluent-kafka)
+
+## az spring-cloud
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az spring-cloud app](/cli/azure/spring-cloud/app) | [Tutorial: Deploy a Spring Boot app connected to Apache Kafka on Confluent Cloud with Service Connector in Azure Spring Apps](/azure/service-connector/tutorial-java-spring-confluent-kafka)
 | [az spring-cloud connection create](/cli/azure/spring-cloud/connection/create) | [Migrate an application to use passwordless connections with Azure Blob Storage](/azure/storage/common/migrate-azure-credentials)
 |  | [Tutorial: Deploy a Spring Boot app connected to Apache Kafka on Confluent Cloud with Service Connector in Azure Spring Apps](/azure/service-connector/tutorial-java-spring-confluent-kafka)
 |  | [Migrate a .NET application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration)
@@ -3037,38 +3237,38 @@ ms.custom: devx-track-azurecli
 | [az sql db geo-backup](/cli/azure/sql/db/geo-backup) | [Configure geo replication and backup restore for transparent data encryption with database level customer-managed keys](/azure/azure-sql/database/transparent-data-encryption-byok-database-level-geo-replication-restore)
 | [az sql db ledger-digest-uploads](/cli/azure/sql/db/ledger-digest-uploads) | [Enable automatic digest storage](/sql/relational-databases/security/ledger/ledger-how-to-enable-automatic-digest-storage)
 |  | [Quickstart: Create a database in Azure SQL Database with ledger enabled](/azure/azure-sql/database/ledger-create-a-single-database-with-ledger-enabled)
-|  | [Manage Azure SQL Database long-term backup retention](/azure/azure-sql/database/long-term-backup-retention-configure)
+| [az sql db ltr-backup](/cli/azure/sql/db/ltr-backup) | [Manage Azure SQL Database long-term backup retention](/azure/azure-sql/database/long-term-backup-retention-configure)
 |  | [Manage Azure SQL Managed Instance long-term backup retention](/azure/azure-sql/managed-instance/long-term-backup-retention-configure)
-|  | [Manage Azure SQL Database long-term backup retention](/azure/azure-sql/database/long-term-backup-retention-configure)
+| [az sql db ltr-policy](/cli/azure/sql/db/ltr-policy) | [Manage Azure SQL Database long-term backup retention](/azure/azure-sql/database/long-term-backup-retention-configure)
 | [az sql db op](/cli/azure/sql/db/op) | [Scale single database resources in Azure SQL Database](/azure/azure-sql/database/single-database-scale)
 |  | [How to manage a Hyperscale database](/azure/azure-sql/database/manage-hyperscale-database)
 |  | [Monitor and scale a single database in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/monitor-and-scale-database-cli)
-|  | [Tutorial: Configure active geo-replication and failover (Azure SQL Database)](/azure/azure-sql/database/active-geo-replication-configure-portal)
+| [az sql db replica](/cli/azure/sql/db/replica) | [Tutorial: Configure active geo-replication and failover (Azure SQL Database)](/azure/azure-sql/database/active-geo-replication-configure-portal)
 |  | [Hyperscale secondary replicas](/azure/azure-sql/database/service-tier-hyperscale-replicas)
 |  | [Configure isolated access to a Hyperscale named replica](/azure/azure-sql/database/hyperscale-named-replica-security-configure)
 |  | [Create a zone-redundant Hyperscale database](/azure/azure-sql/database/hyperscale-create-zone-redundant-database)
 |  | [Configure geo replication and backup restore for transparent data encryption with database level customer-managed keys](/azure/azure-sql/database/transparent-data-encryption-byok-database-level-geo-replication-restore)
 | [az sql db str-policy](/cli/azure/sql/db/str-policy) | [Change automated backup settings for Azure SQL Database](/azure/azure-sql/database/automated-backups-change-settings)
-|  | [PowerShell and Azure CLI: Enable Transparent Data Encryption with customer-managed key from Azure Key Vault](/azure/azure-sql/database/transparent-data-encryption-byok-configure)
-|  | [Identity and key management for TDE with database level customer-managed keys](/azure/azure-sql/database/transparent-data-encryption-byok-database-level-basic-actions)
+| [az sql db tde](/cli/azure/sql/db/tde) | [PowerShell and Azure CLI: Enable Transparent Data Encryption with customer-managed key from Azure Key Vault](/azure/azure-sql/database/transparent-data-encryption-byok-configure)
+| [az sql db tde key](/cli/azure/sql/db/tde/key) | [Identity and key management for TDE with database level customer-managed keys](/azure/azure-sql/database/transparent-data-encryption-byok-database-level-basic-actions)
 | [az sql elastic-pool](/cli/azure/sql/elastic-pool) | [Configure maintenance window](/azure/azure-sql/database/maintenance-window-configure)
 |  | [Tutorial: Add an Azure SQL Database elastic pool to a failover group](/azure/azure-sql/database/failover-group-add-elastic-pool-tutorial)
 |  | [Move a database in SQL Database in a SQL elastic pool using the Azure CLI](/azure/azure-sql/database/scripts/move-database-between-elastic-pools-cli)
 |  | [Enable Always Encrypted with secure enclaves in Azure SQL Database](/azure/azure-sql/database/always-encrypted-enclaves-enable)
 |  | [Working with Hyperscale elastic pools using command-line tools](/azure/azure-sql/database/hyperscale-elastic-pool-command-line)
-|  | [Tutorial: Add an Azure SQL Database to an auto-failover group](/azure/azure-sql/database/failover-group-add-single-database-tutorial)
+| [az sql failover-group](/cli/azure/sql/failover-group) | [Tutorial: Add an Azure SQL Database to an auto-failover group](/azure/azure-sql/database/failover-group-add-single-database-tutorial)
 |  | [Tutorial: Implement a geo-distributed database (Azure SQL Database)](/azure/azure-sql/database/geo-distributed-application-configure-tutorial)
 |  | [Tutorial: Add an Azure SQL Database elastic pool to a failover group](/azure/azure-sql/database/failover-group-add-elastic-pool-tutorial)
 |  | [Configure a failover group for a group of databases in Azure SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/setup-geodr-failover-group-cli)
 |  | [Add a database to a failover group using the Azure CLI](/azure/azure-sql/database/scripts/add-database-to-failover-group-cli)
 | [az sql instance-failover-group-arc](/cli/azure/sql/instance-failover-group-arc) | [Azure Arc-enabled SQL Managed Instance - disaster recovery](/azure/azure-arc/data/managed-instance-disaster-recovery)
-|  | [Deploy Azure SQL Managed Instance to an instance pool](/azure/azure-sql/managed-instance/instance-pools-configure)
-|  | [Managed identities in Azure AD for Azure SQL](/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity)
+| [az sql instance-pool](/cli/azure/sql/instance-pool) | [Deploy Azure SQL Managed Instance to an instance pool](/azure/azure-sql/managed-instance/instance-pools-configure)
+| [az sql mi](/cli/azure/sql/mi) | [Managed identities in Azure AD for Azure SQL](/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity)
 |  | [Configure public endpoints in Azure SQL Managed Instance](/azure/azure-sql/managed-instance/public-endpoint-configure)
 |  | [vCore purchasing model - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/service-tiers-managed-instance-vcore)
 |  | [Configure minimal TLS version in Azure SQL Managed Instance](/azure/azure-sql/managed-instance/minimal-tls-version-configure)
 |  | [Configure maintenance window](/azure/azure-sql/database/maintenance-window-configure)
-|  | [Azure AD-only authentication with Azure SQL](/azure/azure-sql/database/authentication-azure-ad-only-authentication)
+| [az sql mi ad-only-auth](/cli/azure/sql/mi/ad-only-auth) | [Azure AD-only authentication with Azure SQL](/azure/azure-sql/database/authentication-azure-ad-only-authentication)
 |  | [Tutorial: Enable Azure Active Directory only authentication with Azure SQL](/azure/azure-sql/database/authentication-azure-ad-only-authentication-tutorial)
 | [az sql mi dtc](/cli/azure/sql/mi/dtc) | [Distributed Transaction Coordinator (DTC) for Azure SQL Managed Instance (preview)](/azure/azure-sql/managed-instance/distributed-transaction-coordinator-dtc)
 | [az sql mi endpoint-cert](/cli/azure/sql/mi/endpoint-cert) | [Replicate a database with the link via T-SQL and PowerShell or Azure CLI scripts - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/managed-instance-link-use-scripts-to-replicate-database)
@@ -3079,11 +3279,11 @@ ms.custom: devx-track-azurecli
 | [az sql mi op](/cli/azure/sql/mi/op) | [Move Azure SQL Managed Instance across subnets](/azure/azure-sql/managed-instance/vnet-subnet-move-instance)
 |  | [Monitoring Azure SQL Managed Instance management operations](/azure/azure-sql/managed-instance/management-operations-monitor)
 |  | [Canceling Azure SQL Managed Instance management operations](/azure/azure-sql/managed-instance/management-operations-cancel)
-|  | [Replicate a database with the link via T-SQL and PowerShell or Azure CLI scripts - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/managed-instance-link-use-scripts-to-replicate-database)
+| [az sql mi partner-cert](/cli/azure/sql/mi/partner-cert) | [Replicate a database with the link via T-SQL and PowerShell or Azure CLI scripts - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/managed-instance-link-use-scripts-to-replicate-database)
 | [az sql mi server-configuration-option](/cli/azure/sql/mi/server-configuration-option) | [CREATE EXTERNAL TABLE AS SELECT (CETAS) (Transact-SQL)](/sql/t-sql/statements/create-external-table-as-select-transact-sql)
 | [az sql mi tde-key](/cli/azure/sql/mi/tde-key) | [Rotate the Transparent data encryption (TDE) protector](/azure/azure-sql/database/transparent-data-encryption-byok-key-rotation)
 |  | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli)
-|  | [Create an Azure Arc-enabled SQL Managed Instance](/azure/azure-arc/data/create-sql-managed-instance)
+| [az sql mi-arc](/cli/azure/sql/mi-arc) | [Create an Azure Arc-enabled SQL Managed Instance](/azure/azure-arc/data/create-sql-managed-instance)
 |  | [Storage Configuration](/azure/azure-arc/data/storage-configuration)
 |  | [High Availability with Azure Arc-enabled SQL Managed Instance](/azure/azure-arc/data/managed-instance-high-availability)
 |  | [Perform a point-in-time Restore](/azure/azure-arc/data/point-in-time-restore)
@@ -3094,10 +3294,10 @@ ms.custom: devx-track-azurecli
 |  | [Configure a ledger database](/sql/relational-databases/security/ledger/ledger-how-to-configure-ledger-database)
 | [az sql midb copy](/cli/azure/sql/midb/copy) | [Copy or move a database (preview) - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/database-copy-move-how-to)
 | [az sql midb ledger-digest-uploads](/cli/azure/sql/midb/ledger-digest-uploads) | [Enable automatic digest storage](/sql/relational-databases/security/ledger/ledger-how-to-enable-automatic-digest-storage)
-|  | [Migrate databases from SQL Server by using Log Replay Service - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/log-replay-service-migrate)
+| [az sql midb log-replay](/cli/azure/sql/midb/log-replay) | [Migrate databases from SQL Server by using Log Replay Service - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/log-replay-service-migrate)
 | [az sql midb ltr-backup](/cli/azure/sql/midb/ltr-backup) | [Manage Azure SQL Managed Instance long-term backup retention](/azure/azure-sql/managed-instance/long-term-backup-retention-configure)
 | [az sql midb ltr-policy](/cli/azure/sql/midb/ltr-policy) | [Manage Azure SQL Managed Instance long-term backup retention](/azure/azure-sql/managed-instance/long-term-backup-retention-configure)
-|  | [Copy or move a database (preview) - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/database-copy-move-how-to)
+| [az sql midb move](/cli/azure/sql/midb/move) | [Copy or move a database (preview) - Azure SQL Managed Instance](/azure/azure-sql/managed-instance/database-copy-move-how-to)
 | [az sql midb short-term-retention-policy](/cli/azure/sql/midb/short-term-retention-policy) | [Change automated backup settings for Azure SQL Managed Instance](/azure/azure-sql/managed-instance/automated-backups-change-settings)
 | [az sql midb-arc](/cli/azure/sql/midb-arc) | [Perform a point-in-time Restore](/azure/azure-arc/data/point-in-time-restore)
 | [az sql server](/cli/azure/sql/server) | [Quickstart: Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart)
@@ -3110,11 +3310,11 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Connect to Azure databases from App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-azure-database)
 |  | [Tutorial: Connect a function app to Azure SQL with managed identity and SQL bindings](/azure/azure-functions/functions-identity-access-azure-sql-with-managed-identity)
 |  | [Tutorial: Connect an App Service app to SQL Database on behalf of the signed-in user](/azure/app-service/tutorial-connect-app-access-sql-database-as-user-dotnet)
-|  | [Azure AD-only authentication with Azure SQL](/azure/azure-sql/database/authentication-azure-ad-only-authentication)
+| [az sql server ad-only-auth](/cli/azure/sql/server/ad-only-auth) | [Azure AD-only authentication with Azure SQL](/azure/azure-sql/database/authentication-azure-ad-only-authentication)
 |  | [Tutorial: Enable Azure Active Directory only authentication with Azure SQL](/azure/azure-sql/database/authentication-azure-ad-only-authentication-tutorial)
 |  | [Tutorial: Connect an App Service app to SQL Database on behalf of the signed-in user](/azure/app-service/tutorial-connect-app-access-sql-database-as-user-dotnet)
 | [az sql server audit-policy](/cli/azure/sql/server/audit-policy) | [Auditing using managed identity](/azure/azure-sql/database/auditing-managed-identity)
-|  | [PowerShell for DNS Alias to Azure SQL Database](/azure/azure-sql/database/dns-alias-powershell-create)
+| [az sql server dns-alias](/cli/azure/sql/server/dns-alias) | [PowerShell for DNS Alias to Azure SQL Database](/azure/azure-sql/database/dns-alias-powershell-create)
 | [az sql server firewall-rule](/cli/azure/sql/server/firewall-rule) | [Azure SQL Database and Azure Synapse IP firewall rules](/azure/azure-sql/database/firewall-configure)
 |  | [Quickstart: Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart)
 |  | [Use Java and JDBC with  Azure SQL Database](/azure/azure-sql/database/connect-query-java)
@@ -3127,7 +3327,7 @@ ms.custom: devx-track-azurecli
 | [az sql server tde-key](/cli/azure/sql/server/tde-key) | [PowerShell and Azure CLI: Enable Transparent Data Encryption with customer-managed key from Azure Key Vault](/azure/azure-sql/database/transparent-data-encryption-byok-configure)
 |  | [Rotate the Transparent data encryption (TDE) protector](/azure/azure-sql/database/transparent-data-encryption-byok-key-rotation)
 |  | [Remove a Transparent Data Encryption (TDE) protector using PowerShell](/azure/azure-sql/database/transparent-data-encryption-byok-remove-tde-protector)
-|  | [Configure automatic backups](/sql/sql-server/azure-arc/point-in-time-restore)
+| [az sql server-arc backups-policy](/cli/azure/sql/server-arc/backups-policy) | [Configure automatic backups](/sql/sql-server/azure-arc/point-in-time-restore)
 | [az sql virtual-cluster](/cli/azure/sql/virtual-cluster) | [Resolve private domain names in Azure SQL Managed Instance](/azure/azure-sql/managed-instance/resolve-private-domain-names)
 | [az sql vm](/cli/azure/sql/vm) | [Automate management with the Windows SQL Server IaaS Agent extension](/azure/azure-sql/virtual-machines/windows/sql-server-iaas-agent-extension-automate-management)
 |  | [Register Windows SQL Server VM with SQL IaaS Agent extension](/azure/azure-sql/virtual-machines/windows/sql-agent-extension-manually-register-single-vm)
@@ -3136,7 +3336,7 @@ ms.custom: devx-track-azurecli
 |  | [SQL best practices assessment for SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/sql-assessment-for-sql-vm)
 | [az sql vm group](/cli/azure/sql/vm/group) | [Use the Azure portal to configure a multiple-subnet availability group (preview) for SQL Server on Azure VMs](/azure/azure-sql/virtual-machines/windows/availability-group-azure-portal-configure)
 |  | [Use PowerShell or Az CLI to configure an availability group for SQL Server on Azure VM](/azure/azure-sql/virtual-machines/windows/availability-group-az-commandline-configure)
-|  | [Use PowerShell or Az CLI to configure an availability group for SQL Server on Azure VM](/azure/azure-sql/virtual-machines/windows/availability-group-az-commandline-configure)
+| [az sql vm group ag-listener](/cli/azure/sql/vm/group/ag-listener) | [Use PowerShell or Az CLI to configure an availability group for SQL Server on Azure VM](/azure/azure-sql/virtual-machines/windows/availability-group-az-commandline-configure)
 
 ## az ssh
 
@@ -3153,19 +3353,24 @@ ms.custom: devx-track-azurecli
 |  | [Quick steps: Create and use an SSH public-private key pair for Linux VMs in Azure](/azure/virtual-machines/linux/mac-create-ssh-keys)
 |  | [Quickstart: Deploy an Azure Kubernetes Service (AKS) cluster using Bicep](/azure/aks/learn/quick-kubernetes-deploy-bicep)
 |  | [Generate and store SSH keys with the Azure CLI](/azure/virtual-machines/ssh-keys-azure-cli)
-|  | [Deployment stacks (Preview)](/azure/azure-resource-manager/bicep/deployment-stacks)
+
+## az stack
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az stack group](/cli/azure/stack/group) | [Deployment stacks (Preview)](/azure/azure-resource-manager/bicep/deployment-stacks)
 |  | [Quickstart: Create and deploy a deployment stack with Bicep](/azure/azure-resource-manager/bicep/quickstart-create-deployment-stacks)
 |  | [Tutorial: use deployment stack with Bicep (Preview)](/azure/azure-resource-manager/bicep/tutorial-use-deployment-stacks)
 |  | [Quickstart: Create and deploy a deployment stack with Bicep from template specs (Preview)](/azure/azure-resource-manager/bicep/quickstart-create-deployment-stacks-template-specs)
-|  | [Deployment stacks (Preview)](/azure/azure-resource-manager/bicep/deployment-stacks)
-|  | [Deployment stacks (Preview)](/azure/azure-resource-manager/bicep/deployment-stacks)
+| [az stack mg](/cli/azure/stack/mg) | [Deployment stacks (Preview)](/azure/azure-resource-manager/bicep/deployment-stacks)
+| [az stack sub](/cli/azure/stack/sub) | [Deployment stacks (Preview)](/azure/azure-resource-manager/bicep/deployment-stacks)
 
 ## az stack-hci
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az stack-hci arc-setting](/cli/azure/stack-hci/arc-setting) | [Azure Arc extension management on Azure Stack HCI](/azure-stack/hci/manage/arc-extension-management)
-|  | [Azure Arc extension management on Azure Stack HCI](/azure-stack/hci/manage/arc-extension-management)
+| [az stack-hci extension](/cli/azure/stack-hci/extension) | [Azure Arc extension management on Azure Stack HCI](/azure-stack/hci/manage/arc-extension-management)
 
 ## az staticwebapp
 
@@ -3196,7 +3401,7 @@ ms.custom: devx-track-azurecli
 |  | [Configure object replication for block blobs](/azure/storage/blobs/object-replication-configure)
 |  | [Enable and manage blob versioning](/azure/storage/blobs/versioning-enable)
 |  | [Enable soft delete for blobs](/azure/storage/blobs/soft-delete-blob-enable)
-|  | [Create and manage encryption scopes](/azure/storage/blobs/encryption-scope-manage)
+| [az storage account encryption-scope](/cli/azure/storage/account/encryption-scope) | [Create and manage encryption scopes](/azure/storage/blobs/encryption-scope-manage)
 | [az storage account file-service-properties](/cli/azure/storage/account/file-service-properties) | [SMB file shares in Azure Files](/azure/storage/files/files-smb-protocol)
 |  | [Enable soft delete on Azure file shares](/azure/storage/files/storage-files-enable-soft-delete)
 | [az storage account hns-migration](/cli/azure/storage/account/hns-migration) | [Upgrade Azure Blob Storage with Azure Data Lake Storage Gen2 capabilities](/azure/storage/blobs/upgrade-to-data-lake-storage-gen2-how-to)
@@ -3207,12 +3412,12 @@ ms.custom: devx-track-azurecli
 |  | [Create and use a volume with Azure Files in Azure Kubernetes Service (AKS)](/azure/aks/azure-csi-files-storage-provision)
 | [az storage account local-user](/cli/azure/storage/account/local-user) | [Connect to Azure Blob Storage by using the SSH File Transfer Protocol (SFTP)](/azure/storage/blobs/secure-file-transfer-protocol-support-how-to)
 | [az storage account management-policy](/cli/azure/storage/account/management-policy) | [Configure a lifecycle management policy](/azure/storage/blobs/lifecycle-management-policy-configure)
-|  | [Configure Azure Storage firewalls and virtual networks](/azure/storage/common/storage-network-security)
+| [az storage account network-rule](/cli/azure/storage/account/network-rule) | [Configure Azure Storage firewalls and virtual networks](/azure/storage/common/storage-network-security)
 |  | [Configuring Azure Files network endpoints](/azure/storage/files/storage-files-networking-endpoints)
 |  | [Configure Azure storage firewalls to allow access from serverless SQL warehouses](/azure/databricks/sql/admin/serverless-firewall)
 |  | [Configuring Azure File Sync network endpoints](/azure/storage/file-sync/file-sync-networking-endpoints)
 |  | [Restrict network access to PaaS resources with virtual network service endpoints using the Azure CLI](/azure/virtual-network/tutorial-restrict-network-access-to-resources-cli)
-|  | [Configure object replication for block blobs](/azure/storage/blobs/object-replication-configure)
+| [az storage account or-policy](/cli/azure/storage/account/or-policy) | [Configure object replication for block blobs](/azure/storage/blobs/object-replication-configure)
 | [az storage account or-policy rule](/cli/azure/storage/account/or-policy/rule) | [Configure object replication for block blobs](/azure/storage/blobs/object-replication-configure)
 | [az storage blob](/cli/azure/storage/blob) | [Learn to use Bash with the Azure CLI](/cli/azure/azure-cli-learn-bash)
 |  | [Deploy and score a machine learning model by using an online endpoint](/azure/machine-learning/how-to-deploy-online-endpoints)
@@ -3225,11 +3430,11 @@ ms.custom: devx-track-azurecli
 |  | [Export/Copy a managed disk to a storage account using the Azure CLI](/azure/virtual-machines/scripts/copy-managed-disks-vhd-to-storage-account)
 |  | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account)
 | [az storage blob directory](/cli/azure/storage/blob/directory) | [Enable and manage blob versioning](/azure/storage/blobs/versioning-enable)
-|  | [Configure immutability policies for blob versions](/azure/storage/blobs/immutable-policy-configure-version-scope)
+| [az storage blob immutability-policy](/cli/azure/storage/blob/immutability-policy) | [Configure immutability policies for blob versions](/azure/storage/blobs/immutable-policy-configure-version-scope)
 | [az storage blob metadata](/cli/azure/storage/blob/metadata) | [Manage block blobs with Azure CLI](/azure/storage/blobs/blob-cli)
 | [az storage blob service-properties](/cli/azure/storage/blob/service-properties) | [Host a static website in Azure Storage](/azure/storage/blobs/storage-blob-static-website-how-to)
 |  | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain)
-|  | [Use blob index tags to manage and find data on Azure Blob Storage](/azure/storage/blobs/storage-blob-index-how-to)
+| [az storage blob tag](/cli/azure/storage/blob/tag) | [Use blob index tags to manage and find data on Azure Blob Storage](/azure/storage/blobs/storage-blob-index-how-to)
 |  | [Manage block blobs with Azure CLI](/azure/storage/blobs/blob-cli)
 | [az storage container](/cli/azure/storage/container) | [Azure CLI configuration](/cli/azure/azure-cli-configuration)
 |  | [Learn to use Bash with the Azure CLI](/cli/azure/azure-cli-learn-bash)
@@ -3243,7 +3448,7 @@ ms.custom: devx-track-azurecli
 | [az storage container metadata](/cli/azure/storage/container/metadata) | [Learn to use Bash with the Azure CLI](/cli/azure/azure-cli-learn-bash)
 |  | [Manage blob containers using Azure CLI](/azure/storage/blobs/blob-containers-cli)
 | [az storage container policy](/cli/azure/storage/container/policy) | [Use Azure Blob storage Shared Access Signatures to restrict access to data in HDInsight](/azure/hdinsight/hdinsight-storage-sharedaccesssignature-permissions)
-|  | [Configure immutability policies for blob versions](/azure/storage/blobs/immutable-policy-configure-version-scope)
+| [az storage container-rm](/cli/azure/storage/container-rm) | [Configure immutability policies for blob versions](/azure/storage/blobs/immutable-policy-configure-version-scope)
 | [az storage cors](/cli/azure/storage/cors) | [Quickstart - Get started with 3D Scenes Studio (preview) for Azure Digital Twins](/azure/digital-twins/quickstart-3d-scenes-studio)
 |  | [Build 3D scenes with 3D Scenes Studio (preview) for Azure Digital Twins](/azure/digital-twins/how-to-use-3d-scenes-studio)
 | [az storage directory](/cli/azure/storage/directory) | [Quickstart: Create and use an Azure file share](/azure/storage/files/storage-how-to-use-files-portal)
@@ -3257,10 +3462,10 @@ ms.custom: devx-track-azurecli
 |  | [Restore Azure file shares with the Azure CLI](/azure/backup/restore-afs-cli)
 | [az storage fs](/cli/azure/storage/fs) | [Manage and restore soft-deleted blobs](/azure/storage/blobs/soft-delete-blob-manage)
 |  | [Manage directories and files in Azure Data Lake Storage Gen2 via the Azure CLI](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli)
-|  | [Use Azure CLI to manage ACLs in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-acl-cli)
+| [az storage fs access](/cli/azure/storage/fs/access) | [Use Azure CLI to manage ACLs in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-acl-cli)
 |  | [403 Access Denied authorization error when the sticky bit is enabled in ADLS Gen2](/troubleshoot/azure/azure-storage/adls-gen2-sticky-bit-403-access-denied)
 | [az storage fs directory](/cli/azure/storage/fs/directory) | [Manage directories and files in Azure Data Lake Storage Gen2 via the Azure CLI](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli)
-|  | [Manage directories and files in Azure Data Lake Storage Gen2 via the Azure CLI](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli)
+| [az storage fs file](/cli/azure/storage/fs/file) | [Manage directories and files in Azure Data Lake Storage Gen2 via the Azure CLI](/azure/storage/blobs/data-lake-storage-directory-file-acl-cli)
 | [az storage fs service-properties](/cli/azure/storage/fs/service-properties) | [Enable soft delete for blobs](/azure/storage/blobs/soft-delete-blob-enable)
 | [az storage message](/cli/azure/storage/message) | [Connect Azure Functions to Azure Storage using command line tools](/azure/azure-functions/functions-add-output-binding-storage-queue-cli)
 |  | [Tutorial: Deploy a background processing application with Azure Container Apps](/azure/container-apps/background-processing)
@@ -3276,7 +3481,7 @@ ms.custom: devx-track-azurecli
 |  | [Mount an Azure file share in Azure Container Instances](/azure/container-instances/container-instances-volume-azure-files)
 |  | [Access Azure file shares using Azure Active Directory with Azure Files OAuth over REST](/azure/storage/files/authorize-oauth-rest)
 |  | [Back up and recover Oracle Database on an Azure Linux VM by using Azure Files](/azure/virtual-machines/workloads/oracle/oracle-database-backup-azure-storage)
-|  | [Create an SMB Azure file share](/azure/storage/files/storage-how-to-create-file-share)
+| [az storage share-rm](/cli/azure/storage/share-rm) | [Create an SMB Azure file share](/azure/storage/files/storage-how-to-create-file-share)
 |  | [Quickstart: Create and use an Azure file share](/azure/storage/files/storage-how-to-use-files-portal)
 |  | [Enable soft delete on Azure file shares](/azure/storage/files/storage-files-enable-soft-delete)
 |  | [Tutorial: Create an Azure Files volume mount in Azure Container Apps](/azure/container-apps/storage-mounts-azure-files)
@@ -3309,8 +3514,8 @@ ms.custom: devx-track-azurecli
 |---|---|
 | [az support services](/cli/azure/support/services) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
 | [az support services problem-classifications](/cli/azure/support/services/problem-classifications) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
-|  | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
-|  | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
+| [az support tickets](/cli/azure/support/tickets) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
+| [az support tickets communications](/cli/azure/support/tickets/communications) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
 
 ## az synapse
 
@@ -3318,14 +3523,19 @@ ms.custom: devx-track-azurecli
 |---|---|
 | [az synapse role assignment](/cli/azure/synapse/role/assignment) | [Move an Azure Synapse Analytics workspace from one region to another](/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
 | [az synapse spark pool](/cli/azure/synapse/spark/pool) | [Move an Azure Synapse Analytics workspace from one region to another](/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
-|  | [Quickstart: Create a Synapse SQL pool with Azure CLI](/azure/synapse-analytics/sql-data-warehouse/create-data-warehouse-azure-cli)
+| [az synapse sql pool](/cli/azure/synapse/sql/pool) | [Quickstart: Create a Synapse SQL pool with Azure CLI](/azure/synapse-analytics/sql-data-warehouse/create-data-warehouse-azure-cli)
 | [az synapse workspace](/cli/azure/synapse/workspace) | [Move an Azure Synapse Analytics workspace from one region to another](/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
 |  | [Quickstart: Create an Azure synapse workspace with Azure CLI](/azure/synapse-analytics/quickstart-create-workspace-cli)
-|  | [Azure SQL Database and Azure Synapse IP firewall rules](/azure/azure-sql/database/firewall-configure)
+| [az synapse workspace firewall-rule](/cli/azure/synapse/workspace/firewall-rule) | [Azure SQL Database and Azure Synapse IP firewall rules](/azure/azure-sql/database/firewall-configure)
 |  | [Move an Azure Synapse Analytics workspace from one region to another](/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
 |  | [Quickstart: Create an Azure synapse workspace with Azure CLI](/azure/synapse-analytics/quickstart-create-workspace-cli)
 | [az synapse workspace managed-identity](/cli/azure/synapse/workspace/managed-identity) | [Move an Azure Synapse Analytics workspace from one region to another](/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
-|  | [Apply tags with Azure CLI](/azure/azure-resource-manager/management/tag-resources-cli)
+
+## az tag
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az tag](/cli/azure/tag) | [Apply tags with Azure CLI](/azure/azure-resource-manager/management/tag-resources-cli)
 |  | [Enable Microsoft Defender for Storage (classic)](/azure/defender-for-cloud/defender-for-storage-classic-enable)
 |  | [Tutorial: Route policy state change events to Event Grid with Azure CLI](/azure/governance/policy/tutorials/route-state-change-events)
 |  | [Apply inventory tagging to Azure Arc-enabled servers](/azure/cloud-adoption-framework/manage/hybrid/server/best-practices/arc-inventory-tagging)
@@ -3388,7 +3598,7 @@ ms.custom: devx-track-azurecli
 |  | [4 - Get VM information with queries](/cli/azure/azure-cli-vm-tutorial-4)
 |  | [3 - Create a virtual machine on a virtual network](/cli/azure/azure-cli-vm-tutorial-3)
 |  | [Log in to a Windows virtual machine in Azure by using Azure AD including passwordless](/azure/active-directory/devices/howto-vm-sign-in-azure-ad-windows)
-|  | [New Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-new)
+| [az vm aem](/cli/azure/vm/aem) | [New Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-new)
 |  | [Standard Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-standard)
 | [az vm application](/cli/azure/vm/application) | [Create and deploy VM Applications](/azure/virtual-machines/vm-applications-how-to)
 | [az vm availability-set](/cli/azure/vm/availability-set) | [Implement Oracle Data Guard on a Linux-based Azure virtual machine](/azure/virtual-machines/workloads/oracle/configure-oracle-dataguard)
@@ -3420,7 +3630,7 @@ ms.custom: devx-track-azurecli
 |  | [Troubleshooting guidance for the Azure Monitor agent on Windows virtual machines and scale sets](/azure/azure-monitor/agents/azure-monitor-agent-troubleshoot-windows-vm)
 |  | [Enable Azure VM extensions using the Azure CLI](/azure/azure-arc/servers/manage-vm-extensions-cli)
 |  | [New Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-new)
-|  | [Deploy VMs and scale sets to dedicated hosts](/azure/virtual-machines/dedicated-hosts-how-to)
+| [az vm host](/cli/azure/vm/host) | [Deploy VMs and scale sets to dedicated hosts](/azure/virtual-machines/dedicated-hosts-how-to)
 |  | [Add Azure Dedicated Host to an Azure Kubernetes Service (AKS) cluster](/azure/aks/use-azure-dedicated-hosts)
 | [az vm host group](/cli/azure/vm/host/group) | [Deploy VMs and scale sets to dedicated hosts](/azure/virtual-machines/dedicated-hosts-how-to)
 |  | [Add Azure Dedicated Host to an Azure Kubernetes Service (AKS) cluster](/azure/aks/use-azure-dedicated-hosts)
@@ -3439,12 +3649,12 @@ ms.custom: devx-track-azurecli
 |  | [Use dashboards to visualize Azure Databricks metrics](/azure/architecture/databricks-monitoring/dashboards)
 |  | [Red Hat Enterprise Linux bring-your-own-subscription Gold Images in Azure](/azure/virtual-machines/workloads/redhat/byos)
 |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace)
-|  | [Azure Instance Metadata Service](/azure/virtual-machines/instance-metadata-service)
+| [az vm nic](/cli/azure/vm/nic) | [Azure Instance Metadata Service](/azure/virtual-machines/instance-metadata-service)
 |  | [Associate a public IP address to a virtual machine](/azure/virtual-network/ip-services/associate-public-ip-address-vm)
 |  | [Dissociate a public IP address from an Azure VM](/azure/virtual-network/ip-services/remove-public-ip-address-vm)
 |  | [Back up and recover Oracle Database on an Azure Linux VM by using Azure Backup](/azure/virtual-machines/workloads/oracle/oracle-database-backup-azure-backup)
 |  | [How to create a Linux virtual machine in Azure with multiple network interface cards](/azure/virtual-machines/linux/multiple-nics)
-|  | [Repair a Windows VM by using the Azure Virtual Machine repair commands](/troubleshoot/azure/virtual-machines/repair-windows-vm-using-azure-virtual-machine-repair-commands)
+| [az vm repair](/cli/azure/vm/repair) | [Repair a Windows VM by using the Azure Virtual Machine repair commands](/troubleshoot/azure/virtual-machines/repair-windows-vm-using-azure-virtual-machine-repair-commands)
 |  | [Azure Linux virtual machine fails to boot after applying kernel changes](/troubleshoot/azure/virtual-machines/kernel-related-boot-issues)
 |  | [Troubleshoot Linux VM boot issues due to fstab errors](/troubleshoot/azure/virtual-machines/linux-virtual-machine-cannot-start-fstab-errors)
 |  | [Repair a Linux VM by using the Azure Virtual Machine repair commands](/troubleshoot/azure/virtual-machines/repair-linux-vm-using-azure-virtual-machine-repair-commands)
@@ -3457,17 +3667,22 @@ ms.custom: devx-track-azurecli
 | [az vm secret](/cli/azure/vm/secret) | [Tutorial - How to use cloud-init to customize a Linux virtual machine in Azure on first boot](/azure/virtual-machines/linux/tutorial-automate-vm-deployment)
 |  | [Tutorial: Use TLS/SSL certificates to secure a web server](/azure/virtual-machines/linux/tutorial-secure-web-server)
 | [az vm unmanaged-disk](/cli/azure/vm/unmanaged-disk) | [Attach an unmanaged disk to a VM for offline repair](/troubleshoot/azure/virtual-machines/unmanaged-disk-offline-repair)
-|  | [Troubleshoot SSH connections to an Azure Linux VM that fails, errors out, or is refused](/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection)
+| [az vm user](/cli/azure/vm/user) | [Troubleshoot SSH connections to an Azure Linux VM that fails, errors out, or is refused](/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection)
 |  | [Manage administrative users, SSH, and check or repair disks on Linux VMs by using the VMAccess extension with the Azure CLI](/azure/virtual-machines/extensions/vmaccess)
 |  | [Use Azure Policy to restrict extensions installation on Linux VMs](/azure/virtual-machines/extensions/extensions-rmpolicy-howto-cli)
-|  | [Connect to Azure Kubernetes Service (AKS) cluster nodes for maintenance or troubleshooting](/azure/aks/node-access)
+
+## az vmss
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az vmss](/cli/azure/vmss) | [Connect to Azure Kubernetes Service (AKS) cluster nodes for maintenance or troubleshooting](/azure/aks/node-access)
 |  | [Azure Virtual Machine Scale Set agents](/azure/devops/pipelines/agents/scale-set-agents)
 |  | [Troubleshoot Azure Kubernetes Service cluster/node in a failed state](/troubleshoot/azure/azure-kubernetes/cluster-node-virtual-machine-failed-state)
 |  | [Explore Azure Hybrid Benefit for Windows VMs](/azure/virtual-machines/windows/hybrid-use-benefit-licensing)
 |  | [Troubleshoot issues with the Log Analytics agent for Windows](/azure/azure-monitor/agents/agent-windows-troubleshoot)
 | [az vmss application](/cli/azure/vmss/application) | [Create and deploy VM Applications](/azure/virtual-machines/vm-applications-how-to)
-|  | [Tutorial: Create and use disks with Virtual Machine Scale Set with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-disks-cli)
-|  | [Encrypt OS and attached data disks in a Virtual Machine Scale Set with the Azure CLI](/azure/virtual-machine-scale-sets/disk-encryption-cli)
+| [az vmss disk](/cli/azure/vmss/disk) | [Tutorial: Create and use disks with Virtual Machine Scale Set with the Azure CLI](/azure/virtual-machine-scale-sets/tutorial-use-disks-cli)
+| [az vmss encryption](/cli/azure/vmss/encryption) | [Encrypt OS and attached data disks in a Virtual Machine Scale Set with the Azure CLI](/azure/virtual-machine-scale-sets/disk-encryption-cli)
 |  | [Enable disk encryption for Azure Service Fabric cluster nodes in Windows](/azure/service-fabric/service-fabric-enable-azure-disk-encryption-windows)
 |  | [Enable disk encryption for Azure Service Fabric cluster nodes in Linux](/azure/service-fabric/service-fabric-enable-azure-disk-encryption-linux)
 | [az vmss extension](/cli/azure/vmss/extension) | [Azure Virtual Machine Scale Set agents](/azure/devops/pipelines/agents/scale-set-agents)
@@ -3518,7 +3733,7 @@ ms.custom: devx-track-azurecli
 |  | [Application Gateway integration](/azure/app-service/networking/app-gateway-with-service-endpoints)
 |  | [Tutorial: Create a highly available multi-region app in Azure App Service](/azure/app-service/tutorial-multi-region-app)
 |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway)
-|  | [Configure an App Service app](/azure/app-service/configure-common)
+| [az webapp config appsettings](/cli/azure/webapp/config/appsettings) | [Configure an App Service app](/azure/app-service/configure-common)
 |  | [Configure a Node.js app for Azure App Service](/azure/app-service/configure-language-nodejs)
 |  | [OS and runtime patching in Azure App Service](/azure/app-service/overview-patch-os-runtime)
 |  | [Tutorial: Using Service Connector to build a Django app with Postgres on Azure App Service](/azure/service-connector/tutorial-django-webapp-postgres-cli)
@@ -3529,7 +3744,7 @@ ms.custom: devx-track-azurecli
 |  | [Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container)
 | [az webapp config backup](/cli/azure/webapp/config/backup) | [Back up and restore your app in Azure App Service](/azure/app-service/manage-backup)
 |  | [Backup and restore a web app from a backup using CLI](/azure/app-service/scripts/cli-backup-schedule-restore)
-|  | [Configure an App Service app](/azure/app-service/configure-common)
+| [az webapp config connection-string](/cli/azure/webapp/config/connection-string) | [Configure an App Service app](/azure/app-service/configure-common)
 |  | [Tutorial: Connect to SQL Database from .NET App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-sql-database)
 |  | [Tutorial: Connect an App Service app to SQL Database on behalf of the signed-in user](/azure/app-service/tutorial-connect-app-access-sql-database-as-user-dotnet)
 |  | [Tutorial: Connect a Node.js web app with Azure Cosmos DB for MongoDB vCore](/azure/cosmos-db/mongodb/vcore/tutorial-nodejs-web-app)
@@ -3541,9 +3756,9 @@ ms.custom: devx-track-azurecli
 | [az webapp config hostname](/cli/azure/webapp/config/hostname) | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate)
 |  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain)
 |  | [How-to: build a real-time collaborative whiteboard using Azure Web PubSub and deploy it to Azure App Service](/azure/azure-web-pubsub/howto-integrate-app-service)
-|  | [Back up and restore your app in Azure App Service](/azure/app-service/manage-backup)
+| [az webapp config snapshot](/cli/azure/webapp/config/snapshot) | [Back up and restore your app in Azure App Service](/azure/app-service/manage-backup)
 | [az webapp config ssl](/cli/azure/webapp/config/ssl) | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate)
-|  | [Mount Azure Storage as a local share in App Service](/azure/app-service/configure-connect-to-azure-storage)
+| [az webapp config storage-account](/cli/azure/webapp/config/storage-account) | [Mount Azure Storage as a local share in App Service](/azure/app-service/configure-connect-to-azure-storage)
 |  | [Bring dependencies or third party library to Azure Functions](/azure/azure-functions/bring-dependency-to-functions)
 |  | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux)
 | [az webapp connection](/cli/azure/webapp/connection) | [Get connection configurations added by Service Connector](/azure/service-connector/how-to-get-configurations)
@@ -3562,7 +3777,7 @@ ms.custom: devx-track-azurecli
 | [az webapp deployment container](/cli/azure/webapp/deployment/container) | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
 |  | [Continuous deployment with custom containers in Azure App Service](/azure/app-service/deploy-ci-cd-custom-container)
 | [az webapp deployment github-actions](/cli/azure/webapp/deployment/github-actions) | [Use CI/CD with GitHub Actions to deploy a Python web app to Azure App Service on Linux](/azure/developer/python/python-web-app-github-actions-app-service)
-|  | [Set up staging environments in Azure App Service](/azure/app-service/deploy-staging-slots)
+| [az webapp deployment slot](/cli/azure/webapp/deployment/slot) | [Set up staging environments in Azure App Service](/azure/app-service/deploy-staging-slots)
 |  | [Deploy a .NET web app using GitHub Actions](/dotnet/architecture/devops-for-aspnet-developers/actions-deploy)
 |  | [Tutorial: Create a highly available multi-region app in Azure App Service](/azure/app-service/tutorial-multi-region-app)
 |  | [Deploy an app to App Service](/dotnet/architecture/devops-for-aspnet-developers/deploying-to-app-service)
@@ -3577,12 +3792,12 @@ ms.custom: devx-track-azurecli
 |  | [Create a PHP web app in Azure App Service](/azure/app-service/quickstart-php)
 |  | [Configure deployment credentials for Azure App Service](/azure/app-service/deploy-configure-credentials)
 |  | [Tutorial: Visualize real-time sensor data from your Azure IoT hub in a web application](/azure/iot-hub/iot-hub-live-data-visualization-in-web-apps)
-|  | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
+| [az webapp identity](/cli/azure/webapp/identity) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
 |  | [Tutorial: Connect to SQL Database from .NET App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-sql-database)
 |  | [Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container)
 |  | [Tutorial: Use a managed identity to connect Key Vault to an Azure web app in .NET](/azure/key-vault/general/tutorial-net-create-vault-azure-web-app)
 |  | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
-|  | [Quickstart: Deploy a Python (Django or Flask) web app to Azure App Service](/azure/app-service/quickstart-python)
+| [az webapp log](/cli/azure/webapp/log) | [Quickstart: Deploy a Python (Django or Flask) web app to Azure App Service](/azure/app-service/quickstart-python)
 |  | [Enable diagnostics logging for apps in Azure App Service](/azure/app-service/troubleshoot-diagnostic-logs)
 |  | [Deploy a Node.js web app in Azure](/azure/app-service/quickstart-nodejs)
 |  | [Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container)
@@ -3614,9 +3829,14 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Publish and subscribe messages between WebSocket clients using subprotocol](/azure/azure-web-pubsub/tutorial-subprotocol)
 |  | [Tutorial: Create a serverless chat app with Azure Web PubSub service and Azure Static Web Apps](/azure/azure-web-pubsub/tutorial-serverless-static-web-app)
 |  | [Quickstart: Publish messages using the Azure Web PubSub service SDK](/azure/azure-web-pubsub/quickstart-use-sdk)
-|  | [Tutorial: Use Azure CLI to create infrastructure for a distributed highly available (HA) SAP system with *Azure Center for SAP solutions* with customized resource names](/azure/sap/center-sap-solutions/tutorial-create-high-availability-name-custom)
+
+## az workloads
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az workloads](/cli/azure/workloads) | [Tutorial: Use Azure CLI to create infrastructure for a distributed highly available (HA) SAP system with *Azure Center for SAP solutions* with customized resource names](/azure/sap/center-sap-solutions/tutorial-create-high-availability-name-custom)
 |  | [Quickstart: Use Azure CLI to create infrastructure for a distributed highly available (HA) SAP system with Azure Center for SAP solutions with customized resource names](/azure/sap/center-sap-solutions/quickstart-create-high-availability-namecustom)
-|  | [Tutorial: Use Azure CLI to create infrastructure for a distributed highly available (HA) SAP system with *Azure Center for SAP solutions* with customized resource names](/azure/sap/center-sap-solutions/tutorial-create-high-availability-name-custom)
+| [az workloads sap-virtual-instance](/cli/azure/workloads/sap-virtual-instance) | [Tutorial: Use Azure CLI to create infrastructure for a distributed highly available (HA) SAP system with *Azure Center for SAP solutions* with customized resource names](/azure/sap/center-sap-solutions/tutorial-create-high-availability-name-custom)
 |  | [Quickstart:  Install software for a Distributed High-Availability (HA) SAP system and customized resource names with Azure Center for SAP solutions using Azure CLI](/azure/sap/center-sap-solutions/quickstart-install-high-availability-namecustom-cli)
 |  | [Quickstart: Use Azure CLI to create infrastructure for a distributed highly available (HA) SAP system with Azure Center for SAP solutions with customized resource names](/azure/sap/center-sap-solutions/quickstart-create-high-availability-namecustom)
 |  | [Quickstart: Register an existing SAP system with Azure Center for SAP solutions with CLI](/azure/sap/center-sap-solutions/quickstart-register-system-cli)
