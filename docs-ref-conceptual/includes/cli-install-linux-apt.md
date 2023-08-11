@@ -20,7 +20,7 @@ ms.custom: devx-track-azurecli
 
 ## Install Azure CLI
 
-There are two options to install the Azure CLI on your system.  You can download an install script that runs the install commands for you, or you can execute the install commands yourself in a step-by-step process.
+There are two options to install the Azure CLI on your system.  You can download an install script that runs the install commands for you, or you can execute the install commands yourself in a step-by-step process. Both methods are provided here:
 
 ### Option 1: Install with one command
 
