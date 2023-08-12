@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/11/2023
+ms.date: 08/12/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[adp](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp) | 2.40.0 | Microsoft Azure Command-Line Tools Adp Extension. | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.44.0 | Provides a preview for upcoming AKS features | Preview | [0.5.150](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.44.0 | Provides a preview for upcoming AKS features | Preview | [0.5.151](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.48.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
@@ -176,7 +176,7 @@ You will be prompted to install an extension on first use.
 |[staticwebapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp) | 2.39.0 | Microsoft Azure Command-Line Tools Staticwebapp Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/staticwebapp/HISTORY.rst) |
 |[storage-blob-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview) | 2.27.0 | Microsoft Azure Command-Line Tools Storage-blob-preview Extension | Preview | [0.7.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-blob-preview/HISTORY.rst) |
 |[storage-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover) | 2.50.0 | Microsoft Azure Command-Line Tools StorageMover Extension. | Experimental | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-mover/HISTORY.rst) |
-|[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.25.0 | Provides a preview for upcoming storage features. | Preview | [0.9.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
+|[storage-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview) | 2.50.0 | Provides a preview for upcoming storage features. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/storage-preview/HISTORY.rst) |
 |[storagesync](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync) | 2.3.1 | Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension | GA | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/storagesync/HISTORY.rst) |
 |[stream-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics) | 2.15.0 | Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension | Experimental | [0.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/stream-analytics/HISTORY.rst) |
 |[subscription](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription) | 2.0.30 | Support for subscription management preview. | Preview | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/subscription/HISTORY.rst) |
