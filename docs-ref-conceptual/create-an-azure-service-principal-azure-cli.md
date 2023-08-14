@@ -13,17 +13,12 @@ keywords: azure service principal, create service principal azure, create servic
 ---
 # Work with Azure service principal using the Azure CLI
 
-Automated tools that use Azure services should always have restricted permissions. Instead of having
-applications sign in as a fully privileged user, Azure offers service principals.
+It is important that automated tools that use Azure services always have restricted permissions. Instead of having applications sign in as a fully privileged user, Azure instead offers service principals.
 
 ## What is an Azure service principal?
 
-An Azure service principal is an identity created for use with
-applications, hosted services, and automated tools to access
-The roles assigned to the service principal restrict access. This gives you control over which resources can be accessed and at what level.
-to the service principal, giving you control over which resources
-can be accessed and at which level. For security reasons, it's
-always recommended to use service principals with automated
+An Azure service principal is an identity created to use with applications, hosted services, and automated tools. You can assign roles to the service principal in order to restrict its access.This gives you control over which resources can be accessed and at what level.
+For security reasons, it's always recommended to use service principals with automated
 tools rather than allowing them to sign in with a user identity.
 
 This article shows you the steps for creating, getting information about, and resetting an Azure service principal with the Azure CLI.
@@ -90,7 +85,7 @@ az role assignment delete --assignee appID \
                           --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 ```
 
-Adding a role _doesn't_ restrict previously assigned permissions. When you restrict a service principal's permissions, the __Contributor__ role should be removed if previously assigned.
+Adding a role _doesn't_ restrict previously assigned permissions. Since the *Contributor* rights are added by default, the role should be deleted using the command shown previously.
 
 The changes can be verified by listing the assigned roles:
 
@@ -98,15 +93,14 @@ The changes can be verified by listing the assigned roles:
 az role assignment list --assignee appID
 ```
 
+You can also go into the [Azure portal](https://ms.portal.azure.com/) and manually assign the role to the service principal from the IAM blade of the Azure Container Registry Instance.
+
 ## 4. Sign in using a service principal
 
 Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and credentials.
 
-To sign in with a service principal using a password:
+Sign in with a service principal with either a [password](./service-principal-password.md) or a [certificate](./service-principal-certificate.md).
 
-```azurecli-interactive
-az login --service-principal --username appID --password PASSWORD --tenant tenantID
-```
 
 To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
 

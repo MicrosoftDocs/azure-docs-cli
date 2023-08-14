@@ -14,6 +14,10 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Using Service Principal with certificate-based authentication
 
+When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing certificate with the service principal to access the Azure Container Registry.
+
+## How do I add certificates to a Service Principal?
+
 For certificate-based authentication, use the `--cert` parameter. This parameter requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
 
 > [!NOTE]
@@ -52,6 +56,14 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert
+```
+
+You can use `--append ` to assign multiple certificates to a service principal:
+
+```azurecli-interactive
+az ad sp credential reset --append \
+                          --name myServicePrincipalName \
+                          --cert @/path/to/cert.pem
 ```
 
 Console output:
@@ -116,28 +128,10 @@ If you already have a PKCS#12 file, you can convert it to PEM format using OpenS
 openssl pkcs12 -in fileName.p12 -clcerts -nodes -out fileName.pem -passin pass:
 ```
 
-# Assign certificate to service principal using Azure Portal
+## Signing in with a service principal using a certificate
 
-You can assign a certificate to a service principal through the Azure portal by following these steps:
+To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
 
-1. In the Azure Portal, select Active Directory
-2. Then select App Registrations on the left hand sidebar
-3. Next, select your AKS service principal
-4. Then proceed to click on "Certificates and secrets." Here, you can upload it, or download and install it on your PC you are using to connect with. Make sure the certificate is stored somewhere you can access it on your local machine for later steps.
-5. To use the Service Principal with the certificate to access the Azure Container Registry, use the following command:
-
-```bash
-# Sign into Azure CLI with SP's APP_ID and TENANT_ID and use certificate as password
-az login --service-principal --username <APP_ID> --tenant <TENANT_ID> --password </path/to/cert PEM or DER file>
+```azurecli-interactive
+az login --service-principal --username appID --tenant tenantID --password /path/to/cert
 ```
-
-6. Then sign into the registry with `az acr login`, which uses the Active Directory token from the CLI login:
-
-```bash
-az acr login --name <registry name>
-```
-
-> [!NOTE]
-> Certificate must be in PEM format - it won't work with PKCS#12 files (.p12/.pfx)
->
-> You don't need to prefix the path with an @ like you do with the previous az commands

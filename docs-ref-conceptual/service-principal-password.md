@@ -12,9 +12,13 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-### Password-based authentication
+# Using Service Principal with password-based authentication
 
-With password-based authentication, a random password is created for you.  If you don't specify a `--name` parameter value, a name containing a time stamp is created for you.  You must specify a `--scopes` as this value doesn't have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
+When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose the either password-based or certificate based-authentication. This article details how you can use a password with the service principal to access the Azure Container Registry.
+
+## How does password-based authentication work?
+
+With password-based authentication, a random password is created for you. If you don't specify a `--name` parameter value, a name containing a time stamp is created for you.  You must specify a `--scopes` as this value doesn't have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
 
 ```azurecli-interactive
 # Create a service principal with required parameter
@@ -26,7 +30,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 ```
 
-You can also create a service principal using variables.
+You can also create a service principal using variables:
 
 ```azurecli-interactive
 let "randomIdentifier=$RANDOM*$RANDOM"  
@@ -42,3 +46,14 @@ az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scopes 
 ```
 
 The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](#6-reset-credentials).
+
+## Signing in with a service principal using a password
+
+To sign in with a service principal using a password:
+
+> [!IMPORTANT]
+> Make sure to use the same password key you received as the output for the service principal in the previous step
+
+```azurecli-interactive
+az login --service-principal --username appID --password PASSWORD --tenant tenantID
+```
