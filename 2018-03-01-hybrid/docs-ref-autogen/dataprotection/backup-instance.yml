@@ -183,6 +183,7 @@ directCommands:
   description: ''
   syntax: >-
     az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
+                                                              [--backup-hook-references]
                                                               [--excluded-namespaces]
                                                               [--excluded-resource-type]
                                                               [--include-cluster-scope {false, true}]
@@ -200,6 +201,9 @@ directCommands:
     summary: Specify the datasource type of the resource to be backed up.
     description: ''
   optionalParameters:
+  - name: --backup-hook-references --backup-hook-refs
+    summary: Property sets the hook reference to be executed during backup.
+    description: ''
   - name: --excluded-namespaces
     summary: List of namespaces to be excluded for backup.
     description: ''
@@ -238,6 +242,7 @@ directCommands:
                                                                [--label-selectors]
                                                                [--namespace-mappings]
                                                                [--persistent-restoremode {RestoreWithVolumeData, RestoreWithoutVolumeData}]
+                                                               [--restore-hook-references]
   examples:
   - summary: Initialize restore configuration
     syntax: az dataprotection backup-instance initialize-restoreconfig --datasource-type AzureKubernetesService
@@ -277,6 +282,9 @@ directCommands:
   - name: --persistent-restoremode --persistent-volume-restore-mode
     parameterValueGroup: "RestoreWithVolumeData, RestoreWithoutVolumeData"
     summary: Restore mode for persistent volumes. Allowed values are RestoreWithVolumeData, RestoreWithoutVolumeData. Default value is RestoreWithVolumeData.
+    description: ''
+  - name: --restore-hook-references --restore-hook-refs
+    summary: Property sets the hook reference to be executed during restore.
     description: ''
 - uid: az_dataprotection_backup-instance_list
   name: az dataprotection backup-instance list
@@ -479,6 +487,7 @@ directCommands:
                                              [--datasource-auth-credentials]
                                              [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--friendly-name]
+                                             [--identity-details]
                                              [--ids]
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--object-type]
@@ -512,6 +521,9 @@ directCommands:
     description: ''
   - name: --friendly-name
     summary: Gets or sets the Backup Instance friendly name.
+    description: ''
+  - name: --identity-details
+    summary: Contains information of the Identity Details for the BI. If it is null, default will be considered as System Assigned.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -682,7 +694,7 @@ directCommands:
     description: ''
 - uid: az_dataprotection_backup-instance_validate-for-restore
   name: az dataprotection backup-instance validate-for-restore
-  summary: Validates if restore can be triggered for a datasource.
+  summary: Validates if Restore can be triggered for a DataSource.
   description: ''
   syntax: >-
     az dataprotection backup-instance validate-for-restore --restore-request-object
@@ -694,7 +706,7 @@ directCommands:
                                                            [--vault-name]
   examples:
   - summary: Validate Restore
-    syntax: az az dataprotection backup-instance validate-for-restore --name "testInstance1" --restore-request-object "restoreRequest.json" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
+    syntax: az dataprotection backup-instance validate-for-restore-g sample_rg --vault-name sample_backupvault --backup-instance-name sample_biname-fd53a211-3f3e-4c7e-ba45-81050e27c0be --restore-request-object restorerequestobject.json
   requiredParameters:
   - isRequired: true
     name: --restore-request-object

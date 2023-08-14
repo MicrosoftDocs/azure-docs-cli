@@ -4,7 +4,7 @@ name: az maintenance configuration
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **maintenance** extension for the Azure CLI  (version 2.15.0 or higher).  The extension will automatically install the first time you run an **az maintenance configuration** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **maintenance** extension for the Azure CLI  (version 2.50.0 or higher).  The extension will automatically install the first time you run an **az maintenance configuration** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage maintenance configuration with maintenance.
 description: ''
 directCommands:
@@ -13,17 +13,15 @@ directCommands:
   summary: Create configuration record.
   description: ''
   syntax: >-
-    az maintenance configuration create --resource-group
-                                        --resource-name
+    az maintenance configuration create --name
+                                        --resource-group
                                         [--duration]
                                         [--expiration-date-time]
                                         [--extension-properties]
                                         [--install-patches-linux-parameters]
-                                        [--install-patches-post-tasks]
-                                        [--install-patches-pre-tasks]
                                         [--install-patches-windows-parameters]
                                         [--location]
-                                        [--maintenance-scope {All, Extension, Host, InGuestPatch, InResource, OSImage, Resource, SQLDB, SQLManagedInstance}]
+                                        [--maintenance-scope {Extension, Host, InGuestPatch, OSImage, Resource, SQLDB, SQLManagedInstance}]
                                         [--maintenance-window-recur-every]
                                         [--maintenance-window-start-date-time]
                                         [--maintenance-window-time-zone]
@@ -36,12 +34,12 @@ directCommands:
     syntax: az maintenance configuration create --location "westus2" --maintenance-scope "OSImage" --maintenance-window-duration "05:00" --maintenance-window-expiration-date-time "9999-12-31 00:00" --maintenance-window-recur-every "Day" --maintenance-window-start-date-time "2020-04-30 08:00" --maintenance-window-time-zone "Pacific Standard Time" --namespace "Microsoft.Maintenance" --visibility "Custom" --resource-group "examplerg" --resource-name "configuration1"
   requiredParameters:
   - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    name: --name --resource-name -n
+    summary: Maintenance Configuration Name.
     description: ''
   - isRequired: true
-    name: --resource-name
-    summary: Resource Identifier.
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
   - name: --duration --maintenance-window-duration
@@ -51,43 +49,19 @@ directCommands:
     summary: Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59.
     description: ''
   - name: --extension-properties
-    summary: 'Gets or sets extensionProperties of the maintenanceConfiguration Expect value: KEY1=VALUE1 KEY2=VALUE2 ...'
+    summary: Gets or sets extensionProperties of the maintenanceConfiguration  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --install-patches-linux-parameters --linux-parameters
-    summary: Input parameters specific to patching Linux machine. For Windows machines, do not pass this property.
-    description: >-
-      Usage: --install-patches-linux-parameters package-name-masks-to-exclude=XX package-name-masks-to-include=XX classifications-to-include=XX
-
-
-      package-name-masks-to-exclude: Package names to be excluded for patching.
-
-      package-name-masks-to-include: Package names to be included for patching.
-
-      classifications-to-include: Classification category of patches to be patched.
-  - name: --install-patches-post-tasks --post-tasks
-    summary: "List of post tasks. e.g. [{'source' :'runbook', 'taskScope': 'Resource', 'parameters': { 'arg1': 'value1'}}] Expected value: json-string/json-file/@json-file."
-    description: ''
-  - name: --install-patches-pre-tasks --pre-tasks
-    summary: "List of pre tasks. e.g. [{'source' :'runbook', 'taskScope': 'Global', 'parameters': { 'arg1': 'value1'}}] Expected value: json-string/json-file/@json-file."
+    summary: Input parameters specific to patching Linux machine. For Windows machines, do not pass this property.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --install-patches-windows-parameters --windows-parameters
-    summary: Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property.
-    description: >-
-      Usage: --install-patches-windows-parameters kb-numbers-to-exclude=XX kb-numbers-to-include=XX classifications-to-include=XX exclude-kbs-requiring-reboot=XX
-
-
-      kb-numbers-to-exclude: Windows KBID to be excluded for patching.
-
-      kb-numbers-to-include: Windows KBID to be included for patching.
-
-      classifications-to-include: Classification category of patches to be patched
-
-      exclude-kbs-requiring-reboot: Exclude patches which need reboot.
+    summary: Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    summary: Gets or sets location of the resource.
     description: ''
   - name: --maintenance-scope
-    parameterValueGroup: "All, Extension, Host, InGuestPatch, InResource, OSImage, Resource, SQLDB, SQLManagedInstance"
+    parameterValueGroup: "Extension, Host, InGuestPatch, OSImage, Resource, SQLDB, SQLManagedInstance"
     summary: Gets or sets maintenanceScope of the configuration.
     description: ''
   - name: --maintenance-window-recur-every --recur-every
@@ -107,103 +81,105 @@ directCommands:
     summary: Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed.
     description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Gets or sets tags of the resource  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --visibility
     parameterValueGroup: "Custom, Public"
-    summary: Gets or sets the visibility of the configuration.
+    summary: Gets or sets the visibility of the configuration. The default value is 'Custom'.
     description: ''
 - uid: az_maintenance_configuration_delete
   name: az maintenance configuration delete
   summary: Delete Configuration record.
   description: ''
   syntax: >-
-    az maintenance configuration delete --resource-group
-                                        --resource-name
+    az maintenance configuration delete [--ids]
+                                        [--name]
+                                        [--resource-group]
+                                        [--subscription]
                                         [--yes]
   examples:
   - summary: MaintenanceConfigurations_DeleteForResource
     syntax: az maintenance configuration delete --resource-group "examplerg" --resource-name "example1"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --resource-name -n
+    summary: Maintenance Configuration Name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --resource-name
-    summary: Resource Identifier.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  optionalParameters:
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
 - uid: az_maintenance_configuration_list
   name: az maintenance configuration list
-  summary: Get Configuration records within a subscription.
+  summary: List Configuration records within a subscription and resource group.
   description: ''
-  syntax: az maintenance configuration list
+  syntax: az maintenance configuration list [--resource-group]
   examples:
   - summary: MaintenanceConfigurations_List
     syntax: az maintenance configuration list
+  optionalParameters:
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_maintenance_configuration_show
   name: az maintenance configuration show
   summary: Get Configuration record.
   description: ''
   syntax: >-
-    az maintenance configuration show --resource-group
-                                      --resource-name
+    az maintenance configuration show [--ids]
+                                      [--name]
+                                      [--resource-group]
+                                      [--subscription]
   examples:
   - summary: MaintenanceConfigurations_GetForResource
     syntax: az maintenance configuration show --resource-group "examplerg" --resource-name "configuration1"
-  - summary: MaintenanceConfigurations_GetForResource_GuestOSPatchLinux
-    syntax: az maintenance configuration show --resource-group "examplerg" --resource-name "configuration1"
-  - summary: MaintenanceConfigurations_GetForResource_GuestOSPatchWindows
-    syntax: az maintenance configuration show --resource-group "examplerg" --resource-name "configuration1"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --resource-name -n
+    summary: Maintenance Configuration Name.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --resource-name
-    summary: Resource Identifier.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_maintenance_configuration_update
   name: az maintenance configuration update
-  summary: Patch configuration record.
+  summary: Update configuration record.
   description: ''
   syntax: >-
-    az maintenance configuration update --resource-group
-                                        --resource-name
-                                        [--duration]
+    az maintenance configuration update [--duration]
                                         [--expiration-date-time]
                                         [--extension-properties]
+                                        [--ids]
                                         [--install-patches-linux-parameters]
-                                        [--install-patches-post-tasks]
-                                        [--install-patches-pre-tasks]
                                         [--install-patches-windows-parameters]
                                         [--location]
-                                        [--maintenance-scope {All, Extension, Host, InGuestPatch, InResource, OSImage, Resource, SQLDB, SQLManagedInstance}]
+                                        [--maintenance-scope {Extension, Host, InGuestPatch, OSImage, Resource, SQLDB, SQLManagedInstance}]
                                         [--maintenance-window-recur-every]
                                         [--maintenance-window-start-date-time]
                                         [--maintenance-window-time-zone]
+                                        [--name]
                                         [--namespace]
                                         [--reboot-setting {Always, IfRequired, Never}]
+                                        [--resource-group]
+                                        [--subscription]
                                         [--tags]
                                         [--visibility {Custom, Public}]
   examples:
   - summary: MaintenanceConfigurations_UpdateForResource
     syntax: az maintenance configuration update --location "westus2" --maintenance-scope "OSImage" --maintenance-window-duration "05:00" --maintenance-window-expiration-date-time "9999-12-31 00:00" --maintenance-window-recur-every "Month Third Sunday" --maintenance-window-start-date-time "2020-04-30 08:00" --maintenance-window-time-zone "Pacific Standard Time" --namespace "Microsoft.Maintenance" --visibility "Custom" --resource-group "examplerg" --resource-name "configuration1"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --resource-name
-    summary: Resource Identifier.
-    description: ''
   optionalParameters:
   - name: --duration --maintenance-window-duration
     summary: 'Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00.'
@@ -212,43 +188,22 @@ directCommands:
     summary: Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59.
     description: ''
   - name: --extension-properties
-    summary: 'Gets or sets extensionProperties of the maintenanceConfiguration Expect value: KEY1=VALUE1 KEY2=VALUE2 ...'
+    summary: Gets or sets extensionProperties of the maintenanceConfiguration  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --install-patches-linux-parameters --linux-parameters
-    summary: Input parameters specific to patching Linux machine. For Windows machines, do not pass this property.
-    description: >-
-      Usage: --install-patches-linux-parameters package-name-masks-to-exclude=XX package-name-masks-to-include=XX classifications-to-include=XX
-
-
-      package-name-masks-to-exclude: Package names to be excluded for patching.
-
-      package-name-masks-to-include: Package names to be included for patching.
-
-      classifications-to-include: Classification category of patches to be patched.
-  - name: --install-patches-post-tasks --post-tasks
-    summary: "List of post tasks. e.g. [{'source' :'runbook', 'taskScope': 'Resource', 'parameters': { 'arg1': 'value1'}}] Expected value: json-string/json-file/@json-file."
-    description: ''
-  - name: --install-patches-pre-tasks --pre-tasks
-    summary: "List of pre tasks. e.g. [{'source' :'runbook', 'taskScope': 'Global', 'parameters': { 'arg1': 'value1'}}] Expected value: json-string/json-file/@json-file."
+    summary: Input parameters specific to patching Linux machine. For Windows machines, do not pass this property.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --install-patches-windows-parameters --windows-parameters
-    summary: Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property.
-    description: >-
-      Usage: --install-patches-windows-parameters kb-numbers-to-exclude=XX kb-numbers-to-include=XX classifications-to-include=XX exclude-kbs-requiring-reboot=XX
-
-
-      kb-numbers-to-exclude: Windows KBID to be excluded for patching.
-
-      kb-numbers-to-include: Windows KBID to be included for patching.
-
-      classifications-to-include: Classification category of patches to be patched
-
-      exclude-kbs-requiring-reboot: Exclude patches which need reboot.
+    summary: Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    summary: Gets or sets location of the resource.
     description: ''
   - name: --maintenance-scope
-    parameterValueGroup: "All, Extension, Host, InGuestPatch, InResource, OSImage, Resource, SQLDB, SQLManagedInstance"
+    parameterValueGroup: "Extension, Host, InGuestPatch, OSImage, Resource, SQLDB, SQLManagedInstance"
     summary: Gets or sets maintenanceScope of the configuration.
     description: ''
   - name: --maintenance-window-recur-every --recur-every
@@ -260,6 +215,9 @@ directCommands:
   - name: --maintenance-window-time-zone --time-zone
     summary: 'Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time.'
     description: ''
+  - name: --name --resource-name -n
+    summary: Maintenance Configuration Name.
+    description: ''
   - name: --namespace
     summary: Gets or sets namespace of the resource.
     description: ''
@@ -267,12 +225,18 @@ directCommands:
     parameterValueGroup: "Always, IfRequired, Never"
     summary: Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed.
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    summary: Gets or sets tags of the resource  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --visibility
     parameterValueGroup: "Custom, Public"
-    summary: Gets or sets the visibility of the configuration.
+    summary: Gets or sets the visibility of the configuration. The default value is 'Custom'.
     description: ''
 commands:
 - az_maintenance_configuration_create
