@@ -4,7 +4,7 @@ name: az blueprint assignment
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **blueprint** extension for the Azure CLI  (version 2.3.0 or higher).  The extension will automatically install the first time you run an **az blueprint assignment** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **blueprint** extension for the Azure CLI  (version 2.50.0 or higher).  The extension will automatically install the first time you run an **az blueprint assignment** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage blueprint assignment.
 description: ''
 directCommands:
@@ -114,26 +114,28 @@ directCommands:
   description: ''
   syntax: >-
     az blueprint assignment delete --name
+                                   [--delete-behavior {all, none}]
                                    [--management-group]
                                    [--subscription]
                                    [--yes]
   examples:
   - summary: Delete an assignment
-    syntax: >-
-      az blueprint assignment delete --subscription MySubscription \
-
-      --name MyBlueprintAssignment
+    syntax: az blueprint assignment delete --subscription MySubscription --name MyBlueprintAssignment
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the blueprint assignment.
     description: ''
   optionalParameters:
+  - name: --delete-behavior
+    parameterValueGroup: "all, none"
+    summary: When deleteBehavior=all, the resources that were created by the blueprint assignment will be deleted.
+    description: ''
   - name: --management-group -m
-    summary: Use management group for the target scope of the blueprint assignment. It is reserved for future use. Use --subscription instead.
+    summary: Use management group for the scope of the blueprint.
     description: ''
   - name: --subscription -s
-    summary: Use subscription for the target scope of the blueprint assignment. Default susbcription will be used if option not specified.
+    summary: Use subscription for the scope of the blueprint. If --management-group is not specified, --subscription value or the default subscription will be used as the scope.
     description: ''
   - name: --yes -y
     defaultValue: "False"
@@ -145,16 +147,24 @@ directCommands:
   description: ''
   syntax: >-
     az blueprint assignment list [--management-group]
+                                 [--max-items]
+                                 [--next-token]
                                  [--subscription]
   examples:
   - summary: List assignments
     syntax: az blueprint assignment list --subscription MySubscription
   optionalParameters:
   - name: --management-group -m
-    summary: Use management group for the target scope of the blueprint assignment. It is reserved for future use. Use --subscription instead.
+    summary: Use management group for the scope of the blueprint.
+    description: ''
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
   - name: --subscription -s
-    summary: Use subscription for the target scope of the blueprint assignment. Default susbcription will be used if option not specified.
+    summary: Use subscription for the scope of the blueprint. If --management-group is not specified, --subscription value or the default subscription will be used as the scope.
     description: ''
 - uid: az_blueprint_assignment_show
   name: az blueprint assignment show
@@ -166,10 +176,7 @@ directCommands:
                                  [--subscription]
   examples:
   - summary: Show an assignment
-    syntax: >-
-      az blueprint assignment show --subscription MySubscription \
-
-      --name MyBlueprintAssignment
+    syntax: az blueprint assignment show --subscription MySubscription --name MyBlueprintAssignment
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -177,10 +184,10 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --management-group -m
-    summary: Use management group for the target scope of the blueprint assignment. It is reserved for future use. Use --subscription instead.
+    summary: Use management group for the scope of the blueprint.
     description: ''
   - name: --subscription -s
-    summary: Use subscription for the target scope of the blueprint assignment. Default susbcription will be used if option not specified.
+    summary: Use subscription for the scope of the blueprint. If --management-group is not specified, --subscription value or the default subscription will be used as the scope.
     description: ''
 - uid: az_blueprint_assignment_update
   name: az blueprint assignment update
@@ -311,10 +318,7 @@ directCommands:
                                 [--subscription]
   examples:
   - summary: Get SPN objectId
-    syntax: >-
-      az blueprint assignment who --subscription MySubscription \
-
-      --name MyBlueprintAssignment
+    syntax: az blueprint assignment who --subscription MySubscription --name MyBlueprintAssignment
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -322,10 +326,10 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --management-group -m
-    summary: Use management group for the target scope of the blueprint assignment. It is reserved for future use. Use --subscription instead.
+    summary: Use management group for the scope of the blueprint.
     description: ''
   - name: --subscription -s
-    summary: Use subscription for the target scope of the blueprint assignment. Default susbcription will be used if option not specified.
+    summary: Use subscription for the scope of the blueprint. If --management-group is not specified, --subscription value or the default subscription will be used as the scope.
     description: ''
 commands:
 - az_blueprint_assignment_create
