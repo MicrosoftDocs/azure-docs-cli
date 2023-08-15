@@ -4,7 +4,7 @@ name: az blueprint
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **blueprint** extension for the Azure CLI  (version 2.3.0 or higher).  The extension will automatically install the first time you run an **az blueprint** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **blueprint** extension for the Azure CLI  (version 2.50.0 or higher).  The extension will automatically install the first time you run an **az blueprint** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage blueprint.
 description: ''
 directCommands:
@@ -14,37 +14,27 @@ directCommands:
   description: ''
   syntax: >-
     az blueprint create --name
+                        --target-scope {managementGroup, subscription}
                         [--description]
                         [--display-name]
                         [--management-group]
                         [--parameters]
                         [--resource-groups]
                         [--subscription]
-                        [--target-scope {managementGroup, subscription}]
-                        [--versions]
   examples:
   - summary: Create a subscription blueprint
-    syntax: >-
-      az blueprint create --subscription MySubscription --name \
-
-      MyBlueprint --description \
-
-      "blueprint contains all artifacts" --target-scope \
-
-      subscription
+    syntax: az blueprint create --subscription MySubscription --name MyBlueprint --description "blueprint contains all artifacts" --target-scope subscription
   - summary: Create a management group blueprint
-    syntax: >-
-      az blueprint create --management-group MyManagementGroup --name \
-
-      MyBlueprint --description \
-
-      "blueprint contains all artifact" --target-scope \
-
-      subscription
+    syntax: az blueprint create --management-group MyManagementGroup --name MyBlueprint --description "blueprint contains all artifact" --target-scope subscription
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: Name of the blueprint definition.
+    description: ''
+  - isRequired: true
+    name: --target-scope
+    parameterValueGroup: "managementGroup, subscription"
+    summary: The scope where this blueprint definition can be assigned.
     description: ''
   optionalParameters:
   - name: --description
@@ -57,21 +47,13 @@ directCommands:
     summary: Use management group for the scope of the blueprint.
     description: ''
   - name: --parameters -p
-    summary: Parameters required by this blueprint definition. It can be a JSON string or JSON file path.
+    summary: Parameters required by this blueprint definition. It can be a JSON                             string or JSON file path.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --resource-groups
-    summary: 'Resource group placeholders defined by this blueprint definition. Expected value: json-string/@json-file.'
+    summary: 'Resource group placeholders defined by this blueprint definition.                             Expected value: json-string/@json-file.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.'
     description: ''
   - name: --subscription -s
     summary: Use subscription for the scope of the blueprint. If --management-group is not specified, --subscription value or the default subscription will be used as the scope.
-    description: ''
-  - name: --target-scope
-    defaultValue: "subscription"
-    parameterValueGroup: "managementGroup, subscription"
-    summary: The scope where this blueprint definition can be assigned.
-    description: ''
-  - name: --versions
-    summary: 'Published versions of this blueprint definition. Expected value: json-string/@json-file.'
     description: ''
 - uid: az_blueprint_delete
   name: az blueprint delete
@@ -84,15 +66,9 @@ directCommands:
                         [--yes]
   examples:
   - summary: Delete a management group blueprint
-    syntax: >-
-      az blueprint delete --management-group MyManagementGroup --name \
-
-      MyBlueprint
+    syntax: az blueprint delete --management-group MyManagementGroup --name MyBlueprint
   - summary: Delete a subscription blueprint
-    syntax: >-
-      az blueprint delete --subscription MySubscription --name \
-
-      MyBlueprint
+    syntax: az blueprint delete --subscription MySubscription --name MyBlueprint
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -187,6 +163,8 @@ directCommands:
   description: ''
   syntax: >-
     az blueprint list [--management-group]
+                      [--max-items]
+                      [--next-token]
                       [--subscription]
   examples:
   - summary: List blueprints in a management group
@@ -196,6 +174,12 @@ directCommands:
   optionalParameters:
   - name: --management-group -m
     summary: Use management group for the scope of the blueprint.
+    description: ''
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
   - name: --subscription -s
     summary: Use subscription for the scope of the blueprint. If --management-group is not specified, --subscription value or the default subscription will be used as the scope.
@@ -212,17 +196,9 @@ directCommands:
                          [--subscription]
   examples:
   - summary: Publish a management group blueprint
-    syntax: >-
-      az blueprint publish --management-group MyManagementGroup --blueprint-name \
-
-      MyBlueprint --version v2
+    syntax: az blueprint publish --management-group MyManagementGroup --blueprint-name MyBlueprint --version v2
   - summary: Publish a subscription blueprint
-    syntax: >-
-      az blueprint publish --subscription MySubscription \
-
-      --blueprint-name MyBlueprint \
-
-      --version v2
+    syntax: az blueprint publish --subscription MySubscription --blueprint-name MyBlueprint --version v2
   requiredParameters:
   - isRequired: true
     name: --blueprint-name
@@ -252,15 +228,9 @@ directCommands:
                       [--subscription]
   examples:
   - summary: Show a management group blueprint
-    syntax: >-
-      az blueprint show --management-group MyManagementGroup --name \
-
-      MyBlueprint
+    syntax: az blueprint show --management-group MyManagementGroup --name MyBlueprint
   - summary: Show a subscription blueprint
-    syntax: >-
-      az blueprint show --subscription MySubscription --name \
-
-      MyBlueprint
+    syntax: az blueprint show --subscription MySubscription --name MyBlueprint
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -282,7 +252,7 @@ directCommands:
                         [--add]
                         [--description]
                         [--display-name]
-                        [--force-string]
+                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                         [--management-group]
                         [--parameters]
                         [--remove]
@@ -290,7 +260,6 @@ directCommands:
                         [--set]
                         [--subscription]
                         [--target-scope {managementGroup, subscription}]
-                        [--versions]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -298,7 +267,6 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --description
@@ -308,24 +276,22 @@ directCommands:
     summary: One-liner string explain this resource.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --management-group -m
     summary: Use management group for the scope of the blueprint.
     description: ''
   - name: --parameters -p
-    summary: Parameters required by this blueprint definition. It can be a JSON string or JSON file path.
+    summary: Parameters required by this blueprint definition. It can be a JSON                             string or JSON file path.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-groups
-    summary: 'Resource group placeholders defined by this blueprint definition. Expected value: json-string/@json-file.'
+    summary: Resource group placeholders defined by this blueprint definition.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription -s
@@ -334,9 +300,6 @@ directCommands:
   - name: --target-scope
     parameterValueGroup: "managementGroup, subscription"
     summary: The scope where this blueprint definition can be assigned.
-    description: ''
-  - name: --versions
-    summary: 'Published versions of this blueprint definition. Expected value: json-string/@json-file.'
     description: ''
 commands:
 - az_blueprint_artifact
