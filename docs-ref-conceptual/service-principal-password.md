@@ -1,10 +1,10 @@
 ---
 title: Work with Azure service principals with a password – Azure CLI | Microsoft Docs
-description: Learn how to create and use service principals with the Azure CLI. Use service principals with a password to gain control over which Azure resources can be accessed.
+description: Use service principals with a password to gain control over which Azure resources can be accessed.
 manager: jasongroce
 author: daphnemamicrosoft
 ms.author: daphnema
-ms.date: 08/2/2023
+ms.date: 08/16/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -14,7 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Using Service Principal with password-based authentication
 
-When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose the either password-based or certificate based-authentication. This article details how you can use a password with the service principal to access the Azure Container Registry.
+When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose either password-based or certificate based-authentication. This article details how you can use a **password** with the service principal to access the Azure Container Registry.
 
 ## How does password-based authentication work?
 
@@ -47,7 +47,7 @@ az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scopes 
 
 The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](#6-reset-credentials).
 
-## Signing in with a service principal using a password
+## Sign in with a service principal using a password
 
 To sign in with a service principal using a password:
 

@@ -4,7 +4,7 @@ description: Learn how to create and use service principals with the Azure CLI. 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/2/2023
+ms.date: 08/16/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,11 +13,11 @@ keywords: azure service principal, create service principal azure, create servic
 ---
 # Work with Azure service principal using the Azure CLI
 
-It is important that automated tools that use Azure services always have restricted permissions. Instead of having applications sign in as a fully privileged user, Azure instead offers service principals.
+It's important that automated tools that use Azure services always have restricted permissions. Instead of having applications sign in as a fully privileged user, Azure instead offers service principals.
 
 ## What is an Azure service principal?
 
-An Azure service principal is an identity created to use with applications, hosted services, and automated tools. You can assign roles to the service principal in order to restrict its access.This gives you control over which resources can be accessed and at what level.
+An Azure service principal is an identity created to use with applications, hosted services, and automated tools. You can assign roles to the service principal in order to restrict its access. This gives you control over which resources can be accessed and at what level.
 For security reasons, it's always recommended to use service principals with automated
 tools rather than allowing them to sign in with a user identity.
 
@@ -34,14 +34,12 @@ When creating a service principal, you choose the type of sign-in authentication
 > [!WARNING]
 > When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
 >
-> To reduce your risk of a compromised service principal, assign a more specific role and narrow the scopes to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
+> To reduce your risk of a compromised service principal, assign a more specific role and narrow the scopes to a resource or resource group. For more information, see [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps).
 
 
 ## 2. Get an existing service principal
 
-A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list). By default this
-command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` parameter. Getting this list can take a long time, so it's
-recommended that you filter the list with one of the following parameters:
+A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list). By default this command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` parameter. Getting this list can take a long time, so it's recommended that you filter the list with one of the following parameters:
 
 * `--display-name` requests service principals that have a _prefix_ that match the provided name. The display name of a service principal is the value set with the `--name`
   parameter during creation. If you didn't set `--name` during service principal creation, the name prefix is `azure-cli-`.
@@ -93,20 +91,13 @@ The changes can be verified by listing the assigned roles:
 az role assignment list --assignee appID
 ```
 
-You can also go into the [Azure portal](https://ms.portal.azure.com/) and manually assign the role to the service principal from the IAM blade of the Azure Container Registry Instance.
+You can also go into the [Azure portal](https://ms.portal.azure.com/) and manually assign the role to the service principal from the IAM section of the Azure Container Registry Instance.
 
 ## 4. Sign in using a service principal
 
 Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and credentials.
 
 Sign in with a service principal with either a [password](./service-principal-password.md) or a [certificate](./service-principal-certificate.md).
-
-
-To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
-
-```azurecli-interactive
-az login --service-principal --username appID --tenant tenantID --password /path/to/cert
-```
 
 To learn more about signing in with a service principal, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
 

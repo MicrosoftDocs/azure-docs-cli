@@ -1,10 +1,10 @@
 ---
 title: Work with Azure service principals with a certificate – Azure CLI | Microsoft Docs
-description: Learn how to create and use service principals with the Azure CLI. Use service principals with an existing certificate to gain control over which Azure resources can be accessed.
+description:  Use service principals with an existing certificate to gain control over which Azure resources can be accessed.
 manager: jasongroce
 author: daphnemamicrosoft
 ms.author: daphnema
-ms.date: 08/2/2023
+ms.date: 08/16/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -14,11 +14,13 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Using Service Principal with certificate-based authentication
 
-When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing certificate with the service principal to access the Azure Container Registry.
+When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing **certificate** with the service principal to access the Azure Container Registry.
 
 ## How do I add certificates to a Service Principal?
 
 For certificate-based authentication, use the `--cert` parameter. This parameter requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
+
+Existing certificates can also be assigned manually to a service principal through the Azure Portal. You can use the same command shown at the end of the article, to sign in to the Azure Container Registry by using the certificate as the password. To learn more, see [how to assign a certificate to a service principal through Azure Portal](./service-principal-certificate-az-portal.md).
 
 > [!NOTE]
 > When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
@@ -113,7 +115,7 @@ If you lose access to a certificate's private key, [reset the service principal 
 
 ## Retrieve certificate from Key Vault
 
-For certificate stored in Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) and convert it to a PEM file. In the Key Vault, the name of the certificate's secret is the same as the certificate name.
+For a certificate stored in Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) and convert it to a PEM file. In the Key Vault, the name of the certificate's secret is the same as the certificate name.
 
 ```azurecli-interactive
 az keyvault secret download --file /path/to/cert.pfx --vault-name VaultName --name CertName --encoding base64
