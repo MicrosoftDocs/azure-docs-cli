@@ -48,7 +48,7 @@ With password-based authentication, a random password is created for you.  If yo
 
 ```azurecli-interactive
 # Create a service principal with required parameter
-az ad sp create-for-rbac --scopes /subscriptions/mySubscriptionID
+az ad sp create-for-rbac --scopes /subscriptions/mySubscriptionID --role owner 
 
 # Create a service principal for a resource group using a preferred name and role
 az ad sp create-for-rbac --name myServicePrincipalName \
