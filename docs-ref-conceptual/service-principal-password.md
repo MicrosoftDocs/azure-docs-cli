@@ -45,6 +45,18 @@ echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName 
 az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
 ```
 
+Output Console:
+
+```
+{
+  "appId": "myAppId",
+  "displayName": "myDisplayName",
+  "password": "myPassword",
+  "tenant": "myTentantId"
+}
+
+```
+
 The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](./create-an-azure-service-principal-azure-cli.md#6-reset-credentials).
 
 ## Sign in with a service principal using a password
