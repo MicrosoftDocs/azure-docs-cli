@@ -2,7 +2,7 @@
 title: Work with Azure service principals with a certificate – Azure CLI | Microsoft Docs
 description:  Use service principals with an existing certificate to gain control over which Azure resources can be accessed.
 manager: jasongroce
-author: daphnemamicrosoft
+author: daphnemamsft
 ms.author: daphnema
 ms.date: 08/16/2023
 ms.topic: conceptual

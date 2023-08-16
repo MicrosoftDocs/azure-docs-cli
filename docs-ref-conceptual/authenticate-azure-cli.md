@@ -71,11 +71,11 @@ To sign in with a service principal, you need:
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 > [!NOTE]
-> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./service-principal-certificate.md).
 
 > [!IMPORTANT]
 >
-> If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](create-an-azure-service-principal-azure-cli.md#retrieve-certificate-from-key-vault).
+> If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./service-principal-certificate.md#retrieve-certificate-from-key-vault).
 
 ```azurecli-interactive
 az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
@@ -96,7 +96,7 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
-See [Working with service principals](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication) for more information on PEM file formats.
+See [Working with service principals](./service-principal-certificate.md) for more information on PEM file formats.
 
 ## Sign in with a different tenant
 

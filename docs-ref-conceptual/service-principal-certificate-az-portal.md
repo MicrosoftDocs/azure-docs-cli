@@ -2,7 +2,7 @@
 title: Assign an existing certificate to a service principal through the Azure portal – Azure CLI | Microsoft Docs
 description: Learn assign an existing certificate to a service principal by using the Azure portal.
 manager: jasongroce
-author: daphnemamicrosoft
+author: daphnemamsft
 ms.author: daphnema
 ms.date: 08/16/2023
 ms.topic: conceptual
