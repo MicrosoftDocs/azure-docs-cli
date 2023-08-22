@@ -18,7 +18,7 @@ There are several authentication types for the Azure Command-Line Interface (CLI
 Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az-login) command. When you write scripts, the recommended approach is
 to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 
-Azure CLI doesn't store any of your login information. Instead, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). As of August 2018 this token is revoked after 90 days of inactivity. Contact your Microsoft or tenant administrator to change this value. Once the token is revoked, you get a message from the CLI saying you need to sign in again.
+When signing in with a user account, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). For more information on refresh and session token configuration, see [Refresh and session token lifetime policy properties](/azure/active-directory/develop/configurable-token-lifetimes#refresh-and-session-token-lifetime-policy-properties).
 
 After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can [change your default subscription](manage-azure-subscriptions-azure-cli.md).
 

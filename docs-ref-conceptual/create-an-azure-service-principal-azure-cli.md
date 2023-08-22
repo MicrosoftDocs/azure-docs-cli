@@ -19,10 +19,9 @@ applications sign in as a fully privileged user, Azure offers service principals
 ## What is an Azure service principal?
 
 An Azure service principal is an identity created for use with
-applications, hosted services, and automated tools to access
+applications, hosted services, and automated tools to access resources.
 The roles assigned to the service principal restrict access. This gives you control over which resources can be accessed and at what level.
-to the service principal, giving you control over which resources
-can be accessed and at which level. For security reasons, it's
+For security reasons, it's
 always recommended to use service principals with automated
 tools rather than allowing them to sign in with a user identity.
 
@@ -47,7 +46,7 @@ When creating a service principal, you choose the type of sign-in authentication
 With password-based authentication, a random password is created for you.  If you don't specify a `--name` parameter value, a name containing a time stamp is created for you.  You must specify a `--scopes` as this value doesn't have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
 
 ```azurecli-interactive
-# Create a service principal with required parameter
+# Create a service principal without a role assignment
 az ad sp create-for-rbac --scopes /subscriptions/mySubscriptionID
 
 # Create a service principal for a resource group using a preferred name and role
