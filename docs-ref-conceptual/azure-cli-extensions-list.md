@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/23/2023
+ms.date: 08/24/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -90,7 +90,7 @@ You will be prompted to install an extension on first use.
 |[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.48.0 | Microsoft Azure Command-Line Tools DevCenter Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
-|[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.49.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
+|[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.51.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.39.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.41.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
