@@ -4,7 +4,7 @@ name: az network manager
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **virtual-network-manager** extension for the Azure CLI (version 2.43.0 or higher). The extension will automatically install the first time you run an **az network manager** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **virtual-network-manager** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az network manager** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage network-manager with network.
 description: ''
 directCommands:
@@ -63,12 +63,13 @@ directCommands:
     description: ''
 - uid: az_network_manager_delete
   name: az network manager delete
-  summary: Deletes a network manager.
+  summary: Delete a network manager.
   description: ''
   syntax: >-
-    az network manager delete [--force {false, true}]
+    az network manager delete [--force {0, 1, f, false, n, no, t, true, y, yes}]
                               [--ids]
                               [--name]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--resource-group]
                               [--subscription]
                               [--yes]
@@ -77,15 +78,18 @@ directCommands:
     syntax: az network manager delete --name "testNetworkManager" --resource-group "rg1"
   optionalParameters:
   - name: --force
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: Deletes the resource even if it is part of a deployed configuration.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name --network-manager-name -n
     summary: The name of the network manager.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -99,21 +103,27 @@ directCommands:
     description: ''
 - uid: az_network_manager_list
   name: az network manager list
-  summary: List network managers in a resource group.
+  summary: List all network managers in a subscription.
   description: ''
   syntax: >-
-    az network manager list --resource-group
+    az network manager list [--max-items]
+                            [--next-token]
+                            [--resource-group]
                             [--skip-token]
                             [--top]
   examples:
   - summary: List Azure Virtual Network Manager
     syntax: az network manager list --resource-group "rg1"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
   - name: --skip-token
     summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
     description: ''
@@ -122,139 +132,164 @@ directCommands:
     description: ''
 - uid: az_network_manager_list-active-connectivity-config
   name: az network manager list-active-connectivity-config
-  summary: Lists active configurations in a network manager.
+  summary: Lists active connectivity configurations in a network manager.
   description: ''
   syntax: >-
-    az network manager list-active-connectivity-config --name
-                                                       --resource-group
+    az network manager list-active-connectivity-config [--ids]
+                                                       [--name]
                                                        [--regions]
+                                                       [--resource-group]
                                                        [--skip-token]
+                                                       [--subscription]
   examples:
-  - summary: Get Azure Virtual Network Manager Active Configuration
+  - summary: List Azure Virtual Network Manager Active Configuration
     syntax: az network manager list-active-connectivity-config --network-manager-name "testNetworkManager" --resource-group "myResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --name --network-manager-name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --network-manager-name -n
     summary: The name of the network manager.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --regions
+    summary: List of regions.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --regions
-    summary: Location names.
-    description: ''
   - name: --skip-token
-    summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
+    summary: When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_network_manager_list-active-security-admin-rule
   name: az network manager list-active-security-admin-rule
-  summary: List all security admin rules that have been deployed by this network manager.
+  summary: Lists active security admin rules in a network manager.
   description: ''
   syntax: >-
-    az network manager list-active-security-admin-rule --name
-                                                       --resource-group
+    az network manager list-active-security-admin-rule [--ids]
+                                                       [--name]
                                                        [--regions]
+                                                       [--resource-group]
                                                        [--skip-token]
+                                                       [--subscription]
   examples:
-  - summary: Get Azure Virtual Network Manager Active Security Admin Rule
+  - summary: List Azure Virtual Network Manager Active Security Admin Rule
     syntax: az network manager list-active-security-admin-rule --network-manager-name "testNetworkManager" --resource-group "myResourceGroup" --region "eastus2euap"
-  requiredParameters:
-  - isRequired: true
-    name: --name --network-manager-name -n
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --network-manager-name -n
     summary: The name of the network manager.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --regions
+    summary: List of regions.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  optionalParameters:
-  - name: --regions
-    summary: List of locations.
-    description: ''
   - name: --skip-token
-    summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
+    summary: When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_network_manager_list-deploy-status
   name: az network manager list-deploy-status
   summary: Post List of Network Manager Deployment Status.
   description: ''
   syntax: >-
-    az network manager list-deploy-status --name
-                                          --resource-group
-                                          [--deployment-types]
+    az network manager list-deploy-status [--deployment-types]
+                                          [--ids]
+                                          [--name]
                                           [--regions]
+                                          [--resource-group]
                                           [--skip-token]
+                                          [--subscription]
   examples:
-  - summary: Post Azure Virtual Network Manager Deployment Status
+  - summary: List Azure Virtual Network Manager Deployment Status
     syntax: az network manager list-deploy-status --network-manager-name "testNetworkManager" --deployment-types "Connectivity" "SecurityAdmin" --regions "eastus" "westus" --resource-group "resoureGroupSample"
-  requiredParameters:
-  - isRequired: true
-    name: --name --network-manager-name -n
-    summary: The name of the network manager.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --deployment-types
-    summary: List of configurations' deployment types.
+    summary: List of deployment types.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name --network-manager-name -n
+    summary: The name of the network manager.
     description: ''
   - name: --regions
-    summary: List of locations.
+    summary: List of locations.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --skip-token
-    summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
+    summary: Continuation token for pagination, capturing the next page size and offset, as well as the context of the query.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
 - uid: az_network_manager_list-effective-connectivity-config
   name: az network manager list-effective-connectivity-config
-  summary: Lists effective configuration in a network manager.
+  summary: List all effective connectivity configurations applied on a virtual network.
   description: ''
   syntax: >-
-    az network manager list-effective-connectivity-config --resource-group
-                                                          --virtual-network-name
+    az network manager list-effective-connectivity-config [--ids]
+                                                          [--resource-group]
                                                           [--skip-token]
+                                                          [--subscription]
+                                                          [--virtual-network-name]
   examples:
-  - summary: Get Azure Virtual Network Manager Effective Configuration
+  - summary: List Azure Virtual Network Manager Effective Configuration
     syntax: az network manager list-effective-connectivity-config --virtual-network-name "myVirtualNetwork" --resource-group "myResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-name --vnet-name
-    summary: The name of the virtual network.
-    description: ''
-  optionalParameters:
   - name: --skip-token
-    summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
+    summary: When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --virtual-network-name --vnet-name
+    summary: The name of the virtual network.
     description: ''
 - uid: az_network_manager_list-effective-security-admin-rule
   name: az network manager list-effective-security-admin-rule
-  summary: Lists effective configuration in a network manager.
+  summary: List all effective security admin rules applied on a virtual network.
   description: ''
   syntax: >-
-    az network manager list-effective-security-admin-rule --resource-group
-                                                          --virtual-network-name
+    az network manager list-effective-security-admin-rule [--ids]
+                                                          [--resource-group]
                                                           [--skip-token]
+                                                          [--subscription]
+                                                          [--virtual-network-name]
   examples:
-  - summary: Get Azure Virtual Network Manager Effective Configuration
+  - summary: List Azure Virtual Network Manager Effective Security Admin Rule
     syntax: az network manager list-effective-security-admin-rule --virtual-network-name "myVirtualNetwork" --resource-group "myResourceGroup"
-  requiredParameters:
-  - isRequired: true
-    name: --resource-group -g
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --virtual-network-name --vnet-name
-    summary: The name of the virtual network.
-    description: ''
-  optionalParameters:
   - name: --skip-token
-    summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
+    summary: When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --virtual-network-name --vnet-name
+    summary: The name of the virtual network.
     description: ''
 - uid: az_network_manager_post-commit
   name: az network manager post-commit
@@ -266,6 +301,7 @@ directCommands:
                                    [--configuration-ids]
                                    [--ids]
                                    [--name]
+                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--resource-group]
                                    [--subscription]
   examples:
@@ -279,17 +315,21 @@ directCommands:
     description: ''
   - isRequired: true
     name: --target-locations
-    summary: List of target locations.
+    summary: List of target locations.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   optionalParameters:
   - name: --configuration-ids
-    summary: List of configuration ids.
+    summary: List of configuration ids.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name --network-manager-name -n
     summary: The name of the network manager.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -299,7 +339,7 @@ directCommands:
     description: ''
 - uid: az_network_manager_show
   name: az network manager show
-  summary: Gets the specified Network Manager.
+  summary: Get the specified Network Manager.
   description: ''
   syntax: >-
     az network manager show [--ids]
@@ -327,31 +367,19 @@ directCommands:
   summary: Update a Network Manager.
   description: ''
   syntax: >-
-    az network manager update [--add]
-                              [--description]
-                              [--force-string]
+    az network manager update [--description]
                               [--id]
                               [--ids]
                               [--location]
                               [--name]
                               [--network-manager-scopes]
-                              [--remove]
                               [--resource-group]
                               [--scope-accesses]
-                              [--set]
                               [--subscription]
                               [--tags]
   optionalParameters:
-  - name: --add
-    defaultValue: "[]"
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
   - name: --description
     summary: A description of the network manager.
-    description: ''
-  - name: --force-string
-    defaultValue: "False"
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --id
     summary: Resource ID.
@@ -374,25 +402,73 @@ directCommands:
       management-groups: List of management groups.
 
       subscriptions: List of subscriptions.
-  - name: --remove
-    defaultValue: "[]"
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --scope-accesses
     summary: 'Scope Access. Available value: SecurityAdmin, Connectivity.'
     description: ''
-  - name: --set
-    defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: az_network_manager_wait
+  name: az network manager wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network manager wait [--created]
+                            [--custom]
+                            [--deleted]
+                            [--exists]
+                            [--ids]
+                            [--interval]
+                            [--name]
+                            [--resource-group]
+                            [--subscription]
+                            [--timeout]
+                            [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name --network-manager-name -n
+    summary: The name of the network manager.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
 - az_network_manager_connect-config
@@ -401,6 +477,7 @@ commands:
 - az_network_manager_connect-config_list
 - az_network_manager_connect-config_show
 - az_network_manager_connect-config_update
+- az_network_manager_connect-config_wait
 - az_network_manager_connection
 - az_network_manager_connection_management-group
 - az_network_manager_connection_management-group_create
@@ -427,6 +504,7 @@ commands:
 - az_network_manager_group_static-member_list
 - az_network_manager_group_static-member_show
 - az_network_manager_group_update
+- az_network_manager_group_wait
 - az_network_manager_list
 - az_network_manager_list-active-connectivity-config
 - az_network_manager_list-active-security-admin-rule
@@ -456,11 +534,13 @@ commands:
 - az_network_manager_security-admin-config_rule-collection_rule_update
 - az_network_manager_security-admin-config_rule-collection_show
 - az_network_manager_security-admin-config_rule-collection_update
+- az_network_manager_security-admin-config_rule-collection_wait
 - az_network_manager_security-admin-config_show
 - az_network_manager_security-admin-config_update
 - az_network_manager_security-admin-config_wait
 - az_network_manager_show
 - az_network_manager_update
+- az_network_manager_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
