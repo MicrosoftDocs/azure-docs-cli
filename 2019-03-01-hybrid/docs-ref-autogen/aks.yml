@@ -82,7 +82,7 @@ directCommands:
                   [--disk-driver-version {v1, v2}]
                   [--dns-name-prefix]
                   [--dns-service-ip]
-                  [--dns-zone-resource-id]
+                  [--dns-zone-resource-ids]
                   [--edge-zone]
                   [--enable-aad]
                   [--enable-addons]
@@ -398,8 +398,8 @@ directCommands:
   - name: --dns-service-ip
     summary: An IP address assigned to the Kubernetes DNS service.
     description: This address must be within the Kubernetes service address range specified by "--service-cidr". For example, 10.0.0.10.
-  - name: --dns-zone-resource-id
-    summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
+  - name: --dns-zone-resource-ids
+    summary: A comma separated list of resource IDs of the DNS zone resource to use with the web_application_routing addon.
     description: ''
   - name: --edge-zone
     summary: The name of edge zone.
@@ -938,7 +938,7 @@ directCommands:
                          [--appgw-subnet-id]
                          [--appgw-watch-namespace]
                          [--data-collection-settings]
-                         [--dns-zone-resource-id]
+                         [--dns-zone-resource-ids]
                          [--enable-msi-auth-for-monitoring {false, true}]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
@@ -989,8 +989,8 @@ directCommands:
   - name: --data-collection-settings
     summary: Path to JSON file containing data collection settings for Monitoring addon.
     description: ''
-  - name: --dns-zone-resource-id
-    summary: The resource ID of the DNS zone resource to use with the web_application_routing addon.
+  - name: --dns-zone-resource-ids
+    summary: A comma separated list of resource IDs of the DNS zone resource to use with the web_application_routing addon.
     description: ''
   - name: --enable-msi-auth-for-monitoring
     defaultValue: "True"
@@ -1414,6 +1414,7 @@ directCommands:
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
+                  [--disable-force-upgrade]
                   [--disable-image-cleaner]
                   [--disable-image-integrity]
                   [--disable-keda]
@@ -1438,6 +1439,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
+                  [--enable-force-upgrade]
                   [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-local-accounts]
@@ -1493,7 +1495,6 @@ directCommands:
                   [--tier {free, standard}]
                   [--update-cluster-autoscaler]
                   [--upgrade-override-until]
-                  [--upgrade-settings]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -1662,6 +1663,10 @@ directCommands:
     defaultValue: "False"
     summary: Disable AzureFile CSI Driver.
     description: ''
+  - name: --disable-force-upgrade
+    defaultValue: "False"
+    summary: Disable forceUpgrade cluster upgrade settings override.
+    description: ''
   - name: --disable-image-cleaner
     defaultValue: "False"
     summary: Disable ImageCleaner Service.
@@ -1756,6 +1761,10 @@ directCommands:
   - name: --enable-file-driver
     defaultValue: "False"
     summary: Enable AzureFile CSI Driver.
+    description: ''
+  - name: --enable-force-upgrade
+    defaultValue: "False"
+    summary: Enable forceUpgrade cluster upgrade settings override.
     description: ''
   - name: --enable-image-cleaner
     defaultValue: "False"
@@ -1956,11 +1965,8 @@ directCommands:
     summary: Update min-count or max-count for cluster autoscaler.
     description: ''
   - name: --upgrade-override-until
-    summary: Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --upgrade-settings is set to IgnoreKubernetesDeprecations and --upgrade-override-until is not set, by default it will be set to 3 days from now.
+    summary: Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
     description: ''
-  - name: --upgrade-settings
-    summary: A comma separated list of supported cluster upgrade settings. E.g., IgnoreKubernetesDeprecations.
-    description: Allowed value is "IgnoreKubernetesDeprecations". If set as "", upgrade settings will be set to default and the existing overrides will no longer be effective.
   - name: --windows-admin-password
     summary: User account password to use on windows node VMs.
     description: >-

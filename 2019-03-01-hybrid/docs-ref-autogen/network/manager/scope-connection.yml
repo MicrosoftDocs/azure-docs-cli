@@ -4,28 +4,28 @@ name: az network manager scope-connection
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **virtual-network-manager** extension for the Azure CLI (version 2.43.0 or higher). The extension will automatically install the first time you run an **az network manager scope-connection** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **virtual-network-manager** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az network manager scope-connection** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage scope connection with network.
 description: ''
 directCommands:
 - uid: az_network_manager_scope-connection_create
   name: az network manager scope-connection create
-  summary: Creates scope connection from Network Manager.
+  summary: Create scope connection from Network Manager.
   description: ''
   syntax: >-
     az network manager scope-connection create --connection-name
                                                --network-manager
                                                --resource-group
-                                               --resource-id
-                                               --tenant-id
                                                [--description]
+                                               [--resource-id]
+                                               [--tenant-id]
   examples:
   - summary: Create network manager scope-connection
     syntax: az network manager scope-connection create --name "TestScopeConnect" --network-manager-name "testNetworkManager" --resource-group "rg1" --description "A sample policy" --tenant-id 00000000-0000-0000-0000-000000000000 --resource-id /subscriptions/00000000-0000-0000-0000-000000000000
   requiredParameters:
   - isRequired: true
-    name: --connection-name --name -n
-    summary: The name of the network manager scope connection.
+    name: --connection-name --name --scope-connection-name -n
+    summary: Name for the cross-tenant connection.
     description: ''
   - isRequired: true
     name: --network-manager --network-manager-name
@@ -35,17 +35,15 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --resource-id
-    summary: The id of resource.
-    description: ''
-  - isRequired: true
-    name: --tenant-id
-    summary: The id of tenant.
-    description: ''
   optionalParameters:
   - name: --description
     summary: A description of the scope connection.
+    description: ''
+  - name: --resource-id
+    summary: Resource ID.
+    description: ''
+  - name: --tenant-id
+    summary: Tenant ID.
     description: ''
 - uid: az_network_manager_scope-connection_delete
   name: az network manager scope-connection delete
@@ -62,8 +60,8 @@ directCommands:
   - summary: Delete network manager scope connection
     syntax: az network manager scope-connection delete --name "TestScopeConnect" --network-manager-name "testNetworkManager" --resource-group "rg1"
   optionalParameters:
-  - name: --connection-name --name -n
-    summary: The name of the network manager scope connection.
+  - name: --connection-name --name --scope-connection-name -n
+    summary: Name for the cross-tenant connection.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -88,6 +86,8 @@ directCommands:
   syntax: >-
     az network manager scope-connection list --network-manager
                                              --resource-group
+                                             [--max-items]
+                                             [--next-token]
                                              [--skip-token]
                                              [--top]
   examples:
@@ -103,6 +103,12 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
   - name: --skip-token
     summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
     description: ''
@@ -123,8 +129,8 @@ directCommands:
   - summary: Get network manager scope-connection
     syntax: az network manager scope-connection show --name "TestScopeConnect" --network-manager-name "testNetworkManager" --resource-group "rg1"
   optionalParameters:
-  - name: --connection-name --name -n
-    summary: The name of the network manager scope connection.
+  - name: --connection-name --name --scope-connection-name -n
+    summary: Name for the cross-tenant connection.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -146,29 +152,30 @@ directCommands:
     az network manager scope-connection update [--add]
                                                [--connection-name]
                                                [--description]
-                                               [--force-string]
+                                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                [--ids]
                                                [--network-manager]
                                                [--remove]
                                                [--resource-group]
+                                               [--resource-id]
                                                [--set]
                                                [--subscription]
+                                               [--tenant-id]
   examples:
   - summary: Update network manager scope-connection
     syntax: az network manager scope-connection update --name "TestScopeConnect" --network-manager-name "testNetworkManager" --resource-group "rg1" --description "A sample policy"
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
-  - name: --connection-name --name -n
-    summary: The name of the network manager scope connection.
+  - name: --connection-name --name --scope-connection-name -n
+    summary: Name for the cross-tenant connection.
     description: ''
   - name: --description
     summary: A description of the scope connection.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -178,18 +185,22 @@ directCommands:
     summary: The name of the network manager.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
+  - name: --resource-id
+    summary: Resource ID.
+    description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tenant-id
+    summary: Tenant ID.
     description: ''
 commands:
 - az_network_manager_scope-connection_create
