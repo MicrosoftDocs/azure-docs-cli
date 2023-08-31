@@ -1,13 +1,21 @@
 ### YamlMime:AzureCLIGroup
 uid: az_webapp
 name: az webapp
+importantNote: >-
+  > [!Note]
+
+  > This command group has descendant commands that are defined in both Azure CLI core and at least one Azure CLI extension. If you wish to use the extension commands, you must install the extension. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage web apps.
 description: ''
+status: GA
+sourceType: Core and Extension
 directCommands:
 - uid: az_webapp_browse
   name: az webapp browse
   summary: Open a web app in a browser. This is not supported in Azure Cloud Shell.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp browse [--ids]
                      [--logs]
@@ -42,6 +50,8 @@ directCommands:
   name: az webapp create
   summary: Create a web app.
   description: The web app's name must be able to produce a unique FQDN as AppName.azurewebsites.net.
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp create --name
                      --plan
@@ -153,10 +163,129 @@ directCommands:
   - name: --vnet
     summary: Name or resource ID of the regional virtual network. If there are multiple vnets of the same name across different resource groups, use vnet resource id to specify which vnet to use. If vnet name is used, by default, the vnet in the same resource group as the webapp will be used. Must be used with --subnet argument.
     description: ''
+- uid: az_webapp_create_(appservice-kube)
+  name: az webapp create (appservice-kube)
+  summary: Create a web app.
+  description: The web app's name must be able to produce a unique FQDN as AppName.azurewebsites.net.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az webapp create --name
+                     --resource-group
+                     [--assign-identity]
+                     [--custom-location]
+                     [--deployment-container-image-name]
+                     [--deployment-local-git]
+                     [--deployment-source-branch]
+                     [--deployment-source-url]
+                     [--docker-registry-server-password]
+                     [--docker-registry-server-user]
+                     [--max-worker-count]
+                     [--min-worker-count]
+                     [--multicontainer-config-file]
+                     [--multicontainer-config-type {COMPOSE, KUBE}]
+                     [--plan]
+                     [--role]
+                     [--runtime]
+                     [--scope]
+                     [--startup-file]
+                     [--tags]
+  examples:
+  - summary: Create a web app with the default configuration.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName
+  - summary: Create a web app with a Java 11 runtime using '|' delimiter.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java|11|Java SE|11"
+  - summary: Create a web app with a Java 11 runtime using ':' delimiter.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "java:11:Java SE:11"
+  - summary: Create a web app with a NodeJS 10.14 runtime and deployed from a local git repository.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime "node|10.14" --deployment-local-git
+  - summary: Create a web app with an image from DockerHub.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i nginx
+  - summary: Create a web app with an image from a private DockerHub registry.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i MyImageName -s username -w password
+  - summary: Create a web app with an image from a private Azure Container Registry.
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName -i myregistry.azurecr.io/docker-image:tag
+  - summary: create a WebApp using shared App Service Plan that is in a different resource group.
+    syntax: AppServicePlanID=$(az appservice plan show -n SharedAppServicePlan -g MyASPRG --query "id" --out tsv) az webapp create -g MyResourceGroup -p "$AppServicePlanID" -n MyUniqueAppName
+  - summary: create a WebApp in an appservice kubernetes environment
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --custom-location /subscriptions/sub_id/resourcegroups/group_name/providers/microsoft.extendedlocation/customlocations/custom_location_name
+  - summary: create a WebApp in an appservice kubernetes environment and in the same resource group as the custom location
+    syntax: az webapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --custom-location custom_location_name
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: Name of the new web app.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --assign-identity
+    summary: Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
+    description: ''
+  - name: --custom-location
+    summary: Name or ID of the custom location. Use an ID for a custom location in a different resource group from the app.
+    description: ''
+  - name: --deployment-container-image-name -i
+    summary: Linux only. Container image name from Docker Hub, e.g. publisher/image-name:tag.
+    description: ''
+  - name: --deployment-local-git -l
+    summary: Enable local git.
+    description: ''
+  - name: --deployment-source-branch -b
+    defaultValue: "master"
+    summary: The branch to deploy.
+    description: ''
+  - name: --deployment-source-url -u
+    summary: Git repository URL to link with manual integration.
+    description: ''
+  - name: --docker-registry-server-password -w
+    summary: The container registry server password. Required for private registries.
+    description: ''
+  - name: --docker-registry-server-user -s
+    summary: The container registry server username.
+    description: ''
+  - name: --max-worker-count
+    summary: Maximum number of workers to be allocated.
+    description: ''
+    isPreview: true
+  - name: --min-worker-count
+    summary: Minimum number of workers to be allocated.
+    description: ''
+    isPreview: true
+  - name: --multicontainer-config-file
+    summary: Linux only. Config file for multicontainer apps. (local or remote).
+    description: ''
+  - name: --multicontainer-config-type
+    parameterValueGroup: "COMPOSE, KUBE"
+    summary: Linux only.
+    description: ''
+  - name: --plan -p
+    summary: Name or resource id of the app service plan. Use 'appservice plan create' to get one.
+    description: ''
+  - name: --role
+    defaultValue: "Contributor"
+    summary: Role name or id the system assigned identity will have.
+    description: ''
+  - name: --runtime -r
+    summary: Canonicalized web runtime in the format of Framework|Version, e.g. "PHP|5.6". Use `az webapp list-runtimes` for available list.
+    description: ''
+  - name: --scope
+    summary: Scope that the system assigned identity can access.
+    description: ''
+  - name: --startup-file
+    summary: Linux only. The web's startup file.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
 - uid: az_webapp_create-remote-connection
   name: az webapp create-remote-connection
   summary: Creates a remote connection using a tcp tunnel to your web app.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp create-remote-connection [--ids]
                                        [--instance]
@@ -195,6 +324,8 @@ directCommands:
   name: az webapp delete
   summary: Delete a web app.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp delete [--ids]
                      [--keep-dns-registration]
@@ -214,6 +345,8 @@ directCommands:
   - name: --keep-dns-registration
     summary: Keep DNS registration.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'keep_dns_registration' has been deprecated and will be removed in version '3.0.0'.
   - name: --keep-empty-plan
     summary: Keep empty app service plan.
     description: ''
@@ -236,6 +369,10 @@ directCommands:
   name: az webapp deploy
   summary: Deploys a provided artifact to Azure Web Apps.
   description: ''
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
   syntax: >-
     az webapp deploy [--async {false, true}]
                      [--clean {false, true}]
@@ -308,6 +445,8 @@ directCommands:
   name: az webapp list
   summary: List web apps.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: az webapp list [--resource-group]
   examples:
   - summary: List all web apps in MyResourceGroup.
@@ -324,6 +463,8 @@ directCommands:
   name: az webapp list-instances
   summary: List all scaled out instances of a web app or web app slot.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp list-instances --name
                              --resource-group
@@ -345,6 +486,8 @@ directCommands:
   name: az webapp list-runtimes
   summary: List available built-in stacks which can be used for web apps.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp list-runtimes [--linux]
                             [--os {linux, windows}]
@@ -353,6 +496,8 @@ directCommands:
     defaultValue: "False"
     summary: List runtime stacks for linux based web apps.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'linux' has been deprecated and will be removed in a future release. Use '--os-type' instead.
   - name: --os --os-type
     parameterValueGroup: "linux, windows"
     summary: Limit the output to just windows or linux runtimes.
@@ -361,6 +506,8 @@ directCommands:
   name: az webapp restart
   summary: Restart a web app.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp restart [--ids]
                       [--name]
@@ -386,10 +533,43 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-- uid: az_webapp_scale
+- uid: az_webapp_restart_(appservice-kube)
+  name: az webapp restart (appservice-kube)
+  summary: Restart a web app.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az webapp restart [--ids]
+                      [--name]
+                      [--resource-group]
+                      [--slot]
+                      [--subscription]
+  examples:
+  - summary: Restart a web app. (autogenerated)
+    syntax: az webapp restart --name MyWebapp --resource-group MyResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the web app. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_webapp_scale_(appservice-kube)
   name: az webapp scale
   summary: Modify the number of instances of a webapp.
   description: ''
+  status: GA
+  sourceType: Extension
   syntax: >-
     az webapp scale --instance-count
                     [--ids]
@@ -426,6 +606,8 @@ directCommands:
   name: az webapp show
   summary: Get the details of a web app.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp show [--ids]
                    [--name]
@@ -451,10 +633,45 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_webapp_show_(appservice-kube)
+  name: az webapp show (appservice-kube)
+  summary: Get the details of a web app.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az webapp show [--ids]
+                   [--name]
+                   [--resource-group]
+                   [--slot]
+                   [--subscription]
+  examples:
+  - summary: Get the details of a web app. (autogenerated)
+    syntax: az webapp show --name MyWebapp --resource-group MyResourceGroup
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --name -n
+    summary: Name of the web app. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_webapp_ssh
   name: az webapp ssh
   summary: SSH command establishes a ssh session to the web container and developer would get a shell terminal remotely.
   description: ''
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
   syntax: >-
     az webapp ssh [--ids]
                   [--instance]
@@ -496,6 +713,8 @@ directCommands:
   name: az webapp start
   summary: Start a web app.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp start [--ids]
                     [--name]
@@ -525,6 +744,8 @@ directCommands:
   name: az webapp stop
   summary: Stop a web app.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp stop [--ids]
                    [--name]
@@ -554,6 +775,8 @@ directCommands:
   name: az webapp up
   summary: Create a webapp and deploy code from a local workspace to the app. The command is required to run from the folder where the code is present. Current support includes Node, Python, .NET Core and ASP.NET. Node, Python apps are created as Linux apps. .Net Core, ASP.NET, and static HTML apps are created as Windows apps. Append the html flag to deploy as a static HTML app. Each time the command is successfully run, default argument values for resource group, sku, location, plan, and name are saved for the current directory. These defaults are then used for any arguments not provided on subsequent runs of the command in the same directory.  Use 'az configure' to manage defaults.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp up [--app-service-environment]
                  [--dryrun]
@@ -637,6 +860,8 @@ directCommands:
   name: az webapp update
   summary: Update an existing web app.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az webapp update [--add]
                      [--client-affinity-enabled {false, true}]
@@ -673,6 +898,8 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: If true, web app hostname is force registered with DNS.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'force_dns_registration' has been deprecated and will be removed in version '3.0.0'.
   - name: --force-string
     defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
@@ -687,12 +914,14 @@ directCommands:
   - name: --minimum-elastic-instance-count -i
     summary: Minimum number of instances. App must be in an elastic scale App Service Plan.
     description: ''
+    isPreview: true
   - name: --name -n
     summary: Name of the web app. If left unspecified, a name will be randomly generated. You can configure the default using `az configure --defaults web=<name>`.
     description: ''
   - name: --prewarmed-instance-count -w
     summary: Number of preWarmed instances. App must be in an elastic scale App Service Plan.
     description: ''
+    isPreview: true
   - name: --remove
     defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -708,10 +937,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: If true, custom (non *.azurewebsites.net) domains associated with web app are not verified.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'skip_custom_domain_verification' has been deprecated and will be removed in version '3.0.0'.
   - name: --skip-dns-registration
     parameterValueGroup: "false, true"
     summary: If true web app hostname is not registered with DNS on creation.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'skip_dns_registration' has been deprecated and will be removed in version '3.0.0'.
   - name: --slot -s
     summary: The name of the slot. Default to the productions slot if not specified.
     description: ''
@@ -722,41 +955,118 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Time to live in seconds for web app's default domain name.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'ttl_in_seconds' has been deprecated and will be removed in version '3.0.0'.
+- uid: az_webapp_update_(appservice-kube)
+  name: az webapp update (appservice-kube)
+  summary: Update an existing web app.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az webapp update [--add]
+                     [--client-affinity-enabled {false, true}]
+                     [--force-string]
+                     [--https-only {false, true}]
+                     [--ids]
+                     [--minimum-elastic-instance-count]
+                     [--name]
+                     [--prewarmed-instance-count]
+                     [--remove]
+                     [--resource-group]
+                     [--set]
+                     [--slot]
+                     [--subscription]
+  examples:
+  - summary: Update the tags of a web app.
+    syntax: az webapp update -g MyResourceGroup -n MyAppName --set tags.tagName=tagValue
+  - summary: Update a web app. (autogenerated)
+    syntax: az webapp update --https-only true --name MyAppName --resource-group MyResourceGroup
+  optionalParameters:
+  - name: --add
+    defaultValue: "[]"
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --client-affinity-enabled
+    parameterValueGroup: "false, true"
+    summary: Enables sending session affinity cookies.
+    description: ''
+  - name: --force-string
+    defaultValue: "False"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --https-only
+    parameterValueGroup: "false, true"
+    summary: Redirect all traffic made to an app using HTTP to HTTPS.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --minimum-elastic-instance-count -i
+    summary: Minimum number of instances. App must be in an elastic scale App Service Plan.
+    description: ''
+    isPreview: true
+  - name: --name -n
+    summary: Name of the web app. You can configure the default using `az configure --defaults web=<name>`.
+    description: ''
+  - name: --prewarmed-instance-count -w
+    summary: Number of preWarmed instances. App must be in an elastic scale App Service Plan.
+    description: ''
+    isPreview: true
+  - name: --remove
+    defaultValue: "[]"
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    defaultValue: "[]"
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --slot -s
+    summary: The name of the slot. Default to the productions slot if not specified.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 commands:
 - az_webapp_auth
 - az_webapp_auth_apple
-- az_webapp_auth_apple_show
-- az_webapp_auth_apple_update
+- az_webapp_auth_apple_show_(authV2)
+- az_webapp_auth_apple_update_(authV2)
 - az_webapp_auth_config-version
-- az_webapp_auth_config-version_revert
-- az_webapp_auth_config-version_show
-- az_webapp_auth_config-version_upgrade
+- az_webapp_auth_config-version_revert_(authV2)
+- az_webapp_auth_config-version_show_(authV2)
+- az_webapp_auth_config-version_upgrade_(authV2)
 - az_webapp_auth_facebook
-- az_webapp_auth_facebook_show
-- az_webapp_auth_facebook_update
+- az_webapp_auth_facebook_show_(authV2)
+- az_webapp_auth_facebook_update_(authV2)
 - az_webapp_auth_github
-- az_webapp_auth_github_show
-- az_webapp_auth_github_update
+- az_webapp_auth_github_show_(authV2)
+- az_webapp_auth_github_update_(authV2)
 - az_webapp_auth_google
-- az_webapp_auth_google_show
-- az_webapp_auth_google_update
+- az_webapp_auth_google_show_(authV2)
+- az_webapp_auth_google_update_(authV2)
 - az_webapp_auth_microsoft
-- az_webapp_auth_microsoft_show
-- az_webapp_auth_microsoft_update
+- az_webapp_auth_microsoft_show_(authV2)
+- az_webapp_auth_microsoft_update_(authV2)
 - az_webapp_auth_openid-connect
-- az_webapp_auth_openid-connect_add
-- az_webapp_auth_openid-connect_remove
-- az_webapp_auth_openid-connect_show
-- az_webapp_auth_openid-connect_update
-- az_webapp_auth_set
+- az_webapp_auth_openid-connect_add_(authV2)
+- az_webapp_auth_openid-connect_remove_(authV2)
+- az_webapp_auth_openid-connect_show_(authV2)
+- az_webapp_auth_openid-connect_update_(authV2)
+- az_webapp_auth_set_(authV2)
 - az_webapp_auth_show
+- az_webapp_auth_show_(authV2)
 - az_webapp_auth_twitter
-- az_webapp_auth_twitter_show
-- az_webapp_auth_twitter_update
+- az_webapp_auth_twitter_show_(authV2)
+- az_webapp_auth_twitter_update_(authV2)
 - az_webapp_auth_update
+- az_webapp_auth_update_(authV2)
 - az_webapp_auth-classic
-- az_webapp_auth-classic_show
-- az_webapp_auth-classic_update
+- az_webapp_auth-classic_show_(authV2)
+- az_webapp_auth-classic_update_(authV2)
 - az_webapp_browse
 - az_webapp_config
 - az_webapp_config_access-restriction
@@ -795,12 +1105,14 @@ commands:
 - az_webapp_config_snapshot_restore
 - az_webapp_config_ssl
 - az_webapp_config_ssl_bind
+- az_webapp_config_ssl_bind_(appservice-kube)
 - az_webapp_config_ssl_create
 - az_webapp_config_ssl_delete
 - az_webapp_config_ssl_import
 - az_webapp_config_ssl_list
 - az_webapp_config_ssl_show
 - az_webapp_config_ssl_unbind
+- az_webapp_config_ssl_unbind_(appservice-kube)
 - az_webapp_config_ssl_upload
 - az_webapp_config_storage-account
 - az_webapp_config_storage-account_add
@@ -820,13 +1132,17 @@ commands:
 - az_webapp_connection_create_keyvault
 - az_webapp_connection_create_mysql
 - az_webapp_connection_create_mysql-flexible
+- az_webapp_connection_create_mysql-flexible_(serviceconnector-passwordless)
 - az_webapp_connection_create_postgres
+- az_webapp_connection_create_postgres_(serviceconnector-passwordless)
 - az_webapp_connection_create_postgres-flexible
+- az_webapp_connection_create_postgres-flexible_(serviceconnector-passwordless)
 - az_webapp_connection_create_redis
 - az_webapp_connection_create_redis-enterprise
 - az_webapp_connection_create_servicebus
 - az_webapp_connection_create_signalr
 - az_webapp_connection_create_sql
+- az_webapp_connection_create_sql_(serviceconnector-passwordless)
 - az_webapp_connection_create_storage-blob
 - az_webapp_connection_create_storage-file
 - az_webapp_connection_create_storage-queue
@@ -868,6 +1184,7 @@ commands:
 - az_webapp_cors_remove
 - az_webapp_cors_show
 - az_webapp_create
+- az_webapp_create_(appservice-kube)
 - az_webapp_create-remote-connection
 - az_webapp_delete
 - az_webapp_deleted
@@ -893,6 +1210,7 @@ commands:
 - az_webapp_deployment_source_config
 - az_webapp_deployment_source_config-local-git
 - az_webapp_deployment_source_config-zip
+- az_webapp_deployment_source_config-zip_(appservice-kube)
 - az_webapp_deployment_source_delete
 - az_webapp_deployment_source_show
 - az_webapp_deployment_source_sync
@@ -920,14 +1238,16 @@ commands:
 - az_webapp_log_show
 - az_webapp_log_tail
 - az_webapp_restart
-- az_webapp_scale
+- az_webapp_restart_(appservice-kube)
+- az_webapp_scale_(appservice-kube)
 - az_webapp_scan
-- az_webapp_scan_list-result
-- az_webapp_scan_show-result
-- az_webapp_scan_start
-- az_webapp_scan_stop
-- az_webapp_scan_track
+- az_webapp_scan_list-result_(webapp)
+- az_webapp_scan_show-result_(webapp)
+- az_webapp_scan_start_(webapp)
+- az_webapp_scan_stop_(webapp)
+- az_webapp_scan_track_(webapp)
 - az_webapp_show
+- az_webapp_show_(appservice-kube)
 - az_webapp_ssh
 - az_webapp_start
 - az_webapp_stop
@@ -937,6 +1257,7 @@ commands:
 - az_webapp_traffic-routing_show
 - az_webapp_up
 - az_webapp_update
+- az_webapp_update_(appservice-kube)
 - az_webapp_vnet-integration
 - az_webapp_vnet-integration_add
 - az_webapp_vnet-integration_list

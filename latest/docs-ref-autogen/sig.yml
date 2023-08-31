@@ -1,13 +1,21 @@
 ### YamlMime:AzureCLIGroup
 uid: az_sig
 name: az sig
+importantNote: >-
+  > [!Note]
+
+  > This command group has descendant commands that are defined in both Azure CLI core and at least one Azure CLI extension. If you wish to use the extension commands, you must install the extension. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage shared image gallery.
 description: ''
+status: GA
+sourceType: Core and Extension
 directCommands:
 - uid: az_sig_create
   name: az sig create
   summary: Create a shared image gallery.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig create --gallery-name
                   --resource-group
@@ -59,6 +67,69 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
     description: ''
+    isPreview: true
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+- uid: az_sig_create_(image-gallery)
+  name: az sig create (image-gallery)
+  summary: Create a shared image gallery.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az sig create --gallery-name
+                  --resource-group
+                  [--description]
+                  [--eula]
+                  [--location]
+                  [--permissions {Community, Groups, Private}]
+                  [--public-name-prefix]
+                  [--publisher-email]
+                  [--publisher-uri]
+                  [--soft-delete {false, true}]
+                  [--tags]
+  examples:
+  - summary: Create a shared image gallery
+    syntax: az sig create --resource-group MyResourceGroup --gallery-name MyGallery
+  requiredParameters:
+  - isRequired: true
+    name: --gallery-name -r
+    summary: Gallery name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --description
+    summary: The description of the gallery.
+    description: ''
+  - name: --eula
+    summary: Community gallery license agreement and privacy statement.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --permissions
+    parameterValueGroup: "Community, Groups, Private"
+    summary: This property allows you to specify the permission of sharing gallery.
+    description: ''
+    isExperimental: true
+  - name: --public-name-prefix
+    summary: Community gallery public name prefix.
+    description: ''
+  - name: --publisher-email
+    summary: Community gallery publisher contact email.
+    description: ''
+  - name: --publisher-uri
+    summary: Community gallery publisher uri.
+    description: ''
+  - name: --soft-delete
+    parameterValueGroup: "false, true"
+    summary: Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
+    description: ''
+    isPreview: true
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
     description: ''
@@ -66,6 +137,8 @@ directCommands:
   name: az sig delete
   summary: Delete a Shared Image Gallery.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig delete [--gallery-name]
                   [--ids]
@@ -93,6 +166,8 @@ directCommands:
   name: az sig list
   summary: List galleries under a resource group.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: az sig list [--resource-group]
   optionalParameters:
   - name: --resource-group -g
@@ -102,6 +177,8 @@ directCommands:
   name: az sig list-community
   summary: List all community galleries shared directly to your subscription or tenant.
   description: List all community galleries shared directly to your subscription or tenant.
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig list-community [--location]
                           [--marker]
@@ -125,6 +202,8 @@ directCommands:
   name: az sig list-shared
   summary: List all shared galleries shared directly to your subscription or tenant.
   description: List all shared galleries shared directly to your subscription or tenant.
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig list-shared --location
                        [--shared-to {tenant}]
@@ -147,6 +226,8 @@ directCommands:
   name: az sig show
   summary: Retrieve information about a Shared Image Gallery.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig show [--gallery-name]
                 [--ids]
@@ -177,6 +258,8 @@ directCommands:
   name: az sig show-community
   summary: Get a community gallery by gallery public name.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig show-community [--ids]
                           [--location]
@@ -195,10 +278,41 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_sig_show-community_(image-gallery)
+  name: az sig show-community (image-gallery)
+  summary: Get a gallery that has been community (preview).
+  description: Get a gallery that has been community (private preview feature, please contact community image gallery team by email sigpmdev@microsoft.com to register for preview if you're interested in using this feature).
+  status: Experimental
+  isExperimental: true
+  previewOrExperimentalInfo: 'This command is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az sig show-community [--ids]
+                          [--location]
+                          [--public-gallery-name]
+                          [--subscription]
+  examples:
+  - summary: Get a gallery that has been community in the given location.
+    syntax: az sig show-community --public-gallery-name publicGalleryName --location myLocation
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --public-gallery-name
+    summary: The public name of community gallery.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_sig_show-shared
   name: az sig show-shared
   summary: Get a gallery that has been shared directly to your subscription or tenant.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig show-shared [--gallery-unique-name]
                        [--ids]
@@ -224,6 +338,8 @@ directCommands:
   name: az sig update
   summary: Update a share image gallery.
   description: ''
+  status: GA
+  sourceType: Core
   syntax: >-
     az sig update --gallery-name
                   --resource-group
@@ -300,8 +416,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Enable soft-deletion for resources in this gallery, allowing them to be recovered within retention time.
     description: ''
+    isPreview: true
 commands:
 - az_sig_create
+- az_sig_create_(image-gallery)
 - az_sig_delete
 - az_sig_gallery-application
 - az_sig_gallery-application_create
@@ -322,9 +440,11 @@ commands:
 - az_sig_image-definition_delete
 - az_sig_image-definition_list
 - az_sig_image-definition_list-community
+- az_sig_image-definition_list-community_(image-gallery)
 - az_sig_image-definition_list-shared
 - az_sig_image-definition_show
 - az_sig_image-definition_show-community
+- az_sig_image-definition_show-community_(image-gallery)
 - az_sig_image-definition_show-shared
 - az_sig_image-definition_update
 - az_sig_image-definition_wait
@@ -333,9 +453,11 @@ commands:
 - az_sig_image-version_delete
 - az_sig_image-version_list
 - az_sig_image-version_list-community
+- az_sig_image-version_list-community_(image-gallery)
 - az_sig_image-version_list-shared
 - az_sig_image-version_show
 - az_sig_image-version_show-community
+- az_sig_image-version_show-community_(image-gallery)
 - az_sig_image-version_show-shared
 - az_sig_image-version_undelete
 - az_sig_image-version_update
@@ -346,11 +468,13 @@ commands:
 - az_sig_share
 - az_sig_share_add
 - az_sig_share_enable-community
+- az_sig_share_enable-community_(image-gallery)
 - az_sig_share_remove
 - az_sig_share_reset
 - az_sig_share_wait
 - az_sig_show
 - az_sig_show-community
+- az_sig_show-community_(image-gallery)
 - az_sig_show-shared
 - az_sig_update
 globalParameters:
@@ -371,5 +495,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   description: Manage shared image gallery.

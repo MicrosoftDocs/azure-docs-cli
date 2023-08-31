@@ -1,13 +1,22 @@
 ### YamlMime:AzureCLIGroup
 uid: az_netappfiles_account
 name: az netappfiles account
+importantNote: >-
+  > [!Note]
+
+  > This command group has descendant commands that are defined in both Azure CLI core and at least one Azure CLI extension. If you wish to use the extension commands, you must install the extension. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure NetApp Files (ANF) Account Resources.
 description: ''
+status: GA
+sourceType: Core and Extension
 directCommands:
 - uid: az_netappfiles_account_create
   name: az netappfiles account create
   summary: Create a new Azure NetApp Files (ANF) account. Note that active directories are added using the subgroup commands.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles account create --account-name
                                   --resource-group
@@ -37,6 +46,8 @@ directCommands:
   - name: --encryption
     summary: This argument will be deprecated, please use --key-source instead.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'encryption' has been deprecated and will be removed in a future release. Use '--key-source' instead.
   - name: --identity-type
     parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
     summary: The identity type.
@@ -44,17 +55,21 @@ directCommands:
   - name: --key-name
     summary: The name of KeyVault key.
     description: ''
+    isPreview: true
   - name: --key-source
     defaultValue: "Microsoft.NetApp"
     parameterValueGroup: "Microsoft.KeyVault, Microsoft.NetApp"
     summary: The encryption keySource (provider).
     description: ''
+    isPreview: true
   - name: --key-vault-uri -v
     summary: The Uri of KeyVault.
     description: ''
+    isPreview: true
   - name: --keyvault-resource-id
     summary: The resource ID of KeyVault.
     description: ''
+    isPreview: true
   - name: --location -l
     summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
@@ -68,11 +83,49 @@ directCommands:
   - name: --user-assigned-identity -u
     summary: The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has UserAssigned. It should match key of identity.userAssignedIdentities.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+    isPreview: true
+- uid: az_netappfiles_account_create_(netappfiles-preview)
+  name: az netappfiles account create (netappfiles-preview)
+  summary: Create a new Azure NetApp Files (ANF) account. Note that active directory can only be applied to an existing account (using set/update).
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az netappfiles account create --account-name
+                                  --location
+                                  --resource-group
+                                  [--active-directories]
+                                  [--tags]
+  examples:
+  - summary: Create an ANF account
+    syntax: az netappfiles account create -g group --account-name name -l location
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a -n
+    summary: The name of the ANF account.
+    description: ''
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --active-directories
+    summary: Active Directories.
+    description: ''
+  - name: --tags
+    summary: A list of space separated tags to apply to the account.
+    description: ''
 - uid: az_netappfiles_account_delete
   name: az netappfiles account delete
   summary: Delete the specified ANF account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles account delete [--account-name]
                                   [--ids]
@@ -99,11 +152,40 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_account_delete_(netappfiles-preview)
+  name: az netappfiles account delete (netappfiles-preview)
+  summary: Delete the specified ANF account.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az netappfiles account delete [--account-name]
+                                  [--ids]
+                                  [--resource-group]
+                                  [--subscription]
+  examples:
+  - summary: Delete an ANF account
+    syntax: az netappfiles account delete -g group --account-name name
+  optionalParameters:
+  - name: --account-name -a -n
+    summary: The name of the ANF account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_netappfiles_account_list
   name: az netappfiles account list
   summary: List ANF accounts by subscription or by resource group name.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: az netappfiles account list [--resource-group]
   examples:
   - summary: List ANF accounts within a resource group
@@ -112,11 +194,30 @@ directCommands:
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_account_list_(netappfiles-preview)
+  name: az netappfiles account list (netappfiles-preview)
+  summary: List ANF accounts.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: az netappfiles account list --resource-group
+  examples:
+  - summary: List ANF accounts within a resource group
+    syntax: az netappfiles account list -g group
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_netappfiles_account_renew-credentials
   name: az netappfiles account renew-credentials
   summary: Renew identity credentials that are used to authenticate to key vault, for customer-managed key encryption. If encryption.identity.principalId does not match identity.principalId, running this operation will fix it.
   description: ''
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles account renew-credentials [--account-name]
                                              [--ids]
@@ -143,11 +244,12 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
-- uid: az_netappfiles_account_set
+- uid: az_netappfiles_account_set_(netappfiles-preview)
   name: az netappfiles account set
   summary: Sets the tags or the active directory details for a specified ANF account. Sets the active directory property to exactly what is provided. If none is provided then the active directory is removed, i.e. provide empty [].
   description: ''
+  status: GA
+  sourceType: Extension
   syntax: >-
     az netappfiles account set --location
                                [--account-name]
@@ -189,6 +291,9 @@ directCommands:
   name: az netappfiles account show
   summary: Get the specified ANF account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles account show [--account-name]
                                 [--ids]
@@ -210,11 +315,40 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+- uid: az_netappfiles_account_show_(netappfiles-preview)
+  name: az netappfiles account show (netappfiles-preview)
+  summary: Get the specified ANF account.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az netappfiles account show [--account-name]
+                                [--ids]
+                                [--resource-group]
+                                [--subscription]
+  examples:
+  - summary: Get an ANF account
+    syntax: az netappfiles account show -g group --account-name name
+  optionalParameters:
+  - name: --account-name -a -n
+    summary: The name of the ANF account.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
 - uid: az_netappfiles_account_update
   name: az netappfiles account update
   summary: Set/modify the tags for a specified ANF account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles account update [--account-name]
                                   [--add]
@@ -246,6 +380,8 @@ directCommands:
   - name: --encryption
     summary: Encryption settings.
     description: ''
+    isDeprecated: true
+    deprecateInfo: Argument 'encryption' has been deprecated and will be removed in a future release. Use '--key-source' instead.
   - name: --force-string
     defaultValue: "False"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
@@ -256,16 +392,20 @@ directCommands:
   - name: --key-name
     summary: The name of KeyVault key.
     description: ''
+    isPreview: true
   - name: --key-source
     parameterValueGroup: "Microsoft.KeyVault, Microsoft.NetApp"
     summary: The encryption keySource (provider).
     description: ''
+    isPreview: true
   - name: --key-vault-uri -v
     summary: The Uri of KeyVault.
     description: ''
+    isPreview: true
   - name: --keyvault-resource-id
     summary: The resource ID of KeyVault.
     description: ''
+    isPreview: true
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
@@ -290,11 +430,75 @@ directCommands:
   - name: --user-assigned-identity -u
     summary: The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has UserAssigned. It should match key of identity.userAssignedIdentities.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+    isPreview: true
+- uid: az_netappfiles_account_update_(netappfiles-preview)
+  name: az netappfiles account update (netappfiles-preview)
+  summary: Set/modify the tags or the active directory details for a specified ANF account. Active directory settings are appended only - if none are present no change is made otherwise the active directory is replaced with that provided.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az netappfiles account update --location
+                                  [--account-name]
+                                  [--active-directories]
+                                  [--add]
+                                  [--force-string]
+                                  [--ids]
+                                  [--remove]
+                                  [--resource-group]
+                                  [--set]
+                                  [--subscription]
+                                  [--tags]
+  examples:
+  - summary: Update the tags and active directory of an ANF account
+    syntax: "az netappfiles account update -g group --account-name name --tags 'key[=value] key[=value]' --active-directories '[{\"username\": \"aduser\", \"password\": \"aduser\", \"smbservername\": \"SMBSERVER\", \"dns\": \"1.2.3.4\", \"domain\": \"westcentralus\"}]' -l westus2"
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  optionalParameters:
+  - name: --account-name -a -n
+    summary: The name of the ANF account.
+    description: ''
+  - name: --active-directories
+    summary: An array of active directory (AD) settings in json format. Limitation one AD/subscription. Consists of the fields username (Username of Active Directory domain administrator), password (Plain text password of Active Directory domain administrator), domain (Name of the Active Directory domain), dns (Comma separated list of DNS server IP addresses for the Active Directory domain), smb_server_name (NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. Must be 10 characters or less), organizational_unit (The Organizational Unit (OU) within the Windows Active Directory).
+    description: ''
+  - name: --add
+    defaultValue: "[]"
+    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
+    description: ''
+  - name: --force-string
+    defaultValue: "False"
+    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --remove
+    defaultValue: "[]"
+    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --set
+    defaultValue: "[]"
+    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --tags
+    summary: A list of space separated tags to apply to the account.
+    description: ''
 - uid: az_netappfiles_account_wait
   name: az netappfiles account wait
   summary: Wait for a account operation.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles account wait [--account-name]
                                 [--created]
@@ -347,7 +551,6 @@ directCommands:
     defaultValue: "False"
     summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
 commands:
 - az_netappfiles_account_ad
 - az_netappfiles_account_ad_add
@@ -368,12 +571,17 @@ commands:
 - az_netappfiles_account_backup-policy_update
 - az_netappfiles_account_backup-policy_wait
 - az_netappfiles_account_create
+- az_netappfiles_account_create_(netappfiles-preview)
 - az_netappfiles_account_delete
+- az_netappfiles_account_delete_(netappfiles-preview)
 - az_netappfiles_account_list
+- az_netappfiles_account_list_(netappfiles-preview)
 - az_netappfiles_account_renew-credentials
-- az_netappfiles_account_set
+- az_netappfiles_account_set_(netappfiles-preview)
 - az_netappfiles_account_show
+- az_netappfiles_account_show_(netappfiles-preview)
 - az_netappfiles_account_update
+- az_netappfiles_account_update_(netappfiles-preview)
 - az_netappfiles_account_wait
 globalParameters:
 - name: --debug

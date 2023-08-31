@@ -1,13 +1,22 @@
 ### YamlMime:AzureCLIGroup
 uid: az_cosmosdb_mongodb_role_definition
 name: az cosmosdb mongodb role definition
+importantNote: >-
+  > [!Note]
+
+  > This command group has descendant commands that are defined in both Azure CLI core and at least one Azure CLI extension. If you wish to use the extension commands, you must install the extension. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage Azure Cosmos DB Mongo role definitions.
 description: ''
+status: GA
+sourceType: Core and Extension
 directCommands:
 - uid: az_cosmosdb_mongodb_role_definition_create
   name: az cosmosdb mongodb role definition create
   summary: Create a Mongo DB role definition under an Azure Cosmos DB account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
     az cosmosdb mongodb role definition create --account-name
                                                --body
@@ -52,11 +61,78 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+- uid: az_cosmosdb_mongodb_role_definition_create_(cosmosdb-preview)
+  name: az cosmosdb mongodb role definition create (cosmosdb-preview)
+  summary: Create a Mongo DB role definition under an Azure Cosmos DB account.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az cosmosdb mongodb role definition create --account-name
+                                               --body
+                                               --resource-group
+  examples:
+  - summary: Create a Mongo DB role definition under an Azure Cosmos DB account using a JSON string.
+    syntax: >-
+      az cosmosdb mongodb role definition create --account-name MyAccount --resource-group MyResourceGroup --body '{
+        "Id": "MyDB.My_Read_Only_Role",
+        "RoleName": "My_Read_Only_Role",
+        "Type": "CustomRole",
+        "DatabaseName": "MyDB",
+        "Privileges": [{
+          "Resource": {
+              "Db": "MyDB",
+              "Collection": "MyCol"
+            },
+            "Actions": [
+              "insert",
+              "find"
+            ]
+        }],
+        "Roles": [
+          {
+            "Role": "myInheritedRole",
+            "Db": "MyTestDb"
+          }
+        ]
+      }'
+  - summary: Create a Mongo DB role definition under an Azure Cosmos DB account using a JSON file.
+    syntax: az cosmosdb mongodb role definition create --account-name MyAccount --resource-group MyResourceGroup --body @mongo-role-definition.json
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --body -b
+    summary: >-
+      Role Definition body with Id (Optional for create), Type (Default is CustomRole), DatabaseName, Privileges, Roles.  You can enter it as a string or as a file, e.g., --body @mongo-role_definition-body-file.json or --body "{
+
+      \"Id\": \"be79875a-2cc4-40d5-8958-566017875b39\",
+
+      \"RoleName\": \"MyRWRole\",
+
+      \"Type\": \"CustomRole\"
+
+      \"DatabaseName\": \"MyDb\",
+
+      \"Privileges\": [ {\"Resource\": {\"Db\": \"MyDB\",\"Collection\": \"MyCol\"},\"Actions\": [\"insert\",\"find\"]}],
+
+      \"Roles\": [ {\"Role\": \"myInheritedRole\",\"Db\": \"MyTestDb\"}]
+
+      }".
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_cosmosdb_mongodb_role_definition_delete
   name: az cosmosdb mongodb role definition delete
   summary: Delete a CosmosDb MongoDb role definition under an Azure Cosmos DB account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
     az cosmosdb mongodb role definition delete --account-name
                                                --id
@@ -83,11 +159,45 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+- uid: az_cosmosdb_mongodb_role_definition_delete_(cosmosdb-preview)
+  name: az cosmosdb mongodb role definition delete (cosmosdb-preview)
+  summary: Delete a CosmosDb MongoDb role definition under an Azure Cosmos DB account.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az cosmosdb mongodb role definition delete --account-name
+                                               --id
+                                               --resource-group
+                                               [--yes]
+  examples:
+  - summary: Delete a Mongo role definition under an Azure Cosmos DB account.
+    syntax: az cosmosdb mongodb role definition delete --account-name MyAccount --resource-group MyResourceGroup --id be79875a-2cc4-40d5-8958-566017875b39
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --id -i
+    summary: Unique ID for the Mongo Role Definition.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
 - uid: az_cosmosdb_mongodb_role_definition_exists
   name: az cosmosdb mongodb role definition exists
   summary: Check if an Azure Cosmos DB MongoDb role definition exists.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
     az cosmosdb mongodb role definition exists --account-name
                                                --id
@@ -108,11 +218,39 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+- uid: az_cosmosdb_mongodb_role_definition_exists_(cosmosdb-preview)
+  name: az cosmosdb mongodb role definition exists (cosmosdb-preview)
+  summary: Check if an Azure Cosmos DB MongoDb role definition exists.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az cosmosdb mongodb role definition exists --account-name
+                                               --id
+                                               --resource-group
+  examples:
+  - summary: Check if an Azure Cosmos DB MongoDb role definition exists.
+    syntax: az cosmosdb mongodb role definition exists --account-name MyAccount --resource-group MyResourceGroup --id be79875a-2cc4-40d5-8958-566017875b39
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --id -i
+    summary: Unique ID for the Mongo Role Definition.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_cosmosdb_mongodb_role_definition_list
   name: az cosmosdb mongodb role definition list
   summary: List all MongoDb role definitions under an Azure Cosmos DB account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
     az cosmosdb mongodb role definition list --account-name
                                              --resource-group
@@ -128,11 +266,34 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+- uid: az_cosmosdb_mongodb_role_definition_list_(cosmosdb-preview)
+  name: az cosmosdb mongodb role definition list (cosmosdb-preview)
+  summary: List all MongoDb role definitions under an Azure Cosmos DB account.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az cosmosdb mongodb role definition list --account-name
+                                             --resource-group
+  examples:
+  - summary: List all Mongodb role definitions under an Azure Cosmos DB account.
+    syntax: az cosmosdb mongodb role definition list --account-name MyAccount --resource-group MyResourceGroup
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_cosmosdb_mongodb_role_definition_show
   name: az cosmosdb mongodb role definition show
   summary: Show the properties of a MongoDb role definition under an Azure Cosmos DB account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
     az cosmosdb mongodb role definition show --account-name
                                              --id
@@ -153,11 +314,39 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+- uid: az_cosmosdb_mongodb_role_definition_show_(cosmosdb-preview)
+  name: az cosmosdb mongodb role definition show (cosmosdb-preview)
+  summary: Show the properties of a MongoDb role definition under an Azure Cosmos DB account.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az cosmosdb mongodb role definition show --account-name
+                                             --id
+                                             --resource-group
+  examples:
+  - summary: Show the properties of a MongoDb role definition under an Azure Cosmos DB account.
+    syntax: az cosmosdb mongodb role definition show --account-name MyAccount --resource-group MyResourceGroup --id be79875a-2cc4-40d5-8958-566017875b39
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --id -i
+    summary: Unique ID for the Mongo Role Definition.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 - uid: az_cosmosdb_mongodb_role_definition_update
   name: az cosmosdb mongodb role definition update
   summary: Update a MongoDb role definition under an Azure Cosmos DB account.
   description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
     az cosmosdb mongodb role definition update --account-name
                                                --body
@@ -178,14 +367,60 @@ directCommands:
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
+- uid: az_cosmosdb_mongodb_role_definition_update_(cosmosdb-preview)
+  name: az cosmosdb mongodb role definition update (cosmosdb-preview)
+  summary: Update a MongoDb role definition under an Azure Cosmos DB account.
+  description: ''
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az cosmosdb mongodb role definition update --account-name
+                                               --body
+                                               --resource-group
+  examples:
+  - summary: Update a MongoDb role definition under an Azure Cosmos DB account.
+    syntax: az cosmosdb mongodb role definition update --account-name MyAccount --resource-group MyResourceGroup --body @mongo-role-definition.json
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: Cosmosdb account name.
+    description: ''
+  - isRequired: true
+    name: --body -b
+    summary: >-
+      Role Definition body with Id (Optional for create), Type (Default is CustomRole), DatabaseName, Privileges, Roles.  You can enter it as a string or as a file, e.g., --body @mongo-role_definition-body-file.json or --body "{
+
+      \"Id\": \"be79875a-2cc4-40d5-8958-566017875b39\",
+
+      \"RoleName\": \"MyRWRole\",
+
+      \"Type\": \"CustomRole\"
+
+      \"DatabaseName\": \"MyDb\",
+
+      \"Privileges\": [ {\"Resource\": {\"Db\": \"MyDB\",\"Collection\": \"MyCol\"},\"Actions\": [\"insert\",\"find\"]}],
+
+      \"Roles\": [ {\"Role\": \"myInheritedRole\",\"Db\": \"MyTestDb\"}]
+
+      }".
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
 commands:
 - az_cosmosdb_mongodb_role_definition_create
+- az_cosmosdb_mongodb_role_definition_create_(cosmosdb-preview)
 - az_cosmosdb_mongodb_role_definition_delete
+- az_cosmosdb_mongodb_role_definition_delete_(cosmosdb-preview)
 - az_cosmosdb_mongodb_role_definition_exists
+- az_cosmosdb_mongodb_role_definition_exists_(cosmosdb-preview)
 - az_cosmosdb_mongodb_role_definition_list
+- az_cosmosdb_mongodb_role_definition_list_(cosmosdb-preview)
 - az_cosmosdb_mongodb_role_definition_show
+- az_cosmosdb_mongodb_role_definition_show_(cosmosdb-preview)
 - az_cosmosdb_mongodb_role_definition_update
+- az_cosmosdb_mongodb_role_definition_update_(cosmosdb-preview)
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
@@ -204,6 +439,4 @@ globalParameters:
 - name: --verbose
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 03/02/2023
   description: Manage Azure Cosmos DB Mongo role definitions.
