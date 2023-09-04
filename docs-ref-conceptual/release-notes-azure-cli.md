@@ -1613,6 +1613,14 @@ Version 2.39.0
 * `az synapse workspace`: Add `--last-commit-id` for git repo config
 * `az synapse ad-only-auth`: New command group for supporting synapse azure ad only authentication
 
+## September 01, 2023
+
+Version 2.38.1
+
+### App Service
+
+* `az webapp ssh`: Backport #25141 to 2.38
+
 ## July 05, 2022
 
 Version 2.38.0
