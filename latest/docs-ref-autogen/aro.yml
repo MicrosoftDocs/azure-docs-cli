@@ -25,6 +25,7 @@ directCommands:
                   [--master-enc-host {false, true}]
                   [--master-vm-size]
                   [--no-wait]
+                  [--outbound-type]
                   [--pod-cidr]
                   [--pull-secret]
                   [--service-cidr]
@@ -104,6 +105,9 @@ directCommands:
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --outbound-type
+    summary: Outbound type of cluster. Must be "Loadbalancer" (default) or "UserDefinedRouting".
     description: ''
   - name: --pod-cidr
     summary: CIDR of pod network. Must be a minimum of /18 or larger.
@@ -309,6 +313,79 @@ directCommands:
     summary: Refresh cluster application credentials.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
+- uid: az_aro_validate
+  name: az aro validate
+  summary: Validate permissions required to create a cluster.
+  description: ''
+  syntax: >-
+    az aro validate --master-subnet
+                    --name
+                    --resource-group
+                    --worker-subnet
+                    [--client-id]
+                    [--client-secret]
+                    [--cluster-resource-group]
+                    [--disk-encryption-set]
+                    [--location]
+                    [--pod-cidr]
+                    [--service-cidr]
+                    [--version]
+                    [--vnet]
+                    [--vnet-resource-group]
+  examples:
+  - summary: Validate permissions.
+    syntax: az aro validate --resource-group MyGroup --name MyName --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet
+  - summary: Validate permissions and OpenShift version
+    syntax: az aro validate --resource-group MyGroup --name MyName --vnet MyVnet --master-subnet MyMasterSubnet --worker-subnet MyWorkerSubnet --version X.Y.Z
+  requiredParameters:
+  - isRequired: true
+    name: --master-subnet
+    summary: Name or ID of master vnet subnet.  If name is supplied, `--vnet` must be supplied.
+    description: ''
+  - isRequired: true
+    name: --name -n
+    summary: Name of cluster.
+    description: ''
+  - isRequired: true
+    name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - isRequired: true
+    name: --worker-subnet
+    summary: Name or ID of worker vnet subnet.  If name is supplied, `--vnet` must be supplied.
+    description: ''
+  optionalParameters:
+  - name: --client-id
+    summary: Client ID of cluster service principal.
+    description: ''
+  - name: --client-secret
+    summary: Client secret of cluster service principal.
+    description: ''
+  - name: --cluster-resource-group
+    summary: Resource group of cluster.
+    description: ''
+  - name: --disk-encryption-set
+    summary: ResourceID of the DiskEncryptionSet to be used for master and worker VMs.
+    description: ''
+  - name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - name: --pod-cidr
+    summary: CIDR of pod network. Must be a minimum of /18 or larger.
+    description: ''
+  - name: --service-cidr
+    summary: CIDR of service network. Must be a minimum of /18 or larger.
+    description: ''
+  - name: --version
+    summary: OpenShift version to use for cluster creation.
+    description: ''
+  - name: --vnet
+    summary: Name or ID of vnet.  If name is supplied, `--vnet-resource-group` must be supplied.
+    description: ''
+  - name: --vnet-resource-group
+    summary: Name of vnet resource group.
+    description: ''
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/aro/_help.py
 - uid: az_aro_wait
   name: az aro wait
   summary: Wait for a cluster to reach a desired state.
@@ -370,6 +447,7 @@ commands:
 - az_aro_list-credentials
 - az_aro_show
 - az_aro_update
+- az_aro_validate
 - az_aro_wait
 globalParameters:
 - name: --debug
@@ -390,5 +468,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 06/13/2023
+  ms.date: 08/22/2023
   description: Manage Azure Red Hat OpenShift clusters.

@@ -131,6 +131,7 @@ directCommands:
                   [--enable-sgxquotehelper]
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
+                  [--enable-vpa]
                   [--enable-windows-gmsa]
                   [--enable-windows-recording-rules]
                   [--enable-workload-identity]
@@ -170,6 +171,7 @@ directCommands:
                   [--no-ssh-key]
                   [--no-wait]
                   [--node-count]
+                  [--node-os-upgrade-channel {NodeImage, None, Unmanaged}]
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
@@ -274,6 +276,8 @@ directCommands:
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-keda
   - summary: Create a kubernetes cluster with the Azure Monitor managed service for Prometheus integration enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-monitor-metrics
+  - summary: Create a kubernetes cluster with vertical pod autoscaler enaled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-vpa
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -345,7 +349,7 @@ directCommands:
     summary: Resource ID of the Azure Monitor Workspace.
     description: ''
   - name: --ca-profile --cluster-autoscaler-profile
-    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    summary: Comma-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
   - name: --client-secret
     summary: Secret associated with the service principal. This argument is required if `--service-principal` is specified.
@@ -492,6 +496,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable UltraSSD, default value is false.
     description: ''
+  - name: --enable-vpa
+    defaultValue: "False"
+    summary: Enable vertical pod autoscaler for cluster.
+    description: ''
   - name: --enable-windows-gmsa
     defaultValue: "False"
     summary: Enable Windows gmsa.
@@ -591,7 +599,6 @@ directCommands:
     summary: Maximum nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [1, 1000].
     description: ''
   - name: --max-pods -m
-    defaultValue: "0"
     summary: The maximum number of pods deployable to a node.
     description: If not specified, defaults based on network-plugin. 30 for "azure", 110 for "kubenet", or 250 for "none".
   - name: --min-count
@@ -641,11 +648,14 @@ directCommands:
     defaultValue: "3"
     summary: Number of nodes in the Kubernetes node pool. After creating a cluster, you can change the size of its node pool with `az aks scale`.
     description: ''
+  - name: --node-os-upgrade-channel
+    parameterValueGroup: "NodeImage, None, Unmanaged"
+    summary: Manner in which the OS on your nodes is updated. It could be NodeImage, None, SecurityPatch or Unmanaged.
+    description: ''
   - name: --node-osdisk-diskencryptionset-id -d
     summary: ResourceId of the disk encryption set to use for enabling encryption at rest on agent node os disk.
     description: ''
   - name: --node-osdisk-size
-    defaultValue: "0"
     summary: Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
     description: ''
   - name: --node-osdisk-type
@@ -1381,6 +1391,7 @@ directCommands:
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
+                  [--disable-vpa]
                   [--disable-workload-identity]
                   [--enable-aad]
                   [--enable-ahub]
@@ -1400,6 +1411,7 @@ directCommands:
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
+                  [--enable-vpa]
                   [--enable-windows-gmsa]
                   [--enable-windows-recording-rules]
                   [--enable-workload-identity]
@@ -1421,8 +1433,10 @@ directCommands:
                   [--min-count]
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
+                  [--network-dataplane {azure, cilium}]
                   [--network-plugin-mode]
                   [--no-wait]
+                  [--node-os-upgrade-channel]
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
@@ -1486,6 +1500,10 @@ directCommands:
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-keda
   - summary: Disable KEDA workload autoscaler for an existing kubernetes cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-keda
+  - summary: Enable VPA(Vertical Pod Autoscaler) for an existing kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --enable-vpa
+  - summary: Disable VPA(Vertical Pod Autoscaler) for an existing kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCLuster --disable-vpa
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1535,7 +1553,7 @@ directCommands:
     summary: Resource ID of the Azure Monitor Workspace.
     description: ''
   - name: --ca-profile --cluster-autoscaler-profile
-    summary: Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+    summary: Comma-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
     description: ''
   - name: --defender-config
     summary: Path to JSON file containing Microsoft Defender profile configurations.
@@ -1601,6 +1619,10 @@ directCommands:
   - name: --disable-snapshot-controller
     defaultValue: "False"
     summary: Disable CSI Snapshot Controller.
+    description: ''
+  - name: --disable-vpa
+    defaultValue: "False"
+    summary: Disable vertical pod autoscaler for cluster.
     description: ''
   - name: --disable-workload-identity
     defaultValue: "False"
@@ -1677,6 +1699,10 @@ directCommands:
     defaultValue: "False"
     summary: Enable Snapshot Controller.
     description: ''
+  - name: --enable-vpa
+    defaultValue: "False"
+    summary: Enable vertical pod autoscaler for cluster.
+    description: ''
   - name: --enable-windows-gmsa
     defaultValue: "False"
     summary: Enable Windows gmsa on cluster.
@@ -1750,12 +1776,22 @@ directCommands:
   - name: --nat-gateway-managed-outbound-ip-count
     summary: NAT gateway managed outbound IP count.
     description: Desired number of managed outbound IPs for NAT gateway outbound connection. Please specify a value in the range of [1, 16]. Valid for Standard SKU load balancer cluster with managedNATGateway outbound type only.
+  - name: --network-dataplane
+    parameterValueGroup: "azure, cilium"
+    summary: The network dataplane to use.
+    description: >-
+      Network dataplane used in the Kubernetes cluster.
+
+      Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --network-plugin-mode
     summary: Update the mode of a network plugin to migrate to a different pod networking setup.
     description: ''
   - name: --no-wait
     defaultValue: "False"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --node-os-upgrade-channel
+    summary: Manner in which the OS on your nodes is updated. It could be NodeImage, None, SecurityPatch or Unmanaged.
     description: ''
   - name: --nodepool-labels
     summary: The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.

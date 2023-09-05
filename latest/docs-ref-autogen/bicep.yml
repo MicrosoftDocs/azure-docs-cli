@@ -51,6 +51,41 @@ directCommands:
   - name: --stdout
     summary: When set, prints all output to stdout instead of corresponding files.
     description: ''
+- uid: az_bicep_build-params
+  name: az bicep build-params
+  summary: Build .bicepparam file.
+  description: ''
+  syntax: >-
+    az bicep build-params --file
+                          [--no-restore]
+                          [--outdir]
+                          [--outfile]
+                          [--stdout]
+  examples:
+  - summary: Build a .bicepparam file.
+    syntax: az bicep build-params --file {bicepparam_file}
+  - summary: Build a .bicepparam file and print all output to stdout.
+    syntax: az bicep build-params --file {bicepparam_file} --stdout
+  - summary: Build a .bicepparam file and save the result to the specified file.
+    syntax: az bicep build-params --file {bicepparam_file} --outfile {out_file}
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: The path to the .bicepparam file to build in the file system.
+    description: ''
+  optionalParameters:
+  - name: --no-restore
+    summary: When set, builds the .bicepparam file without restoring external modules.
+    description: ''
+  - name: --outdir
+    summary: When set, saves the output at the specified directory.
+    description: ''
+  - name: --outfile
+    summary: When set, saves the output as the specified file path.
+    description: ''
+  - name: --stdout
+    summary: When set, prints all output to stdout instead of corresponding files.
+    description: ''
 - uid: az_bicep_decompile
   name: az bicep decompile
   summary: Attempt to decompile an ARM template file to a Bicep file.
@@ -71,6 +106,45 @@ directCommands:
   optionalParameters:
   - name: --force
     summary: Allows overwriting the output file if it exists.
+    description: ''
+- uid: az_bicep_decompile-params
+  name: az bicep decompile-params
+  summary: Decompile a parameters .json file to .bicepparam.
+  description: ''
+  syntax: >-
+    az bicep decompile-params --file
+                              [--bicep-file]
+                              [--outdir]
+                              [--outfile]
+                              [--stdout]
+  examples:
+  - summary: Attempts to decompile a parameters .json file to .bicepparam.
+    syntax: az bicep decompile-params --file {json_template_file}
+  - summary: Attempts to decompile a parameters .json file to .bicepparam using the bicep file given.
+    syntax: az bicep decompile-params --file {json_template_file} --bicep-file {bicep_file}
+  - summary: Attempts to decompile a parameters .json file to .bicepparam and print all output to stdout.
+    syntax: az bicep decompile-params --file {json_template_file} --stdout
+  - summary: Attempts to decompile a parameters .json file to .bicepparam and print all output to stdout and save the result to the specified directory.
+    syntax: az bicep decompile-params --file {json_template_file} --outdir {out_dir}
+  - summary: Attempts to decompile a parameters .json file to .bicepparam and print all output to stdout and save the result to the specified file.
+    syntax: az bicep decompile-params --file {json_template_file} --outfile {out_file}
+  requiredParameters:
+  - isRequired: true
+    name: --file -f
+    summary: The path to the parameters file to build in the file system.
+    description: ''
+  optionalParameters:
+  - name: --bicep-file
+    summary: Path to the bicep template file (relative to the .bicepparam file) that will be referenced in the using declaration.
+    description: ''
+  - name: --outdir
+    summary: When set, saves the output at the specified directory.
+    description: ''
+  - name: --outfile
+    summary: When set, saves the output as the specified file path.
+    description: ''
+  - name: --stdout
+    summary: When set, prints all output to stdout instead of corresponding files.
     description: ''
 - uid: az_bicep_format
   name: az bicep format
@@ -133,9 +207,11 @@ directCommands:
   description: ''
   syntax: >-
     az bicep generate-params --file
+                             [--include-params]
                              [--no-restore]
                              [--outdir]
                              [--outfile]
+                             [--output-format]
                              [--stdout]
   examples:
   - summary: Generate parameters file for a Bicep file.
@@ -148,12 +224,17 @@ directCommands:
     syntax: az bicep generate-params --file {bicep_file} --outfile {out_file}
   - summary: Generate parameters file for a Bicep file without restoring external modules.
     syntax: az bicep generate-params --file {bicep_file} --no-restore
+  - summary: Generate parameters file for a Bicep file with specified output format. Valid values are ( json | bicepparam ).
+    syntax: az bicep generate-params --file {bicep_file} --output-format {output_format} --include-params {include_params}
   requiredParameters:
   - isRequired: true
     name: --file -f
     summary: The path to the Bicep file to generate the parameters file from in the file system.
     description: ''
   optionalParameters:
+  - name: --include-params
+    summary: Set include params. Valid values are ( all | required-only ).
+    description: ''
   - name: --no-restore
     summary: When set, generates the parameters file without restoring external modules.
     description: ''
@@ -162,6 +243,9 @@ directCommands:
     description: ''
   - name: --outfile
     summary: When set, saves the output as the specified file path.
+    description: ''
+  - name: --output-format
+    summary: Set output format. Valid values are ( json | bicepparam ).
     description: ''
   - name: --stdout
     summary: When set, prints all output to stdout instead of corresponding files.
@@ -273,7 +357,9 @@ directCommands:
   syntax: az bicep version
 commands:
 - az_bicep_build
+- az_bicep_build-params
 - az_bicep_decompile
+- az_bicep_decompile-params
 - az_bicep_format
 - az_bicep_generate-params
 - az_bicep_install
