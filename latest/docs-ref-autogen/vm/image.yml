@@ -6,7 +6,7 @@ description: ''
 status: GA
 sourceType: Core
 directCommands:
-- uid: az_vm_image_accept-terms_()
+- uid: az_vm_image_accept-terms()
   name: az vm image accept-terms
   summary: Accept Azure Marketplace term so that the image can be used to create VMs.
   description: ''
@@ -36,7 +36,94 @@ directCommands:
   - name: --urn
     summary: URN, in format of 'publisher:offer:sku:version' or 'publisher:offer:sku:edge_zone:version'. If specified, other argument values can be omitted.
     description: ''
-- uid: az_vm_image_list_()
+- uid: az_vm_image_list-offers()
+  name: az vm image list-offers
+  summary: List the VM image offers available in the Azure Marketplace.
+  description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+  syntax: >-
+    az vm image list-offers --location
+                            --publisher
+                            [--edge-zone]
+  examples:
+  - summary: List all offers from Microsoft in the West US region.
+    syntax: az vm image list-offers -l westus -p MicrosoftWindowsServer
+  - summary: List all offers from OpenLocic in the West US region.
+    syntax: az vm image list-offers -l westus -p OpenLogic
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --publisher -p
+    summary: Image publisher.
+    description: ''
+    valueFrom: az vm image list-publishers
+  optionalParameters:
+  - name: --edge-zone
+    summary: The name of edge zone.
+    description: ''
+- uid: az_vm_image_list-publishers()
+  name: az vm image list-publishers
+  summary: List the VM image publishers available in the Azure Marketplace.
+  description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+  syntax: >-
+    az vm image list-publishers --location
+                                [--edge-zone]
+  examples:
+  - summary: List all publishers in the West US region.
+    syntax: az vm image list-publishers -l westus
+  - summary: List all publishers with names starting with "Open" in westus.
+    syntax: az vm image list-publishers -l westus --query "[?starts_with(name, 'Open')]"
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  optionalParameters:
+  - name: --edge-zone
+    summary: The name of edge zone.
+    description: ''
+- uid: az_vm_image_list-skus()
+  name: az vm image list-skus
+  summary: List the VM image SKUs available in the Azure Marketplace.
+  description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
+  syntax: >-
+    az vm image list-skus --location
+                          --offer
+                          --publisher
+                          [--edge-zone]
+  examples:
+  - summary: List all skus available for CentOS published by OpenLogic in the West US region.
+    syntax: az vm image list-skus -l westus -f CentOS -p OpenLogic
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
+    description: ''
+  - isRequired: true
+    name: --offer -f
+    summary: Image offer.
+    description: ''
+  - isRequired: true
+    name: --publisher -p
+    summary: Image publisher.
+    description: ''
+    valueFrom: az vm image list-publishers
+  optionalParameters:
+  - name: --edge-zone
+    summary: The name of edge zone.
+    description: ''
+- uid: az_vm_image_list()
   name: az vm image list
   summary: List the VM/VMSS images available in the Azure Marketplace.
   description: ''
@@ -82,94 +169,7 @@ directCommands:
   - name: --sku -s
     summary: Image sku name, partial name is accepted.
     description: ''
-- uid: az_vm_image_list-offers_()
-  name: az vm image list-offers
-  summary: List the VM image offers available in the Azure Marketplace.
-  description: ''
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-  syntax: >-
-    az vm image list-offers --location
-                            --publisher
-                            [--edge-zone]
-  examples:
-  - summary: List all offers from Microsoft in the West US region.
-    syntax: az vm image list-offers -l westus -p MicrosoftWindowsServer
-  - summary: List all offers from OpenLocic in the West US region.
-    syntax: az vm image list-offers -l westus -p OpenLogic
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
-    name: --publisher -p
-    summary: Image publisher.
-    description: ''
-    valueFrom: az vm image list-publishers
-  optionalParameters:
-  - name: --edge-zone
-    summary: The name of edge zone.
-    description: ''
-- uid: az_vm_image_list-publishers_()
-  name: az vm image list-publishers
-  summary: List the VM image publishers available in the Azure Marketplace.
-  description: ''
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-  syntax: >-
-    az vm image list-publishers --location
-                                [--edge-zone]
-  examples:
-  - summary: List all publishers in the West US region.
-    syntax: az vm image list-publishers -l westus
-  - summary: List all publishers with names starting with "Open" in westus.
-    syntax: az vm image list-publishers -l westus --query "[?starts_with(name, 'Open')]"
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  optionalParameters:
-  - name: --edge-zone
-    summary: The name of edge zone.
-    description: ''
-- uid: az_vm_image_list-skus_()
-  name: az vm image list-skus
-  summary: List the VM image SKUs available in the Azure Marketplace.
-  description: ''
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
-  syntax: >-
-    az vm image list-skus --location
-                          --offer
-                          --publisher
-                          [--edge-zone]
-  examples:
-  - summary: List all skus available for CentOS published by OpenLogic in the West US region.
-    syntax: az vm image list-skus -l westus -f CentOS -p OpenLogic
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-  - isRequired: true
-    name: --offer -f
-    summary: Image offer.
-    description: ''
-  - isRequired: true
-    name: --publisher -p
-    summary: Image publisher.
-    description: ''
-    valueFrom: az vm image list-publishers
-  optionalParameters:
-  - name: --edge-zone
-    summary: The name of edge zone.
-    description: ''
-- uid: az_vm_image_show_()
+- uid: az_vm_image_show()
   name: az vm image show
   summary: Get the details for a VM image available in the Azure Marketplace.
   description: ''
@@ -215,16 +215,16 @@ directCommands:
     summary: Image sku's version.
     description: ''
 commands:
-- az_vm_image_accept-terms_()
-- az_vm_image_list_()
-- az_vm_image_list-offers_()
-- az_vm_image_list-publishers_()
-- az_vm_image_list-skus_()
-- az_vm_image_show_()
+- az_vm_image_accept-terms()
+- az_vm_image_list-offers()
+- az_vm_image_list-publishers()
+- az_vm_image_list-skus()
+- az_vm_image_list()
+- az_vm_image_show()
 - az_vm_image_terms
-- az_vm_image_terms_accept_()
-- az_vm_image_terms_cancel_()
-- az_vm_image_terms_show_()
+- az_vm_image_terms_accept()
+- az_vm_image_terms_cancel()
+- az_vm_image_terms_show()
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

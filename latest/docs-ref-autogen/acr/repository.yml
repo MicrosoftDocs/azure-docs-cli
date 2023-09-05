@@ -6,7 +6,7 @@ description: ''
 status: GA
 sourceType: Core
 directCommands:
-- uid: az_acr_repository_delete_()
+- uid: az_acr_repository_delete()
   name: az acr repository delete
   summary: Delete a repository or image in an Azure Container Registry.
   description: This command deletes all associated layer data that are not referenced by any other manifest in the container registry.
@@ -53,7 +53,39 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
-- uid: az_acr_repository_list_()
+- uid: az_acr_repository_list-deleted()
+  name: az acr repository list-deleted
+  summary: List soft-deleted repositories in an Azure Container Registry.
+  description: ''
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+  syntax: >-
+    az acr repository list-deleted --name
+                                   [--password]
+                                   [--suffix]
+                                   [--username]
+  examples:
+  - summary: List soft-deleted repositories in a given Azure Container Registry.
+    syntax: az acr repository list-deleted -n MyRegistry
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    description: ''
+  optionalParameters:
+  - name: --password -p
+    summary: The password used to log into a container registry.
+    description: ''
+  - name: --suffix
+    summary: The tenant suffix in registry login server. You may specify '--suffix tenant' if your registry login server is in the format 'registry-tenant.azurecr.io'. Applicable if you're accessing the registry from a different subscription or you have permission to access images but not the permission to manage the registry resource.
+    description: ''
+  - name: --username -u
+    summary: The username used to log into a container registry.
+    description: ''
+- uid: az_acr_repository_list()
   name: az acr repository list
   summary: List repositories in an Azure Container Registry.
   description: ''
@@ -87,81 +119,7 @@ directCommands:
   - name: --username -u
     summary: The username used to log into a container registry.
     description: ''
-- uid: az_acr_repository_list-deleted_()
-  name: az acr repository list-deleted
-  summary: List soft-deleted repositories in an Azure Container Registry.
-  description: ''
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
-  syntax: >-
-    az acr repository list-deleted --name
-                                   [--password]
-                                   [--suffix]
-                                   [--username]
-  examples:
-  - summary: List soft-deleted repositories in a given Azure Container Registry.
-    syntax: az acr repository list-deleted -n MyRegistry
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
-    description: ''
-  optionalParameters:
-  - name: --password -p
-    summary: The password used to log into a container registry.
-    description: ''
-  - name: --suffix
-    summary: The tenant suffix in registry login server. You may specify '--suffix tenant' if your registry login server is in the format 'registry-tenant.azurecr.io'. Applicable if you're accessing the registry from a different subscription or you have permission to access images but not the permission to manage the registry resource.
-    description: ''
-  - name: --username -u
-    summary: The username used to log into a container registry.
-    description: ''
-- uid: az_acr_repository_show_()
-  name: az acr repository show
-  summary: Get the attributes of a repository or image in an Azure Container Registry.
-  description: ''
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
-  syntax: >-
-    az acr repository show --name
-                           [--image]
-                           [--password]
-                           [--repository]
-                           [--suffix]
-                           [--username]
-  examples:
-  - summary: Get the attributes of the repository 'hello-world'.
-    syntax: az acr repository show -n MyRegistry --repository hello-world
-  - summary: Get the attributes of the image referenced by tag 'hello-world:latest'.
-    syntax: az acr repository show -n MyRegistry --image hello-world:latest
-  - summary: Get the attributes of the image referenced by digest 'hello-world@sha256:abc123'.
-    syntax: az acr repository show -n MyRegistry --image hello-world@sha256:abc123
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
-    description: ''
-  optionalParameters:
-  - name: --image -t
-    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
-    description: ''
-  - name: --password -p
-    summary: The password used to log into a container registry.
-    description: ''
-  - name: --repository
-    summary: The name of the repository.
-    description: ''
-  - name: --suffix
-    summary: The tenant suffix in registry login server. You may specify '--suffix tenant' if your registry login server is in the format 'registry-tenant.azurecr.io'. Applicable if you're accessing the registry from a different subscription or you have permission to access images but not the permission to manage the registry resource.
-    description: ''
-  - name: --username -u
-    summary: The username used to log into a container registry.
-    description: ''
-- uid: az_acr_repository_show-manifests_()
+- uid: az_acr_repository_show-manifests()
   name: az acr repository show-manifests
   summary: Show manifests of a repository in an Azure Container Registry.
   description: ''
@@ -216,7 +174,7 @@ directCommands:
   - name: --username -u
     summary: The username used to log into a container registry.
     description: ''
-- uid: az_acr_repository_show-tags_()
+- uid: az_acr_repository_show-tags()
   name: az acr repository show-tags
   summary: Show tags for a repository in an Azure Container Registry.
   description: ''
@@ -269,7 +227,49 @@ directCommands:
   - name: --username -u
     summary: The username used to log into a container registry.
     description: ''
-- uid: az_acr_repository_untag_()
+- uid: az_acr_repository_show()
+  name: az acr repository show
+  summary: Get the attributes of a repository or image in an Azure Container Registry.
+  description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acr/_help.py
+  syntax: >-
+    az acr repository show --name
+                           [--image]
+                           [--password]
+                           [--repository]
+                           [--suffix]
+                           [--username]
+  examples:
+  - summary: Get the attributes of the repository 'hello-world'.
+    syntax: az acr repository show -n MyRegistry --repository hello-world
+  - summary: Get the attributes of the image referenced by tag 'hello-world:latest'.
+    syntax: az acr repository show -n MyRegistry --image hello-world:latest
+  - summary: Get the attributes of the image referenced by digest 'hello-world@sha256:abc123'.
+    syntax: az acr repository show -n MyRegistry --image hello-world@sha256:abc123
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: The name of the container registry. It should be specified in lower case. You can configure the default registry name using `az configure --defaults acr=<registry name>`.
+    description: ''
+  optionalParameters:
+  - name: --image -t
+    summary: The name of the image. May include a tag in the format 'name:tag' or digest in the format 'name@digest'.
+    description: ''
+  - name: --password -p
+    summary: The password used to log into a container registry.
+    description: ''
+  - name: --repository
+    summary: The name of the repository.
+    description: ''
+  - name: --suffix
+    summary: The tenant suffix in registry login server. You may specify '--suffix tenant' if your registry login server is in the format 'registry-tenant.azurecr.io'. Applicable if you're accessing the registry from a different subscription or you have permission to access images but not the permission to manage the registry resource.
+    description: ''
+  - name: --username -u
+    summary: The username used to log into a container registry.
+    description: ''
+- uid: az_acr_repository_untag()
   name: az acr repository untag
   summary: Untag an image in an Azure Container Registry.
   description: This command does not delete the manifest referenced by the tag or any associated layer data.
@@ -304,7 +304,7 @@ directCommands:
   - name: --username -u
     summary: The username used to log into a container registry.
     description: ''
-- uid: az_acr_repository_update_()
+- uid: az_acr_repository_update()
   name: az acr repository update
   summary: Update the attributes of a repository or image in an Azure Container Registry.
   description: ''
@@ -367,14 +367,14 @@ directCommands:
     summary: Indicates whether write or delete operation is allowed.
     description: ''
 commands:
-- az_acr_repository_delete_()
-- az_acr_repository_list_()
-- az_acr_repository_list-deleted_()
-- az_acr_repository_show_()
-- az_acr_repository_show-manifests_()
-- az_acr_repository_show-tags_()
-- az_acr_repository_untag_()
-- az_acr_repository_update_()
+- az_acr_repository_delete()
+- az_acr_repository_list-deleted()
+- az_acr_repository_list()
+- az_acr_repository_show-manifests()
+- az_acr_repository_show-tags()
+- az_acr_repository_show()
+- az_acr_repository_untag()
+- az_acr_repository_update()
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

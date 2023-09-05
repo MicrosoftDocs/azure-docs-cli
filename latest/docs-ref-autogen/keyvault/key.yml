@@ -6,7 +6,7 @@ description: ''
 status: GA
 sourceType: Core
 directCommands:
-- uid: az_keyvault_key_backup_()
+- uid: az_keyvault_key_backup()
   name: az keyvault key backup
   summary: Request that a backup of the specified key be downloaded to the client.
   description: The Key Backup operation exports a key from Vault or HSM in a protected form. Note that this operation does NOT return key material in a form that can be used outside the Vault or HSM system, the returned key material is either protected to a HSM or to Vault itself. The intent of this operation is to allow a client to GENERATE a key in one Vault or HSM instance, BACKUP the key, and then RESTORE it into another Vault or HSM instance. The BACKUP operation may be used to export, in protected form, any key type from Vault or HSM. Individual versions of a key cannot be backed up. BACKUP / RESTORE can be performed within geographical boundaries only; meaning that a BACKUP from one geographical area cannot be restored to another geographical area. For example, a backup from the US geographical area cannot be restored in an EU geographical area. This operation requires the key/backup permission.
@@ -37,7 +37,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_create_()
+- uid: az_keyvault_key_create()
   name: az keyvault key create
   summary: Create a new key, stores it, then returns key parameters and attributes to the client.
   description: The create key operation can be used to create any key type in Vault or HSM. If the named key already exists, Vault or HSM creates a new version of the key. It requires the keys/create permission.
@@ -123,7 +123,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_decrypt_()
+- uid: az_keyvault_key_decrypt()
   name: az keyvault key decrypt
   summary: Decrypt a single block of encrypted data.
   description: The DECRYPT operation decrypts a well-formed block of ciphertext using the target encryption key and specified algorithm. This operation is the reverse of the ENCRYPT operation; only a single block of data may be decrypted, the size of this block is dependent on the target key and the algorithm to be used. The DECRYPT operation applies to asymmetric and symmetric keys stored in Vault or HSM since it uses the private portion of the key. This operation requires the keys/decrypt permission.
@@ -192,7 +192,7 @@ directCommands:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-- uid: az_keyvault_key_delete_()
+- uid: az_keyvault_key_delete()
   name: az keyvault key delete
   summary: Delete a key of any type from storage in Vault or HSM.
   description: The delete key operation cannot be used to remove individual versions of a key. This operation removes the cryptographic material associated with the key, which means the key is not usable for Sign/Verify, Wrap/Unwrap or Encrypt/Decrypt operations. This operation requires the keys/delete permission.
@@ -217,7 +217,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_download_()
+- uid: az_keyvault_key_download()
   name: az keyvault key download
   summary: Download the public part of a stored key.
   description: ''
@@ -263,7 +263,7 @@ directCommands:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-- uid: az_keyvault_key_encrypt_()
+- uid: az_keyvault_key_encrypt()
   name: az keyvault key encrypt
   summary: Encrypt an arbitrary sequence of bytes using an encryption key that is stored in a Vault or HSM.
   description: The ENCRYPT operation encrypts an arbitrary sequence of bytes using an encryption key that is stored in Vault or HSM. Note that the ENCRYPT operation only supports a single block of data, the size of which is dependent on the target key and the encryption algorithm to be used. The ENCRYPT operation is only strictly necessary for symmetric keys stored in Vault pr HSM since protection with an asymmetric key can be performed using public portion of the key. This operation is supported for asymmetric keys as a convenience for callers that have a key-reference but do not have access to the public key material. This operation requires the keys/encrypt permission.
@@ -325,7 +325,7 @@ directCommands:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-- uid: az_keyvault_key_get-policy-template_()
+- uid: az_keyvault_key_get-policy-template()
   name: az keyvault key get-policy-template
   summary: Return policy template as JSON encoded policy definition.
   description: ''
@@ -335,7 +335,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
   syntax: az keyvault key get-policy-template
-- uid: az_keyvault_key_import_()
+- uid: az_keyvault_key_import()
   name: az keyvault key import
   summary: Import a private key.
   description: Supports importing base64 encoded private keys from PEM files or strings. Supports importing BYOK keys into HSM for premium key vaults.
@@ -438,7 +438,61 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_list_()
+- uid: az_keyvault_key_list-deleted()
+  name: az keyvault key list-deleted
+  summary: List the deleted keys in the specified Vault or HSM.
+  description: Retrieve a list of the keys in the Vault or HSM as JSON Web Key structures that contain the public part of a deleted key. This operation includes deletion-specific information. The Get Deleted Keys operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any Vault or HSM, it will return an error if invoked on a non soft-delete enabled Vault or HSM. This operation requires the keys/list permission.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+  syntax: >-
+    az keyvault key list-deleted [--hsm-name]
+                                 [--id]
+                                 [--maxresults]
+                                 [--vault-name]
+  optionalParameters:
+  - name: --hsm-name
+    summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
+    description: ''
+  - name: --id
+    summary: Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - name: --vault-name
+    summary: Name of the Vault.
+    description: ''
+- uid: az_keyvault_key_list-versions()
+  name: az keyvault key list-versions
+  summary: Retrieves a list of individual key versions with the same key name.
+  description: The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+  syntax: >-
+    az keyvault key list-versions [--hsm-name]
+                                  [--id]
+                                  [--maxresults]
+                                  [--name]
+                                  [--vault-name]
+  optionalParameters:
+  - name: --hsm-name
+    summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
+    description: ''
+  - name: --id
+    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --maxresults
+    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+    description: ''
+  - name: --name -n
+    summary: Name of the key. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the Vault.
+    description: ''
+- uid: az_keyvault_key_list()
   name: az keyvault key list
   summary: List keys in the specified Vault or HSM.
   description: Retrieve a list of the keys in the Vault or HSM as JSON Web Key structures that contain the public part of a stored key. The LIST operation is applicable to all key types, however only the base key identifier, attributes, and tags are provided in the response. Individual versions of a key are not listed in the response. This operation requires the keys/list permission.
@@ -469,61 +523,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_list-deleted_()
-  name: az keyvault key list-deleted
-  summary: List the deleted keys in the specified Vault or HSM.
-  description: Retrieve a list of the keys in the Vault or HSM as JSON Web Key structures that contain the public part of a deleted key. This operation includes deletion-specific information. The Get Deleted Keys operation is applicable for vaults enabled for soft-delete. While the operation can be invoked on any Vault or HSM, it will return an error if invoked on a non soft-delete enabled Vault or HSM. This operation requires the keys/list permission.
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-  syntax: >-
-    az keyvault key list-deleted [--hsm-name]
-                                 [--id]
-                                 [--maxresults]
-                                 [--vault-name]
-  optionalParameters:
-  - name: --hsm-name
-    summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
-    description: ''
-  - name: --id
-    summary: Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
-    description: ''
-  - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-    description: ''
-  - name: --vault-name
-    summary: Name of the Vault.
-    description: ''
-- uid: az_keyvault_key_list-versions_()
-  name: az keyvault key list-versions
-  summary: Retrieves a list of individual key versions with the same key name.
-  description: The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-  syntax: >-
-    az keyvault key list-versions [--hsm-name]
-                                  [--id]
-                                  [--maxresults]
-                                  [--name]
-                                  [--vault-name]
-  optionalParameters:
-  - name: --hsm-name
-    summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
-    description: ''
-  - name: --id
-    summary: Id of the key. If specified all other 'Id' arguments should be omitted.
-    description: ''
-  - name: --maxresults
-    summary: Maximum number of results to return in a page. If not specified the service will return up to 25 results.
-    description: ''
-  - name: --name -n
-    summary: Name of the key. Required if --id is not specified.
-    description: ''
-  - name: --vault-name
-    summary: Name of the Vault.
-    description: ''
-- uid: az_keyvault_key_purge_()
+- uid: az_keyvault_key_purge()
   name: az keyvault key purge
   summary: Permanently delete the specified key.
   description: The Purge Deleted Key operation is applicable for soft-delete enabled Vaults or HSMs. While the operation can be invoked on any Vault or HSM, it will return an error if invoked on a non soft-delete enabled Vault or HSM. This operation requires the keys/purge permission.
@@ -548,7 +548,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_random_()
+- uid: az_keyvault_key_random()
   name: az keyvault key random
   summary: Get the requested number of random bytes from a managed HSM.
   description: ''
@@ -571,7 +571,7 @@ directCommands:
   - name: --id
     summary: Full URI of the HSM.
     description: ''
-- uid: az_keyvault_key_recover_()
+- uid: az_keyvault_key_recover()
   name: az keyvault key recover
   summary: Recover the deleted key to its latest version.
   description: The Recover Deleted Key operation is applicable for deleted keys in soft-delete enabled Vaults or HSMs. It recovers the deleted key back to its latest version under /keys. An attempt to recover an non-deleted key will return an error. Consider this the inverse of the delete operation on soft-delete enabled Vaults or HSMs. This operation requires the keys/recover permission.
@@ -596,7 +596,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_restore_()
+- uid: az_keyvault_key_restore()
   name: az keyvault key restore
   summary: Restore a backed up key to a Vault or HSM.
   description: Import a previously backed up key into Vault or HSM, restoring the key, its key identifier, attributes and access control policies. The RESTORE operation may be used to import a previously backed up key. Individual versions of a key cannot be restored. The key is restored in its entirety with the same key name as it had when it was backed up. If the key name is not available in the target Key Vault, the RESTORE operation will be rejected. While the key name is retained during restore, the final key identifier will change if the key is restored to a different Vault or HSM. Restore will restore all versions and preserve version identifiers. The RESTORE operation is subject to security constraints. The target Vault or HSM must be owned by the same Microsoft Azure Subscription as the source Vault or HSM. The user must have RESTORE permission in the target Vault or HSM. This operation requires the keys/restore permission.
@@ -650,7 +650,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_rotate_()
+- uid: az_keyvault_key_rotate()
   name: az keyvault key rotate
   summary: Rotate the key based on the key policy by generating a new version of the key.
   description: ''
@@ -675,7 +675,7 @@ directCommands:
   - name: --vault-name
     summary: Name of the Vault.
     description: ''
-- uid: az_keyvault_key_set-attributes_()
+- uid: az_keyvault_key_set-attributes()
   name: az keyvault key set-attributes
   summary: The update key operation changes specified attributes of a stored key and can be applied to any key type and key version stored in Vault or HSM.
   description: In order to perform this operation, the key must already exist in the Vault or HSM. The cryptographic material of a key itself cannot be changed. This operation requires the keys/update permission.
@@ -735,7 +735,32 @@ directCommands:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-- uid: az_keyvault_key_show_()
+- uid: az_keyvault_key_show-deleted()
+  name: az keyvault key show-deleted
+  summary: Get the public part of a deleted key.
+  description: The Get Deleted Key operation is applicable for soft-delete enabled Vaults or HSMs. While the operation can be invoked on any Vault or HSM, it will return an error if invoked on a non soft-delete enabled Vault or HSM. This operation requires the keys/get permission.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
+  syntax: >-
+    az keyvault key show-deleted [--hsm-name]
+                                 [--id]
+                                 [--name]
+                                 [--vault-name]
+  optionalParameters:
+  - name: --hsm-name
+    summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
+    description: ''
+  - name: --id
+    summary: The recovery id of the key. If specified all other 'Id' arguments should be omitted.
+    description: ''
+  - name: --name -n
+    summary: Name of the key. Required if --id is not specified.
+    description: ''
+  - name: --vault-name
+    summary: Name of the Vault.
+    description: ''
+- uid: az_keyvault_key_show()
   name: az keyvault key show
   summary: Get a key's attributes and, if it's an asymmetric key, its public material.
   description: Requires keys/get permission.
@@ -764,32 +789,7 @@ directCommands:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-- uid: az_keyvault_key_show-deleted_()
-  name: az keyvault key show-deleted
-  summary: Get the public part of a deleted key.
-  description: The Get Deleted Key operation is applicable for soft-delete enabled Vaults or HSMs. While the operation can be invoked on any Vault or HSM, it will return an error if invoked on a non soft-delete enabled Vault or HSM. This operation requires the keys/get permission.
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
-  syntax: >-
-    az keyvault key show-deleted [--hsm-name]
-                                 [--id]
-                                 [--name]
-                                 [--vault-name]
-  optionalParameters:
-  - name: --hsm-name
-    summary: Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
-    description: ''
-  - name: --id
-    summary: The recovery id of the key. If specified all other 'Id' arguments should be omitted.
-    description: ''
-  - name: --name -n
-    summary: Name of the key. Required if --id is not specified.
-    description: ''
-  - name: --vault-name
-    summary: Name of the Vault.
-    description: ''
-- uid: az_keyvault_key_sign_()
+- uid: az_keyvault_key_sign()
   name: az keyvault key sign
   summary: Create a signature from a digest using a key that is stored in a Vault or HSM.
   description: ''
@@ -833,7 +833,7 @@ directCommands:
   - name: --version -v
     summary: The key version. If omitted, uses the latest version.
     description: ''
-- uid: az_keyvault_key_verify_()
+- uid: az_keyvault_key_verify()
   name: az keyvault key verify
   summary: Verify a signature using the key that is stored in a Vault or HSM.
   description: ''
@@ -883,30 +883,30 @@ directCommands:
     summary: The key version. If omitted, uses the latest version.
     description: ''
 commands:
-- az_keyvault_key_backup_()
-- az_keyvault_key_create_()
-- az_keyvault_key_decrypt_()
-- az_keyvault_key_delete_()
-- az_keyvault_key_download_()
-- az_keyvault_key_encrypt_()
-- az_keyvault_key_get-policy-template_()
-- az_keyvault_key_import_()
-- az_keyvault_key_list_()
-- az_keyvault_key_list-deleted_()
-- az_keyvault_key_list-versions_()
-- az_keyvault_key_purge_()
-- az_keyvault_key_random_()
-- az_keyvault_key_recover_()
-- az_keyvault_key_restore_()
-- az_keyvault_key_rotate_()
+- az_keyvault_key_backup()
+- az_keyvault_key_create()
+- az_keyvault_key_decrypt()
+- az_keyvault_key_delete()
+- az_keyvault_key_download()
+- az_keyvault_key_encrypt()
+- az_keyvault_key_get-policy-template()
+- az_keyvault_key_import()
+- az_keyvault_key_list-deleted()
+- az_keyvault_key_list-versions()
+- az_keyvault_key_list()
+- az_keyvault_key_purge()
+- az_keyvault_key_random()
+- az_keyvault_key_recover()
+- az_keyvault_key_restore()
+- az_keyvault_key_rotate()
 - az_keyvault_key_rotation-policy
-- az_keyvault_key_rotation-policy_show_()
-- az_keyvault_key_rotation-policy_update_()
-- az_keyvault_key_set-attributes_()
-- az_keyvault_key_show_()
-- az_keyvault_key_show-deleted_()
-- az_keyvault_key_sign_()
-- az_keyvault_key_verify_()
+- az_keyvault_key_rotation-policy_show()
+- az_keyvault_key_rotation-policy_update()
+- az_keyvault_key_set-attributes()
+- az_keyvault_key_show-deleted()
+- az_keyvault_key_show()
+- az_keyvault_key_sign()
+- az_keyvault_key_verify()
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

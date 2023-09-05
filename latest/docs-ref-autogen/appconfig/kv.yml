@@ -6,7 +6,7 @@ description: ''
 status: GA
 sourceType: Core
 directCommands:
-- uid: az_appconfig_kv_delete_()
+- uid: az_appconfig_kv_delete()
   name: az appconfig kv delete
   summary: Delete key-values.
   description: ''
@@ -55,7 +55,7 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
-- uid: az_appconfig_kv_export_()
+- uid: az_appconfig_kv_export()
   name: az appconfig kv export
   summary: Export configurations to another place from your App Configuration.
   description: ''
@@ -203,7 +203,7 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for preview.
     description: ''
-- uid: az_appconfig_kv_import_()
+- uid: az_appconfig_kv_import()
   name: az appconfig kv import
   summary: Import configurations into your App Configuration from another place.
   description: ''
@@ -342,7 +342,7 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for preview.
     description: ''
-- uid: az_appconfig_kv_list_()
+- uid: az_appconfig_kv_list()
   name: az appconfig kv list
   summary: List key-values.
   description: ''
@@ -421,7 +421,7 @@ directCommands:
   - name: --top -t
     summary: Maximum number of items to return. Must be a positive integer. Default to 100.
     description: ''
-- uid: az_appconfig_kv_lock_()
+- uid: az_appconfig_kv_lock()
   name: az appconfig kv lock
   summary: Lock a key-value to prohibit write operations.
   description: ''
@@ -468,7 +468,7 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
-- uid: az_appconfig_kv_restore_()
+- uid: az_appconfig_kv_restore()
   name: az appconfig kv restore
   summary: Restore key-values.
   description: ''
@@ -519,7 +519,63 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
-- uid: az_appconfig_kv_set_()
+- uid: az_appconfig_kv_set-keyvault()
+  name: az appconfig kv set-keyvault
+  summary: Set a keyvault reference.
+  description: ''
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
+  syntax: >-
+    az appconfig kv set-keyvault --key
+                                 --secret-identifier
+                                 [--auth-mode {key, login}]
+                                 [--connection-string]
+                                 [--endpoint]
+                                 [--label]
+                                 [--name]
+                                 [--tags]
+                                 [--yes]
+  examples:
+  - summary: Set a keyvault reference with label MyLabel.
+    syntax: az appconfig kv set-keyvault -n MyAppConfiguration --key HostSecret --label MyLabel --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret/Dummyversion
+  - summary: Set a keyvault reference with null label and multiple tags using connection string.
+    syntax: az appconfig kv set-keyvault --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key HostSecret --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret --tags tag1=value1 tag2=value2
+  requiredParameters:
+  - isRequired: true
+    name: --key
+    summary: Key to be set. Key cannot be a '.' or '..', or contain the '%' character.
+    description: ''
+  - isRequired: true
+    name: --secret-identifier
+    summary: ID of the Key Vault object. Can be found using 'az keyvault {collection} show' command, where collection is key, secret or certificate. To set reference to the latest version of your secret, remove version information from secret identifier.
+    description: ''
+  optionalParameters:
+  - name: --auth-mode
+    defaultValue: "key"
+    parameterValueGroup: "key, login"
+    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://docs.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
+    description: ''
+  - name: --connection-string
+    summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
+    description: ''
+  - name: --endpoint
+    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
+    description: ''
+  - name: --label
+    summary: If no label specified, set the key with null label by default.
+    description: ''
+  - name: --name -n
+    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
+    description: ''
+  - name: --tags
+    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --yes -y
+    defaultValue: "False"
+    summary: Do not prompt for confirmation.
+    description: ''
+- uid: az_appconfig_kv_set()
   name: az appconfig kv set
   summary: Set a key-value.
   description: ''
@@ -586,63 +642,7 @@ directCommands:
     defaultValue: "False"
     summary: Do not prompt for confirmation.
     description: ''
-- uid: az_appconfig_kv_set-keyvault_()
-  name: az appconfig kv set-keyvault
-  summary: Set a keyvault reference.
-  description: ''
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appconfig/_help.py
-  syntax: >-
-    az appconfig kv set-keyvault --key
-                                 --secret-identifier
-                                 [--auth-mode {key, login}]
-                                 [--connection-string]
-                                 [--endpoint]
-                                 [--label]
-                                 [--name]
-                                 [--tags]
-                                 [--yes]
-  examples:
-  - summary: Set a keyvault reference with label MyLabel.
-    syntax: az appconfig kv set-keyvault -n MyAppConfiguration --key HostSecret --label MyLabel --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret/Dummyversion
-  - summary: Set a keyvault reference with null label and multiple tags using connection string.
-    syntax: az appconfig kv set-keyvault --connection-string Endpoint=https://contoso.azconfig.io;Id=xxx;Secret=xxx --key HostSecret --secret-identifier https://contoso.vault.azure.net/Secrets/DummySecret --tags tag1=value1 tag2=value2
-  requiredParameters:
-  - isRequired: true
-    name: --key
-    summary: Key to be set. Key cannot be a '.' or '..', or contain the '%' character.
-    description: ''
-  - isRequired: true
-    name: --secret-identifier
-    summary: ID of the Key Vault object. Can be found using 'az keyvault {collection} show' command, where collection is key, secret or certificate. To set reference to the latest version of your secret, remove version information from secret identifier.
-    description: ''
-  optionalParameters:
-  - name: --auth-mode
-    defaultValue: "key"
-    parameterValueGroup: "key, login"
-    summary: This parameter can be used for indicating how a data operation is to be authorized. If the auth mode is "key", provide connection string or store name and your account access keys will be retrieved for authorization. If the auth mode is "login", provide the store endpoint or store name and your "az login" credentials will be used for authorization. You can configure the default auth mode using `az configure --defaults appconfig_auth_mode=<auth_mode>`. For more information, see https://docs.microsoft.com/azure/azure-app-configuration/concept-enable-rbac.
-    description: ''
-  - name: --connection-string
-    summary: Combination of access key and endpoint of App Configuration. Can be found using 'az appconfig credential list'. Users can preset it using `az configure --defaults appconfig_connection_string=<connection_string>` or environment variable with the name AZURE_APPCONFIG_CONNECTION_STRING.
-    description: ''
-  - name: --endpoint
-    summary: If auth mode is "login", provide endpoint URL of the App Configuration. The endpoint can be retrieved using "az appconfig show" command. You can configure the default endpoint using `az configure --defaults appconfig_endpoint=<endpoint>`.
-    description: ''
-  - name: --label
-    summary: If no label specified, set the key with null label by default.
-    description: ''
-  - name: --name -n
-    summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
-    description: ''
-  - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
-  - name: --yes -y
-    defaultValue: "False"
-    summary: Do not prompt for confirmation.
-    description: ''
-- uid: az_appconfig_kv_show_()
+- uid: az_appconfig_kv_show()
   name: az appconfig kv show
   summary: Show all attributes of a key-value.
   description: ''
@@ -690,7 +690,7 @@ directCommands:
   - name: --name -n
     summary: Name of the App Configuration. You can configure the default name using `az configure --defaults app_configuration_store=<name>`.
     description: ''
-- uid: az_appconfig_kv_unlock_()
+- uid: az_appconfig_kv_unlock()
   name: az appconfig kv unlock
   summary: Unlock a key-value to gain write operations.
   description: ''
@@ -738,16 +738,16 @@ directCommands:
     summary: Do not prompt for confirmation.
     description: ''
 commands:
-- az_appconfig_kv_delete_()
-- az_appconfig_kv_export_()
-- az_appconfig_kv_import_()
-- az_appconfig_kv_list_()
-- az_appconfig_kv_lock_()
-- az_appconfig_kv_restore_()
-- az_appconfig_kv_set_()
-- az_appconfig_kv_set-keyvault_()
-- az_appconfig_kv_show_()
-- az_appconfig_kv_unlock_()
+- az_appconfig_kv_delete()
+- az_appconfig_kv_export()
+- az_appconfig_kv_import()
+- az_appconfig_kv_list()
+- az_appconfig_kv_lock()
+- az_appconfig_kv_restore()
+- az_appconfig_kv_set-keyvault()
+- az_appconfig_kv_set()
+- az_appconfig_kv_show()
+- az_appconfig_kv_unlock()
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.
