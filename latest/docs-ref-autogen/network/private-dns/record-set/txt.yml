@@ -52,7 +52,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the record set, relative to the name of the Private DNS zone.
+    summary: Name of the record set, relative to the name of the zone.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -60,11 +60,11 @@ directCommands:
     description: ''
   - isRequired: true
     name: --zone-name -z
-    summary: The name of the Private DNS zone.
+    summary: Name of the Private DNS zone (without a terminating dot).
     description: ''
   optionalParameters:
   - name: --metadata
-    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    summary: Metadata attached to the record set.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   - name: --ttl
     defaultValue: "3600"
@@ -76,34 +76,38 @@ directCommands:
   summary: Delete a TXT record set and all associated records.
   description: ''
   syntax: >-
-    az network private-dns record-set txt delete --name
-                                                 --resource-group
-                                                 --zone-name
+    az network private-dns record-set txt delete [--ids]
                                                  [--if-match]
+                                                 [--name]
+                                                 [--resource-group]
+                                                 [--subscription]
                                                  [--yes]
+                                                 [--zone-name]
   examples:
   - summary: Delete a TXT record set and all associated records.
     syntax: az network private-dns record-set txt delete -g MyResourceGroup -z www.mysite.com -n MyRecordSet
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the record set, relative to the name of the Private DNS zone.
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --if-match
+    summary: ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes.
+    description: ''
+  - name: --name -n
+    summary: Name of the record set, relative to the name of the zone.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --zone-name -z
-    summary: The name of the Private DNS zone.
-    description: ''
-  optionalParameters:
-  - name: --if-match
-    summary: The ETag of the record set. Omit this value to always delete the current record set. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for confirmation.
+    description: ''
+  - name: --zone-name -z
+    summary: Name of the Private DNS zone (without a terminating dot).
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_private-dns_record-set_txt_list
@@ -113,6 +117,8 @@ directCommands:
   syntax: >-
     az network private-dns record-set txt list --resource-group
                                                --zone-name
+                                               [--max-items]
+                                               [--next-token]
   examples:
   - summary: List all TXT record sets in a zone.
     syntax: az network private-dns record-set txt list -g MyResourceGroup -z www.mysite.com
@@ -123,7 +129,14 @@ directCommands:
     description: ''
   - isRequired: true
     name: --zone-name -z
-    summary: The name of the Private DNS zone.
+    summary: Name of the Private DNS zone (without a terminating dot).
+    description: ''
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_private-dns_record-set_txt_remove-record
@@ -169,24 +182,29 @@ directCommands:
   summary: Get the details of a TXT record set.
   description: ''
   syntax: >-
-    az network private-dns record-set txt show --name
-                                               --resource-group
-                                               --zone-name
+    az network private-dns record-set txt show [--ids]
+                                               [--name]
+                                               [--resource-group]
+                                               [--subscription]
+                                               [--zone-name]
   examples:
   - summary: Get the details of a TXT record set.
     syntax: az network private-dns record-set txt show -g MyResourceGroup -z www.mysite.com -n MyRecordSet
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the record set, relative to the name of the Private DNS zone.
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: Name of the record set, relative to the name of the zone.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - isRequired: true
-    name: --zone-name -z
-    summary: The name of the Private DNS zone.
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --zone-name -z
+    summary: Name of the Private DNS zone (without a terminating dot).
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_private-dns_record-set_txt_update
@@ -194,55 +212,54 @@ directCommands:
   summary: Update a TXT record set.
   description: ''
   syntax: >-
-    az network private-dns record-set txt update --name
-                                                 --resource-group
-                                                 --zone-name
-                                                 [--add]
-                                                 [--force-string]
+    az network private-dns record-set txt update [--add]
+                                                 [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                 [--ids]
                                                  [--if-match]
                                                  [--metadata]
+                                                 [--name]
                                                  [--remove]
+                                                 [--resource-group]
                                                  [--set]
+                                                 [--subscription]
+                                                 [--zone-name]
   examples:
   - summary: Update a TXT record set.
-    syntax: >-
-      az network private-dns record-set txt update -g MyResourceGroup -z www.mysite.com \
-          -n MyRecordSet --metadata owner=WebTeam
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the record set, relative to the name of the Private DNS zone.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  - isRequired: true
-    name: --zone-name -z
-    summary: The name of the Private DNS zone.
-    description: ''
+    syntax: az network private-dns record-set txt update -g MyResourceGroup -z www.mysite.com -n MyRecordSet --metadata owner=WebTeam
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --if-match
-    summary: The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
+    summary: ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes.
     description: ''
   - name: --metadata
-    summary: Metadata in space-separated key=value pairs. This overwrites any existing metadata.
+    summary: Metadata attached to the record set.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    description: ''
+  - name: --name -n
+    summary: Name of the record set, relative to the name of the zone.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --zone-name -z
+    summary: Name of the Private DNS zone (without a terminating dot).
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 commands:

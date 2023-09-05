@@ -11,10 +11,10 @@ directCommands:
   syntax: >-
     az relay wcfrelay create --name
                              --namespace-name
-                             --relay-type {Http, NetTcp}
                              --resource-group
-                             [--requires-client-authorization {false, true}]
-                             [--requires-transport-security {false, true}]
+                             [--relay-type {Http, NetTcp}]
+                             [--requires-client-authorization {0, 1, f, false, n, no, t, true, y, yes}]
+                             [--requires-transport-security {0, 1, f, false, n, no, t, true, y, yes}]
                              [--user-metadata]
   examples:
   - summary: Create Relay Service WCF Relay.
@@ -29,22 +29,21 @@ directCommands:
     summary: Name of Namespace.
     description: ''
   - isRequired: true
-    name: --relay-type
-    defaultValue: "NetTcp"
-    parameterValueGroup: "Http, NetTcp"
-    summary: Relay type.
-    description: ''
-  - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
-  - name: --requires-client-authorization
-    parameterValueGroup: "false, true"
+  - name: --relay-type
+    defaultValue: "NetTcp"
+    parameterValueGroup: "Http, NetTcp"
+    summary: 'Relay type.  Allowed values: Http, NetTcp.'
+    description: ''
+  - name: --requires-client-authorization -c
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Indicates whether client authorization is required.
     description: ''
-  - name: --requires-transport-security
-    parameterValueGroup: "false, true"
+  - name: --requires-transport-security -t
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Indicates whether transport security is required.
     description: ''
   - name: --user-metadata
@@ -88,6 +87,8 @@ directCommands:
   syntax: >-
     az relay wcfrelay list --namespace-name
                            --resource-group
+                           [--max-items]
+                           [--next-token]
   examples:
   - summary: Get the WCF Relays by Relay Service Namespace.
     syntax: az relay wcfrelay list --resource-group myresourcegroup --namespace-name mynamespace
@@ -99,6 +100,13 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/relay/_help.py
 - uid: az_relay_wcfrelay_show
@@ -137,7 +145,7 @@ directCommands:
   description: ''
   syntax: >-
     az relay wcfrelay update [--add]
-                             [--force-string]
+                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                              [--ids]
                              [--name]
                              [--namespace-name]
@@ -153,11 +161,10 @@ directCommands:
     syntax: az relay wcfrelay update --resource-group myresourcegroup --namespace-name mynamespace --name myrelay
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -170,19 +177,16 @@ directCommands:
     summary: Name of Namespace.
     description: ''
   - name: --relay-type
-    defaultValue: "NetTcp"
     parameterValueGroup: "Http, NetTcp"
     summary: Relay type.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --status
