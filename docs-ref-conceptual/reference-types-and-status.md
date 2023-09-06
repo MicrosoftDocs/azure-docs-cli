@@ -24,7 +24,7 @@ The Azure CLI syntax is a combination of groups, references, commands, and param
 |-|-|-|-|-|-|
 | Azure CLI | [az config](../latest/docs-ref-autogen/config.yml) | | | az config | --local, --output -o
 | Azure Network | [az network](../latest/docs-ref-autogen/network.yml) | application-gateway | create | [az network application-gateway create](/cli/azure/network/application-gateway#az-network-application-gateway-create) | --name, --resource-group, --capacity
-| Azure DevOps Server | [az pipelines](../latest/docs-ref-autogen/pipelines.yml) | agent | list | [az pipelines agent list](../latest/docs-ref-autogen/pipelines/agent.yml) | --pool-id, --agent-name, --demands
+| Azure DevOps | [az pipelines](../latest/docs-ref-autogen/pipelines.yml) | agent | list | [az pipelines agent list](../latest/docs-ref-autogen/pipelines/agent.yml) | --pool-id, --agent-name, --demands
 
 A **reference subgroup** can have multiple levels such as `az network application-gateway private-link ip-config add`
 
@@ -38,12 +38,12 @@ See [Reference list A to Z](../latest/docs-ref-autogen/reference-index.yml) for 
 
 Azure CLI commands are either part of the **core** Azure CLI service, or they're an **extension**.  Extensions are optional add-ons.  The reference type determines the release schedule, status and installation method as described here:
 
-|                |                           Core                           |                       Extension                        |
-| -------------- | -------------------------------------------------------- | ------------------------------------------------------ |
-| **References** | Are part of the primary Azure CLI service                | Are optional reference commands that must be installed |
-| **Install**    | Jointly with the [MSI installer]()                       | Individually with [az extension add]()                 |
-| **Released**   | On a schedule                                            | As new features or updates become available            |
-| **Status**     | Can be GA (Generally Available), preview or experimental | Also can be GA, preview or experimental                |
+| Term | Core | Extension |
+| - | -| -|
+| **References** | Are part of the primary Azure CLI service | Are optional reference commands that must be installed |
+| **Install**    | Jointly with the [MSI installer](install-azure-cli-windows.md) | Individually with [az extension add](/cli/azure/extension#az-extension-add)                 |
+| **Released**   | On a schedule | As new features or updates become available |
+| **Status**     | Can be GA (Generally Available), preview or experimental | Also can be GA, preview or experimental |
 
 To get a list of command groups, run `az`.  For a list of extensions, use [az extension list-available --output table](/cli/azure/extension#az-extension-list-available) commands.
 
@@ -57,7 +57,7 @@ az extension list-available --output table
 
 ### Core
 
-Azure CLI references that have been published as a permanent part of the CLI are called **core references**. All core references install with the Azure CLI and you can't choose a subset of references. If you run the CLI through Azure Cloud Shell, core references are always up to date. 
+Azure CLI references that have been published as a permanent part of the CLI are called **core references**. All core references install with the Azure CLI and you can't choose a subset of references. If you run the CLI through Azure Cloud Shell, core references are always up to date.
 
 ### Extension
 

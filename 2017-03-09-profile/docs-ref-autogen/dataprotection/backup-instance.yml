@@ -4,7 +4,7 @@ name: az dataprotection backup-instance
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **dataprotection** extension for the Azure CLI  (version 2.49.0 or higher).  The extension will automatically install the first time you run an **az dataprotection backup-instance** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage backup instance with dataprotection.
 description: ''
 directCommands:
@@ -22,8 +22,11 @@ directCommands:
                                                    [--subscription]
                                                    [--vault-name]
   examples:
-  - summary: Trigger Adhoc Backup
-    syntax: az dataprotection backup-instance adhoc-backup --name "testInstance1" --rule-name "BackupWeekly" --retention-tag-override "yearly" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
+  - summary: Fetch Backup Policy details for rule name and Trigger Adhoc Backup
+    syntax: >-
+      az dataprotection backup-policy show -g "000pikumar" --vault-name "PratikPrivatePreviewVault1" -n "backupPolicy"
+
+      az dataprotection backup-instance adhoc-backup --name "testInstance1" --rule-name "BackupWeekly" --retention-tag-override "yearly" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
   requiredParameters:
   - isRequired: true
     name: --rule-name
@@ -183,6 +186,7 @@ directCommands:
   description: ''
   syntax: >-
     az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureDatabaseForPostgreSQL, AzureDisk, AzureKubernetesService}
+                                                              [--backup-hook-references]
                                                               [--excluded-namespaces]
                                                               [--excluded-resource-type]
                                                               [--include-cluster-scope {false, true}]
@@ -200,6 +204,9 @@ directCommands:
     summary: Specify the datasource type of the resource to be backed up.
     description: ''
   optionalParameters:
+  - name: --backup-hook-references --backup-hook-refs
+    summary: Property sets the hook reference to be executed during backup.
+    description: ''
   - name: --excluded-namespaces
     summary: List of namespaces to be excluded for backup.
     description: ''
@@ -238,6 +245,7 @@ directCommands:
                                                                [--label-selectors]
                                                                [--namespace-mappings]
                                                                [--persistent-restoremode {RestoreWithVolumeData, RestoreWithoutVolumeData}]
+                                                               [--restore-hook-references]
   examples:
   - summary: Initialize restore configuration
     syntax: az dataprotection backup-instance initialize-restoreconfig --datasource-type AzureKubernetesService
@@ -278,6 +286,9 @@ directCommands:
     parameterValueGroup: "RestoreWithVolumeData, RestoreWithoutVolumeData"
     summary: Restore mode for persistent volumes. Allowed values are RestoreWithVolumeData, RestoreWithoutVolumeData. Default value is RestoreWithVolumeData.
     description: ''
+  - name: --restore-hook-references --restore-hook-refs
+    summary: Property sets the hook reference to be executed during restore.
+    description: ''
 - uid: az_dataprotection_backup-instance_list
   name: az dataprotection backup-instance list
   summary: Gets backup instances belonging to a backup vault.
@@ -285,6 +296,8 @@ directCommands:
   syntax: >-
     az dataprotection backup-instance list --resource-group
                                            --vault-name
+                                           [--max-items]
+                                           [--next-token]
   examples:
   - summary: List backup instances in a vault
     syntax: az dataprotection backup-instance list --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
@@ -296,6 +309,13 @@ directCommands:
   - isRequired: true
     name: --vault-name
     summary: The name of the backup vault.
+    description: ''
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
 - uid: az_dataprotection_backup-instance_list-from-resourcegraph
   name: az dataprotection backup-instance list-from-resourcegraph
@@ -479,6 +499,7 @@ directCommands:
                                              [--datasource-auth-credentials]
                                              [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--friendly-name]
+                                             [--identity-details]
                                              [--ids]
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--object-type]
@@ -498,13 +519,13 @@ directCommands:
     summary: The name of the backup instance.
     description: ''
   - name: --data-source-info
-    summary: Gets or sets the data source information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Gets or sets the data source information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   - name: --data-source-set-info
-    summary: Gets or sets the data source set information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Gets or sets the data source set information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   - name: --datasource-auth-credentials --datasource-auth-creds
-    summary: Credentials to use to authenticate with data source provider.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Credentials to use to authenticate with data source provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -512,6 +533,9 @@ directCommands:
     description: ''
   - name: --friendly-name
     summary: Gets or sets the Backup Instance friendly name.
+    description: ''
+  - name: --identity-details
+    summary: Contains information of the Identity Details for the BI. If it is null, default will be considered as System Assigned.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -524,7 +548,7 @@ directCommands:
     summary: Type of Backup or Restore Instance for request body.
     description: ''
   - name: --policy-info
-    summary: Gets or sets the policy information.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Gets or sets the policy information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   - name: --remove
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
@@ -539,7 +563,7 @@ directCommands:
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --tags
-    summary: Proxy Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try `??` to show more.
+    summary: Proxy Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   - name: --validation-type
     parameterValueGroup: "DeepValidation, ShallowValidation"
@@ -682,7 +706,7 @@ directCommands:
     description: ''
 - uid: az_dataprotection_backup-instance_validate-for-restore
   name: az dataprotection backup-instance validate-for-restore
-  summary: Validates if restore can be triggered for a datasource.
+  summary: Validates if Restore can be triggered for a DataSource.
   description: ''
   syntax: >-
     az dataprotection backup-instance validate-for-restore --restore-request-object
@@ -694,7 +718,7 @@ directCommands:
                                                            [--vault-name]
   examples:
   - summary: Validate Restore
-    syntax: az az dataprotection backup-instance validate-for-restore --name "testInstance1" --restore-request-object "restoreRequest.json" --resource-group "000pikumar" --vault-name "PratikPrivatePreviewVault1"
+    syntax: az dataprotection backup-instance validate-for-restore-g sample_rg --vault-name sample_backupvault --backup-instance-name sample_biname-fd53a211-3f3e-4c7e-ba45-81050e27c0be --restore-request-object restorerequestobject.json
   requiredParameters:
   - isRequired: true
     name: --restore-request-object
@@ -784,6 +808,10 @@ commands:
 - az_dataprotection_backup-instance_adhoc-backup
 - az_dataprotection_backup-instance_create
 - az_dataprotection_backup-instance_delete
+- az_dataprotection_backup-instance_deleted-backup-instance
+- az_dataprotection_backup-instance_deleted-backup-instance_list
+- az_dataprotection_backup-instance_deleted-backup-instance_show
+- az_dataprotection_backup-instance_deleted-backup-instance_undelete
 - az_dataprotection_backup-instance_initialize
 - az_dataprotection_backup-instance_initialize-backupconfig
 - az_dataprotection_backup-instance_initialize-restoreconfig

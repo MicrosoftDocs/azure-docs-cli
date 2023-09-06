@@ -11,7 +11,7 @@ This section contains examples of JMESPath queries for different Azure resources
 
 This section shows example queries for storage accounts.
 
-- This examples returns the tenant ID and subscription ID of the Azure account and subscription you are using.
+- This example returns the tenant ID and subscription ID of the Azure account and subscription you're using.
 
 ### [Bash](#tab/bash)
 
@@ -35,7 +35,7 @@ az account show --query "{tenantId:tenantId,subscriptionid:id}"
 
 ### Query examples for Azure Active Directory service principals
 
-This section shows example queries for AAD service principals.
+This section shows example queries for Azure Active Directory (Azure AD) service principals.
 
 - The following query returns the first Microsoft Graph application service principal who has read permissions.
 
@@ -89,7 +89,7 @@ az storage account show --resource-group QueryDemo --name mystorageaccount --que
 
 This section shows example queries for Virtual Machines (VMs).
 
-- This example returns the names of VMs whose disk size is larger than 50GB.
+- This example returns the names of VMs whose disk size is larger than 50 GB.
 
 ### [Bash](#tab/bash)
 
@@ -103,7 +103,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the 50 in the command above. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be taken into consideration. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues please see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the 50 in the command previous. The extra escape characters are present because Azure CLI commands are considered Command Prompt scripts.  Take into consideration the built-in parsing of both PowerShell and of a Command Prompt. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
@@ -162,7 +162,7 @@ az cognitiveservices account show --resource-group QueryDemo --name DemoAccount 
 
 ---
 
-### Query examples for virtual vetworks
+### Query examples for virtual networks
 
 This section shows example queries for virtual networks (VNet).
 

@@ -44,6 +44,7 @@ directCommands:
                    [--enable-agent {false, true}]
                    [--enable-auto-update {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
+                   [--enable-hibernation {false, true}]
                    [--enable-osimage-notification {false, true}]
                    [--enable-secure-boot {false, true}]
                    [--enable-spot-restore {false, true}]
@@ -294,6 +295,10 @@ directCommands:
   - name: --enable-cross-zone-upgrade
     parameterValueGroup: "false, true"
     summary: Set this Boolean property will allow VMSS to ignore AZ boundaries when constructing upgrade batches, and only consider Update Domain and maxBatchInstancePercent to determine the batch size.
+    description: ''
+  - name: --enable-hibernation
+    parameterValueGroup: "false, true"
+    summary: The flag that enable or disable hibernation capability on the VMSS.
     description: ''
   - name: --enable-osimage-notification
     parameterValueGroup: "false, true"
@@ -577,6 +582,7 @@ directCommands:
   syntax: >-
     az vmss deallocate --name
                        --resource-group
+                       [--hibernate {false, true}]
                        [--instance-ids]
                        [--no-wait]
   examples:
@@ -592,6 +598,10 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --hibernate
+    parameterValueGroup: "false, true"
+    summary: Hibernate a virtual machine from the VM scale set. Available for VMSS with Flexible OrchestrationMode only.
+    description: ''
   - name: --instance-ids
     summary: 'Space-separated list of IDs (ex: 1 2 3 ...) or * for all instances. If not provided, the action will be applied on the scaleset itself.'
     description: ''
@@ -602,27 +612,28 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_delete
   name: az vmss delete
-  summary: Deletes a VM scale set.
+  summary: Delete a VM scale set.
   description: ''
   syntax: >-
-    az vmss delete [--force-deletion]
+    az vmss delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
                    [--ids]
                    [--name]
-                   [--no-wait]
+                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                    [--resource-group]
                    [--subscription]
   optionalParameters:
   - name: --force-deletion
-    summary: Optional parameter to force delete a VM scale set. (Feature in Preview). Default value is None.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Optional parameter to force delete a VM scale set. (Feature in Preview).
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+  - name: --name --vm-scale-set-name -n
+    summary: The name of the VM scale set.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
@@ -695,36 +706,48 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_get-os-upgrade-history
   name: az vmss get-os-upgrade-history
-  summary: Gets list of OS upgrades on a VM scale set instance.
+  summary: List the OS upgrades on a VM scale set instance.
   description: ''
   syntax: >-
-    az vmss get-os-upgrade-history [--ids]
-                                   [--name]
-                                   [--resource-group]
-                                   [--subscription]
-  optionalParameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    az vmss get-os-upgrade-history --name
+                                   --resource-group
+                                   [--max-items]
+                                   [--next-token]
+  requiredParameters:
+  - isRequired: true
+    name: --name --vm-scale-set-name -n
+    summary: The name of the VM scale set.
     description: ''
-  - name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_list
   name: az vmss list
-  summary: List VMSS.
+  summary: List all VM scale sets under a resource group.
   description: ''
-  syntax: az vmss list [--resource-group]
+  syntax: >-
+    az vmss list [--max-items]
+                 [--next-token]
+                 [--resource-group]
   examples:
-  - summary: List VMSS (autogenerated)
+  - summary: List VMSS
     syntax: az vmss list --resource-group MyResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -783,87 +806,98 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_list-instances
   name: az vmss list-instances
-  summary: Get a list of all virtual machines in a VM scale sets.
+  summary: List all virtual machines in a VM scale sets.
   description: Return a list of virtual machines managed by VMSS. For VMSS in Flexible Orchestration mode, please use "az vm list" to get full details.
   syntax: >-
-    az vmss list-instances [--expand]
+    az vmss list-instances --name
+                           --resource-group
+                           [--expand]
                            [--filter]
-                           [--ids]
-                           [--name]
-                           [--resource-group]
+                           [--max-items]
+                           [--next-token]
                            [--select]
-                           [--subscription]
-  optionalParameters:
-  - name: --expand
-    summary: The expand expression to apply to the operation. Allowed values are 'instanceView'. Default value is None.
+  requiredParameters:
+  - isRequired: true
+    name: --name --virtual-machine-scale-set-name -n
+    summary: The name of the VM scale set.
     description: ''
-  - name: --filter
-    summary: The filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code, 'PowerState') eq true', 'properties/latestModelApplied eq true', 'properties/latestModelApplied eq false'. Default value is None.
-    description: ''
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
-  - name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --select
-    summary: The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'. Default value is None.
+  optionalParameters:
+  - name: --expand
+    summary: The expand expression to apply to the operation. Allowed values are 'instanceView'.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --filter
+    summary: The filter to apply to the operation. Allowed values are 'startswith(instanceView/statuses/code, 'PowerState') eq true', 'properties/latestModelApplied eq true', 'properties/latestModelApplied eq false'.
+    description: ''
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
+  - name: --select
+    summary: The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_list-skus
   name: az vmss list-skus
-  summary: Gets a list of SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
+  summary: List SKUs available for your VM scale set, including the minimum and maximum VM instances allowed for each SKU.
   description: ''
   syntax: >-
-    az vmss list-skus [--ids]
-                      [--name]
-                      [--resource-group]
-                      [--subscription]
-  optionalParameters:
-  - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    az vmss list-skus --name
+                      --resource-group
+                      [--max-items]
+                      [--next-token]
+  requiredParameters:
+  - isRequired: true
+    name: --name --vm-scale-set-name -n
+    summary: The name of the VM scale set.
     description: ''
-  - name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
-    description: ''
-  - name: --resource-group -g
+  - isRequired: true
+    name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
-  - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_perform-maintenance
   name: az vmss perform-maintenance
-  summary: Perform maintenance on one or more virtual machines in a VM scale set.
-  description: 'Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications.'
+  summary: 'Perform maintenance on one or more virtual machines in a VM scale set. Operation on instances which are not eligible for perform maintenance will be failed. Please refer to best practices for more details: https://docs.microsoft.com/azure/virtual-machine-scale-sets/virtual-machine-scale-sets-maintenance-notifications.'
+  description: ''
   syntax: >-
     az vmss perform-maintenance [--ids]
+                                [--instance-ids]
                                 [--name]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--resource-group]
                                 [--subscription]
-                                [--vm-instance-i-ds]
   optionalParameters:
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+  - name: --instance-ids
+    summary: The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    description: ''
+  - name: --name --vm-scale-set-name -n
+    summary: The name of the VM scale set.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  - name: --vm-instance-i-ds
-    summary: A list of virtual machine instance IDs from the VM scale set. Is either a VirtualMachineScaleSetVMInstanceIDs type or a IO type. Default value is None.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_reimage
@@ -1051,24 +1085,29 @@ directCommands:
   summary: Simulate the eviction of a Spot virtual machine in a VM scale set.
   description: ''
   syntax: >-
-    az vmss simulate-eviction --instance-id
-                              --name
-                              --resource-group
+    az vmss simulate-eviction [--ids]
+                              [--instance-id]
+                              [--name]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: Simulate the eviction of a Spot virtual machine in a VM scale set.
     syntax: az vmss simulate-eviction --resource-group MyResourceGroup --name MyScaleSet --instance-id 0
-  requiredParameters:
-  - isRequired: true
-    name: --instance-id
-    summary: The instance ID of the virtual machine. Required.
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --name -n
-    summary: Scale set name. You can configure the default using `az configure --defaults vmss=<name>`.
+  - name: --instance-id
+    summary: The instance ID of the virtual machine.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name --vm-scale-set-name -n
+    summary: The name of the VM scale set.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/vm/_help.py
 - uid: az_vmss_start
@@ -1151,6 +1190,7 @@ directCommands:
                    [--disk-controller-type {NVMe, SCSI}]
                    [--enable-automatic-repairs {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
+                   [--enable-hibernation {false, true}]
                    [--enable-osimage-notification {false, true}]
                    [--enable-secure-boot {false, true}]
                    [--enable-spot-restore {false, true}]
@@ -1179,6 +1219,7 @@ directCommands:
                    [--remove]
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
+                   [--security-type {TrustedLaunch}]
                    [--set]
                    [--spot-restore-timeout]
                    [--subscription]
@@ -1232,6 +1273,10 @@ directCommands:
   - name: --enable-cross-zone-upgrade
     parameterValueGroup: "false, true"
     summary: Set this Boolean property will allow VMSS to ignore AZ boundaries when constructing upgrade batches, and only consider Update Domain and maxBatchInstancePercent to determine the batch size.
+    description: ''
+  - name: --enable-hibernation
+    parameterValueGroup: "false, true"
+    summary: The flag that enable or disable hibernation capability on the VMSS.
     description: ''
   - name: --enable-osimage-notification
     parameterValueGroup: "false, true"
@@ -1331,6 +1376,10 @@ directCommands:
   - name: --scale-in-policy
     parameterValueGroup: "Default, NewestVM, OldestVM"
     summary: Specify the scale-in policy (space delimited) that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
+    description: ''
+  - name: --security-type
+    parameterValueGroup: "TrustedLaunch"
+    summary: Specify the security type of the virtual machine scale set.
     description: ''
   - name: --set
     defaultValue: "[]"
@@ -1547,5 +1596,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/26/2023
+  ms.date: 08/28/2023
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

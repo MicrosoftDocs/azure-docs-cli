@@ -4,7 +4,7 @@ name: az containerapp job
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **containerapp** extension for the Azure CLI  (version 2.45.0 or higher).  The extension will automatically install the first time you run an **az containerapp job** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **containerapp** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az containerapp job** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Commands to manage Container Apps jobs.
 description: ''
 directCommands:
@@ -22,6 +22,7 @@ directCommands:
                                [--cron-expression]
                                [--env-vars]
                                [--environment]
+                               [--environment-type {connected, managed}]
                                [--image]
                                [--max-executions]
                                [--memory]
@@ -51,6 +52,7 @@ directCommands:
   - summary: Create a container apps job with Trigger Type as Manual.
     syntax: >-
       az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --environment MyContainerappEnv
           --trigger-type Manual \
           --replica-timeout 5 \
           --replica-retry-limit 2 \
@@ -61,6 +63,7 @@ directCommands:
   - summary: Create a container apps job with Trigger Type as Schedule.
     syntax: >-
       az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --environment MyContainerappEnv
           --trigger-type Schedule \
           --replica-timeout 5 \
           --replica-retry-limit 2 \
@@ -71,6 +74,7 @@ directCommands:
   - summary: Create a container apps job with Trigger Type as Event.
     syntax: >-
       az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --environment MyContainerappEnv
           --trigger-type Event \
           --replica-timeout 5 \
           --replica-retry-limit 2 \
@@ -86,6 +90,18 @@ directCommands:
                                 "queueLength": "5" "queueName": "foo" \
           --scale-rule-auth "connection=my-connection-string-secret-name" \
           --image imageName
+  - summary: Create a container apps job hosted on a Connected Environment.
+    syntax: >-
+      az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --environment MyContainerappConnectedEnv
+          --environment-type connected
+          --trigger-type Manual \
+          --replica-timeout 5 \
+          --replica-retry-limit 2 \
+          --replica-completion-count 1 \
+          --parallelism 1 \
+          --image imageName \
+          --workload-profile-name my-wlp
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -116,6 +132,11 @@ directCommands:
     description: ''
   - name: --environment
     summary: Name or resource ID of the container app's environment.
+    description: ''
+  - name: --environment-type
+    defaultValue: "managed"
+    parameterValueGroup: "connected, managed"
+    summary: Type of environment.
     description: ''
   - name: --image
     summary: Container image, e.g. publisher/image-name:tag.
@@ -286,6 +307,7 @@ directCommands:
                               [--registry-identity]
                               [--resource-group]
                               [--subscription]
+                              [--yaml]
   examples:
   - summary: Start a job execution.
     syntax: az containerapp job start -n MyContainerAppJob -g MyResourceGroup
@@ -331,6 +353,9 @@ directCommands:
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --yaml
+    summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
     description: ''
 - uid: az_containerapp_job_stop
   name: az containerapp job stop
