@@ -1,5 +1,5 @@
 ---
-title: Work with Azure service principals with a certificate – Azure CLI | Microsoft Docs
+title: Work with Azure service principals using a certificate – Azure CLI | Microsoft Docs
 description:  Use service principals with an existing certificate to gain control over which Azure resources can be accessed.
 manager: jasongroce
 author: daphnemamsft
@@ -166,3 +166,10 @@ az acr login --name registryName
 > Certificate must be in PEM format - it won't work with PKCS#12 files (.p12/.pfx)
 >
 > You don't need to prefix the path with an @ like you do with the previous az commands
+
+## Next Steps
+
+Now that you've learned how to work with service principals using a certificate, proceed to the next step to learn how to create a resource using service principal.
+
+> [!div class="nextstepaction"]
+> [Manage service principal roles](./azure-cli-sp-tutorial-6.md)

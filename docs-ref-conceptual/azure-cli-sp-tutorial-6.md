@@ -54,3 +54,10 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
     ```azurecli-interactive
     az storage account keys list --name myStorageAccountName --resource-group myResourceGroupName
     ```
+
+## Next Steps
+
+Now that you've learned how to create a resource using service principal, proceed to the next step to learn how to reset your service principal credentials.
+
+> [!div class="nextstepaction"]
+> [Reset service principal credentials](./azure-cli-sp-tutorial-7.md)

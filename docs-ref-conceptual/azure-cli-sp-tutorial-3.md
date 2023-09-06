@@ -43,3 +43,10 @@ az role assignment list --assignee appID
 ```
 
 You can also go into the [Azure portal](https://ms.portal.azure.com/) and manually assign the role to the service principal from the IAM section of the Azure Container Registry Instance.
+
+## Next Steps
+
+Now that you've learned how to manage your service principal roles, proceed to the next step to learn how to work with service principals using a password.
+
+> [!div class="nextstepaction"]
+> [Work with service principals using a password](./azure-cli-sp-tutorial-4.md)

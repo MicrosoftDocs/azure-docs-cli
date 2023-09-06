@@ -14,3 +14,9 @@ keywords: azure service principal, create service principal azure, create servic
 
 # 8 - Cleanup
  
+## Next Steps
+
+Now that you've learned how to cleanup your service principal resources, proceed to the next step to see an overall summary of everything you have learned.
+
+> [!div class="nextstepaction"]
+> [Summary](./azure-cli-sp-tutorial-9.md)

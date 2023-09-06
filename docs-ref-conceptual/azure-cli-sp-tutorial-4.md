@@ -1,5 +1,5 @@
 ---
-title: Work with Azure service principals with a password – Azure CLI | Microsoft Docs
+title: Work with Azure service principals using a password – Azure CLI | Microsoft Docs
 description: Use service principals with a password to gain control over which Azure resources can be accessed.
 manager: jasongroce
 author: daphnemamsft
@@ -77,3 +77,10 @@ To sign in with a service principal using a password:
 ```azurecli-interactive
 az login --service-principal --username appID --password PASSWORD --tenant tenantID
 ```
+
+## Next Steps
+
+Now that you've learned how to work with service principals using a password, proceed to the next step to learn how to work with service principals using a certificate.
+
+> [!div class="nextstepaction"]
+> [Work with service principals using a certificate](./azure-cli-sp-tutorial-5.md)

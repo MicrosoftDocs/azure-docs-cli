@@ -41,3 +41,9 @@ When creating a service principal, you choose the type of sign-in authentication
 > To reduce your risk of a compromised service principal, assign a more specific role and narrow the scopes to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
 
 
+## Next Steps
+
+Now that you've learned how to create an Azure service principal, proceed to the next step to learn how to retrieve the service principal you created.
+
+> [!div class="nextstepaction"]
+> [Getting an existing service principal](./azure-cli-sp-tutorial-2.md)

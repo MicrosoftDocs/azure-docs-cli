@@ -20,3 +20,10 @@ as `az ad sp create-for-rbac`.
 ```azurecli-interactive
 az ad sp credential reset --name myServicePrincipal_appID_or_name
 ```
+
+## Next Steps
+
+Now that you've learned how to reset your service principal credentials, proceed to the next step to see how to clean up your service principal resources.
+
+> [!div class="nextstepaction"]
+> [Cleanup](./azure-cli-sp-tutorial-8.md)
