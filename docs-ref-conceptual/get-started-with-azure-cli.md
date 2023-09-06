@@ -1,10 +1,10 @@
 ---
 title: Get started with Azure Command-Line Interface (CLI) | Microsoft Docs
-description: Learn how to start using the Azure CLI by completing common commands. You can begin using the Azure CLI by running it in an Azure Cloud shell environment.
+description: Learn how to start using the Azure CLI by completing common commands. You can begin using the Azure CLI by running it in an Azure Cloud Shell environment.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
@@ -109,9 +109,9 @@ To learn how to use the Azure CLI, try an in-depth tutorial for setting up virtu
 of the CLI to query Azure resources.
 
 > [!div class="nextstepaction"]
-> [Create virtual machines with the Azure CLI tutorial](azure-cli-vm-tutorial.yml)
+> [Create virtual machines with the Azure CLI tutorial](azure-cli-vm-tutorial-1.md)
 
-There are also quickstarts for other popular services.
+There are also Quickstarts for other popular services.
 
 * [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cli)
 * [Transfer objects to/from Azure Blob storage using the CLI](/azure/storage/blobs/storage-quickstart-blobs-cli)

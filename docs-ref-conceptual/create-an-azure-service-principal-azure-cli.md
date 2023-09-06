@@ -4,7 +4,7 @@ description: Learn how to create and use service principals with the Azure CLI. 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -19,12 +19,11 @@ applications sign in as a fully privileged user, Azure offers service principals
 ## What is an Azure service principal?
 
 An Azure service principal is an identity created for use with
-applications, hosted services, and automated tools to access
-Azure resources. This access is restricted by the roles assigned
-to the service principal, giving you control over which resources
-can be accessed and at which level. For security reasons, it's
+applications, hosted services, and automated tools to access resources.
+The roles assigned to the service principal restrict access. This gives you control over which resources can be accessed and at what level.
+For security reasons, it's
 always recommended to use service principals with automated
-tools rather than allowing them to log in with a user identity.
+tools rather than allowing them to sign in with a user identity.
 
 This article shows you the steps for creating, getting information about, and resetting an Azure service principal with the Azure CLI.
 
@@ -44,10 +43,10 @@ When creating a service principal, you choose the type of sign-in authentication
 
 ### Password-based authentication
 
-With password-based authentication, a random password is created for you.  If you do not specify a `--name` parameter value, a name containing a time stamp will be created for you.  You must specify a `--scopes` as this value does not have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
+With password-based authentication, a random password is created for you.  If you don't specify a `--name` parameter value, a name containing a time stamp is created for you.  You must specify a `--scopes` as this value doesn't have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
 
 ```azurecli-interactive
-# Create a service principal with required parameter
+# Create a service principal without a role assignment
 az ad sp create-for-rbac --scopes /subscriptions/mySubscriptionID
 
 # Create a service principal for a resource group using a preferred name and role
@@ -144,7 +143,7 @@ myCertificateValue
 > [!NOTE]
 > The `az ad sp create-for-rbac --create-cert` command creates the service principal and a PEM file. The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
 
-The `--keyvault` parameter can be added to store the certificate in Azure Key Vault. When using `--keyvault`, the `--cert` parameter is __required__.
+The `--keyvault` parameter can be added to store the certificate in Azure Key Vault. When you use `--keyvault`, the `--cert` parameter is __required__.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
@@ -225,7 +224,7 @@ az role assignment delete --assignee appID \
                           --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 ```
 
-Adding a role _doesn't_ restrict previously assigned permissions. When restricting a service principal's permissions, the __Contributor__ role should be removed if previously assigned.
+Adding a role _doesn't_ restrict previously assigned permissions. When you restrict a service principal's permissions, the __Contributor__ role should be removed if previously assigned.
 
 The changes can be verified by listing the assigned roles:
 
@@ -243,7 +242,7 @@ To sign in with a service principal using a password:
 az login --service-principal --username appID --password PASSWORD --tenant tenantID
 ```
 
-To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When using a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
+To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
 
 ```azurecli-interactive
 az login --service-principal --username appID --tenant tenantID --password /path/to/cert
@@ -253,7 +252,7 @@ To learn more about signing in with a service principal, see [Sign in with the A
 
 ## 5. Create a resource using service principal
 
-The following section provides an example of how to create an resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
+The following section provides an example of how to create a resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
 * [az login](/cli/azure/reference-index#az-login)
 * [az group create](/cli/azure/group#az-group-create)
@@ -262,7 +261,7 @@ The following section provides an example of how to create an resource for [Azur
 
 To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned as the response when you [created your service principal](#1-create-a-service-principal).
 
-1. Log in as the service principal.
+1. Sign in as the service principal.
 
     ```azurecli-interactive
     az login --service-principal --username appID --password PASSWORD --tenant tenantID
@@ -306,13 +305,13 @@ az ad sp credential reset --name myServicePrincipal_appID_or_name
 ## 7. Troubleshooting
 
 ### Insufficient privileges
-If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` will return an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
+If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` returns an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
 ### Invalid tenant
-If you have specified an invalid subscription ID, you see the error message "The request did not have a subscription or a valid tenant level resource provider."  If using variables, use the Bash `echo` command to see the value being passed to the reference command.  Use [az account set](/cli/azure/account#az-account-set) to change your subscription or learn [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
+If you have specified an invalid subscription ID, you see the error message "The request didn't have a subscription or a valid tenant level resource provider."  If using variables, use the Bash `echo` command to see the value being passed to the reference command.  Use [az account set](/cli/azure/account#az-account-set) to change your subscription or learn [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 ### Resource group not found
-If you have specified an invalid resource group name, you see the error message "Resource group 'name' could not be found."  If using variables, use the Bash `echo` command to see the value being passed to both the subscription and reference commands.  Use [az group list](/cli/azure/group#az-group-list) to see the resource groups for the current subscription, or learn [How to manage Azure resource groups with the Azure CLI](./manage-azure-groups-azure-cli.md).
+If you have specified an invalid resource group name, you see the error message "Resource group 'name' couldn't be found."  If using variables, use the Bash `echo` command to see the value being passed to both the subscription and reference commands.  Use [az group list](/cli/azure/group#az-group-list) to see the resource groups for the current subscription, or learn [How to manage Azure resource groups with the Azure CLI](./manage-azure-groups-azure-cli.md).
 
 ### Authorization to perform action
 If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.

@@ -4,7 +4,7 @@ description: Learn how to find, install, uninstall, and manage extensions with A
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
@@ -15,7 +15,7 @@ keywords: manage extensions, microsoft extensions, install extensions, uninstall
 # Use and manage extensions with the Azure CLI 
 
 The Azure CLI offers the capability to load extensions. Extensions for the Azure CLI are characterized as Python wheels that aren't shipped as part of the CLI but run as CLI commands.
-With extensions, you gain access to experimental and pre-release commands along with the ability to write your own CLI interfaces. This article covers how to manage extensions and answers common questions about their use.
+With extensions, you gain access to experimental and prerelease commands along with the ability to write your own CLI interfaces. This article covers how to manage extensions and answers common questions about their use.
 
 ## How to find extensions
 
@@ -55,7 +55,7 @@ Linux and macOS, and `%USERPROFILE%\.azure\cliextensions` on Windows.
 
 ### Install extensions automatically
 
-When you run an extension command that is not installed, the Azure CLI can recognize the command you run, and automatically install the extension for you starting from version `2.10.0`. This feature, referred to as **dynamic install**, is enabled by default since `2.12.0`. You can also enable it through configuration for previous supported versions.
+When you run an extension command that isn't installed, the Azure CLI can recognize the command you run, and automatically install the extension for you starting from version `2.10.0`. This feature, referred to as **dynamic install**, is enabled by default since `2.12.0`. You can also enable it through configuration for previous supported versions.
 ```azurecli-interactive
 az config set extension.use_dynamic_install=yes_prompt
 ```
@@ -65,7 +65,7 @@ Use the following configuration command to enable dynamic install without a prom
 az config set extension.use_dynamic_install=yes_without_prompt
 ```
 
-Use the following configuration command to turn off the dynamic install feature to revert to the default behavior. The extension command will return a command-not-found error if the extension is not installed.
+Use the following configuration command to turn off the dynamic install feature to revert to the default behavior. The extension command returns a command-not-found error if the extension isn't installed.
 ```azurecli-interactive
 az config set extension.use_dynamic_install=no
 ```
@@ -77,7 +77,7 @@ az config set extension.run_after_dynamic_install=no
 
 ## How to update extensions
 
-If an extension was installed by name, update it using [az extension update](/cli/azure/extension#az-extension-update).
+If you install an extension by name, update it using [az extension update](/cli/azure/extension#az-extension-update).
 
 ```azurecli-interactive
 az extension update --name <extension-name>
@@ -85,7 +85,7 @@ az extension update --name <extension-name>
 
 Otherwise, an extension can be updated from source by following the [Install extensions](#how-to-install-extensions) instructions.
 
-If an extension name can't be resolved by the CLI, uninstall it and attempt to reinstall. The extension could also have become part of the base CLI.
+If you can't use CLI to resolve an extension name, uninstall it and attempt to reinstall. The extension could also have become part of the base CLI.
 Try updating the CLI as described in [Install the Azure CLI](install-azure-cli.md) and see if the extension's commands were added.
 
 ## How to uninstall extensions
@@ -113,20 +113,20 @@ Currently, only compiled Python wheels can be installed as extensions.
 
 ### Can extensions replace existing commands?
 
-Yes. Extensions may replace existing commands, but before running a command that has been replaced the CLI will issue a warning.
+Yes. Extensions may replace existing commands, but before running a command that has been replaced the CLI issues a warning.
 
-### How can I tell if an extension is in pre-release?
+### How can I tell if an extension is in prerelease?
 
-An extension's documentation and versioning will show if it's in pre-release. Microsoft often releases preview commands as CLI extensions, with the option
+An extension's documentation and versioning shows if it's in prerelease. Microsoft often releases preview commands as CLI extensions, with the option
 of moving them into the main CLI product later. When commands are moved out of extensions, the old extension should be uninstalled. 
 
 ### Can extensions depend upon each other?
 
-No. Since the CLI doesn't guarantee a load order, dependencies might not be satisfied. Removing an extension won't affect any others.
+No. Since the CLI doesn't guarantee a load order, dependencies might not be satisfied. Removing an extension doesn't affect any others.
 
 ### Are extensions updated along with the CLI?
 
 No. Extensions must be updated separately, as described in [Update extensions](#how-to-update-extensions).
 
 ### How to develop our own extension?
-Please refer to the official repository for more help. [Azure/azure-cli-extensions](https://github.com/Azure/azure-cli/tree/master/doc/extensions)
+Refer to the official repository for more help. [Azure/azure-cli-extensions](https://github.com/Azure/azure-cli/tree/master/doc/extensions)

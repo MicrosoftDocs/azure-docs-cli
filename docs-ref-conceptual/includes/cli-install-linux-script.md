@@ -11,7 +11,7 @@ ms.custom: devx-track-azurecli
 
 ## Before you begin
 
-It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates, and guarantees the stability of CLI components. Check and see if there is a package for your distribution before installing manually.
+It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates, and guarantees the stability of CLI components. Check and see if there's a package for your distribution before installing manually.
 
 The CLI requires the following software:
 
@@ -21,7 +21,7 @@ The CLI requires the following software:
 
 ## Install or update Azure CLI
 
-Both installing and updating the Azure CLI requires re-running the install script.
+Both installing and updating the Azure CLI requires rerunning the install script.
 
 ```bash
 curl -L https://aka.ms/InstallAzureCli | bash
@@ -65,8 +65,8 @@ Here are some common problems seen during a manual installation. If you experien
 ### Install without Python 3
 
 The Azure CLI has dropped support for Python 2.7 since version [2.1.0](/cli/azure/release-notes-azure-cli#february-18-2020).
-On your system, there may be a Python version which predates the requirement of Python 3.6.x.
-If this affects you, find a replacement `python3` package.
+On your system, there may be a Python version that predates the requirement of Python 3.6.x.
+Find a replacement `python3` package.
 
 ### curl "Object Moved" error
 

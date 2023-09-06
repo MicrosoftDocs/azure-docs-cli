@@ -4,7 +4,7 @@ description: The Azure CLI allows user configuration for various settings. Manag
 author: dbradish-microsoft
 ms.author: dbradish
 manager: barbkess
-ms.date: 07/13/2023 
+ms.date: 08/2/2023 
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -24,7 +24,7 @@ Configuration values used by the CLI are evaluated in the following precedence, 
 
 ## Configure settings using az init
 
-The easiest way to set Azure CLI configurations is to use the interactive [az init](/cli/azure/reference-index#az-init) command.  Choose a common configuration like "interaction" or "automation", or opt to walk through individual configurations.  What is especially helpful with this approach is `az init` provides reasons why you might want to choose one configuration option over another.
+The easiest way to set Azure CLI configurations is to use the interactive [az init](/cli/azure/reference-index#az-init) command.  Choose a common configuration like "interaction" or "automation," or opt to walk through individual configurations.  What is especially helpful with this approach is `az init` provides reasons why you might want to choose one configuration option over another.
 
 ```azurecli-interactive
 az init
@@ -64,13 +64,13 @@ The CLI configuration file contains other settings that are used for managing CL
 at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS,
 and `%USERPROFILE%\.azure` on Windows.
 
-Configuration files are written in the INI file format. This file format is defined by section headers, followed by a list of key-value entries.
+Configuration files are written in the INI file format. Section headers define the file format, followed by a list of key-value entries.
 
 * Section headers are written as `[section-name]`. Section names are case-sensitive.
-* Entries are written as `key=value`. Key names are not case-sensitive.
-* Comments are any line that begins with a `#` or `;`. Inline comments are not allowed.
+* Entries are written as `key=value`. Key names aren't case-sensitive.
+* Comments are any line that begins with a `#` or `;`. Inline comments aren't allowed.
 
-Booleans are case-insensitive, and are represented by the following values.
+Booleans are case-insensitive. The following values represent booleans:
 
 * __True__: `1`, `yes`, `true`, `on`
 * __False__: `0`, `no`, `false`, `off`
@@ -100,10 +100,10 @@ When you provide a default value, that argument is no longer required by any com
 |---------|-----------|------|------------|
 | __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
-| | display\_region\_identified | boolean | Azure customers can choose to deploy resources in many different regions.  In some cases, customers may be able to reduce costs by selecting nearby regions offering the same services.  If a nearby region is identified, a message will display the region to select for future deployments. This setting controls if the message will be displayed.
+| | display\_region\_identified | boolean | Azure customers can choose to deploy resources in many different regions.  In some cases, customers may be able to reduce costs by selecting nearby regions offering the same services.  If a nearby region is identified, a message will display the region to select for future deployments. This setting controls if the message is displayed.
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI MIT license](https://github.com/Azure/azure-cli/blob/dev/LICENSE). |
-| | only\_show\_errors | boolean | Only show errors during command invocation. In other words, only errors will be written to `stderr`. It suppresses warnings from preview, deprecated and experimental commands. It is also available for individual commands with the `--only-show-errors` parameter. |
-| | no\_color | boolean | Disable color. Originally colored messages will be prefixed with `DEBUG`, `INFO`, `WARNING` and `ERROR`. This bypasses the issue of a third-party library where the terminal's color cannot revert back after a `stdout` redirection. |
+| | only\_show\_errors | boolean | Only show errors during command invocation. In other words, only errors are written to `stderr`. It suppresses warnings from preview, deprecated and experimental commands. It's also available for individual commands with the `--only-show-errors` parameter. |
+| | no\_color | boolean | Disable color. Originally colored messages are prefixed with `DEBUG`, `INFO`, `WARNING` and `ERROR`. This boolean bypasses the issue of a third-party library where the terminal's color can't revert back after a `stdout` redirection. |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
 | | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs*`. |
 | __defaults__ | group | string | The default resource group to use for all commands. |
@@ -112,7 +112,7 @@ When you provide a default value, that argument is no longer required by any com
 | | vm | string | The default VM name to use for `az vm` commands. |
 | | vmss | string | The default virtual machine scale set (VMSS) name to use for `az vmss` commands. |
 | | acr | string | The default container registry name to use for `az acr` commands. |
-| __storage__ | account | string | The default storage account name (e.g., **mystorageaccount** in `https://mystorageaccount.blob.core.windows.net`) to use for `az storage` data-plane commands (e.g., `az storage container list`). |
+| __storage__ | account | string | The default storage account name (for example, **mystorageaccount** in `https://mystorageaccount.blob.core.windows.net`) to use for `az storage` data-plane commands (for example, `az storage container list`). |
 | | key | string | The default access key to use for `az storage` data-plane commands. |
 | | sas\_token | string | The default SAS token to use for `az storage` data-plane commands. |
 | | connection\_string | string | The default connection string to use for `az storage` data-plane commands. |
@@ -125,11 +125,11 @@ When you provide a default value, that argument is no longer required by any com
 | __cloud__ | name | string | The default cloud for all `az` commands.  The possible values are  `AzureCloud` (default), `AzureChinaCloud`, `AzureUSGovernment`. To change clouds, you can use the `az cloud set –name` command.  For an example, see [Manage Clouds with the Azure CLI](manage-clouds-azure-cli.md). |
 | __extension__ | use_dynamic_install | string | Install an extension if it's not added yet when running a command from it. The possible values are `no` (default), `yes_prompt`, `yes_without_prompt`. |
 | | run_after_dynamic_install | boolean | Continue to run the command when an extension is dynamically installed for it. Default is `False`. |
-| | index_url | string | URL of private extension index file following the format in [index.json](https://github.com/Azure/azure-cli-extensions/blob/main/src/index.json). Once specified, executing `az extension add --name <extension-name>` will use that file to find the extension to add. |
+| | index_url | string | URL of private extension index file following the format in [index.json](https://github.com/Azure/azure-cli-extensions/blob/main/src/index.json). Once specified, executing `az extension add --name <extension-name>` uses that file to find the extension to add. |
 
 > [!NOTE]
 > You may see other values in your configuration file, but these are managed directly through CLI commands,
-> including `az config`. The ones listed in the table above are the only values you should change yourself.
+> including `az config`. The ones listed in the table previously are the only values you should change yourself.
 
 ## See also
 

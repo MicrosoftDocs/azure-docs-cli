@@ -172,6 +172,6 @@ All extensions install with endpoint **azcliprod.blob.core.windows.net** with th
 - [Work with existing on-premises proxy servers](/azure/active-directory/app-proxy/application-proxy-configure-connectors-with-proxy-servers)
 - [Azure Firewall threat intelligence configuration - Allowlist addresses](/azure/firewall-manager/threat-intelligence-settings#allowlist-addresses)
 - Azure IP ranges and Service Tags
-  - [Public Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=56519)
-  - [US Government Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57063)
-  - [China Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=57062)
+  - [Public Cloud](https://www.microsoft.com/download/details.aspx?id=56519)
+  - [US Government Cloud](https://www.microsoft.com/download/details.aspx?id=57063)
+  - [China Cloud](https://www.microsoft.com/download/details.aspx?id=57062)
