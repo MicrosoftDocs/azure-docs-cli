@@ -71,7 +71,7 @@ To sign in with a service principal, you need:
 * The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
 
 > [!NOTE]
-> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./service-principal-certificate.md).
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./azure-cli-sp-tutorial-5.md).
 
 > [!IMPORTANT]
 >
@@ -96,7 +96,7 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
-See [Working with service principals](./azure-cli-sp-tutorial-5.md) for more information on PEM file formats.
+See [Working with service principals](./azure-cli-sp-tutorial-1.md) for more information on PEM file formats.
 
 ## Sign in with a different tenant
 
