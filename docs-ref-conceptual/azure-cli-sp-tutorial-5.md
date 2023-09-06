@@ -14,7 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # 5 - Using Service Principal with certificate-based authentication
 
-When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing **certificate** with the service principal to access the Azure Container Registry.
+When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing **certificate** with the service principal to access the Azure Container Registry.
 
 ## How do I add certificates to a Service Principal?
 
@@ -115,7 +115,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
 __Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
 
-If you lose access to a certificate's private key, [reset the service principal credentials](./create-an-azure-service-principal-azure-cli.md#6-reset-credentials).
+If you lose access to a certificate's private key, [reset the service principal credentials](./(./azure-cli-sp-tutorial-7.md)).
 
 ## Retrieve certificate from Key Vault
 

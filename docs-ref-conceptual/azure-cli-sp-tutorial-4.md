@@ -22,7 +22,7 @@ To learn more about signing in with a service principal, see [Sign in with the A
 
 ## Using Service Principal with password-based authentication
 
-When creating a [Service Principal](./create-an-azure-service-principal-azure-cli.md), you can choose either password-based or [certificate based-authentication](./azure-cli-sp-tutorial-5.md). This article details how you can use a **password** with the service principal to access the Azure Container Registry.
+When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose either password-based or [certificate based-authentication](./azure-cli-sp-tutorial-5.md). This article details how you can use a **password** with the service principal to access the Azure Container Registry.
 
 ### How does password-based authentication work?
 
@@ -65,7 +65,7 @@ Output Console:
 
 ```
 
-The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](./create-an-azure-service-principal-azure-cli.md#6-reset-credentials).
+The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
 ### Sign in with a service principal using a password
 
