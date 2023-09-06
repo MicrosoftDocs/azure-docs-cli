@@ -11,7 +11,7 @@ directCommands:
   syntax: >-
     az network private-dns zone create --name
                                        --resource-group
-                                       [--no-wait]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--tags]
   examples:
   - summary: Create a Private DNS zone using a fully qualified domain name.
@@ -19,7 +19,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Private DNS zone.
+    summary: Name of the Private DNS zone.
     description: ''
   - isRequired: true
     name: --resource-group -g
@@ -27,11 +27,11 @@ directCommands:
     description: ''
   optionalParameters:
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --tags
-    summary: Resource tags for the Private DNS zone.
+    summary: Resource tags for the Private DNS zone.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_private-dns_zone_delete
@@ -39,30 +39,35 @@ directCommands:
   summary: Delete a Private DNS zone.
   description: All DNS records in the zone will also be deleted. This operation cannot be undone. Private DNS zone cannot be deleted unless all virtual network links to it are removed.
   syntax: >-
-    az network private-dns zone delete --name
-                                       --resource-group
+    az network private-dns zone delete [--ids]
                                        [--if-match]
-                                       [--no-wait]
+                                       [--name]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--resource-group]
+                                       [--subscription]
                                        [--yes]
   examples:
   - summary: Delete a Private DNS zone using a fully qualified domain name.
     syntax: az network private-dns zone delete -g MyResourceGroup -n www.mysite.com
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Private DNS zone.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --if-match
-    summary: The ETag of the Private DNS zone. Omit this value to always delete the current zone. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes.
+    summary: ETag of the Private DNS zone. Omit this value to always delete the current zone. Specify the last-seen ETag value to prevent accidentally deleting any concurrent changes.
+    description: ''
+  - name: --name -n
+    summary: Name of the Private DNS zone.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --yes -y
     defaultValue: "False"
@@ -123,11 +128,20 @@ directCommands:
   name: az network private-dns zone list
   summary: List Private DNS zones.
   description: ''
-  syntax: az network private-dns zone list [--resource-group]
+  syntax: >-
+    az network private-dns zone list [--max-items]
+                                     [--next-token]
+                                     [--resource-group]
   examples:
   - summary: List Private DNS zones in a resource group.
     syntax: az network private-dns zone list -g MyResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
@@ -137,19 +151,25 @@ directCommands:
   summary: Get a Private DNS zone.
   description: ''
   syntax: >-
-    az network private-dns zone show --name
-                                     --resource-group
+    az network private-dns zone show [--ids]
+                                     [--name]
+                                     [--resource-group]
+                                     [--subscription]
   examples:
   - summary: Get a Private DNS zone using a fully qualified domain name.
     syntax: az network private-dns zone show -g MyResourceGroup -n www.mysite.com
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Private DNS zone.
+  optionalParameters:
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
-  - isRequired: true
-    name: --resource-group -g
+  - name: --name -n
+    summary: Name of the Private DNS zone.
+    description: ''
+  - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_private-dns_zone_update
@@ -157,81 +177,73 @@ directCommands:
   summary: Update a Private DNS zone's properties. Does not modify Private DNS records or virtual network links within the zone.
   description: ''
   syntax: >-
-    az network private-dns zone update --name
-                                       --resource-group
-                                       [--add]
-                                       [--force-string]
+    az network private-dns zone update [--add]
+                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--ids]
                                        [--if-match]
-                                       [--no-wait]
+                                       [--name]
+                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--remove]
+                                       [--resource-group]
                                        [--set]
+                                       [--subscription]
                                        [--tags]
   examples:
   - summary: Update a Private DNS zone properties to change the user-defined value of a previously set tag.
     syntax: az network private-dns zone update -g MyResourceGroup -n www.mysite.com --tags CostCenter=Marketing
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Private DNS zone.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --if-match
-    summary: The ETag of the Private DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes.
+    summary: ETag of the Private DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes.
+    description: ''
+  - name: --name -n
+    summary: Name of the Private DNS zone.
     description: ''
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
   - name: --tags
-    summary: Resource tags for the Private DNS zone.
+    summary: Resource tags for the Private DNS zone.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
     description: ''
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
 - uid: az_network_private-dns_zone_wait
   name: az network private-dns zone wait
-  summary: Place the CLI in a waiting state until a condition of the Private DNS zone is met.
+  summary: Place the CLI in a waiting state until a condition is met.
   description: ''
   syntax: >-
-    az network private-dns zone wait --name
-                                     --resource-group
-                                     [--created]
+    az network private-dns zone wait [--created]
                                      [--custom]
                                      [--deleted]
                                      [--exists]
+                                     [--ids]
                                      [--interval]
+                                     [--name]
+                                     [--resource-group]
+                                     [--subscription]
                                      [--timeout]
                                      [--updated]
-  examples:
-  - summary: Pause executing next line of CLI script until the Private DNS zone is successfully provisioned.
-    syntax: az network private-dns zone wait -g MyResourceGroup -n www.mysite.com --created
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: The name of the Private DNS zone.
-    description: ''
-  - isRequired: true
-    name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
   optionalParameters:
   - name: --created
     defaultValue: "False"
@@ -248,9 +260,21 @@ directCommands:
     defaultValue: "False"
     summary: Wait until the resource exists.
     description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
   - name: --interval
     defaultValue: "30"
     summary: Polling interval in seconds.
+    description: ''
+  - name: --name -n
+    summary: Name of the Private DNS zone.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
   - name: --timeout
     defaultValue: "3600"

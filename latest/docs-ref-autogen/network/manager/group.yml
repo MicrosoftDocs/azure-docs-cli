@@ -4,7 +4,7 @@ name: az network manager group
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **virtual-network-manager** extension for the Azure CLI  (version 2.43.0 or higher).  The extension will automatically install the first time you run an **az network manager group** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **virtual-network-manager** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az network manager group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage networkgroup with network.
 description: ''
 directCommands:
@@ -24,7 +24,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --name --network-group-name -n
-    summary: The name of the network group to get.
+    summary: The name of the network group.
     description: ''
   - isRequired: true
     name: --network-manager-name
@@ -43,13 +43,14 @@ directCommands:
     description: ''
 - uid: az_network_manager_group_delete
   name: az network manager group delete
-  summary: Deletes a network group.
+  summary: Delete a network group.
   description: ''
   syntax: >-
-    az network manager group delete [--force {false, true}]
+    az network manager group delete [--force {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--ids]
                                     [--name]
                                     [--network-manager-name]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--resource-group]
                                     [--subscription]
                                     [--yes]
@@ -58,18 +59,21 @@ directCommands:
     syntax: az network manager group delete --name "TestNetworkGroup" --network-manager-name "testNetworkManager" --resource-group "rg1" --force
   optionalParameters:
   - name: --force
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: Deletes the resource even if it is part of a deployed configuration.
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Deletes the resource even if it is part of a deployed configuration. If the configuration has been deployed, the service will do a cleanup deployment in the background, prior to the delete.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name --network-group-name -n
-    summary: The name of the network group to get.
+    summary: The name of the network group.
     description: ''
   - name: --network-manager-name
     summary: The name of the network manager.
+    description: ''
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: Do not wait for the long-running operation to finish.
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -83,11 +87,13 @@ directCommands:
     description: ''
 - uid: az_network_manager_group_list
   name: az network manager group list
-  summary: Lists the specified network group.
+  summary: List the specified network group.
   description: ''
   syntax: >-
     az network manager group list --network-manager-name
                                   --resource-group
+                                  [--max-items]
+                                  [--next-token]
                                   [--skip-token]
                                   [--top]
   examples:
@@ -103,6 +109,12 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
   - name: --skip-token
     summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
     description: ''
@@ -111,7 +123,7 @@ directCommands:
     description: ''
 - uid: az_network_manager_group_show
   name: az network manager group show
-  summary: Gets the specified network group.
+  summary: Get the specified network group.
   description: ''
   syntax: >-
     az network manager group show [--ids]
@@ -127,7 +139,7 @@ directCommands:
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
   - name: --name --network-group-name -n
-    summary: The name of the network group to get.
+    summary: The name of the network group.
     description: ''
   - name: --network-manager-name
     summary: The name of the network manager.
@@ -145,7 +157,7 @@ directCommands:
   syntax: >-
     az network manager group update [--add]
                                     [--description]
-                                    [--force-string]
+                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--ids]
                                     [--if-match]
                                     [--name]
@@ -156,14 +168,13 @@ directCommands:
                                     [--subscription]
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --description
     summary: A description of the network group.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
@@ -173,24 +184,82 @@ directCommands:
     summary: The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes.
     description: ''
   - name: --name --network-group-name -n
-    summary: The name of the network group to get.
+    summary: The name of the network group.
     description: ''
   - name: --network-manager-name
     summary: The name of the network manager.
     description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+- uid: az_network_manager_group_wait
+  name: az network manager group wait
+  summary: Place the CLI in a waiting state until a condition is met.
+  description: ''
+  syntax: >-
+    az network manager group wait [--created]
+                                  [--custom]
+                                  [--deleted]
+                                  [--exists]
+                                  [--ids]
+                                  [--interval]
+                                  [--name]
+                                  [--network-manager-name]
+                                  [--resource-group]
+                                  [--subscription]
+                                  [--timeout]
+                                  [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: Wait until created with 'provisioningState' at 'Succeeded'.
+    description: ''
+  - name: --custom
+    summary: Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+    description: ''
+  - name: --deleted
+    defaultValue: "False"
+    summary: Wait until deleted.
+    description: ''
+  - name: --exists
+    defaultValue: "False"
+    summary: Wait until the resource exists.
+    description: ''
+  - name: --ids
+    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+    description: ''
+  - name: --interval
+    defaultValue: "30"
+    summary: Polling interval in seconds.
+    description: ''
+  - name: --name --network-group-name -n
+    summary: The name of the network group.
+    description: ''
+  - name: --network-manager-name
+    summary: The name of the network manager.
+    description: ''
+  - name: --resource-group -g
+    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+  - name: --subscription
+    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+    description: ''
+  - name: --timeout
+    defaultValue: "3600"
+    summary: Maximum wait in seconds.
+    description: ''
+  - name: --updated
+    defaultValue: "False"
+    summary: Wait until updated with provisioningState at 'Succeeded'.
     description: ''
 commands:
 - az_network_manager_group_create
@@ -203,6 +272,7 @@ commands:
 - az_network_manager_group_static-member_list
 - az_network_manager_group_static-member_show
 - az_network_manager_group_update
+- az_network_manager_group_wait
 globalParameters:
 - name: --debug
   summary: Increase logging verbosity to show all debug logs.

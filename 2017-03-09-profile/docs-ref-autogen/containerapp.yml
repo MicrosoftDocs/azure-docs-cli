@@ -36,6 +36,7 @@ directCommands:
   syntax: >-
     az containerapp create --name
                            --resource-group
+                           [--allow-insecure {false, true}]
                            [--args]
                            [--bind]
                            [--command]
@@ -51,6 +52,7 @@ directCommands:
                            [--enable-dapr {false, true}]
                            [--env-vars]
                            [--environment]
+                           [--environment-type {connected, managed}]
                            [--exposed-port]
                            [--image]
                            [--ingress {external, internal}]
@@ -126,6 +128,11 @@ directCommands:
           --image my-app:v1.0 --environment MyContainerappEnv \
           --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
           --secret-volume-mount "mnt/secrets"
+  - summary: Create a container app hosted on a Connected Environment.
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+          --image my-app:v1.0 --environment MyContainerappConnectedEnv \
+          --environment-type connected
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -136,6 +143,11 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --allow-insecure
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: Allow insecure connections for ingress traffic.
+    description: ''
   - name: --args
     summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
     description: ''
@@ -185,6 +197,11 @@ directCommands:
     description: ''
   - name: --environment
     summary: Name or resource ID of the container app's environment.
+    description: ''
+  - name: --environment-type
+    defaultValue: "managed"
+    parameterValueGroup: "connected, managed"
+    summary: Type of environment.
     description: ''
   - name: --exposed-port
     summary: Additional exposed port. Only supported by tcp transport protocol. Must be unique per environment if the app ingress is external.
@@ -359,18 +376,39 @@ directCommands:
   description: ''
   syntax: >-
     az containerapp list [--environment]
+                         [--environment-type {connected, managed}]
                          [--resource-group]
   examples:
   - summary: List container apps in the current subscription.
     syntax: az containerapp list
   - summary: List container apps by resource group.
     syntax: az containerapp list -g MyResourceGroup
+  - summary: List container apps by environment type.
+    syntax: az containerapp list --environment-type connected
   optionalParameters:
   - name: --environment
     summary: Name or resource ID of the container app's environment.
     description: ''
+  - name: --environment-type
+    defaultValue: "all"
+    parameterValueGroup: "connected, managed"
+    summary: Type of environment.
+    description: ''
   - name: --resource-group -g
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+    description: ''
+- uid: az_containerapp_list-usages
+  name: az containerapp list-usages
+  summary: List usages of subscription level quotas in specific region.
+  description: ''
+  syntax: az containerapp list-usages --location
+  examples:
+  - summary: List usages of  quotas in specific region.
+    syntax: az containerapp list-usages -l eastus
+  requiredParameters:
+  - isRequired: true
+    name: --location -l
+    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
     description: ''
 - uid: az_containerapp_show
   name: az containerapp show
@@ -402,6 +440,16 @@ directCommands:
   - name: --subscription
     summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
     description: ''
+- uid: az_containerapp_show-custom-domain-verification-id
+  name: az containerapp show-custom-domain-verification-id
+  summary: Show the verification id for binding app or environment custom domains.
+  description: ''
+  syntax: az containerapp show-custom-domain-verification-id
+  examples:
+  - summary: Get the verification id, which needs to be added as a TXT record for app custom domain to verify domain ownership
+    syntax: az containerapp show-custom-domain-verification-id
+  - summary: Get the verification id, which needs to be added as a TXT record for custom environment DNS suffix to verify domain ownership
+    syntax: az containerapp show-custom-domain-verification-id
 - uid: az_containerapp_up
   name: az containerapp up
   summary: Create or update a container app as well as any associated resources (ACR, resource group, container apps environment, GitHub Actions, etc.).
@@ -768,6 +816,7 @@ commands:
 - az_containerapp_env_dapr-component_show
 - az_containerapp_env_delete
 - az_containerapp_env_list
+- az_containerapp_env_list-usages
 - az_containerapp_env_logs
 - az_containerapp_env_logs_show
 - az_containerapp_env_show
@@ -840,6 +889,7 @@ commands:
 - az_containerapp_job_stop
 - az_containerapp_job_update
 - az_containerapp_list
+- az_containerapp_list-usages
 - az_containerapp_logs
 - az_containerapp_logs_show
 - az_containerapp_patch
@@ -876,6 +926,9 @@ commands:
 - az_containerapp_service_kafka_create
 - az_containerapp_service_kafka_delete
 - az_containerapp_service_list
+- az_containerapp_service_mariadb
+- az_containerapp_service_mariadb_create
+- az_containerapp_service_mariadb_delete
 - az_containerapp_service_postgres
 - az_containerapp_service_postgres_create
 - az_containerapp_service_postgres_delete
@@ -883,6 +936,7 @@ commands:
 - az_containerapp_service_redis_create
 - az_containerapp_service_redis_delete
 - az_containerapp_show
+- az_containerapp_show-custom-domain-verification-id
 - az_containerapp_ssl
 - az_containerapp_ssl_upload
 - az_containerapp_up

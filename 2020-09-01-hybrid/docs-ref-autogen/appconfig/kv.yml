@@ -80,6 +80,7 @@ directCommands:
                            [--separator]
                            [--skip-features {false, true}]
                            [--skip-keyvault {false, true}]
+                           [--snapshot]
                            [--yes]
   examples:
   - summary: Export all keys and feature flags with label test to a json file.
@@ -96,6 +97,8 @@ directCommands:
     syntax: az appconfig kv export -d appconfig --endpoint https://myappconfiguration.azconfig.io --auth-mode login --dest-endpoint https://anotherappconfiguration.azconfig.io --dest-auth-mode login --key * --label * --preserve-labels
   - summary: Export all keys and feature flags with label test using appconfig/kvset profile.
     syntax: az appconfig kv export -n MyAppConfiguration --label test -d file --path D:/abc.json --format json --profile appconfig/kvset
+  - summary: Export all keys to another App Configuration from a snapshot of the source configuration
+    syntax: az appconfig kv export -n MyAppConfiguration -d appconfig --dest-name AnotherAppConfiguration --snapshot MySnapshot
   requiredParameters:
   - isRequired: true
     name: --destination -d
@@ -191,6 +194,9 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: Export items excluding all key vault references. By default, all key vault references with the specified label will be exported.
     description: ''
+  - name: --snapshot
+    summary: Export all keys in a given snapshot of the App Configuration store. If no snapshot is specified, the keys currently in the store are exported based on the specified key and label filters.
+    description: ''
   - name: --yes -y
     defaultValue: "False"
     summary: Do not prompt for preview.
@@ -209,6 +215,7 @@ directCommands:
                            [--depth]
                            [--endpoint]
                            [--format {json, properties, yaml}]
+                           [--import-mode {all, ignore-match}]
                            [--label]
                            [--name]
                            [--path]
@@ -223,6 +230,7 @@ directCommands:
                            [--src-key]
                            [--src-label]
                            [--src-name]
+                           [--src-snapshot]
                            [--strict {false, true}]
                            [--yes]
   examples:
@@ -230,6 +238,8 @@ directCommands:
     syntax: az appconfig kv import -n MyAppConfiguration --label test -s file --path D:/abc.json --format json
   - summary: Import all keys and feature flags with null label and apply new label from an App Configuration.
     syntax: az appconfig kv import -n MyAppConfiguration -s appconfig --src-name AnotherAppConfiguration --label ImportedKeys
+  - summary: Import all keys from a snapshot of an App Configuration.
+    syntax: az appconfig kv import -n MyAppConfiguration -s appconfig --src-name AnotherAppConfiguration --src-snapshot MySnapshot
   - summary: Import all keys and apply null label from an App Service application.
     syntax: az appconfig kv import -n MyAppConfiguration -s appservice --appservice-account MyAppService
   - summary: Import all keys with label test and apply test2 label excluding feature flags from an App Configuration.
@@ -272,6 +282,11 @@ directCommands:
   - name: --format
     parameterValueGroup: "json, properties, yaml"
     summary: Imported file format. Required for file arguments. Currently, feature flags are not supported in properties format.
+    description: ''
+  - name: --import-mode
+    defaultValue: "ignore-match"
+    parameterValueGroup: "all, ignore-match"
+    summary: If import mode is "ignore-match", source key-values that already exist at the destination will not be overwritten. Import mode "all" writes all key-values to the destination regardless of whether they exist or not.
     description: ''
   - name: --label
     summary: Imported KVs and feature flags will be assigned with this label. If no label specified, will assign null label.
@@ -322,6 +337,9 @@ directCommands:
     description: ''
   - name: --src-name
     summary: The name of the source App Configuration.
+    description: ''
+  - name: --src-snapshot
+    summary: Import all keys in a given snapshot of the source App Configuration store. If no snapshot is specified, the keys currently in the store are imported based on the specified key and label filters.
     description: ''
   - name: --strict
     defaultValue: "False"
@@ -743,5 +761,5 @@ globalParameters:
   summary: Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
-  ms.date: 07/25/2023
+  ms.date: 08/16/2023
   description: Manage key-values stored in an App Configuration.

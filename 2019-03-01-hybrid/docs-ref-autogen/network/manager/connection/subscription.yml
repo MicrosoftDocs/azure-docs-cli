@@ -4,37 +4,36 @@ name: az network manager connection subscription
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **virtual-network-manager** extension for the Azure CLI  (version 2.43.0 or higher).  The extension will automatically install the first time you run an **az network manager connection subscription** command.  [Learn more](https://docs.microsoft.com/en-us/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **virtual-network-manager** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az network manager connection subscription** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Manage subscription-group connection with network.
 description: ''
 directCommands:
 - uid: az_network_manager_connection_subscription_create
   name: az network manager connection subscription create
-  summary: Create a connection from a subscription to a cross-tenant network manager.
+  summary: Create a network manager connection on this subscription.
   description: ''
   syntax: >-
     az network manager connection subscription create --connection-name
-                                                      --network-manager
                                                       [--description]
+                                                      [--network-manager]
   examples:
   - summary: Create network manager connection
     syntax: az network manager connection subscription create --connection-name "testNetworkManagerConnection" --description "A sample policy" --network-manager-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testManagerName
   requiredParameters:
   - isRequired: true
     name: --connection-name --name -n
-    summary: The name of the network manager connection.
-    description: ''
-  - isRequired: true
-    name: --network-manager --network-manager-id
-    summary: The id of the network manager.
+    summary: Name for the network manager connection.
     description: ''
   optionalParameters:
   - name: --description
-    summary: A description of the scope connection.
+    summary: A description of the network manager connection.
+    description: ''
+  - name: --network-manager --network-manager-id
+    summary: Network Manager Id.
     description: ''
 - uid: az_network_manager_connection_subscription_delete
   name: az network manager connection subscription delete
-  summary: Deletes a network manager connection.
+  summary: Delete specified connection created by this subscription.
   description: ''
   syntax: >-
     az network manager connection subscription delete [--connection-name]
@@ -46,7 +45,7 @@ directCommands:
     syntax: az network manager connection subscription delete --connection-name "testNetworkManagerConnection"
   optionalParameters:
   - name: --connection-name --name -n
-    summary: The name of the network manager connection.
+    summary: Name for the network manager connection.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -63,12 +62,20 @@ directCommands:
   summary: List all network manager connections created by this subscription.
   description: ''
   syntax: >-
-    az network manager connection subscription list [--skip-token]
+    az network manager connection subscription list [--max-items]
+                                                    [--next-token]
+                                                    [--skip-token]
                                                     [--top]
   examples:
   - summary: List network manager connections in a network manager
     syntax: az network manager connection subscription list
   optionalParameters:
+  - name: --max-items
+    summary: Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+    description: ''
+  - name: --next-token
+    summary: Token to specify where to start paginating. This is the token value from a previously truncated response.
+    description: ''
   - name: --skip-token
     summary: SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls.
     description: ''
@@ -88,7 +95,7 @@ directCommands:
     syntax: az network manager connection subscription show --connection-name "testNetworkManagerConnection"
   optionalParameters:
   - name: --connection-name --name -n
-    summary: The name of the network manager connection.
+    summary: Name for the network manager connection.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -98,14 +105,15 @@ directCommands:
     description: ''
 - uid: az_network_manager_connection_subscription_update
   name: az network manager connection subscription update
-  summary: Update a connection from this subscription to a cross tenant network manager.
+  summary: Update a network manager connection on this subscription.
   description: ''
   syntax: >-
     az network manager connection subscription update [--add]
                                                       [--connection-name]
                                                       [--description]
-                                                      [--force-string]
+                                                      [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                       [--ids]
+                                                      [--network-manager]
                                                       [--remove]
                                                       [--set]
                                                       [--subscription]
@@ -114,28 +122,28 @@ directCommands:
     syntax: az network manager connection subscription update --connection-name "testNetworkManagerConnection" --description "A sample policy"
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
     description: ''
   - name: --connection-name --name -n
-    summary: The name of the network manager connection.
+    summary: Name for the network manager connection.
     description: ''
   - name: --description
-    summary: A description of the scope connection.
+    summary: A description of the network manager connection.
     description: ''
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
     description: ''
   - name: --ids
     summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
     description: ''
+  - name: --network-manager --network-manager-id
+    summary: Network Manager Id.
+    description: ''
   - name: --remove
-    defaultValue: "[]"
     summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
     description: ''
   - name: --set
-    defaultValue: "[]"
     summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
     description: ''
   - name: --subscription

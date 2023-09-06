@@ -18,7 +18,7 @@ There are several authentication types for the Azure Command-Line Interface (CLI
 Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az-login) command. When you write scripts, the recommended approach is
 to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 
-Azure CLI doesn't store any of your login information. Instead, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). As of August 2018 this token is revoked after 90 days of inactivity. Contact your Microsoft or tenant administrator to change this value. Once the token is revoked, you get a message from the CLI saying you need to sign in again.
+When signing in with a user account, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). For more information on refresh and session token configuration, see [Refresh and session token lifetime policy properties](/azure/active-directory/develop/configurable-token-lifetimes#refresh-and-session-token-lifetime-policy-properties).
 
 After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can [change your default subscription](manage-azure-subscriptions-azure-cli.md).
 
@@ -115,7 +115,7 @@ On resources configured for managed identities for Azure resources, you can sign
 az login --identity
 ```
 
-If the resource has multiple user assigned managed identities and no system assigned identity, you must specify the client id or object id or resource id of the user assigned managed identity with `--username` for login.
+If the resource has multiple user assigned managed identities and no system assigned identity, you must specify the client ID or object ID or resource ID of the user assigned managed identity with `--username` for login.
 ```azurecli-interactive
 az login --identity --username <client_id|object_id|resource_id>
 ```

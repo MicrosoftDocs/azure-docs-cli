@@ -74,7 +74,6 @@ See [Create an Azure service principal with the Azure CLI](./azure-cli-sp-tutori
 
 ## See Also
 
+* [Onboarding Cheat Sheet](./cheat-sheet-onboarding.md)
 * [Get started with the Azure CLI](./get-started-with-azure-cli.md)
-* [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
-* [Azure resources that the Azure CLI can manage](./azure-services-the-azure-cli-can-manage.md)
 * [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
