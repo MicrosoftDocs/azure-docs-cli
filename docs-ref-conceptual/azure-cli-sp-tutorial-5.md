@@ -24,8 +24,6 @@ We recommend you use Azure CLI to perform certificate-based authentication, howe
 
 For certificate-based authentication, use the `--cert` parameter. This parameter requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
 
-Existing certificates can also be assigned manually to a service principal through the Azure Portal. You can use the same command shown at the end of the article, to sign in to the Azure Container Registry by using the certificate as the password. To learn more, see [how to assign a certificate to a service principal through Azure Portal](./service-principal-certificate-az-portal.md).
-
 > [!NOTE]
 > When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
 
@@ -115,7 +113,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
 __Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
 
-If you lose access to a certificate's private key, [reset the service principal credentials](./(./azure-cli-sp-tutorial-7.md)).
+If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
 ## Retrieve certificate from Key Vault
 

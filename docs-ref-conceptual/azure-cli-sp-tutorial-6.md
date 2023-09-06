@@ -21,7 +21,7 @@ The following section provides an example of how to create a resource for [Azure
 * [az storage account create](/cli/azure/storage/account#az-storage-account-create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
 
-To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned as the response when you [created your service principal](#1-create-a-service-principal).
+To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned as the response when you [created your service principal](./azure-cli-sp-tutorial-1.md).
 
 1. Sign in as the service principal.
 

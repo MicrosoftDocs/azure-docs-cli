@@ -34,4 +34,4 @@ az ad sp list --show-mine --query "[].{id:appId, tenant:appOwnerTenantId}"
 >
 > `az ad sp list` or [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
 > Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default.
-> If you forget an authentication method or secret, [reset the service principal credentials](#6-reset-credentials).
+> If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
