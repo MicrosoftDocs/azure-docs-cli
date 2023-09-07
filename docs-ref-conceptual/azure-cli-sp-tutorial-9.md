@@ -16,6 +16,8 @@ keywords: azure service principal, create service principal azure, create servic
 
 ## Troubleshooting
 
+Congratulations! You learned how to create, retrieve, and work with service principals in order to create a resource group. Although you have completed the tutorial, you may still have additional questions regarding service principals that can be answered in this article.
+
 ### Insufficient privileges
 If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` returns an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
 
