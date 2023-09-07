@@ -14,12 +14,6 @@ keywords: azure service principal, create service principal azure, create servic
 
 # 4 - Sign in using a service principal
 
-## Prerequisites
-
-You can test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and credentials.
-
-To learn more about signing in with a service principal, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
-
 ## Using Service Principal with password-based authentication
 
 When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose either password-based or [certificate based-authentication](./azure-cli-sp-tutorial-5.md). This article details how you can use a **password** with the service principal to access the Azure Container Registry.
@@ -69,6 +63,10 @@ The output for a service principal with password authentication includes the `pa
 
 ### Sign in with a service principal using a password
 
+You can test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and credentials.
+
+To learn more about signing in with a service principal, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
+
 To sign in with a service principal using a password:
 
 > [!IMPORTANT]
@@ -77,6 +75,22 @@ To sign in with a service principal using a password:
 ```azurecli-interactive
 az login --service-principal --username appID --password PASSWORD --tenant tenantID
 ```
+
+> [!IMPORTANT]
+> If you want to avoid displaying your password on console and are using `az login` interactively,
+> use the `read -s` command under `bash`.
+>
+> ```bash
+> read -sp "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-id> -p $AZ_PASS --tenant <tenant>
+> ```
+>
+> Under PowerShell, use the `Get-Credential` cmdlet.
+>
+> ```powershell
+> $AzCred = Get-Credential -UserName <app-id>
+> az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
+> ```
+
 
 ## Next Steps
 

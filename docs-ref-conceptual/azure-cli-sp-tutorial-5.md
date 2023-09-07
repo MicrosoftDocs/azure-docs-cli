@@ -16,6 +16,12 @@ keywords: azure service principal, create service principal azure, create servic
 
 When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing **certificate** with the service principal to access the Azure Container Registry.
 
+## Why use certificate-based authentication?
+
+We recommend using certificate-based authentication due to the security considerations that password authentication has. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/overview), which better protects the user's assets. 
+
+To learn more about why and how certificate based authentication is more secure, see [Azure Active Directory certificate based authentication concepts](https://learn.microsoft.com/en-us/azure/active-directory/authentication/concept-certificate-based-authentication). 
+
 ## How do I add certificates to a Service Principal?
 
 We recommend you use Azure CLI to perform certificate-based authentication, however there is also a way to manually assign an existing certificate to a service principal through the Azure portal:
@@ -172,4 +178,4 @@ az acr login --name registryName
 Now that you've learned how to work with service principals using a certificate, proceed to the next step to learn how to create a resource using service principal.
 
 > [!div class="nextstepaction"]
-> [Manage service principal roles](./azure-cli-sp-tutorial-6.md)
+> [Create a resource using service principal](./azure-cli-sp-tutorial-6.md)
