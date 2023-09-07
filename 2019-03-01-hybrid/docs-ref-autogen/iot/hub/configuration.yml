@@ -5,28 +5,24 @@ extensionInformation: >-
   > [!Note]
 
   > This reference is part of the **azure-iot** extension for the Azure CLI (version 2.37.0 or higher). The extension will automatically install the first time you run an **az iot hub configuration** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Manage IoT automatic device management configuration at scale.
-description: ''
+summary: |-
+  Manage IoT automatic device management configuration at scale.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_iot_hub_configuration_create(azure-iot)
   name: az iot hub configuration create
-  summary: Create an IoT automatic device management configuration in a target IoT Hub.
-  description: >-
+  summary: |-
+    Create an IoT automatic device management configuration in a target IoT Hub.
+  description: |-
     Configuration content is json and slighty varies based on device or module intent.
-
 
     Device configurations are in the form of {"deviceContent":{...}} or {"content":{"deviceContent":{...}}}
 
-
     Module configurations are in the form of {"moduleContent":{...}} or {"content":{"moduleContent":{...}}}
 
-
     Configurations can be defined with user provided metrics for on demand evaluation.
-
     User metrics are json and in the form of {"queries":{...}} or {"metrics":{"queries":{...}}}.
-
 
     Note: Target condition for modules must start with "from devices.modules where".
   status: GA
@@ -45,63 +41,68 @@ directCommands:
                                     [--resource-group]
                                     [--target-condition]
   examples:
-  - summary: Create a device configuration with a priority of 3 that applies on condition when a device is tagged in building 9 and the environment is 'test'.
+  - summary: |-
+      Create a device configuration with a priority of 3 that applies on condition when a device is tagged in building 9 and the environment is 'test'.
     syntax: az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition "tags.building=9 and tags.environment='test'" --priority 3
-  - summary: Create a device configuration with labels and provide user metrics inline (bash syntax example).
+  - summary: |-
+      Create a device configuration with labels and provide user metrics inline (bash syntax example).
     syntax: "az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition \"tags.building=9\" --labels '{\"key0\":\"value0\", \"key1\":\"value1\"}' --priority 10 --metrics '{\"metrics\": {\"queries\": {\"mymetric\": \"select deviceId from devices where tags.location='US'\"}}}'"
-  - summary: Create a module configuration with labels and provide user metrics inline (cmd syntax example)
+  - summary: |-
+      Create a module configuration with labels and provide user metrics inline (cmd syntax example)
     syntax: "az iot hub configuration create -c {config_name} -n {iothub_name} --content module_content.json --target-condition \"from devices.modules where tags.building=9\" --labels \"{\\\"key0\\\":\\\"value0\\\", \\\"key1\\\":\\\"value1\\\"}\" --metrics \"{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetric\\\": \\\"select moduleId from devices.modules where tags.location='US'\\\"}}}\""
-  - summary: Create a module configuration with content and user metrics inline (powershell syntax example).
+  - summary: |-
+      Create a module configuration with content and user metrics inline (powershell syntax example).
     syntax: "az iot hub configuration create -c {config_name} -n {iothub_name} --content '{\\\"moduleContent\\\": {\\\"properties.desired.chillerWaterSettings\\\": {\\\"temperature\\\": 38, \\\"pressure\\\": 78}}}' --target-condition \"from devices.modules where tags.building=9\" --priority 1 --metrics '{\\\"metrics\\\": {\\\"queries\\\": {\\\"mymetric\\\":\\\"select moduleId from devices.modules where tags.location=''US''\\\"}}}'"
-  - summary: Create a device configuration with an alternative input style of labels and metrics (shell agnostic).
+  - summary: |-
+      Create a device configuration with an alternative input style of labels and metrics (shell agnostic).
     syntax: az iot hub configuration create -c {config_name} -n {iothub_name} --content device_content.json --target-condition "from devices.modules where tags.building=9" --custom-labels key0="value0" key1="value1" --priority 10 --custom-metric-queries mymetric1="select deviceId from devices where tags.location='US'" mymetric2="select *"
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
-    description: ''
+    summary: |-
+      Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!'].
   - isRequired: true
     name: --content -k
-    summary: Device configuration content. Provide file path or raw json.
-    description: ''
+    summary: |-
+      Device configuration content. Provide file path or raw json.
   optionalParameters:
   - name: --auth-type
     defaultValue: "key"
     parameterValueGroup: "key, login"
-    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
-    description: ''
+    summary: |-
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
   - name: --cl --custom-labels
-    summary: 'An alternative input style (space separated key=value pairs) for --labels and intended to replace it in the future. Format example: key1=value1 key2="this is my value".'
-    description: ''
+    summary: |-
+      An alternative input style (space separated key=value pairs) for --labels and intended to replace it in the future. Format example: key1=value1 key2="this is my value".
   - name: --cmq --custom-metric-queries
-    summary: "An alternative input style (space separated key=value pairs) for --metrics and intended to replace it in the future. Format example: metric1=\"select deviceId from devices where tags.location='US'\" metric2=\"select *\"."
-    description: ''
+    summary: |-
+      An alternative input style (space separated key=value pairs) for --metrics and intended to replace it in the future. Format example: metric1="select deviceId from devices where tags.location='US'" metric2="select *".
   - name: --hub-name -n
-    summary: IoT Hub name or hostname. Required if --login is not provided.
-    description: ''
+    summary: |-
+      IoT Hub name or hostname. Required if --login is not provided.
   - name: --lab --labels
-    summary: 'Map of labels to be applied to target configuration. Using --custom-labels instead of --labels is recommended.Format example: {"key0":"value0", "key1":"value1"}.'
-    description: ''
+    summary: |-
+      Map of labels to be applied to target configuration. Using --custom-labels instead of --labels is recommended.Format example: {"key0":"value0", "key1":"value1"}.
   - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
-    description: ''
+    summary: |-
+      This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
   - name: --metrics -m
-    summary: Device configuration metric definitions. Provide file path or raw json.Using --custom-metric-queries instead of --metrics is recommended.
-    description: ''
+    summary: |-
+      Device configuration metric definitions. Provide file path or raw json.Using --custom-metric-queries instead of --metrics is recommended.
   - name: --pri --priority
     defaultValue: "0"
-    summary: Weight of the device configuration in case of competing rules (highest wins).
-    description: ''
+    summary: |-
+      Weight of the device configuration in case of competing rules (highest wins).
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --target-condition --tc -t
-    summary: "Target condition in which a device or module configuration applies to. Configurations with no target condition will target no device or module. Use the following format: \"tags.environment='test'\"."
-    description: ''
+    summary: |-
+      Target condition in which a device or module configuration applies to. Configurations with no target condition will target no device or module. Use the following format: "tags.environment='test'".
 - uid: az_iot_hub_configuration_delete(azure-iot)
   name: az iot hub configuration delete
-  summary: Delete an IoT device configuration.
-  description: ''
+  summary: |-
+    Delete an IoT device configuration.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -114,30 +115,30 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
-    description: ''
+    summary: |-
+      Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!'].
   optionalParameters:
   - name: --auth-type
     defaultValue: "key"
     parameterValueGroup: "key, login"
-    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
-    description: ''
+    summary: |-
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
   - name: --etag -e
-    summary: Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
-    description: ''
+    summary: |-
+      Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
   - name: --hub-name -n
-    summary: IoT Hub name or hostname. Required if --login is not provided.
-    description: ''
+    summary: |-
+      IoT Hub name or hostname. Required if --login is not provided.
   - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
-    description: ''
+    summary: |-
+      This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_iot_hub_configuration_list(azure-iot)
   name: az iot hub configuration list
-  summary: List IoT automatic device management configurations in an IoT Hub.
-  description: ''
+  summary: |-
+    List IoT automatic device management configurations in an IoT Hub.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -150,24 +151,24 @@ directCommands:
   - name: --auth-type
     defaultValue: "key"
     parameterValueGroup: "key, login"
-    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
-    description: ''
+    summary: |-
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
   - name: --hub-name -n
-    summary: IoT Hub name or hostname. Required if --login is not provided.
-    description: ''
+    summary: |-
+      IoT Hub name or hostname. Required if --login is not provided.
   - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
-    description: ''
+    summary: |-
+      This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --top
-    summary: Maximum number of configurations to return. By default all configurations are returned.
-    description: ''
+    summary: |-
+      Maximum number of configurations to return. By default all configurations are returned.
 - uid: az_iot_hub_configuration_show-metric(azure-iot)
   name: az iot hub configuration show-metric
-  summary: Evaluate a target user or system metric defined in an IoT device configuration.
-  description: ''
+  summary: |-
+    Evaluate a target user or system metric defined in an IoT device configuration.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -179,43 +180,45 @@ directCommands:
                                          [--metric-type {system, user}]
                                          [--resource-group]
   examples:
-  - summary: Evaluate the user defined 'warningLimit' metric
+  - summary: |-
+      Evaluate the user defined 'warningLimit' metric
     syntax: az iot hub configuration show-metric -m warningLimit -c {configuration_name} -n {iothub_name}
-  - summary: Evaluate the system 'appliedCount' metric
+  - summary: |-
+      Evaluate the system 'appliedCount' metric
     syntax: az iot hub configuration show-metric --metric-id appliedCount -c {configuration_name} -n {iothub_name} --metric-type system
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
-    description: ''
+    summary: |-
+      Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!'].
   - isRequired: true
     name: --metric-id -m
-    summary: Target metric for evaluation.
-    description: ''
+    summary: |-
+      Target metric for evaluation.
   optionalParameters:
   - name: --auth-type
     defaultValue: "key"
     parameterValueGroup: "key, login"
-    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
-    description: ''
+    summary: |-
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
   - name: --hub-name -n
-    summary: IoT Hub name or hostname. Required if --login is not provided.
-    description: ''
+    summary: |-
+      IoT Hub name or hostname. Required if --login is not provided.
   - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
-    description: ''
+    summary: |-
+      This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
   - name: --metric-type --mt
     defaultValue: "user"
     parameterValueGroup: "system, user"
-    summary: Indicates which metric collection should be used to lookup a metric.
-    description: ''
+    summary: |-
+      Indicates which metric collection should be used to lookup a metric.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_iot_hub_configuration_show(azure-iot)
   name: az iot hub configuration show
-  summary: Get the details of an IoT automatic device management configuration.
-  description: ''
+  summary: |-
+    Get the details of an IoT automatic device management configuration.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -227,32 +230,31 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
-    description: ''
+    summary: |-
+      Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!'].
   optionalParameters:
   - name: --auth-type
     defaultValue: "key"
     parameterValueGroup: "key, login"
-    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
-    description: ''
+    summary: |-
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
   - name: --hub-name -n
-    summary: IoT Hub name or hostname. Required if --login is not provided.
-    description: ''
+    summary: |-
+      IoT Hub name or hostname. Required if --login is not provided.
   - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
-    description: ''
+    summary: |-
+      This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_iot_hub_configuration_update(azure-iot)
   name: az iot hub configuration update
-  summary: Update specified properties of an IoT automatic device management configuration.
-  description: >-
+  summary: |-
+    Update specified properties of an IoT automatic device management configuration.
+  description: |-
     Use --set followed by property assignments for updating a configuration.
 
-
     Note: Configuration content is immutable. Configuration properties that can be
-
     updated are 'labels', 'metrics', 'priority' and 'targetCondition'.
   status: GA
   sourceType: Extension
@@ -268,47 +270,48 @@ directCommands:
                                     [--resource-group]
                                     [--set]
   examples:
-  - summary: Alter the priority of a device configuration and update its target condition
+  - summary: |-
+      Alter the priority of a device configuration and update its target condition
     syntax: az iot hub configuration update -c {configuration_name} -n {iothub_name} --set priority=10 targetCondition="tags.building=43 and tags.environment='dev'"
   requiredParameters:
   - isRequired: true
     name: --config-id -c
-    summary: "Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!']."
-    description: ''
+    summary: |-
+      Target device configuration name. Lowercase and the following special characters are allowed: [-+%_*!'].
   optionalParameters:
   - name: --add
     defaultValue: "[]"
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --auth-type
     defaultValue: "key"
     parameterValueGroup: "key, login"
-    summary: Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
-    description: ''
+    summary: |-
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
   - name: --etag -e
-    summary: Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
-    description: ''
+    summary: |-
+      Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
   - name: --force-string
     defaultValue: "False"
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --hub-name -n
-    summary: IoT Hub name or hostname. Required if --login is not provided.
-    description: ''
+    summary: |-
+      IoT Hub name or hostname. Required if --login is not provided.
   - name: --login -l
-    summary: This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
-    description: ''
+    summary: |-
+      This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
   - name: --remove
     defaultValue: "[]"
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
     defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
 commands:
 - az_iot_hub_configuration_create(azure-iot)
 - az_iot_hub_configuration_delete(azure-iot)
@@ -318,20 +321,27 @@ commands:
 - az_iot_hub_configuration_update(azure-iot)
 globalParameters:
 - name: --debug
-  summary: Increase logging verbosity to show all debug logs.
+  summary: |-
+    Increase logging verbosity to show all debug logs.
 - name: --help -h
-  summary: Show this help message and exit.
+  summary: |-
+    Show this help message and exit.
 - name: --only-show-errors
-  summary: Only show errors, suppressing warnings.
+  summary: |-
+    Only show errors, suppressing warnings.
 - name: --output -o
   defaultValue: "json"
   parameterValueGroup: "json, jsonc, table, tsv"
-  summary: Output format.
+  summary: |-
+    Output format.
 - name: --query
-  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --subscription
-  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
-  summary: Increase logging verbosity. Use --debug for full debug logs.
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage IoT automatic device management configuration at scale.
