@@ -4,7 +4,7 @@ name: az arcappliance run
 extensionInformation: >-
   > [!Note]
 
-  > This reference is part of the **arcappliance** extension for the Azure CLI (version 2.41.0 or higher). The extension will automatically install the first time you run an **az arcappliance run** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **arcappliance** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az arcappliance run** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: Command group for consecutively running the Arc resource bridge commands required for deployment. This command is idempotent.
 description: ''
 directCommands:
@@ -16,13 +16,15 @@ directCommands:
     az arcappliance run hci --location
                             --name
                             --resource-group
+                            [--cloudagent]
                             [--force]
+                            [--loginconfigfile]
                             [--out-dir]
                             [--tags]
                             [--working-dir]
   examples:
   - summary: Use the 'run' command to deploy Arc resource bridge on Azure Stack HCI
-    syntax: az arcappliance run hci --resource-group [REQUIRED] --name [REQUIRED] --location [REQUIRED] --out-dir [OPTIONAL]
+    syntax: az arcappliance run hci --resource-group [REQUIRED] --name [REQUIRED] --location [REQUIRED] --out-dir [OPTIONAL] --cloudagent [OPTIONAL] --loginconfigfile [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -37,9 +39,15 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --cloudagent
+    summary: FQDN or IP address of cloud agent service for Arc resource bridge.
+    description: ''
   - name: --force
     defaultValue: "False"
     summary: Delete Arc resource bridge on-premises appliance VM and Azure resource with the same name/id (if it exists) before continuing to the run command.
+    description: ''
+  - name: --loginconfigfile
+    summary: File path for HCI login configuration.
     description: ''
   - name: --out-dir
     summary: Output directory for Arc resource bridge configuration files, defaults to ./ (current directory).
@@ -100,13 +108,17 @@ directCommands:
     az arcappliance run scvmm --location
                               --name
                               --resource-group
+                              [--address]
                               [--force]
                               [--out-dir]
+                              [--password]
+                              [--port]
                               [--tags]
+                              [--username]
                               [--working-dir]
   examples:
   - summary: Use the 'run' command to deploy Arc resource bridge on SCVMM
-    syntax: az arcappliance run scvmm --resource-group [REQUIRED] --name [REQUIRED] --location [REQUIRED] --out-dir [OPTIONAL]
+    syntax: az arcappliance run scvmm --resource-group [REQUIRED] --name [REQUIRED] --location [REQUIRED] --out-dir [OPTIONAL] --address [OPTIONAL] --port [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -121,6 +133,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --address
+    summary: SCVMM Server FQDN(Role name in case of HAVMM) or IP address.
+    description: ''
   - name: --force
     defaultValue: "False"
     summary: Delete Arc resource bridge on-premises appliance VM and Azure resource with the same name/id (if it exists) before continuing to the run command.
@@ -128,8 +143,17 @@ directCommands:
   - name: --out-dir
     summary: Output directory for Arc resource bridge configuration files, defaults to ./ (current directory).
     description: ''
+  - name: --password
+    summary: SCVMM Administrator Password.
+    description: ''
+  - name: --port
+    summary: SCVMM server port (The default is 8100. This is the port number specified for VMM console to server connection e.g. vmmserver.constoso.com:8100).
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --username
+    summary: SCVMM Administrator Username (domain\username).
     description: ''
   - name: --working-dir
     summary: Local directory path to store image & files downloaded for Arc resource bridge on-premises appliance VM deployment. If not specified, a default temp directory is used.
@@ -142,13 +166,16 @@ directCommands:
     az arcappliance run vmware --location
                                --name
                                --resource-group
+                               [--address]
                                [--force]
                                [--out-dir]
+                               [--password]
                                [--tags]
+                               [--username]
                                [--working-dir]
   examples:
   - summary: Use the 'run' command to deploy Arc resource bridge on VMware
-    syntax: az arcappliance run vmware --resource-group [REQUIRED] --name [REQUIRED] --location [REQUIRED] --out-dir [OPTIONAL]
+    syntax: az arcappliance run vmware --resource-group [REQUIRED] --name [REQUIRED] --location [REQUIRED] --out-dir [OPTIONAL] --address [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -163,6 +190,9 @@ directCommands:
     summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
     description: ''
   optionalParameters:
+  - name: --address
+    summary: 'FQDN or IP address for vCenter Server instance. Ex: 10.160.0.1.'
+    description: ''
   - name: --force
     defaultValue: "False"
     summary: Delete Arc resource bridge on-premises appliance VM and Azure resource with the same name/id (if it exists) before continuing to the run command.
@@ -170,8 +200,14 @@ directCommands:
   - name: --out-dir
     summary: Output directory for Arc resource bridge configuration files, defaults to ./ (current directory).
     description: ''
+  - name: --password
+    summary: Password for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
+    description: ''
   - name: --tags
     summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
+    description: ''
+  - name: --username
+    summary: Username for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
     description: ''
   - name: --working-dir
     summary: Local directory path to store image & files downloaded for Arc resource bridge on-premises appliance VM deployment. If not specified, a default temp directory is used.
