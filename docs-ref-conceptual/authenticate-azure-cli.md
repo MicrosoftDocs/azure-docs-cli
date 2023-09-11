@@ -145,6 +145,13 @@ At the current stage of development, there are a few known limitations to WAM:
 - WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, we automatically fall back to a browser.  
 - Microsoft Accounts (for example @outlook.com or @live.com) aren't supported for the time being. We're working with the Microsoft Identity team to bring the support later.
 
+## Troubleshooting
+
+When your default browser is Microsoft Edge, you might encounter the following error when attempting
+to login to Azure interactively with `az login`: "_The connection for this site is not
+secure._" To resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in
+Microsoft Edge. Add `localhost` under "_Delete domain security policy_" and click <kbd>Delete</kbd>.
+
 ## See also
 
 * [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant)
