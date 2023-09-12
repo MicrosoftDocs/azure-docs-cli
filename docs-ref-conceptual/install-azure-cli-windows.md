@@ -49,11 +49,6 @@ If you have previously installed the Azure CLI, running either the 32-bit or 64-
 
 ### PowerShell
 
-Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
-- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
-- [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
-- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
-
 To install the Azure CLI using PowerShell, start PowerShell **as administrator** and run the following command:
 
    ```PowerShell
@@ -68,10 +63,6 @@ To install a specific version, replace the `-Uri` argument with the URL describe
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
-When working with the Azure CLI in PowerShell, be aware of error handling differences and the ability to enable tab completion.
-- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
-- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
-
 ### Specific version
 
 [!INCLUDE [specific version](includes/specific-version.md)]
@@ -79,6 +70,17 @@ When working with the Azure CLI in PowerShell, be aware of error handling differ
 ### Update the Azure CLI
 
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
+
+### Differences between Bash and PowerShell
+
+Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
+- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+- [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+
+There are also error handling differences and the ability to enable tab completion.  See these articles for more information:
+- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
+- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
 
 # [Windows Package Manager](#tab/winget)
 
