@@ -43,6 +43,8 @@ If you have previously installed the Azure CLI, running either the 32-bit or 64-
 
 ### Specific version
 
+If you prefer, you can download a specific version of the Azure CLI by using a URL.
+
 [!INCLUDE [specific version](includes/specific-version.md)]
 
 # [Microsoft Installer (MSI) with PowerShell](#tab/powershell)
