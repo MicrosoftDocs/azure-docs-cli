@@ -53,7 +53,6 @@ Although most Azure CLI documentation is written and tested in a Bash shell, you
 - [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 - [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
 - Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
-- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
 
 To install the Azure CLI using PowerShell, start PowerShell **as administrator** and run the following command:
 
@@ -69,11 +68,15 @@ To install a specific version, replace the `-Uri` argument with the URL describe
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
    ```
 
+When working with the Azure CLI in PowerShell, be aware of error handling differences and the ability to enable tab completion.
+- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
+- [Enable Tab Completion in PowerShell](enable-tab-completion-in-powerShell)
+
 ### Specific version
 
 [!INCLUDE [specific version](includes/specific-version.md)]
 
-### Azure CLI Command (for update only)
+### Update the Azure CLI
 
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
 
@@ -98,38 +101,9 @@ The `-e` option is to ensure the official Azure CLI package is installed. This c
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
 
-## Enable Tab Completion on PowerShell
+## Enable Tab Completion in PowerShell
 
-PowerShell provides completion on inputs to provide hints, enable discovery and speed up input entry. Command names, command group names, parameters and certain parameter values can be completed by pressing the <kbd>Tab</kbd> key.
-
-> [!Note]
-> Azure CLI version 2.49 or higher is required to enable tab completion for Azure CLI on PowerShell.
-
-To enable tab completion in PowerShell, create or edit the profile stored in the variable `$PROFILE`. The simplest way is to run `notepad $PROFILE` in PowerShell. For more information, see [How to create your profile](/powershell/module/microsoft.powershell.core/about/about_profiles#how-to-create-a-profile) and [Profiles and execution policy](/powershell/module/microsoft.powershell.core/about/about_profiles#profiles-and-execution-policy).
-
-Then add the following code to your PowerShell profile:
-
-```powershell
-Register-ArgumentCompleter -Native -CommandName az -ScriptBlock {
-    param($commandName, $wordToComplete, $cursorPosition)
-    $completion_file = New-TemporaryFile
-    $env:ARGCOMPLETE_USE_TEMPFILES = 1
-    $env:_ARGCOMPLETE_STDOUT_FILENAME = $completion_file
-    $env:COMP_LINE = $wordToComplete
-    $env:COMP_POINT = $cursorPosition
-    $env:_ARGCOMPLETE = 1
-    $env:_ARGCOMPLETE_SUPPRESS_SPACE = 0
-    $env:_ARGCOMPLETE_IFS = "`n"
-    $env:_ARGCOMPLETE_SHELL = 'powershell'
-    az 2>&1 | Out-Null
-    Get-Content $completion_file | Sort-Object | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
-    }
-    Remove-Item $completion_file, Env:\_ARGCOMPLETE_STDOUT_FILENAME, Env:\ARGCOMPLETE_USE_TEMPFILES, Env:\COMP_LINE, Env:\COMP_POINT, Env:\_ARGCOMPLETE, Env:\_ARGCOMPLETE_SUPPRESS_SPACE, Env:\_ARGCOMPLETE_IFS, Env:\_ARGCOMPLETE_SHELL
-}
-```
-
-To display all available options in the  menu, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` to your PowerShell profile.
+[!INCLUDE [tab-completion](includes/tab-completion.md)]
 
 ## Troubleshooting
 

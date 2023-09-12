@@ -416,6 +416,10 @@ foreach ($vm_id in $vm_ids) {
 
 ---
 
+## Enable Tab Completion in PowerShell
+
+[!INCLUDE [tab-completion](includes/tab-completion.md)]
+
 ## Error handling for Azure CLI in PowerShell
 
 You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md). If you do, be sure you understand Azure CLI error handling in PowerShell. In particular, Azure CLI doesn't create exceptions for PowerShell to catch.
