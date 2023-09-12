@@ -41,11 +41,7 @@ Download and install the latest release of the Azure CLI. When the installer ask
 
 If you have previously installed the Azure CLI, running either the 32-bit or 64-bit MSI will overwrite an existing installation.
 
-### Specific version
-
-[!INCLUDE [specific version](includes/specific-version.md)]
-
-# [Microsoft Installer (MSI) with Command](#tab/powershell)
+# [Microsoft Installer (MSI) with PowerShell](#tab/powershell)
 
 ### PowerShell
 
@@ -99,10 +95,6 @@ The `-e` option is to ensure the official Azure CLI package is installed. This c
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
 
-## Update the Azure CLI
-
-[!INCLUDE [az upgrade](includes/az-upgrade.md)]
-
 ## Enable Tab Completion in PowerShell
 
 [!INCLUDE [tab-completion](includes/tab-completion.md)]
@@ -143,6 +135,10 @@ Follow these steps to migrate to Azure CLI 64-bit:
 1. Install extensions by running `az extension add --name <extension> --version <version>`.  If you don't want to reinstall extensions manually, the Azure CLI will prompt you to install an extension on first use. For more information on installing extensions, see [How to install extensions](/cli/azure/azure-cli-extensions-overview#how-to-install-extensions).
 
 If you have issues after migration, you can uninstall the 64-bit and reinstall the 32-bit MSI.  If you have made a backup of your 32-bit extension folder, restore (rename) your extension folder after the change.
+
+## Update the Azure CLI
+
+[!INCLUDE [az upgrade](includes/az-upgrade.md)]
 
 ## Uninstall
 
