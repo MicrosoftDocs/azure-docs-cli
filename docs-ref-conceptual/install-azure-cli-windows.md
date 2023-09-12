@@ -70,7 +70,7 @@ To install a specific version, replace the `-Uri` argument with the URL describe
 
 When working with the Azure CLI in PowerShell, be aware of error handling differences and the ability to enable tab completion.
 - [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
-- [Enable Tab Completion in PowerShell](enable-tab-completion-in-powerShell)
+- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
 
 ### Specific version
 
