@@ -166,7 +166,7 @@ If you don't plan to reinstall Azure CLI, remove its data from `C:\Users\<userna
 
 ## Next Steps
 
-Now that you've installed the Azure CLI on Windows, take a short tour of its features and common commands.
+Now that you've installed the Azure CLI on Windows, learn about the different ways to sign in.
 
 > [!div class="nextstepaction"]
-> [Get started with the Azure CLI](get-started-with-azure-cli.md)
+> [Sign in with Azure CLI](authenticate-azure-cli.md)
