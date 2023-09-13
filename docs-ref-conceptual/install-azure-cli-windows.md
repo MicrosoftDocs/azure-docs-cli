@@ -5,7 +5,7 @@ author: jiasli
 ms.author: jiasli
 manager: yonzhan
 ms.service: azure-cli
-ms.date: 08/2/2023
+ms.date: 09/13/2023
 ms.topic: conceptual
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
@@ -59,7 +59,7 @@ To install the Azure CLI using PowerShell, start PowerShell **as administrator**
 
 This will download and install the latest 32-bit installer of the Azure CLI for Windows. If you prefer a 64-bit install, change URL to `https://aka.ms/installazurecliwindowsx64`. If the Azure CLI is already installed, the installer will overwrite the existing version.
 
-To install a specific version, replace the `-Uri` argument with the URL described in [Specific version](#specific-version-1).  Here is an example of using the 32-bit installer of the Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023) in PowerShell:
+To install a specific version, replace the `-Uri` argument with the URL described in [Specific version](#specific-version-1). Here is an example of using the 32-bit installer of the Azure CLI version [2.51.0](/cli/azure/release-notes-azure-cli#august-01-2023) in PowerShell:
 
    ```PowerShell
    $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri https://azcliprod.blob.core.windows.net/msi/azure-cli-2.51.0.msi -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
@@ -71,12 +71,12 @@ To install a specific version, replace the `-Uri` argument with the URL describe
 
 ### Differences between Bash and PowerShell
 
-Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell.  Review these articles to avoid scripting errors:
+Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell. Review these articles to avoid scripting errors:
 - [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 - [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
 - Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
 
-When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion.  See these articles for more information:
+When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion. See these articles for more information:
 - [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
 - [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
 
@@ -138,9 +138,9 @@ Follow these steps to migrate to Azure CLI 64-bit:
 1. Check your current CLI version and installed extensions by running `az --version`.
 1. Extensions will need to be reinstalled. It is recommended to perform a backup of the current extension folder `%userprofile%\.azure\cliextensions` by renaming it in case you choose to revert back to 32-bit. This folder is created automatically when you reinstall an extension.
 1. Download and install latest 64-bit installer as described in [Install or update](#install-or-update). The 32-bit MSI will be automatically uninstalled.
-1. Install extensions by running `az extension add --name <extension> --version <version>`.  If you don't want to reinstall extensions manually, the Azure CLI will prompt you to install an extension on first use. For more information on installing extensions, see [How to install extensions](/cli/azure/azure-cli-extensions-overview#how-to-install-extensions).
+1. Install extensions by running `az extension add --name <extension> --version <version>`. If you don't want to reinstall extensions manually, the Azure CLI will prompt you to install an extension on first use. For more information on installing extensions, see [How to install extensions](/cli/azure/azure-cli-extensions-overview#how-to-install-extensions).
 
-If you have issues after migration, you can uninstall the 64-bit and reinstall the 32-bit MSI.  If you have made a backup of your 32-bit extension folder, restore (rename) your extension folder after the change.
+If you have issues after migration, you can uninstall the 64-bit and reinstall the 32-bit MSI. If you have made a backup of your 32-bit extension folder, restore (rename) your extension folder after the change.
 
 ## Update the Azure CLI
 
