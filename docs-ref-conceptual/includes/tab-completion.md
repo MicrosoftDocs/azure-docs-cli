@@ -27,9 +27,9 @@ Tab completion is enabled by default in Azure Cloud Shell and in most Linux dist
           $env:_ARGCOMPLETE_SHELL = 'powershell'
           az 2>&1 | Out-Null
           Get-Content $completion_file | Sort-Object | ForEach-Object {
-              [System.Management.Automation.CompletionResult]::new($_, $_,    "ParameterValue",    $_)
+              [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
           }
-          Remove-Item $completion_file, Env:\_ARGCOMPLETE_STDOUT_FILENAME,       Env:\ARGCOMPLETE_USE_TEMPFILES, Env:\COMP_LINE, Env:\COMP_POINT,    Env:\_ARGCOMPLETE,    Env:\_ARGCOMPLETE_SUPPRESS_SPACE, Env:\_ARGCOMPLETE_IFS,    Env:\_ARGCOMPLETE_SHELL
+          Remove-Item $completion_file, Env:\_ARGCOMPLETE_STDOUT_FILENAME, Env:\ARGCOMPLETE_USE_TEMPFILES, Env:\COMP_LINE, Env:\COMP_POINT, Env:\_ARGCOMPLETE, Env:\_ARGCOMPLETE_SUPPRESS_SPACE, Env:\_ARGCOMPLETE_IFS, Env:\_ARGCOMPLETE_SHELL
       }
       ```
 1. To display all available options in the menu, add `Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete` to your PowerShell profile.
