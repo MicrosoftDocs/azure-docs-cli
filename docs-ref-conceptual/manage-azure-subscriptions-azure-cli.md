@@ -4,7 +4,7 @@ description: Learn about Azure tenants, users, and subscriptions. Use Azure CLI 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/2/2023
+ms.date: 09/13/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -14,13 +14,13 @@ keywords: Azure subscriptions, manage azure subscriptions, azure management grou
 
 # How to manage Azure subscriptions with the Azure CLI
 
-The Azure CLI helps you manage your Azure subscription, create management groups, and lock subscriptions.  You might have multiple subscriptions within Azure. You can be part of more than one organization or your organization might divide access to certain resources across groupings. The Azure CLI supports selecting a subscription both globally and per command.
+The Azure CLI helps you manage your Azure subscription, create management groups, and lock subscriptions.You might have multiple subscriptions within Azure. You can be part of more than one organization or your organization might divide access to certain resources across groupings. The Azure CLI supports selecting a subscription both globally and per command.
 
 For detailed information on subscriptions, billing, and cost management, see the [billing and cost management documentation](/azure/billing/).
 
 ## Tenants, users, and subscriptions
 
-A _tenant_ is the Azure Active Directory entity that encompasses a whole organization. A tenant has one or more _subscriptions_ and _users_. Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _subscriptions_, but a user is only associated with a single tenant.  _Subscriptions_ are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
+A _tenant_ is the Azure Active Directory entity that encompasses a whole organization. A tenant has one or more _subscriptions_ and _users_. Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _subscriptions_, but a user is only associated with a single tenant. _Subscriptions_ are the agreements with Microsoft to use cloud services, including Azure. Every resource is associated with a subscription.
 
 To learn more about the differences between tenants, users, and subscriptions, see the [Azure cloud terminology dictionary](/azure/azure-glossary-cloud-terminology).
 
@@ -35,7 +35,7 @@ az account show
 
 ## Change the active tenant
 
-To switch tenants, you need to sign in as a user within the desired tenant.  Use [az login](/cli/azure/reference-index#az-login-examples) to change the active tenant and update the subscription list to which you belong.
+To switch tenants, you need to sign in as a user within the desired tenant. Use [az login](/cli/azure/reference-index#az-login-examples) to change the active tenant and update the subscription list to which you belong.
 
 ```azurecli-interactive
 # sign in as a different user
@@ -51,13 +51,13 @@ If your organization requires multi-factor authentication, you may receive this 
 Due to a configuration change made by your administrator, or because you moved to a new location, you must use multi-factor authentication to access...
 ```
 
-Using the alternative `az login --tenant` command prompts you to open an HTTPS page and enter the code provided.  You can then use multi-factor authentication and successfully sign in.  To learn more about sign in options with the azure CLI, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
+Using the alternative `az login --tenant` command prompts you to open an HTTPS page and enter the code provided. You can then use multi-factor authentication and successfully sign in. To learn more about sign in options with the azure CLI, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
 
 ## Get the active subscription
 
 Most Azure CLI commands act within a subscription. You can specify which subscription to work in by using the `--subscription` parameter in your command. If you don't specify a subscription, the command uses your current, active subscription. 
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command.  Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of ways to use `az account show`.
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command. Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of ways to use `az account show`.
 
 ```azurecli-interactive
 # get the current default subscription using show
@@ -66,7 +66,7 @@ az account show --output table
 # get the current default subscription using list
 az account list --query "[?isDefault]"
 
-# store the default subscription  in a variable
+# store the default subscription in a variable
 subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
 echo $subscriptionId
 ```
@@ -78,7 +78,7 @@ Subscriptions contain resource groups. An Azure resource group is a container th
 
 ## Change the active subscription
 
-Azure subscriptions have both a name and an ID.  You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the desired subscription ID or name.
+Azure subscriptions have both a name and an ID. You can switch to a different subscription using [az account set](/cli/azure/account#az-account-set) specifying the desired subscription ID or name.
 
 ```azurecli-interactive
 # change the active subscription using the subscription name
