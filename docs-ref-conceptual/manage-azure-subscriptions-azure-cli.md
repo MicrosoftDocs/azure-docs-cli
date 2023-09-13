@@ -92,13 +92,7 @@ subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
 az account set --subscription $subscriptionId
 ```
 
-You can't change your active subscription to a subscription _within a different tenant_ using the `az account set` command.  You first must sign in as a user within the desire tenant.  If you do try to set your subscription to a subscription within a different tenant, you receive this error:
-
-```output
-The subscription of 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' doesn't exist in cloud 'AzureCloud'.
-```
-
-To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
+If you change to a subscription that is in a different tenant, you will also be changing the active tenant. To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 
 ## Create Azure management groups
 
