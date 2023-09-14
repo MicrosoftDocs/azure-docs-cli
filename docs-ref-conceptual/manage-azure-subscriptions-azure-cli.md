@@ -4,7 +4,7 @@ description: Learn about Azure tenants, users, and subscriptions. Use Azure CLI 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/13/2023
+ms.date: 09/15/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -68,7 +68,7 @@ Most Azure CLI commands act within a subscription. You can specify which subscri
 
 To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command. Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of ways to use these commands.
 
-Here are examples showing how to get subscription information:
+Here are examples showing how to get subscription information.
 
 ```azurecli-interactive
 # get the current default subscription using show
@@ -188,9 +188,9 @@ az account lock delete --name "Cannot delete subscription"
 
 ### The subscription doesn't exist
 
-In addition to a typographical error, you can receive this error when there is a permissions timing issue.  For example, if you have been given permissions to a new subscriptions _while your current terminal window is open_, this error can occur.  The solution is to either close and reopen your terminal window, or use `az logout` then `az login` to refresh your available subscriptions list.
+In addition to a typographical error, you can receive this error when there is a permissions timing issue. For example, if you have been given permissions to a new subscriptions _while your current terminal window is open_, this error can occur. The solution is to either close and reopen your terminal window, or use `az logout` then `az login` to refresh your available subscriptions list.
 
-Here is a script to help you find available subscriptions.
+Here is a script to help you find and change a subscription.
 
 ```azurecli
 # See what subscription you are currently using.
@@ -209,7 +209,7 @@ az login
 az account list --output table
 
 # If the subscription you are seeking is still not in the list,
-#    contact your system administrator.  You cannot change your
+#    contact your system administrator. You cannot change your
 #    subscription to an ID that is not in the list.
 
 # If the subscription you are seeking is now in the list,
