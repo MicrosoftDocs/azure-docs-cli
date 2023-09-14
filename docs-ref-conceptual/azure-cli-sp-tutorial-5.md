@@ -28,7 +28,7 @@ We recommend you use Azure CLI to perform certificate-based authentication, howe
 
 # [Azure CLI](#tab/concepts)
 
-For certificate-based authentication, use the `--cert` parameter. This parameter requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certificate as a string, or use the `@path` format to load the certificate from a file.
+For certificate-based authentication, use the `--cert` parameter. This parameter requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certi897ficate as a string, or use the `@path` format to load the certificate from a file.
 
 > [!NOTE]
 > When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
@@ -152,9 +152,21 @@ az login --service-principal --username appID --tenant tenantID --password /path
 You can assign a certificate to a service principal through the Azure portal by following these steps:
 
 1. In the Azure Portal, select Active Directory.
+
+![Screenshot of AAD](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-aad.png)
+
 2. Then select App Registrations on the left hand sidebar.
+
+![Screenshot of App Registration](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-app-reg.png)
+
 3. Next, select your AKS service principal.
+
+![Screenshot of Service Principal](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-app-reg.png)
+
 4. Then proceed to click on "Certificates and secrets." Here, you can upload it, or download and install it on your PC you are using to connect with. Make sure the certificate is stored somewhere you can access it on your local machine for later steps.
+
+![Screenshot of AAD](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-cert.png)
+
 5. To use the Service Principal with the certificate to access the Azure Container Registry, use the following command:
 
 ```azurecli-interactive
