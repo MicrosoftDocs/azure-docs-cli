@@ -57,8 +57,6 @@ Output Console:
   "updatedBy": "userID",
   "updatedOn": "2023-09-13T21:12:24.213484+00:00"
 }
-
-
 ```
 
 Adding a role _doesn't_ restrict previously assigned permissions. Since the *Contributor* rights are added by default, the role should be deleted using the command shown previously.
