@@ -62,11 +62,13 @@ To switch tenants, you have two options.
 
     Using the alternative `az login --tenant` command prompts you to open an HTTPS page and enter the code provided. You can then use multi-factor authentication and successfully sign in. To learn more about sign in options with the azure CLI, see [Sign in with the Azure CLI](./authenticate-azure-cli.md).
 
-## Get the active subscription
+## Get subscription information
 
 Most Azure CLI commands act within a subscription. You can specify which subscription to work in by using the `--subscription` parameter in your command. If you don't specify a subscription, the command uses your current, active subscription.
 
-To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command. Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of ways to use `az account show`.
+To see the subscription you're currently using or to get a list of available subscriptions, run the [az account show](/cli/azure/account#az-account-show) or [az account list](/cli/azure/account#az-account-list) command. Go to [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md#querying-and-formatting-single-values-and-nested-values) to see more examples of ways to use these commands.
+
+Here are examples showing how to get subscription information:
 
 ```azurecli-interactive
 # get the current default subscription using show
@@ -75,8 +77,15 @@ az account show --output table
 # get the current default subscription using list
 az account list --query "[?isDefault]"
 
+# get a subscription that contains search words or phrases
+az account list --query "[?contains(name,'search phrase')].{SubscriptionName:name, SubscriptionID:id, TenantID:tenantId}" --output table
+
 # store the default subscription in a variable
-subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
+subscriptionId="$(az account list --query "[?isDefault].id" --output tsv)"
+echo $subscriptionId
+
+# store a subscription of certain name in a variable
+subscriptionId="$(az account list --query "[?name=='my case sensitive subscription full name'].id" --output tsv)"
 echo $subscriptionId
 ```
 
@@ -95,13 +104,13 @@ az account set --subscription "My Demos"
 az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 # change the active subscription using a variable
-subscriptionId="$(az account list --query "[?isDefault].id" -o tsv)"
+subscriptionId="$(az account list --query "[?name=='my case sensitive subscription full name'].id" --output tsv)"
 az account set --subscription $subscriptionId
 ```
 
 If you change to a subscription that is in a different tenant, you will also be changing the active tenant. To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 
-If you received a "The subscription of ... doesn't exist...", see [Troubleshooting](#troubleshooting) for possible solutions.
+If you received a "The subscription of ... doesn't exist..." error, see [Troubleshooting](#troubleshooting) for possible solutions.
 
 ## Create Azure management groups
 
