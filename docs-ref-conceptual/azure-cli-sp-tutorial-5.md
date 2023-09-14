@@ -161,11 +161,11 @@ You can assign a certificate to a service principal through the Azure portal by 
 
 3. Next, select your AKS service principal.
 
-![Screenshot of Service Principal](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-app-reg.png)
+![Screenshot of Service Principal](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-select-sp.png)
 
 4. Then proceed to click on "Certificates and secrets." Here, you can upload it, or download and install it on your PC you are using to connect with. Make sure the certificate is stored somewhere you can access it on your local machine for later steps.
 
-![Screenshot of AAD](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-cert.png)
+![Screenshot of Upload Certificate](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-cert.png)
 
 5. To use the Service Principal with the certificate to access the Azure Container Registry, use the following command:
 
