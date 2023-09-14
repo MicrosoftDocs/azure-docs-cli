@@ -34,6 +34,33 @@ az role assignment delete --assignee appID \
                           --scope /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
 ```
 
+Output Console:
+
+```
+{
+  "condition": null,
+  "conditionVersion": null,
+  "createdBy": "userID",
+  "createdOn": "2023-09-13T21:12:24.213484+00:00",
+  "delegatedManagedIdentityResourceId": null,
+  "description": null,
+  "id": "/subscriptions/mySubscriptionID/resourceGroups/daphne-test/providers/Microsoft.Authorization/roleAssignments/myName",
+  "name": "myName",
+  "principalId": "myPrincipalId",
+  "principalName": "myPrincipalName",
+  "principalType": "servicePrincipal",
+  "resourceGroup": "myResourceGroupName",
+  "roleDefinitionId": "/subscriptions/mysubscriptionID/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7",
+  "roleDefinitionName": "Reader",
+  "scope": "/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName",
+  "type": "Microsoft.Authorization/roleAssignments",
+  "updatedBy": "userID",
+  "updatedOn": "2023-09-13T21:12:24.213484+00:00"
+}
+
+
+```
+
 Adding a role _doesn't_ restrict previously assigned permissions. Since the *Contributor* rights are added by default, the role should be deleted using the command shown previously.
 
 The changes can be verified by listing the assigned roles:

@@ -29,6 +29,27 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
     az login --service-principal --username appID --password PASSWORD --tenant tenantID
     ```
 
+    Output console:
+
+    ```
+    [
+      {
+        "cloudName": "AzureCloud",
+        "homeTenantId": "tenantID",
+        "id": "mySubscriptionId",
+        "isDefault": true,
+        "managedByTenants": [],
+        "name": "mySubscriptionName",
+        "state": "Enabled",
+        "tenantId": "tenantID",
+        "user": {
+          "name": "myName",
+          "type": "servicePrincipal"
+        }
+      }
+    ]
+    ```
+
 1. Create a resource group to hold all resources used for the same quickstart, tutorial, or development project.
 
     ```azurecli-interactive
