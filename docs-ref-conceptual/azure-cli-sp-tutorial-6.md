@@ -177,7 +177,7 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 4. Get resource keys, which you use in your code to authenticate to the Azure storage account.
 
     ```azurecli-interactive
-    az storage account keys list --name myStorageAccountName --resource-group myResourceGroupName
+    az storage account keys list --resource-group myResourceGroupName --account-name myStorageAccountName
     ```
     
     Output Console: 
