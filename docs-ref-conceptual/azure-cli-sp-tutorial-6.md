@@ -173,6 +173,7 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
       "type": "Microsoft.Storage/storageAccounts"
     }
     ```
+
 4. Get resource keys, which you use in your code to authenticate to the Azure storage account.
 
     ```azurecli-interactive
