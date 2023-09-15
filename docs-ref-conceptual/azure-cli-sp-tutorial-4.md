@@ -23,8 +23,6 @@ When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choos
 With password-based authentication, a random password is created for you. If you don't specify a `--name` parameter value, a name containing a time stamp is created for you.  You must specify a `--scopes` as this value doesn't have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
 
 ```azurecli-interactive
-# Create a service principal with required parameter
-az ad sp create-for-rbac --scopes /subscriptions/mySubscriptionID
 
 # Create a service principal for a resource group using a preferred name and role
 az ad sp create-for-rbac --name myServicePrincipalName \
