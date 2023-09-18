@@ -1,10 +1,10 @@
 ---
-title: Sign in with Azure CLI — Login and Authentication | Microsoft Docs
-description: Learn the different authentication types for your Azure CLI login — sign in with Azure CLI automatically, locally, or interactively using the az login command.
+title: Sign in with Azure CLI using a service principal | Microsoft Docs
+description: Learn how to sign into the Azure CIL using a service principal
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 08/1/2023
+ms.date: 09/22/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
