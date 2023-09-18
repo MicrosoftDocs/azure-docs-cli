@@ -37,7 +37,7 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 
 ## See also
 
-- [Sign in with the Azure CLI](./authenticate-azure-cli.md)
-- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
-- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-- [How to use the Azure CLI successfully](use-cli-effectively.md)
+* [Sign in with the Azure CLI](./authenticate-azure-cli.md)
+* Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+* [How to use the Azure CLI successfully](use-cli-effectively.md)

@@ -64,6 +64,6 @@ Microsoft Edge. Add `localhost` under "_Delete domain security policy_" and sele
 
 ## See also
 
-- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
-- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-- [How to use the Azure CLI successfully](use-cli-effectively.md)
+* Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+* [How to use the Azure CLI successfully](use-cli-effectively.md)

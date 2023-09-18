@@ -17,9 +17,9 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 On resources configured for managed identities for Azure resources, you can sign in using the managed identity.
 Here are some of the benefits of using managed identities:
 
-- You don't need to manage credentials. Credentials aren’t even accessible to you.
-- You can use managed identities to authenticate to any resource that supports Azure AD authentication, including your own applications.
-- Managed identities can be used at no extra cost.
+* You don't need to manage credentials. Credentials aren’t even accessible to you.
+* You can use managed identities to authenticate to any resource that supports Azure AD authentication, including your own applications.
+* Managed identities can be used at no extra cost.
 
 Signing in with the resource's identity is done through the `--identity` flag.
 
@@ -35,11 +35,11 @@ az login --identity --username <client_id|object_id|resource_id>
 
 To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm). Here are more articles showing the use of the `--identity` parameter.
 
-- [How to use managed identities for Azure resources on an Azure VM for sign-in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
-- [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity?tabs=azure-cli)
+* [How to use managed identities for Azure resources on an Azure VM for sign-in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
+* [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity?tabs=azure-cli)
 
 ## See also
 
-- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
-- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-- [How to use the Azure CLI successfully](use-cli-effectively.md)
+* Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+* [How to use the Azure CLI successfully](use-cli-effectively.md)

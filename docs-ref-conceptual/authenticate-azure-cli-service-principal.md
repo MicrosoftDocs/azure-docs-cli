@@ -27,9 +27,9 @@ To sign in with a service principal, you need:
 
 Note two important facts when working with service principals and the Azure CLI:
 
-- A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
+* A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
 
-- If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./create-an-azure-service-principal-azure-cli.md#retrieve-certificate-from-key-vault).
+* If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./create-an-azure-service-principal-azure-cli.md#retrieve-certificate-from-key-vault).
 
 ```azurecli-interactive
 az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
@@ -54,6 +54,6 @@ For more information on PEN file formats, see [Working with service principals](
 
 ## See also
 
-- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
-- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-- [How to use the Azure CLI successfully](use-cli-effectively.md)
+* Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+* [How to use the Azure CLI successfully](use-cli-effectively.md)
