@@ -35,3 +35,9 @@ At the current stage of development, there are a few known limitations to WAM:
 
 - WAM is available on Windows 10 and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, the Azure CLI automatically defaults to a browser.  
 - Microsoft Accounts (for example @outlook.com or @live.com) aren't currently supported. We're working with the Microsoft Identity team to bring the support later.
+
+## See also
+
+- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+- [How to use the Azure CLI successfully](use-cli-effectively.md)

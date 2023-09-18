@@ -37,3 +37,9 @@ To learn more about managed identities for Azure resources, see [Configure manag
 
 - [How to use managed identities for Azure resources on an Azure VM for sign-in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
 - [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity?tabs=azure-cli)
+
+## See also
+
+- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+- [How to use the Azure CLI successfully](use-cli-effectively.md)

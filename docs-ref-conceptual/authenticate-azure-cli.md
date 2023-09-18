@@ -33,7 +33,12 @@ When you sign in with a user account, Azure CLI generates and stores an authenti
 
 > [!NOTE]
 > Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
+>
+> After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`.
+> To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
-## Next step
+## See also
 
-After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`. To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
+- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+- [How to use the Azure CLI successfully](use-cli-effectively.md)

@@ -61,3 +61,9 @@ When your default browser is Microsoft Edge, you might encounter the following e
 to sign in to Azure interactively with `az login`: "_The connection for this site is not
 secure._" To resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in
 Microsoft Edge. Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
+
+## See also
+
+- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+- [How to use the Azure CLI successfully](use-cli-effectively.md)

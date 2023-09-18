@@ -51,3 +51,9 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > ```
 
 For more information on PEN file formats, see [Working with service principals](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
+
+## See also
+
+- Azure CLI [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+- Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+- [How to use the Azure CLI successfully](use-cli-effectively.md)
