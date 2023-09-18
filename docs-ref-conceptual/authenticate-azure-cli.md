@@ -25,11 +25,11 @@ There are five authentication options when working with the Azure CIL:
 - Locally, you can [sign in interactively](authenticate-azure-cli-interactively.md) through your browser with the [az login](/cli/azure/reference-index#az-login) command. When you're learning to use Azure CIL commands, using `az login` is a good option.
 - When you write scripts, the recommended approach is to [sign in using a service principal](authenticate-azure-cli-service-principal.md). By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
 - A common challenge for developers is the management of secrets, credentials, certificates, and keys used to secure communication between services. Choosing to [sign in with a managed identity](authenticate-azure-cli-managed-identity.md) eliminates the need for you to manage these credentials.
-- You can also [sign in using Web Account Manager (WAM)](authenticate-auzre-cli-web-account-manager.md), a Windows 10+ component that acts as an authentication broker.
+- You can also [sign in using Web Account Manager (WAM)](authenticate-azure-cli-web-account-manager.md), a Windows 10+ component that acts as an authentication broker.
 
 ## Refresh tokens
 
-When you sing in with a user account, Azure CLI generates and stores an authentication refresh token. Because access tokens are valid for only a short period of time, a refresh token is issued at the same time the access token is issued. The client application can then exchange this refresh token for a new access token when needed.  For more information on token lifetime and expiration, see [Refresh tokens in the Microsoft identity platform](/active-directory/develop/refresh-tokens).
+When you sing in with a user account, Azure CLI generates and stores an authentication refresh token. Because access tokens are valid for only a short period of time, a refresh token is issued at the same time the access token is issued. The client application can then exchange this refresh token for a new access token when needed.  For more information on token lifetime and expiration, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens).
 
 > [!NOTE]
 > Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
