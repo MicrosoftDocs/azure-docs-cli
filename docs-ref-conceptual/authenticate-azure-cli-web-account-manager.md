@@ -14,7 +14,7 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 
 # Sign in with Web Account Manager (WAM)
 
-The Azure CLI now offers preview support for Web Account Manager (WAM).  WAM is a Windows 10+ component that acts as an authentication broker.  (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+The Azure CLI now offers preview support for Web Account Manager (WAM). WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
 
 Using WAM has several benefits:
 

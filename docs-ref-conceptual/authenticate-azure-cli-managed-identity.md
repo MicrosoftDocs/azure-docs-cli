@@ -33,7 +33,7 @@ If the resource has multiple user assigned managed identities and no system assi
 az login --identity --username <client_id|object_id|resource_id>
 ```
 
-To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm).  Here are more articles showing the use of the `--identity` parameter.
+To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm). Here are more articles showing the use of the `--identity` parameter.
 
 - [How to use managed identities for Azure resources on an Azure VM for sign-in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
 - [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity?tabs=azure-cli)
