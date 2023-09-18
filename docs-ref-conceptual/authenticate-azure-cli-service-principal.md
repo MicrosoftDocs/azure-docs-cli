@@ -51,4 +51,4 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
-See [Working with service principals](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication) for more information on PEM file formats.
+For more information on PEN file formats, see [Working with service principals](./create-an-azure-service-principal-azure-cli.md#certificate-based-authentication).
