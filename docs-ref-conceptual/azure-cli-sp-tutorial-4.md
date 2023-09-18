@@ -12,9 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 4 - Sign in using a service principal
-
-## Using Service Principal with password-based authentication
+# 4 - Using Service Principal with password-based authentication
 
 When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose either password-based or [certificate based-authentication](./azure-cli-sp-tutorial-5.md). This article details how you can use a **password** with the service principal to access the Azure Container Registry.
 
