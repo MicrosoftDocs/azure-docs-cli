@@ -14,6 +14,8 @@ keywords: azure service principal, create service principal azure, create servic
 
 # 2 - Get an existing service principal
 
+If you already have an existing service principal that you wish to use, this article details how to retrieve your existing service principal.
+
 A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list). By default this command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` parameter. Getting this list can take a long time, so it's recommended that you filter the list with one of the following parameters:
 
 * `--display-name` requests service principals that have a _prefix_ that match the provided name. The display name of a service principal is the value set with the `--name`

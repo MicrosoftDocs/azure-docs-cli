@@ -14,6 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # 6 - Create a resource using service principal
 
+When using service principals with an Azure service, you want to ensure that your resources are secure. You can achieve this by creating your resources using service principal.
 The following section provides an example of how to create a resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
 * [az login](/cli/azure/reference-index#az-login)

@@ -13,14 +13,13 @@ keywords: azure service principal, create service principal azure, create servic
 ---
 # 1 - Work with Azure service principal using the Azure CLI
 
-Automated tools that use Azure services should always have restricted permissions. Instead of having applications sign in as a fully privileged user, Azure offers service principals.
+Automated tools that use Azure services should always have restricted permissions, to ensure that your resources will be secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals.
 
 ## What is an Azure service principal?
 
-An Azure service principal is an identity created for use with applications, hosted services, and automated tools to access resources. The roles assigned to the service principal restrict access. This gives you control over which resources can be accessed and at what level.
+An Azure service principal is an identity created for use with applications, hosted services, and automated tools, to access resources. The roles assigned to the service principal restrict access, which gives you control over which resources can be accessed and at what level.
 
-For security reasons, it's always recommended to use service principals with automated
-tools rather than allowing them to sign in with a user identity.
+For security reasons, it's always recommended to use service principals with automated tools rather than allowing them to sign in with a user identity.
 
 This article shows you the steps for creating, getting information about, and resetting an Azure service principal with the Azure CLI.
 
@@ -30,7 +29,7 @@ Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure
 
 The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication. Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list).
 
-When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: [password-based authentication](./azure-cli-sp-tutorial-4.md), and [certificate-based authentication](./azure-cli-sp-tutorial-5.md).
+When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: [password-based authentication](./azure-cli-sp-tutorial-4.md), and [certificate-based authentication](./azure-cli-sp-tutorial-5.md). We recommend using certificate-based authentication due to the security restrictions that password-based authentication has. To learn more about why certificate-based authentication is more secure, see the [benefits](/azure/active-directory/authentication/) that it provides, as opposed to password-based authentication.
 
 > [!WARNING]
 > When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
