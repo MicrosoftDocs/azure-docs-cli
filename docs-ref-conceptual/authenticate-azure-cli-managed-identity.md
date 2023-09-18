@@ -1,5 +1,5 @@
 ---
-title: Sign in with Azure CLI with a managed identity | Microsoft Docs
+title: Sign in with Azure CLI using a managed identity | Microsoft Docs
 description: Learn how to sign into the Azure CIL with managed identity
 author: jiasli
 ms.author: jiasli
