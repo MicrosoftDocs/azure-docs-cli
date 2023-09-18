@@ -185,6 +185,8 @@ az acr login --name registryName
 >
 > You don't need to prefix the path with an @ like you do with the previous az commands
 
+***
+
 ## Next Steps
 
 Now that you've learned how to work with service principals using a certificate, proceed to the next step to learn how to create a resource using service principal.
