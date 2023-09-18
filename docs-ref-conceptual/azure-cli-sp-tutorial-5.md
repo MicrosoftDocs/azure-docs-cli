@@ -18,9 +18,9 @@ When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choos
 
 ## Why use certificate-based authentication?
 
-We recommend using certificate-based authentication due to the security considerations that password authentication has. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/overview), which better protects the user's assets. 
+We recommend using certificate-based authentication due to the security considerations that password authentication has. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects the user's assets. 
 
-To learn more about why and how certificate based authentication is more secure, see [Azure Active Directory certificate based authentication concepts](https://learn.microsoft.com/en-us/azure/active-directory/authentication/concept-certificate-based-authentication). 
+To learn more about why and how certificate based authentication is more secure, see [Azure Active Directory certificate based authentication concepts](/azure/active-directory/authentication/concept-certificate-based-authentication). 
 
 ## How do I add certificates to a Service Principal?
 
