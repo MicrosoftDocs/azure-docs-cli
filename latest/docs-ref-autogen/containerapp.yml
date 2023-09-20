@@ -50,8 +50,10 @@ directCommands:
                            [--allow-insecure {false, true}]
                            [--args]
                            [--bind]
+                           [--branch]
                            [--command]
                            [--container-name]
+                           [--context-path]
                            [--cpu]
                            [--dal]
                            [--dapr-app-id]
@@ -75,6 +77,7 @@ directCommands:
                            [--registry-password]
                            [--registry-server]
                            [--registry-username]
+                           [--repo]
                            [--revision-suffix]
                            [--revisions-mode {multiple, single}]
                            [--scale-rule-auth]
@@ -84,10 +87,15 @@ directCommands:
                            [--scale-rule-type]
                            [--secret-volume-mount]
                            [--secrets]
+                           [--service-principal-client-id]
+                           [--service-principal-client-secret]
+                           [--service-principal-tenant-id]
+                           [--source]
                            [--system-assigned]
                            [--tags]
                            [--target-port]
                            [--termination-grace-period]
+                           [--token]
                            [--transport {auto, http, http2, tcp}]
                            [--user-assigned]
                            [--workload-profile-name]
@@ -152,6 +160,26 @@ directCommands:
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappConnectedEnv \
           --environment-type connected
+  - summary: |-
+      Create a container app from a new GitHub Actions workflow in the provided GitHub repository
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+
+      --environment MyContainerappEnv --registry-server MyRegistryServer \
+
+      --registry-user MyRegistryUser --registry-pass MyRegistryPass \
+
+      --repo https://github.com/myAccount/myRepo
+  - summary: |-
+      Create a Container App from the provided application source
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+
+      --environment MyContainerappEnv --registry-server MyRegistryServer \
+
+      --registry-user MyRegistryUser --registry-pass MyRegistryPass \
+
+      --source .
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -173,12 +201,20 @@ directCommands:
   - name: --bind
     summary: |-
       Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
+  - name: --branch -b
+    summary: |-
+      Branch in the provided GitHub repository. Assumed to be the GitHub repository's default branch if not specified.
+    isPreview: true
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
   - name: --container-name
     summary: |-
       Name of the container.
+  - name: --context-path
+    summary: |-
+      Path in the repository to run docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
+    isPreview: true
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
@@ -258,6 +294,10 @@ directCommands:
   - name: --registry-username
     summary: |-
       The username to log in to container registry.
+  - name: --repo
+    summary: |-
+      Create an app via GitHub Actions in the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.
+    isPreview: true
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
@@ -287,6 +327,22 @@ directCommands:
   - name: --secrets -s
     summary: |-
       A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+  - name: --service-principal-client-id --sp-cid
+    summary: |-
+      The service principal client ID. Used by GitHub Actions to authenticate with Azure.
+    isPreview: true
+  - name: --service-principal-client-secret --sp-sec
+    summary: |-
+      The service principal client secret. Used by GitHub Actions to authenticate with Azure.
+    isPreview: true
+  - name: --service-principal-tenant-id --sp-tid
+    summary: |-
+      The service principal tenant ID. Used by GitHub Actions to authenticate with Azure.
+    isPreview: true
+  - name: --source
+    summary: |-
+      Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.
+    isPreview: true
   - name: --system-assigned
     defaultValue: "False"
     summary: |-
@@ -300,6 +356,10 @@ directCommands:
   - name: --termination-grace-period --tgp
     summary: |-
       Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
+  - name: --token
+    summary: |-
+      A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.
+    isPreview: true
   - name: --transport
     defaultValue: "auto"
     parameterValueGroup: "auto, http, http2, tcp"
@@ -646,6 +706,7 @@ directCommands:
                            [--scale-rule-type]
                            [--secret-volume-mount]
                            [--set-env-vars]
+                           [--source]
                            [--subscription]
                            [--tags]
                            [--termination-grace-period]
@@ -678,6 +739,9 @@ directCommands:
           --scale-rule-type my-custom-type \
           --scale-rule-metadata key=value key2=value2 \
           --scale-rule-auth triggerparam=secretref triggerparam=secretref
+  - summary: |-
+      Update a Container App from the provided application source
+    syntax: az containerapp update -n MyContainerapp -g MyResourceGroup --source .
   optionalParameters:
   - name: --args
     summary: |-
@@ -753,6 +817,10 @@ directCommands:
   - name: --set-env-vars
     summary: |-
       Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+  - name: --source
+    summary: |-
+      Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.
+    isPreview: true
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -801,6 +869,25 @@ commands:
 - az_containerapp_browse(containerapp)
 - az_containerapp_compose
 - az_containerapp_compose_create(containerapp)
+- az_containerapp_connected-env
+- az_containerapp_connected-env_certificate
+- az_containerapp_connected-env_certificate_delete(containerapp)
+- az_containerapp_connected-env_certificate_list(containerapp)
+- az_containerapp_connected-env_certificate_upload(containerapp)
+- az_containerapp_connected-env_create(containerapp)
+- az_containerapp_connected-env_dapr-component
+- az_containerapp_connected-env_dapr-component_list(containerapp)
+- az_containerapp_connected-env_dapr-component_remove(containerapp)
+- az_containerapp_connected-env_dapr-component_set(containerapp)
+- az_containerapp_connected-env_dapr-component_show(containerapp)
+- az_containerapp_connected-env_delete(containerapp)
+- az_containerapp_connected-env_list(containerapp)
+- az_containerapp_connected-env_show(containerapp)
+- az_containerapp_connected-env_storage
+- az_containerapp_connected-env_storage_list(containerapp)
+- az_containerapp_connected-env_storage_remove(containerapp)
+- az_containerapp_connected-env_storage_set(containerapp)
+- az_containerapp_connected-env_storage_show(containerapp)
 - az_containerapp_connection
 - az_containerapp_connection_create
 - az_containerapp_connection_create_appconfig()
@@ -992,6 +1079,9 @@ commands:
 - az_containerapp_service_postgres
 - az_containerapp_service_postgres_create(containerapp)
 - az_containerapp_service_postgres_delete(containerapp)
+- az_containerapp_service_qdrant
+- az_containerapp_service_qdrant_create(containerapp)
+- az_containerapp_service_qdrant_delete(containerapp)
 - az_containerapp_service_redis
 - az_containerapp_service_redis_create(containerapp)
 - az_containerapp_service_redis_delete(containerapp)
