@@ -20,12 +20,17 @@ The Azure CLI supports several authentication methods. Restrict sign-in permissi
 
 There are five authentication options when working with the Azure CIL:
 
-* The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in.
+| Authentication method | Advantage |
+|-|-|
+| [Azure Cloud Shell](/azure/cloud-shell/overview) | Azure Cloud Shell automatically logs you in, so this is the easiest way to get started.
+| [Sign in interactively](./authenticate-azure-cli-interactively.md) | This is a good option when learning Azure CLI commands and running the Azure CLI locally.  Log in through your browser with the [az login](/cli/azure/reference-index#az-login) command.
+| [Sign in using a service principal](./authenticate-azure-cli-service-principal.md) | When you write scripts, using a service principal is the recommended approach. You grant just the appropriate permissions needed to a service principal keeping your automation secure.
+| [Sign in with a managed identity](./authenticate-azure-cli-managed-identity.md) | A common challenge for developers is the management of secrets, credentials, certificates, and keys used to secure communication between services. Using a managed identity eliminates the need for you to manage these credentials.
+| [Sign in using Web Account Manager (WAM)](./authenticate-azure-cli-web-account-manager.md) | WAM is a Windows 10+ component that acts as an authentication broker. WAM provides enhanced security and enhancements are shipped with Windows.
 
-* Locally, you can [sign in interactively](./authenticate-azure-cli-interactively.md) through your browser with the [az login](/cli/azure/reference-index#az-login) command. When you're learning to use Azure CIL commands, using `az login` is a good option.
-* When you write scripts, the recommended approach is to [sign in using a service principal](./authenticate-azure-cli-service-principal.md). By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
-* A common challenge for developers is the management of secrets, credentials, certificates, and keys used to secure communication between services. Choosing to [sign in with a managed identity](./authenticate-azure-cli-managed-identity.md) eliminates the need for you to manage these credentials.
-* You can also [sign in using Web Account Manager (WAM)](./authenticate-azure-cli-web-account-manager.md), a Windows 10+ component that acts as an authentication broker.
+## Find or change your current subscription
+
+After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`. To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 ## Refresh tokens
 
@@ -34,11 +39,9 @@ When you sign in with a user account, Azure CLI generates and stores an authenti
 > [!NOTE]
 > Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
 >
-> After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`.
-> To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 ## See also
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-* [How to use the Azure CLI successfully](use-cli-effectively.md)

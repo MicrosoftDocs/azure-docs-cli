@@ -55,5 +55,5 @@ For more information on PEN file formats, see [Working with service principals](
 ## See also
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-* [How to use the Azure CLI successfully](use-cli-effectively.md)

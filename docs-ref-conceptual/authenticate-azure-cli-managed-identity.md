@@ -41,5 +41,5 @@ To learn more about managed identities for Azure resources, see [Configure manag
 ## See also
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-* [How to use the Azure CLI successfully](use-cli-effectively.md)
