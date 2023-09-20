@@ -85,7 +85,7 @@ Configure the `azure-cli` repository information as shown previously. Available 
     AZ_DIST=$(lsb_release -cs)
 
     # Store an Azure CLI version of choice
-    AZ_VER = 2.51.0
+    AZ_VER=2.51.0
 
     # Install a specific version
     sudo apt-get install azure-cli=$AZ_VER-1~$AZ_DIST
@@ -98,6 +98,8 @@ Configure the `azure-cli` repository information as shown previously. Available 
     ```
 
 If you receive error message _Unable to locate package azure-cli_, the `azure-cli` repository information is not configured.  Follow the steps given in [Option 2: Step-by-step installation instructions](#option-2-step-by-step-installation-instructions).
+
+If you receive error message _Version x.xx.x-1~distributionName for azure-cli was not found_, use `lsb_release -cs` to find the distribution you're running.
 
 ## Update Azure CLI
 
@@ -217,12 +219,9 @@ Acquire {
 
 If your proxy doesn't use basic auth, __remove__ the `[username]:[password]@` portion of the proxy URI. If you require more information for proxy configuration, see the official Ubuntu documentation:
 
-* [apt.conf manpage](https://manpages.ubuntu.com/manpages/lunar/en/man5/apt.conf.5.html)
+* [apt.conf man page](https://manpages.ubuntu.com/manpages/lunar/en/man5/apt.conf.5.html)
 * [Ubuntu wiki - apt-get howto](https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy)
 
-In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
-allow HTTPS connections to the following address:
-
-* `https://packages.microsoft.com`
+In order to get the Microsoft signing key and get the package from our repository, your proxy needs to allow HTTPS connections to the following address: `https://packages.microsoft.com.
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
