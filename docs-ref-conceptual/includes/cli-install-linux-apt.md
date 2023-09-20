@@ -56,8 +56,8 @@ If you prefer a step-by-step installation process, complete the following steps 
 3. <div id="set-release"/>Add the Azure CLI software repository:
 
     ```bash
-    AZ_REPO=$(lsb_release -cs)
-    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
+    AZ_DIST=$(lsb_release -cs)
+    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_DIST main" |
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
@@ -78,11 +78,26 @@ Configure the `azure-cli` repository information as shown previously. Available 
     apt-cache policy azure-cli
     ```
 
-2. To install specific version:
+1. To install specific version with variables:
 
     ```bash
-    sudo apt-get install azure-cli=<version>-1~bullseye
+    # Obtain the currently installed distribution
+    AZ_DIST=$(lsb_release -cs)
+
+    # Store an Azure CLI version of choice
+    AZ_VER = 2.51.0
+
+    # Install a specific version
+    sudo apt-get install azure-cli=$AZ_VER-1~$AZ_DIST
     ```
+
+1. To install a specific version without variables, replace the Azure CLI version and Linux distribution name shown:
+
+    ```bash
+    sudo apt-get install azure-cli=2.51.0-1~bullseye
+    ```
+
+If you receive error message _Unable to locate package azure-cli_, the `azure-cli` repository information is not configured.  Follow the steps given in [Option 2: Step-by-step installation instructions](#option-2-step-by-step-installation-instructions).
 
 ## Update Azure CLI
 
