@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/19/2023
+ms.date: 09/20/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[adp](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp) | 2.40.0 | Microsoft Azure Command-Line Tools Adp Extension. | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.49.0 | Provides a preview for upcoming AKS features | Preview | [0.5.157](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.49.0 | Provides a preview for upcoming AKS features | Preview | [0.5.159](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.48.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
@@ -87,7 +87,7 @@ You will be prompted to install an extension on first use.
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
 |[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.15.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
-|[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.48.0 | Microsoft Azure Command-Line Tools DevCenter Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
+|[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.51.0 | Microsoft Azure Command-Line Tools DevCenter Extension | GA | [3.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
 |[dms-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview) | 2.27.0 | Support for new Database Migration Service scenarios. | Preview | [0.15.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/dms-preview/HISTORY.rst) |
 |[dnc](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc) | 2.51.0 | Microsoft Azure Command-Line Tools Dnc Extension. | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/dnc/HISTORY.rst) |
@@ -146,7 +146,7 @@ You will be prompted to install an extension on first use.
 |[nsp](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp) | 2.45.0 | Microsoft Azure Command-Line Tools Nsp Extension. | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp/HISTORY.rst) |
 |[offazure](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMigrateV2 Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure/HISTORY.rst) |
 |[orbital](https://github.com/Azure/azure-cli-extensions/tree/main/src/orbital) | 2.39.0 | Microsoft Azure Command-Line Tools Orbital Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/orbital/HISTORY.rst) |
-|[palo-alto-networks](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks) | 2.50.0 | Microsoft Azure Command-Line Tools PaloAltoNetworks Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks/HISTORY.rst) |
+|[palo-alto-networks](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks) | 2.51.0 | Microsoft Azure Command-Line Tools PaloAltoNetworks Extension. | Preview | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks/HISTORY.rst) |
 |[partnercenter](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter) | 2.0.67 | Microsoft Azure CLI Extension for Partner Center | Preview | [0.2.4](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter/HISTORY.rst) |
 |[peering](https://github.com/Azure/azure-cli-extensions/tree/master/src/peering) | 2.3.1 | Microsoft Azure Command-Line Tools PeeringManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/peering/HISTORY.rst) |
 |[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.3.1 | Microsoft Azure Command-Line Tools Portal Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
