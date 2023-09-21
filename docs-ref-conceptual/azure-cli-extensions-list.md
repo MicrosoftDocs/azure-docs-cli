@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/20/2023
+ms.date: 09/21/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -66,11 +66,11 @@ You will be prompted to install an extension on first use.
 |[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [0.2.16](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
-|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
+|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.4.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.49.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | Preview | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
-|[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.45.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.39](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
+|[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.45.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.40](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
 |[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.25.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.3.1 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
@@ -146,7 +146,7 @@ You will be prompted to install an extension on first use.
 |[nsp](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp) | 2.45.0 | Microsoft Azure Command-Line Tools Nsp Extension. | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp/HISTORY.rst) |
 |[offazure](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMigrateV2 Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure/HISTORY.rst) |
 |[orbital](https://github.com/Azure/azure-cli-extensions/tree/main/src/orbital) | 2.39.0 | Microsoft Azure Command-Line Tools Orbital Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/orbital/HISTORY.rst) |
-|[palo-alto-networks](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks) | 2.51.0 | Microsoft Azure Command-Line Tools PaloAltoNetworks Extension. | Preview | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks/HISTORY.rst) |
+|[palo-alto-networks](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks) | 2.51.0 | Microsoft Azure Command-Line Tools PaloAltoNetworks Extension. | Preview | [1.1.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks/HISTORY.rst) |
 |[partnercenter](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter) | 2.0.67 | Microsoft Azure CLI Extension for Partner Center | Preview | [0.2.4](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter/HISTORY.rst) |
 |[peering](https://github.com/Azure/azure-cli-extensions/tree/master/src/peering) | 2.3.1 | Microsoft Azure Command-Line Tools PeeringManagementClient Extension | GA | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/peering/HISTORY.rst) |
 |[portal](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal) | 2.3.1 | Microsoft Azure Command-Line Tools Portal Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/portal/HISTORY.rst) |
