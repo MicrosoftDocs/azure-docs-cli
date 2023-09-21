@@ -23,7 +23,13 @@ directCommands:
   syntax: >-
     az fleet create --name
                     --resource-group
+                    [--agent-subnet-id]
+                    [--apiserver-subnet-id]
+                    [--assign-identity]
                     [--dns-name-prefix]
+                    [--enable-managed-identity {false, true}]
+                    [--enable-private-cluster {false, true}]
+                    [--enable-vnet-integration {false, true}]
                     [--location]
                     [--no-wait]
                     [--tags]
@@ -37,9 +43,36 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --agent-subnet-id
+    summary: |-
+      The ID of the subnet which the Fleet hub node will join on startup. If this is not specified, a vnet and subnet will be generated and used.
+    isPreview: true
+  - name: --apiserver-subnet-id
+    summary: |-
+      The subnet to be used when apiserver vnet integration is enabled. It is required when creating a new Fleet with BYO vnet.
+    isPreview: true
+  - name: --assign-identity
+    summary: |-
+      Specify an existing user assigned identity to manage the Fleet's hub cluster.
+    isPreview: true
   - name: --dns-name-prefix -p
     summary: |-
       Prefix for hostnames that are created. If not specified, generate a hostname using the managed cluster and resource group names.
+  - name: --enable-managed-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use managed identity (MSI) to manage the Fleet's Hub cluster. This value is not set by default, which implies a hubless Fleet.
+    isPreview: true
+  - name: --enable-private-cluster
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to create the Fleet hub as a private cluster or not.
+    isPreview: true
+  - name: --enable-vnet-integration
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to enable apiserver vnet integration for the Fleet hub or not.
+    isPreview: true
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -155,6 +188,8 @@ directCommands:
   syntax: >-
     az fleet update --name
                     --resource-group
+                    [--assign-identity]
+                    [--enable-managed-identity {false, true}]
                     [--tags]
   requiredParameters:
   - isRequired: true
@@ -166,6 +201,15 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --assign-identity
+    summary: |-
+      Specify an existing user assigned identity to manage the Fleet's hub cluster.
+    isPreview: true
+  - name: --enable-managed-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use managed identity (MSI) to manage the Fleet's Hub cluster. This value is not set by default, which implies a hubless Fleet.
+    isPreview: true
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
