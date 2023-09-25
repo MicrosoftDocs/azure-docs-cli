@@ -45,7 +45,7 @@ User-specific configuration files are located in `$HOME/.azure` on macOS and Lin
 
 ### What version of the Azure CLI is installed?
 
-Type `az version` in a terminal window to know if you have the Azure CLI installed.  Your output will look like this:
+Type `az version` in a terminal window to know what version of the Azure CLI is installed.  Your output will look like this:
 
 ```output
 {
