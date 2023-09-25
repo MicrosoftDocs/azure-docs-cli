@@ -30,9 +30,11 @@ In this tutorial, you learn how to:
 > * Manage service principal roles
 > * Create a resource using service principal
 
+## Prerequisites 
+
 If you don't have an [Azure subscription](../articles/guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
-[!INCLUDE [azure-cli-prepare-your-environment.md](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
+You can then view the steps to [get started with Azure CLI](/azure/get-started-with-azure-cli) in order to prepare your environment. 
 
 ## Overview 
 
