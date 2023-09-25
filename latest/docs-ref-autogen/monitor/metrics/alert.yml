@@ -1,13 +1,18 @@
 ### YamlMime:AzureCLIGroup
 uid: az_monitor_metrics_alert
 name: az monitor metrics alert
-summary: Manage near-realtime metric alert rules.
-description: ''
+summary: |-
+  Manage near-realtime metric alert rules.
+status: GA
+sourceType: Core
 directCommands:
-- uid: az_monitor_metrics_alert_create
+- uid: az_monitor_metrics_alert_create()
   name: az monitor metrics alert create
-  summary: Create a metric-based alert rule.
-  description: ''
+  summary: |-
+    Create a metric-based alert rule.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
     az monitor metrics alert create --condition
                                     --name
@@ -24,30 +29,36 @@ directCommands:
                                     [--target-resource-type]
                                     [--window-size]
   examples:
-  - summary: Create a high CPU usage alert on a VM with no action.
+  - summary: |-
+      Create a high CPU usage alert on a VM with no action.
     syntax: az monitor metrics alert create -n alert1 -g {ResourceGroup} --scopes {VirtualMachineID} --condition "avg Percentage CPU > 90" --description "High CPU"
-  - summary: Create a high CPU usage alert on a VM with email and webhook actions.
+  - summary: |-
+      Create a high CPU usage alert on a VM with email and webhook actions.
     syntax: >-
       az monitor metrics alert create -n alert1 -g {ResourceGroup} --scopes {VirtualMachineID} \
           --condition "avg Percentage CPU > 90" --window-size 5m --evaluation-frequency 1m \
           --action "/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Insights/actionGroups/<actionGroupName>" apiKey={APIKey} type=HighCPU \
           --description "High CPU"
-  - summary: Create an alert when a storage account shows a high number of slow transactions, using multi-dimensional filters.
+  - summary: |-
+      Create an alert when a storage account shows a high number of slow transactions, using multi-dimensional filters.
     syntax: >-
       az monitor metrics alert create -g {ResourceGroup} -n alert1 --scopes {StorageAccountId} \
           --description "Storage Slow Transactions" \
           --condition "total transactions > 5 where ResponseType includes Success" \
           --condition "avg SuccessE2ELatency > 250 where ApiName includes GetBlob"
-  - summary: Create a metric-based alert rule that monitors a custom metric.
+  - summary: |-
+      Create a metric-based alert rule that monitors a custom metric.
     syntax: >-
       az monitor metrics alert create -n "metric alert rule on a custom metric" -g "Demos" --scopes {VirtualMachineID} \
           --condition "max Azure.VM.Windows.GuestMetrics.Memory\Available Bytes > 90" \
           --window-size 5m --evaluation-frequency 1m
-  - summary: Create a high CPU usage alert on several VMs with no actions.
+  - summary: |-
+      Create a high CPU usage alert on several VMs with no actions.
     syntax: >-
       az monitor metrics alert create -n alert1 -g {ResourceGroup} --scopes {VirtualMachineID1} {VirtualMachineID2} {VirtualMachineID3} \
           --condition "avg Percentage CPU > 90" --description "High CPU" --region westus
-  - summary: Create a dynamic CPU usage alert on several VMs with no actions.
+  - summary: |-
+      Create a dynamic CPU usage alert on several VMs with no actions.
     syntax: >-
       az monitor metrics alert create -n alert1 -g {ResourceGroup} --scopes {VirtualMachineID1} {VirtualMachineID2} {VirtualMachineID3} \
           --condition "avg Percentage CPU > dynamic medium 2 of 4 since 2020-10-01T10:23:00.000Z"
@@ -57,8 +68,9 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --condition
-    summary: The condition which triggers the rule. It can be created by 'az monitor metrics alert condition create' command.
-    description: >-
+    summary: |-
+      The condition which triggers the rule. It can be created by 'az monitor metrics alert condition create' command.
+    description: |-
       Usage:  --condition {avg,min,max,total,count} [NAMESPACE.]METRIC
                          [{=,!=,>,>=,<,<=} THRESHOLD]
                          [{<,>,><} dynamic SENSITIVITY VIOLATIONS of EVALUATIONS [since DATETIME]]
@@ -68,149 +80,153 @@ directCommands:
 
       Sensitivity can be 'low', 'medium', 'high'.
 
-
       Violations can be the number of violations to trigger an alert. It should be smaller or equal to evaluation.
-
 
       Evaluations can be the number of evaluation periods for dynamic threshold.
 
-
       Datetime can be the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format).
-
 
       Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
 
-
       Values for METRIC, DIMENSION and appropriate THRESHOLD values can be obtained from `az monitor metrics list-definitions` command.
 
-
       Due to server limitation, when an alert rule contains multiple criterias, the use of dimensions is limited to one value per dimension within each criterion.
-
 
       Multiple conditions can be specified by using more than one `--condition` argument.
   - isRequired: true
     name: --name -n
-    summary: Name of the alert rule.
-    description: ''
+    summary: |-
+      Name of the alert rule.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
     name: --scopes
-    summary: Space-separated list of scopes the rule applies to. The resources specified in this parameter must be of the same type and exist in the same location.
-    description: ''
+    summary: |-
+      Space-separated list of scopes the rule applies to. The resources specified in this parameter must be of the same type and exist in the same location.
   optionalParameters:
   - name: --action -a
-    summary: Add an action group and optional webhook properties to fire when the alert is triggered.
-    description: >-
+    summary: |-
+      Add an action group and optional webhook properties to fire when the alert is triggered.
+    description: |-
       Usage:   --action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]
-
 
       Multiple action groups can be specified by using more than one `--action` argument.
   - name: --auto-mitigate
     parameterValueGroup: "false, true"
-    summary: Automatically resolve the alert.
-    description: ''
+    summary: |-
+      Automatically resolve the alert.
   - name: --description
-    summary: Free-text description of the rule.
-    description: ''
+    summary: |-
+      Free-text description of the rule.
   - name: --disabled
     defaultValue: "False"
     parameterValueGroup: "false, true"
-    summary: Create the rule in a disabled state.
-    description: ''
+    summary: |-
+      Create the rule in a disabled state.
   - name: --evaluation-frequency
     defaultValue: "1m"
-    summary: Frequency with which to evaluate the rule in "##h##m##s" format.
-    description: ''
+    summary: |-
+      Frequency with which to evaluate the rule in "##h##m##s" format.
   - name: --region --target-resource-region
-    summary: The region of the target resource(s) in scopes. This must be provided when scopes is resource group or subscription.
-    description: ''
+    summary: |-
+      The region of the target resource(s) in scopes. This must be provided when scopes is resource group or subscription.
   - name: --severity
     defaultValue: "2"
-    summary: Severity of the alert from 0 (critical) to 4 (verbose).
-    description: ''
+    summary: |-
+      Severity of the alert from 0 (critical) to 4 (verbose).
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --target-resource-type --type
-    summary: The resource type of the target resource(s) in scopes. This must be provided when scopes is resource group or subscription.
-    description: ''
+    summary: |-
+      The resource type of the target resource(s) in scopes. This must be provided when scopes is resource group or subscription.
   - name: --window-size
     defaultValue: "5m"
-    summary: Time over which to aggregate metrics in "##h##m##s" format.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-- uid: az_monitor_metrics_alert_delete
+    summary: |-
+      Time over which to aggregate metrics in "##h##m##s" format.
+- uid: az_monitor_metrics_alert_delete()
   name: az monitor metrics alert delete
-  summary: Delete a metrics-based alert rule.
-  description: ''
+  summary: |-
+    Delete a metrics-based alert rule.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
     az monitor metrics alert delete [--ids]
                                     [--name]
                                     [--resource-group]
                                     [--subscription]
   examples:
-  - summary: Delete a metrics-based alert rule. (autogenerated)
+  - summary: |-
+      Delete a metrics-based alert rule. (autogenerated)
     syntax: az monitor metrics alert delete --name MyAlertRule --resource-group MyResourceGroup
   optionalParameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
-    summary: Name of the alert rule.
-    description: ''
+    summary: |-
+      Name of the alert rule.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-- uid: az_monitor_metrics_alert_list
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_monitor_metrics_alert_list()
   name: az monitor metrics alert list
-  summary: List metric-based alert rules.
-  description: ''
+  summary: |-
+    List metric-based alert rules.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: az monitor metrics alert list [--resource-group]
   examples:
-  - summary: List metric-based alert rules. (autogenerated)
+  - summary: |-
+      List metric-based alert rules. (autogenerated)
     syntax: az monitor metrics alert list --resource-group MyResourceGroup
   optionalParameters:
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-- uid: az_monitor_metrics_alert_show
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_monitor_metrics_alert_show()
   name: az monitor metrics alert show
-  summary: Show a metrics-based alert rule.
-  description: ''
+  summary: |-
+    Show a metrics-based alert rule.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
     az monitor metrics alert show [--ids]
                                   [--name]
                                   [--resource-group]
                                   [--subscription]
   examples:
-  - summary: Show a metrics-based alert rule. (autogenerated)
+  - summary: |-
+      Show a metrics-based alert rule. (autogenerated)
     syntax: az monitor metrics alert show --name MyAlertRule --resource-group MyResourceGroup
   optionalParameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
-    summary: Name of the alert rule.
-    description: ''
+    summary: |-
+      Name of the alert rule.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
-- uid: az_monitor_metrics_alert_update
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_monitor_metrics_alert_update()
   name: az monitor metrics alert update
-  summary: Update a metric-based alert rule.
-  description: ''
+  summary: |-
+    Update a metric-based alert rule.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
     az monitor metrics alert update [--add]
                                     [--add-action]
@@ -233,23 +249,25 @@ directCommands:
                                     [--tags]
                                     [--window-size]
   examples:
-  - summary: Disable/Enable a metric-based alert rule.
+  - summary: |-
+      Disable/Enable a metric-based alert rule.
     syntax: az monitor metrics alert update --enabled false --name MyAlertRule --resource-group MyResourceGroup
   optionalParameters:
   - name: --add
     defaultValue: "[]"
-    summary: 'Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.'
-    description: ''
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --add-action
-    summary: Add an action group and optional webhook properties to fire when the alert is triggered.
-    description: >-
+    summary: |-
+      Add an action group and optional webhook properties to fire when the alert is triggered.
+    description: |-
       Usage:   --add-action ACTION_GROUP_NAME_OR_ID [KEY=VAL [KEY=VAL ...]]
-
 
       Multiple action groups can be specified by using more than one `--action` argument.
   - name: --add-condition
-    summary: Add a condition which triggers the rule.
-    description: >-
+    summary: |-
+      Add a condition which triggers the rule.
+    description: |-
       Usage:  --add-condition {avg,min,max,total,count} [NAMESPACE.]METRIC
                          [{=,!=,>,>=,<,<=} THRESHOLD]
                          [{<,>,><} dynamic SENSITIVITY VIOLATIONS of EVALUATIONS [since DATETIME]]
@@ -258,111 +276,109 @@ directCommands:
 
       Sensitivity can be 'low', 'medium', 'high'.
 
-
       Violations can be the number of violations to trigger an alert. It should be smaller or equal to evaluation.
-
 
       Evaluations can be the number of evaluation periods for dynamic threshold.
 
-
       Datetime can be the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format).
-
 
       Dimensions can be queried by adding the 'where' keyword and multiple dimensions can be queried by combining them with the 'and' keyword.
 
-
       Values for METRIC, DIMENSION and appropriate THRESHOLD values can be obtained from `az monitor metrics list-definitions` command.
 
-
       Due to server limitation, when an alert rule contains multiple criterias, the use of dimensions is limited to one value per dimension within each criterion.
-
 
       Multiple conditions can be specified by using more than one `--condition` argument.
   - name: --auto-mitigate
     parameterValueGroup: "false, true"
-    summary: Automatically resolve the alert.
-    description: ''
+    summary: |-
+      Automatically resolve the alert.
   - name: --description
-    summary: Free-text description of the rule.
-    description: ''
+    summary: |-
+      Free-text description of the rule.
   - name: --enabled
     parameterValueGroup: "false, true"
-    summary: Whether the metric alert rule is enabled.
-    description: ''
+    summary: |-
+      Whether the metric alert rule is enabled.
   - name: --evaluation-frequency
-    summary: Frequency with which to evaluate the rule in "##h##m##s" format.
-    description: ''
+    summary: |-
+      Frequency with which to evaluate the rule in "##h##m##s" format.
   - name: --force-string
     defaultValue: "False"
-    summary: When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-    description: ''
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
-    summary: Name of the alert rule.
-    description: ''
+    summary: |-
+      Name of the alert rule.
   - name: --remove
     defaultValue: "[]"
-    summary: 'Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.'
-    description: ''
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --remove-actions
-    summary: Space-separated list of action group names to remove.
-    description: ''
+    summary: |-
+      Space-separated list of action group names to remove.
   - name: --remove-conditions
-    summary: Space-separated list of condition names to remove.
-    description: ''
+    summary: |-
+      Space-separated list of condition names to remove.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --scopes
-    summary: Space-separated list of scopes the rule applies to. The resources specified in this parameter must be of the same type and exist in the same location.
-    description: ''
+    summary: |-
+      Space-separated list of scopes the rule applies to. The resources specified in this parameter must be of the same type and exist in the same location.
   - name: --set
     defaultValue: "[]"
-    summary: 'Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.'
-    description: ''
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --severity
-    summary: Severity of the alert from 0 (critical) to 4 (verbose).
-    description: ''
+    summary: |-
+      Severity of the alert from 0 (critical) to 4 (verbose).
   - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --window-size
-    summary: Time over which to aggregate metrics in "##h##m##s" format.
-    description: ''
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+    summary: |-
+      Time over which to aggregate metrics in "##h##m##s" format.
 commands:
 - az_monitor_metrics_alert_condition
-- az_monitor_metrics_alert_condition_create
-- az_monitor_metrics_alert_create
-- az_monitor_metrics_alert_delete
+- az_monitor_metrics_alert_condition_create()
+- az_monitor_metrics_alert_create()
+- az_monitor_metrics_alert_delete()
 - az_monitor_metrics_alert_dimension
-- az_monitor_metrics_alert_dimension_create
-- az_monitor_metrics_alert_list
-- az_monitor_metrics_alert_show
-- az_monitor_metrics_alert_update
+- az_monitor_metrics_alert_dimension_create()
+- az_monitor_metrics_alert_list()
+- az_monitor_metrics_alert_show()
+- az_monitor_metrics_alert_update()
 globalParameters:
 - name: --debug
-  summary: Increase logging verbosity to show all debug logs.
+  summary: |-
+    Increase logging verbosity to show all debug logs.
 - name: --help -h
-  summary: Show this help message and exit.
+  summary: |-
+    Show this help message and exit.
 - name: --only-show-errors
-  summary: Only show errors, suppressing warnings.
+  summary: |-
+    Only show errors, suppressing warnings.
 - name: --output -o
   defaultValue: "json"
   parameterValueGroup: "json, jsonc, table, tsv"
-  summary: Output format.
+  summary: |-
+    Output format.
 - name: --query
-  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --subscription
-  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
-  summary: Increase logging verbosity. Use --debug for full debug logs.
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  doc_source_url_repo: https://github.com/Azure/azure-cli/blob/dev/
   ms.date: 08/18/2023
   description: Manage near-realtime metric alert rules.

@@ -4,7 +4,7 @@ description: Learn the different authentication types for your Azure CLI login â
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 08/1/2023
+ms.date: 09/22/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -14,22 +14,25 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 
 # Sign in with Azure CLI
 
-There are several authentication types for the Azure Command-Line Interface (CLI), so how do you sign in?  The easiest way to get started is with [Azure Cloud Shell](/azure/cloud-shell/overview), which automatically logs you in.
-Locally, you can sign in interactively through your browser with the [az login](/cli/azure/reference-index#az-login) command. When you write scripts, the recommended approach is
-to use service principals. By granting just the appropriate permissions needed to a service principal, you can keep your automation secure.
+The Azure CLI supports several authentication methods. Restrict sign-in permissions for your use case to keep your Azure resources secure.
 
-When signing in with a user account, Azure CLI generates and stores an [authentication refresh token](/azure/active-directory/develop/v1-id-and-access-tokens#refresh-tokens). For more information on refresh and session token configuration, see [Refresh and session token lifetime policy properties](/azure/active-directory/develop/configurable-token-lifetimes#refresh-and-session-token-lifetime-policy-properties).
+## Authentication methods
 
-After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can [change your default subscription](manage-azure-subscriptions-azure-cli.md).
+There are five authentication options when working with the Azure CIL:
 
-> [!Note]
-> Depending on your signing in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
+| Authentication method | Advantage |
+|-|-|
+| [Azure Cloud Shell](/azure/cloud-shell/overview) | Azure Cloud Shell automatically logs you in, so this is the easiest way to get started.
+| [Sign in interactively](./authenticate-azure-cli-interactively.md) | This is a good option when learning Azure CLI commands and running the Azure CLI locally.  Log in through your browser with the [az login](/cli/azure/reference-index#az-login) command.
+| [Sign in using a service principal](./authenticate-azure-cli-service-principal.md) | When you write scripts, using a service principal is the recommended approach. You grant just the appropriate permissions needed to a service principal keeping your automation secure.
+| [Sign in with a managed identity](./authenticate-azure-cli-managed-identity.md) | A common challenge for developers is the management of secrets, credentials, certificates, and keys used to secure communication between services. Using a managed identity eliminates the need for you to manage these credentials.
+| [Sign in using Web Account Manager (WAM)](./authenticate-azure-cli-web-account-manager.md) | WAM is a Windows 10+ component that acts as an authentication broker. WAM provides enhanced security and enhancements are shipped with Windows.
 
-## Sign in interactively
+## Find or change your current subscription
 
-The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
+After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`. To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
-[!INCLUDE [interactive_login](includes/interactive-login.md)]
+## Refresh tokens
 
 ## Sign in with credentials on the command line
 
@@ -145,8 +148,14 @@ At the current stage of development, there are a few known limitations to WAM:
 - WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, we automatically fall back to a browser.  
 - Microsoft Accounts (for example @outlook.com or @live.com) aren't supported for the time being. We're working with the Microsoft Identity team to bring the support later.
 
+When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. Because access tokens are valid for only a short period of time, a refresh token is issued at the same time the access token is issued. The client application can then exchange this refresh token for a new access token when needed. For more information on token lifetime and expiration, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens).
+
+> [!NOTE]
+> Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
+
+
 ## See also
 
-* [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant)
-* [How-to change your active subscription](manage-azure-subscriptions-azure-cli.md#change-the-active-subscription)
-* [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md)
+* [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
+* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)

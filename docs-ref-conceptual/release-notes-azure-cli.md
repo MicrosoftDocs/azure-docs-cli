@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/05/2023
+ms.date: 09/26/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,89 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## September 26, 2023
+
+Version 2.53.0
+
+### ACR
+
+* `az acr token create`: Fix random order of repo valid actions and gateway valid actions in the help message
+
+### AKS
+
+* `az aks update`: Add new parameter `--private-dns-zone` to support private DNS zone for AKS private cluster
+* `az aks update`: Add new parameter `--disable-windows-gmsa` to support disabling Windows gMSA in an AKS cluster
+* `az aks update`: Add forceupgrade settings to aks stable cli
+
+### App Config
+
+* `az appconfig kv import/export`: Remove `skip-features` and `skip-keyvault` restriction for snapshots
+
+### App Service
+
+* `az functionapp create`: Enable distributed tracing for non consumption apps
+
+### ARM
+
+* `az deployment group create`: Make `--template-file` parameter optional when used with `.bicepparam` parameter file
+* `az account list-locations`: Add new parameter `--include-extended-locations` to support listing extended locations
+
+### Backup
+
+* `az backup backup-properties`: Add option for setting `--soft-delete-feature-state` to "AlwaysOn", and `--soft-delete-duration` with values between 14 to 180 (inclusive)
+* `az backup vault list-soft-deleted-containers`: List all soft-deleted containers in a backup vault
+
+### Compute
+
+* `az vm/vmss extension set`: Enable auto upgrade by default for CodeIntegrityAgent extension
+* `az vm create`: Add warning message for Basic option removal
+* `az vmss create`: Add warning message for Basic option removal
+
+### Containerapp
+
+* `az containerapp`: Move `containerapp` from CLI extension to core CLI
+* `az containerapp env create`: Add `--enable-workload-profiles` to specify if the environment is enabled to have workload profiles
+* `az containerapp env dapr-component create`: Fix the sample link for `--yaml` parameter
+
+### Cosmos DB
+
+* `az cosmosdb postgres`: GA Cosmos DB for PostgreSQL
+
+### MySQL
+
+* `az mysql flexible-server replica create`: Add new parameters to support replica creation
+
+### NetAppFiles
+
+* `az netappfiles volume`: Add new command `get-groupid-list-for-ldapuser` to Get Group Id List for LDAP User
+* `az netappfiles account update`: Add parameter `--identity-type`
+* `az netappfiles volume update`: Add parameter `--snapshot-dir-visible`. If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true)
+
+### Network
+
+* `az network virtual-appliance`: Add parameter `--additional-nics`
+* `az network vnet subnet`: Add parameter `--default-outbound-access`
+* `az network public-ip create`: Add warning message for Basic option removal
+* `az network lb create`: Add warning message for Basic option removal
+
+### RDBMS
+
+* `az postgres flexible-server create/update`: Add capability to enable/disable storage auto-grow during creation and update
+
+### Service Connector
+
+* `az spring connection`: Add deprecated message for `--deployment` breaking change
+* `az webapp connection`: Add new parameter `--slot` to support webapp slot connection
+
+### SQL
+
+* `az sql failover-group set-primary`: Add parameter `--try-planned-before-forced-failover` to support hybrid geo-failover
+
+### Storage
+
+* Fix #26732: `az storage blob copy start-batch`: Add `--rehydrate-priority` to batch copy
+* Fix #27052: `az storage blob delete-batch`: Use utc as default timezone to remove "Datetime with no tzinfo will be considered UTC." warning
 
 ## September 05, 2023
 
@@ -1707,6 +1790,16 @@ Version 2.39.0
 
 * `az synapse workspace`: Add `--last-commit-id` for git repo config
 * `az synapse ad-only-auth`: New command group for supporting synapse azure ad only authentication
+
+## September 01, 2023
+
+Version 2.38.1
+
+This version is only available on CentOS 7 and RHEL 7.
+
+### App Service
+
+* `az webapp ssh`: Backport #25141 to 2.38
 
 ## July 05, 2022
 
