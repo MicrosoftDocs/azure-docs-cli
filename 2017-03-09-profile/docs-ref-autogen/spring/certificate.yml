@@ -20,6 +20,7 @@ directCommands:
     az spring certificate add --name
                               --resource-group
                               --service
+                              [--enable-auto-sync {false, true}]
                               [--only-public-cert {false, true}]
                               [--public-certificate-file]
                               [--vault-certificate-name]
@@ -42,6 +43,11 @@ directCommands:
     summary: |-
       The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
   optionalParameters:
+  - name: --enable-auto-sync
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to automatically synchronize certificate from key vault.
   - name: --only-public-cert
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -157,12 +163,49 @@ directCommands:
     name: --service -s
     summary: |-
       The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
+- uid: az_spring_certificate_update(spring)
+  name: az spring certificate update
+  summary: |-
+    Update a certificate in Azure Spring Apps.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az spring certificate update --name
+                                 --resource-group
+                                 --service
+                                 [--enable-auto-sync {false, true}]
+  examples:
+  - summary: |-
+      Enable auto sync feature of a key vault certificate in Azure Spring Apps.
+    syntax: az spring certificate update --name MyCertName --service MyCluster --resource-group MyResourceGroup --enable-auto-sync true
+  - summary: |-
+      Disable auto sync feature of a key vault certificate in Azure Spring Apps.
+    syntax: az spring certificate update --name MyCertName --service MyCluster --resource-group MyResourceGroup --enable-auto-sync false
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of certificate.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --service -s
+    summary: |-
+      The name of Azure Spring Apps instance, you can configure the default service using az configure --defaults spring=<name>.
+  optionalParameters:
+  - name: --enable-auto-sync
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to automatically synchronize certificate from key vault.
 commands:
 - az_spring_certificate_add(spring)
 - az_spring_certificate_list(spring)
 - az_spring_certificate_list-reference-app(spring)
 - az_spring_certificate_remove(spring)
 - az_spring_certificate_show(spring)
+- az_spring_certificate_update(spring)
 globalParameters:
 - name: --debug
   summary: |-
