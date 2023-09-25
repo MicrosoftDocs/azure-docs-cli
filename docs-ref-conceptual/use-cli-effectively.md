@@ -4,7 +4,7 @@ description: Learn tips for using Azure CLI successfully, such as output formats
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/2/2023
+ms.date: 09/13/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 
 # Tips for using the Azure CLI successfully
 
-Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments.  First [choose the right command-line tool](./choose-the-right-azure-command-line-tool.md#different-shell-environments) and [install](./install-azure-cli.md) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
+Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments. First [choose the right command-line tool](./choose-the-right-azure-command-line-tool.md#different-shell-environments) and [install](./install-azure-cli.md) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
 
 To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](../latest/docs-ref-autogen/reference-index.yml).
 
@@ -122,9 +122,9 @@ To avoid unanticipated results, here are a few suggestions:
 
 - In Bash or PowerShell, both single and double quotes are interpreted correctly. In Windows Command Prompt, only double quotes are interpreted correctly -- single quotes are treated as part of the value.
 
-- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single quotes are necessary when supplying inline JSON values.  For example, this JSON is correct in Bash: `'{"key": "value"}'`.
+- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single quotes are necessary when supplying inline JSON values. For example, this JSON is correct in Bash: `'{"key": "value"}'`.
 
-- If your command runs at a Windows Command Prompt, you must use double quotes.  If the value contains double quotes, you must escape it.  The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
+- If your command runs at a Windows Command Prompt, you must use double quotes. If the value contains double quotes, you must escape it. The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
 
 - In PowerShell, if your value is an empty string, use `'""'`.
 
@@ -151,7 +151,7 @@ To avoid unanticipated results, here are a few suggestions:
     1. Quoted space-separated list
        `--parameterName "firstValue" "secondValue"`
 
-    This example is a string with a space in it.  It isn't a space-separated list:
+    This example is a string with a space in it. It isn't a space-separated list:
        `--parameterName "firstValue secondValue"`
 
 - There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. You can also enclose the value in single or double quotes `"`/`"`.
@@ -219,7 +219,7 @@ To avoid unanticipated results, here are a few suggestions:
 
   ---
 
-- The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag.  This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
+- The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
 
   ```bash
   # Correct
@@ -245,7 +245,7 @@ If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a pa
 
 ## Asynchronous operations
 
-Operations in Azure can take a noticeable amount of time. For instance, configuring a virtual machine at a data center isn't instantaneous. Azure CLI waits until the command has finished to accept other commands.  Many commands therefore offer a `--no-wait` parameter as shown here:
+Operations in Azure can take a noticeable amount of time. For instance, configuring a virtual machine at a data center isn't instantaneous. Azure CLI waits until the command has finished to accept other commands. Many commands therefore offer a `--no-wait` parameter as shown here:
 
 ```azurecli
 az group delete --name MyResourceGroup --no-wait
@@ -363,7 +363,7 @@ When using `--uri-parameters` for requests in the form of OData, make sure to es
 
 ## Script examples
 
-Here are examples for using variables and looping through a list when working with Azure Virtual Machines.  For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
+Here are examples for using variables and looping through a list when working with Azure Virtual Machines. For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
 
 Use these scripts to save IDs to variables:
 
@@ -415,6 +415,10 @@ foreach ($vm_id in $vm_ids) {
 ```
 
 ---
+
+## Enable Tab Completion in PowerShell
+
+[!INCLUDE [tab-completion](includes/tab-completion.md)]
 
 ## Error handling for Azure CLI in PowerShell
 

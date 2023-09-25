@@ -1,46 +1,59 @@
 ### YamlMime:AzureCLIGroup
 uid: az_containerapp
 name: az containerapp
-summary: Manage Azure Container Apps.
-description: ''
+importantNote: >-
+  > [!NOTE]
+
+  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Azure Container Apps.
+status: GA
+sourceType: Core and Extension
 directCommands:
-- uid: az_containerapp_browse
+- uid: az_containerapp_browse(containerapp)
   name: az containerapp browse
-  summary: Open a containerapp in the browser, if possible.
-  description: ''
+  summary: |-
+    Open a containerapp in the browser, if possible.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp browse [--ids]
                            [--name]
                            [--resource-group]
                            [--subscription]
   examples:
-  - summary: open a containerapp in the browser
+  - summary: |-
+      open a containerapp in the browser
     syntax: az containerapp browse -n MyContainerapp -g MyResourceGroup
   optionalParameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
+    summary: |-
+      The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-- uid: az_containerapp_create
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_containerapp_create(containerapp)
   name: az containerapp create
-  summary: Create a container app.
-  description: ''
+  summary: |-
+    Create a container app.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp create --name
                            --resource-group
                            [--allow-insecure {false, true}]
                            [--args]
                            [--bind]
+                           [--branch]
                            [--command]
                            [--container-name]
+                           [--context-path]
                            [--cpu]
                            [--dal]
                            [--dapr-app-id]
@@ -64,6 +77,7 @@ directCommands:
                            [--registry-password]
                            [--registry-server]
                            [--registry-username]
+                           [--repo]
                            [--revision-suffix]
                            [--revisions-mode {multiple, single}]
                            [--scale-rule-auth]
@@ -73,45 +87,56 @@ directCommands:
                            [--scale-rule-type]
                            [--secret-volume-mount]
                            [--secrets]
+                           [--service-principal-client-id]
+                           [--service-principal-client-secret]
+                           [--service-principal-tenant-id]
+                           [--source]
                            [--system-assigned]
                            [--tags]
                            [--target-port]
                            [--termination-grace-period]
+                           [--token]
                            [--transport {auto, http, http2, tcp}]
                            [--user-assigned]
                            [--workload-profile-name]
                            [--yaml]
   examples:
-  - summary: Create a container app and retrieve its fully qualified domain name.
+  - summary: |-
+      Create a container app and retrieve its fully qualified domain name.
     syntax: >-
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --image myregistry.azurecr.io/my-app:v1.0 --environment MyContainerappEnv \
           --ingress external --target-port 80 \
           --registry-server myregistry.azurecr.io --registry-username myregistry --registry-password $REGISTRY_PASSWORD \
           --query properties.configuration.ingress.fqdn
-  - summary: Create a container app with resource requirements and replica count limits.
+  - summary: |-
+      Create a container app with resource requirements and replica count limits.
     syntax: >-
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --image nginx --environment MyContainerappEnv \
           --cpu 0.5 --memory 1.0Gi \
           --min-replicas 4 --max-replicas 8
-  - summary: Create a container app with secrets and environment variables.
+  - summary: |-
+      Create a container app with secrets and environment variables.
     syntax: >-
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappEnv \
           --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
           --env-vars GREETING="Hello, world" SECRETENV=secretref:anothersecret
-  - summary: Create a container app using a YAML configuration. Example YAML configuration - https://aka.ms/azure-container-apps-yaml
+  - summary: |-
+      Create a container app using a YAML configuration. Example YAML configuration - https://aka.ms/azure-container-apps-yaml
     syntax: >-
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --environment MyContainerappEnv \
           --yaml "path/to/yaml/file.yml"
-  - summary: Create a container app with an http scale rule
+  - summary: |-
+      Create a container app with an http scale rule
     syntax: >-
       az containerapp create -n myapp -g mygroup --environment myenv --image nginx \
           --scale-rule-name my-http-rule \
           --scale-rule-http-concurrency 50
-  - summary: Create a container app with a custom scale rule
+  - summary: |-
+      Create a container app with a custom scale rule
     syntax: >-
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --image my-queue-processor --environment MyContainerappEnv \
@@ -122,182 +147,239 @@ directCommands:
                                 "cloud=AzurePublicCloud" \
                                 "queueLength": "5" "queueName": "foo" \
           --scale-rule-auth "connection=my-connection-string-secret-name"
-  - summary: Create a container app with secrets and mounts them in a volume.
+  - summary: |-
+      Create a container app with secrets and mounts them in a volume.
     syntax: >-
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappEnv \
           --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
           --secret-volume-mount "mnt/secrets"
-  - summary: Create a container app hosted on a Connected Environment.
+  - summary: |-
+      Create a container app hosted on a Connected Environment.
     syntax: >-
       az containerapp create -n MyContainerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappConnectedEnv \
           --environment-type connected
+  - summary: |-
+      Create a container app from a new GitHub Actions workflow in the provided GitHub repository
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+
+      --environment MyContainerappEnv --registry-server MyRegistryServer \
+
+      --registry-user MyRegistryUser --registry-pass MyRegistryPass \
+
+      --repo https://github.com/myAccount/myRepo
+  - summary: |-
+      Create a Container App from the provided application source
+    syntax: >-
+      az containerapp create -n MyContainerapp -g MyResourceGroup \
+
+      --environment MyContainerappEnv --registry-server MyRegistryServer \
+
+      --registry-user MyRegistryUser --registry-pass MyRegistryPass \
+
+      --source .
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
+    summary: |-
+      The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --allow-insecure
     defaultValue: "False"
     parameterValueGroup: "false, true"
-    summary: Allow insecure connections for ingress traffic.
-    description: ''
+    summary: |-
+      Allow insecure connections for ingress traffic.
   - name: --args
-    summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
-    description: ''
+    summary: |-
+      A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
   - name: --bind
-    summary: Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
-    description: ''
+    summary: |-
+      Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
+  - name: --branch -b
+    summary: |-
+      Branch in the provided GitHub repository. Assumed to be the GitHub repository's default branch if not specified.
+    isPreview: true
   - name: --command
-    summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
-    description: ''
+    summary: |-
+      A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
   - name: --container-name
-    summary: Name of the container.
-    description: ''
+    summary: |-
+      Name of the container.
+  - name: --context-path
+    summary: |-
+      Path in the repository to run docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
+    isPreview: true
   - name: --cpu
-    summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
-    description: ''
+    summary: |-
+      Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
   - name: --dal --dapr-enable-api-logging
     defaultValue: "False"
-    summary: Enable API logging for the Dapr sidecar.
-    description: ''
+    summary: |-
+      Enable API logging for the Dapr sidecar.
   - name: --dapr-app-id
-    summary: The Dapr application identifier.
-    description: ''
+    summary: |-
+      The Dapr application identifier.
   - name: --dapr-app-port
-    summary: The port Dapr uses to talk to the application.
-    description: ''
+    summary: |-
+      The port Dapr uses to talk to the application.
   - name: --dapr-app-protocol
     parameterValueGroup: "grpc, http"
-    summary: The protocol Dapr uses to talk to the application.
-    description: ''
+    summary: |-
+      The protocol Dapr uses to talk to the application.
   - name: --dapr-http-max-request-size --dhmrs
-    summary: Increase max size of request body http and grpc servers parameter in MB to handle uploading of big files.
-    description: ''
+    summary: |-
+      Increase max size of request body http and grpc servers parameter in MB to handle uploading of big files.
   - name: --dapr-http-read-buffer-size --dhrbs
-    summary: Dapr max size of http header read buffer in KB to handle when sending multi-KB headers..
-    description: ''
+    summary: |-
+      Dapr max size of http header read buffer in KB to handle when sending multi-KB headers..
   - name: --dapr-log-level
     parameterValueGroup: "debug, error, info, warn"
-    summary: Set the log level for the Dapr sidecar.
-    description: ''
+    summary: |-
+      Set the log level for the Dapr sidecar.
   - name: --enable-dapr
     defaultValue: "False"
     parameterValueGroup: "false, true"
-    summary: Boolean indicating if the Dapr side car is enabled.
-    description: ''
+    summary: |-
+      Boolean indicating if the Dapr side car is enabled.
   - name: --env-vars
-    summary: A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
-    description: ''
+    summary: |-
+      A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
   - name: --environment
-    summary: Name or resource ID of the container app's environment.
-    description: ''
+    summary: |-
+      Name or resource ID of the container app's environment.
   - name: --environment-type
     defaultValue: "managed"
     parameterValueGroup: "connected, managed"
-    summary: Type of environment.
-    description: ''
+    summary: |-
+      Type of environment.
+    isPreview: true
   - name: --exposed-port
-    summary: Additional exposed port. Only supported by tcp transport protocol. Must be unique per environment if the app ingress is external.
-    description: ''
+    summary: |-
+      Additional exposed port. Only supported by tcp transport protocol. Must be unique per environment if the app ingress is external.
   - name: --image -i
-    summary: Container image, e.g. publisher/image-name:tag.
-    description: ''
+    summary: |-
+      Container image, e.g. publisher/image-name:tag.
   - name: --ingress
     parameterValueGroup: "external, internal"
-    summary: The ingress type.
-    description: ''
+    summary: |-
+      The ingress type.
   - name: --max-replicas
-    summary: The maximum number of replicas.
-    description: ''
+    summary: |-
+      The maximum number of replicas.
   - name: --memory
-    summary: Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
-    description: ''
+    summary: |-
+      Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
   - name: --min-replicas
-    summary: The minimum number of replicas.
-    description: ''
+    summary: |-
+      The minimum number of replicas.
   - name: --no-wait
     defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --registry-identity
-    summary: A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
-    description: ''
+    summary: |-
+      A Managed Identity to authenticate with the registry server instead of username/password. Use a resource ID or 'system' for user-defined and system-defined identities, respectively. The registry must be an ACR. If possible, an 'acrpull' role assignemnt will be created for the identity automatically.
   - name: --registry-password
-    summary: The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
-    description: ''
+    summary: |-
+      The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
   - name: --registry-server
-    summary: The container registry server hostname, e.g. myregistry.azurecr.io.
-    description: ''
+    summary: |-
+      The container registry server hostname, e.g. myregistry.azurecr.io.
   - name: --registry-username
-    summary: The username to log in to container registry.
-    description: ''
+    summary: |-
+      The username to log in to container registry.
+  - name: --repo
+    summary: |-
+      Create an app via GitHub Actions in the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.
+    isPreview: true
   - name: --revision-suffix
-    summary: User friendly suffix that is appended to the revision name.
-    description: ''
+    summary: |-
+      User friendly suffix that is appended to the revision name.
   - name: --revisions-mode
     defaultValue: "single"
     parameterValueGroup: "multiple, single"
-    summary: The active revisions mode for the container app.
-    description: ''
+    summary: |-
+      The active revisions mode for the container app.
   - name: --scale-rule-auth --sra
-    summary: Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
-    description: ''
+    summary: |-
+      Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
-    summary: The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
-    description: ''
+    summary: |-
+      The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
   - name: --scale-rule-metadata --srm
-    summary: Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
-    description: ''
+    summary: |-
+      Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
   - name: --scale-rule-name --srn
-    summary: The name of the scale rule.
-    description: ''
+    summary: |-
+      The name of the scale rule.
   - name: --scale-rule-type --srt
-    summary: 'The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.'
-    description: ''
+    summary: |-
+      The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.
   - name: --secret-volume-mount
-    summary: Path to mount all secrets e.g. mnt/secrets.
-    description: ''
+    summary: |-
+      Path to mount all secrets e.g. mnt/secrets.
   - name: --secrets -s
-    summary: A list of secret(s) for the container app. Space-separated values in 'key=value' format.
-    description: ''
+    summary: |-
+      A list of secret(s) for the container app. Space-separated values in 'key=value' format.
+  - name: --service-principal-client-id --sp-cid
+    summary: |-
+      The service principal client ID. Used by GitHub Actions to authenticate with Azure.
+    isPreview: true
+  - name: --service-principal-client-secret --sp-sec
+    summary: |-
+      The service principal client secret. Used by GitHub Actions to authenticate with Azure.
+    isPreview: true
+  - name: --service-principal-tenant-id --sp-tid
+    summary: |-
+      The service principal tenant ID. Used by GitHub Actions to authenticate with Azure.
+    isPreview: true
+  - name: --source
+    summary: |-
+      Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.
+    isPreview: true
   - name: --system-assigned
     defaultValue: "False"
-    summary: Boolean indicating whether to assign system-assigned identity.
-    description: ''
+    summary: |-
+      Boolean indicating whether to assign system-assigned identity.
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --target-port
-    summary: The application port used for ingress traffic.
-    description: ''
+    summary: |-
+      The application port used for ingress traffic.
   - name: --termination-grace-period --tgp
-    summary: 'Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).'
-    description: ''
+    summary: |-
+      Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
+  - name: --token
+    summary: |-
+      A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.
+    isPreview: true
   - name: --transport
     defaultValue: "auto"
     parameterValueGroup: "auto, http, http2, tcp"
-    summary: The transport protocol used for ingress traffic.
-    description: ''
+    summary: |-
+      The transport protocol used for ingress traffic.
   - name: --user-assigned
-    summary: Space-separated user identities to be assigned.
-    description: ''
+    summary: |-
+      Space-separated user identities to be assigned.
   - name: --workload-profile-name -w
-    summary: Name of the workload profile to run the app on.
-    description: ''
+    summary: |-
+      Name of the workload profile to run the app on.
   - name: --yaml
-    summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
-    description: ''
-- uid: az_containerapp_delete
+    summary: |-
+      Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+- uid: az_containerapp_delete(containerapp)
   name: az containerapp delete
-  summary: Delete a container app.
-  description: ''
+  summary: |-
+    Delete a container app.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp delete [--ids]
                            [--name]
@@ -306,33 +388,36 @@ directCommands:
                            [--subscription]
                            [--yes]
   examples:
-  - summary: Delete a container app.
+  - summary: |-
+      Delete a container app.
     syntax: az containerapp delete -g MyResourceGroup -n MyContainerapp
   optionalParameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
+    summary: |-
+      The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   - name: --no-wait
     defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --yes -y
     defaultValue: "False"
-    summary: Do not prompt for confirmation.
-    description: ''
-- uid: az_containerapp_exec
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_containerapp_exec(containerapp)
   name: az containerapp exec
-  summary: Open an SSH-like interactive shell within a container app replica.
-  description: ''
+  summary: |-
+    Open an SSH-like interactive shell within a container app replica.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp exec --name
                          --resource-group
@@ -341,79 +426,95 @@ directCommands:
                          [--replica]
                          [--revision]
   examples:
-  - summary: exec into a container app
+  - summary: |-
+      exec into a container app
     syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup
-  - summary: exec into a particular container app replica and revision
+  - summary: |-
+      exec into a particular container app replica and revision
     syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup --replica MyReplica --revision MyRevision
-  - summary: open a bash shell in a containerapp
+  - summary: |-
+      open a bash shell in a containerapp
     syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup --command bash
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Containerapp.
-    description: ''
+    summary: |-
+      The name of the Containerapp.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --command
     defaultValue: "sh"
-    summary: The startup command (bash, zsh, sh, etc.).
-    description: ''
+    summary: |-
+      The startup command (bash, zsh, sh, etc.).
   - name: --container
-    summary: The name of the container to ssh into.
-    description: ''
+    summary: |-
+      The name of the container to ssh into.
   - name: --replica
-    summary: The name of the replica to ssh into. List replicas with 'az containerapp replica list'. A replica may not exist if there is not traffic to your app.
-    description: ''
+    summary: |-
+      The name of the replica to ssh into. List replicas with 'az containerapp replica list'. A replica may not exist if there is not traffic to your app.
   - name: --revision
-    summary: The name of the container app revision to ssh into. Defaults to the latest revision.
-    description: ''
-- uid: az_containerapp_list
+    summary: |-
+      The name of the container app revision to ssh into. Defaults to the latest revision.
+- uid: az_containerapp_list(containerapp)
   name: az containerapp list
-  summary: List container apps.
-  description: ''
+  summary: |-
+    List container apps.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp list [--environment]
                          [--environment-type {connected, managed}]
                          [--resource-group]
   examples:
-  - summary: List container apps in the current subscription.
+  - summary: |-
+      List container apps in the current subscription.
     syntax: az containerapp list
-  - summary: List container apps by resource group.
+  - summary: |-
+      List container apps by resource group.
     syntax: az containerapp list -g MyResourceGroup
-  - summary: List container apps by environment type.
+  - summary: |-
+      List container apps by environment type.
     syntax: az containerapp list --environment-type connected
   optionalParameters:
   - name: --environment
-    summary: Name or resource ID of the container app's environment.
-    description: ''
+    summary: |-
+      Name or resource ID of the container app's environment.
   - name: --environment-type
     defaultValue: "all"
     parameterValueGroup: "connected, managed"
-    summary: Type of environment.
-    description: ''
+    summary: |-
+      Type of environment.
+    isPreview: true
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_containerapp_list-usages
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_containerapp_list-usages(containerapp)
   name: az containerapp list-usages
-  summary: List usages of subscription level quotas in specific region.
-  description: ''
+  summary: |-
+    List usages of subscription level quotas in specific region.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
   syntax: az containerapp list-usages --location
   examples:
-  - summary: List usages of  quotas in specific region.
+  - summary: |-
+      List usages of  quotas in specific region.
     syntax: az containerapp list-usages -l eastus
   requiredParameters:
   - isRequired: true
     name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
-- uid: az_containerapp_show
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+- uid: az_containerapp_show(containerapp)
   name: az containerapp show
-  summary: Show details of a container app.
-  description: ''
+  summary: |-
+    Show details of a container app.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp show [--ids]
                          [--name]
@@ -421,39 +522,48 @@ directCommands:
                          [--show-secrets]
                          [--subscription]
   examples:
-  - summary: Show the details of a container app.
+  - summary: |-
+      Show the details of a container app.
     syntax: az containerapp show -n MyContainerapp -g MyResourceGroup
   optionalParameters:
   - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
+    summary: |-
+      The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --show-secrets
     defaultValue: "False"
-    summary: Show Containerapp secrets.
-    description: ''
+    summary: |-
+      Show Containerapp secrets.
   - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
-- uid: az_containerapp_show-custom-domain-verification-id
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_containerapp_show-custom-domain-verification-id(containerapp)
   name: az containerapp show-custom-domain-verification-id
-  summary: Show the verification id for binding app or environment custom domains.
-  description: ''
+  summary: |-
+    Show the verification id for binding app or environment custom domains.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
   syntax: az containerapp show-custom-domain-verification-id
   examples:
-  - summary: Get the verification id, which needs to be added as a TXT record for app custom domain to verify domain ownership
+  - summary: |-
+      Get the verification id, which needs to be added as a TXT record for app custom domain to verify domain ownership
     syntax: az containerapp show-custom-domain-verification-id
-  - summary: Get the verification id, which needs to be added as a TXT record for custom environment DNS suffix to verify domain ownership
+  - summary: |-
+      Get the verification id, which needs to be added as a TXT record for custom environment DNS suffix to verify domain ownership
     syntax: az containerapp show-custom-domain-verification-id
-- uid: az_containerapp_up
+- uid: az_containerapp_up(containerapp)
   name: az containerapp up
-  summary: Create or update a container app as well as any associated resources (ACR, resource group, container apps environment, GitHub Actions, etc.).
-  description: ''
+  summary: |-
+    Create or update a container app as well as any associated resources (ACR, resource group, container apps environment, GitHub Actions, etc.).
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp up --name
                        [--branch]
@@ -479,92 +589,98 @@ directCommands:
                        [--token]
                        [--workload-profile-name]
   examples:
-  - summary: Create a container app from a dockerfile in a GitHub repo (setting up github actions)
+  - summary: |-
+      Create a container app from a dockerfile in a GitHub repo (setting up github actions)
     syntax: az containerapp up -n MyContainerapp --repo https://github.com/myAccount/myRepo
-  - summary: Create a container app from a dockerfile in a local directory (or autogenerate a container if no dockerfile is found)
+  - summary: |-
+      Create a container app from a dockerfile in a local directory (or autogenerate a container if no dockerfile is found)
     syntax: az containerapp up -n MyContainerapp --source .
-  - summary: Create a container app from an image in a registry
+  - summary: |-
+      Create a container app from an image in a registry
     syntax: az containerapp up -n MyContainerapp --image myregistry.azurecr.io/myImage:myTag
-  - summary: Create a container app from an image in a registry with ingress enabled and a specified environment
+  - summary: |-
+      Create a container app from an image in a registry with ingress enabled and a specified environment
     syntax: az containerapp up -n MyContainerapp --image myregistry.azurecr.io/myImage:myTag --ingress external --target-port 80 --environment MyEnv
   requiredParameters:
   - isRequired: true
     name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
+    summary: |-
+      The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   optionalParameters:
   - name: --branch -b
-    summary: The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
-    description: ''
+    summary: |-
+      The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
   - name: --browse
     defaultValue: "False"
-    summary: Open the app in a web browser after creation and deployment, if possible.
-    description: ''
+    summary: |-
+      Open the app in a web browser after creation and deployment, if possible.
   - name: --context-path
-    summary: Path in the repo from which to run the docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
-    description: ''
+    summary: |-
+      Path in the repo from which to run the docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
   - name: --env-vars
-    summary: A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
-    description: ''
+    summary: |-
+      A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
   - name: --environment
-    summary: Name or resource ID of the container app's environment.
-    description: ''
+    summary: |-
+      Name or resource ID of the container app's environment.
   - name: --image -i
-    summary: Container image, e.g. publisher/image-name:tag.
-    description: ''
+    summary: |-
+      Container image, e.g. publisher/image-name:tag.
   - name: --ingress
     parameterValueGroup: "external, internal"
-    summary: The ingress type.
-    description: ''
+    summary: |-
+      The ingress type.
   - name: --location -l
-    summary: 'Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.'
-    description: ''
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --logs-workspace-id
-    summary: Workspace ID of the Log Analytics workspace to send diagnostics logs to. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
-    description: ''
+    summary: |-
+      Workspace ID of the Log Analytics workspace to send diagnostics logs to. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
   - name: --logs-workspace-key
-    summary: Log Analytics workspace key to configure your Log Analytics workspace. You can use "az monitor log-analytics workspace get-shared-keys" to retrieve the key.
-    description: ''
+    summary: |-
+      Log Analytics workspace key to configure your Log Analytics workspace. You can use "az monitor log-analytics workspace get-shared-keys" to retrieve the key.
   - name: --registry-password
-    summary: The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
-    description: ''
+    summary: |-
+      The password to log in to container registry. If stored as a secret, value must start with 'secretref:' followed by the secret name.
   - name: --registry-server
-    summary: The container registry server hostname, e.g. myregistry.azurecr.io.
-    description: ''
+    summary: |-
+      The container registry server hostname, e.g. myregistry.azurecr.io.
   - name: --registry-username
-    summary: The username to log in to container registry.
-    description: ''
+    summary: |-
+      The username to log in to container registry.
   - name: --repo
-    summary: 'Create an app via Github Actions. In the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.'
-    description: ''
+    summary: |-
+      Create an app via Github Actions. In the format: https://github.com/<owner>/<repository-name> or <owner>/<repository-name>.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --service-principal-client-id --sp-cid
-    summary: The service principal client ID. Used by Github Actions to authenticate with Azure.
-    description: ''
+    summary: |-
+      The service principal client ID. Used by Github Actions to authenticate with Azure.
   - name: --service-principal-client-secret --sp-sec
-    summary: The service principal client secret. Used by Github Actions to authenticate with Azure.
-    description: ''
+    summary: |-
+      The service principal client secret. Used by Github Actions to authenticate with Azure.
   - name: --service-principal-tenant-id --sp-tid
-    summary: The service principal tenant ID. Used by Github Actions to authenticate with Azure.
-    description: ''
+    summary: |-
+      The service principal tenant ID. Used by Github Actions to authenticate with Azure.
   - name: --source
-    summary: 'Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.'
-    description: ''
+    summary: |-
+      Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.
   - name: --target-port
-    summary: The application port used for ingress traffic.
-    description: ''
+    summary: |-
+      The application port used for ingress traffic.
   - name: --token
-    summary: 'A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.'
-    description: ''
+    summary: |-
+      A Personal Access Token with write access to the specified repository. For more information: https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line. If not provided or not found in the cache (and using --repo), a browser page will be opened to authenticate with Github.
   - name: --workload-profile-name -w
-    summary: The friendly name for the workload profile.
-    description: ''
-- uid: az_containerapp_update
+    summary: |-
+      The friendly name for the workload profile.
+- uid: az_containerapp_update(containerapp)
   name: az containerapp update
-  summary: Update a container app. In multiple revisions mode, create a new revision based on the latest revision.
-  description: ''
+  summary: |-
+    Update a container app. In multiple revisions mode, create a new revision based on the latest revision.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp update [--args]
                            [--bind]
@@ -590,6 +706,7 @@ directCommands:
                            [--scale-rule-type]
                            [--secret-volume-mount]
                            [--set-env-vars]
+                           [--source]
                            [--subscription]
                            [--tags]
                            [--termination-grace-period]
@@ -597,366 +714,406 @@ directCommands:
                            [--workload-profile-name]
                            [--yaml]
   examples:
-  - summary: Update a container app's container image.
+  - summary: |-
+      Update a container app's container image.
     syntax: >-
       az containerapp update -n MyContainerapp -g MyResourceGroup \
           --image myregistry.azurecr.io/my-app:v2.0
-  - summary: Update a container app's resource requirements and scale limits.
+  - summary: |-
+      Update a container app's resource requirements and scale limits.
     syntax: >-
       az containerapp update -n MyContainerapp -g MyResourceGroup \
           --cpu 0.5 --memory 1.0Gi \
           --min-replicas 4 --max-replicas 8
-  - summary: Update a container app with an http scale rule
+  - summary: |-
+      Update a container app with an http scale rule
     syntax: >-
       az containerapp update -n myapp -g mygroup \
           --scale-rule-name my-http-rule \
           --scale-rule-http-concurrency 50
-  - summary: Update a container app with a custom scale rule
+  - summary: |-
+      Update a container app with a custom scale rule
     syntax: >-
       az containerapp update -n myapp -g mygroup \
           --scale-rule-name my-custom-rule \
           --scale-rule-type my-custom-type \
           --scale-rule-metadata key=value key2=value2 \
           --scale-rule-auth triggerparam=secretref triggerparam=secretref
+  - summary: |-
+      Update a Container App from the provided application source
+    syntax: az containerapp update -n MyContainerapp -g MyResourceGroup --source .
   optionalParameters:
   - name: --args
-    summary: A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
-    description: ''
+    summary: |-
+      A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
   - name: --bind
-    summary: Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
-    description: ''
+    summary: |-
+      Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
   - name: --command
-    summary: A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
-    description: ''
+    summary: |-
+      A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
   - name: --container-name
-    summary: Name of the container.
-    description: ''
+    summary: |-
+      Name of the container.
   - name: --cpu
-    summary: Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
-    description: ''
+    summary: |-
+      Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
   - name: --ids
-    summary: One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-    description: ''
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --image -i
-    summary: Container image, e.g. publisher/image-name:tag.
-    description: ''
+    summary: |-
+      Container image, e.g. publisher/image-name:tag.
   - name: --max-replicas
-    summary: The maximum number of replicas.
-    description: ''
+    summary: |-
+      The maximum number of replicas.
   - name: --memory
-    summary: Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
-    description: ''
+    summary: |-
+      Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
   - name: --min-replicas
-    summary: The minimum number of replicas.
-    description: ''
+    summary: |-
+      The minimum number of replicas.
   - name: --name -n
-    summary: The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
-    description: ''
+    summary: |-
+      The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   - name: --no-wait
     defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --remove-all-env-vars
     defaultValue: "False"
-    summary: Remove all environment variable(s) from container..
-    description: ''
+    summary: |-
+      Remove all environment variable(s) from container..
   - name: --remove-env-vars
-    summary: Remove environment variable(s) from container. Space-separated environment variable names.
-    description: ''
+    summary: |-
+      Remove environment variable(s) from container. Space-separated environment variable names.
   - name: --replace-env-vars
-    summary: Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
-    description: ''
+    summary: |-
+      Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
   - name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --revision-suffix
-    summary: User friendly suffix that is appended to the revision name.
-    description: ''
+    summary: |-
+      User friendly suffix that is appended to the revision name.
   - name: --scale-rule-auth --sra
-    summary: Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
-    description: ''
+    summary: |-
+      Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
-    summary: The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
-    description: ''
+    summary: |-
+      The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
   - name: --scale-rule-metadata --srm
-    summary: Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
-    description: ''
+    summary: |-
+      Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
   - name: --scale-rule-name --srn
-    summary: The name of the scale rule.
-    description: ''
+    summary: |-
+      The name of the scale rule.
   - name: --scale-rule-type --srt
-    summary: 'The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.'
-    description: ''
+    summary: |-
+      The type of the scale rule. Default: http. For more information please visit https://learn.microsoft.com/azure/container-apps/scale-app#scale-triggers.
   - name: --secret-volume-mount
-    summary: Path to mount all secrets e.g. mnt/secrets.
-    description: ''
+    summary: |-
+      Path to mount all secrets e.g. mnt/secrets.
   - name: --set-env-vars
-    summary: Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
-    description: ''
+    summary: |-
+      Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+  - name: --source
+    summary: |-
+      Local directory path containing the application source and Dockerfile for building the container image. Preview: If no Dockerfile is present, a container image is generated using buildpacks. If Docker is not running or buildpacks cannot be used, Oryx will be used to generate the image. See the supported Oryx runtimes here: https://github.com/microsoft/Oryx/blob/main/doc/supportedRuntimeVersions.md.
+    isPreview: true
   - name: --subscription
-    summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-    description: ''
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
-    summary: 'Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.'
-    description: ''
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --termination-grace-period --tgp
-    summary: 'Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).'
-    description: ''
+    summary: |-
+      Duration in seconds a replica is given to gracefully shut down before it is forcefully terminated. (Default: 30).
   - name: --unbind
-    summary: Space separated list of services(bindings) to be removed from this app. e.g. BIND_NAME1...
-    description: ''
+    summary: |-
+      Space separated list of services(bindings) to be removed from this app. e.g. BIND_NAME1...
   - name: --workload-profile-name -w
-    summary: The friendly name for the workload profile.
-    description: ''
+    summary: |-
+      The friendly name for the workload profile.
   - name: --yaml
-    summary: Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
-    description: ''
+    summary: |-
+      Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
 commands:
 - az_containerapp_auth
 - az_containerapp_auth_apple
-- az_containerapp_auth_apple_show
-- az_containerapp_auth_apple_update
+- az_containerapp_auth_apple_show(containerapp)
+- az_containerapp_auth_apple_update(containerapp)
 - az_containerapp_auth_facebook
-- az_containerapp_auth_facebook_show
-- az_containerapp_auth_facebook_update
+- az_containerapp_auth_facebook_show(containerapp)
+- az_containerapp_auth_facebook_update(containerapp)
 - az_containerapp_auth_github
-- az_containerapp_auth_github_show
-- az_containerapp_auth_github_update
+- az_containerapp_auth_github_show(containerapp)
+- az_containerapp_auth_github_update(containerapp)
 - az_containerapp_auth_google
-- az_containerapp_auth_google_show
-- az_containerapp_auth_google_update
+- az_containerapp_auth_google_show(containerapp)
+- az_containerapp_auth_google_update(containerapp)
 - az_containerapp_auth_microsoft
-- az_containerapp_auth_microsoft_show
-- az_containerapp_auth_microsoft_update
+- az_containerapp_auth_microsoft_show(containerapp)
+- az_containerapp_auth_microsoft_update(containerapp)
 - az_containerapp_auth_openid-connect
-- az_containerapp_auth_openid-connect_add
-- az_containerapp_auth_openid-connect_remove
-- az_containerapp_auth_openid-connect_show
-- az_containerapp_auth_openid-connect_update
-- az_containerapp_auth_show
+- az_containerapp_auth_openid-connect_add(containerapp)
+- az_containerapp_auth_openid-connect_remove(containerapp)
+- az_containerapp_auth_openid-connect_show(containerapp)
+- az_containerapp_auth_openid-connect_update(containerapp)
+- az_containerapp_auth_show(containerapp)
 - az_containerapp_auth_twitter
-- az_containerapp_auth_twitter_show
-- az_containerapp_auth_twitter_update
-- az_containerapp_auth_update
-- az_containerapp_browse
+- az_containerapp_auth_twitter_show(containerapp)
+- az_containerapp_auth_twitter_update(containerapp)
+- az_containerapp_auth_update(containerapp)
+- az_containerapp_browse(containerapp)
 - az_containerapp_compose
-- az_containerapp_compose_create
+- az_containerapp_compose_create(containerapp)
+- az_containerapp_connected-env
+- az_containerapp_connected-env_certificate
+- az_containerapp_connected-env_certificate_delete(containerapp)
+- az_containerapp_connected-env_certificate_list(containerapp)
+- az_containerapp_connected-env_certificate_upload(containerapp)
+- az_containerapp_connected-env_create(containerapp)
+- az_containerapp_connected-env_dapr-component
+- az_containerapp_connected-env_dapr-component_list(containerapp)
+- az_containerapp_connected-env_dapr-component_remove(containerapp)
+- az_containerapp_connected-env_dapr-component_set(containerapp)
+- az_containerapp_connected-env_dapr-component_show(containerapp)
+- az_containerapp_connected-env_delete(containerapp)
+- az_containerapp_connected-env_list(containerapp)
+- az_containerapp_connected-env_show(containerapp)
+- az_containerapp_connected-env_storage
+- az_containerapp_connected-env_storage_list(containerapp)
+- az_containerapp_connected-env_storage_remove(containerapp)
+- az_containerapp_connected-env_storage_set(containerapp)
+- az_containerapp_connected-env_storage_show(containerapp)
 - az_containerapp_connection
 - az_containerapp_connection_create
-- az_containerapp_connection_create_appconfig
-- az_containerapp_connection_create_confluent-cloud
-- az_containerapp_connection_create_cosmos-cassandra
-- az_containerapp_connection_create_cosmos-gremlin
-- az_containerapp_connection_create_cosmos-mongo
-- az_containerapp_connection_create_cosmos-sql
-- az_containerapp_connection_create_cosmos-table
-- az_containerapp_connection_create_eventhub
-- az_containerapp_connection_create_keyvault
-- az_containerapp_connection_create_mysql
-- az_containerapp_connection_create_mysql-flexible
-- az_containerapp_connection_create_postgres
-- az_containerapp_connection_create_postgres-flexible
-- az_containerapp_connection_create_redis
-- az_containerapp_connection_create_redis-enterprise
-- az_containerapp_connection_create_servicebus
-- az_containerapp_connection_create_signalr
-- az_containerapp_connection_create_sql
-- az_containerapp_connection_create_storage-blob
-- az_containerapp_connection_create_storage-file
-- az_containerapp_connection_create_storage-queue
-- az_containerapp_connection_create_storage-table
-- az_containerapp_connection_create_webpubsub
-- az_containerapp_connection_delete
-- az_containerapp_connection_list
-- az_containerapp_connection_list-configuration
-- az_containerapp_connection_list-support-types
-- az_containerapp_connection_show
+- az_containerapp_connection_create_appconfig()
+- az_containerapp_connection_create_confluent-cloud()
+- az_containerapp_connection_create_cosmos-cassandra()
+- az_containerapp_connection_create_cosmos-gremlin()
+- az_containerapp_connection_create_cosmos-mongo()
+- az_containerapp_connection_create_cosmos-sql()
+- az_containerapp_connection_create_cosmos-table()
+- az_containerapp_connection_create_eventhub()
+- az_containerapp_connection_create_keyvault()
+- az_containerapp_connection_create_mysql()
+- az_containerapp_connection_create_mysql-flexible()
+- az_containerapp_connection_create_postgres()
+- az_containerapp_connection_create_postgres-flexible()
+- az_containerapp_connection_create_redis()
+- az_containerapp_connection_create_redis-enterprise()
+- az_containerapp_connection_create_servicebus()
+- az_containerapp_connection_create_signalr()
+- az_containerapp_connection_create_sql()
+- az_containerapp_connection_create_storage-blob()
+- az_containerapp_connection_create_storage-file()
+- az_containerapp_connection_create_storage-queue()
+- az_containerapp_connection_create_storage-table()
+- az_containerapp_connection_create_webpubsub()
+- az_containerapp_connection_delete()
+- az_containerapp_connection_list()
+- az_containerapp_connection_list-configuration()
+- az_containerapp_connection_list-support-types()
+- az_containerapp_connection_show()
 - az_containerapp_connection_update
-- az_containerapp_connection_update_appconfig
-- az_containerapp_connection_update_confluent-cloud
-- az_containerapp_connection_update_cosmos-cassandra
-- az_containerapp_connection_update_cosmos-gremlin
-- az_containerapp_connection_update_cosmos-mongo
-- az_containerapp_connection_update_cosmos-sql
-- az_containerapp_connection_update_cosmos-table
-- az_containerapp_connection_update_eventhub
-- az_containerapp_connection_update_keyvault
-- az_containerapp_connection_update_mysql
-- az_containerapp_connection_update_mysql-flexible
-- az_containerapp_connection_update_postgres
-- az_containerapp_connection_update_postgres-flexible
-- az_containerapp_connection_update_redis
-- az_containerapp_connection_update_redis-enterprise
-- az_containerapp_connection_update_servicebus
-- az_containerapp_connection_update_signalr
-- az_containerapp_connection_update_sql
-- az_containerapp_connection_update_storage-blob
-- az_containerapp_connection_update_storage-file
-- az_containerapp_connection_update_storage-queue
-- az_containerapp_connection_update_storage-table
-- az_containerapp_connection_update_webpubsub
-- az_containerapp_connection_validate
-- az_containerapp_connection_wait
-- az_containerapp_create
+- az_containerapp_connection_update_appconfig()
+- az_containerapp_connection_update_confluent-cloud()
+- az_containerapp_connection_update_cosmos-cassandra()
+- az_containerapp_connection_update_cosmos-gremlin()
+- az_containerapp_connection_update_cosmos-mongo()
+- az_containerapp_connection_update_cosmos-sql()
+- az_containerapp_connection_update_cosmos-table()
+- az_containerapp_connection_update_eventhub()
+- az_containerapp_connection_update_keyvault()
+- az_containerapp_connection_update_mysql()
+- az_containerapp_connection_update_mysql-flexible()
+- az_containerapp_connection_update_postgres()
+- az_containerapp_connection_update_postgres-flexible()
+- az_containerapp_connection_update_redis()
+- az_containerapp_connection_update_redis-enterprise()
+- az_containerapp_connection_update_servicebus()
+- az_containerapp_connection_update_signalr()
+- az_containerapp_connection_update_sql()
+- az_containerapp_connection_update_storage-blob()
+- az_containerapp_connection_update_storage-file()
+- az_containerapp_connection_update_storage-queue()
+- az_containerapp_connection_update_storage-table()
+- az_containerapp_connection_update_webpubsub()
+- az_containerapp_connection_validate()
+- az_containerapp_connection_wait()
+- az_containerapp_create(containerapp)
 - az_containerapp_dapr
-- az_containerapp_dapr_disable
-- az_containerapp_dapr_enable
-- az_containerapp_delete
+- az_containerapp_dapr_disable(containerapp)
+- az_containerapp_dapr_enable(containerapp)
+- az_containerapp_delete(containerapp)
 - az_containerapp_env
 - az_containerapp_env_certificate
-- az_containerapp_env_certificate_create
-- az_containerapp_env_certificate_delete
-- az_containerapp_env_certificate_list
-- az_containerapp_env_certificate_upload
-- az_containerapp_env_create
+- az_containerapp_env_certificate_create(containerapp)
+- az_containerapp_env_certificate_delete(containerapp)
+- az_containerapp_env_certificate_list(containerapp)
+- az_containerapp_env_certificate_upload(containerapp)
+- az_containerapp_env_create(containerapp)
 - az_containerapp_env_dapr-component
-- az_containerapp_env_dapr-component_list
-- az_containerapp_env_dapr-component_remove
-- az_containerapp_env_dapr-component_set
-- az_containerapp_env_dapr-component_show
-- az_containerapp_env_delete
-- az_containerapp_env_list
-- az_containerapp_env_list-usages
+- az_containerapp_env_dapr-component_list(containerapp)
+- az_containerapp_env_dapr-component_remove(containerapp)
+- az_containerapp_env_dapr-component_set(containerapp)
+- az_containerapp_env_dapr-component_show(containerapp)
+- az_containerapp_env_delete(containerapp)
+- az_containerapp_env_list(containerapp)
+- az_containerapp_env_list-usages(containerapp)
 - az_containerapp_env_logs
-- az_containerapp_env_logs_show
-- az_containerapp_env_show
+- az_containerapp_env_logs_show(containerapp)
+- az_containerapp_env_show(containerapp)
 - az_containerapp_env_storage
-- az_containerapp_env_storage_list
-- az_containerapp_env_storage_remove
-- az_containerapp_env_storage_set
-- az_containerapp_env_storage_show
-- az_containerapp_env_update
+- az_containerapp_env_storage_list(containerapp)
+- az_containerapp_env_storage_remove(containerapp)
+- az_containerapp_env_storage_set(containerapp)
+- az_containerapp_env_storage_show(containerapp)
+- az_containerapp_env_update(containerapp)
 - az_containerapp_env_workload-profile
-- az_containerapp_env_workload-profile_add
-- az_containerapp_env_workload-profile_delete
-- az_containerapp_env_workload-profile_list
-- az_containerapp_env_workload-profile_list-supported
-- az_containerapp_env_workload-profile_set
-- az_containerapp_env_workload-profile_show
-- az_containerapp_env_workload-profile_update
-- az_containerapp_exec
+- az_containerapp_env_workload-profile_add(containerapp)
+- az_containerapp_env_workload-profile_delete(containerapp)
+- az_containerapp_env_workload-profile_list(containerapp)
+- az_containerapp_env_workload-profile_list-supported(containerapp)
+- az_containerapp_env_workload-profile_set(containerapp)
+- az_containerapp_env_workload-profile_show(containerapp)
+- az_containerapp_env_workload-profile_update(containerapp)
+- az_containerapp_exec(containerapp)
 - az_containerapp_github-action
-- az_containerapp_github-action_add
-- az_containerapp_github-action_delete
-- az_containerapp_github-action_show
+- az_containerapp_github-action_add(containerapp)
+- az_containerapp_github-action_delete(containerapp)
+- az_containerapp_github-action_show(containerapp)
 - az_containerapp_hostname
-- az_containerapp_hostname_add
-- az_containerapp_hostname_bind
-- az_containerapp_hostname_delete
-- az_containerapp_hostname_list
+- az_containerapp_hostname_add(containerapp)
+- az_containerapp_hostname_bind(containerapp)
+- az_containerapp_hostname_delete(containerapp)
+- az_containerapp_hostname_list(containerapp)
 - az_containerapp_identity
-- az_containerapp_identity_assign
-- az_containerapp_identity_remove
-- az_containerapp_identity_show
+- az_containerapp_identity_assign(containerapp)
+- az_containerapp_identity_remove(containerapp)
+- az_containerapp_identity_show(containerapp)
 - az_containerapp_ingress
 - az_containerapp_ingress_access-restriction
-- az_containerapp_ingress_access-restriction_list
-- az_containerapp_ingress_access-restriction_remove
-- az_containerapp_ingress_access-restriction_set
+- az_containerapp_ingress_access-restriction_list(containerapp)
+- az_containerapp_ingress_access-restriction_remove(containerapp)
+- az_containerapp_ingress_access-restriction_set(containerapp)
 - az_containerapp_ingress_cors
-- az_containerapp_ingress_cors_disable
-- az_containerapp_ingress_cors_enable
-- az_containerapp_ingress_cors_show
-- az_containerapp_ingress_cors_update
-- az_containerapp_ingress_disable
-- az_containerapp_ingress_enable
-- az_containerapp_ingress_show
+- az_containerapp_ingress_cors_disable(containerapp)
+- az_containerapp_ingress_cors_enable(containerapp)
+- az_containerapp_ingress_cors_show(containerapp)
+- az_containerapp_ingress_cors_update(containerapp)
+- az_containerapp_ingress_disable(containerapp)
+- az_containerapp_ingress_enable(containerapp)
+- az_containerapp_ingress_show(containerapp)
 - az_containerapp_ingress_sticky-sessions
-- az_containerapp_ingress_sticky-sessions_set
-- az_containerapp_ingress_sticky-sessions_show
+- az_containerapp_ingress_sticky-sessions_set(containerapp)
+- az_containerapp_ingress_sticky-sessions_show(containerapp)
 - az_containerapp_ingress_traffic
-- az_containerapp_ingress_traffic_set
-- az_containerapp_ingress_traffic_show
-- az_containerapp_ingress_update
+- az_containerapp_ingress_traffic_set(containerapp)
+- az_containerapp_ingress_traffic_show(containerapp)
+- az_containerapp_ingress_update(containerapp)
 - az_containerapp_job
-- az_containerapp_job_create
-- az_containerapp_job_delete
+- az_containerapp_job_create(containerapp)
+- az_containerapp_job_delete(containerapp)
 - az_containerapp_job_execution
-- az_containerapp_job_execution_list
-- az_containerapp_job_execution_show
+- az_containerapp_job_execution_list(containerapp)
+- az_containerapp_job_execution_show(containerapp)
 - az_containerapp_job_identity
-- az_containerapp_job_identity_assign
-- az_containerapp_job_identity_remove
-- az_containerapp_job_identity_show
-- az_containerapp_job_list
+- az_containerapp_job_identity_assign(containerapp)
+- az_containerapp_job_identity_remove(containerapp)
+- az_containerapp_job_identity_show(containerapp)
+- az_containerapp_job_list(containerapp)
 - az_containerapp_job_secret
-- az_containerapp_job_secret_list
-- az_containerapp_job_secret_remove
-- az_containerapp_job_secret_set
-- az_containerapp_job_secret_show
-- az_containerapp_job_show
-- az_containerapp_job_start
-- az_containerapp_job_stop
-- az_containerapp_job_update
-- az_containerapp_list
-- az_containerapp_list-usages
+- az_containerapp_job_secret_list(containerapp)
+- az_containerapp_job_secret_remove(containerapp)
+- az_containerapp_job_secret_set(containerapp)
+- az_containerapp_job_secret_show(containerapp)
+- az_containerapp_job_show(containerapp)
+- az_containerapp_job_start(containerapp)
+- az_containerapp_job_stop(containerapp)
+- az_containerapp_job_update(containerapp)
+- az_containerapp_list(containerapp)
+- az_containerapp_list-usages(containerapp)
 - az_containerapp_logs
-- az_containerapp_logs_show
+- az_containerapp_logs_show(containerapp)
 - az_containerapp_patch
-- az_containerapp_patch_apply
-- az_containerapp_patch_interactive
-- az_containerapp_patch_list
+- az_containerapp_patch_apply(containerapp)
+- az_containerapp_patch_interactive(containerapp)
+- az_containerapp_patch_list(containerapp)
 - az_containerapp_registry
-- az_containerapp_registry_list
-- az_containerapp_registry_remove
-- az_containerapp_registry_set
-- az_containerapp_registry_show
+- az_containerapp_registry_list(containerapp)
+- az_containerapp_registry_remove(containerapp)
+- az_containerapp_registry_set(containerapp)
+- az_containerapp_registry_show(containerapp)
 - az_containerapp_replica
-- az_containerapp_replica_list
-- az_containerapp_replica_show
+- az_containerapp_replica_list(containerapp)
+- az_containerapp_replica_show(containerapp)
 - az_containerapp_revision
-- az_containerapp_revision_activate
-- az_containerapp_revision_copy
-- az_containerapp_revision_deactivate
+- az_containerapp_revision_activate(containerapp)
+- az_containerapp_revision_copy(containerapp)
+- az_containerapp_revision_deactivate(containerapp)
 - az_containerapp_revision_label
-- az_containerapp_revision_label_add
-- az_containerapp_revision_label_remove
-- az_containerapp_revision_label_swap
-- az_containerapp_revision_list
-- az_containerapp_revision_restart
-- az_containerapp_revision_set-mode
-- az_containerapp_revision_show
+- az_containerapp_revision_label_add(containerapp)
+- az_containerapp_revision_label_remove(containerapp)
+- az_containerapp_revision_label_swap(containerapp)
+- az_containerapp_revision_list(containerapp)
+- az_containerapp_revision_restart(containerapp)
+- az_containerapp_revision_set-mode(containerapp)
+- az_containerapp_revision_show(containerapp)
 - az_containerapp_secret
-- az_containerapp_secret_list
-- az_containerapp_secret_remove
-- az_containerapp_secret_set
-- az_containerapp_secret_show
+- az_containerapp_secret_list(containerapp)
+- az_containerapp_secret_remove(containerapp)
+- az_containerapp_secret_set(containerapp)
+- az_containerapp_secret_show(containerapp)
 - az_containerapp_service
 - az_containerapp_service_kafka
-- az_containerapp_service_kafka_create
-- az_containerapp_service_kafka_delete
-- az_containerapp_service_list
+- az_containerapp_service_kafka_create(containerapp)
+- az_containerapp_service_kafka_delete(containerapp)
+- az_containerapp_service_list(containerapp)
 - az_containerapp_service_mariadb
-- az_containerapp_service_mariadb_create
-- az_containerapp_service_mariadb_delete
+- az_containerapp_service_mariadb_create(containerapp)
+- az_containerapp_service_mariadb_delete(containerapp)
 - az_containerapp_service_postgres
-- az_containerapp_service_postgres_create
-- az_containerapp_service_postgres_delete
+- az_containerapp_service_postgres_create(containerapp)
+- az_containerapp_service_postgres_delete(containerapp)
+- az_containerapp_service_qdrant
+- az_containerapp_service_qdrant_create(containerapp)
+- az_containerapp_service_qdrant_delete(containerapp)
 - az_containerapp_service_redis
-- az_containerapp_service_redis_create
-- az_containerapp_service_redis_delete
-- az_containerapp_show
-- az_containerapp_show-custom-domain-verification-id
+- az_containerapp_service_redis_create(containerapp)
+- az_containerapp_service_redis_delete(containerapp)
+- az_containerapp_show(containerapp)
+- az_containerapp_show-custom-domain-verification-id(containerapp)
 - az_containerapp_ssl
-- az_containerapp_ssl_upload
-- az_containerapp_up
-- az_containerapp_update
+- az_containerapp_ssl_upload(containerapp)
+- az_containerapp_up(containerapp)
+- az_containerapp_update(containerapp)
 globalParameters:
 - name: --debug
-  summary: Increase logging verbosity to show all debug logs.
+  summary: |-
+    Increase logging verbosity to show all debug logs.
 - name: --help -h
-  summary: Show this help message and exit.
+  summary: |-
+    Show this help message and exit.
 - name: --only-show-errors
-  summary: Only show errors, suppressing warnings.
+  summary: |-
+    Only show errors, suppressing warnings.
 - name: --output -o
   defaultValue: "json"
   parameterValueGroup: "json, jsonc, table, tsv"
-  summary: Output format.
+  summary: |-
+    Output format.
 - name: --query
-  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --subscription
-  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
-  summary: Increase logging verbosity. Use --debug for full debug logs.
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Manage Azure Container Apps.
