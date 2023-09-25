@@ -32,9 +32,9 @@ In this tutorial, you learn how to:
 
 ## Prerequisites 
 
-If you don't have an [Azure subscription](https://learn.microsoft.com/azure/industry/training-services/microsoft-community-training/frequently-asked-questions/pricing-subscription), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
+If you don't have an [Azure subscription](/azure/industry/training-services/microsoft-community-training/frequently-asked-questions/pricing-subscription), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
-You can then view the steps to [get started with Azure CLI](https://learn.microsoft.com/cli/azure/get-started-with-azure-cli) in order to prepare your environment. 
+You can then view the steps to [get started with Azure CLI](/cli/azure/get-started-with-azure-cli) in order to prepare your environment. 
 
 ## Overview 
 
