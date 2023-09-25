@@ -17,13 +17,26 @@ Automated tools that use Azure services should always have restricted permission
 
 ## What is an Azure service principal?
 
-An Azure service principal is an identity created for use with applications, hosted services, and automated tools, to access resources. The roles assigned to the service principal restrict access, which gives you control over which resources can be accessed and at what level.
+An Azure service principal is an identity created for use with applications, hosted services, and automated tools, to access resources. For security reasons, it's always recommended to use service principals with automated tools rather than allowing them to sign in with a user identity.
 
-For security reasons, it's always recommended to use service principals with automated tools rather than allowing them to sign in with a user identity.
+In this tutorial, you'll learn how to use service principals with either password-based or certificate-based authentication in order to create a resource. The roles assigned to the service principal restrict access, which gives you control over which resources can be accessed and at what level.
 
-This article shows you the steps for creating, getting information about, and resetting an Azure service principal with the Azure CLI.
+In this tutorial, you learn how to:
 
-## Overview
+> [!div class="checklist"]
+> * Use service principals with a password.
+> * Use service principals with a certificate.
+> * Get an existing service principal.
+> * Manage service principal roles
+> * Create a resource using service principal
+
+## Prerequisites 
+
+[!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
+
+[!INCLUDE [azure-cli-prepare-your-environment.md](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
+
+## Overview 
 
 Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command.
 

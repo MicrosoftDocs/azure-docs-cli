@@ -32,7 +32,6 @@ For certificate-based authentication, use the `--cert` parameter. This parameter
 
 > [!NOTE]
 > When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
-
 ```azurecli-interactive
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
@@ -104,7 +103,6 @@ myCertificateValue
 
 > [!NOTE]
 > The `az ad sp create-for-rbac --create-cert` command creates the service principal and a PEM file. The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
-
 The `--keyvault` parameter can be added to store the certificate in Azure Key Vault. When you use `--keyvault`, the `--cert` parameter is __required__.
 
 ```azurecli-interactive
@@ -184,7 +182,6 @@ az acr login --name registryName
 > Certificate must be in PEM format - it won't work with PKCS#12 files (.p12/.pfx)
 >
 > You don't need to prefix the path with an @ like you do with the previous az commands
-
 ***
 
 ## Next Steps
