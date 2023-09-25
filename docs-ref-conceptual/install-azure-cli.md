@@ -39,7 +39,7 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 
 ### Where is the Azure CLI installed?
 
-When installing the Azure CLI, you cannot select an install location.  In Windows, use `where az` at a Cmd prompt to see where the Azure CLI is installed.  The 32-bit Azure CLI installs in `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2` and the 64-bit in `C:\Program Files\Microsoft SDKs\Azure\CLI2`. In Linux, programs are more distributed.  Most binaries are in `/bin` or `/sbin` and most libraries are in `/lib`.
+When installing the Azure CLI, you cannot select an install location. In Windows, the 32-bit Azure CLI installs in `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2` and the 64-bit in `C:\Program Files\Microsoft SDKs\Azure\CLI2`. In Linux, programs are more distributed.  Most binaries are in `/bin` or `/sbin` and most libraries are in `/lib`.
 
 User-specific configuration files are located in `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows.  These locations are known as the `AZURE_CONFIG_DIR`.
 
