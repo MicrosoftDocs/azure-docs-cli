@@ -30,8 +30,6 @@ In this tutorial, you learn how to:
 > * Manage service principal roles
 > * Create a resource using service principal
 
-## Prerequisites 
-
 [!INCLUDE [quickstarts-free-trial-note](../../includes/quickstarts-free-trial-note.md)]
 
 [!INCLUDE [azure-cli-prepare-your-environment.md](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
