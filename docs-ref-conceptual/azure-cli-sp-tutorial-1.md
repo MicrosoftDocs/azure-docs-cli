@@ -23,7 +23,7 @@ For security reasons, it's always recommended to use service principals with aut
 
 This article shows you the steps for creating, getting information about, and resetting an Azure service principal with the Azure CLI.
 
-## Create a service principal
+## Overview
 
 Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command.
 
@@ -39,7 +39,7 @@ When creating a service principal, you choose the type of sign-in authentication
 
 ## Next Steps
 
-Now that you've learned how to create an Azure service principal, proceed to the next step to learn how to retrieve the service principal you created.
+Now that you've learned how to create an Azure service principal, proceed to the next step to learn how to use service principals with password-based authentication.
 
 > [!div class="nextstepaction"]
-> [Getting an existing service principal](./azure-cli-sp-tutorial-2.md)
+> [Work with service principals using a password](./azure-cli-sp-tutorial-2.md)
