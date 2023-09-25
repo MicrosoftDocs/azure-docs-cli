@@ -43,6 +43,23 @@ When installing the Azure CLI, you cannot select an install location. In Windows
 
 User-specific configuration files are located in `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows.  These locations are known as the `AZURE_CONFIG_DIR`.
 
+### What version of the Azure CLI is installed?
+
+Type `az version` in a terminal window to know if you have the Azure CLI installed.  Your output will look like this:
+
+```output
+{
+  "azure-cli": "x.xx.0x",
+  "azure-cli-core": "x.xx.x",
+  "azure-cli-telemetry": "x.x.x",
+  "extensions": {}
+}
+```
+
+### What extensions are installed?
+
+Use the `az extension list` command to see installed extension.  You can also use `az version`, but `az extension list` provides additional information including the installation path and status. See [Use and manage extensions with the Azure CLI](./azure-cli-extensions-overview.md) for more information on managing extensions.
+
 ## See also
 
 * [Sign in with the Azure CLI](./authenticate-azure-cli.md)
