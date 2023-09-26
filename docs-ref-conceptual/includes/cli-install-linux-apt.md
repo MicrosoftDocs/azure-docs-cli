@@ -72,13 +72,13 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 Configure the `azure-cli` repository information as shown previously. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
-1. To view available versions with command:
+1. View available versions of the Azure CLI.
 
     ```bash
     apt-cache policy azure-cli
     ```
 
-1. To install specific version with variables:
+1. Install a specific version.
 
     ```bash
     # Obtain the currently installed distribution
@@ -91,7 +91,7 @@ Configure the `azure-cli` repository information as shown previously. Available 
     sudo apt-get install azure-cli=$AZ_VER-1~$AZ_DIST
     ```
 
-1. To install a specific version without variables, replace the Azure CLI version and Linux distribution name shown:
+    To install a specific version without variables, replace the Azure CLI version and Linux distribution name shown:
 
     ```bash
     sudo apt-get install azure-cli=2.51.0-1~bullseye
