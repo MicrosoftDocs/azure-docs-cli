@@ -15,28 +15,18 @@ keywords: azure service principal, create service principal azure, create servic
 
 Automated tools that use Azure services should always have restricted permissions, to ensure that your resources will be secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals.
 
-## What is an Azure service principal?
+## Overview and Prerequisites 
 
 An Azure service principal is an identity created for use with applications, hosted services, and automated tools, to access resources. For security reasons, it's always recommended to use service principals with automated tools rather than allowing them to sign in with a user identity.
 
 In this tutorial, you'll learn how to use service principals with either password-based or certificate-based authentication in order to create a resource. The roles assigned to the service principal restrict access, which gives you control over which resources can be accessed and at what level.
 
-In this tutorial, you learn how to:
+This tutorial can be completed with the interactive experience offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
+locally.
 
-> [!div class="checklist"]
-> * Use service principals with a password.
-> * Use service principals with a certificate.
-> * Get an existing service principal.
-> * Manage service principal roles
-> * Create a resource using service principal
+To create a service principal in Azure, you must have sufficient permissions to register an application with your Azure Active Directory tenant, and assign a role to the application in your Azure subscription. In order to do so, you require `Application.ReadWrite.All`permissions.
 
-## Prerequisites 
-
-If you don't have an [Azure subscription](/azure/industry/training-services/microsoft-community-training/frequently-asked-questions/pricing-subscription), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
-
-You can then view the steps to [get started with Azure CLI](/cli/azure/get-started-with-azure-cli) in order to prepare your environment. 
-
-## Overview 
+[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
 
 Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command.
 
