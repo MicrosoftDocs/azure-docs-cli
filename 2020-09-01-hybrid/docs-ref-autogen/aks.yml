@@ -2004,17 +2004,17 @@ directCommands:
     Enable Kubernetes addons.
   description: |-
     These addons are available:
-        - http_application_routing : configure ingress with automatic public DNS name creation.
-        - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
-                                     Requires "--enable-msi-auth-for-monitoring" for managed identity auth.
-                                     Requires "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
-                                     If monitoring addon is enabled --no-wait argument will have no effect
-        - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-        - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
-                                     Learn more at aka.ms/aks/policy.
-        - ingress-appgw            : enable Application Gateway Ingress Controller addon.
-        - open-service-mesh        : enable Open Service Mesh addon.
-        - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
+    - http_application_routing : configure ingress with automatic public DNS name creation.
+    - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
+                                 Requires "--enable-msi-auth-for-monitoring" for managed identity auth.
+                                 Requires "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
+                                 If monitoring addon is enabled --no-wait argument will have no effect
+    - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+    - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+                                 Learn more at aka.ms/aks/policy.
+    - ingress-appgw            : enable Application Gateway Ingress Controller addon.
+    - open-service-mesh        : enable Open Service Mesh addon.
+    - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
@@ -3033,6 +3033,7 @@ directCommands:
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
+                  [--disable-force-upgrade]
                   [--disable-image-cleaner]
                   [--disable-keda]
                   [--disable-local-accounts]
@@ -3040,6 +3041,7 @@ directCommands:
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
                   [--disable-vpa]
+                  [--disable-windows-gmsa]
                   [--disable-workload-identity]
                   [--enable-aad]
                   [--enable-ahub]
@@ -3051,6 +3053,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
+                  [--enable-force-upgrade]
                   [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-local-accounts]
@@ -3089,10 +3092,12 @@ directCommands:
                   [--nodepool-taints]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
+                  [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
+                  [--upgrade-override-until]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -3168,6 +3173,9 @@ directCommands:
   - summary: |-
       Enable Windows gmsa for a kubernetes cluster without setting DNS server in the vnet used by the cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
+  - summary: |-
+      Disable Windows gmsa for a kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-windows-gmsa
   - summary: |-
       Enable KEDA workload autoscaler for an existing kubernetes cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-keda
@@ -3274,6 +3282,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable AzureFile CSI Driver.
+  - name: --disable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Disable forceUpgrade cluster upgrade settings override.
   - name: --disable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -3302,6 +3314,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable vertical pod autoscaler for cluster.
+  - name: --disable-windows-gmsa
+    defaultValue: "False"
+    summary: |-
+      Disable Windows gmsa on cluster.
   - name: --disable-workload-identity
     defaultValue: "False"
     summary: |-
@@ -3345,6 +3361,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable AzureFile CSI Driver.
+  - name: --enable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Enable forceUpgrade cluster upgrade settings override.
   - name: --enable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -3501,6 +3521,11 @@ directCommands:
   - name: --pod-cidr
     summary: |-
       Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
+  - name: --private-dns-zone
+    summary: |-
+      The private dns zone mode for private cluster.
+    description: |-
+      Only allow changing private dns zone from byo/system mode to none for private cluster. Others are denied.
   - name: --rotation-poll-interval
     summary: |-
       Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
@@ -3515,6 +3540,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update min-count or max-count for cluster autoscaler.
+  - name: --upgrade-override-until
+    summary: |-
+      Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
   - name: --windows-admin-password
     summary: |-
       User account password to use on windows node VMs.
