@@ -24,7 +24,7 @@ In this tutorial, you'll learn how to use service principals with either passwor
 This tutorial can be completed with the interactive experience offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
 locally.
 
-To create a service principal in Azure, you must have sufficient permissions to register an application with your Azure Active Directory tenant, and assign a role to the application in your Azure subscription. In order to do so, you require `Application.ReadWrite.All`permissions.
+To create a service principal in Azure, you must have sufficient permissions to register an application with your Azure Active Directory tenant, and assign a role to the application in your Azure subscription. In order to do so, you require `Application.ReadWrite.All` permissions.
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
 
