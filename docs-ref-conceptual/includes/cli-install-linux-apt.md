@@ -56,8 +56,8 @@ If you prefer a step-by-step installation process, complete the following steps 
 3. <div id="set-release"/>Add the Azure CLI software repository:
 
     ```bash
-    AZ_REPO=$(lsb_release -cs)
-    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
+    AZ_DIST=$(lsb_release -cs)
+    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_DIST main" |
         sudo tee /etc/apt/sources.list.d/azure-cli.list
     ```
 
@@ -72,17 +72,34 @@ If you prefer a step-by-step installation process, complete the following steps 
 
 Configure the `azure-cli` repository information as shown previously. Available versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md).
 
-1. To view available versions with command:
+1. View available versions of the Azure CLI.
 
     ```bash
     apt-cache policy azure-cli
     ```
 
-2. To install specific version:
+1. Install a specific version.
 
     ```bash
-    sudo apt-get install azure-cli=<version>-1~bullseye
+    # Obtain the currently installed distribution
+    AZ_DIST=$(lsb_release -cs)
+
+    # Store an Azure CLI version of choice
+    AZ_VER=2.51.0
+
+    # Install a specific version
+    sudo apt-get install azure-cli=$AZ_VER-1~$AZ_DIST
     ```
+
+    To install a specific version without variables, replace the Azure CLI version and Linux distribution name shown:
+
+    ```bash
+    sudo apt-get install azure-cli=2.51.0-1~bullseye
+    ```
+
+If you receive error message _Unable to locate package azure-cli_, the `azure-cli` repository information is not configured.  Follow the steps given in [Option 2: Step-by-step installation instructions](#option-2-step-by-step-installation-instructions).
+
+If you receive error message _Version x.xx.x-1~distributionName for azure-cli was not found_, use `lsb_release -cs` to find the distribution you're running.
 
 ## Update Azure CLI
 
@@ -202,12 +219,9 @@ Acquire {
 
 If your proxy doesn't use basic auth, __remove__ the `[username]:[password]@` portion of the proxy URI. If you require more information for proxy configuration, see the official Ubuntu documentation:
 
-* [apt.conf manpage](https://manpages.ubuntu.com/manpages/lunar/en/man5/apt.conf.5.html)
+* [apt.conf man page](https://manpages.ubuntu.com/manpages/lunar/en/man5/apt.conf.5.html)
 * [Ubuntu wiki - apt-get howto](https://help.ubuntu.com/community/AptGet/Howto#Setting_up_apt-get_to_use_a_http-proxy)
 
-In order to get the Microsoft signing key and get the package from our repository, your proxy needs to
-allow HTTPS connections to the following address:
-
-* `https://packages.microsoft.com`
+In order to get the Microsoft signing key and get the package from our repository, your proxy needs to allow HTTPS connections to the following address: `https://packages.microsoft.com.
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
