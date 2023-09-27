@@ -13,14 +13,26 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 ---
 # What's new in the Azure CLI
 
-This page highlights new features, articles and learning paths for the Azure CLI.  Use these quick links to jump straight to the article containing detailed information:
+This page highlights new features, articles and learning paths for the Azure CLI. Use these quick links to jump straight to the article containing detailed information:
 
+- [Reference type and status](#reference-type-and-status)
 - [64-bit install](/cli/azure/install-azure-cli-windows#latest-version)
 - [Tab completion](/cli/azure/install-azure-cli-windows#enable-tab-completion-on-powershell)
 - [WAM sign in](/cli/azure/authenticate-azure-cli#sign-in-with-web-account-manager-wam)
 - [Cheat sheet](cheat-sheet-onboarding.md)
 - [Article index](reference-docs-index.md)
 - [Sample index](samples-index.md)
+
+## Reference type and status
+
+Reference type and status information has been added to the Azure CLI reference content. You can see this information in three places:
+
+- **In reference list tables.** See an example in [az account](/cli/azure/account).
+- **Under each command name.** For an example, see [az account tenant](/cli/azure/account/tenant) which has a status of _experimental_.
+- **Next to each parameter name.** If a parameter status is not given it is because the parameter status matches the reference command status, or the parameter is in general acceptance (GA).
+
+Why is this important? Reference command status determines the support level. For more information see [Azure CLI terminology and support levels](./reference-types-and-status.md#what-is-reference-status).
+
 
 ## 64-bit Windows install
 
