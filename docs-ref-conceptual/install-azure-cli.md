@@ -39,13 +39,13 @@ The Azure CLI is available to install in Windows, macOS and Linux environments. 
 
 ### Where is the Azure CLI installed?
 
-When installing the Azure CLI, you cannot select an install location. In Windows, the 32-bit Azure CLI installs in `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2` and the 64-bit in `C:\Program Files\Microsoft SDKs\Azure\CLI2`. In Linux, the Azure CLI is installed in `/opt/az/` on Ubuntu and Debian, and in `/lib64/az/` on CentOS, RHEL and Azure Linux.
+When installing the Azure CLI, you can't select an install location. In Windows, the 32-bit Azure CLI installs in `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2` and the 64-bit in `C:\Program Files\Microsoft SDKs\Azure\CLI2`. In Linux, the Azure CLI is installed in `/opt/az/` on Ubuntu and Debian, and in `/lib64/az/` on CentOS, RHEL and Azure Linux.
 
 User-specific configuration files are located in `$HOME/.azure` on macOS and Linux, and `%USERPROFILE%\.azure` on Windows. These locations are known as the `AZURE_CONFIG_DIR`.
 
 ### What version of the Azure CLI is installed?
 
-Type `az version` in a terminal window to know what version of the Azure CLI is installed. Your output will look like this:
+Type `az version` in a terminal window to know what version of the Azure CLI is installed. Your output looks like this:
 
 ```output
 {
@@ -58,7 +58,7 @@ Type `az version` in a terminal window to know what version of the Azure CLI is 
 
 ### What extensions are installed?
 
-Use the `az extension list` command to see installed extension. You can also use `az version`, but `az extension list` provides additional information including the installation path and status. See [Use and manage extensions with the Azure CLI](./azure-cli-extensions-overview.md) for more information on managing extensions.
+Use the `az extension list` command to see installed extension. You can also use `az version`, but `az extension list` provides additional information including the installation path and status. For information on managing extensions, see [Use and manage extensions with the Azure CLI](./azure-cli-extensions-overview.md).
 
 ## See also
 
