@@ -34,11 +34,125 @@ After you sign in, CLI commands are run against your default subscription. If yo
 
 ## Refresh tokens
 
+## Sign in with credentials on the command line
+
+Provide your Azure user credentials on the command line.
+
+> [!Note]
+> This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
+
+```azurecli-interactive
+az login -u <username> -p <password>
+```
+
+> [!IMPORTANT]
+> If you want to avoid displaying your password on console and are using `az login` interactively,
+> use the `read -s` command under `bash`.
+>
+> ```bash
+> read -sp "Azure password: " AZ_PASS && echo && az login -u <username> -p $AZ_PASS
+> ```
+>
+> Under PowerShell, use the `Get-Credential` cmdlet.
+>
+> ```powershell
+> $AzCred = Get-Credential -UserName <username>
+> az login -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password
+> ```
+
+## Sign in with a service principal
+
+Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
+predefined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
+allowing you to apply both permissions restrictions and locally stored static credential information. To learn more
+about service principals, see [Working with Azure service principals using the Azure CLI](./azure-cli-sp-tutorial-1.md).
+
+To sign in with a service principal, you need:
+
+* The URL or name associated with the service principal
+* The service principal password, or the X509 certificate used to create the service principal in PEM format
+* The tenant associated with the service principal, as either an `.onmicrosoft.com` domain or Azure object ID
+
+> [!NOTE]
+> A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./azure-cli-sp-tutorial-5.md).
+
+> [!IMPORTANT]
+>
+> If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./azure-cli-sp-tutorial-5.md).
+
+```azurecli-interactive
+az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
+```
+
+> [!IMPORTANT]
+> If you want to avoid displaying your password on console and are using `az login` interactively,
+> use the `read -s` command under `bash`.
+>
+> ```bash
+> read -sp "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-id> -p $AZ_PASS --tenant <tenant>
+> ```
+>
+> Under PowerShell, use the `Get-Credential` cmdlet.
+>
+> ```powershell
+> $AzCred = Get-Credential -UserName <app-id>
+> az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
+> ```
+
+See [Working with service principals](./azure-cli-sp-tutorial-1.md) for more information on PEM file formats.
+
+## Sign in with a different tenant
+
+You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both
+interactive and command-line sign in methods work with `--tenant`.
+
+```azurecli-interactive
+az login --tenant <tenant>
+```
+
+## Sign in with a managed identity
+
+On resources configured for managed identities for Azure resources, you can sign in using the managed identity. Signing in with the resource's identity is done through the `--identity` flag.
+
+```azurecli-interactive
+az login --identity
+```
+
+If the resource has multiple user assigned managed identities and no system assigned identity, you must specify the client ID or object ID or resource ID of the user assigned managed identity with `--username` for login.
+```azurecli-interactive
+az login --identity --username <client_id|object_id|resource_id>
+```
+
+To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm) and [Use managed identities for Azure resources for sign in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
+
+## Sign in with Web Account Manager (WAM)
+
+The Azure CLI now offers preview support for Web Account Manager (WAM).  WAM is a Windows 10+ component that acts as an authentication broker.  (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.) 
+
+Using WAM has several benefits:
+
+- Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
+- Support for Windows Hello, conditional access policies, and FIDO keys.
+- Streamlined single sign-on.
+- Bug fixes and enhancements shipped with Windows.
+
+Signing in with WAM is a preview, opt-in feature. Once enabled, the previous browser-based user interface is replaced.
+
+```azurecli-interactive
+az config set core.allow_broker=true
+az account clear
+az login
+```
+
+At the current stage of development, there are a few known limitations to WAM:
+- WAM is available on Windows 10   and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, we automatically fall back to a browser.  
+- Microsoft Accounts (for example @outlook.com or @live.com) aren't supported for the time being. We're working with the Microsoft Identity team to bring the support later.
+
 When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. Because access tokens are valid for only a short period of time, a refresh token is issued at the same time the access token is issued. The client application can then exchange this refresh token for a new access token when needed. For more information on token lifetime and expiration, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens).
 
 > [!NOTE]
 > Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
->
+
 
 ## See also
 
