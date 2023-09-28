@@ -3,18 +3,16 @@ uid: az_cosmosdb_postgres_cluster
 name: az cosmosdb postgres cluster
 summary: |-
   Manage Azure Cosmos DB for PostgreSQL clusters.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: "Command group 'az cosmosdb postgres' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+status: GA
 sourceType: Core
 directCommands:
 - uid: az_cosmosdb_postgres_cluster_create()
   name: az cosmosdb postgres cluster create
   summary: |-
-    Create a new cluster with servers.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Create a new cluster with nodes.
+  description: |-
+    Use the following reference to determine supported values for various parameters for Azure Cosmos DB for PostgreSQL clusters and nodes CLI commands: https://learn.microsoft.com/rest/api/postgresqlhsc/#values.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -45,7 +43,7 @@ directCommands:
   examples:
   - summary: |-
       Create a new single node cluster
-    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 8 --coordinator-server-edition "GeneralPurpose" --coordinator-storage 131072 --enable-shards-on-coord true --node-count 0 --preferred-primary-zone "1" --login-password "password"
+    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 8 --coordinator-server-edition "GeneralPurpose" --coordinator-storage 131072 --enable-shards-on-coord true --node-count 0 --preferred-primary-zone "1" --administrator-login-password "password"
   - summary: |-
       Create a new cluster as a point in time restore
     syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --point-in-time-utc "2017-12-14T00:00:37.467Z" --source-location "eastus" --source-resource-id "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testGroup/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/source-cluster"
@@ -54,13 +52,13 @@ directCommands:
     syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --source-location "eastus" --source-resource-id "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testGroup/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/source-cluster"
   - summary: |-
       Create a new multi-node cluster
-    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 8 --coordinator-server-edition "GeneralPurpose" --coordinator-storage 131072 --enable-shards-on-coord false --node-count 3 --node-server-edition "MemoryOptimized" --node-v-cores 8 --node-storage 131072 --postgresql-version "15" --preferred-primary-zone "1" --login-password "password"
+    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 8 --coordinator-server-edition "GeneralPurpose" --coordinator-storage 131072 --enable-shards-on-coord false --node-count 3 --node-server-edition "MemoryOptimized" --node-v-cores 8 --node-storage 131072 --postgresql-version "15" --preferred-primary-zone "1" --administrator-login-password "password"
   - summary: |-
       Create a new single node Burstable 1 vCore cluster
-    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 1 --coordinator-server-edition "BurstableMemoryOptimized" --coord-public-ip-access true --coordinator-storage 131072 --enable-shards-on-coord true --node-count 0 --preferred-primary-zone "1" --login-password "password"
+    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 1 --coordinator-server-edition "BurstableMemoryOptimized" --coord-public-ip-access true --coordinator-storage 131072 --enable-shards-on-coord true --node-count 0 --preferred-primary-zone "1" --administrator-login-password "password"
   - summary: |-
       Create a new single node Burstable 2 vCores cluster
-    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 2 --coordinator-server-edition "BurstableGeneralPurpose" --coord-public-ip-access true --coordinator-storage 131072 --enable-shards-on-coord true --node-count 0 --preferred-primary-zone "1" --login-password "password"
+    syntax: az cosmosdb postgres cluster create -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --enable-ha false --coordinator-v-cores 2 --coordinator-server-edition "BurstableGeneralPurpose" --coord-public-ip-access true --coordinator-storage 131072 --enable-shards-on-coord true --node-count 0 --preferred-primary-zone "1" --administrator-login-password "password"
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -86,10 +84,10 @@ directCommands:
       The edition of a coordinator server (default: GeneralPurpose). Required for creation.
   - name: --coordinator-storage --coordinator-storage-quota-in-mb
     summary: |-
-      The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information.
+      The storage of a server in MB. Required for creation. See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --coordinator-v-cores
     summary: |-
-      The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information.
+      The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --enable-ha
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -120,10 +118,10 @@ directCommands:
       The edition of a node server (default: MemoryOptimized).
   - name: --node-storage --node-storage-quota-in-mb
     summary: |-
-      The storage in MB on each worker node. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information.
+      The storage in MB on each worker node. See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --node-v-cores
     summary: |-
-      The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information.
+      The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --point-in-time-utc
     summary: |-
       Date and time in UTC (ISO8601 format) for cluster restore.
@@ -145,10 +143,8 @@ directCommands:
 - uid: az_cosmosdb_postgres_cluster_delete()
   name: az cosmosdb postgres cluster delete
   summary: |-
-    Delete a cluster together with servers in it.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Delete a cluster together with nodes in it.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -187,9 +183,7 @@ directCommands:
   name: az cosmosdb postgres cluster list
   summary: |-
     List all clusters in a subscription or a resource group.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: az cosmosdb postgres cluster list [--resource-group]
@@ -208,9 +202,7 @@ directCommands:
   name: az cosmosdb postgres cluster promote
   summary: |-
     Promotes read replica cluster to an independent read-write cluster.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -244,9 +236,7 @@ directCommands:
   name: az cosmosdb postgres cluster restart
   summary: |-
     Restarts all nodes in the cluster.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -280,9 +270,7 @@ directCommands:
   name: az cosmosdb postgres cluster show
   summary: |-
     Get information about a cluster such as compute and storage configuration and cluster lifecycle metadata such as cluster creation date and time.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -311,9 +299,7 @@ directCommands:
   name: az cosmosdb postgres cluster start
   summary: |-
     Starts stopped compute on all cluster nodes.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -347,9 +333,7 @@ directCommands:
   name: az cosmosdb postgres cluster stop
   summary: |-
     Stops compute on all cluster nodes.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -383,9 +367,9 @@ directCommands:
   name: az cosmosdb postgres cluster update
   summary: |-
     Update an existing cluster. The request body can contain one or several properties from the cluster definition.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  description: |-
+    Use the following reference to determine supported values for various parameters for Azure Cosmos DB for PostgreSQL clusters and nodes CLI commands: https://learn.microsoft.com/rest/api/postgresqlhsc/#values.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-
@@ -412,20 +396,26 @@ directCommands:
                                         [--tags]
   examples:
   - summary: |-
-      Scale compute up or down
+      Scale worker node compute up or down
     syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --node-v-cores 16
   - summary: |-
       Scale out: Add new worker nodes
     syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --node-count 2
   - summary: |-
-      Scale up storage
-    syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --coordinator-storage 2097152
+      Scale up worker node storage
+    syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --node-storage 2097152
   - summary: |-
       Update multiple configuration settings of the cluster
-    syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --node-v-cores 16 --node-count 4 coordinator-v-cores 16 --login-password "newPassword"
+    syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --node-v-cores 16 --node-count 4 coordinator-v-cores 16 --administrator-login-password "newPassword"
   - summary: |-
       Update or define maintenance window
     syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --maintenance-window day-of-week=1 start-hour=2 --start-minute=0 custom-window="Enabled"
+  - summary: |-
+      Upgrade PostgreSQL major version
+    syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --postgresql-version "15"
+  - summary: |-
+      Scale up coordinator storage
+    syntax: az cosmosdb postgres cluster update -n "test-cluster" -g "testGroup" --subscription "ffffffff-ffff-ffff-ffff-ffffffffffff" --coordinator-storage 2097152
   optionalParameters:
   - name: --administrator-login-password --login-password
     summary: |-
@@ -445,10 +435,10 @@ directCommands:
       The edition of a coordinator server (default: GeneralPurpose). Required for creation.
   - name: --coordinator-storage --coordinator-storage-quota-in-mb
     summary: |-
-      The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information.
+      The storage of a server in MB. Required for creation. See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --coordinator-v-cores
     summary: |-
-      The vCores count of the coordinator (max: 96).
+      The vCores count of a server (max: 96). Required for creation. See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --enable-ha
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -472,13 +462,13 @@ directCommands:
       Worker node count of the cluster. When node count is 0, it represents a single node configuration with the ability to create distributed tables on that node. 2 or more worker nodes represent multi-node configuration. Node count value cannot be 1.
   - name: --node-server-edition
     summary: |-
-      The edition of a node (default: MemoryOptimized).
+      The edition of a node server (default: MemoryOptimized).
   - name: --node-storage --node-storage-quota-in-mb
     summary: |-
-      The storage in MB on each worker node. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information.
+      The storage in MB on each worker node. See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --node-v-cores
     summary: |-
-      The compute in vCores on each worker node (max: 104).
+      The compute in vCores on each worker node (max: 104). See https://learn.microsoft.com/rest/api/postgresqlhsc/#values for more information.
   - name: --postgresql-version
     summary: |-
       The major PostgreSQL version on all cluster servers.
@@ -498,9 +488,7 @@ directCommands:
   name: az cosmosdb postgres cluster wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az cosmosdb postgres cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cosmosdb/_help.py
   syntax: >-

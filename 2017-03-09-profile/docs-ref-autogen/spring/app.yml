@@ -415,6 +415,7 @@ directCommands:
                          [--registry-password]
                          [--registry-username]
                          [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--server-version]
                          [--source-path]
                          [--startup-probe-config]
                          [--target-module]
@@ -426,6 +427,9 @@ directCommands:
   - summary: |-
       Deploy a pre-built jar to an app with jvm options and environment variables.
     syntax: az spring app deploy -n MyApp -s MyCluster -g MyResourceGroup --artifact-path app.jar --jvm-options="-XX:+UseG1GC -XX:+UseStringDeduplication" --env foo=bar
+  - summary: |-
+      Deploy a pre-built war to an app with server version, jvm options and environment variables (Standard and Basic Tiers Only).
+    syntax: az spring app deploy -n MyApp -s MyCluster -g MyResourceGroup --artifact-path app.war --server-version Tomcat_10 --jvm-options="-XX:+UseG1GC -XX:+UseStringDeduplication" --env foo=bar
   - summary: |-
       Deploy source code to a specific deployment of an app.
     syntax: az spring app deploy -n MyApp -s MyCluster -g MyResourceGroup -d green-deployment --source-path
@@ -460,7 +464,7 @@ directCommands:
       (Enterprise Tier Only) Space-separated APM names.
   - name: --artifact-path
     summary: |-
-      Deploy the specified pre-built artifact (jar or netcore zip).
+      Deploy the specified pre-built artifact (jar, war or netcore zip, war is in public preview).
   - name: --build-certificates
     summary: |-
       (Enterprise Tier Only) Space-separated certificate names, the certificates are used during build time.
@@ -563,6 +567,9 @@ directCommands:
     parameterValueGroup: "Java_11, Java_17, Java_8, NetCore_31"
     summary: |-
       Runtime version of used language.
+  - name: --server-version
+    summary: |-
+      (Standard and Basic Tiers Only) Tomcat server version. List all supported server versions by running `az spring list-support-server-versions -o table`. This feature is in public preview.
   - name: --source-path
     summary: |-
       Deploy the specified source folder. The folder will be packed into tar, uploaded, and built using kpack. Default to the current folder if no value provided.

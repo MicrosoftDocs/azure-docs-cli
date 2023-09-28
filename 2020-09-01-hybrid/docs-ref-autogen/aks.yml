@@ -1025,6 +1025,7 @@ directCommands:
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
                   [--ip-families]
+                  [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--kube-proxy-config]
@@ -1083,7 +1084,7 @@ directCommands:
                   [--snapshot-id]
                   [--ssh-key-value]
                   [--tags]
-                  [--tier {free, standard}]
+                  [--tier {free, premium, standard}]
                   [--vm-set-type]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
@@ -1560,6 +1561,10 @@ directCommands:
       A comma separated list of IP versions to use for cluster networking.
     description: |-
       Each IP version should be in the format IPvN. For example, IPv4.
+  - name: --k8s-support-plan
+    parameterValueGroup: "AKSLongTermSupport, KubernetesOfficial"
+    summary: |-
+      Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
   - name: --ksm-metric-annotations-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
@@ -1809,7 +1814,7 @@ directCommands:
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
   - name: --tier
-    parameterValueGroup: "free, standard"
+    parameterValueGroup: "free, premium, standard"
     summary: |-
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
   - name: --vm-set-type
@@ -2004,17 +2009,17 @@ directCommands:
     Enable Kubernetes addons.
   description: |-
     These addons are available:
-        - http_application_routing : configure ingress with automatic public DNS name creation.
-        - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
-                                     Requires "--enable-msi-auth-for-monitoring" for managed identity auth.
-                                     Requires "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
-                                     If monitoring addon is enabled --no-wait argument will have no effect
-        - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
-        - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
-                                     Learn more at aka.ms/aks/policy.
-        - ingress-appgw            : enable Application Gateway Ingress Controller addon.
-        - open-service-mesh        : enable Open Service Mesh addon.
-        - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
+    - http_application_routing : configure ingress with automatic public DNS name creation.
+    - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
+                                 Requires "--enable-msi-auth-for-monitoring" for managed identity auth.
+                                 Requires "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
+                                 If monitoring addon is enabled --no-wait argument will have no effect
+    - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
+    - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
+                                 Learn more at aka.ms/aks/policy.
+    - ingress-appgw            : enable Application Gateway Ingress Controller addon.
+    - open-service-mesh        : enable Open Service Mesh addon.
+    - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
@@ -3033,6 +3038,7 @@ directCommands:
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
+                  [--disable-force-upgrade]
                   [--disable-image-cleaner]
                   [--disable-keda]
                   [--disable-local-accounts]
@@ -3040,6 +3046,7 @@ directCommands:
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
                   [--disable-vpa]
+                  [--disable-windows-gmsa]
                   [--disable-workload-identity]
                   [--enable-aad]
                   [--enable-ahub]
@@ -3051,6 +3058,7 @@ directCommands:
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
+                  [--enable-force-upgrade]
                   [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-local-accounts]
@@ -3089,10 +3097,12 @@ directCommands:
                   [--nodepool-taints]
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
+                  [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
+                  [--upgrade-override-until]
                   [--windows-admin-password]
                   [--yes]
   examples:
@@ -3168,6 +3178,9 @@ directCommands:
   - summary: |-
       Enable Windows gmsa for a kubernetes cluster without setting DNS server in the vnet used by the cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-windows-gmsa --gmsa-dns-server "10.240.0.4" --gmsa-root-domain-name "contoso.com"
+  - summary: |-
+      Disable Windows gmsa for a kubernetes cluster.
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --disable-windows-gmsa
   - summary: |-
       Enable KEDA workload autoscaler for an existing kubernetes cluster.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --enable-keda
@@ -3274,6 +3287,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable AzureFile CSI Driver.
+  - name: --disable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Disable forceUpgrade cluster upgrade settings override.
   - name: --disable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -3302,6 +3319,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable vertical pod autoscaler for cluster.
+  - name: --disable-windows-gmsa
+    defaultValue: "False"
+    summary: |-
+      Disable Windows gmsa on cluster.
   - name: --disable-workload-identity
     defaultValue: "False"
     summary: |-
@@ -3345,6 +3366,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable AzureFile CSI Driver.
+  - name: --enable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Enable forceUpgrade cluster upgrade settings override.
   - name: --enable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -3501,6 +3526,11 @@ directCommands:
   - name: --pod-cidr
     summary: |-
       Update the pod CIDR for a cluster. Used when updating a cluster from Azure CNI to Azure CNI Overlay.
+  - name: --private-dns-zone
+    summary: |-
+      The private dns zone mode for private cluster.
+    description: |-
+      Only allow changing private dns zone from byo/system mode to none for private cluster. Others are denied.
   - name: --rotation-poll-interval
     summary: |-
       Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
@@ -3515,6 +3545,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update min-count or max-count for cluster autoscaler.
+  - name: --upgrade-override-until
+    summary: |-
+      Until when the cluster upgradeSettings overrides are effective. It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
   - name: --windows-admin-password
     summary: |-
       User account password to use on windows node VMs.
@@ -3626,6 +3659,7 @@ directCommands:
                   [--guardrails-version]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
+                  [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
                   [--kube-proxy-config]
@@ -3653,7 +3687,7 @@ directCommands:
                   [--rotation-poll-interval]
                   [--ssh-key-value]
                   [--tags]
-                  [--tier {free, standard}]
+                  [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
                   [--upgrade-override-until]
                   [--windows-admin-password]
@@ -4100,6 +4134,10 @@ directCommands:
     summary: |-
       ImageCleaner scanning interval.
     isPreview: true
+  - name: --k8s-support-plan
+    parameterValueGroup: "AKSLongTermSupport, KubernetesOfficial"
+    summary: |-
+      Choose from "KubernetesOfficial" or "AKSLongTermSupport", with "AKSLongTermSupport" you get 1 extra year of CVE patchs.
   - name: --ksm-metric-annotations-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g.'=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
@@ -4218,7 +4256,7 @@ directCommands:
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
   - name: --tier
-    parameterValueGroup: "free, standard"
+    parameterValueGroup: "free, premium, standard"
     summary: |-
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' changes a standard managed cluster to a free one.
   - name: --update-cluster-autoscaler -u
@@ -4678,6 +4716,9 @@ commands:
 - az_aks_kollect(aks-preview)
 - az_aks_list()
 - az_aks_list(aks-preview)
+- az_aks_machine
+- az_aks_machine_list(aks-preview)
+- az_aks_machine_show(aks-preview)
 - az_aks_maintenanceconfiguration
 - az_aks_maintenanceconfiguration_add()
 - az_aks_maintenanceconfiguration_add(aks-preview)

@@ -80,6 +80,7 @@ directCommands:
                                        [--resource-group]
                                        [--sku-name]
                                        [--standby-zone]
+                                       [--storage-auto-grow {Disabled, Enabled}]
                                        [--storage-size]
                                        [--subnet]
                                        [--subnet-prefixes]
@@ -251,6 +252,11 @@ directCommands:
 
       az postgres flexible-server create -g testGroup -n testServer --location testLocation --geo-redundant-backup Enabled \
         --key $keyIdentifier --identity testIdentity --backup-key $geoKeyIdentifier --backup-identity geoIdentity
+
+
+      # create flexible server with storage auto-grow as Enabled. Accepted values Enabled / Disabled. Default value for storage auto-grow is "Disabled".
+
+      az postgres flexible-server create -g testGroup -n testServer --location testLocation --storage-auto-grow Enabled
   optionalParameters:
   - name: --active-directory-auth
     defaultValue: "Disabled"
@@ -264,7 +270,7 @@ directCommands:
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
   - name: --admin-user -u
-    defaultValue: "grouchyoil8"
+    defaultValue: "violentpolenta4"
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
   - name: --backup-identity
@@ -323,6 +329,11 @@ directCommands:
   - name: --standby-zone
     summary: |-
       The availability zone information of the standby server when high availability is enabled.
+  - name: --storage-auto-grow
+    defaultValue: "Disabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable autogrow of the storage. Default value is Enabled.
   - name: --storage-size
     defaultValue: "128"
     summary: |-
@@ -675,7 +686,7 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --restore-time
-    defaultValue: "2023-09-21T08:33:54+00:00"
+    defaultValue: "2023-09-28T12:11:17+00:00"
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --subnet
@@ -966,6 +977,7 @@ directCommands:
                                        [--set]
                                        [--sku-name]
                                        [--standby-zone]
+                                       [--storage-auto-grow {Disabled, Enabled}]
                                        [--storage-size]
                                        [--subscription]
                                        [--tags]
@@ -1003,6 +1015,9 @@ directCommands:
   - summary: |-
       Update a flexible server to update private DNS zone for a VNET enabled server, using private DNS zone in the different resource group and subscription. Private DNS zone will be linked to the VNET if not already linked.
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver --private-dns-zone /subscriptions/{SubId2}/resourceGroups/{testGroup2}/providers/Microsoft.Network/privateDnsZones/testDNS.postgres.database.azure.com
+  - summary: |-
+      Update a flexible server's storage to enable / disable storage auto-grow.
+    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --storage-auto-grow Enabled
   optionalParameters:
   - name: --active-directory-auth
     parameterValueGroup: "Disabled, Enabled"
@@ -1071,6 +1086,10 @@ directCommands:
   - name: --standby-zone
     summary: |-
       The availability zone information of the standby server when high availability is enabled.
+  - name: --storage-auto-grow
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable autogrow of the storage. Default value is Enabled.
   - name: --storage-size
     summary: |-
       The storage capacity of the server. Minimum is 32 GiB and max is 16 TiB.
