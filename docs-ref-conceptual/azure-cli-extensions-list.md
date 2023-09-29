@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/28/2023
+ms.date: 09/29/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -189,7 +189,7 @@ You will be prompted to install an extension on first use.
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/virtual-network-tap) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.50.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | Preview | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
 |[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [0.5.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
-|[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.11.0 | Azure VMware Solution commands. | GA | [5.0.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
+|[vmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) | 2.51.0 | Azure VMware Solution commands. | GA | [6.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/vmware) |
 |[webapp](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp) | 2.23.0 | Additional commands for Azure AppService. | Preview | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/webapp/HISTORY.rst) |
 |[webpubsub](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub) | 2.39.0 | Microsoft Azure Command-Line Tools Webpubsub Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/webpubsub/HISTORY.rst) |
 |[workloads](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads) | 2.45.0 | Microsoft Azure Command-Line Tools Workloads Extension. | Preview | [0.1.0a1](https://github.com/Azure/azure-cli-extensions/tree/main/src/workloads/HISTORY.rst) |
