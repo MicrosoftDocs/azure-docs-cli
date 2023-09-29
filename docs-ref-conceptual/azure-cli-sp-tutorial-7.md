@@ -22,6 +22,7 @@ as `az ad sp create-for-rbac`.
 
 ```azurecli-interactive
 az ad sp credential reset --name spNameForMyApp
+az ad sp credential reset --id 36aa54f2-01d1-4def-b4ae-3b32e10585fd
 ```
 
 ## Next Steps
