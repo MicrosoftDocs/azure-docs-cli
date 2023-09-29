@@ -23,17 +23,17 @@ In this tutorial, you learn how to:
 > * Sign in using a service principal and password
 > * Sign in using a service principal and certificate
 > * Create an Azure resource using a service principal
-> * Reset a service principal credentials
+> * Reset service principal credentials
 
 ## Prerequisites
 
-* You must have `User Access Administrator` or `Role Based Access Control Administrator` or higher permissions in the subscription to create a service principal. For a list of roles available for [Azure role-based access control (Azure RBAC)](/azure/role-based-access-control/overview), see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
+* In a subscription, you must have `User Access Administrator` or `Role Based Access Control Administrator` permissions, or higher, to create a service principal. For a list of roles available for Azure role-based access control (Azure RBAC), see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
 ## 1 - Create a service principal
 
-Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) Azure CLI reference command to create a service principal. Because this example does not specify a `--name` parameter, a name containing a time stamp is automatically created.
+Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) Azure CLI reference command to create a service principal. This example does not specify a `--name` parameter, so a name containing a time stamp is automatically created.
 
 ```azurecli-interactive
 az ad sp create-for-rbac
@@ -59,7 +59,7 @@ If you aren't adhering to resource naming conventions and plan to create a role 
 
 ## Create a service principal with role and scope
 
-As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. In this example, a new service principal named **spForMyApp** was created with **reader** permissions to all resources in **myRG1**, but only **myVM** in resource group **myRG2**. Notice the space-delimited list of scopes.
+As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. In this example, a new service principal named **spForMyApp** was created with **reader** permissions to all resources in **myRG1**. In resource group **myRG2**, the service principal only has **reader** permissions on **myVM**. Notice the space-delimited list of scopes.
 
 ```azurecli-interactive
 az ad sp create-for-rbac --name spNameForMyApp \
@@ -75,4 +75,4 @@ az ad sp create-for-rbac --name spNameForMyApp \
 Now that you've learned how to create an Azure service principal, proceed to the next step to learn how to use service principals with password-based authentication.
 
 > [!div class="nextstepaction"]
-> [Work with service principals using a password](./azure-cli-sp-tutorial-2.md)
+> [Use password-based authentication](./azure-cli-sp-tutorial-2.md)

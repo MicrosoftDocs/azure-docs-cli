@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 4 - Create a service principal with certificate-based authentication
+# 4 - Learn about certificate-based authentication
 
  When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**.
 

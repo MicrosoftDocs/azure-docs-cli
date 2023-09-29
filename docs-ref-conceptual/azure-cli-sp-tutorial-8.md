@@ -51,10 +51,3 @@ If your account doesn't have permission to assign a role, you see an error messa
 * [Azure authentication with service principals](/azure/developer/java/sdk/identity-service-principal-auth)
 * [Service principals with Azure Kubernetes Service (AKS)](/azure/aks/kubernetes-service-principal)
 * [View the service principal of a managed identity](/azure/active-directory/managed-identities-azure-resources/how-to-view-managed-identity-service-principal-cli)
-
-## Next Steps
-
-Now that you've learned how to cleanup your service principal resources, proceed to the next step to see an overall summary of everything you have learned.
-
-> [!div class="nextstepaction"]
-> [Summary](./azure-cli-sp-tutorial-9.md)
