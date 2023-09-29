@@ -2,26 +2,26 @@
 title: Get an existing service principal – Azure CLI | Microsoft Docs
 description: Learn how to retrieve an existing service principal.
 manager: jasongroce
-author: daphnemamsft
-ms.author: daphnema
-ms.date: 09/6/2023
+author: dbradish-microsoft
+ms.author: dbradish
+ms.date: 09/29/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
 # 4 - Get an existing service principal
 
-If you already have an existing service principal that you wish to use, this article details how to retrieve your existing service principal.
+If you already have an existing service principal that you wish to use, this steps details how to retrieve your existing service principal.
 
 A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list). By default this command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` parameter. Getting this list can take a long time, so it's recommended that you filter the list with one of the following parameters:
 
 * `--display-name` requests service principals that have a _prefix_ that match the provided name. The display name of a service principal is the value set with the `--name`
-  parameter during creation. If you didn't set `--name` during service principal creation, the name prefix is `azure-cli-`.
+parameter during creation. If you didn't set `--name` during service principal creation, the name prefix is `azure-cli-`.
 * `--spn` filters on exact service principal name matching. The service principal name always starts with `https://`.
-  if the value you used for `--name` wasn't a URI, this value is `https://` followed by the display name.
+if the value you used for `--name` wasn't a URI, this value is `https://` followed by the display name.
 * `--show-mine` requests only service principals created by the signed-in user.
 * `--filter` takes an OData filter, and performs _server-side_ filtering. This method is recommended over filtering client-side with the CLI's `--query` parameter. To learn about OData filters, see [OData expression syntax for filters](/rest/api/searchservice/odata-expression-syntax-for-azure-search).
 

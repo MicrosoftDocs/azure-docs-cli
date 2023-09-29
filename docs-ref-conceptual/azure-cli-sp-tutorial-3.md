@@ -2,29 +2,27 @@
 title: Work with Azure service principals using a certificate – Azure CLI | Microsoft Docs
 description:  Use service principals with an existing certificate to gain control over which Azure resources can be accessed.
 manager: jasongroce
-author: daphnemamsft
-ms.author: daphnema
-ms.date: 08/16/2023
+author: dbradish-microsoft
+ms.author: dbradish
+ms.date: 09/29/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 3 - Create a service principal using certificate-based authentication
+# 4 - Create a service principal with certificate-based authentication
 
-When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing **certificate** with the service principal to access the Azure Container Registry.
+ When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**.
+
+This step in the tutorial details how you can use an existing **certificate** with the service principal to access an Azure resource.
 
 ## Why use certificate-based authentication?
 
-We recommend using certificate-based authentication due to the security considerations that password authentication has. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects the user's assets. 
-
-To learn more about why and how certificate based authentication is more secure, see [Azure Active Directory certificate based authentication concepts](/azure/active-directory/authentication/concept-certificate-based-authentication). 
+We recommend using certificate-based authentication due to the security restrictions of password-based authentication. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects Azure resources. To learn more about why certificate-based authentication is more secure, see [Azure Active Directory certificate based authentication concepts](/azure/active-directory/authentication/concept-certificate-based-authentication).
 
 ## How do I add certificates to a Service Principal?
-
-We recommend you use Azure CLI to perform certificate-based authentication, however there is also a way to manually assign an existing certificate to a service principal through the Azure portal:
 
 # [Azure CLI](#tab/concepts)
 
@@ -77,10 +75,10 @@ az ad sp credential reset --append \
 
 Console output:
 
-```
+```output
 Creating a role assignment under the scopes of "/subscriptions/myId"
 Please copy C:\myPath\myNewFile.pem to a safe place.
-When you run 'az login', provide the file path in the --password parameter
+When you run 'az login`, provide the file path in the --password parameter
 {
   "appId": "myAppId",
   "displayName": "myDisplayName",
@@ -143,7 +141,6 @@ To sign in with a certificate, it must be available locally as a PEM or DER file
 ```azurecli-interactive
 az login --service-principal --username appID --tenant tenantID --password /path/to/cert
 ```
-
 
 # [Azure Portal](#tab/examples)
 
