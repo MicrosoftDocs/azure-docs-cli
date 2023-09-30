@@ -29,14 +29,25 @@ The information returned for service principal objects is verbose. To get only t
 `[].{id:appId, tenant:appOwnerOrganizationId}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
 
 ```azurecli-interactive
-az ad sp list --show-mine --query "[].{id:appId, tenant:appOwnerTenantId}"
+az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerTenantId}"
+```
+
+If you are working in a large organization with many service principals, try these command examples:
+
+```
+# get service principals containing a keyword
+az ad sp list --display-name mySearchWord --output table
+
+# get service principals using an OData filter
+az ad sp list --filter "displayname eq 'myServicePrincipalName'"
+
+# get a service principal having a certain servicePrincipalNames property value
+az ad sp list --spn https://spURL.com
 ```
 
 > [!IMPORTANT]
 >
-> `az ad sp list` or [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show) get the user and tenant, but not any authentication secrets _or_ the authentication method.
-> Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default.
-> If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+> The user and tenant can both be retrieved with [`az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show), but authentication secrets _or_ the authentication method is not available. Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default. If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
 ## Next Steps
 

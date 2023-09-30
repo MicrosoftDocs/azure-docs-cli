@@ -121,24 +121,20 @@ Use the `--append` parameter in [az ad sp credential reset](/cli/azure/ad/sp/cre
 By default, this command clears all passwords and keys so use carefully.
 
 ```azurecli-interactive
-az ad sp credential reset --append \
-                          --name myServicePrincipalName \
+az ad sp credential reset --id myServicePrincipalID \
+                          --append \
                           --cert @/path/to/cert.pem
 ```
 
 Console output:
 
 ```output
-Creating a role assignment under the scopes of "/subscriptions/myId"
-Please copy C:\myPath\myNewFile.pem to a safe place.
-When you run 'az login`, provide the file path in the --password parameter
+Certificate expires yyyy-mm-dd hh:mm:ss+00:00. Adjusting key credential end date to match.
+The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https://aka.ms/azadsp-cli
 {
-  "appId": "myAppId",
-  "displayName": "myDisplayName",
-  "fileWithCertAndPrivateKey": "C:\\myPath\\myNewFile.pem",
-  "name": "http://myName",
+  "appId": "myServicePrincipalID",
   "password": null,
-  "tenant": "myTenantId"
+  "tenant": "myOrganizationTenantID"
 }
 ```
 

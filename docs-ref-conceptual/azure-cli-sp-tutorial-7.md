@@ -21,9 +21,14 @@ If you lose the credentials for a service principal, use [az ad sp credential re
 as `az ad sp create-for-rbac`.
 
 ```azurecli-interactive
-az ad sp credential reset --name spNameForMyApp
-az ad sp credential reset --id 36aa54f2-01d1-4def-b4ae-3b32e10585fd
+# reset a service principal credential with a password
+az ad sp credential reset --id myServicePrincipalID
+
+# reset a service principal credential with a new self-signed certificate
+az ad sp credential reset --id myServicePrincipalID --create-cert
 ```
+
+If you don't know the ID associated with your service principal, use the `az ad sp list` command as explained in [Get an existing service principal](./azure-cli-sp-tutorial-4.md).
 
 ## Next Steps
 
