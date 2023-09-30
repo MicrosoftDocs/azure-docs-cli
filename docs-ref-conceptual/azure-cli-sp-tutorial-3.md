@@ -115,8 +115,6 @@ openssl pkcs12 -in fileName.p12 -clcerts -nodes -out fileName.pem -passin pass:
 
 ## Append a certificate to a service principal
 
-# [Azure CLI](#tab/azurecli)
-
 Use the `--append` parameter in [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset()) to append a certificate to an existing service principal.
 By default, this command clears all passwords and keys so use carefully.
 
@@ -138,44 +136,9 @@ The output includes credentials that you must protect. Be sure that you do not i
 }
 ```
 
-# [Azure portal](#tab/portal)
+## Sign in with a service principal using a certificate
 
-You can assign a certificate to a service principal through the Azure portal by following these steps:
-
-1. In the Azure portal, select Active Directory.
-
-    ![Screenshot of AAD](~/docs-ref-conceptual/media/sp-tutorial/azure-cli-sp-tutorial-aad.png)
-
-1. Then select App Registrations on the left hand sidebar.
-
-    ![Screenshot of App Registration](~/docs-ref-conceptual/media/sp-tutorial/azure-cli-sp-tutorial-app-reg.png)
-
-1. Next, select your AKS service principal.
-
-    ![Screenshot of Service Principal](~/docs-ref-conceptual/media/sp-tutorial/azure-cli-sp-tutorial-select-sp.png)
-
-1. Then proceed to select "Certificates and secrets." Here, you can upload it, or download and install it on your PC you're using to connect with. Make sure the certificate is stored somewhere you can access it on your local machine for later steps.
-
-    ![Screenshot of Upload Certificate](~/docs-ref-conceptual/media/sp-tutorial/azure-cli-sp-tutorial-cert.png)
-
-1. To use the Service Principal with the certificate to access the Azure Container Registry, use the following command:
-
-    ```azurecli-interactive
-    # Sign into Azure CLI with Service Principal's appID and tenantID and use certificate as password
-    az login --service-principal --username appID --tenant tenantID --password /path/to/cert
-    ```
-
-1. Then sign into the registry with `az acr login`, which uses the Active Directory token from the CLI login:
-
-    ```azurecli-interactive
-    az acr login --name registryName
-    ```
-
-***
-
-## Signing in with a service principal using a certificate
-
-To sign in with a certificate, the certificate must be available locally as a PEM or DER file, in ASCII format. PKCS#12 files (.p12/.pfx) doesn't work. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file. You don't need to prefix the path with an @ like you do with the previous az commands.
+To sign in with a certificate, the certificate must be available locally as a PEM or DER file, in ASCII format. PKCS#12 files (.p12/.pfx) doesn't work. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file. You don't need to prefix the path with an `@` like you do with the other az commands.
 
 ```azurecli-interactive
 az login --service-principal --username myServicePrincipalID --tenant myOrganizationTenantID --password /path/to/cert
