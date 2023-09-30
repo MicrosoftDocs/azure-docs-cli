@@ -1,6 +1,6 @@
 ---
 title: Create a resource using service principal – Azure CLI | Microsoft Docs
-description: Learn how to create a resource using service principal with Azure CLI.
+description: Learn how to create a resource using a service principal and the Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -26,7 +26,10 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 1. Sign in as the service principal.
 
     ```azurecli-interactive
-    az login --service-principal --username myServicePrincipalID --password myServicePrincipalPassword --tenant myOrganizationTenantID
+    az login --service-principal \
+             --username myServicePrincipalID \
+             --password myServicePrincipalPassword \
+             --tenant myOrganizationTenantID
     ```
 
     Output console:
@@ -67,13 +70,19 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
     * StorageV2
 
     ```azurecli-interactive
-    az storage account create --name myStorageAccountName --resource-group myResourceGroupName --kind <KIND> --sku F0 --location westus --yes
+    az storage account create --name myStorageAccountName \
+                              --resource-group myResourceGroupName \
+                              --kind <KIND> \
+                              --sku F0 \
+                              --location westus \
+                              --yes
     ```
 
 1. Get resource keys, which you use in your code to authenticate to the Azure storage account.
 
     ```azurecli-interactive
-    az storage account keys list --resource-group myResourceGroupName --account-name myStorageAccountName
+    az storage account keys list --resource-group myResourceGroupName \
+                                 --account-name myStorageAccountName
     ```
 
     Output Console:

@@ -1,6 +1,6 @@
 ---
 title: Manage service principal roles – Azure CLI | Microsoft Docs
-description: Learn how to manage role assignments using Azure CLI.
+description: Learn how to manage role assignments for a service principal using Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
