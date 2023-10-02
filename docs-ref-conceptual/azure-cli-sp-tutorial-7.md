@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 7 - Reset credentials
+# Reset service principal credentials
 
 If you ever lose your service principal credentials, the best and most secure option is to reset the credentials.
 This step details how to reset your service principal credentials.

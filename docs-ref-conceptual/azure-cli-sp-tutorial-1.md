@@ -31,13 +31,12 @@ In this tutorial, you learn how to:
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
-## 1 - Create a service principal
+## Create a service principal
 
 Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) Azure CLI reference command to create a service principal. This example doesn't specify a `--name` parameter, so a name containing a time stamp is automatically created.
 
 ```azurecli-interactive
 az ad sp create-for-rbac
-
 ```
 
 Output console:
@@ -55,8 +54,8 @@ If you aren't adhering to resource naming conventions and plan to create a role 
 
 When you create a service principal without parameters, also complete these steps:
 
-* Record your system-assigned password as you can't retrieve it again. If you lose the password, reset it using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) as explained in step seven, [Reset credentials](./azure-cli-sp-tutorial-7.md).
-* Set the role assignment for your new service principal by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) as explained in step 5, [Manage service principal roles](./azure-cli-sp-tutorial-5.md).
+* Record your system-assigned password as you can't retrieve it again. If you lose the password, reset it using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) as explained in [Reset service principal credentials](./azure-cli-sp-tutorial-7.md).
+* Set the role assignment for your new service principal by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) as explained in [Manage service principal roles](./azure-cli-sp-tutorial-5.md).
 
 ## Create a service principal with role and scope
 
@@ -67,9 +66,6 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --role reader \
                          --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
 ```
-
-> [!WARNING]
-> When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
 
 ## Create a service principal using variables
 
@@ -89,6 +85,11 @@ az ad sp create-for-rbac --name $servicePrincipalName \
                          --role $roleName \
                          --scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
 ```
+
+For a complete list of service principal properties, use [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and see [Get an existing service principal](./azure-cli-sp-tutorial-4.md).
+
+> [!WARNING]
+> When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
 
 ## Next Steps
 

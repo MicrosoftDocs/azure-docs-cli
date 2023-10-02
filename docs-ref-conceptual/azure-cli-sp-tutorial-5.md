@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 5 - Manage service principal roles
+# Manage service principal roles
 
 In order to restrict access to your Azure service's resources, you can use a service principal to manage role assignments. Each role provides a different amount of permissions allowed by the user when accessing the service's resources.
 

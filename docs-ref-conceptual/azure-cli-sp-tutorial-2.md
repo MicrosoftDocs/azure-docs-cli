@@ -12,15 +12,15 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 2 - Use password-based authentication
+# Use password-based authentication
 
-When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. Password-based authentication is good to use when learning about service principals, but it isn't recommended for applications.
+When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. Password-based authentication is good to use when learning about service principals, but we recommend using [certificate-based authentication](./azure-cli-sp-tutorial-3.md) for applications.
 
 This step in the tutorial explains how to use a service principal password to access an Azure resource.
 
 ## Create a service principal with a password
 
-The default behavior of `az ad sp create-for-rbac` is to create a service principal with a random password.
+The default behavior of [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) is to create a service principal with a random password.
 
 ```azurecli-interactive
 # Create a service principal for a resource group using a preferred name and role
@@ -44,7 +44,7 @@ The output for a service principal with password authentication includes the `pa
 
 ## Sign in using a service principal using a password
 
-You can test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and `password`. Here's an example:
+Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId` (also known as "service principal ID" and "user name"), `tenant`, and `password`. Here's an example:
 
 ```azurecli-interactive
 az login --service-principal --username myServicePrincipalId --password myServicePrincipalPassword --tenant myOrganizationTenantID
@@ -53,13 +53,13 @@ az login --service-principal --username myServicePrincipalId --password myServic
 If you don't know your `appId` or `--tenant`, retrieve it by using the `az ad sp list` command.
 
 ```azurecli-interactive
-spID=$(az ad sp list --display-name spNameForMyApp --query "[].{spID:appId}" --output tsv)
-tenantID=$(az ad sp list --display-name spNameForMyApp --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
+spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
+tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
 echo "Using appId $spID in tenant $tenantID"
 az login --service-principal --username $spID --password {paste your password here} --tenant $tenantID
 ```
 
-If you're testing in an organization that requires two-factor authentication, you'll receive an "..Interactive authentication is needed" message.
+If you're testing in an organization that requires two-factor authentication, you'll receive an "..Interactive authentication is needed" message. As an alternative, use a certificate or [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
 
 > [!IMPORTANT]
 > If you want to avoid displaying your password on console and are using `az login` interactively,

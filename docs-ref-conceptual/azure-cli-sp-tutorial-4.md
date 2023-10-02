@@ -12,7 +12,9 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 4 - Get an existing service principal
+# Get an existing service principal
+
+## List service principals
 
 If you already have an existing service principal that you wish to use, this steps details how to retrieve your existing service principal.
 
@@ -29,7 +31,7 @@ The information returned for service principal objects is verbose. To get only t
 `[].{id:appId, tenant:appOwnerOrganizationId}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
 
 ```azurecli-interactive
-az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerTenantId}"
+az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerOrganizationId}"
 ```
 
 If you are working in a large organization with many service principals, try these command examples:
@@ -39,7 +41,7 @@ If you are working in a large organization with many service principals, try the
 az ad sp list --display-name mySearchWord --output table
 
 # get service principals using an OData filter
-az ad sp list --filter "displayname eq 'myServicePrincipalName'"
+az ad sp list --filter "displayname eq 'myExactServicePrincipalName'" --output json
 
 # get a service principal having a certain servicePrincipalNames property value
 az ad sp list --spn https://spURL.com
@@ -48,6 +50,88 @@ az ad sp list --spn https://spURL.com
 > [!IMPORTANT]
 >
 > The user and tenant can both be retrieved with [`az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show), but authentication secrets _or_ the authentication method is not available. Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default. If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+
+## Service principal properties
+
+When you get a list of service principals using `az ad sp list`, there are many properties you can reference in your script.
+
+```output
+[
+  {
+    "accountEnabled": true,
+    "addIns": [],
+    "alternativeNames": [],
+    "appDescription": null,
+    "appDisplayName": "myServicePrincipalName",
+    "appId": "00000000-0000-0000-0000-000000000000",
+    "appOwnerOrganizationId": "00000000-0000-0000-0000-000000000000",
+    "appRoleAssignmentRequired": false,
+    "appRoles": [],
+    "applicationTemplateId": null,
+    "createdDateTime": null,
+    "deletedDateTime": null,
+    "description": null,
+    "disabledByMicrosoftStatus": null,
+    "displayName": "myServicePrincipalName",
+    "homepage": "https://myURL.com",
+    "id": "00000000-0000-0000-0000-000000000000",
+    "info": {
+      "logoUrl": null,
+      "marketingUrl": null,
+      "privacyStatementUrl": null,
+      "supportUrl": null,
+      "termsOfServiceUrl": null
+    },
+    "keyCredentials": [],
+    "loginUrl": null,
+    "logoutUrl": null,
+    "notes": null,
+    "notificationEmailAddresses": [],
+    "oauth2PermissionScopes": [
+      {
+        "adminConsentDescription": "my admin description",
+        "adminConsentDisplayName": "my admin display name",
+        "id": "00000000-0000-0000-0000-000000000000",
+        "isEnabled": true,
+        "type": "User",
+        "userConsentDescription": "my user description",
+        "userConsentDisplayName": "my user display name",
+        "value": "user_impersonation"
+      }
+    ],
+    "passwordCredentials": [],
+    "preferredSingleSignOnMode": null,
+    "preferredTokenSigningKeyThumbprint": null,
+    "replyUrls": [],
+    "resourceSpecificApplicationPermissions": [],
+    "samlSingleSignOnSettings": null,
+    "servicePrincipalNames": [
+      "00000000-0000-0000-0000-000000000000",
+      "https://myURL.com"
+    ],
+    "servicePrincipalType": "Application",
+    "signInAudience": null,
+    "tags": [
+      "WindowsAzureActiveDirectoryIntegratedApp"
+    ],
+    "tokenEncryptionKeyId": null,
+    "verifiedPublisher": {
+      "addedDateTime": null,
+      "displayName": null,
+      "verifiedPublisherId": null
+    }
+  }
+]
+```
+
+Use the `--query` parameter to retrieve and store service principal properties in variables.
+
+```azurecli-interactive
+spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
+tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
+userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv))
+echo "Using appId $spID in tenant $tenantID" for $userConsentDescr
+```
 
 ## Next Steps
 

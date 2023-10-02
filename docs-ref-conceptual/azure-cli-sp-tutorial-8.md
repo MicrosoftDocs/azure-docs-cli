@@ -12,28 +12,30 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 8 - Cleanup & troubleshooting
+# Cleanup & troubleshooting
 
-## Cleanup
+Now that you have completed the tutorial, it's time to clean up the created service principal resources.
 
-Now that you have completed the tutorial, it's time to clean up the created service principal resources. You can delete individual resources with the `delete` command, but the safest way to remove all resources in a resource group is with `group delete`.
+## Cleanup resources
 
-```azurecli-interactive
-az group delete --name $resourceGroup --no-wait
+The safest way to remove all resources used in this tutorial is to use [az group delete](/cli/azure/group#az-group-delete). The `--no-wait` parameter keeps the CLI from blocking while the deletion takes place.
+
+```
+az group delete --name myResourceGroup --no-wait
 ```
 
-This command deletes the resources created during the tutorial, and clears them in the correct order. The `--no-wait` parameter keeps the CLI from blocking while the deletion takes place. If you want to wait until the deletion is complete or watch it progress, use the `group wait` command.
+If you prefer, delete individual service principals with the [az ad sp delete](/cli/azure/ad/sp#az-ad-sp-delete) command.
 
 ```azurecli-interactive
-az group wait --name $resourceGroup --deleted
+az ad sp delete --id 00000000-0000-0000-0000-000000000000
 ```
 
 ## Troubleshooting
 
-Congratulations! You learned how to create, retrieve, and work with service principals in order to create a resource group. Although you have completed the tutorial, you may still have additional questions regarding service principals that can be answered in this article.
+Congratulations! You learned how to create, retrieve, and work with service principals! Although you have completed the tutorial, you may still have additional questions regarding service principals that can be answered in this section.
 
 ### Insufficient privileges
-If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` returns an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to create a service principal.
+If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` returns an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to obtain `User Access Administrator` or `Role Based Access Control Administrator` permissions.
 
 ### Invalid tenant
 If you have specified an invalid subscription ID, you see the error message "The request didn't have a subscription or a valid tenant level resource provider." If using variables, use the Bash `echo` command to see the value being passed to the reference command. Use [az account set](/cli/azure/account#az-account-set) to change your subscription or learn [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
@@ -44,9 +46,9 @@ If you have specified an invalid resource group name, you see the error message 
 ### Authorization to perform action
 If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.
 
-### Application with identifier was not found
+### Interactive authentication is needed
 
- If your organization requires multi-factor authentication you will see error message "Application with identifier 'myServicePrincipalName' was not found in the directory 'myOrganizationName'. This can happen if the application has not been installed by the administrator of the tenant or consented to by any user in the tenant. You may have sent your authentication request to the wrong tenant...Interactive authentication is needed. Please run 'az login'"
+ When signing in with password authentication, you will see error message "...Interactive authentication is needed..." if your organization requires multi-factor authentication. Switch to certification authentication, or consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
 
 ## See also
 

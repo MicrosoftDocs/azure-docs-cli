@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 6 - Create a resource using service principal
+# Create a resource using service principal
 
 The following section provides an example of how to create a resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
 
