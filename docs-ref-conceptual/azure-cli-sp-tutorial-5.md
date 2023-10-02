@@ -42,22 +42,19 @@ Output Console:
 {
   "condition": null,
   "conditionVersion": null,
-  "createdBy": "userID",
-  "createdOn": "2023-09-13T21:12:24.213484+00:00",
+  "createdBy": null,
+  "createdOn": "yyyy-mm-ddT00:00:00.000000+00:00",
   "delegatedManagedIdentityResourceId": null,
   "description": null,
-  "id": "/subscriptions/mySubscriptionID/resourceGroups/daphne-test/providers/Microsoft.Authorization/roleAssignments/myName",
-  "name": "myName",
-  "principalId": "myPrincipalId",
-  "principalName": "myPrincipalName",
-  "principalType": "servicePrincipal",
-  "resourceGroup": "myResourceGroupName",
-  "roleDefinitionId": "/subscriptions/mysubscriptionID/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7",
-  "roleDefinitionName": "Reader",
-  "scope": "/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName",
+  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Authorization/roleAssignments/00000000-0000-0000-0000-000000000000",
+  "name": "00000000-0000-0000-0000-000000000000",
+  "principalId": "00000000-0000-0000-0000-000000000000",
+  "principalType": "ServicePrincipal",
+  "roleDefinitionId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Authorization/roleDefinitions/00000000-0000-0000-0000-000000000000",
+  "scope": "/subscriptions/00000000-0000-0000-0000-000000000000",
   "type": "Microsoft.Authorization/roleAssignments",
-  "updatedBy": "userID",
-  "updatedOn": "2023-09-13T21:12:24.213484+00:00"
+  "updatedBy": "00000000-0000-0000-0000-000000000000",
+  "updatedOn": "yyyy-mm-ddT00:00:00.000000+00:00"
 }
 ```
 

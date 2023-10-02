@@ -130,7 +130,7 @@ Use the `--query` parameter to retrieve and store service principal properties i
 spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
 tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
 userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv))
-echo "Using appId $spID in tenant $tenantID" for $userConsentDescr
+echo "Using appId $spID in tenant $tenantID for $userConsentDescr"
 ```
 
 ## Next Steps

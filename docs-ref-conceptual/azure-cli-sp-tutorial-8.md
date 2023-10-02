@@ -27,7 +27,7 @@ az group delete --name myResourceGroup --no-wait
 If you prefer, delete individual service principals with the [az ad sp delete](/cli/azure/ad/sp#az-ad-sp-delete) command.
 
 ```azurecli-interactive
-az ad sp delete --id 00000000-0000-0000-0000-000000000000
+az ad sp delete --id myServicePrincipalID
 ```
 
 ## Troubleshooting
@@ -48,7 +48,7 @@ If your account doesn't have permission to assign a role, you see an error messa
 
 ### Interactive authentication is needed
 
- When signing in with password authentication, you will see error message "...Interactive authentication is needed..." if your organization requires multi-factor authentication. Switch to certification authentication, or consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
+ When signing in with password authentication, you will see error message "...Interactive authentication is needed..." if your organization requires multi-factor authentication. Switch to certificate-based authentication, or consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
 
 ## See also
 

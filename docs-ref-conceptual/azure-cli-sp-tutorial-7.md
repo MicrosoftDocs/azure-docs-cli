@@ -23,7 +23,9 @@ as `az ad sp create-for-rbac`.
 ```azurecli-interactive
 # reset a service principal credential with a password
 az ad sp credential reset --id myServicePrincipalID
+```
 
+```azurecli-interactive
 # reset a service principal credential with a new self-signed certificate
 az ad sp credential reset --id myServicePrincipalID --create-cert
 ```

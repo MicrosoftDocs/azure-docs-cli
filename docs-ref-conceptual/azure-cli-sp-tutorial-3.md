@@ -18,7 +18,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 This step in the tutorial details how you can use an existing **certificate** with the service principal to access an Azure resource.
 
-## Create a service principal and a new certificate
+## Create a service principal containing new certificate
 
 To create a _self-signed_ certificate for authentication, use the `--create-cert` parameter:
 

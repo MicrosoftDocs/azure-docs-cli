@@ -14,7 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Create a resource using service principal
 
-The following section provides an example of how to create a resource for [Azure Storage](/azure/storage/) with a service principal, using the following commands:
+This page provides an example of how to create a resource for [Azure Storage](/azure/storage/) using a service principal and the following commands:
 
 * [az login](/cli/azure/reference-index#az-login)
 * [az group create](/cli/azure/group#az-group-create)
@@ -53,7 +53,7 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
     ]
     ```
 
-1. Create a resource group to hold all resources used for the same quickstart, tutorial, or development project.
+1. Create a resource group to hold all resources for the same project.
 
     ```azurecli-interactive
     az group create --location westus --name myResourceGroupName

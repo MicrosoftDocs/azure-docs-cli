@@ -18,7 +18,7 @@ When creating a service principal, you choose the type of sign-in authentication
 
 This step in the tutorial explains how to use a service principal password to access an Azure resource.
 
-## Create a service principal with a password
+## Create a service principal containing a password
 
 The default behavior of [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) is to create a service principal with a random password.
 
