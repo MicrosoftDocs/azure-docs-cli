@@ -31,7 +31,7 @@ The information returned for service principal objects is verbose. To get only t
 `[].{id:appId, tenant:appOwnerOrganizationId}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
 
 ```azurecli-interactive
-az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerOrganizationId}"
+az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerOrganizationId}" --output table
 ```
 
 If you're working in a large organization with many service principals, try these command examples:
