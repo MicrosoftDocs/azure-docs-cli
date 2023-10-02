@@ -16,7 +16,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 ## List service principals
 
-If you already have an existing service principal that you wish to use, this steps details how to retrieve your existing service principal.
+If you already have an existing service principal that you wish to use, this step explains how to retrieve your existing service principal.
 
 A list of the service principals in a tenant can be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list). By default this command returns the first 100 service principals for your tenant. To get all of a tenant's service principals, use the `--all` parameter. Getting this list can take a long time, so it's recommended that you filter the list with one of the following parameters:
 
@@ -34,7 +34,7 @@ The information returned for service principal objects is verbose. To get only t
 az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerOrganizationId}"
 ```
 
-If you are working in a large organization with many service principals, try these command examples:
+If you're working in a large organization with many service principals, try these command examples:
 
 ```
 # get service principals containing a keyword
@@ -53,7 +53,7 @@ az ad sp list --spn https://spURL.com
 
 ## Service principal properties
 
-When you get a list of service principals using `az ad sp list`, there are many properties you can reference in your script.
+When you get a list of service principals using `az ad sp list`, there are many output properties you can reference in your script.
 
 ```output
 [

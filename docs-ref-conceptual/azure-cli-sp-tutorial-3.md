@@ -1,6 +1,6 @@
 ---
 title: Work with Azure service principals using a certificate – Azure CLI | Microsoft Docs
-description:  Use service principals with an self-signed certificate to gain control over which Azure resources can be accessed.
+description:  Use service principals with a self-signed certificate to gain control over which Azure resources can be accessed.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish

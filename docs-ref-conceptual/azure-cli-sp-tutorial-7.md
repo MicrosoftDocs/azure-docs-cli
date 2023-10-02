@@ -34,7 +34,7 @@ If you don't know the ID associated with your service principal, use the `az ad 
 
 ## Next Steps
 
-Now that you've learned how to reset your service principal credentials, proceed to the next step to see how to clean up your service principal resources.
+Now that you've learned how to reset your service principal credentials, proceed to the next step to see how to clean up tutorial resources.
 
 > [!div class="nextstepaction"]
 > [Cleanup & troubleshooting](./azure-cli-sp-tutorial-8.md)

@@ -32,7 +32,7 @@ az ad sp delete --id myServicePrincipalID
 
 ## Troubleshooting
 
-Congratulations! You learned how to create, retrieve, and work with service principals! Although you have completed the tutorial, you may still have additional questions regarding service principals that can be answered in this section.
+Congratulations! You learned how to create, retrieve, and work with service principals! Although you have completed the tutorial, you may still have questions regarding service principals that can be answered in this section.
 
 ### Insufficient privileges
 If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` returns an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to obtain `User Access Administrator` or `Role Based Access Control Administrator` permissions.
@@ -48,7 +48,7 @@ If your account doesn't have permission to assign a role, you see an error messa
 
 ### Interactive authentication is needed
 
- When signing in with password authentication, you will see error message "...Interactive authentication is needed..." if your organization requires multi-factor authentication. Switch to certificate-based authentication, or consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
+ When signing in with password authentication, error message "...Interactive authentication is needed..." occurs if your organization requires multifactor authentication. Switch to certificate-based authentication, or consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
 
 ## See also
 

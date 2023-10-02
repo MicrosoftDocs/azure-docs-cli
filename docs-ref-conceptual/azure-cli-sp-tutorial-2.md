@@ -59,7 +59,7 @@ echo "Using appId $spID in tenant $tenantID"
 az login --service-principal --username $spID --password {paste your password here} --tenant $tenantID
 ```
 
-If you're testing in an organization that requires two-factor authentication, you'll receive an "..Interactive authentication is needed" message. As an alternative, use a certificate or [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
+If you're testing in an organization that requires two-factor authentication, error message "...Interactive authentication is needed..." is displayed. As an alternative, use a certificate or [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
 
 > [!IMPORTANT]
 > If you want to avoid displaying your password on console and are using `az login` interactively,
