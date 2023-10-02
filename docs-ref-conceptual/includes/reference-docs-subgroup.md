@@ -14,7 +14,7 @@ ms.custom: devx-track-azurecli
 | [az account](/cli/azure/account) | [Sign in with Azure CLI](/cli/azure/authenticate-azure-cli)
 |  | [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
 |  | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-|  | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+|  | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Learn to use Bash with the Azure CLI](/cli/azure/azure-cli-learn-bash)
 | [az account alias](/cli/azure/account/alias) | [Programmatically create Azure Enterprise Agreement subscriptions with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-enterprise-agreement)
 |  | [Programmatically create Azure subscriptions for a Microsoft Customer Agreement with the latest APIs](/azure/cost-management-billing/manage/programmatically-create-subscription-microsoft-customer-agreement)
@@ -148,12 +148,12 @@ ms.custom: devx-track-azurecli
 |  | [Integrate Azure Active Directory with Azure Kubernetes Service (AKS) using the Azure CLI (legacy)](/azure/aks/azure-ad-integration-cli)
 |  | [Add Key Management Service (KMS) etcd encryption to an Azure Kubernetes Service (AKS) cluster](/azure/aks/use-kms-etcd-encryption)
 |  | [Tutorial: Access Azure Storage from a web app](/azure/active-directory/develop/multi-service-web-app-access-storage)
-| [az ad sp](/cli/azure/ad/sp) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az ad sp](/cli/azure/ad/sp) | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Application and service principal objects in Azure Active Directory](/azure/active-directory/develop/app-objects-and-service-principals)
 |  | [Assign a Key Vault access policy (legacy)](/azure/key-vault/general/assign-access-policy)
 |  | [Transfer an Azure subscription to a different Azure AD directory](/azure/role-based-access-control/transfer-subscription)
 |  | [Access control lists (ACLs) in Azure Data Lake Storage Gen2](/azure/storage/blobs/data-lake-storage-access-control)
-| [az ad sp credential](/cli/azure/ad/sp/credential) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az ad sp credential](/cli/azure/ad/sp/credential) | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Fail to pull images from Azure Container Registry to Azure Kubernetes Service cluster](/troubleshoot/azure/azure-kubernetes/cannot-pull-image-from-acr-to-aks-cluster)
 |  | [Azure Container Registry authentication with service principals](/azure/container-registry/container-registry-auth-service-principal)
 |  | [Pull images from an Azure container registry to a Kubernetes cluster using a pull secret](/azure/container-registry/container-registry-auth-kubernetes)
@@ -1541,7 +1541,7 @@ ms.custom: devx-track-azurecli
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az group](/cli/azure/group) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az group](/cli/azure/group) | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Learn to use Bash with the Azure CLI](/cli/azure/azure-cli-learn-bash)
 |  | [How to use variables in Azure CLI commands](/cli/azure/azure-cli-variables)
 |  | [1 - Overview and Prerequisites](/cli/azure/azure-cli-vm-tutorial-1)
@@ -1857,7 +1857,7 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Deploy confidential VM with ARM template](/azure/confidential-computing/quick-create-confidential-vm-arm-amd)
 | [az keyvault role definition](/cli/azure/keyvault/role/definition) | [Managed HSM role management](/azure/key-vault/managed-hsm/role-management)
 |  | [Azure Managed HSM TLS Offload Library](/azure/key-vault/managed-hsm/tls-offload-library)
-| [az keyvault secret](/cli/azure/keyvault/secret) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az keyvault secret](/cli/azure/keyvault/secret) | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Use the Azure Key Vault Provider for Secrets Store CSI Driver in an Azure Kubernetes Service (AKS) cluster](/azure/aks/csi-secrets-store-driver)
 |  | [Azure Key Vault configuration provider in ASP.NET Core](/aspnet/core/security/key-vault-configuration)
 |  | [Use Azure Key Vault secrets in Azure Pipelines](/azure/devops/pipelines/release/azure-key-vault)
@@ -1929,7 +1929,7 @@ ms.custom: devx-track-azurecli
 | [Azure CLI](/cli/azure/reference-index) | [Sign in with Azure CLI](/cli/azure/authenticate-azure-cli)
 |  | [Get started with Azure CLI](/cli/azure/get-started-with-azure-cli)
 |  | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli)
-|  | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+|  | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [How to use variables in Azure CLI commands](/cli/azure/azure-cli-variables)
 
 ## az logout
@@ -2991,7 +2991,7 @@ ms.custom: devx-track-azurecli
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az role assignment](/cli/azure/role/assignment) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az role assignment](/cli/azure/role/assignment) | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Provide access to Key Vault keys, certificates, and secrets with an Azure role-based access control](/azure/key-vault/general/rbac-guide)
 |  | [Log in to a Windows virtual machine in Azure by using Azure AD including passwordless](/azure/active-directory/devices/howto-vm-sign-in-azure-ad-windows)
 |  | [Elevate access to manage all Azure subscriptions and management groups](/azure/role-based-access-control/elevate-access-global-admin)
@@ -3411,7 +3411,7 @@ ms.custom: devx-track-azurecli
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az storage account](/cli/azure/storage/account) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az storage account](/cli/azure/storage/account) | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Learn to use Bash with the Azure CLI](/cli/azure/azure-cli-learn-bash)
 |  | [How to use variables in Azure CLI commands](/cli/azure/azure-cli-variables)
 |  | [How to manage Azure resource groups with the Azure CLI](/cli/azure/manage-azure-groups-azure-cli)
@@ -3426,7 +3426,7 @@ ms.custom: devx-track-azurecli
 | [az storage account file-service-properties](/cli/azure/storage/account/file-service-properties) | [SMB file shares in Azure Files](/azure/storage/files/files-smb-protocol)
 |  | [Enable soft delete on Azure file shares](/azure/storage/files/storage-files-enable-soft-delete)
 | [az storage account hns-migration](/cli/azure/storage/account/hns-migration) | [Upgrade Azure Blob Storage with Azure Data Lake Storage Gen2 capabilities](/azure/storage/blobs/upgrade-to-data-lake-storage-gen2-how-to)
-| [az storage account keys](/cli/azure/storage/account/keys) | [Work with Azure service principal using the Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+| [az storage account keys](/cli/azure/storage/account/keys) | [Work with Azure service principal using the Azure CLI](/cli/azure/azure-cli-sp-tutorial-1)
 |  | [Learn to use Bash with the Azure CLI](/cli/azure/azure-cli-learn-bash)
 |  | [Manage storage account access keys](/azure/storage/common/storage-account-keys-manage)
 |  | [Create and use a volume with Azure Files in Azure Kubernetes Service (AKS)](/azure/aks/azure-csi-files-storage-provision)
