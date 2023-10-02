@@ -4,45 +4,96 @@ description: Learn how to create and use service principals with the Azure CLI. 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/2/2023
+ms.date: 09/29/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
-# 1 - Work with Azure service principal using the Azure CLI
+# Work with Azure service principals using the Azure CLI
 
-Automated tools that use Azure services should always have restricted permissions, to ensure that your resources will be secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals.
+Automated tools that use Azure services should always have restricted permissions to ensure that Azure resources are secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals. An Azure service principal is an identity created for use with applications, hosted services, and automated tools. This identity is used to access resources.
 
-## Overview and Prerequisites 
+In this tutorial, you learn how to:
 
-An Azure service principal is an identity created for use with applications, hosted services, and automated tools, to access resources. For security reasons, it's always recommended to use service principals with automated tools rather than allowing them to sign in with a user identity.
+> [!div class="checklist"]
+> * Create a service principal
+> * Sign in using a service principal and password
+> * Sign in using a service principal and certificate
+> * Manage service principal roles
+> * Create an Azure resource using a service principal
+> * Reset service principal credentials
 
-In this tutorial, you'll learn how to use service principals with either password-based or certificate-based authentication in order to create a resource. The roles assigned to the service principal restrict access, which gives you control over which resources can be accessed and at what level.
+## Prerequisites
 
-This tutorial can be completed with the interactive experience offered through Azure Cloud Shell, or you may [install the CLI](install-azure-cli.md)
-locally.
+* In a subscription, you must have `User Access Administrator` or `Role Based Access Control Administrator` permissions, or higher, to create a service principal. For a list of roles available for Azure role-based access control (Azure RBAC), see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
 
-To create a service principal in Azure, you must have sufficient permissions to register an application with your Azure Active Directory tenant, and assign a role to the application in your Azure subscription. In order to do so, you require `Application.ReadWrite.All` permission.
+[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
-[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment.md)]
+## Create a service principal
 
-Create an Azure service principal with the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) command.
+Use the [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) Azure CLI reference command to create a service principal. This example doesn't specify a `--name` parameter, so a name containing a time stamp is automatically created.
 
-The `appId` and `tenant` keys appear in the output of `az ad sp create-for-rbac` and are used in service principal authentication. Record their values, but they can be retrieved at any point with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list).
+```azurecli-interactive
+az ad sp create-for-rbac
+```
 
-When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: [password-based authentication](./azure-cli-sp-tutorial-4.md), and [certificate-based authentication](./azure-cli-sp-tutorial-5.md). We recommend using certificate-based authentication due to the security restrictions that password-based authentication has. To learn more about why certificate-based authentication is more secure, see the [benefits](/azure/active-directory/authentication/) that it provides, as opposed to password-based authentication.
+Output console:
+
+```output
+{
+  "appId": "myAppId",
+  "displayName": "myServicePrincipalName",
+  "password": "myServicePrincipalPassword",
+  "tenant": "myTentantId"
+}
+```
+
+If you aren't adhering to resource naming conventions and plan to create a role and scope for your new service principal later, the `az ad sp create-for-rbac` command without parameters is an acceptable solution. However, without a role and scope, the new service principal doesn't have access to resources. It just exists.
+
+When you create a service principal without parameters, also complete these steps:
+
+* Record your system-assigned password as you can't retrieve it again. If you lose the password, reset it using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) as explained in [Reset service principal credentials](./azure-cli-sp-tutorial-7.md).
+* Set the role assignment for your new service principal by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) as explained in [Manage service principal roles](./azure-cli-sp-tutorial-5.md).
+
+## Create a service principal with role and scope
+
+As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. In this example, a new service principal named **spForMyApp** was created with **reader** permissions to all resources in **myRG1**. In resource group **myRG2**, the service principal only has **reader** permissions on **myVM**. Notice the space-delimited list of scopes.
+
+```azurecli-interactive
+az ad sp create-for-rbac --name myServicePrincipalName \
+                         --role reader \
+                         --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
+```
+
+## Create a service principal using variables
+
+You can also create a service principal using variables:
+
+```azurecli-interactive
+let "randomIdentifier=$RANDOM*$RANDOM"
+servicePrincipalName="msdocs-sp-$randomIdentifier"
+roleName="azureRoleName"
+subscriptionID=$(az account show --query id --output tsv)
+# Verify the ID of the active subscription
+echo "Using subscription ID $subscriptionID"
+resourceGroup="myResourceGroupName"
+
+echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
+az ad sp create-for-rbac --name $servicePrincipalName \
+                         --role $roleName \
+                         --scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
+```
+
+For a complete list of service principal properties, use [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and see [Get an existing service principal](./azure-cli-sp-tutorial-4.md).
 
 > [!WARNING]
 > When you create an Azure service principal using the `az ad sp create-for-rbac` command, the output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. As an alternative, consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview) if available to avoid the need to use credentials.
->
-> To reduce your risk of a compromised service principal, assign a more specific role and narrow the scopes to a resource or resource group. See [Steps to add a role assignment](/azure/role-based-access-control/role-assignments-steps) for more information.
-
 
 ## Next Steps
 
 Now that you've learned how to create an Azure service principal, proceed to the next step to learn how to use service principals with password-based authentication.
 
 > [!div class="nextstepaction"]
-> [Work with service principals using a password](./azure-cli-sp-tutorial-2.md)
+> [Use password-based authentication](./azure-cli-sp-tutorial-2.md)

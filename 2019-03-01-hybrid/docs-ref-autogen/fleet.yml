@@ -27,9 +27,10 @@ directCommands:
                     [--apiserver-subnet-id]
                     [--assign-identity]
                     [--dns-name-prefix]
-                    [--enable-managed-identity {false, true}]
-                    [--enable-private-cluster {false, true}]
-                    [--enable-vnet-integration {false, true}]
+                    [--enable-hub]
+                    [--enable-managed-identity]
+                    [--enable-private-cluster]
+                    [--enable-vnet-integration]
                     [--location]
                     [--no-wait]
                     [--tags]
@@ -53,23 +54,28 @@ directCommands:
     isPreview: true
   - name: --assign-identity
     summary: |-
-      Specify an existing user assigned identity to manage the Fleet's hub cluster.
+      With --enable-managed-identity, enable user assigned managed identity (MSI) on the Fleet resource. Specify the existing user assigned identity resource.
     isPreview: true
   - name: --dns-name-prefix -p
     summary: |-
       Prefix for hostnames that are created. If not specified, generate a hostname using the managed cluster and resource group names.
-  - name: --enable-managed-identity
-    parameterValueGroup: "false, true"
+  - name: --enable-hub
+    defaultValue: "False"
     summary: |-
-      Use managed identity (MSI) to manage the Fleet's Hub cluster. This value is not set by default, which implies a hubless Fleet.
+      If set, the Fleet will be created with a hub cluster.
+    isPreview: true
+  - name: --enable-managed-identity
+    defaultValue: "False"
+    summary: |-
+      Enable system assigned managed identity (MSI) on the Fleet resource.
     isPreview: true
   - name: --enable-private-cluster
-    parameterValueGroup: "false, true"
+    defaultValue: "False"
     summary: |-
       Whether to create the Fleet hub as a private cluster or not.
     isPreview: true
   - name: --enable-vnet-integration
-    parameterValueGroup: "false, true"
+    defaultValue: "False"
     summary: |-
       Whether to enable apiserver vnet integration for the Fleet hub or not.
     isPreview: true
@@ -189,7 +195,8 @@ directCommands:
     az fleet update --name
                     --resource-group
                     [--assign-identity]
-                    [--enable-managed-identity {false, true}]
+                    [--enable-managed-identity]
+                    [--no-wait]
                     [--tags]
   requiredParameters:
   - isRequired: true
@@ -203,13 +210,17 @@ directCommands:
   optionalParameters:
   - name: --assign-identity
     summary: |-
-      Specify an existing user assigned identity to manage the Fleet's hub cluster.
+      With --enable-managed-identity, enable user assigned managed identity (MSI) on the Fleet resource. Specify the existing user assigned identity resource.
     isPreview: true
   - name: --enable-managed-identity
-    parameterValueGroup: "false, true"
+    defaultValue: "False"
     summary: |-
-      Use managed identity (MSI) to manage the Fleet's Hub cluster. This value is not set by default, which implies a hubless Fleet.
+      Enable system assigned managed identity (MSI) on the Fleet resource.
     isPreview: true
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
@@ -291,6 +302,13 @@ commands:
 - az_fleet_updaterun_show(fleet)
 - az_fleet_updaterun_start(fleet)
 - az_fleet_updaterun_stop(fleet)
+- az_fleet_updaterun_wait(fleet)
+- az_fleet_updatestrategy
+- az_fleet_updatestrategy_create(fleet)
+- az_fleet_updatestrategy_delete(fleet)
+- az_fleet_updatestrategy_list(fleet)
+- az_fleet_updatestrategy_show(fleet)
+- az_fleet_updatestrategy_wait(fleet)
 - az_fleet_wait(fleet)
 globalParameters:
 - name: --debug

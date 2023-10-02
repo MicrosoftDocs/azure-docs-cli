@@ -2,75 +2,64 @@
 title: Work with Azure service principals using a password – Azure CLI | Microsoft Docs
 description: Use service principals with a password to gain control over which Azure resources can be accessed.
 manager: jasongroce
-author: daphnemamsft
-ms.author: daphnema
-ms.date: 09/6/2023
+author: dbradish-microsoft
+ms.author: dbradish
+ms.date: 09/29/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 2 - Create a service principal using password-based authentication
+# Use password-based authentication
 
-When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose either password-based or [certificate based-authentication](./azure-cli-sp-tutorial-5.md). This article details how you can use a **password** with the service principal to access the Azure Container Registry.
+When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. Password-based authentication is good to use when learning about service principals, but we recommend using [certificate-based authentication](./azure-cli-sp-tutorial-3.md) for applications.
 
-### How does password-based authentication work?
+This step in the tutorial explains how to use a service principal password to access an Azure resource.
 
-With password-based authentication, a random password is created for you. If you don't specify a `--name` parameter value, a name containing a time stamp is created for you.  You must specify a `--scopes` as this value doesn't have a default.  If you prefer, you can set the role assignment later by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create).
+## Create a service principal containing a password
+
+The default behavior of [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) is to create a service principal with a random password.
 
 ```azurecli-interactive
-
 # Create a service principal for a resource group using a preferred name and role
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role reader \
-                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName
-```
-
-You can also create a service principal using variables:
-
-```azurecli-interactive
-let "randomIdentifier=$RANDOM*$RANDOM"  
-servicePrincipalName="msdocs-sp-$randomIdentifier"
-roleName="azureRoleName"
-subscriptionID=$(az account show --query id -o tsv)
-# Verify the ID of the active subscription
-echo "Using subscription ID $subscriptionID"
-resourceGroup="myResourceGroupName"
-
-echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
-az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
+                         --scopes /subscriptions/mySubscriptionId/resourceGroups/myResourceGroupName
 ```
 
 Output Console:
 
 ```
 {
-  "appId": "myAppId",
-  "displayName": "myDisplayName",
-  "password": "myPassword",
-  "tenant": "myTentantId"
+  "appId": "myServicePrincipalId",
+  "displayName": "myServicePrincipalName",
+  "password": "myServicePrincipalPassword",
+  "tenant": "myOrganizationTenantId"
 }
-
 ```
 
 The output for a service principal with password authentication includes the `password` key. __Make sure you copy this value__ - it can't be retrieved. If you lose the password, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
-### Sign in with a service principal using a password
+## Sign in using a service principal using a password
 
-You can test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId`, `tenant`, and credentials.
-
-To learn more about signing in with a service principal, see [Sign in with the Azure CLI](authenticate-azure-cli.md).
-
-To sign in with a service principal using a password:
-
-> [!IMPORTANT]
-> Make sure to use the same password key you received as the output for the service principal in the previous step
+Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId` (also known as "service principal ID" and "user name"), `tenant`, and `password`. Here's an example:
 
 ```azurecli-interactive
-az login --service-principal --username appID --password PASSWORD --tenant tenantID
+az login --service-principal --username myServicePrincipalId --password myServicePrincipalPassword --tenant myOrganizationTenantID
 ```
+
+If you don't know your `appId` or `--tenant`, retrieve it by using the `az ad sp list` command.
+
+```azurecli-interactive
+spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
+tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
+echo "Using appId $spID in tenant $tenantID"
+az login --service-principal --username $spID --password {paste your password here} --tenant $tenantID
+```
+
+If you're testing in an organization that requires two-factor authentication, error message "...Interactive authentication is needed..." is displayed. As an alternative, use a certificate or [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
 
 > [!IMPORTANT]
 > If you want to avoid displaying your password on console and are using `az login` interactively,
@@ -93,4 +82,4 @@ az login --service-principal --username appID --password PASSWORD --tenant tenan
 Now that you've learned how to work with service principals using a password, proceed to the next step to learn how to use service principals with certificate-based authentication.
 
 > [!div class="nextstepaction"]
-> [Work with service principals using a certificate](./azure-cli-sp-tutorial-3.md)
+> [Use certificate-based authentication](./azure-cli-sp-tutorial-3.md)

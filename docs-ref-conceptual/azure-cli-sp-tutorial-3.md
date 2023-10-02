@@ -1,62 +1,24 @@
 ---
 title: Work with Azure service principals using a certificate – Azure CLI | Microsoft Docs
-description:  Use service principals with an existing certificate to gain control over which Azure resources can be accessed.
+description:  Use service principals with a self-signed certificate to gain control over which Azure resources can be accessed.
 manager: jasongroce
-author: daphnemamsft
-ms.author: daphnema
-ms.date: 08/16/2023
+author: dbradish-microsoft
+ms.author: dbradish
+ms.date: 09/29/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# 3 - Create a service principal using certificate-based authentication
+# Use certificate-based authentication
 
-When creating a [Service Principal](./azure-cli-sp-tutorial-1.md), you can choose the either password-based or certificate based-authentication. This article details how you can use an existing **certificate** with the service principal to access the Azure Container Registry.
+ When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. We recommend using certificate-based authentication due to the security restrictions of password-based authentication. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects Azure resources. To learn more about why certificate-based authentication is more secure, see [Azure Active Directory certificate based authentication concepts](/azure/active-directory/authentication/concept-certificate-based-authentication).
 
-## Why use certificate-based authentication?
+This step in the tutorial details how you can use an existing **certificate** with the service principal to access an Azure resource.
 
-We recommend using certificate-based authentication due to the security considerations that password authentication has. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects the user's assets. 
-
-To learn more about why and how certificate based authentication is more secure, see [Azure Active Directory certificate based authentication concepts](/azure/active-directory/authentication/concept-certificate-based-authentication). 
-
-## How do I add certificates to a Service Principal?
-
-We recommend you use Azure CLI to perform certificate-based authentication, however there is also a way to manually assign an existing certificate to a service principal through the Azure portal:
-
-# [Azure CLI](#tab/concepts)
-
-For certificate-based authentication, use the `--cert` parameter. This parameter requires that you hold an existing certificate. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the certi897ficate as a string, or use the `@path` format to load the certificate from a file.
-
-> [!NOTE]
-> When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
-```azurecli-interactive
-az ad sp create-for-rbac --name myServicePrincipalName \
-                         --role roleName \
-                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
-                         --cert "-----BEGIN CERTIFICATE-----
-...
------END CERTIFICATE-----"
-```
-
-```azurecli-interactive
-az ad sp create-for-rbac --name myServicePrincipalName \
-                         --role roleName \
-                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
-                         --cert @/path/to/cert.pem
-```
-
-The `--keyvault` parameter can be added to use a certificate in Azure Key Vault. In this case, the `--cert` value is the name of the certificate.
-
-```azurecli-interactive
-az ad sp create-for-rbac --name myServicePrincipalName \
-                         --role roleName \
-                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
-                         --cert certificateName \
-                         --keyvault vaultName
-```
+## Create a service principal containing new certificate
 
 To create a _self-signed_ certificate for authentication, use the `--create-cert` parameter:
 
@@ -67,59 +29,74 @@ az ad sp create-for-rbac --name myServicePrincipalName \
                          --create-cert
 ```
 
-You can use `--append ` to assign multiple certificates to a service principal:
-
-```azurecli-interactive
-az ad sp credential reset --append \
-                          --name myServicePrincipalName \
-                          --cert @/path/to/cert.pem
-```
-
 Console output:
 
-```
-Creating a role assignment under the scopes of "/subscriptions/myId"
-Please copy C:\myPath\myNewFile.pem to a safe place.
-When you run 'az login', provide the file path in the --password parameter
+```output
 {
-  "appId": "myAppId",
-  "displayName": "myDisplayName",
-  "fileWithCertAndPrivateKey": "C:\\myPath\\myNewFile.pem",
-  "name": "http://myName",
+  "appId": "myServicePrincipalID",
+  "displayName": "myServicePrincipalName",
+  "fileWithCertAndPrivateKey": "certFilePath\certFileName.pem",
   "password": null,
-  "tenant": "myTenantId"
+  "tenant": "myOrganizationTenantID"
 }
 ```
 
-Contents of the new PEM file:
-```
------BEGIN PRIVATE KEY-----
-myPrivateKeyValue
------END PRIVATE KEY-----
------BEGIN CERTIFICATE-----
-myCertificateValue
------END CERTIFICATE-----
-```
+Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
+__Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal. If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+
+The contents of a PEM file can be viewed with a text editor, but don't modify it manually. The contents of the PEM file look like this:
+
+![Screenshot of PEM file](~/docs-ref-conceptual/media/sp-tutorial/pem-file.png)
+
+## Create a service principal using an existing certificate
+
+Create a service principal with an existing certificate by using the `--cert` parameter. Make sure any tool that uses this service principal has access to the certificate's private key. Certificates should be in an ASCII format such as PEM, CER, or DER. Pass the **certi897ficate** as a string, or use the `@path` format to load the certificate from a file.
 
 > [!NOTE]
-> The `az ad sp create-for-rbac --create-cert` command creates the service principal and a PEM file. The PEM file contains a correctly formatted **PRIVATE KEY** and **CERTIFICATE**.
-The `--keyvault` parameter can be added to store the certificate in Azure Key Vault. When you use `--keyvault`, the `--cert` parameter is __required__.
+> When using a PEM file, the **CERTIFICATE** must be appended to the **PRIVATE KEY** within the file.
 
 ```azurecli-interactive
+# create a service principal with the certificate as a string
+az ad sp create-for-rbac --name myServicePrincipalName \
+                         --role roleName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --cert "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----"
+```
+
+```azurecli-interactive
+# create a service principal with the certificate file location
+az ad sp create-for-rbac --name myServicePrincipalName \
+                         --role roleName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --cert @/path/to/cert.pem
+```
+
+## Work with Azure Key Vault
+
+The `--keyvault` parameter can be added to create or retrieve certificates in Azure Key Vault. When you use `--keyvault`, the `--cert` parameter is __required__. In this example, the `--cert` value is the name of the certificate.
+
+```azurecli-interactive
+# Create a service principal storing the certificate in Azure Key Vault
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role roleName \
                          --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
                          --create-cert \
-                         --cert certificateName \
-                         --keyvault vaultName
+                         --cert myCertificateName \
+                         --keyvault myVaultName
 ```
 
-Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
-__Make sure__ that you copy the certificate to a secure location, or you can't sign in with this service principal.
+```azurecli-interactive
+# Create a service principal using an existing certificate in Azure Key Vault
+az ad sp create-for-rbac --name myServicePrincipalName \
+                         --role roleName \
+                         --scopes /subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName \
+                         --cert myCertificateName \
+                         --keyvault myVaultName
+```
 
-If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
-
-## Retrieve certificate from Key Vault
+### Retrieve a certificate from Azure Key Vault
 
 For a certificate stored in Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) and convert it to a PEM file. In the Key Vault, the name of the certificate's secret is the same as the certificate name.
 
@@ -130,59 +107,42 @@ openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 
 ## Convert existing PKCS12 file
 
-If you already have a PKCS#12 file, you can convert it to PEM format using OpenSSL.  If you have a password, change the `passin` argument.
+If you already have a PKCS#12 file, you can convert it to PEM format using OpenSSL. If you have a password, change the `passin` argument.
 
 ```console
 openssl pkcs12 -in fileName.p12 -clcerts -nodes -out fileName.pem -passin pass:
 ```
 
-## Signing in with a service principal using a certificate
+## Append a certificate to a service principal
 
-To sign in with a certificate, it must be available locally as a PEM or DER file, in ASCII format. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file.
-
-```azurecli-interactive
-az login --service-principal --username appID --tenant tenantID --password /path/to/cert
-```
-
-
-# [Azure Portal](#tab/examples)
-
-You can assign a certificate to a service principal through the Azure portal by following these steps:
-
-1. In the Azure Portal, select Active Directory.
-
-![Screenshot of AAD](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-aad.png)
-
-2. Then select App Registrations on the left hand sidebar.
-
-![Screenshot of App Registration](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-app-reg.png)
-
-3. Next, select your AKS service principal.
-
-![Screenshot of Service Principal](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-select-sp.png)
-
-4. Then proceed to click on "Certificates and secrets." Here, you can upload it, or download and install it on your PC you are using to connect with. Make sure the certificate is stored somewhere you can access it on your local machine for later steps.
-
-![Screenshot of Upload Certificate](~/docs-ref-conceptual/media/azure-cli-sp-tutorial-cert.png)
-
-5. To use the Service Principal with the certificate to access the Azure Container Registry, use the following command:
+Use the `--append` parameter in [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset()) to append a certificate to an existing service principal.
+By default, this command clears all passwords and keys so use carefully.
 
 ```azurecli-interactive
-# Sign into Azure CLI with Service Principal's appID and tenantID and use certificate as password
-az login --service-principal --username appID --tenant tenantID --password /path/to/cert
+az ad sp credential reset --id myServicePrincipalID \
+                          --append \
+                          --cert @/path/to/cert.pem
 ```
 
-6. Then sign into the registry with `az acr login`, which uses the Active Directory token from the CLI login:
+Console output:
+
+```output
+Certificate expires yyyy-mm-dd hh:mm:ss+00:00. Adjusting key credential end date to match.
+The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https://aka.ms/azadsp-cli
+{
+  "appId": "myServicePrincipalID",
+  "password": null,
+  "tenant": "myOrganizationTenantID"
+}
+```
+
+## Sign in with a service principal using a certificate
+
+To sign in with a certificate, the certificate must be available locally as a PEM or DER file, in ASCII format. PKCS#12 files (.p12/.pfx) don't work. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file. You don't need to prefix the path with an `@` like you do with other az commands.
 
 ```azurecli-interactive
-az acr login --name registryName
+az login --service-principal --username myServicePrincipalID --tenant myOwnerOrganizationId --password /path/to/cert
 ```
-
-> [!NOTE]
-> Certificate must be in PEM format - it won't work with PKCS#12 files (.p12/.pfx)
->
-> You don't need to prefix the path with an @ like you do with the previous az commands
-***
 
 ## Next Steps
 
