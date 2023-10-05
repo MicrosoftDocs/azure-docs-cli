@@ -50,8 +50,6 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
-For more information on PEN file formats, see [Working with service principals](./azure-cli-sp-tutorial-3).
-
 ## See also
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
