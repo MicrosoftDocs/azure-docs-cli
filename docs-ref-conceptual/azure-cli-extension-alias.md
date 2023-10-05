@@ -4,7 +4,7 @@ description: The alias extension allows users to define custom commands for the 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 09/15/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
