@@ -4,7 +4,7 @@ description: The Azure CLI is available to install in Windows, macOS and Linux e
 author: chasecrum
 ms.author: chasecrum
 manager: mamccrea
-ms.date: 06/19/2023
+ms.date: 09/28/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli

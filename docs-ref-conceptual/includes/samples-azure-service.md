@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/05/2023
+ms.date: 10/05/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -38,6 +38,7 @@ ms.custom: devx-track-azurecli
 |  | [Export from an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-export) |
 |  | [Import to an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-import) |
 |  | [Work with key-values in an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-work-with-keys) |
+| **azure-arc** | [Azure Resource Graph sample queries for Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/resource-graph-samples) |
 | **azure-cache-for-redis** | [Create a Premium Azure Cache for Redis with clustering](/azure/azure-cache-for-redis/scripts/create-manage-premium-cache-cluster) |
 |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache) |
 | **azure-devops** | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
@@ -49,19 +50,20 @@ ms.custom: devx-track-azurecli
 |  | [Create a serverless Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-create-serverless-python) |
 |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
 |  | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
-| **azure-monitor** | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| **azure-monitor** | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 |  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
 | **azure-signalr** | [Create a SignalR Service](/azure/azure-signalr/scripts/signalr-cli-create-service) |
 |  | [Create a SignalR Service with an App Service](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service) |
 |  | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
 | **azure-sql-edge** | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
-| **batch** | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-|  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-|  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
-|  | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-|  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-|  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| **batch** | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+|  | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+|  | [Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
+|  | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+|  | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+|  | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | **cdn** | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
+| **chaos-studio** | [Use the Chaos Studio REST APIs to run and manage chaos experiments](/azure/chaos-studio/chaos-studio-samples-rest-api) |
 | **cosmos-db** | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
 |  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
 |  | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) |
@@ -95,10 +97,18 @@ ms.custom: devx-track-azurecli
 |  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](/azure/cosmos-db/scripts/cli/table/autoscale) |
 |  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](/azure/cosmos-db/scripts/cli/table/serverless) |
 |  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
+| **defender-for-cloud** | [Azure Resource Graph sample queries for Microsoft Defender for Cloud](/azure/defender-for-cloud/resource-graph-samples) |
+|  | [Express configuration Azure Command Line Interface (CLI) commands reference](/azure/defender-for-cloud/express-configuration-azure-commands) |
 | **devtest-labs** | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
 | **dns** | [Azure CLI script example: Create a DNS zone and record](/azure/dns/scripts/dns-cli-create-dns-zone-record) |
 | **event-grid** | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
 | **frontdoor** | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain) |
+| **governance** | [Advanced Resource Graph query samples](/azure/governance/resource-graph/samples/advanced) |
+|  | [Azure Resource Graph sample queries by category](/azure/governance/resource-graph/samples/samples-by-category) |
+|  | [Azure Resource Graph sample queries by table](/azure/governance/resource-graph/samples/samples-by-table) |
+|  | [Azure Resource Graph sample queries for Azure Policy](/azure/governance/policy/samples/resource-graph-samples) |
+|  | [Azure Resource Graph sample queries for management groups](/azure/governance/management-groups/resource-graph-samples) |
+|  | [Starter Resource Graph query samples](/azure/governance/resource-graph/samples/starter) |
 | **hdinsight** | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | **logic-apps** | [Azure CLI script sample - create a logic app](/azure/logic-apps/sample-logic-apps-cli-script) |
 | **mariadb** | [Create a MariaDB server and configure a firewall rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-and-firewall-rule) |
@@ -132,6 +142,7 @@ ms.custom: devx-track-azurecli
 |  | [Monitor and scale a single PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-scale-server-up-or-down) |
 |  | [Restore an Azure Database for PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-point-in-time-restore) |
 | **service-fabric** | [Create a secure Service Fabric Linux cluster via the Azure CLI](/azure/service-fabric/scripts/cli-create-cluster) |
+| **service-health** | [Azure Resource Graph sample queries for Azure Service Health](/azure/service-health/resource-graph-samples) |
 | **sql-server** | [Add a database to a failover group using the Azure CLI](/azure/azure-sql/database/scripts/add-database-to-failover-group-cli) |
 |  | [Add an Azure SQL Database elastic pool to a failover group using the Azure CLI](/azure/azure-sql/database/scripts/add-elastic-pool-to-failover-group-cli) |
 |  | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
@@ -151,7 +162,8 @@ ms.custom: devx-track-azurecli
 |  | [Create a storage account and rotate its account access keys](/azure/storage/scripts/storage-common-rotate-account-keys-cli) |
 |  | [Use an Azure CLI script to delete containers based on container name prefix](/azure/storage/scripts/storage-blobs-container-delete-by-prefix-cli) |
 | **traffic-manager** | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
-| **virtual-machines** | [Copy managed disks to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-managed-disks-to-same-or-different-subscription) |
+| **virtual-machines** | [Azure Resource Graph sample queries for Azure Virtual Machines](/azure/virtual-machines/resource-graph-samples) |
+|  | [Copy managed disks to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-managed-disks-to-same-or-different-subscription) |
 |  | [Copy snapshot of a managed disk to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-same-or-different-subscription) |
 |  | [Create a managed disk from a snapshot with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-snapshot) |
 |  | [Create a managed disk from a VHD file in a storage account in the same subscription with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-vhd) |
