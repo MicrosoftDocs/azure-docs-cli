@@ -17,7 +17,7 @@ keywords: az login, authentication types , authentication methods, azure, cli lo
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 predefined roles. Authenticating with a service principal is the best way to write secure scripts or programs,
 allowing you to apply both permissions restrictions and locally stored static credential information. To learn more
-about service principals, see [Work with Azure service principals using the Azure CLI](./azure-cli-sp-tutorial-1).
+about service principals, see [Work with Azure service principals using the Azure CLI](./azure-cli-sp-tutorial-1.md).
 
 To sign in with a service principal, you need:
 
@@ -27,9 +27,9 @@ To sign in with a service principal, you need:
 
 Note two important facts when working with service principals and the Azure CLI:
 
-* A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./azure-cli-sp-tutorial-3).
+* A **CERTIFICATE** must be appended to the **PRIVATE KEY** within a PEM file. For an example of a PEM file format, see [Certificate-based authentication](./azure-cli-sp-tutorial-3.md).
 
-* If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./azure-cli-sp-tutorial-3#work-with-azure-key-vault).
+* If your service principal uses a certificate that is stored in Key Vault, that certificate's private key must be available without signing in to Azure. To retrieve the certificate for `az login`, see [Retrieve certificate from Key Vault](./azure-cli-sp-tutorial-3.md#work-with-azure-key-vault).
 
 ```azurecli-interactive
 az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
