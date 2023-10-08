@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli create vnet, virtual network in azure cli, subnet in virtual network
 ---
 
-# 2- Create a virtual network
+# Create a virtual network
 
 Virtual networks (VNets) allow virtual machines (VMs) and other Azure resources to communicate securely with each other, the internet, and on-premises networks. VNets can also be connected to other VNets if their address ranges don't overlap. In this section, you learn how to create a virtual network with a subnet.
 

@@ -50,6 +50,10 @@ If your account doesn't have permission to assign a role, you see an error messa
 
  When signing in with password authentication, error message "...Interactive authentication is needed..." occurs if your organization requires multifactor authentication. Switch to certificate-based authentication, or consider using [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).
 
+###  Compliant device required
+
+If you try to create a service principal using a device that is not compliant with your organizations access policies, you will receive message "...Conditional Access policy requires a compliant device...".  Switch to a computer that meets your organization's access policies.
+
 ## See also
 
 * [Application and service principal objects in Azure Active Directory](/azure/active-directory/develop/app-objects-and-service-principals)

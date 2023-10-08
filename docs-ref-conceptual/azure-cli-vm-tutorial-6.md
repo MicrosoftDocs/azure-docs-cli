@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli clean up resources, virtual machine in azure cli
 ---
 
-# 6 - Cleanup
+# Cleanup
 
 Now that the tutorial is complete, it's time to clean up the created resources. You
 can delete individual resources with the `delete` command, but the safest way to remove all resources
