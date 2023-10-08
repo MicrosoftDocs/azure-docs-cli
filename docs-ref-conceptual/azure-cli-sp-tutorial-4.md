@@ -126,12 +126,25 @@ When you get a list of service principals using `az ad sp list`, there are many 
 
 Use the `--query` parameter to retrieve and store service principal properties in variables.
 
+# [Azure CLI](#tab/azure-cli)
+
 ```azurecli-interactive
 spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
 tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
-userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv))
+userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv)
 echo "Using appId $spID in tenant $tenantID for $userConsentDescr"
 ```
+
+# [PowerShell](#tab/powershell)
+
+```powershell
+$spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
+$tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
+$userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv)
+echo "Using appId $spID in tenant $tenantID for $userConsentDescr"
+```
+
+---
 
 ## Next Steps
 

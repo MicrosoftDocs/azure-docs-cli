@@ -44,10 +44,13 @@ The output for a service principal with password authentication includes the `pa
 
 ## Sign in using a service principal using a password
 
-Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId` (also known as "service principal ID" and "user name"), `tenant`, and `password`. Here's an example:
+Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId` (also known as "service principal ID", "username" or "assignee"), `tenant`, and `password`. Here's an example:
 
 ```azurecli-interactive
-az login --service-principal --username myServicePrincipalId --password myServicePrincipalPassword --tenant myOrganizationTenantID
+az login --service-principal \
+         --username myServicePrincipalId \
+         --password myServicePrincipalPassword \
+         --tenant myOrganizationTenantID
 ```
 
 If you don't know your `appId` or `--tenant`, retrieve it by using the `az ad sp list` command.
@@ -56,7 +59,11 @@ If you don't know your `appId` or `--tenant`, retrieve it by using the `az ad sp
 spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
 tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
 echo "Using appId $spID in tenant $tenantID"
-az login --service-principal --username $spID --password {paste your password here} --tenant $tenantID
+
+az login --service-principal \
+         --username $spID \
+         --password {paste your password here} \
+         --tenant $tenantID
 ```
 
 If you're testing in an organization that requires two-factor authentication, error message "...Interactive authentication is needed..." is displayed. As an alternative, use a certificate or [managed identities](/azure/active-directory/managed-identities-azure-resources/overview).

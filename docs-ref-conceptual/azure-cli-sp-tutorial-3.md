@@ -101,7 +101,10 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 For a certificate stored in Key Vault, retrieve the certificate with its private key with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) and convert it to a PEM file. In the Key Vault, the name of the certificate's secret is the same as the certificate name.
 
 ```azurecli-interactive
-az keyvault secret download --file /path/to/cert.pfx --vault-name VaultName --name CertName --encoding base64
+az keyvault secret download --file /path/to/cert.pfx \
+                            --vault-name VaultName \
+                            --name CertName \
+                            --encoding base64
 openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 ```
 
@@ -141,7 +144,10 @@ The output includes credentials that you must protect. Be sure that you do not i
 To sign in with a certificate, the certificate must be available locally as a PEM or DER file, in ASCII format. PKCS#12 files (.p12/.pfx) don't work. When you use a PEM file, the **PRIVATE KEY** and **CERTIFICATE** must be appended together within the file. You don't need to prefix the path with an `@` like you do with other az commands.
 
 ```azurecli-interactive
-az login --service-principal --username myServicePrincipalID --tenant myOwnerOrganizationId --password /path/to/cert
+az login --service-principal \
+         --username myServicePrincipalID \
+         --tenant myOwnerOrganizationId \
+         --password /path/to/cert
 ```
 
 ## Next Steps
