@@ -83,7 +83,6 @@ If you're testing in an organization that requires two-factor authentication, er
 > az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant <tenant>
 > ```
 
-
 ## Next Steps
 
 Now that you've learned how to work with service principals using a password, proceed to the next step to learn how to use service principals with certificate-based authentication.

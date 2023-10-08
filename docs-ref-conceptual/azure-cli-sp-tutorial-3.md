@@ -18,7 +18,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 This step in the tutorial details how you can use an existing **certificate** with the service principal to access an Azure resource.
 
-## Create a service principal containing new certificate
+## Create a service principal containing a new certificate
 
 To create a _self-signed_ certificate for authentication, use the `--create-cert` parameter:
 
@@ -108,7 +108,7 @@ az keyvault secret download --file /path/to/cert.pfx \
 openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 ```
 
-## Convert existing PKCS12 file
+## Convert an existing PKCS12 file
 
 If you already have a PKCS#12 file, you can convert it to PEM format using OpenSSL. If you have a password, change the `passin` argument.
 
