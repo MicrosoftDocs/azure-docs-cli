@@ -1,6 +1,6 @@
 ---
-title: Reset service principal credentials – Azure CLI | Microsoft Docs
-description: Learn how to reset your service principal credentials using Azure CLI.
+title: Reset service principal credentials using the Azure CLI | Microsoft Docs
+description: Learn how to reset your service principal credentials using the Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish

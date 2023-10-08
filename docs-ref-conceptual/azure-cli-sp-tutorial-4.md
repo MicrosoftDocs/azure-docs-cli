@@ -1,6 +1,6 @@
 ---
-title: Get an existing service principal – Azure CLI | Microsoft Docs
-description: Learn how to retrieve an existing service principal using the Azure CLI
+title: Get an existing service principal using the Azure CLI | Microsoft Docs
+description: Learn how to retrieve an existing service principal using the Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -36,7 +36,7 @@ az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:ap
 
 If you're working in a large organization with many service principals, try these command examples:
 
-```
+```azurecli-interactive
 # get service principals containing a keyword
 az ad sp list --display-name mySearchWord --output table
 

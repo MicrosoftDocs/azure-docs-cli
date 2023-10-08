@@ -1,6 +1,6 @@
 ---
-title: Service principal cleanup and troubleshooting – Azure CLI | Microsoft Docs
-description: Learn how to clean up and troubleshoot service principal resources.
+title: Service principal cleanup and troubleshooting using Azure CLI | Microsoft Docs
+description: Learn how to cleanup and troubleshoot service principals.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish

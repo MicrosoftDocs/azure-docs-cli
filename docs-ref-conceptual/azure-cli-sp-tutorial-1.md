@@ -1,6 +1,6 @@
 ---
-title: Work with Azure service principals – Azure CLI | Microsoft Docs
-description: Learn how to create and use service principals with the Azure CLI. Use service principals to gain control over which Azure resources can be accessed.
+title: Create Azure service principals using the Azure CLI | Microsoft Docs
+description: Learn how to create and use service principals to control access to Azure resources using the Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -73,7 +73,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 # [PowerShell](#tab/powershell)
 
 ```powershell
-# PowerShell script without line continuation characters
+# PowerShell script
 az ad sp create-for-rbac --name myServicePrincipalName --role reader --scopes /subscriptions/00000000-0000-0000-0000-000000000000
 ```
 
@@ -93,7 +93,7 @@ az ad sp create-for-rbac --name myServicePrincipalName2 \
 # [PowerShell](#tab/powershell)
 
 ```powershell
-# PowerShell script without line continuation characters
+# PowerShell script
 az ad sp create-for-rbac --name myServicePrincipalName2 --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
 ```
 

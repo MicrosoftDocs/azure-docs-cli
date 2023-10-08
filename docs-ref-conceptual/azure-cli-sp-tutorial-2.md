@@ -1,6 +1,6 @@
 ---
-title: Work with Azure service principals using a password – Azure CLI | Microsoft Docs
-description: Use service principals with a password to gain control over which Azure resources can be accessed.
+title: Create a service principal containing password authentication using the Azure CLI | Microsoft Docs
+description: Learn to use service principals with a password to control access to Azure resources.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -70,13 +70,13 @@ If you're testing in an organization that requires two-factor authentication, er
 
 > [!IMPORTANT]
 > If you want to avoid displaying your password on console and are using `az login` interactively,
-> use the `read -s` command under `bash`.
+> use the `read -s` command in `bash`.
 >
 > ```bash
 > read -sp "Azure password: " AZ_PASS && echo && az login --service-principal -u <app-id> -p $AZ_PASS --tenant <tenant>
 > ```
 >
-> Under PowerShell, use the `Get-Credential` cmdlet.
+>In PowerShell, use the `Get-Credential` cmdlet.
 >
 > ```powershell
 > $AzCred = Get-Credential -UserName <app-id>
