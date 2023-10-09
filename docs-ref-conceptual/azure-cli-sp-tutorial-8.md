@@ -4,7 +4,7 @@ description: Learn how to cleanup and troubleshoot service principals.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/29/2023
+ms.date: 10/10/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -56,7 +56,7 @@ If your account doesn't have permission to assign a role, you see an error messa
 
 ### Compliant device required
 
-If you try to create a service principal using a device that is not compliant with your organizations access policies, you will receive message "...Conditional Access policy requires a compliant device...".  Switch to a computer that meets your organization's access policies.
+If you try to create a service principal using a device that is not compliant with your organizations access policies, you will receive message "...Conditional Access policy requires a compliant device...". Switch to a computer that meets your organization's access policies.
 
 ## See also
 

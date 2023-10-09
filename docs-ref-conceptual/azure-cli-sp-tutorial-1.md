@@ -4,7 +4,7 @@ description: Learn how to create and use service principals to control access to
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/29/2023
+ms.date: 10/10/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -81,7 +81,7 @@ az ad sp create-for-rbac --name myServicePrincipalName --role reader --scopes /s
 
 ---
 
-The `--scopes` parameter accepts a space-delimited list of scopes.  In this example, a new service principal named **myServicePrincipalName2** is created with **contributor** permissions to all resources in resource group **myRG1**.  This service principal is also given **contributor** permissions to **myVM** located in **myRG2**.
+The `--scopes` parameter accepts a space-delimited list of scopes. In this example, a new service principal named **myServicePrincipalName2** is created with **contributor** permissions to all resources in resource group **myRG1**.  This service principal is also given **contributor** permissions to **myVM** located in **myRG2**.
 
 # [Bash](#tab/bash)
 
