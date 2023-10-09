@@ -1,10 +1,10 @@
 ---
-title: Reset service principal credentials – Azure CLI | Microsoft Docs
-description: Learn how to reset your service principal credentials using Azure CLI.
+title: Reset service principal credentials using the Azure CLI | Microsoft Docs
+description: Learn how to reset your service principal credentials using the Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/29/2023
+ms.date: 10/10/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -14,11 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Reset service principal credentials
 
-If you ever lose your service principal credentials, the best and most secure option is to reset the credentials.
-This step details how to reset your service principal credentials.
-
-If you lose the credentials for a service principal, use [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). The reset command takes the same parameters
-as `az ad sp create-for-rbac`.
+If you lose your service principal credentials, you will need to reset the credentials using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). This step details how to reset your service principal credentials.
 
 ```azurecli-interactive
 # reset a service principal credential with a password
@@ -37,4 +33,4 @@ If you don't know the ID associated with your service principal, use the `az ad 
 Now that you've learned how to reset your service principal credentials, proceed to the next step to see how to clean up tutorial resources.
 
 > [!div class="nextstepaction"]
-> [Cleanup & troubleshooting](./azure-cli-sp-tutorial-8.md)
+> [Cleanup & troubleshoot service principals](./azure-cli-sp-tutorial-8.md)

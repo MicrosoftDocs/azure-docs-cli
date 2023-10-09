@@ -1,10 +1,10 @@
 ---
-title: Get an existing service principal – Azure CLI | Microsoft Docs
-description: Learn how to retrieve an existing service principal using the Azure CLI
+title: Get an existing service principal using the Azure CLI | Microsoft Docs
+description: Learn how to retrieve an existing service principal using the Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/29/2023
+ms.date: 10/10/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -28,7 +28,7 @@ if the value you used for `--name` wasn't a URI, this value is `https://` follow
 * `--filter` takes an OData filter, and performs _server-side_ filtering. This method is recommended over filtering client-side with the CLI's `--query` parameter. To learn about OData filters, see [OData expression syntax for filters](/rest/api/searchservice/odata-expression-syntax-for-azure-search).
 
 The information returned for service principal objects is verbose. To get only the information necessary for sign-in, use the query string
-`[].{id:appId, tenant:appOwnerOrganizationId}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
+`[].{id:appId, tenant:appOwnerOrganizationId}`. Here is an example that gets the sign-in information for all service principals created by the currently logged in user:
 
 ```azurecli-interactive
 az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerOrganizationId}" --output table
@@ -36,7 +36,7 @@ az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:ap
 
 If you're working in a large organization with many service principals, try these command examples:
 
-```
+```azurecli-interactive
 # get service principals containing a keyword
 az ad sp list --display-name mySearchWord --output table
 
@@ -49,7 +49,7 @@ az ad sp list --spn https://spURL.com
 
 > [!IMPORTANT]
 >
-> The user and tenant can both be retrieved with [`az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show), but authentication secrets _or_ the authentication method is not available. Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default. If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+> The user and tenant can both be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show), but authentication secrets _or_ the authentication method is not available. Secrets for certificates in Azure Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default. If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
 ## Service principal properties
 
@@ -126,12 +126,27 @@ When you get a list of service principals using `az ad sp list`, there are many 
 
 Use the `--query` parameter to retrieve and store service principal properties in variables.
 
+# [Bash](#tab/bash)
+
 ```azurecli-interactive
+# Bash script
 spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
 tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
-userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv))
+userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv)
 echo "Using appId $spID in tenant $tenantID for $userConsentDescr"
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli
+# PowerShell script
+$spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
+$tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
+$userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv)
+echo "Using appId $spID in tenant $tenantID for $userConsentDescr"
+```
+
+---
 
 ## Next Steps
 
