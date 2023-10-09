@@ -61,7 +61,5 @@ If you try to create a service principal using a device that is not compliant wi
 ## See also
 
 * [Application and service principal objects in Microsoft Entra ID](/azure/active-directory/develop/app-objects-and-service-principals)
-* [Manage service principals using the Azure portal](/azure/developer/python/how-to-manage-service-principals)
-* [Azure authentication with service principals](/azure/developer/java/sdk/identity-service-principal-auth)
-* [View the service principal of a managed identity](/azure/active-directory/managed-identities-azure-resources/how-to-view-managed-identity-service-principal-cli)
+* [Create a service principal using the Azure portal](/azure/active-directory/develop/howto-create-service-principal-portal)
 * [Create an Azure service principal with Azure PowerShell](/powershell/azure/create-azure-service-principal-azureps)
