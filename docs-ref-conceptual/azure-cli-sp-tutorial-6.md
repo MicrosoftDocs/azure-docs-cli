@@ -11,7 +11,7 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# Create a resource using service principal
+# Create a resource using a service principal
 
 If given the necessary permissions, a service principal can create and manage Azure resources just like an account. This page provides an example of how to create a resource for [Azure Storage](/azure/storage/) using a service principal and the following commands:
 

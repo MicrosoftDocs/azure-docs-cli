@@ -11,7 +11,7 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
-# Create a service principal using the Azure CLI
+# Create an Azure service principal with Azure CLI
 
 Automated tools that use Azure services should always have restricted permissions to ensure that Azure resources are secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals. An Azure service principal is an identity created for use with applications, hosted services, and automated tools. This identity is used to access resources.
 

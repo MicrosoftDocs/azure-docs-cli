@@ -12,11 +12,11 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# Cleanup & troubleshooting
+# Cleanup & troubleshoot service principals
 
 Now that you have completed the tutorial, it's time to clean up the created service principal resources.
 
-## Cleanup resources
+## Cleanup service principal resources
 
 The safest way to remove all resources used in this tutorial is to use [az group delete](/cli/azure/group#az-group-delete). The `--no-wait` parameter keeps the CLI from blocking while the deletion takes place.
 
@@ -30,7 +30,7 @@ If you prefer, delete individual service principals with the [az ad sp delete](/
 az ad sp delete --id myServicePrincipalID
 ```
 
-## Troubleshooting
+## Troubleshoot service principals
 
 Congratulations! You learned how to create, retrieve, and work with service principals! Although you have completed the tutorial, you may still have questions regarding service principals that can be answered in this section.
 
@@ -64,3 +64,4 @@ If you try to create a service principal using a device that is not compliant wi
 * [Manage service principals using the Azure portal](/azure/developer/python/how-to-manage-service-principals)
 * [Azure authentication with service principals](/azure/developer/java/sdk/identity-service-principal-auth)
 * [View the service principal of a managed identity](/azure/active-directory/managed-identities-azure-resources/how-to-view-managed-identity-service-principal-cli)
+* [Create an Azure service principal with Azure PowerShell](/powershell/azure/create-azure-service-principal-azureps)
