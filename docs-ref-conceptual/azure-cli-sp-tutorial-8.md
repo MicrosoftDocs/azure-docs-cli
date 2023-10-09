@@ -14,13 +14,13 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Cleanup & troubleshoot service principals
 
-Now that you have completed the tutorial, it's time to clean up the created service principal resources.
+Congratulations! You learned how to create, retrieve, and work with service principals! Now that you have completed the tutorial, it's time to clean up the created service principal resources.
 
 ## Cleanup service principal resources
 
 The safest way to remove all resources used in this tutorial is to use [az group delete](/cli/azure/group#az-group-delete). The `--no-wait` parameter keeps the CLI from blocking while the deletion takes place.
 
-```
+```azurecli-interactive
 az group delete --name myResourceGroup --no-wait
 ```
 
@@ -32,7 +32,7 @@ az ad sp delete --id myServicePrincipalID
 
 ## Troubleshoot service principals
 
-Congratulations! You learned how to create, retrieve, and work with service principals! Although you have completed the tutorial, you may still have questions regarding service principals that can be answered in this section.
+Although you have completed the tutorial, you may still have questions regarding service principals that can be answered in this section.
 
 ### Insufficient privileges
 

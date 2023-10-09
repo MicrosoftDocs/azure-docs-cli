@@ -28,7 +28,7 @@ if the value you used for `--name` wasn't a URI, this value is `https://` follow
 * `--filter` takes an OData filter, and performs _server-side_ filtering. This method is recommended over filtering client-side with the CLI's `--query` parameter. To learn about OData filters, see [OData expression syntax for filters](/rest/api/searchservice/odata-expression-syntax-for-azure-search).
 
 The information returned for service principal objects is verbose. To get only the information necessary for sign-in, use the query string
-`[].{id:appId, tenant:appOwnerOrganizationId}`. For example, to get the sign-in information for all service principals created by the currently logged in user:
+`[].{id:appId, tenant:appOwnerOrganizationId}`. Here is an example that gets the sign-in information for all service principals created by the currently logged in user:
 
 ```azurecli-interactive
 az ad sp list --show-mine --query "[].{SPname:displayName, SPid:appId, tenant:appOwnerOrganizationId}" --output table
@@ -49,7 +49,7 @@ az ad sp list --spn https://spURL.com
 
 > [!IMPORTANT]
 >
-> The user and tenant can both be retrieved with [`az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show), but authentication secrets _or_ the authentication method is not available. Secrets for certificates in Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default. If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+> The user and tenant can both be retrieved with [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and [az ad sp show](/cli/azure/ad/sp#az-ad-sp-show), but authentication secrets _or_ the authentication method is not available. Secrets for certificates in Azure Key Vault can be retrieved with [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show), but no other secrets are stored by default. If you forget an authentication method or secret, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
 ## Service principal properties
 

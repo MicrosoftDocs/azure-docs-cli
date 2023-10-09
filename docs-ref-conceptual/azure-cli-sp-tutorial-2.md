@@ -23,7 +23,6 @@ This step in the tutorial explains how to use a service principal password to ac
 The default behavior of [az ad sp create-for-rbac](/cli/azure/ad/sp#az_ad_sp_create_for_rbac) is to create a service principal with a random password.
 
 ```azurecli-interactive
-# Create a service principal for a resource group using a preferred name and role
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role reader \
                          --scopes /subscriptions/mySubscriptionId/resourceGroups/myResourceGroupName
