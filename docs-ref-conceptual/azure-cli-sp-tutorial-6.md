@@ -4,7 +4,8 @@ description: Learn how to create a resource using a service principal and the Az
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/29/2023ms.date: 10/10/2023ms.topic: conceptual
+ms.date: 10/10/2023
+ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli
