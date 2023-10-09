@@ -81,7 +81,7 @@ az ad sp create-for-rbac --name myServicePrincipalName --role reader --scopes /s
 
 The `--scopes` parameter accepts a space-delimited list of scopes.  In this example, a new service principal named **myServicePrincipalName2** is created with **contributor** permissions to all resources in resource group **myRG1**.  This service principal is also given **contributor** permissions to **myVM** located in **myRG2**.
 
-# [Azure CLI](#tab/azure-cli)
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 # Bash script
@@ -92,7 +92,7 @@ az ad sp create-for-rbac --name myServicePrincipalName2 \
 
 # [PowerShell](#tab/powershell)
 
-```powershell
+```azurecli
 # PowerShell script
 az ad sp create-for-rbac --name myServicePrincipalName2 --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
 ```
@@ -103,7 +103,7 @@ az ad sp create-for-rbac --name myServicePrincipalName2 --role contributor --sco
 
 You can also create a service principal using variables:
 
-# [Azure CLI](#tab/azure-cli)
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 # Bash script
@@ -123,7 +123,7 @@ az ad sp create-for-rbac --name $servicePrincipalName \
 
 # [PowerShell](#tab/powershell)
 
-```powershell
+```azurecli
 # PowerShell script
 $randomIdentifier = (New-Guid).ToString().Substring(0,8)
 $servicePrincipalName="msdocs-sp-$randomIdentifier"
