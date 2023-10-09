@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli create vm, virtual machine in azure cli, shell variables
 ---
 
-# 1 - Overview and Prerequisites
+# Overview and Prerequisites
 
 In this tutorial, you learn how to create a virtual network (VNet) and deploy a virtual machine (VM) to the VNet with the Azure CLI. This tutorial
 also covers Azure CLI specific concepts such as shell variables and output queries.

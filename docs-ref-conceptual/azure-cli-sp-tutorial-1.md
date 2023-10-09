@@ -1,17 +1,17 @@
 ---
-title: Work with Azure service principals – Azure CLI | Microsoft Docs
-description: Learn how to create and use service principals with the Azure CLI. Use service principals to gain control over which Azure resources can be accessed.
+title: Create Azure service principals using the Azure CLI | Microsoft Docs
+description: Learn how to create and use service principals to control access to Azure resources using the Azure CLI.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/29/2023
+ms.date: 10/10/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
-# Work with Azure service principals using the Azure CLI
+# Create an Azure service principal with Azure CLI
 
 Automated tools that use Azure services should always have restricted permissions to ensure that Azure resources are secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals. An Azure service principal is an identity created for use with applications, hosted services, and automated tools. This identity is used to access resources.
 
@@ -59,19 +59,58 @@ When you create a service principal without parameters, also complete these step
 
 ## Create a service principal with role and scope
 
-As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. In this example, a new service principal named **spForMyApp** was created with **reader** permissions to all resources in **myRG1**. In resource group **myRG2**, the service principal only has **reader** permissions on **myVM**. Notice the space-delimited list of scopes.
+As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. In this example, a new service principal named **myServicePrincipalName** is created with **reader** permissions to all resources in subscriptoin ID **00000000-0000-0000-0000-000000000000**.
+
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
+# Bash script
 az ad sp create-for-rbac --name myServicePrincipalName \
                          --role reader \
+                         --scopes /subscriptions/00000000-0000-0000-0000-000000000000
+```
+
+# [PowerShell](#tab/powershell)
+
+When working in a PowerShell environment, remove Bash line continuation characters.
+
+```powershell
+# PowerShell script
+az ad sp create-for-rbac --name myServicePrincipalName --role reader --scopes /subscriptions/00000000-0000-0000-0000-000000000000
+```
+
+---
+
+The `--scopes` parameter accepts a space-delimited list of scopes. In this example, a new service principal named **myServicePrincipalName2** is created with **contributor** permissions to all resources in resource group **myRG1**.  This service principal is also given **contributor** permissions to **myVM** located in **myRG2**.
+
+# [Bash](#tab/bash)
+
+```azurecli-interactive
+# Bash script
+az ad sp create-for-rbac --name myServicePrincipalName2 \
+                         --role contributor \
                          --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
 ```
+
+# [PowerShell](#tab/powershell)
+
+When working in a PowerShell environment, remove Bash line continuation characters.
+
+```azurecli
+# PowerShell script
+az ad sp create-for-rbac --name myServicePrincipalName2 --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
+```
+
+---
 
 ## Create a service principal using variables
 
 You can also create a service principal using variables:
 
+# [Bash](#tab/bash)
+
 ```azurecli-interactive
+# Bash script
 let "randomIdentifier=$RANDOM*$RANDOM"
 servicePrincipalName="msdocs-sp-$randomIdentifier"
 roleName="azureRoleName"
@@ -85,6 +124,22 @@ az ad sp create-for-rbac --name $servicePrincipalName \
                          --role $roleName \
                          --scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli
+# PowerShell script
+$randomIdentifier = (New-Guid).ToString().Substring(0,8)
+$servicePrincipalName="msdocs-sp-$randomIdentifier"
+$roleName="azureRoleName"
+$subscriptionID=$(az account show --query id --output tsv)
+$resourceGroup="myResourceGroupName"
+echo "Creating SP for RBAC with name $servicePrincipalName, with role $roleName and in scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup"
+
+az ad sp create-for-rbac --name $servicePrincipalName --role $roleName --scopes /subscriptions/$subscriptionID/resourceGroups/$resourceGroup
+```
+
+---
 
 For a complete list of service principal properties, use [az ad sp list](/cli/azure/ad/sp#az-ad-sp-list) and see [Get an existing service principal](./azure-cli-sp-tutorial-4.md).
 
