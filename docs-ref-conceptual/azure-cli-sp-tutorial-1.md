@@ -61,7 +61,7 @@ When you create a service principal without parameters, also complete these step
 
 As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. In this example, a new service principal named **myServicePrincipalName** is created with **reader** permissions to all resources in subscriptoin ID **00000000-0000-0000-0000-000000000000**.
 
-# [Azure CLI](#tab/azure-cli)
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 # Bash script
@@ -71,6 +71,8 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 ```
 
 # [PowerShell](#tab/powershell)
+
+When working in a PowerShell environment, remove Bash line continuation characters.
 
 ```powershell
 # PowerShell script
@@ -91,6 +93,8 @@ az ad sp create-for-rbac --name myServicePrincipalName2 \
 ```
 
 # [PowerShell](#tab/powershell)
+
+When working in a PowerShell environment, remove Bash line continuation characters.
 
 ```azurecli
 # PowerShell script
