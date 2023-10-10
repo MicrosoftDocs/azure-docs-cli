@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/07/2023
+ms.date: 10/10/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -111,7 +111,7 @@ You will be prompted to install an extension on first use.
 |[healthbot](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot/HISTORY.rst) |
 |[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.15.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 2.3.0 | Microsoft Azure Command-Line Tools StorageCache Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache/HISTORY.rst) |
-|[hybridaks](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.2.2](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) |
+|[hybridaks](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.2.3](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) |
 |[image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy) | 2.0.24 | Support for copying managed vm images between regions | GA | [0.2.13](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy/HISTORY.rst) |
 |[image-gallery](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery) | 2.3.0 | Support for Azure Image Gallery | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery/HISTORY.rst) |
 |[import-export](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions) |
