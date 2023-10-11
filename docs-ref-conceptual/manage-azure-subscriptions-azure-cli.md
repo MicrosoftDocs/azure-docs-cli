@@ -48,7 +48,7 @@ To switch tenants, you have two options.
 
     ```azurecli-interactive
     # sign in as a different user
-    az login --user <myAlias@myCompany.com> -password <myPassword>
+    az login --user <myAlias@myCompany.com> --password <myPassword>
     
     # sign in with a different tenant
     az login --tenant <myTenantID>
