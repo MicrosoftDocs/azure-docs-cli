@@ -30,11 +30,8 @@ Reference type and status information is now available in Azure CLI reference co
 You see this information in three places:
 
 - **New "type" and "status" columns in reference list tables.**
-
-  |Name|Description|Type|Status|
-  |-|-|-|-|
-  |Command name 1| Command description 1 | Core | GA
-  |Command name 2| Command description 2 | Extension | Preview
+  
+  ![status table](./media/status-table.png)  
 
   For a live example, see the [reference index](/cli/azure/reference-index) or drill down to [az account](/cli/azure/account).
 
@@ -46,7 +43,7 @@ You see this information in three places:
 
 - **New status indicator for deprecated parameters.** Only deprecated parameters show a status.
 
-For more information see [Azure CLI terminology and support levels](./reference-types-and-status.md#what-is-reference-status).
+For more information on Azure CLI statuses, see [Azure CLI terminology and support levels](./reference-types-and-status.md#what-is-reference-status).
 
 ## 64-bit Windows install
 
