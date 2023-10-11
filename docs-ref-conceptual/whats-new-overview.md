@@ -31,17 +31,17 @@ You see this information in three places:
 
 - **New "type" and "status" columns in reference list tables.**
   
-  ![status table](./media/status-table.png)  
+  ![status table](./media/status-table.png)
 
   For a live example, see the [reference index](/cli/azure/reference-index) or drill down to [az account](/cli/azure/account).
 
 - **New status indicators under command names.**
 
-  ![status badges](./media/status-badges.png)  
+  ![status badges](./media/status-badges.png)
 
   If there is no status indicator, the command group or reference command is GA (Generally Available). For a live example, see [az account subscription](/cli/azure/account/subscription).
 
-- **New status indicator for deprecated parameters.** Only deprecated parameters show a status.
+- **New status indicator for parameters.** Only deprecated parameters show a status. All other paremters inherit the status of the reference command.
 
 For more information on Azure CLI statuses, see [Azure CLI terminology and support levels](./reference-types-and-status.md#what-is-reference-status).
 
