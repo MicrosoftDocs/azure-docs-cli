@@ -19,11 +19,18 @@ directCommands:
   syntax: >-
     az sql server-arc backups-policy set --name
                                          --resource-group
-                                         --retention-days
+                                         [--default-policy]
+                                         [--diff-backup-hours]
+                                         [--full-backup-days]
+                                         [--retention-days]
+                                         [--tlog-backup-mins]
   examples:
   - summary: |-
-      Ex 1 - Enabling a Backups policy
-    syntax: az sql server-arc backups-policy set -n MyServerName -g myResourceGroup --retention-days 7
+      Ex 1 - Enabling a backups policy with a custom backups policy
+    syntax: az sql server-arc backups-policy set --name MyServerName --resource-group myResourceGroup --retention-days 7 --full-backup-days 7 --diff-backup-hours 12 --tlog-backup-mins 5
+  - summary: |-
+      Ex 2 - Enabling a backups policy with the default backups policy
+    syntax: az sql server-arc backups-policy set --name MyServerName --resource-group myResourceGroup --default-policy
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -33,10 +40,23 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of the resource group where the Arc enabled SQL Server is projected to.
-  - isRequired: true
-    name: --retention-days
+  optionalParameters:
+  - name: --default-policy
+    defaultValue: "False"
+    summary: |-
+      Set the default policy of weekly retention period, weekly full, daily differential, and 5 min transaction log backups.
+  - name: --diff-backup-hours
+    summary: |-
+      Interval, in hours, at which differential backups should be performed. Valid values – 12 or 24.
+  - name: --full-backup-days
+    summary: |-
+      Interval, in days, at which a new full backup should be performed. Valid values – 0-7.
+  - name: --retention-days
     summary: |-
       Number of days to keep the backups for. Valid values 0-35.
+  - name: --tlog-backup-mins
+    summary: |-
+      Interval, in minutes, at which transactional backups should be performed. Valid values – 0 to 60.
 - uid: az_sql_server-arc_backups-policy_show(arcdata)
   name: az sql server-arc backups-policy show
   summary: |-
