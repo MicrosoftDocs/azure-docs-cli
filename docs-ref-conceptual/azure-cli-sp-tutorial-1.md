@@ -59,7 +59,29 @@ When you create a service principal without parameters, also complete these step
 
 ## Create a service principal with role and scope
 
-As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. In this example, a new service principal named **myServicePrincipalName** is created with **reader** permissions to all resources in subscriptoin ID **00000000-0000-0000-0000-000000000000**.
+As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal.
+
+### 1 - Determine the correct role
+
+When determining role, always be guided by the principle of least privilege. Don't give your service principal `contributor` permissions to a subscription if the service principal only needs to access Azure storage within a resource group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor). For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
+
+### 2 - Get a value for the scopes parameter
+
+Find and copy the **Resource ID** of the Azure resource that will be using your new service principal. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
+
+| Scope | Example |
+|-|-|
+| Subscription | `/subscriptions/mySubscriptionID`
+| Resource group | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName`
+| Virtual machine | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.Compute/virtualMachines/myVMname`
+| Storage account file service | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default`
+| Data factory | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.DataFactory/factories/myDataFactoryName`
+
+For more scope examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
+
+### 3 - Create the service principal
+
+In this example, a new service principal named **myServicePrincipalName** is created with **reader** permissions to all resources in subscriptoin ID **00000000-0000-0000-0000-000000000000**.
 
 # [Bash](#tab/bash)
 

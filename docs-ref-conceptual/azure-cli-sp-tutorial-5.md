@@ -24,7 +24,7 @@ The Azure CLI has the following commands to manage role assignments:
 
 ## Create or remove a role assignment
 
-The **Contributor** role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive, with read-only access. For more information on Role-Based Access Control (RBAC) and roles, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
+The **Contributor** role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive with read-only access. Always be guided by the principle of least privilege. For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
 
 Adding a role _doesn't_ restrict previously assigned permissions. This example adds the **Reader** role and removes the **Contributor** role:
 
@@ -62,9 +62,7 @@ Output Console:
 
 ## Get a value for the scope parameter
 
-One question you may have is "How do I know the `--scope` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Always be guided by the principle of least privilege. Don't give your service principal `contributor` permissions to an entire resource group if the service principal only needs to access the Azure storage within the group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor).
-
-Here are common `--scope` examples, but _rely on your **Resource ID** for an actual format and value_.
+One question you may have is "How do I know the `--scope` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scope` examples, but _rely on your **Resource ID** for an actual format and value_.
 
 | Scope | Example |
 |-|-|
@@ -74,7 +72,7 @@ Here are common `--scope` examples, but _rely on your **Resource ID** for an act
 | Storage account file service | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default`
 | Data factory | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.DataFactory/factories/myDataFactoryName`
 
-For more information and examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
+For more scope examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
 
 ## Verify changes
 

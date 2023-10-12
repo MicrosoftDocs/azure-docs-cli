@@ -18,26 +18,6 @@ keywords: azure service principal, create service principal azure, create servic
 
 This step in the tutorial explains how to use a service principal certificate to access an Azure resource.
 
-## Get a value for the scopes parameter
-
-Find and copy the **Resource ID** of the Azure resource that will be using your new service principal. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource.
-
-Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
-
-| Scope | Example |
-|-|-|
-| Subscription | `/subscriptions/mySubscriptionID`
-| Resource group | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName`
-| Virtual machine | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.Compute/virtualMachines/myVMname`
-| Storage account file service | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default`
-| Data factory | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.DataFactory/factories/myDataFactoryName`
-
-For more information and examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
-
-## Determine the correct role
-
-When determining role, always be guided by the principle of least privilege. Don't give your service principal `contributor` permissions to a suscription if the service principal only needs to access Azure storage within a resource group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor). For a complete list of available roles for Azure RBAC, see [Understand Azure role assignments](/azure/role-based-access-control/role-assignments).
-
 ## Create a service principal containing a new certificate
 
 To create a _self-signed_ certificate for authentication, use the `--create-cert` parameter:
@@ -61,10 +41,9 @@ Console output:
 }
 ```
 
-Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored.
-Copy the certificate to a secure location. If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
+Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored. Copy the certificate to a secure location. If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
-The contents of a PEM file can be viewed with a text editor, but don't modify it manually. The contents of the PEM file look like this:
+The contents of a PEM file can be viewed with a text editor, but don't modify it manually. Here is a PEM file example:
 
 ![Screenshot of PEM file](~/docs-ref-conceptual/media/sp-tutorial/pem-file.png)
 
