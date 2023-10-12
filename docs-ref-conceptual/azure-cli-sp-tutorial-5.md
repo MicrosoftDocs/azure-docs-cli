@@ -60,16 +60,19 @@ Output Console:
 }
 ```
 
-## Find a Resource ID for scopes parameter
+## Get a value for the scopes parameter
 
-One question you may have is "How do I know the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Always be guided by the principle of least privilege. Don't give your service principal `reader` permissions to an entire resource group if the service principal only needs to access the Azure virtual machine within the group. Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
+One question you may have is "How do I know the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Always be guided by the principle of least privilege. Don't give your service principal `contributor` permissions to an entire resource group if the service principal only needs to access the Azure storage within the group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor).
+
+Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
 
 | Azure resource | Example scopes |
 |-|-|
 | Subscription | /subscriptions/00000000-0000-0000-0000-000000000000
 | Resource group | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupName
 | Virtual machine | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupName/providers/Microsoft.Compute/virtualMachines/myVMname
-| File service of a storage account | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupname/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default
+| Storage account file service | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupname/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default
+| Data factory | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupname/providers/Microsoft.DataFactory/factories/myDataFactoryName
 
 For more information and examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
 
