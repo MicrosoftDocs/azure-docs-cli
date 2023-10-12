@@ -62,7 +62,7 @@ Output Console:
 
 ## Find a Resource ID for scopes parameter
 
-One question you may have is "How do I know the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. _Always be guided by the "principle of least privilege"._ Don't give your service principal `reader` permissions to an entire resource group if the service principal only needs to access the Azure virtual machine within the group. Here are some common `--scopes` examples, but rely on your actual **Resource ID** for an actual format and value.
+One question you may have is "How do I know the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Always be guided by the principle of least privilege. Don't give your service principal `reader` permissions to an entire resource group if the service principal only needs to access the Azure virtual machine within the group. Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
 
 | Azure resource | Example scopes |
 |-|-|
