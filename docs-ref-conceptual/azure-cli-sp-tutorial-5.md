@@ -62,7 +62,16 @@ Output Console:
 
 ## Find a Resource ID for scopes parameter
 
-One question you may have is "How do I figure out the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. For more information, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
+One question you may have is "How do I know the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. _Always be guided by the "principle of least privilege"._ Don't give your service principal `reader` permissions to an entire resource group if the service principal only needs to access the Azure virtual machine within the group. Here are some common `--scopes` examples, but rely on your actual **Resource ID** for an actual format and value.
+
+| Azure resource | Example scopes |
+|-|-|
+| Subscription | /subscriptions/00000000-0000-0000-0000-000000000000
+| Resource group | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupName
+| Virtual machine | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupName/providers/Microsoft.Compute/virtualMachines/myVMname
+| File service of a storage account | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupname/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default
+
+For more information and examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
 
 ## Verify changes
 
