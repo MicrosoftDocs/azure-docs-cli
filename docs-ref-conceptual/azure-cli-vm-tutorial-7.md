@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: more information about azure cli and vm, virtual machine in azure cli
 ---
 
-# 7 - Summary
+# Summary
 
 Congratulations! You learned how to create a VM that's connected to a VNet, used the `--query` and `--output` arguments
 to capture data to be stored in shell variables, and looked at some of the resources that get created for Azure VMs.

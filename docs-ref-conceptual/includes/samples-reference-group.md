@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/05/2023
+ms.date: 10/05/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -39,7 +39,7 @@ ms.custom: devx-track-azurecli
 | |  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) |
 | |  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) |
 | |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
-| |  | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| |  | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | |  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
 | |  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain) |
 | |  | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) |
@@ -47,44 +47,44 @@ ms.custom: devx-track-azurecli
 | |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
 | |  | [Scale an App Service app manually using Azure CLI](/azure/app-service/scripts/cli-scale-manual) |
 | |  | [Scale an App Service app worldwide with a high-availability architecture using Azure CLI](/azure/app-service/scripts/cli-scale-high-availability) |
-| | [az appservice plan show](/cli/azure/appservice/plan#az-appservice-plan-show) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| | [az appservice plan show](/cli/azure/appservice/plan#az-appservice-plan-show) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | | [az appservice plan update](/cli/azure/appservice/plan#az-appservice-plan-update) | [Scale an App Service app manually using Azure CLI](/azure/app-service/scripts/cli-scale-manual) |
-| **az batch**| [az batch account create](/cli/azure/batch/account#az-batch-account-create) | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-| |  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-| |  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
-| |  | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| | [az batch account keys list](/cli/azure/batch/account/keys#az-batch-account-keys-list) | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-| | [az batch account login](/cli/azure/batch/account#az-batch-account-login) | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-| |  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-| |  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
-| |  | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| | [az batch account set](/cli/azure/batch/account#az-batch-account-set) | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-| | [az batch account show](/cli/azure/batch/account#az-batch-account-show) | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-| | [az batch application create](/cli/azure/batch/application#az-batch-application-create) | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-| | [az batch application package create](/cli/azure/batch/application/package#az-batch-application-package-create) | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-| | [az batch application set](/cli/azure/batch/application#az-batch-application-set) | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-| | [az batch job create](/cli/azure/batch/job#az-batch-job-create) | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| | [az batch job set](/cli/azure/batch/job#az-batch-job-set) | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| | [az batch job show](/cli/azure/batch/job#az-batch-job-show) | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| | [az batch node delete](/cli/azure/batch/node#az-batch-node-delete) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| | [az batch node list](/cli/azure/batch/node#az-batch-node-list) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| | [az batch node reboot](/cli/azure/batch/node#az-batch-node-reboot) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| | [az batch pool autoscale disable](/cli/azure/batch/pool/autoscale#az-batch-pool-autoscale-disable) | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| | [az batch pool autoscale enable](/cli/azure/batch/pool/autoscale#az-batch-pool-autoscale-enable) | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| | [az batch pool create](/cli/azure/batch/pool#az-batch-pool-create) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| | [az batch pool resize](/cli/azure/batch/pool#az-batch-pool-resize) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| | [az batch pool set](/cli/azure/batch/pool#az-batch-pool-set) | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| | [az batch pool show](/cli/azure/batch/pool#az-batch-pool-show) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| | [az batch pool supported-images list](/cli/azure/batch/pool/supported-images#az-batch-pool-supported-images-list) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-| | [az batch task create](/cli/azure/batch/task#az-batch-task-create) | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| | [az batch task show](/cli/azure/batch/task#az-batch-task-show) | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| **az batch**| [az batch account create](/cli/azure/batch/account#az-batch-account-create) | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+| |  | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+| |  | [Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
+| |  | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| |  | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| |  | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| | [az batch account keys list](/cli/azure/batch/account/keys#az-batch-account-keys-list) | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+| | [az batch account login](/cli/azure/batch/account#az-batch-account-login) | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+| |  | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+| |  | [Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
+| |  | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| |  | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| |  | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| | [az batch account set](/cli/azure/batch/account#az-batch-account-set) | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+| | [az batch account show](/cli/azure/batch/account#az-batch-account-show) | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+| | [az batch application create](/cli/azure/batch/application#az-batch-application-create) | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+| | [az batch application package create](/cli/azure/batch/application/package#az-batch-application-package-create) | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+| | [az batch application set](/cli/azure/batch/application#az-batch-application-set) | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+| | [az batch job create](/cli/azure/batch/job#az-batch-job-create) | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| | [az batch job set](/cli/azure/batch/job#az-batch-job-set) | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| | [az batch job show](/cli/azure/batch/job#az-batch-job-show) | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| | [az batch node delete](/cli/azure/batch/node#az-batch-node-delete) | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| | [az batch node list](/cli/azure/batch/node#az-batch-node-list) | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| | [az batch node reboot](/cli/azure/batch/node#az-batch-node-reboot) | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| | [az batch pool autoscale disable](/cli/azure/batch/pool/autoscale#az-batch-pool-autoscale-disable) | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| | [az batch pool autoscale enable](/cli/azure/batch/pool/autoscale#az-batch-pool-autoscale-enable) | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| | [az batch pool create](/cli/azure/batch/pool#az-batch-pool-create) | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| |  | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| |  | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| | [az batch pool resize](/cli/azure/batch/pool#az-batch-pool-resize) | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| | [az batch pool set](/cli/azure/batch/pool#az-batch-pool-set) | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| | [az batch pool show](/cli/azure/batch/pool#az-batch-pool-show) | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| |  | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| | [az batch pool supported-images list](/cli/azure/batch/pool/supported-images#az-batch-pool-supported-images-list) | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+| | [az batch task create](/cli/azure/batch/task#az-batch-task-create) | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| | [az batch task show](/cli/azure/batch/task#az-batch-task-show) | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | **az cdn**| [az cdn custom-domain create](/cli/azure/cdn/custom-domain#az-cdn-custom-domain-create) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
 | | [az cdn custom-domain enable-https](/cli/azure/cdn/custom-domain#az-cdn-custom-domain-enable-https) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
 | | [az cdn endpoint create](/cli/azure/cdn/endpoint#az-cdn-endpoint-create) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
@@ -134,6 +134,7 @@ ms.custom: devx-track-azurecli
 | |  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](/azure/cosmos-db/scripts/cli/table/autoscale) |
 | |  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](/azure/cosmos-db/scripts/cli/table/serverless) |
 | |  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
+| | [az cosmosdb database create](/cli/azure/cosmosdb/database#az-cosmosdb-database-create) | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create) |
 | | [az cosmosdb failover-priority-change](/cli/azure/cosmosdb#az-cosmosdb-failover-priority-change) | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
 | | [az cosmosdb gremlin database create](/cli/azure/cosmosdb/gremlin/database#az-cosmosdb-gremlin-database-create) | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) |
 | |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
@@ -238,17 +239,27 @@ ms.custom: devx-track-azurecli
 | | [az functionapp deployment source update-token](/cli/azure/functionapp/deployment/source#az-functionapp-deployment-source-update-token) | [Create a function app in Azure that is deployed from GitHub](/azure/azure-functions/scripts/functions-cli-create-function-app-github-continuous) |
 | | [az functionapp plan create](/cli/azure/functionapp/plan#az-functionapp-plan-create) | [Create a function app in a Premium plan - Azure CLI](/azure/azure-functions/scripts/functions-cli-create-premium-plan) |
 | |  | [Create a Function App in an App Service plan](/azure/azure-functions/scripts/functions-cli-create-app-service-plan) |
+| **az graph**| [az graph query](/cli/azure/graph#az-graph-query) | [Advanced Resource Graph query samples](/azure/governance/resource-graph/samples/advanced) |
+| |  | [Azure Resource Graph sample queries by category](/azure/governance/resource-graph/samples/samples-by-category) |
+| |  | [Azure Resource Graph sample queries by table](/azure/governance/resource-graph/samples/samples-by-table) |
+| |  | [Azure Resource Graph sample queries for Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/resource-graph-samples) |
+| |  | [Azure Resource Graph sample queries for Azure Policy](/azure/governance/policy/samples/resource-graph-samples) |
+| |  | [Azure Resource Graph sample queries for Azure Service Health](/azure/service-health/resource-graph-samples) |
+| |  | [Azure Resource Graph sample queries for Azure Virtual Machines](/azure/virtual-machines/resource-graph-samples) |
+| |  | [Azure Resource Graph sample queries for management groups](/azure/governance/management-groups/resource-graph-samples) |
+| |  | [Azure Resource Graph sample queries for Microsoft Defender for Cloud](/azure/defender-for-cloud/resource-graph-samples) |
+| |  | [Starter Resource Graph query samples](/azure/governance/resource-graph/samples/starter) |
 | **az hdinsight**| [az hdinsight application create](/cli/azure/hdinsight/application#az-hdinsight-application-create) | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | | [az hdinsight create](/cli/azure/hdinsight#az-hdinsight-create) | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | | [az hdinsight script-action execute](/cli/azure/hdinsight/script-action#az-hdinsight-script-action-execute) | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | **az iot**| [az iot hub device-identity connection-string show](/cli/azure/iot/hub/device-identity/connection-string#az-iot-hub-device-identity-connection-string-show) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | **az keyvault**| [az keyvault certificate import](/cli/azure/keyvault/certificate#az-keyvault-certificate-import) | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
 | | [az keyvault create](/cli/azure/keyvault#az-keyvault-create) | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
-| |  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
+| |  | [Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
 | | [az keyvault key create](/cli/azure/keyvault/key#az-keyvault-key-create) | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
 | | [az keyvault key show](/cli/azure/keyvault/key#az-keyvault-key-show) | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
 | | [az keyvault set-policy](/cli/azure/keyvault#az-keyvault-set-policy) | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
-| |  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
+| |  | [Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
 | **az lab**| [az lab vm create](/cli/azure/lab/vm#az-lab-vm-create) | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
 | | [az lab vm delete](/cli/azure/lab/vm#az-lab-vm-delete) | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
 | | [az lab vm show](/cli/azure/lab/vm#az-lab-vm-show) | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
@@ -294,7 +305,7 @@ ms.custom: devx-track-azurecli
 | | [az mariadb server-logs download](/cli/azure/mariadb/server-logs#az-mariadb-server-logs-download) | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
 | | [az mariadb server-logs list](/cli/azure/mariadb/server-logs#az-mariadb-server-logs-list) | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
 | **az ml**| [az ml workspace create](/cli/azure/ml/workspace#az-ml-workspace-create) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
-| **az monitor**| [az monitor action-group create](/cli/azure/monitor/action-group#az-monitor-action-group-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| **az monitor**| [az monitor action-group create](/cli/azure/monitor/action-group#az-monitor-action-group-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | | [az monitor diagnostic-settings create](/cli/azure/monitor/diagnostic-settings#az-monitor-diagnostic-settings-create) | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | | [az monitor log-analytics workspace create](/cli/azure/monitor/log-analytics/workspace#az-monitor-log-analytics-workspace-create) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
 | | [az monitor log-analytics workspace data-export create](/cli/azure/monitor/log-analytics/workspace/data-export#az-monitor-log-analytics-workspace-data-export-create) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
@@ -318,15 +329,15 @@ ms.custom: devx-track-azurecli
 | | [az monitor log-analytics workspace table delete](/cli/azure/monitor/log-analytics/workspace/table#az-monitor-log-analytics-workspace-table-delete) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
 | | [az monitor log-analytics workspace table list](/cli/azure/monitor/log-analytics/workspace/table#az-monitor-log-analytics-workspace-table-list) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
 | | [az monitor log-analytics workspace table update](/cli/azure/monitor/log-analytics/workspace/table#az-monitor-log-analytics-workspace-table-update) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
-| | [az monitor metrics alert condition create](/cli/azure/monitor/metrics/alert/condition#az-monitor-metrics-alert-condition-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| | [az monitor metrics alert create](/cli/azure/monitor/metrics/alert#az-monitor-metrics-alert-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| | [az monitor metrics alert delete](/cli/azure/monitor/metrics/alert#az-monitor-metrics-alert-delete) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
-| | [az monitor metrics alert dimension create](/cli/azure/monitor/metrics/alert/dimension#az-monitor-metrics-alert-dimension-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| | [az monitor metrics alert condition create](/cli/azure/monitor/metrics/alert/condition#az-monitor-metrics-alert-condition-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
+| | [az monitor metrics alert create](/cli/azure/monitor/metrics/alert#az-monitor-metrics-alert-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
+| | [az monitor metrics alert delete](/cli/azure/monitor/metrics/alert#az-monitor-metrics-alert-delete) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
+| | [az monitor metrics alert dimension create](/cli/azure/monitor/metrics/alert/dimension#az-monitor-metrics-alert-dimension-create) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | | [az monitor metrics list](/cli/azure/monitor/metrics#az-monitor-metrics-list) | [Monitor and scale a single PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-scale-server-up-or-down) |
 | |  | [Monitor and scale an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-scale-server) |
 | |  | [Monitor and scale an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-monitor-and-scale) |
 | |  | [Monitor and scale an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-scale-server) |
-| | [az monitor metrics list-definitions](/cli/azure/monitor/metrics#az-monitor-metrics-list-definitions) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| | [az monitor metrics list-definitions](/cli/azure/monitor/metrics#az-monitor-metrics-list-definitions) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | **az mysql**| [az mysql flexible-server connect](/cli/azure/mysql/flexible-server#az-mysql-flexible-server-connect) | [Create an Azure Database for MySQL - Flexible Server and enable public access connectivity using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-public-access) |
 | | [az mysql flexible-server create](/cli/azure/mysql/flexible-server#az-mysql-flexible-server-create) | [Configure audit logs on an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-audit-logs) |
 | |  | [Configure same-zone high availability in an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-same-zone-ha) |
@@ -507,8 +518,10 @@ ms.custom: devx-track-azurecli
 | | [az redis show](/cli/azure/redis#az-redis-show) | [Create a Premium Azure Cache for Redis with clustering](/azure/azure-cache-for-redis/scripts/create-manage-premium-cache-cluster) |
 | |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache) |
 | **az resource**| [az resource move](/cli/azure/resource#az-resource-move) | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
-| **az rest**| [az rest](/cli/azure/reference-index#az-rest) | [Import a BACPAC file into a database in SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/import-from-bacpac-cli) |
-| **az role**| [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
+| **az rest**| [az rest](/cli/azure/reference-index#az-rest) | [Express configuration Azure Command Line Interface (CLI) commands reference](/azure/defender-for-cloud/express-configuration-azure-commands) |
+| |  | [Import a BACPAC file into a database in SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/import-from-bacpac-cli) |
+| |  | [Use the Chaos Studio REST APIs to run and manage chaos experiments](/azure/chaos-studio/chaos-studio-samples-rest-api) |
+| **az role**| [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) | [Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
 | **az sf**| [az sf cluster create](/cli/azure/sf/cluster#az-sf-cluster-create) | [Create a secure Service Fabric Linux cluster via the Azure CLI](/azure/service-fabric/scripts/cli-create-cluster) |
 | **az signalr**| [az signalr create](/cli/azure/signalr#az-signalr-create) | [Create a SignalR Service](/azure/azure-signalr/scripts/signalr-cli-create-service) |
 | |  | [Create a SignalR Service with an App Service](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service) |
@@ -596,10 +609,10 @@ ms.custom: devx-track-azurecli
 | |  | [Backup an Azure SQL single database to an Azure storage container using the Azure CLI](/azure/azure-sql/database/scripts/backup-database-cli) |
 | |  | [Backup and restore a web app from a backup using CLI](/azure/app-service/scripts/cli-backup-schedule-restore) |
 | |  | [Calculate the size of a Blob storage container](/azure/storage/scripts/storage-blobs-container-calculate-size-cli) |
-| |  | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-| |  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-| |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-| |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| |  | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+| |  | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+| |  | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+| |  | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | |  | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) |
 | |  | [Create a function app for serverless code execution](/azure/azure-functions/scripts/functions-cli-create-serverless) |
 | |  | [Create a function app in a Premium plan - Azure CLI](/azure/azure-functions/scripts/functions-cli-create-premium-plan) |
@@ -652,7 +665,7 @@ ms.custom: devx-track-azurecli
 | |  | [Create a virtual machine from a snapshot with CLI](/azure/virtual-machines/scripts/create-vm-from-snapshot) |
 | |  | [Create a virtual machine using an existing managed OS disk with CLI](/azure/virtual-machines/scripts/create-vm-from-managed-os-disks) |
 | |  | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
-| |  | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| |  | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | |  | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
 | | [az vm deallocate](/cli/azure/vm#az-vm-deallocate) | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
@@ -665,7 +678,7 @@ ms.custom: devx-track-azurecli
 | | [az vm list-ip-addresses](/cli/azure/vm#az-vm-list-ip-addresses) | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
 | | [az vm open-port](/cli/azure/vm#az-vm-open-port) | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
 | | [az vm run-command invoke](/cli/azure/vm/run-command#az-vm-run-command-invoke) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
-| | [az vm show](/cli/azure/vm#az-vm-show) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/azure-cli-metrics-alert-sample) |
+| | [az vm show](/cli/azure/vm#az-vm-show) | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
 | **az vmss**| [az vmss create](/cli/azure/vmss#az-vmss-create) | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
 | |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |

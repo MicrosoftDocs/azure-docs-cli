@@ -2,32 +2,45 @@
 uid: az_fleet_updaterun
 name: az fleet updaterun
 extensionInformation: >-
-  > [!Note]
+  > [!NOTE]
 
   > This reference is part of the **fleet** extension for the Azure CLI (version 2.48.0 or higher). The extension will automatically install the first time you run an **az fleet updaterun** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
-summary: Commands to manage a fleet update run.
-description: ''
+summary: |-
+  Commands to manage a fleet update run.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
 directCommands:
-- uid: az_fleet_updaterun_create
+- uid: az_fleet_updaterun_create(fleet)
   name: az fleet updaterun create
-  summary: Creates or updates a fleet update run.
-  description: ''
+  summary: |-
+    Creates or updates a fleet update run.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
   syntax: >-
     az fleet updaterun create --fleet-name
                               --name
+                              --node-image-selection {Consistent, Latest}
                               --resource-group
-                              --upgrade-type
+                              --upgrade-type {Full, NodeImageOnly}
                               [--kubernetes-version]
                               [--no-wait]
                               [--stages]
+                              [--update-strategy-id]
   examples:
-  - summary: Create updaterun for a fleet with 'Full' upgrade type.
-    syntax: az fleet updaterun create -g MyResourceGroup -f MyFleet -n MyUpdateRun --upgrade-type Full --kubernetes-version 1.25.0
-  - summary: Create updaterun for a fleet with 'NodeImageOnly' upgrade type.
-    syntax: az fleet updaterun create -g MyResourceGroup -f MyFleet -n MyUpdateRun --upgrade-type NodeImageOnly
-  - summary: Create updaterun for a fleet with 'Full' upgrade type & stages.
+  - summary: |-
+      Create updaterun for a fleet with 'Full' upgrade type.
+    syntax: az fleet updaterun create -g MyResourceGroup -f MyFleet -n MyUpdateRun --upgrade-type Full --kubernetes-version 1.25.0 --node-image-selection Latest
+  - summary: |-
+      Create updaterun for a fleet with 'NodeImageOnly' upgrade type.
+    syntax: az fleet updaterun create -g MyResourceGroup -f MyFleet -n MyUpdateRun --upgrade-type NodeImageOnly --node-image-selection Latest
+  - summary: |-
+      Create updaterun for a fleet with 'Full' upgrade type & stages.
     syntax: >-
-      az fleet updaterun create -g MyResourceGroup -f MyFleet -n MyUpdateRun --upgrade-type Full --kubernetes-version 1.25.0 --stages ./test/stages.json
+      az fleet updaterun create -g MyResourceGroup -f MyFleet -n MyUpdateRun --upgrade-type Full --kubernetes-version 1.25.0 --node-image-selection Latest --stages ./test/stages.json
 
           A sample json to demonstrate the expected format. It takes a stages array. Each stage consists of the stage name, groups array and an optional afterStageWaitInSeconds integer.
           Within groups, each group consists of group name, given to a fleet's member(s).
@@ -67,35 +80,48 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
-    summary: Specify the fleet name.
-    description: ''
+    summary: |-
+      Specify the fleet name.
   - isRequired: true
     name: --name -n
-    summary: Specify name for the update run.
-    description: ''
+    summary: |-
+      Specify name for the update run.
+  - isRequired: true
+    name: --node-image-selection
+    parameterValueGroup: "Consistent, Latest"
+    summary: |-
+      Node Image Selection is an option that lets you choose how your clusters' nodes are upgraded.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
     name: --upgrade-type
-    summary: Specify the upgrade type of fleet members. Acceptable values are 'Full' and 'NodeImageOnly'.
-    description: ''
+    parameterValueGroup: "Full, NodeImageOnly"
+    summary: |-
+      Specify the upgrade type of fleet members. Acceptable values are 'Full' and 'NodeImageOnly'.
   optionalParameters:
   - name: --kubernetes-version
-    summary: Specify the kubernetes version to upgrade fleet member(s) to, when --upgrade-type is set to 'Full'. Acceptable format is x.x.x (eg. 1.2.3).
-    description: ''
+    summary: |-
+      Specify the kubernetes version to upgrade fleet member(s) to, when --upgrade-type is set to 'Full'. Acceptable format is x.x.x (eg. 1.2.3).
   - name: --no-wait
     defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --stages
-    summary: Path to a json file that defines stages to upgrade a fleet. See examples for further reference.
-    description: ''
-- uid: az_fleet_updaterun_delete
+    summary: |-
+      Path to a json file that defines stages to upgrade a fleet. See examples for further reference.
+  - name: --update-strategy-id
+    summary: |-
+      The ID of the update strategy to use for this update run. If not specified, the default update strategy will be used.
+- uid: az_fleet_updaterun_delete(fleet)
   name: az fleet updaterun delete
-  summary: Deletes a fleet update run.
-  description: ''
+  summary: |-
+    Deletes a fleet update run.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
   syntax: >-
     az fleet updaterun delete --fleet-name
                               --name
@@ -104,41 +130,49 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
-    summary: Specify the fleet name.
-    description: ''
+    summary: |-
+      Specify the fleet name.
   - isRequired: true
     name: --name -n
-    summary: Specify name for the update run.
-    description: ''
+    summary: |-
+      Specify name for the update run.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --no-wait
     defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-- uid: az_fleet_updaterun_list
+    summary: |-
+      Do not wait for the long-running operation to finish.
+- uid: az_fleet_updaterun_list(fleet)
   name: az fleet updaterun list
-  summary: Lists the update runs of a fleet.
-  description: ''
+  summary: |-
+    Lists the update runs of a fleet.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
   syntax: >-
     az fleet updaterun list --fleet-name
                             --resource-group
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
-    summary: Specify the fleet name.
-    description: ''
+    summary: |-
+      Specify the fleet name.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_fleet_updaterun_show
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_fleet_updaterun_show(fleet)
   name: az fleet updaterun show
-  summary: Shows a fleet update run.
-  description: ''
+  summary: |-
+    Shows a fleet update run.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
   syntax: >-
     az fleet updaterun show --fleet-name
                             --name
@@ -146,20 +180,24 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
-    summary: Specify the fleet name.
-    description: ''
+    summary: |-
+      Specify the fleet name.
   - isRequired: true
     name: --name -n
-    summary: Specify name for the update run.
-    description: ''
+    summary: |-
+      Specify name for the update run.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
-- uid: az_fleet_updaterun_start
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_fleet_updaterun_start(fleet)
   name: az fleet updaterun start
-  summary: Starts a fleet update run.
-  description: ''
+  summary: |-
+    Starts a fleet update run.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
   syntax: >-
     az fleet updaterun start --fleet-name
                              --name
@@ -168,25 +206,29 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
-    summary: Specify the fleet name.
-    description: ''
+    summary: |-
+      Specify the fleet name.
   - isRequired: true
     name: --name -n
-    summary: Specify name for the update run.
-    description: ''
+    summary: |-
+      Specify name for the update run.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --no-wait
     defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
-- uid: az_fleet_updaterun_stop
+    summary: |-
+      Do not wait for the long-running operation to finish.
+- uid: az_fleet_updaterun_stop(fleet)
   name: az fleet updaterun stop
-  summary: Stops a fleet update run.
-  description: ''
+  summary: |-
+    Stops a fleet update run.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
   syntax: >-
     az fleet updaterun stop --fleet-name
                             --name
@@ -195,44 +237,114 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
-    summary: Specify the fleet name.
-    description: ''
+    summary: |-
+      Specify the fleet name.
   - isRequired: true
     name: --name -n
-    summary: Specify name for the update run.
-    description: ''
+    summary: |-
+      Specify name for the update run.
   - isRequired: true
     name: --resource-group -g
-    summary: Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-    description: ''
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --no-wait
     defaultValue: "False"
-    summary: Do not wait for the long-running operation to finish.
-    description: ''
+    summary: |-
+      Do not wait for the long-running operation to finish.
+- uid: az_fleet_updaterun_wait(fleet)
+  name: az fleet updaterun wait
+  summary: |-
+    Wait for a fleet updateraun resource to reach a desired state.
+  description: |-
+    If an operation on fleet updateraun was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'fleet' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az fleet updaterun wait --fleet-name
+                            --resource-group
+                            --update-run-name
+                            [--created]
+                            [--custom]
+                            [--deleted]
+                            [--exists]
+                            [--interval]
+                            [--timeout]
+                            [--updated]
+  requiredParameters:
+  - isRequired: true
+    name: --fleet-name -f
+    summary: |-
+      Specify the fleet name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --update-run-name
+    summary: |-
+      The name of the UpdateRun resource. Required.
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
-- az_fleet_updaterun_create
-- az_fleet_updaterun_delete
-- az_fleet_updaterun_list
-- az_fleet_updaterun_show
-- az_fleet_updaterun_start
-- az_fleet_updaterun_stop
+- az_fleet_updaterun_create(fleet)
+- az_fleet_updaterun_delete(fleet)
+- az_fleet_updaterun_list(fleet)
+- az_fleet_updaterun_show(fleet)
+- az_fleet_updaterun_start(fleet)
+- az_fleet_updaterun_stop(fleet)
+- az_fleet_updaterun_wait(fleet)
 globalParameters:
 - name: --debug
-  summary: Increase logging verbosity to show all debug logs.
+  summary: |-
+    Increase logging verbosity to show all debug logs.
 - name: --help -h
-  summary: Show this help message and exit.
+  summary: |-
+    Show this help message and exit.
 - name: --only-show-errors
-  summary: Only show errors, suppressing warnings.
+  summary: |-
+    Only show errors, suppressing warnings.
 - name: --output -o
   defaultValue: "json"
   parameterValueGroup: "json, jsonc, table, tsv"
-  summary: Output format.
+  summary: |-
+    Output format.
 - name: --query
-  summary: JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
 - name: --subscription
-  summary: Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - name: --verbose
-  summary: Increase logging verbosity. Use --debug for full debug logs.
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
 metadata:
   description: Commands to manage a fleet update run.
