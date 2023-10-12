@@ -14,7 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Reset service principal credentials
 
-If you lose your service principal credentials, you will need to reset the credentials using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). This step details how to reset your service principal credentials.
+If you lose your service principal credentials, reset the credentials using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). This step details how to reset your service principal credentials.
 
 ```azurecli-interactive
 # reset a service principal credential with a password

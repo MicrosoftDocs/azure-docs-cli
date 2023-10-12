@@ -21,7 +21,7 @@ If given the necessary permissions, a service principal can create and manage Az
 * [az storage account create](/cli/azure/storage/account#az-storage-account-create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
 
-To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned in the console output when you [created a service principal](./azure-cli-sp-tutorial-1.md). 
+To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned in the console output when you [created a service principal](./azure-cli-sp-tutorial-1.md).
 
 1. Sign in as the service principal.
 
@@ -34,7 +34,7 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 
     Output console:
 
-    ```
+    ```output
     [
       {
         "cloudName": "AzureCloud",

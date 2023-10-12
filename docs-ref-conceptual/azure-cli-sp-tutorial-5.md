@@ -24,7 +24,7 @@ The Azure CLI has the following commands to manage role assignments:
 
 ## Create or remove a role assignment
 
-The **Contributor** role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive with read-only access. Always be guided by the principle of least privilege. For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
+The **Contributor** role has full permissions to read and write to an Azure account. The **Reader** role is more restrictive with read-only access. Always use the principle of least privilege. For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
 
 Adding a role _doesn't_ restrict previously assigned permissions. This example adds the **Reader** role and removes the **Contributor** role:
 
@@ -40,7 +40,7 @@ az role assignment delete --assignee myServicePrincipalID \
 
 Output Console:
 
-```
+```output
 {
   "condition": null,
   "conditionVersion": null,
@@ -62,7 +62,7 @@ Output Console:
 
 ## Get a value for the scope parameter
 
-One question you may have is "How do I know the `--scope` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scope` examples, but _rely on your **Resource ID** for an actual format and value_.
+One question you might have is "How do I know the `--scope` parameter value?" The answer is to find and copy the **Resource ID** of the Azure resource your service principal needs to access. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scope` examples, but _rely on your **Resource ID** for an actual format and value_.
 
 | Scope | Example |
 |-|-|
@@ -89,7 +89,7 @@ az role assignment list --assignee myUserName@contoso.com
 az role assignment list --subscription mySubscriptionID
 ```
 
-You can also go into the [Azure portal](https://ms.portal.azure.com/) and manually assign the role to the service principal from the Acess control (IAM) menu. For more examples on listing role assignments, see [List Azure role assignments using Azure CLI](/azure/role-based-access-control/role-assignments-list-cli).
+You can also go into the [Azure portal](https://ms.portal.azure.com/) and manually assign the role to the service principal from the Access control (IAM) menu. For more examples on listing role assignments, see [List Azure role assignments using Azure CLI](/azure/role-based-access-control/role-assignments-list-cli).
 
 ## Next Steps
 

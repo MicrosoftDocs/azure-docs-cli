@@ -18,6 +18,7 @@ Automated tools that use Azure services should always have restricted permission
 In this tutorial, you learn how to:
 
 > [!div class="checklist"]
+>
 > * Create a service principal
 > * Sign in using a service principal and password
 > * Sign in using a service principal and certificate
@@ -63,11 +64,11 @@ As a best practice, always assign a specific `--role` and `--scopes` when you cr
 
 ### 1 - Determine the correct role
 
-When determining role, always be guided by the principle of least privilege. Don't give your service principal `contributor` permissions to a subscription if the service principal only needs to access Azure storage within a resource group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor). For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
+When determining role, always use the principle of least privilege. Don't give your service principal `contributor` permissions to a subscription if the service principal only needs to access Azure storage within a resource group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor). For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
 
 ### 2 - Get a value for the scopes parameter
 
-Find and copy the **Resource ID** of the Azure resource that will be using your new service principal. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
+Find and copy the **Resource ID** of the Azure resource the new service principal needs to access. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
 
 | Scope | Example |
 |-|-|
@@ -81,15 +82,15 @@ For more scope examples, see [Understand scope for Azure RBAC](/azure/role-based
 
 ### 3 - Create the service principal
 
-In this example, a new service principal named **myServicePrincipalName** is created with **reader** permissions to all resources in subscriptoin ID **00000000-0000-0000-0000-000000000000**.
+In this example, a new service principal named **myServicePrincipalName1** is created with **reader** permissions to all resources in resource group **RG1**.
 
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
 # Bash script
-az ad sp create-for-rbac --name myServicePrincipalName \
+az ad sp create-for-rbac --name myServicePrincipalName1 \
                          --role reader \
-                         --scopes /subscriptions/00000000-0000-0000-0000-000000000000
+                         --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1
 ```
 
 # [PowerShell](#tab/powershell)
@@ -98,19 +99,19 @@ When working in a PowerShell environment, remove Bash line continuation characte
 
 ```powershell
 # PowerShell script
-az ad sp create-for-rbac --name myServicePrincipalName --role reader --scopes /subscriptions/00000000-0000-0000-0000-000000000000
+az ad sp create-for-rbac --name myServicePrincipalName1 --role reader --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1
 ```
 
 ---
 
-The `--scopes` parameter accepts a space-delimited list of scopes. In this example, a new service principal named **myServicePrincipalName2** is created with **contributor** permissions to all resources in resource group **myRG1**.  This service principal is also given **contributor** permissions to **myVM** located in **myRG2**.
+The `--scopes` parameter accepts a space-delimited list of scopes. In this example, a new service principal named **myServicePrincipalName2** is created with **reader** permissions to all resources in resource group **myRG1**.  This service principal is also given **reader** permissions to **myVM** located in **myRG2**.
 
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
 # Bash script
 az ad sp create-for-rbac --name myServicePrincipalName2 \
-                         --role contributor \
+                         --role reader \
                          --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
 ```
 
@@ -120,10 +121,12 @@ When working in a PowerShell environment, remove Bash line continuation characte
 
 ```azurecli
 # PowerShell script
-az ad sp create-for-rbac --name myServicePrincipalName2 --role contributor --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
+az ad sp create-for-rbac --name myServicePrincipalName2 --role reader --scopes /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG1 /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG2/providers/Microsoft.Compute/virtualMachines/myVM
 ```
 
 ---
+
+If you decide that you granted too few or too many permissions to your new service principal, alter the permissions by [managing service principal roles](azure-cli-sp-tutorial-5.md).
 
 ## Create a service principal using variables
 
