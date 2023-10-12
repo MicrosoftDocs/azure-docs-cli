@@ -43,7 +43,7 @@ The output for a service principal with password authentication includes the `pa
 
 ## Sign in using a service principal using a password
 
-Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId` (also known as "service principal ID" or "username"), `tenant`, and `password`. Here's an example:
+Test the new service principal's credentials and permissions by signing in. To sign in with a service principal, you need the `appId` (also known as "service principal ID", "username" or "assignee"), `tenant`, and `password`. Here's an example:
 
 ```azurecli-interactive
 az login --service-principal \
