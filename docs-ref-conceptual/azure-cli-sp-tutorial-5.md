@@ -62,7 +62,7 @@ Output Console:
 
 ## Find a Resource ID for scopes parameter
 
-One question you may have is "How do I figure out the `--scopes` parameter value?" The answer is to find the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. For more information, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
+One question you may have is "How do I figure out the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. For more information, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
 
 ## Verify changes
 
