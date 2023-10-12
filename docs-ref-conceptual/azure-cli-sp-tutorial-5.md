@@ -60,19 +60,19 @@ Output Console:
 }
 ```
 
-## Get a value for the scopes parameter
+## Get a value for the scope parameter
 
-One question you may have is "How do I know the `--scopes` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Always be guided by the principle of least privilege. Don't give your service principal `contributor` permissions to an entire resource group if the service principal only needs to access the Azure storage within the group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor).
+One question you may have is "How do I know the `--scope` parameter value?" The answer is to find and copy the **Resource ID** of your Azure resource. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Always be guided by the principle of least privilege. Don't give your service principal `contributor` permissions to an entire resource group if the service principal only needs to access the Azure storage within the group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor).
 
-Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
+Here are common `--scope` examples, but _rely on your **Resource ID** for an actual format and value_.
 
-| Azure resource | Example scopes |
+| Scope | Example |
 |-|-|
-| Subscription | /subscriptions/00000000-0000-0000-0000-000000000000
-| Resource group | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupName
-| Virtual machine | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupName/providers/Microsoft.Compute/virtualMachines/myVMname
-| Storage account file service | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupname/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default
-| Data factory | /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroupname/providers/Microsoft.DataFactory/factories/myDataFactoryName
+| Subscription | `/subscriptions/mySubscriptionID`
+| Resource group | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName`
+| Virtual machine | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.Compute/virtualMachines/myVMname`
+| Storage account file service | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.Storage/storageAccounts/myStorageAccountName/fileServices/default`
+| Data factory | `/subscriptions/mySubscriptionID/resourceGroups/myResourceGroupName/providers/Microsoft.DataFactory/factories/myDataFactoryName`
 
 For more information and examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
 
@@ -88,7 +88,7 @@ az role assignment list ---output table
 az role assignment list --assignee myUserName@contoso.com
 
 # list role assignments for a subscription
-az role assignment list --subscription 00000000-0000-0000-0000-000000000000
+az role assignment list --subscription mySubscriptionID
 ```
 
 You can also go into the [Azure portal](https://ms.portal.azure.com/) and manually assign the role to the service principal from the Acess control (IAM) menu. For more examples on listing role assignments, see [List Azure role assignments using Azure CLI](/azure/role-based-access-control/role-assignments-list-cli).
