@@ -4,7 +4,7 @@ description: The Azure CLI offers various output formats such as JSON and YAML. 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 06/19/2023
+ms.date: 10/16/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,7 +13,7 @@ keywords: azure cli commands
 ---
 # Output formats for Azure CLI commands
 
-The Azure CLI uses JSON as its default output format, but offers other formats.  Use the `--output` (`--out` or `-o`) parameter
+The Azure CLI uses JSON as its default output format, but offers other formats. Use the `--output` (`--out` or `-o`) parameter
 to format CLI output. The argument values and types of output are:
 
 --output | Description
@@ -70,7 +70,7 @@ The `yaml` format prints output as [YAML](http://yaml.org/), a plain-text data s
 that format. Some applications and CLI commands take YAML as configuration input, instead of JSON.
 
 ```azurecli-interactive
-az vm list --out yaml
+az vm list --output yaml
 ```
 
 The following output has some fields omitted for brevity, and identifying information replaced.
@@ -100,7 +100,7 @@ The following output has some fields omitted for brevity, and identifying inform
 The `table` format prints output as an ASCII table, making it easy to read and scan. Nested objects aren't included in table output, but can still be filtered as part of a query. Some fields aren't included in the table, so this format is best when you want a quick, human-searchable overview of data.
 
 ```azurecli-interactive
-az vm list --out table
+az vm list --output table
 ```
 
 ```output
@@ -116,7 +116,7 @@ KBDemo020    RGDEMO001        westus
 You can use the `--query` parameter to customize the properties and columns you want to show in the list output. The following example shows how to select just the VM Name and the Resource Group Name in the `list` command.
 
 ```azurecli-interactive
-az vm list --query "[].{resource:resourceGroup, name:name}" -o table
+az vm list --query "[].{resource:resourceGroup, name:name}" --output table
 ```
 
 ```output
@@ -134,7 +134,7 @@ RGDEMO001   KBDemo020
 > in your output, you can use the JMESPath re-keying feature to change the key name and avoid filtering.
 >
 > ```azurecli-interactive
-> az vm list --query "[].{objectID:id}" -o table
+> az vm list --query "[].{objectID:id}" --output table
 > ```
 
 For more about using queries to filter data, see [Use JMESPath queries with Azure CLI](./query-azure-cli.md).
@@ -146,7 +146,7 @@ The `tsv` output format returns tab- and newline-separated values without additi
 Using the preceding example with the `tsv` option outputs the tab-separated result.
 
 ```azurecli-interactive
-az vm list --out tsv
+az vm list --output tsv
 ```
 
 ```output
@@ -166,7 +166,7 @@ JSON dictionary, use the general format `[key1, key2, ..., keyN]` to force a key
 For example, to order the information displayed above by ID, location, resource group, and VM name:
 
 ```azurecli-interactive
-az vm list --out tsv --query '[].[id, location, resourceGroup, name]'
+az vm list --output tsv --query '[].[id, location, resourceGroup, name]'
 ```
 
 ```output
@@ -181,12 +181,30 @@ The next example shows how `tsv` output can be piped to other commands in bash. 
 command selects the fourth field to show the name of the VM in output.
 
 ```azurecli-interactive
-az vm list --out tsv --query '[].[id, location, resourceGroup, name]' | grep RGD | cut -f4
+az vm list --output tsv --query '[].[id, location, resourceGroup, name]' | grep RGD | cut -f4
 ```
 
 ```output
 KBDemo001VM
 KBDemo020
+```
+
+The `tsv` output format is often used when assigning values to variables. This example gets the active subscription ID and stores it into a variable for use in a script.
+
+```azurecli-interactive
+subscriptionID=$(az account show --query id --output tsv)
+echo "Using subscription ID $subscriptionID"
+```
+
+For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
+
+## None
+
+Some Azure CLI commands have output you must protect. For example, when you create a service principal with [az ad sp create-for-rbac]() the output contains a password or a certificate location. Store this information in a variable for later use within your script, and use the `--output none` option to keep this information from displaying on a monitor.
+
+```azurecli-interactive
+
+
 ```
 
 ## Set the default output format
@@ -203,7 +221,7 @@ Welcome to the Azure CLI! This command will guide you through logging in and set
 Your settings can be found at /home/defaultuser/.azure/config
 Your current configuration is as follows:
 
-  ...
+...
 
 Do you wish to change your settings? (y/N): y
 
