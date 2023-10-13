@@ -14,7 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Manage service principal roles
 
-In order to restrict access to your Azure resources, you can use a service principal to manage role assignments. Each role provides different permissions allowed by the user when accessing Azure resources.
+In order to restrict access to your Azure resources, you can use a service principal to manage role assignments. Each role provides different permissions allowed by the user when accessing Azure resources. This step in the tutorial explains how to create and remove service principal roles.
 
 The Azure CLI has the following commands to manage role assignments:
 

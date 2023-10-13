@@ -14,7 +14,9 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Use an Azure service principal with certificate-based authentication
 
- When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. We recommend using certificate-based authentication due to the security restrictions of password-based authentication. Certificate-based authentication enables you to adopt a phishing resistant authentication, by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects Azure resources. To learn more about why certificate-based authentication is more secure, see [Microsoft Entra certificate-based authentication](/azure/active-directory/authentication/concept-certificate-based-authentication).
+When creating a service principal, you choose the type of sign-in authentication it uses. There are two types of authentication available for Azure service principals: **password-based authentication** and **certificate-based authentication**. 
+
+We recommend using certificate-based authentication due to the security restrictions of password-based authentication. Certificate-based authentication enables you to adopt a phishing resistant authentication by using [conditional access policies](/azure/active-directory/conditional-access/overview), which better protects Azure resources. To learn more about why certificate-based authentication is more secure, see [Microsoft Entra certificate-based authentication](/azure/active-directory/authentication/concept-certificate-based-authentication).
 
 This step in the tutorial explains how to use a service principal certificate to access an Azure resource.
 
@@ -43,7 +45,7 @@ Console output:
 
 Unless you store the certificate in Key Vault, the output includes the `fileWithCertAndPrivateKey` key. This key's value tells you where the generated certificate is stored. Copy the certificate to a secure location. If you lose access to a certificate's private key, [reset the service principal credentials](./azure-cli-sp-tutorial-7.md).
 
-The contents of a PEM file can be viewed with a text editor, but don't modify it manually. Here's a PEM file example:
+The contents of a PEM file can be viewed with a text editor. Here's a PEM file example:
 
 ![Screenshot of PEM file](~/docs-ref-conceptual/media/sp-tutorial/pem-file.png)
 

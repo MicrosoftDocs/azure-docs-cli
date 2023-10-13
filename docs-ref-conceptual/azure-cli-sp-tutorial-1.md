@@ -60,13 +60,13 @@ When you create a service principal without parameters, also complete these step
 
 ## Create a service principal with role and scope
 
-As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal.
+As a best practice, always assign a specific `--role` and `--scopes` when you create a service principal. Follow these steps:
 
-1. Determine the correct role
+1. Determine the correct role.
 
-   When determining role, always use the principle of least privilege. Don't give your service principal `contributor` permissions to a subscription if the service principal only needs to access Azure storage within a resource group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor). For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
+   When determining role, always use the principle of least privilege. For example, don't give your service principal `contributor` permissions to a subscription if the service principal only needs to access Azure storage within a resource group. Consider a specialize role like [storage blob data contributor](/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor). For a complete list of available roles in Azure RBAC, see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
 
-1. Get a value for the scopes parameter
+1. Get a value for the scopes parameter.
 
    Find and copy the **Resource ID** of the Azure resource the new service principal needs to access. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scopes` examples, but _rely on your **Resource ID** for an actual format and value_.
 
@@ -80,7 +80,7 @@ As a best practice, always assign a specific `--role` and `--scopes` when you cr
 
    For more scope examples, see [Understand scope for Azure RBAC](/azure/role-based-access-control/scope-overview).
 
-1. Create the service principal
+1. Create the service principal.
 
    In this example, a new service principal named **myServicePrincipalName1** is created with **reader** permissions to all resources in resource group **RG1**.
 
