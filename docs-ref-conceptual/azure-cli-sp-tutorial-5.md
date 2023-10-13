@@ -60,7 +60,7 @@ Output Console:
 }
 ```
 
-## Get a value for the scope parameter
+## How to get a value for the scope parameter
 
 One question you might have is "How do I know the `--scope` parameter value?" The answer is to find and copy the **Resource ID** of the Azure resource your service principal needs to access. This information is usually found in the Azure portal's **Properties** or **Endpoints** page of each resource. Here are common `--scope` examples, but _rely on your **Resource ID** for an actual format and value_.
 
