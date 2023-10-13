@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/11/2023
+ms.date: 10/13/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[adp](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp) | 2.40.0 | Microsoft Azure Command-Line Tools Adp Extension. | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.49.0 | Provides a preview for upcoming AKS features | Preview | [0.5.162](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.49.0 | Provides a preview for upcoming AKS features | Preview | [0.5.163](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.48.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
 |[alertsmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement) | 2.45.0 | Microsoft Azure Command-Line Tools AlertsManagementClient Extension | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/alertsmanagement/HISTORY.rst) |
 |[alias](https://github.com/Azure/azure-cli-extensions) | 2.0.50.dev0 | Support for command aliases | Preview | [0.5.2](https://github.com/Azure/azure-cli-extensions) |
@@ -111,7 +111,7 @@ You will be prompted to install an extension on first use.
 |[healthbot](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot) | 2.15.0 | Microsoft Azure Command-Line Tools HealthbotClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/healthbot/HISTORY.rst) |
 |[healthcareapis](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis) | 2.15.0 | Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension | GA | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/healthcareapis/HISTORY.rst) |
 |[hpc-cache](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache) | 2.3.0 | Microsoft Azure Command-Line Tools StorageCache Extension | GA | [0.1.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/hpc-cache/HISTORY.rst) |
-|[hybridaks](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.2.3](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) |
+|[hybridaks](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.2.4](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils) |
 |[image-copy-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy) | 2.0.24 | Support for copying managed vm images between regions | GA | [0.2.13](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-copy/HISTORY.rst) |
 |[image-gallery](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery) | 2.3.0 | Support for Azure Image Gallery | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/image-gallery/HISTORY.rst) |
 |[import-export](https://github.com/Azure/azure-cli-extensions) | 2.3.1 | Microsoft Azure Command-Line Tools StorageImportExport Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions) |
@@ -120,7 +120,7 @@ You will be prompted to install an extension on first use.
 |[internet-analyzer](https://github.com/Azure/azure-cli-extensions/tree/master/src/internet-analyzer) | 2.0.67 | Microsoft Azure Command-Line Tools Internet Analyzer Extension | Preview | [0.1.0rc6](https://github.com/Azure/azure-cli-extensions/tree/master/src/internet-analyzer/HISTORY.rst) |
 |[ip-group](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools IpGroup Extension | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions) |
 |[k8s-configuration](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration) | 2.15.0 | Microsoft Azure Command-Line Tools K8s-configuration Extension | GA | [1.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration/HISTORY.rst) |
-|[k8s-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension) | 2.51.0 | Microsoft Azure Command-Line Tools K8s-extension Extension | GA | [1.4.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension/HISTORY.rst) |
+|[k8s-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension) | 2.51.0 | Microsoft Azure Command-Line Tools K8s-extension Extension | GA | [1.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension/HISTORY.rst) |
 |[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
 |[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.41.0 | Microsoft Azure Command-Line Tools Load Testing Extension. | GA | [0.3.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
