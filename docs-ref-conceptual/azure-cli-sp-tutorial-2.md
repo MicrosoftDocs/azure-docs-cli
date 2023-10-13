@@ -30,7 +30,7 @@ az ad sp create-for-rbac --name myServicePrincipalName \
 
 Output Console:
 
-```
+```output
 {
   "appId": "myServicePrincipalId",
   "displayName": "myServicePrincipalName",
