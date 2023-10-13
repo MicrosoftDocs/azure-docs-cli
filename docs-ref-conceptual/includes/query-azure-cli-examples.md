@@ -33,9 +33,11 @@ az account show --query "{tenantId:tenantId,subscriptionid:id}"
 
 ---
 
-### Query examples for Azure Active Directory service principals
+<a name='query-examples-for-azure-active-directory-service-principals'></a>
 
-This section shows example queries for Azure Active Directory (Azure AD) service principals.
+### Query examples for Microsoft Entra service principals
+
+This section shows example queries for Microsoft Entra service principals.
 
 - The following query returns the first Microsoft Graph application service principal who has read permissions.
 
