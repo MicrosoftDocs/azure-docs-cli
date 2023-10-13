@@ -14,14 +14,14 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Create a resource using a service principal
 
-If given the necessary permissions, a service principal can create and manage Azure resources just like an account. This page provides an example of how to create a resource for [Azure Storage](/azure/storage/) using a service principal and the following commands:
+If given the necessary permissions, a service principal can create and manage Azure resources just like an account. This tutorial step provides an example of how to create a resource for [Azure Storage](/azure/storage/) using a service principal and the following commands:
 
 * [az login](/cli/azure/reference-index#az-login)
 * [az group create](/cli/azure/group#az-group-create)
 * [az storage account create](/cli/azure/storage/account#az-storage-account-create)
 * [az storage account keys list](/cli/azure/storage/account/keys#az-storage-account-keys-list)
 
-To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned in the console output when you [created a service principal](./azure-cli-sp-tutorial-1.md). 
+To sign in with a service principal, you need the `appID`, `tenantID`, and `password` returned in the console output when you [created a service principal](./azure-cli-sp-tutorial-1.md).
 
 1. Sign in as the service principal.
 
@@ -34,7 +34,7 @@ To sign in with a service principal, you need the `appID`, `tenantID`, and `pass
 
     Output console:
 
-    ```
+    ```output
     [
       {
         "cloudName": "AzureCloud",
