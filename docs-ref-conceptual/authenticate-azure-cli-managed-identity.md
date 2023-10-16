@@ -18,7 +18,7 @@ On resources configured for managed identities for Azure resources, you can sign
 Here are some of the benefits of using managed identities:
 
 * You don't need to manage credentials. Credentials aren’t even accessible to you.
-* You can use managed identities to authenticate to any resource that supports Azure AD authentication, including your own applications.
+* You can use managed identities to authenticate to any resource that supports Microsoft Entra authentication, including your own applications.
 * Managed identities can be used at no extra cost.
 
 Signing in with the resource's identity is done through the `--identity` flag.

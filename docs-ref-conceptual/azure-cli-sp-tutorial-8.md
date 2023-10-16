@@ -36,7 +36,7 @@ Although you have completed the tutorial, you may still have questions regarding
 
 ### Insufficient privileges
 
-If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` returns an error message containing "Insufficient privileges to complete the operation." Contact your Azure Active Directory admin to obtain `User Access Administrator` or `Role Based Access Control Administrator` permissions.
+If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac` returns an error message containing "Insufficient privileges to complete the operation." Contact your Microsoft Entra administrator to obtain `User Access Administrator` or `Role Based Access Control Administrator` permissions.
 
 ### Invalid tenant
 
@@ -48,7 +48,7 @@ If you have specified an invalid resource group name, you see the error message 
 
 ### Authorization to perform action
 
-If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Azure Active Directory admin to manage roles.
+If your account doesn't have permission to assign a role, you see an error message that your account "does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'." Contact your Microsoft Entra administrator to manage roles.
 
 ### Interactive authentication is needed
 

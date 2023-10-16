@@ -20,7 +20,7 @@ For detailed information on subscriptions, billing, and cost management, see the
 
 ## Terminology
 
-A _tenant_ is an instance of Azure AD in which information about a single organization resides. A _[multi-tenant organization](/azure/active-directory/multi-tenant-organizations/overview)_ is an organization that has more than one instance of Azure AD. A tenant has one or more _subscriptions_ and _users_.
+A _tenant_ is an instance of Microsoft Entra ID in which information about a single organization resides. A _[multi-tenant organization](/azure/active-directory/multi-tenant-organizations/overview)_ is an organization that has more than one instance of Microsoft Entra ID. A tenant has one or more _subscriptions_ and _users_.
 
 Users are those accounts that sign in to Azure to create, manage, and use resources. A user may have access to multiple _tenants_ and _subscriptions_.
 
@@ -108,7 +108,7 @@ subscriptionId="$(az account list --query "[?name=='my case sensitive subscripti
 az account set --subscription $subscriptionId
 ```
 
-If you change to a subscription that is in a different tenant, you will also be changing the active tenant. To learn how to add a new subscription to your Azure Active Directory tenant, see [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
+If you change to a subscription that is in a different tenant, you will also be changing the active tenant. To learn how to add a new subscription to your Microsoft Entra tenant, see [Associate or add an Azure subscription to your Microsoft Entra tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 
 If you received a "The subscription of ... doesn't exist..." error, see [Troubleshooting](#troubleshooting) for possible solutions.
 
@@ -219,5 +219,5 @@ az account set --subscription 00000000-0000-0000-0000-00000000000
 
 ## See also
 
-- [Associate or add an Azure subscription to your Azure Active Directory tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory)
+- [Associate or add an Azure subscription to your Microsoft Entra tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory)
 - [Manage Azure resource groups](./manage-azure-groups-azure-cli.md)
