@@ -4,7 +4,7 @@ name: az elastic-san volume
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **elastic-san** extension for the Azure CLI (version 2.50.0 or higher). The extension will automatically install the first time you run an **az elastic-san volume** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **elastic-san** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az elastic-san volume** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Elastic SAN Volume.
 status: Preview
@@ -21,20 +21,23 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'az elastic-san volume' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume create --elastic-san-name
+    az elastic-san volume create --elastic-san
                                  --name
                                  --resource-group
                                  --size-gib
-                                 --volume-group-name
+                                 --volume-group
                                  [--creation-data]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
       Create a Volume.
-    syntax: az elastic-san volume create -g {rg} -e {san_name} -v {vg_name} -n {volume_name} --size-gib 2
+    syntax: az elastic-san volume create -g "rg" -e "san_name" -v "vg_name" -n "volume_name" --size-gib 2
+  - summary: |-
+      Create a Volume from snapshot.
+    syntax: az elastic-san volume create -g "rg" -e "san_name" -v "vg_name" -n "volume_name_2" --size-gib 2 --creation-data '{source-id:"snapshot_id",create-source:VolumeSnapshot}'
   requiredParameters:
   - isRequired: true
-    name: --elastic-san-name -e
+    name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - isRequired: true
@@ -50,7 +53,7 @@ directCommands:
     summary: |-
       Volume size.
   - isRequired: true
-    name: --volume-group-name -v
+    name: --volume-group --volume-group-name -v
     summary: |-
       The name of the VolumeGroup.
   optionalParameters:
@@ -70,20 +73,25 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'az elastic-san volume' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume delete [--elastic-san-name]
+    az elastic-san volume delete [--elastic-san]
                                  [--ids]
                                  [--name]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--resource-group]
                                  [--subscription]
-                                 [--volume-group-name]
+                                 [--volume-group]
+                                 [--x-ms-delete-snapshots {false, true}]
+                                 [--x-ms-force-delete {false, true}]
                                  [--yes]
   examples:
   - summary: |-
       Delete a Volume.
-    syntax: az elastic-san volume delete -g {rg} -e {san_name} -v {vg_name} -n {volume_name}
+    syntax: az elastic-san volume delete -g "rg" -e "san_name" -v "vg_name" -n "volume_name"
+  - summary: |-
+      Delete a volume with its snapshot
+    syntax: az elastic-san volume delete -g "rg" -e "san_name" -v "vg_name" -n "volume_name" -y --x-ms-delete-snapshots true --x-ms-force-delete true
   optionalParameters:
-  - name: --elastic-san-name -e
+  - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - name: --ids
@@ -102,9 +110,17 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --volume-group-name -v
+  - name: --volume-group --volume-group-name -v
     summary: |-
       The name of the VolumeGroup.
+  - name: --x-ms-delete-snapshots
+    parameterValueGroup: "false, true"
+    summary: |-
+      Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false.
+  - name: --x-ms-force-delete
+    parameterValueGroup: "false, true"
+    summary: |-
+      Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -118,18 +134,18 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'az elastic-san volume' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume list --elastic-san-name
+    az elastic-san volume list --elastic-san
                                --resource-group
-                               --volume-group-name
+                               --volume-group
                                [--max-items]
                                [--next-token]
   examples:
   - summary: |-
       List Volumes in a Volume Group.
-    syntax: az elastic-san volume list -g {rg} -e {san_name} -v {vg_name}
+    syntax: az elastic-san volume list -g "rg" -e "san_name" -v "vg_name"
   requiredParameters:
   - isRequired: true
-    name: --elastic-san-name -e
+    name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - isRequired: true
@@ -137,7 +153,7 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --volume-group-name -v
+    name: --volume-group --volume-group-name -v
     summary: |-
       The name of the VolumeGroup.
   optionalParameters:
@@ -156,18 +172,18 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'az elastic-san volume' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume show [--elastic-san-name]
+    az elastic-san volume show [--elastic-san]
                                [--ids]
                                [--name]
                                [--resource-group]
                                [--subscription]
-                               [--volume-group-name]
+                               [--volume-group]
   examples:
   - summary: |-
       Get a Volume.
-    syntax: az elastic-san volume show -g {rg} -e {san_name} -v {vg_name} -n {volume_name}
+    syntax: az elastic-san volume show -g "rg" -e "san_name" -v "vg_name" -n "volume_name"
   optionalParameters:
-  - name: --elastic-san-name -e
+  - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - name: --ids
@@ -182,7 +198,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --volume-group-name -v
+  - name: --volume-group --volume-group-name -v
     summary: |-
       The name of the VolumeGroup.
 - uid: az_elastic-san_volume_update(elastic-san)
@@ -196,7 +212,7 @@ directCommands:
   syntax: >-
     az elastic-san volume update [--add]
                                  [--creation-data]
-                                 [--elastic-san-name]
+                                 [--elastic-san]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
                                  [--name]
@@ -206,11 +222,11 @@ directCommands:
                                  [--set]
                                  [--size-gib]
                                  [--subscription]
-                                 [--volume-group-name]
+                                 [--volume-group]
   examples:
   - summary: |-
       Update a Volume.
-    syntax: az elastic-san volume update -g {rg} -e {san_name} -v {vg_name} -n {volume_name} --size-gib 3
+    syntax: az elastic-san volume update -g "rg" -e "san_name" -v "vg_name" -n "volume_name" --size-gib 3
   optionalParameters:
   - name: --add
     summary: |-
@@ -218,7 +234,7 @@ directCommands:
   - name: --creation-data
     summary: |-
       State of the operation on the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --elastic-san-name -e
+  - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - name: --force-string
@@ -250,7 +266,75 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --volume-group-name -v
+  - name: --volume-group --volume-group-name -v
+    summary: |-
+      The name of the VolumeGroup.
+- uid: az_elastic-san_volume_wait(elastic-san)
+  name: az elastic-san volume wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'az elastic-san volume' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az elastic-san volume wait [--created]
+                               [--custom]
+                               [--deleted]
+                               [--elastic-san]
+                               [--exists]
+                               [--ids]
+                               [--interval]
+                               [--name]
+                               [--resource-group]
+                               [--subscription]
+                               [--timeout]
+                               [--updated]
+                               [--volume-group]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --elastic-san --elastic-san-name -e
+    summary: |-
+      The name of the ElasticSan.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --volume-name -n
+    summary: |-
+      The name of the Volume.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
+  - name: --volume-group --volume-group-name -v
     summary: |-
       The name of the VolumeGroup.
 commands:
@@ -258,7 +342,14 @@ commands:
 - az_elastic-san_volume_delete(elastic-san)
 - az_elastic-san_volume_list(elastic-san)
 - az_elastic-san_volume_show(elastic-san)
+- az_elastic-san_volume_snapshot
+- az_elastic-san_volume_snapshot_create(elastic-san)
+- az_elastic-san_volume_snapshot_delete(elastic-san)
+- az_elastic-san_volume_snapshot_list(elastic-san)
+- az_elastic-san_volume_snapshot_show(elastic-san)
+- az_elastic-san_volume_snapshot_wait(elastic-san)
 - az_elastic-san_volume_update(elastic-san)
+- az_elastic-san_volume_wait(elastic-san)
 globalParameters:
 - name: --debug
   summary: |-

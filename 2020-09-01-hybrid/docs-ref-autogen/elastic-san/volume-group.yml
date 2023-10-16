@@ -4,7 +4,7 @@ name: az elastic-san volume-group
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **elastic-san** extension for the Azure CLI (version 2.50.0 or higher). The extension will automatically install the first time you run an **az elastic-san volume-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **elastic-san** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az elastic-san volume-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Elastic SAN Volume Group.
 status: Preview
@@ -18,23 +18,28 @@ directCommands:
     Create a Volume Group.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az elastic-san volume-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'az elastic-san' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume-group create --elastic-san-name
+    az elastic-san volume-group create --elastic-san
                                        --name
                                        --resource-group
-                                       [--encryption {EncryptionAtRestWithPlatformKey}]
+                                       [--encryption {EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey}]
+                                       [--encryption-properties]
+                                       [--identity]
                                        [--network-acls]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--protocol-type {Iscsi, None}]
   examples:
   - summary: |-
-      Create a Volume Group.
-    syntax: az elastic-san volume-group create -e {san_name} -n {vg_name} -g {rg} --tags "{key1910:bbbb}" --encryption EncryptionAtRestWithPlatformKey --protocol-type Iscsi --network-acls "{virtual-network-rules:["{id:{subnet_id},action:Allow}"]}"
+      Create a Volume Group with PlaformManagedkey and SystemAssignedIdentity
+    syntax: az elastic-san volume-group create -e "san_name" -n "vg_name" -g "rg" --tags '{key1910:bbbb}' --encryption EncryptionAtRestWithPlatformKey --protocol-type Iscsi --network-acls '{virtual-network-rules:[{id:"subnet_id",action:Allow}]}' --identity '{type:SystemAssigned}'
+  - summary: |-
+      Create a volume group with CustomerManagedKey and UserAssignedIdentity
+    syntax: az elastic-san volume-group create -e "san_name" -n "vg_name" -g "rg" --encryption EncryptionAtRestWithCustomerManagedKey --protocol-type Iscsi --identity '{type:UserAssigned,user-assigned-identity:"uai_id"}' --encryption-properties '{key-vault-properties:{key-name:"key_name",key-vault-uri:"vault_uri"},identity:{user-assigned-identity:"uai_id"}}'
   requiredParameters:
   - isRequired: true
-    name: --elastic-san-name -e
+    name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - isRequired: true
@@ -47,9 +52,15 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --encryption
-    parameterValueGroup: "EncryptionAtRestWithPlatformKey"
+    parameterValueGroup: "EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey"
     summary: |-
       Type of encryption.
+  - name: --encryption-properties
+    summary: |-
+      Encryption Properties describing Key Vault and Identity information  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --identity
+    summary: |-
+      The identity of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --network-acls
     summary: |-
       A collection of rules governing the accessibility from specific network locations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -67,10 +78,10 @@ directCommands:
     Delete a Volume Group.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az elastic-san volume-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'az elastic-san' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume-group delete [--elastic-san-name]
+    az elastic-san volume-group delete [--elastic-san]
                                        [--ids]
                                        [--name]
                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -80,9 +91,9 @@ directCommands:
   examples:
   - summary: |-
       Delete a Volume Group.
-    syntax: az elastic-san volume-group delete -g {rg} -e {san_name} -n {vg_name}
+    syntax: az elastic-san volume-group delete -g "rg" -e "san_name" -n "vg_name"
   optionalParameters:
-  - name: --elastic-san-name -e
+  - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - name: --ids
@@ -111,20 +122,20 @@ directCommands:
     List Volume Groups.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az elastic-san volume-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'az elastic-san' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume-group list --elastic-san-name
+    az elastic-san volume-group list --elastic-san
                                      --resource-group
                                      [--max-items]
                                      [--next-token]
   examples:
   - summary: |-
       List Volume Groups.
-    syntax: az elastic-san volume-group list -g {rg} -e {san_name}
+    syntax: az elastic-san volume-group list -g "rg" -e "san_name"
   requiredParameters:
   - isRequired: true
-    name: --elastic-san-name -e
+    name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - isRequired: true
@@ -144,10 +155,10 @@ directCommands:
     Get a Volume Group.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az elastic-san volume-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'az elastic-san' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az elastic-san volume-group show [--elastic-san-name]
+    az elastic-san volume-group show [--elastic-san]
                                      [--ids]
                                      [--name]
                                      [--resource-group]
@@ -155,9 +166,9 @@ directCommands:
   examples:
   - summary: |-
       Get a Volume Group.
-    syntax: az elastic-san volume-group show -g {rg} -e {san_name} -n {vg_name}
+    syntax: az elastic-san volume-group show -g "rg" -e "san_name" -n "vg_name"
   optionalParameters:
-  - name: --elastic-san-name -e
+  - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - name: --ids
@@ -178,13 +189,15 @@ directCommands:
     Update a Volume Group.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az elastic-san volume-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'az elastic-san' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az elastic-san volume-group update [--add]
-                                       [--elastic-san-name]
-                                       [--encryption {EncryptionAtRestWithPlatformKey}]
+                                       [--elastic-san]
+                                       [--encryption {EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey}]
+                                       [--encryption-properties]
                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--identity]
                                        [--ids]
                                        [--name]
                                        [--network-acls]
@@ -197,22 +210,40 @@ directCommands:
   examples:
   - summary: |-
       Update a Volume Group.
-    syntax: az elastic-san volume-group update -e {san_name} -n {vg_name} -g {rg} --tags "{key2011:cccc}" --protocol-type None --network-acls "{virtual-network-rules:["{id:{subnet_id_2},action:Allow}"]}"
+    syntax: az elastic-san volume-group update -e "san_name" -n "vg_name" -g "rg" --protocol-type None --network-acls '{virtual-network-rules:[{id:"subnet_id_2",action:Allow}]}'
+  - summary: |-
+      Update volume group to use CustomerManagedKey with keyvault details
+    syntax: az elastic-san volume-group update -e "san_name" -n "vg_name" -g "rg" --encryption EncryptionAtRestWithCustomerManagedKey --encryption-properties '{key-vault-properties:{key-name:"key_name",key-vault-uri:"vault_uri"}}'
+  - summary: |-
+      Update volume group to use another UserAssignedIdentity
+    syntax: az elastic-san volume-group update -e "san_name" -n "vg_name" -g "rg" --identity '{type:UserAssigned,user-assigned-identity:"uai_2_id"}' --encryption-properties '{key-vault-properties:{key-name:"key_name",key-vault-uri:"vault_uri"},identity:{user-assigned-identity:"uai_2_id"}}'
+  - summary: |-
+      Update volume group back to PlatformManagedKey
+    syntax: az elastic-san volume-group update -e "san_name" -n "vg_name" -g "rg" --encryption EncryptionAtRestWithPlatformKey
+  - summary: |-
+      Update volume group back to SystemAssignedIdentity
+    syntax: az elastic-san volume-group update -e "san_name" -n "vg_name" -g "rg" --identity '{type:SystemAssigned}'
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --elastic-san-name -e
+  - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - name: --encryption
-    parameterValueGroup: "EncryptionAtRestWithPlatformKey"
+    parameterValueGroup: "EncryptionAtRestWithCustomerManagedKey, EncryptionAtRestWithPlatformKey"
     summary: |-
       Type of encryption.
+  - name: --encryption-properties
+    summary: |-
+      Encryption Properties describing Key Vault and Identity information  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --identity
+    summary: |-
+      The identity of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -248,13 +279,13 @@ directCommands:
     Place the CLI in a waiting state until a condition is met.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az elastic-san volume-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'az elastic-san' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az elastic-san volume-group wait [--created]
                                      [--custom]
                                      [--deleted]
-                                     [--elastic-san-name]
+                                     [--elastic-san]
                                      [--exists]
                                      [--ids]
                                      [--interval]
@@ -275,7 +306,7 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Wait until deleted.
-  - name: --elastic-san-name -e
+  - name: --elastic-san --elastic-san-name -e
     summary: |-
       The name of the ElasticSan.
   - name: --exists
