@@ -4,7 +4,7 @@ description: Learn what's new in the Azure CLI
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/11/2023
+ms.date: 09/29/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
@@ -13,14 +13,37 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 ---
 # What's new in the Azure CLI
 
-This page highlights new features, articles and learning paths for the Azure CLI.  Use these quick links to jump straight to the article containing detailed information:
+This page highlights new features, articles and learning paths for the Azure CLI. Use these quick links to jump straight to the article containing detailed information:
 
+- [Reference type and status](#reference-type-and-status)
 - [64-bit install](/cli/azure/install-azure-cli-windows#latest-version)
 - [Tab completion](/cli/azure/install-azure-cli-windows#enable-tab-completion-on-powershell)
 - [WAM sign in](/cli/azure/authenticate-azure-cli#sign-in-with-web-account-manager-wam)
 - [Cheat sheet](cheat-sheet-onboarding.md)
 - [Article index](reference-docs-index.md)
 - [Sample index](samples-index.md)
+
+## Reference type and status
+
+Reference type and status information is now available in Azure CLI reference content. Why is this important? Reference command status determines the support level.
+
+You see this information in three places:
+
+- **New "type" and "status" columns in reference list tables.**
+  
+  ![status table](./media/status-table.png)
+
+  For a live example, see the [reference index](/cli/azure/reference-index) or drill down to [az account](/cli/azure/account).
+
+- **New status indicators under command names.**
+
+  ![status badges](./media/status-badges.png)
+
+  If there is no status indicator, the command group or reference command is GA (Generally Available). For a live example, see [az account subscription](/cli/azure/account/subscription).
+
+- **New status indicator for parameters.** Only deprecated parameters show a status. All other paremters inherit the status of the reference command.
+
+For more information on Azure CLI statuses, see [Azure CLI terminology and support levels](./reference-types-and-status.md#what-is-reference-status).
 
 ## 64-bit Windows install
 
