@@ -12,7 +12,7 @@ isPreview: true
 previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
 sourceType: Extension
 directCommands:
-- uid: az_fleet_create(fleet)
+- uid: az_fleet_create
   name: az fleet create
   summary: |-
     Creates or updates a Fleet.
@@ -34,6 +34,13 @@ directCommands:
                     [--location]
                     [--no-wait]
                     [--tags]
+  examples:
+  - summary: |-
+      Create a hubless fleet
+    syntax: az fleet create -g MyResourceGroup -l MyLocation -n MyFleetName --tags "TagKey=TagValue"
+  - summary: |-
+      Create a hubful fleet
+    syntax: az fleet create -g MyResourceGroup -l MyLocation -n MyFleetName --enable-hub --tags "TagKey=TagValue"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -88,8 +95,8 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --tags
     summary: |-
-      The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
-- uid: az_fleet_delete(fleet)
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+- uid: az_fleet_delete
   name: az fleet delete
   summary: |-
     Deletes a Fleet.
@@ -101,6 +108,7 @@ directCommands:
     az fleet delete --name
                     --resource-group
                     [--no-wait]
+                    [--yes]
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -115,7 +123,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
-- uid: az_fleet_get-credentials(fleet)
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_fleet_get-credentials
   name: az fleet get-credentials
   summary: |-
     Lists the user credentials of a Fleet.
@@ -150,7 +162,7 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Overwrite any existing cluster entry with the same name.
-- uid: az_fleet_list(fleet)
+- uid: az_fleet_list
   name: az fleet list
   summary: |-
     Lists fleets in the specified subscription and resource group.
@@ -163,7 +175,7 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-- uid: az_fleet_show(fleet)
+- uid: az_fleet_show
   name: az fleet show
   summary: |-
     Gets a Fleet.
@@ -183,7 +195,7 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-- uid: az_fleet_update(fleet)
+- uid: az_fleet_update
   name: az fleet update
   summary: |-
     Patches a fleet resource.
@@ -195,9 +207,19 @@ directCommands:
     az fleet update --name
                     --resource-group
                     [--assign-identity]
-                    [--enable-managed-identity]
+                    [--enable-managed-identity {false, true}]
                     [--no-wait]
                     [--tags]
+  examples:
+  - summary: |-
+      Update a Fleet's tags
+    syntax: az fleet update -g MyResourceGroup -n MyFleetName --tags Key=Value
+  - summary: |-
+      Update a Fleet to use a system assigned managed service identity.
+    syntax: az fleet update -g MyResourceGroup -n MyFleetName --enable-managed-identity --tags Key=Value
+  - summary: |-
+      Update a Fleet to use a user assigned managed service identity.
+    syntax: az fleet update -g MyResourceGroup -n MyFleetName --enable-managed-identity --assign-identity "/subscription/00000000-0000-0000-0000-000000000000/resourcegroup/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity" --tags Key=Value
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -213,7 +235,7 @@ directCommands:
       With --enable-managed-identity, enable user assigned managed identity (MSI) on the Fleet resource. Specify the existing user assigned identity resource.
     isPreview: true
   - name: --enable-managed-identity
-    defaultValue: "False"
+    parameterValueGroup: "false, true"
     summary: |-
       Enable system assigned managed identity (MSI) on the Fleet resource.
     isPreview: true
@@ -223,8 +245,8 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --tags
     summary: |-
-      The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
-- uid: az_fleet_wait(fleet)
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+- uid: az_fleet_wait
   name: az fleet wait
   summary: |-
     Wait for a fleet resource to reach a desired state.
@@ -282,34 +304,34 @@ directCommands:
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
 commands:
-- az_fleet_create(fleet)
-- az_fleet_delete(fleet)
-- az_fleet_get-credentials(fleet)
-- az_fleet_list(fleet)
+- az_fleet_create
+- az_fleet_delete
+- az_fleet_get-credentials
+- az_fleet_list
 - az_fleet_member
-- az_fleet_member_create(fleet)
-- az_fleet_member_delete(fleet)
-- az_fleet_member_list(fleet)
-- az_fleet_member_show(fleet)
-- az_fleet_member_update(fleet)
-- az_fleet_member_wait(fleet)
-- az_fleet_show(fleet)
-- az_fleet_update(fleet)
+- az_fleet_member_create
+- az_fleet_member_delete
+- az_fleet_member_list
+- az_fleet_member_show
+- az_fleet_member_update
+- az_fleet_member_wait
+- az_fleet_show
+- az_fleet_update
 - az_fleet_updaterun
-- az_fleet_updaterun_create(fleet)
-- az_fleet_updaterun_delete(fleet)
-- az_fleet_updaterun_list(fleet)
-- az_fleet_updaterun_show(fleet)
-- az_fleet_updaterun_start(fleet)
-- az_fleet_updaterun_stop(fleet)
-- az_fleet_updaterun_wait(fleet)
+- az_fleet_updaterun_create
+- az_fleet_updaterun_delete
+- az_fleet_updaterun_list
+- az_fleet_updaterun_show
+- az_fleet_updaterun_start
+- az_fleet_updaterun_stop
+- az_fleet_updaterun_wait
 - az_fleet_updatestrategy
-- az_fleet_updatestrategy_create(fleet)
-- az_fleet_updatestrategy_delete(fleet)
-- az_fleet_updatestrategy_list(fleet)
-- az_fleet_updatestrategy_show(fleet)
-- az_fleet_updatestrategy_wait(fleet)
-- az_fleet_wait(fleet)
+- az_fleet_updatestrategy_create
+- az_fleet_updatestrategy_delete
+- az_fleet_updatestrategy_list
+- az_fleet_updatestrategy_show
+- az_fleet_updatestrategy_wait
+- az_fleet_wait
 globalParameters:
 - name: --debug
   summary: |-
