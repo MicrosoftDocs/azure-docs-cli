@@ -205,10 +205,22 @@ For more `--query` parameter examples, see [How to query Azure CLI command outpu
 
 ## None output format
 
-Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `config`, `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. To avoid secrets being written to your log, use one of these options:
+Some Azure CLI commands output information you must protect. Here are four examples:
 
-- Use the `--output none` option to keep security information from displaying in your terminal _and from being written to your log_. If your command fails, you will still receive error messages. This is a good solution when your security information _can be_ retrieved at a later time.
-- Use the `--query` parameter to store output in a variable. This is a good solution when security information _cannot be_ retrieved at a later time.
+- passwords
+- connection strings
+- secrets
+- keys
+
+To avoid command output being written to your log, use one of these options:
+
+|Option|Benefit|Use case|
+|-|-|-|
+|`--output none` output format| Keeps security information from displaying in your console _and from being written to your log_. If your command fails, you will still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
+| | | 2. Use when you have no need for output.
+| | | 3. A common solution when a managed identity or a service principal is being used to manage Azure resources.
+|`--query` parameter | Stores output in a variable. Does not store command output in the log.|1. Use when command output _cannot be_ retrieved at a later time.|
+| | | 2. Use when you need to use a command output value in a script.
 
 ### Use `none` and retrieve security information at a later time
 
@@ -232,7 +244,7 @@ Reset a service principal credential returning output in the default json format
 az ad sp credential reset --id myServicePrincipalID --output json
 ```
 
-Console output showing the new password in the console, and although not immediately visible, also in the log:
+Console output showing the new password in the console, and also visible in the log:
 
 ```output
 {
@@ -242,25 +254,33 @@ Console output showing the new password in the console, and although not immedia
 }
 ```
 
-A better solution is to return security information to a variable. Use the `echo` command to show results in your terminal. This example _does not_ write the service principal password to the log.
+A better solution is to return security information to a variable. This example _does not_ write the service principal password to the log. When testing, use the `echo` command to display ...<>
 
 ```azurecli-interactive
 # reset service principal credentials returning results to a variable
 myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
-echo $myNewPassword
 ```
 
-For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command).
+For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command). To learn more about the `--query` parameter, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## Set the default output format
 
-The default output for the Azure CLI is `json`.  Use the `az config set` command to set up your environment and chose a default setting of your choice. This example sets the default output to `table`.
+Azure CLI commands provide output that can be controlled in two ways:
+
+|Output control | How-to |
+|-|-|
+|Global setting| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
+|Command parameter| Override the default setting using a reference command's `--output` parameter.
+
+The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging is not needed.
+
+This example sets the default output to `jsonc`.
 
 ```azurecli
-az config set core.output=table
+az config set core.output=jsonc
 ```
 
-You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter.
+You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter. Here is a script of commands that alter and test command output:
 
 ```azurecli
 # set your default output to table
@@ -270,7 +290,7 @@ az config set core.output=table
 # notice how only a subset of properties are returned in the table
 az account show
 
-# show your active subscription in JSONC format
+# override your `table` default and show your active subscription in JSONC format
 az account show --output jsonc
 
 # reset your default output to json
