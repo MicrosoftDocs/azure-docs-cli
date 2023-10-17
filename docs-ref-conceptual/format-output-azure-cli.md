@@ -26,7 +26,12 @@ to format CLI output. The argument values and types of output are:
 `tsv`    | Tab-separated values, with no keys
 `none`   | No output other than errors and warnings
 
-## JSON output format
+> [!IMPORTANT]
+> The output you choose can be written to your log file.
+> Chose an output of `none` for Azure CLI commands that return API keys and credentials
+> For more information, see [None output format](#none-output-format).
+
+## JSON output format (default)
 
 The following example displays the list of virtual machines in your subscriptions in the default JSON format.
 
@@ -198,42 +203,77 @@ echo "Using subscription ID $subscriptionID"
 
 For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
 
-## None
+## None output format
 
-Some Azure CLI commands have output you must protect. For example, when you create a service principal with [az ad sp create-for-rbac]() the output contains a password or a certificate location. Store this information in a variable for later use within your script, and use the `--output none` option to keep this information from displaying on a monitor.
+Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. Use the `--output none` option when running these commands to keep this information from displaying in your terminal _and from being written to your log_! If your command fails, you will still receive error messages.
+
+Here is an example:
 
 ```azurecli-interactive
-
-
+# reset your webapp appsettings
+az staticwebapp config appsettings set --name MyWebAppName \
+                                       --resource-group MyResourceGroup \
+                                       --settings myNewProperty="myPropertyValue" \
+                                       --output json
 ```
+
+Here is your terminal output, and the new setting was also just written to your log.
+
+```output
+{
+  "id" = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Web/staticSites/webapp/config/appsettings",
+  "kind": null,
+  "location": "myLocation",
+  "name": "appsettings",
+  "properties": {
+    "myNewProperty": "myPropertyValue"
+  },
+  "resourceGroup": "myResourceGroup",
+  "type": "Microsoft.Web/staticSites/config"
+}
+```
+
+Execute the same script but remove all output.
+
+```azurecli-interactive
+# reset your functionapp appsettings without displaying or logging output
+az staticwebapp config appsettings set --name MyWebAppName \
+                                       --resource-group MyResourceGroup \
+                                       --settings WEBSITE_NODE_DEFAULT_VERSION=6.9.1 \
+                                       --output none
+
+# get your new webapp setting
+az staticwebapp config appsetting list --name MyWebApp \
+                                       --resource-group MyResourceGroup
+```
+
+### How do I view my log?
+
+{need something here}
 
 ## Set the default output format
 
-Use the `az config set` command to set up your environment and establish default settings for output formats. The default output format is `json`.
+The default output for the Azure CLI is `json`.  Use the `az config set` command to set up your environment and chose a default setting of your choice. This example sets the default output to `table`.
 
 ```azurecli
-az config set core.output=<format>
+az config set core.output=table
 ```
 
-```output
-Welcome to the Azure CLI! This command will guide you through logging in and setting some default values.
+You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter.
 
-Your settings can be found at /home/defaultuser/.azure/config
-Your current configuration is as follows:
+```azurecli
+# set your default output to table
+az config set core.output=table
 
-...
+# show your active subscription in table format
+# notice how only a subset of properties are returned in the table
+az account show
 
-Do you wish to change your settings? (y/N): y
+# show your active subscription in JSONC format
+az account show --output jsonc
 
-What default output format would you like?
- [1] json - JSON formatted output that most closely matches API responses.
- [2] jsonc - Colored JSON formatted output that most closely matches API responses.
- [3] table - Human-readable output format.
- [4] tsv - Tab- and Newline-delimited. Great for GREP, AWK, etc.
- [5] yaml - YAML formatted output. An alternative to JSON. Great for configuration files.
- [6] yamlc - Colored YAML formatted output. An alternative to JSON. Great for configuration files.
- [7] none - No output, except for errors and warnings.
-Please enter a choice [1]:
+# reset your default output to json
+az config set core.output=json
 ```
 
 ## See also
