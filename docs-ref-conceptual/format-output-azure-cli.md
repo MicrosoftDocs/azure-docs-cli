@@ -223,7 +223,7 @@ az keyvault secret set --name MySecretName \
 
 ### Use `--query` and return security information to a variable
 
-The use of `--query` to store output in a variable is not technically an output format. It is a solution to protecting secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password cannot be retrieved again.
+The use of `--query` to store output in a variable is technically not an output format. It is a solution to protect secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password cannot be retrieved again.
 
 Reset a service principal credential returning output in the default json format:
 
@@ -232,7 +232,7 @@ Reset a service principal credential returning output in the default json format
 az ad sp credential reset --id myServicePrincipalID --output json
 ```
 
-Console output:
+Console output showing the new password in the console, and although not immediately visible, also in the log:
 
 ```output
 {
