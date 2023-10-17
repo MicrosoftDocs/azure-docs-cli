@@ -98,7 +98,7 @@ When you provide a default value, that argument is no longer required by any com
 
 | Section | Name      | Type | Description|
 |---------|-----------|------|------------|
-| __core__ | output | string | The default output format. Can be one of `json`, `jsonc`, `tsv`, or `table`. |
+| __core__ | output | string | The default output format. Allowed values: `json` (default), `jsonc`, `yaml`, `yamlc`, `table`, `tsv`, `none`. For more information, see [Output formats for Azure CLI commands](format-output-azure-cli.md). |
 | | disable\_confirm\_prompt | boolean | Turn confirmation prompts on/off. |
 | | display\_region\_identified | boolean | Azure customers can choose to deploy resources in many different regions.  In some cases, customers may be able to reduce costs by selecting nearby regions offering the same services.  If a nearby region is identified, a message will display the region to select for future deployments. This setting controls if the message is displayed.
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI MIT license](https://github.com/Azure/azure-cli/blob/dev/LICENSE). |
@@ -121,9 +121,9 @@ When you provide a default value, that argument is no longer required by any com
 | __batch__ | account | string | The default Azure Batch account name to use for `az batch` commands. |
 | | access\_key | string | The default access key to use for `az batch` commands. Only used with `aad` authorization. |
 | | endpoint | string | The default endpoint to connect to for `az batch` commands. |
-| | auth\_mode | string | The authorization mode to use for `az batch` commands. Can be `shared_key` or `aad`. |
-| __cloud__ | name | string | The default cloud for all `az` commands.  The possible values are  `AzureCloud` (default), `AzureChinaCloud`, `AzureUSGovernment`. To change clouds, you can use the `az cloud set –name` command.  For an example, see [Manage Clouds with the Azure CLI](manage-clouds-azure-cli.md). |
-| __extension__ | use_dynamic_install | string | Install an extension if it's not added yet when running a command from it. The possible values are `no` (default), `yes_prompt`, `yes_without_prompt`. |
+| | auth\_mode | string | The authorization mode to use for `az batch` commands. Allowed values: `shared_key`, `aad`. |
+| __cloud__ | name | string | The default cloud for all `az` commands.  Allowed values: `AzureCloud` (default), `AzureChinaCloud`, `AzureUSGovernment`. To change clouds, you can use the `az cloud set –name` command.  For an example, see [Manage Clouds with the Azure CLI](manage-clouds-azure-cli.md). |
+| __extension__ | use_dynamic_install | string | Install an extension if it's not added yet when running a command from it. Allowed values: `no` (default), `yes_prompt`, `yes_without_prompt`. |
 | | run_after_dynamic_install | boolean | Continue to run the command when an extension is dynamically installed for it. Default is `False`. |
 | | index_url | string | URL of private extension index file following the format in [index.json](https://github.com/Azure/azure-cli-extensions/blob/main/src/index.json). Once specified, executing `az extension add --name <extension-name>` uses that file to find the extension to add. |
 
