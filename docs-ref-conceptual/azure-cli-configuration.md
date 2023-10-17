@@ -18,7 +18,6 @@ The Azure CLI allows for user configuration for settings such as logging, data c
 Configuration values used by the CLI are evaluated in the following precedence, with items higher on the list taking priority.
 
 1. Command-line parameters
-1. Parameter persisted values set with `az config param-persist`
 1. Environment variables
 1. Values in the configuration file set with `az config` or `az init`
 
@@ -130,8 +129,3 @@ When you provide a default value, that argument is no longer required by any com
 > [!NOTE]
 > You may see other values in your configuration file, but these are managed directly through CLI commands,
 > including `az config`. The ones listed in the table previously are the only values you should change yourself.
-
-## See also
-
-- [How-to work with Azure CLI persisted parameters](param-persist-howto.md)
-- [Tutorial: Use persisted parameters with sequential Azure CLI commands](param-persist-tutorial.md)
