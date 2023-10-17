@@ -26,9 +26,9 @@ to format CLI output. The argument values and types of output are:
 `tsv`    | Tab-separated values, with no keys
 `none`   | No output other than errors and warnings
 
-> [!IMPORTANT]
+> [!WARNING]
 > The output you choose can be written to your log file.
-> Chose an output of `none` for Azure CLI commands that return API keys and credentials
+> Use an output format of `none` for Azure CLI commands that return any form of secrets such as API keys and credentials.
 > For more information, see [None output format](#none-output-format).
 
 ## JSON output format (default)
@@ -203,21 +203,51 @@ echo "Using subscription ID $subscriptionID"
 
 For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
 
+## Output to variable
+
+This is not an output format, but it an output option
+
+https://learn.microsoft.com/en-us/cli/azure/use-cli-effectively?tabs=bash%2Cbash2#output-formatting
+
+https://learn.microsoft.com/en-us/cli/azure/use-cli-effectively?tabs=bash%2Cbash2#pass-values-to-another-command
+
 ## None output format
 
-Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. Use the `--output none` option when running these commands to keep this information from displaying in your terminal _and from being written to your log_! If your command fails, you will still receive error messages.
+/*
+module	parameters	operation
+webapp	config appsettings 	set
+webapp	config appsettings 	delete
+functionapp	config appsettings 	set
+functionapp	config appsettings 	delete
+logicapp	config appsettings 	set
+logicapp	config appsettings 	delete
+webapp	config connection-string	set
+webapp	config connection-string	delete
+webapp	config storage-account	add
+webapp	config storage-account	delete
+webapp	config storage-account	update
+webapp	config auth-classic	update
+staticwebapp	appsettings	set
+staticwebapp	appsettings	delete
+containerapp	secret	set
+functionapp	keys	set
+functionapp	function keys	set
+*/
 
-Here is an example:
+Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `config`, `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. Use the `--output none` option when running these commands to keep this information from displaying in your terminal _and from being written to your log_! If your command fails, you will still receive error messages.
+
+Here's' an example:
 
 ```azurecli-interactive
-# reset your webapp appsettings
+# create a static webapp setting
+{change to az ad or keyvault secret command}
 az staticwebapp config appsettings set --name MyWebAppName \
                                        --resource-group MyResourceGroup \
                                        --settings myNewProperty="myPropertyValue" \
                                        --output json
 ```
 
-Here is your terminal output, and the new setting was also just written to your log.
+Your terminal output is similar to the one shown here, and the new setting is also written to your log.
 
 ```output
 {
@@ -233,23 +263,21 @@ Here is your terminal output, and the new setting was also just written to your 
 }
 ```
 
-Execute the same script but remove all output.
+Execute the same script but remove all output using `--output none`.
 
 ```azurecli-interactive
-# reset your functionapp appsettings without displaying or logging output
+# create a static webapp setting without displaying or logging output
 az staticwebapp config appsettings set --name MyWebAppName \
                                        --resource-group MyResourceGroup \
-                                       --settings WEBSITE_NODE_DEFAULT_VERSION=6.9.1 \
+                                       --settings myNewProperty="myPropertyValue" \
                                        --output none
 
-# get your new webapp setting
+# ..variable
+
+subscriptionID=$(az account show --query id --output tsv)
 az staticwebapp config appsetting list --name MyWebApp \
                                        --resource-group MyResourceGroup
 ```
-
-### How do I view my log?
-
-{need something here}
 
 ## Set the default output format
 
@@ -278,5 +306,6 @@ az config set core.output=json
 
 ## See also
 
+* [Output format to a variable]()
 * [Azure CLI configuration](./azure-cli-configuration.md)
 * [How to query Azure CLI command output](./query-azure-cli.md)
