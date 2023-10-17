@@ -20,15 +20,15 @@ to format CLI output. The argument values and types of output are:
 ---------|-------------------------------
 `json`   | JSON string. This setting is the default
 `jsonc`  | Colorized JSON
-`yaml`   | YAML, a human-readable alternative to JSON
-`yamlc`  | Colorized YAML
 `table`  | ASCII table with keys as column headings
 `tsv`    | Tab-separated values, with no keys
+`yaml`   | YAML, a human-readable alternative to JSON
+`yamlc`  | Colorized YAML
 `none`   | No output other than errors and warnings
 
 > [!WARNING]
 > The output you choose can be written to your log file.
-> Use an output format of `none` for Azure CLI commands that return any form of secrets such as API keys and credentials.
+> Use an output format of `none` for Azure CLI commands that return secrets such as API keys and credentials.
 > For more information, see [None output format](#none-output-format).
 
 ## JSON output format (default)
@@ -213,71 +213,55 @@ https://learn.microsoft.com/en-us/cli/azure/use-cli-effectively?tabs=bash%2Cbash
 
 ## None output format
 
-/*
-module	parameters	operation
-webapp	config appsettings 	set
-webapp	config appsettings 	delete
-functionapp	config appsettings 	set
-functionapp	config appsettings 	delete
-logicapp	config appsettings 	set
-logicapp	config appsettings 	delete
-webapp	config connection-string	set
-webapp	config connection-string	delete
-webapp	config storage-account	add
-webapp	config storage-account	delete
-webapp	config storage-account	update
-webapp	config auth-classic	update
-staticwebapp	appsettings	set
-staticwebapp	appsettings	delete
-containerapp	secret	set
-functionapp	keys	set
-functionapp	function keys	set
-*/
+Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `config`, `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. To avoid secrets being written to your log, use one of these options:
 
-Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `config`, `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. Use the `--output none` option when running these commands to keep this information from displaying in your terminal _and from being written to your log_! If your command fails, you will still receive error messages.
+- Use the `--output none` option to keep security information from displaying in your terminal _and from being written to your log_. If your command fails, you will still receive error messages. This is a good solution when your security information _can be retrieved_ at a later time.
+- Use the `--query` parameter to store results in a variable. This is a good solution when security information _cannot be retrieved_ at a later time.
 
-Here's' an example:
+### Retrieve security information at a later time
+
+_Some_ Azure secrets can be retrieved at a later time.  A good example are secrets stored in Azure Key Vault.
+
+Create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
 
 ```azurecli-interactive
-# create a static webapp setting
-{change to az ad or keyvault secret command}
-az staticwebapp config appsettings set --name MyWebAppName \
-                                       --resource-group MyResourceGroup \
-                                       --settings myNewProperty="myPropertyValue" \
-                                       --output json
+az keyvault secret set --name MySecretName \
+                       --vault-name MyKeyVaultName \
+                       --value MySecretValue\
+                       --output none
 ```
 
-Your terminal output is similar to the one shown here, and the new setting is also written to your log.
+### Return security information to a variable
+
+Using `--query` to store output in a variable is not technically an output format. It is a solution to protecting secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password cannot be retrieved again.
+
+Reset a service principal credential returning output in the default json format:
+
+```azurecli-interactive
+# reset service principal credentials returning results to the console and the log
+az ad sp credential reset --id myServicePrincipalID --output json
+```
+
+Console output:
 
 ```output
 {
-  "id" = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.Web/staticSites/webapp/config/appsettings",
-  "kind": null,
-  "location": "myLocation",
-  "name": "appsettings",
-  "properties": {
-    "myNewProperty": "myPropertyValue"
-  },
-  "resourceGroup": "myResourceGroup",
-  "type": "Microsoft.Web/staticSites/config"
+  "appId": "myServicePrincipalID",
+  "password": "myServicePrincipalNewPassword",
+  "tenant": "myTenantID"
 }
 ```
 
-Execute the same script but remove all output using `--output none`.
+A better solution is to return security information to a variable. Use the `echo` command to show results in your terminal.  
+This example _does not_ write the service principal password to the log.
 
 ```azurecli-interactive
-# create a static webapp setting without displaying or logging output
-az staticwebapp config appsettings set --name MyWebAppName \
-                                       --resource-group MyResourceGroup \
-                                       --settings myNewProperty="myPropertyValue" \
-                                       --output none
-
-# ..variable
-
-subscriptionID=$(az account show --query id --output tsv)
-az staticwebapp config appsetting list --name MyWebApp \
-                                       --resource-group MyResourceGroup
+# reset service principal credentials returning results to a variable
+myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
+echo $myNewPassword
 ```
+
+For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md&tabs=bash%2Cbash2#pass-values-to-another-command).
 
 ## Set the default output format
 
@@ -306,6 +290,6 @@ az config set core.output=json
 
 ## See also
 
-* [Output format to a variable]()
-* [Azure CLI configuration](./azure-cli-configuration.md)
-* [How to query Azure CLI command output](./query-azure-cli.md)
+- [Use the Azure CLI successfully](./use-cli-effectively.md)
+- [Azure CLI configuration](./azure-cli-configuration.md)
+- [How to query Azure CLI command output](./query-azure-cli.md)
