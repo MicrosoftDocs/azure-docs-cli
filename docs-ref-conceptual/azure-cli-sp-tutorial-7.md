@@ -16,19 +16,18 @@ keywords: azure service principal, create service principal azure, create servic
 
 If you lose your service principal credentials, reset the credentials using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). This step details how to reset your service principal password or certificate.
 
-## Reset credentials
-
 > [!WARNING]
-> The output you choose can show credentials in your console and be written to your log file.
-> [Reset credentials storing output in a variable](#reset-credentials-storing-output-in-a-variable) to avoid writing credentials in your log.
+> While learning to manage Azure service principals, returning passwords and credential locations in your terminal, and consequently in your log file, is a solution. However, when outside of a testing environment, [store credential output in a variable](#reset-credentials-storing-output-in-a-variable).
 
-Reset a service principal credential with a password.
+## Basic credential reset
+
+Reset a service principal credential with a password. If you don't know the ID associated with your service principal, use the `az ad sp list` command as explained in [Get an existing service principal](./azure-cli-sp-tutorial-4.md).
 
 ```azurecli-interactive
 az ad sp credential reset --id myServicePrincipalID
 ```
 
-Console output:
+Console output showing the new password in the console, and although not immediately visible, also in the log:
 
 ```output
 {
@@ -36,6 +35,7 @@ Console output:
   "password": "myServicePrincipalNewPassword",
   "tenant": "myTenantID"
 }
+```
 
 Reset a service principal credential with a new self-signed certificate.
 
@@ -43,7 +43,7 @@ Reset a service principal credential with a new self-signed certificate.
 az ad sp credential reset --id myServicePrincipalID --create-cert
 ```
 
-Console output:
+Console output showing the new certificate location in the console, and although not immediately visible, also in the log:
 
 ```output
 {
@@ -54,12 +54,10 @@ Console output:
 }
 ```
 
-If you don't know the ID associated with your service principal, use the `az ad sp list` command as explained in [Get an existing service principal](./azure-cli-sp-tutorial-4.md).
-
 ## Reset credentials storing output in a variable
 
 To avoid storing credentials in your log file, use the `--query` parameter to store output in a variable.
-You can chose to return output to your console by using the `echo` command.
+You can still return output to your console by using the `echo` command.
 
 Reset a service principal credential with a password
 

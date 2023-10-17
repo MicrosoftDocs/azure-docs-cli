@@ -28,7 +28,7 @@ to format CLI output. The argument values and types of output are:
 
 > [!WARNING]
 > The output you choose can be written to your log file.
-> Use an output format of `none` for Azure CLI commands that return secrets such as API keys and credentials.
+> Use an output format of `none` or store command output in a variable to avoid exposing secrets such as API keys and credentials.
 > For more information, see [None output format](#none-output-format).
 
 ## JSON output format (default)
@@ -207,14 +207,12 @@ For more `--query` parameter examples, see [How to query Azure CLI command outpu
 
 Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `config`, `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. To avoid secrets being written to your log, use one of these options:
 
-- Use the `--output none` option to keep security information from displaying in your terminal _and from being written to your log_. If your command fails, you will still receive error messages. This is a good solution when your security information _can be retrieved_ at a later time.
-- Use the `--query` parameter to store results in a variable. This is a good solution when security information _cannot be retrieved_ at a later time.
+- Use the `--output none` option to keep security information from displaying in your terminal _and from being written to your log_. If your command fails, you will still receive error messages. This is a good solution when your security information _can be_ retrieved at a later time.
+- Use the `--query` parameter to store output in a variable. This is a good solution when security information _cannot be_ retrieved at a later time.
 
-### Retrieve security information at a later time
+### Use `none` and retrieve security information at a later time
 
-_Some_ Azure secrets can be retrieved at a later time.  A good example are secrets stored in Azure Key Vault.
-
-Create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
+_Some_ Azure secrets can be retrieved at a later time.  A good example are secrets stored in Azure Key Vault. In this example, create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
 
 ```azurecli-interactive
 az keyvault secret set --name MySecretName \
@@ -223,9 +221,9 @@ az keyvault secret set --name MySecretName \
                        --output none
 ```
 
-### Return security information to a variable
+### Use `--query` and return security information to a variable
 
-Using `--query` to store output in a variable is not technically an output format. It is a solution to protecting secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password cannot be retrieved again.
+The use of `--query` to store output in a variable is not technically an output format. It is a solution to protecting secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password cannot be retrieved again.
 
 Reset a service principal credential returning output in the default json format:
 
@@ -244,8 +242,7 @@ Console output:
 }
 ```
 
-A better solution is to return security information to a variable. Use the `echo` command to show results in your terminal.  
-This example _does not_ write the service principal password to the log.
+A better solution is to return security information to a variable. Use the `echo` command to show results in your terminal. This example _does not_ write the service principal password to the log.
 
 ```azurecli-interactive
 # reset service principal credentials returning results to a variable
