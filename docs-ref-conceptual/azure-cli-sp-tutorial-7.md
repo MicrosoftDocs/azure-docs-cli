@@ -27,7 +27,7 @@ Reset a service principal credential with a password. If you don't know the ID a
 az ad sp credential reset --id myServicePrincipalID
 ```
 
-Console output showing the new password in the console, and although not immediately visible, also in the log:
+Console output showing the new password in the console, and although not visible in the console, also in the log:
 
 ```output
 {
@@ -43,7 +43,7 @@ Reset a service principal credential with a new self-signed certificate.
 az ad sp credential reset --id myServicePrincipalID --create-cert
 ```
 
-Console output showing the new certificate location in the console, and although not immediately visible, also in the log:
+Console output showing the new certificate location in the console, and although not visible in the console, also in the log:
 
 ```output
 {

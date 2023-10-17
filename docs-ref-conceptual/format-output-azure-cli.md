@@ -290,7 +290,7 @@ az config set core.output=table
 # notice how only a subset of properties are returned in the table
 az account show
 
-# override your `table` default and show your active subscription in JSONC format
+# override your table default and show your active subscription in jsonc format
 az account show --output jsonc
 
 # reset your default output to json
