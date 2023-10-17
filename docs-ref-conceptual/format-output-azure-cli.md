@@ -203,14 +203,6 @@ echo "Using subscription ID $subscriptionID"
 
 For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
 
-## Output to variable
-
-This is not an output format, but it an output option
-
-https://learn.microsoft.com/en-us/cli/azure/use-cli-effectively?tabs=bash%2Cbash2#output-formatting
-
-https://learn.microsoft.com/en-us/cli/azure/use-cli-effectively?tabs=bash%2Cbash2#pass-values-to-another-command
-
 ## None output format
 
 Some Azure CLI commands output secrets you must protect. For example, reference commands that manage `config`, `appsettings`, a `connection-string`, `secrets`, and `keys` often return authentication information. To avoid secrets being written to your log, use one of these options:
@@ -261,7 +253,7 @@ myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query pass
 echo $myNewPassword
 ```
 
-For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md&tabs=bash%2Cbash2#pass-values-to-another-command).
+For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command).
 
 ## Set the default output format
 
