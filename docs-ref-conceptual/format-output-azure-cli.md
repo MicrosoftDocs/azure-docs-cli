@@ -254,7 +254,7 @@ Console output showing the new password in the console, and also visible in the 
 }
 ```
 
-A better solution is to return security information to a variable. This example _does not_ write the service principal password to the log. When testing, use the `echo` command to display ...<>
+A better solution is to return security information to a variable. This example _does not_ write the service principal password to the log. When testing, use the `echo` command to test the output of your variable, but understand that `echo` writes to the log.
 
 ```azurecli-interactive
 # reset service principal credentials returning results to a variable
