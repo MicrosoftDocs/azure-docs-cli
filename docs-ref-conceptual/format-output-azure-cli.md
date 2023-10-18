@@ -224,7 +224,7 @@ To avoid command output being written to your log, use one of these options:
 
 ### Use `none` and retrieve security information at a later time
 
-_Some_ Azure secrets can be retrieved at a later time.  A good example are secrets stored in Azure Key Vault. In this example, create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
+_Some_ Azure secrets can be retrieved at a later time. A good example are secrets stored in Azure Key Vault. In this example, create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
 
 ```azurecli-interactive
 az keyvault secret set --name MySecretName \
@@ -254,14 +254,14 @@ Console output showing the new password in the console. This information is also
 }
 ```
 
-A better solution is to return security information to a variable. This example _does not_ write the service principal password to the log. When testing, use the `echo` command to test the output of your variable, but understand that `echo` writes to the log.
+A better solution is to return security information to a variable. This example _does not_ write the service principal password to the log. When testing, use the `echo` command to see the output of your variable, but understand that `echo` writes to the log.
 
 ```azurecli-interactive
 # reset service principal credentials returning results to a variable
 myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
 ```
 
-For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command). To learn more about the `--query` parameter, see [How to query Azure CLI command output](./query-azure-cli.md).
+For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## Set the default output format
 
