@@ -4,7 +4,7 @@ description: Learn how to reset your service principal credentials using the Azu
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/10/2023
+ms.date: 10/18/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -56,13 +56,15 @@ Console output showing the new certificate location in the console.  This inform
 
 ## Reset credentials storing output in a variable
 
-To avoid storing credentials in your log file, use the `--query` parameter to store output in a variable.
-You can still return output to your console by using the `echo` command.
+To avoid storing credentials in your log file, use the `--query` parameter to store output in a variable. When testing, use the `echo` command to test the output of your variable, but understand that `echo` writes to the log.
 
 Reset a service principal credential with a password
 
 ```azurecli-interactive
 myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
+
+# the echo command writes to the log file
+# only use it when testing
 echo $myNewPassword
 ```
 
@@ -70,6 +72,9 @@ Reset a service principal credential with a new self-signed certificate.
 
 ```azurecli-interactive
 myNewCertificateLocation=$(az ad sp credential reset --id myServicePrincipalID --query fileWithCertAndPrivateKey --output tsv)
+
+# the echo command writes to the log file
+# only use it when testing
 echo $myNewCertificateLocation
 ```
 

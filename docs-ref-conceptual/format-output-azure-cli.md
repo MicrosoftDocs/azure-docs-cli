@@ -4,7 +4,7 @@ description: The Azure CLI offers various output formats such as JSON and YAML. 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/16/2023
+ms.date: 10/18/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -218,7 +218,7 @@ To avoid command output being written to your log, use one of these options:
 |-|-|-|
 |`--output none` output format| Keeps security information from displaying in your console _and from being written to your log_. If your command fails, you will still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
 | | | 2. Use when you have no need for output.
-| | | 3. A common solution when a managed identity or a service principal is being used to manage Azure resources.
+| | | 3. A common choice when a managed identity or a service principal is being used to manage Azure resources.
 |`--query` parameter | Stores output in a variable. Does not store command output in the log.|1. Use when command output _cannot be_ retrieved at a later time.|
 | | | 2. Use when you need to use a command output value in a script.
 
@@ -274,13 +274,13 @@ Azure CLI commands provide output that can be controlled in two ways:
 
 The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging is not needed.
 
-```azurecli
+```azurecli-interactive
 az config set core.output=none
 ```
 
 You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter. Here is a script of commands that alter and test command output:
 
-```azurecli
+```azurecli-interactive
 # set your default output to table
 az config set core.output=table
 
@@ -297,6 +297,6 @@ az config set core.output=json
 
 ## See also
 
-- [Use the Azure CLI successfully](./use-cli-effectively.md)
 - [Azure CLI configuration](./azure-cli-configuration.md)
 - [How to query Azure CLI command output](./query-azure-cli.md)
+- [Use the Azure CLI successfully](./use-cli-effectively.md)
