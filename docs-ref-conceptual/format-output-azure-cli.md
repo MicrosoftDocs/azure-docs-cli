@@ -146,7 +146,7 @@ For more about using queries to filter data, see [Use JMESPath queries with Azur
 
 ## TSV output format
 
-The `tsv` output format returns tab- and newline-separated values without additional formatting, keys, or other symbols. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Like the `table` format, `tsv` doesn't print nested objects.
+The `tsv` output format returns tab- and newline-separated values without extra formatting, keys, or other symbols. This format makes it easy to consume the output into other commands and tools that need to process the text in some form. Like the `table` format, `tsv` doesn't print nested objects.
 
 Using the preceding example with the `tsv` option outputs the tab-separated result.
 
@@ -163,10 +163,10 @@ None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Micros
 ```
 
 One restriction of the TSV output format is that there isn't a guarantee on output ordering. The CLI makes a best effort to preserve ordering by sorting keys in the response JSON alphabetically,
-and then printing their values in order for TSV output. This isn't a guarantee that the order is always identical though, since the Azure service response format may change.
+and then printing their values in order for TSV output. There is no guarantee that the order is always identical, since the Azure service response format can change.
 
 In order to enforce consistent ordering, you'll need to use the `--query` parameter and the [multiselect list](query-azure-cli.md#get-multiple-values) format. When a CLI command returns a single
-JSON dictionary, use the general format `[key1, key2, ..., keyN]` to force a key order.  For CLI commands which return an array, use the general format `[].[key1, key2, ..., keyN]` to order column values.
+JSON dictionary, use the general format `[key1, key2, ..., keyN]` to force a key order.  For CLI commands that return an array, use the general format `[].[key1, key2, ..., keyN]` to order column values.
 
 For example, to order the information displayed above by ID, location, resource group, and VM name:
 
@@ -216,15 +216,15 @@ To avoid command output being written to your log, use one of these options:
 
 |Option|Benefit|Use case|
 |-|-|-|
-|`--output none` output format| Keeps security information from displaying in your console _and from being written to your log_. If your command fails, you will still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
+|`--output none` output format| Keeps security information from displaying in your console _and from being written to your log_. If your command fails, you'll still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
 | | | 2. Use when you have no need for output.
 | | | 3. A common choice when a managed identity or a service principal is being used to manage Azure resources.
-|`--query` parameter | Stores output in a variable. Does not store command output in the log.|1. Use when command output _cannot be_ retrieved at a later time.|
+|`--query` parameter | Stores output in a variable. Doesn't store command output in the log.|1. Use when command output _can't be_ retrieved at a later time.|
 | | | 2. Use when you need to use a command output value in a script.
 
 ### Use `none` and retrieve security information at a later time
 
-_Some_ Azure secrets can be retrieved at a later time. A good example are secrets stored in Azure Key Vault. In this example, create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
+_Some_ Azure secrets can be retrieved at a later time. A good example is secrets stored in Azure Key Vault. In this example, create an Azure Key Vault secret using [az keyvault secret set](/cli/azure/keyvault/secret#az-keyvault-secret-set) with the `--output none` option. You can retrieve the secret later using the [az keyvault secret show](/cli/azure/keyvault/secret#az-keyvault-secret-show) command.
 
 ```azurecli-interactive
 az keyvault secret set --name MySecretName \
@@ -235,7 +235,7 @@ az keyvault secret set --name MySecretName \
 
 ### Use `--query` and return security information to a variable
 
-The use of `--query` to store output in a variable is technically not an output format. It is a solution to protect secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password cannot be retrieved again.
+The use of `--query` to store output in a variable is technically not an output format. It is a solution to protect secrets, and is an alternative to using `--output none`. For example, when you reset a service principal credential, the password can't be retrieved again.
 
 Reset a service principal credential returning output in the default json format:
 
@@ -254,7 +254,7 @@ Console output showing the new password in the console. This information is also
 }
 ```
 
-A better solution is to return security information to a variable. This example _does not_ write the service principal password to the log. When testing, use the `echo` command to see the value of your variable, but understand that `echo` writes to the log.
+A better solution is to return security information to a variable. This example _doesn't_ write the service principal password to the log. When testing, use the `echo` command to see the value of your variable, but understand that `echo` writes to the log.
 
 ```azurecli-interactive
 # reset service principal credentials returning results to a variable
@@ -267,18 +267,18 @@ For more examples on storing output to a variable, see [Use the Azure CLI succes
 
 Azure CLI commands provide output that can be controlled in two ways:
 
-|Output control | How-to |
+|Output control | Use case |
 |-|-|
-|Global setting| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
-|Command parameter| Override the default setting using a reference command's `--output` parameter.
+|Global setting| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables). Select a default output value that you use the most so you don't have to continually provide an `--output` parameter for every reference command.
+|Command parameter| Override the default setting using a reference command's `--output` parameter. Specifying output at the command level provides maximum flexibility. You control console output, logging and variable input on a case-by-case basis.
 
-The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging is not needed.
+The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging isn't needed.
 
 ```azurecli-interactive
 az config set core.output=none
 ```
 
-You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter. Here is a script of commands that alter and test command output:
+You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter. Here's a script of commands that alter and test command output:
 
 ```azurecli-interactive
 # set your default output to table
