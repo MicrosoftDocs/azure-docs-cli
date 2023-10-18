@@ -17,7 +17,7 @@ keywords: azure service principal, create service principal azure, create servic
 If you lose your service principal credentials, reset the credentials using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset). This step details how to reset your service principal password or certificate.
 
 > [!WARNING]
-> While learning to manage Azure service principals, returning passwords and credential locations in your terminal, and consequently in your log file, is a solution. However, when outside of a testing environment, [store credential output in a variable](#reset-credentials-storing-output-in-a-variable).
+> While learning to manage Azure service principals, returning passwords and credential locations in your terminal, and consequently in your log file, is common. However, when outside of a testing environment, [store credential output in a variable](#reset-credentials-storing-output-in-a-variable).
 
 ## Reset credentials returning output to the console and log file
 
@@ -58,7 +58,7 @@ Console output showing the new certificate location in the console. This informa
 
 ## Reset credentials storing output in a variable
 
-To avoid storing credentials in your log file, use the `--query` parameter to store output in a variable. When testing, use the `echo` command to see the output of your variable, but understand that `echo` writes to the log.
+To avoid storing credentials in your log file, use the `--query` parameter to store output in a variable. When testing, use the `echo` command to see the value of your variable, but understand that `echo` writes to the log.
 
 Reset a service principal credential with a password.
 
