@@ -267,10 +267,10 @@ For more examples on storing output to a variable, see [Use the Azure CLI succes
 
 Azure CLI commands provide output that can be controlled in two ways:
 
-|Output control | Use case |
-|-|-|
-|Global setting| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables). Select a default output value that you use the most so you don't have to continually provide an `--output` parameter for every reference command.
-|Command parameter| Override the default setting using a reference command's `--output` parameter. Specifying output at the command level provides maximum flexibility. You control console output, logging and variable input on a case-by-case basis.
+|Output control | Benefit | How-to
+|-|-|-|
+|Global setting| Select a default output value that you use the most so you don't have to continually provide an `--output` parameter for each reference command.| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
+|Command parameter| Specify output at the command level and give your scripts maximum flexibility. You control console output, logging and variable input for each reference command. | Override the default setting using a reference command's `--output` parameter.
 
 The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging isn't needed.
 
