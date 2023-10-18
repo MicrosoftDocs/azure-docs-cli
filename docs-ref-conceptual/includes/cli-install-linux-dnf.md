@@ -9,7 +9,7 @@ ms.custom: devx-track-azurecli
 
 ## Before you begin
 
-- Azure CLI [2.38.1](/cli/azure/release-notes-azure-cli#september-01-2023) (released on September 01, 2023) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft isn't providing other updates or bug fixes for these distributions.
+- Azure CLI [2.38.1](/cli/azure/release-notes-azure-cli#september-01-2023) (released on September 01, 2023) is the lastest version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft isn't providing other updates or bug fixes for these distributions.
 
 - Microsoft continues to develop and support Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script).
 
