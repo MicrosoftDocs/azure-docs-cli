@@ -244,7 +244,7 @@ Reset a service principal credential returning output in the default json format
 az ad sp credential reset --id myServicePrincipalID --output json
 ```
 
-Console output showing the new password in the console, and also visible in the log:
+Console output showing the new password in the console. This information is also written in the log.
 
 ```output
 {
