@@ -274,10 +274,8 @@ Azure CLI commands provide output that can be controlled in two ways:
 
 The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging is not needed.
 
-This example sets the default output to `jsonc`.
-
 ```azurecli
-az config set core.output=jsonc
+az config set core.output=none
 ```
 
 You can overwrite the default output of any Azure CLI reference command by using the `--output` parameter. Here is a script of commands that alter and test command output:
