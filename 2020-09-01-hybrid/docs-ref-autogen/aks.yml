@@ -983,6 +983,7 @@ directCommands:
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
                   [--enable-asm]
+                  [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
@@ -1083,6 +1084,10 @@ directCommands:
                   [--skip-subnet-role-assignment]
                   [--snapshot-id]
                   [--ssh-key-value]
+                  [--storage-pool-name]
+                  [--storage-pool-option {NVMe, SSD}]
+                  [--storage-pool-size]
+                  [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
@@ -1380,6 +1385,10 @@ directCommands:
     summary: |-
       Enable Azure Service Mesh.
     isPreview: true
+  - name: --enable-azure-container-storage
+    parameterValueGroup: "azureDisk, elasticSan, ephemeralDisk"
+    summary: |-
+      Enable azure container storage and define storage pool type.
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -1702,7 +1711,7 @@ directCommands:
   - name: --node-osdisk-size
     defaultValue: "0"
     summary: |-
-      Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
+      Size in GiB of the OS disk for each node in the node pool. Minimum 30 GiB.
   - name: --node-osdisk-type
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
@@ -1808,6 +1817,20 @@ directCommands:
     defaultValue: "~\\.ssh\\id_rsa.pub"
     summary: |-
       Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
+  - name: --storage-pool-name
+    summary: |-
+      Set storage pool name for azure container storage.
+  - name: --storage-pool-option
+    parameterValueGroup: "NVMe, SSD"
+    summary: |-
+      Set ephemeral disk storage pool option for azure container storage.
+  - name: --storage-pool-size
+    summary: |-
+      Set storage pool size for azure container storage.
+  - name: --storage-pool-sku
+    parameterValueGroup: "PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS"
+    summary: |-
+      Set azure disk type storage pool sku for azure container storage.
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
@@ -3585,6 +3608,7 @@ directCommands:
                   [--assign-kubelet-identity]
                   [--attach-acr]
                   [--auto-upgrade-channel {node-image, none, patch, rapid, stable}]
+                  [--azure-container-storage-nodepools]
                   [--azure-keyvault-kms-key-id]
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
@@ -3595,6 +3619,7 @@ directCommands:
                   [--defender-config]
                   [--detach-acr]
                   [--disable-ahub]
+                  [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-metrics]
                   [--disable-azure-rbac]
@@ -3622,6 +3647,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
@@ -3684,6 +3710,10 @@ directCommands:
                   [--private-dns-zone]
                   [--rotation-poll-interval]
                   [--ssh-key-value]
+                  [--storage-pool-name]
+                  [--storage-pool-option {NVMe, SSD}]
+                  [--storage-pool-size]
+                  [--storage-pool-sku {PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS}]
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--update-cluster-autoscaler]
@@ -3826,6 +3856,9 @@ directCommands:
     parameterValueGroup: "node-image, none, patch, rapid, stable"
     summary: |-
       Specify the upgrade channel for autoupgrade. It could be rapid, stable, patch, node-image or none, none means disable autoupgrade.
+  - name: --azure-container-storage-nodepools
+    summary: |-
+      Define the comma separated nodepool list to install azure container storage.
   - name: --azure-keyvault-kms-key-id
     summary: |-
       Identifier of Azure Key Vault key.
@@ -3864,6 +3897,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --disable-azure-container-storage
+    defaultValue: "False"
+    summary: |-
+      Flag to disable azure container storage.
   - name: --disable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -3982,6 +4019,10 @@ directCommands:
     summary: |-
       Enable integration of user vnet with control plane apiserver pods.
     isPreview: true
+  - name: --enable-azure-container-storage
+    parameterValueGroup: "azureDisk, elasticSan, ephemeralDisk"
+    summary: |-
+      Enable azure container storage and define storage pool type.
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -4247,6 +4288,20 @@ directCommands:
   - name: --ssh-key-value
     summary: |-
       Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
+  - name: --storage-pool-name
+    summary: |-
+      Set storage pool name for azure container storage.
+  - name: --storage-pool-option
+    parameterValueGroup: "NVMe, SSD"
+    summary: |-
+      Set ephemeral disk storage pool option for azure container storage.
+  - name: --storage-pool-size
+    summary: |-
+      Set storage pool size for azure container storage.
+  - name: --storage-pool-sku
+    parameterValueGroup: "PremiumV2_LRS, Premium_LRS, Premium_ZRS, StandardSSD_LRS, StandardSSD_ZRS, Standard_LRS, UltraSSD_LRS"
+    summary: |-
+      Set azure disk type storage pool sku for azure container storage.
   - name: --tags
     summary: |-
       The tags of the managed cluster. The managed cluster instance and all resources managed by the cloud provider will be tagged.
