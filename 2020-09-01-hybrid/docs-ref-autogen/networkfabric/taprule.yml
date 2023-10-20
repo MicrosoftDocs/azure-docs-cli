@@ -4,7 +4,7 @@ name: az networkfabric taprule
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az networkfabric taprule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.49.0 or higher). The extension will automatically install the first time you run an **az networkfabric taprule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Network Tap Rule Resource.
 status: GA
@@ -21,23 +21,23 @@ directCommands:
                                     --resource-group
                                     --resource-name
                                     [--annotation]
-                                    [--dynamic-match-configurations]
+                                    [--dynamic-match-conf]
                                     [--location]
-                                    [--match-configurations]
+                                    [--match-conf]
                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                    [--polling-interval-in-seconds {120, 30, 60, 90}]
+                                    [--polling-interval {120, 30, 60, 90}]
                                     [--tags]
                                     [--tap-rules-url]
   examples:
   - summary: |-
       Create a Network Tap Rule with Configuration type as "File".
-    syntax: az networkfabric taprule create --resource-group "example-rg" --location "westus3" --resource-name "example-networktaprule" --polling-interval-in-seconds 30 --configuration-type "File" --tap-rules-url "https://microsoft.com/<FileName>"
+    syntax: az networkfabric taprule create --resource-group "example-rg" --location "westus3" --resource-name "example-networktaprule" --polling-interval 30 --configuration-type "File" --tap-rules-url "https://microsoft.com/<FileName>"
   - summary: |-
       Create a Network Tap Rule with Configuration type as "Inline".
-    syntax: az networkfabric taprule create --resource-group "example-rg" --location "westus3" --resource-name "example-networktaprule" --configuration-type "Inline" --match-configurations "[{matchConfigurationName:config1,sequenceNumber:10,ipAddressType:IPv4,matchConditions:[{encapsulationType:None,portCondition:{portType:SourcePort,layer4Protocol:TCP,ports:[100],portGroupNames:['example-portGroup1']},protocolTypes:[TCP],vlanMatchCondition:{vlans:['10'],innerVlans:['11-20']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.10.10.10/20']}}],actions:[{type:Drop,truncate:100,isTimestampEnabled:True,destinationId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup',matchConfigurationName:match1}]}]" --dynamic-match-configurations "[{ipGroups:[{name:'example-ipGroup1',ipAddressType:IPv4,ipPrefixes:['10.10.10.10/30']}],vlanGroups:[{name:'exmaple-vlanGroup',vlans:['10']}],portGroups:[{name:'example-portGroup1',ports:['100-200']}]}]"
+    syntax: az networkfabric taprule create --resource-group "example-rg" --location "westus3" --resource-name "example-networktaprule" --configuration-type "Inline" --match-conf "[{matchConfigurationName:config1,sequenceNumber:10,ipAddressType:IPv4,matchConditions:[{encapsulationType:None,portCondition:{portType:SourcePort,layer4Protocol:TCP,ports:[100],portGroupNames:['example-portGroup1']},protocolTypes:[TCP],vlanMatchCondition:{vlans:['10'],innerVlans:['11-20']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.10.10.10/20']}}],actions:[{type:Drop,truncate:100,isTimestampEnabled:True,destinationId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup',matchConfigurationName:match1}]}]" --dynamic-match-conf "[{ipGroups:[{name:'example-ipGroup1',ipAddressType:IPv4,ipPrefixes:['10.10.10.10/30']}],vlanGroups:[{name:'exmaple-vlanGroup',vlans:['10']}],portGroups:[{name:'example-portGroup1',ports:['100-200']}]}]"
   - summary: |-
       Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
-    syntax: az networkfabric taprule create --match-configurations "??"
+    syntax: az networkfabric taprule create --match-conf "??"
   requiredParameters:
   - isRequired: true
     name: --configuration-type
@@ -56,20 +56,20 @@ directCommands:
   - name: --annotation
     summary: |-
       Description for underlying resource.
-  - name: --dynamic-match-configurations
+  - name: --dynamic-match-conf
     summary: |-
       List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
       Location of Azure region  When not specified, the location of the resource group will be used.
-  - name: --match-configurations
+  - name: --match-conf
     summary: |-
       List of match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --polling-interval-in-seconds
+  - name: --polling-interval
     parameterValueGroup: "120, 30, 60, 90"
     summary: |-
       Polling interval in seconds. Default value is 30. Example: 60.
@@ -167,9 +167,9 @@ directCommands:
   syntax: >-
     az networkfabric taprule update [--annotation]
                                     [--configuration-type {File, Inline}]
-                                    [--dynamic-match-configurations]
+                                    [--dynamic-match-conf]
                                     [--ids]
-                                    [--match-configurations]
+                                    [--match-conf]
                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--resource-group]
                                     [--resource-name]
@@ -179,10 +179,10 @@ directCommands:
   examples:
   - summary: |-
       Update the Network Tap Rule
-    syntax: az networkfabric taprule update --resource-group "example-rg" --resource-name "example-networktaprule" --configuration-type "Inline" --match-configurations "[{matchConfigurationName:config1,sequenceNumber:10,ipAddressType:IPv4,matchConditions:[{encapsulationType:None,portCondition:{portType:SourcePort,layer4Protocol:TCP,ports:[100]},protocolTypes:[TCP],vlanMatchCondition:{vlans:['10'],innerVlans:['11-20']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.10.10.10/20']}}],actions:[{type:Drop,truncate:100,isTimestampEnabled:True,destinationId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup',matchConfigurationName:match1}]}]" --dynamic-match-configurations "[{ipGroups:[{name:'example-ipGroup1',ipAddressType:IPv4,ipPrefixes:['10.10.10.10/30']}],vlanGroups:[{name:'exmaple-vlanGroup',vlans:['10']}],portGroups:[{name:'example-portGroup1',ports:['100-200']}]}]"
+    syntax: az networkfabric taprule update --resource-group "example-rg" --resource-name "example-networktaprule" --configuration-type "Inline" --match-conf "[{matchConfigurationName:config1,sequenceNumber:10,ipAddressType:IPv4,matchConditions:[{encapsulationType:None,portCondition:{portType:SourcePort,layer4Protocol:TCP,ports:[100]},protocolTypes:[TCP],vlanMatchCondition:{vlans:['10'],innerVlans:['11-20']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.10.10.10/20']}}],actions:[{type:Drop,truncate:100,isTimestampEnabled:True,destinationId:'/subscriptions/xxxxx-xxxx-xxxx-xxxx-xxxxx/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup',matchConfigurationName:match1}]}]" --dynamic-match-conf "[{ipGroups:[{name:'example-ipGroup1',ipAddressType:IPv4,ipPrefixes:['10.10.10.10/30']}],vlanGroups:[{name:'exmaple-vlanGroup',vlans:['10']}],portGroups:[{name:'example-portGroup1',ports:['100-200']}]}]"
   - summary: |-
       Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
-    syntax: az networkfabric taprule update --match-configurations "??"
+    syntax: az networkfabric taprule update --match-conf "??"
   optionalParameters:
   - name: --annotation
     summary: |-
@@ -191,13 +191,13 @@ directCommands:
     parameterValueGroup: "File, Inline"
     summary: |-
       Input method to configure Network Tap Rule. Example: File.
-  - name: --dynamic-match-configurations
+  - name: --dynamic-match-conf
     summary: |-
       List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --match-configurations
+  - name: --match-conf
     summary: |-
       List of match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait

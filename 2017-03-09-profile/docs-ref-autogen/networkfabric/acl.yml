@@ -4,7 +4,7 @@ name: az networkfabric acl
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az networkfabric acl** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **managednetworkfabric** extension for the Azure CLI (version 2.49.0 or higher). The extension will automatically install the first time you run an **az networkfabric acl** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Access Control List Resource.
 status: GA
@@ -23,9 +23,9 @@ directCommands:
                                 [--acls-url]
                                 [--annotation]
                                 [--default-action {Deny, Permit}]
-                                [--dynamic-match-configurations]
+                                [--dynamic-match-conf]
                                 [--location]
-                                [--match-configurations]
+                                [--match-conf]
                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--tags]
   examples:
@@ -34,10 +34,10 @@ directCommands:
     syntax: az networkfabric acl create --resource-group "example-rg" --location "westus3" --resource-name "example-accesscontrollist" --configuration-type "File" --acls-url "https://ACL-Storage-URL"
   - summary: |-
       Creates an Access Control List with Configuration type as "Inline".
-    syntax: az networkfabric acl create --resource-group "example-rg" --location "westus3" --resource-name "example-accesscontrollist" --configuration-type "Inline" --default-action "Permit" --dynamic-match-configurations "[{ipGroups:[{name:'example-ipGroup',ipAddressType:IPv4,ipPrefixes:['10.20.3.1/20']}],vlanGroups:[{name:'example-vlanGroup',vlans:['20-30']}],portGroups:[{name:'example-portGroup',ports:['100-200']}]}]" --match-configurations "[{matchConfigurationName:'example-match',sequenceNumber:123,ipAddressType:IPv4,matchConditions:[{etherTypes:['0x1'],fragments:['0xff00-0xffff'],ipLengths:['4094-9214'],ttlValues:[23],dscpMarkings:[32],portCondition:{flags:[established],portType:SourcePort,layer4Protocol:TCP,ports:['1-20'],portGroupNames:['example-portGroup']},protocolTypes:[TCP],vlanMatchCondition:{vlans:['20-30'],innerVlans:[30],vlanGroupNames:['example-vlanGroup']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.20.20.20/12'],ipGroupNames:['example-ipGroup']}}],actions:[{type:Count,counterName:'example-counter'}]}]"
+    syntax: az networkfabric acl create --resource-group "example-rg" --location "westus3" --resource-name "example-accesscontrollist" --configuration-type "Inline" --default-action "Permit" --dynamic-match-conf "[{ipGroups:[{name:'example-ipGroup',ipAddressType:IPv4,ipPrefixes:['10.20.3.1/20']}],vlanGroups:[{name:'example-vlanGroup',vlans:['20-30']}],portGroups:[{name:'example-portGroup',ports:['100-200']}]}]" --match-conf "[{matchConfigurationName:'example-match',sequenceNumber:123,ipAddressType:IPv4,matchConditions:[{etherTypes:['0x1'],fragments:['0xff00-0xffff'],ipLengths:['4094-9214'],ttlValues:[23],dscpMarkings:[32],portCondition:{flags:[established],portType:SourcePort,layer4Protocol:TCP,ports:['1-20'],portGroupNames:['example-portGroup']},protocolTypes:[TCP],vlanMatchCondition:{vlans:['20-30'],innerVlans:[30],vlanGroupNames:['example-vlanGroup']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.20.20.20/12'],ipGroupNames:['example-ipGroup']}}],actions:[{type:Count,counterName:'example-counter'}]}]"
   - summary: |-
       Help text for sub parameters under the specific parent can be viewed by using the shorthand syntax '??'. See https://github.com/Azure/azure-cli/tree/dev/doc/shorthand_syntax.md for more about shorthand syntax.
-    syntax: az networkfabric acl create --dynamic-match-configurations "??"
+    syntax: az networkfabric acl create --dynamic-match-conf "??"
   requiredParameters:
   - isRequired: true
     name: --configuration-type
@@ -63,13 +63,13 @@ directCommands:
     parameterValueGroup: "Deny, Permit"
     summary: |-
       Default action that needs to be applied when no condition is matched. Example: Permit.
-  - name: --dynamic-match-configurations
+  - name: --dynamic-match-conf
     summary: |-
       List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
       Location of Azure region  When not specified, the location of the resource group will be used.
-  - name: --match-configurations
+  - name: --match-conf
     summary: |-
       List of match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
@@ -158,6 +158,69 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_networkfabric_acl_update
+  name: az networkfabric acl update
+  summary: |-
+    Update the Access Control List resource.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az networkfabric acl update [--acls-url]
+                                [--annotation]
+                                [--configuration-type {File, Inline}]
+                                [--default-action {Deny, Permit}]
+                                [--dynamic-match-conf]
+                                [--ids]
+                                [--match-conf]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--resource-group]
+                                [--resource-name]
+                                [--subscription]
+                                [--tags]
+  examples:
+  - summary: |-
+      Update ACL with Inline configuration type
+    syntax: az networkfabric acl update -g "example-rg" --resource-name "example-acl" --configuration-type "Inline" --default-action "Permit"  --dynamic-match-conf "[{ipGroups:[{name:'example-ipGroup',ipAddressType:IPv4,ipPrefixes:['10.20.3.1/20']}],vlanGroups:[{name:'example-vlanGroup',vlans:['20-30']}],portGroups:[{name:'example-portGroup',ports:['100-200']}]}]" --match-conf "[{matchConfigurationName:'example-match',sequenceNumber:123,ipAddressType:IPv4,matchConditions:[{etherTypes:['0x1'],fragments:['0xff00-0xffff'],ipLengths:['4094-9214'],ttlValues:[23],dscpMarkings:[32],portCondition:{flags:[established],portType:SourcePort,layer4Protocol:TCP,ports:['1-20'],portGroupNames:['example-portGroup']},protocolTypes:[TCP],vlanMatchCondition:{vlans:['20-30'],innerVlans:[30],vlanGroupNames:['example-vlanGroup']},ipCondition:{type:SourceIP,prefixType:Prefix,ipPrefixValues:['10.20.20.20/12'],ipGroupNames:['example-ipGroup']}}],actions:[{type:Count,counterName:'example-counter'}]}]"
+  optionalParameters:
+  - name: --acls-url
+    summary: |-
+      Access Control List file URL.
+  - name: --annotation
+    summary: |-
+      Description for underlying resource.
+  - name: --configuration-type
+    parameterValueGroup: "File, Inline"
+    summary: |-
+      Input method to configure Access Control List. Example: File.
+  - name: --default-action
+    parameterValueGroup: "Deny, Permit"
+    summary: |-
+      Default action that needs to be applied when no condition is matched. Example: Permit.
+  - name: --dynamic-match-conf
+    summary: |-
+      List of dynamic match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --match-conf
+    summary: |-
+      List of match configurations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      Name of the resource group.
+  - name: --resource-name
+    summary: |-
+      Name of the Access Control List.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --tags
+    summary: |-
+      Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_networkfabric_acl_wait
   name: az networkfabric acl wait
   summary: |-
@@ -221,6 +284,7 @@ commands:
 - az_networkfabric_acl_delete
 - az_networkfabric_acl_list
 - az_networkfabric_acl_show
+- az_networkfabric_acl_update
 - az_networkfabric_acl_wait
 globalParameters:
 - name: --debug
