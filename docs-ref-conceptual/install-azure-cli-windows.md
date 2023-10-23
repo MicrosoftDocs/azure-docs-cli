@@ -37,6 +37,8 @@ Download and install the latest release of the Azure CLI. When the installer ask
 
 > [!div class="nextstepaction"]
 > [Latest release of the Azure CLI (32-bit)](https://aka.ms/installazurecliwindows)
+
+> [!div class="nextstepaction"]
 > [Latest release of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowsx64)
 
 If you have previously installed the Azure CLI, running either the 32-bit or 64-bit MSI will overwrite an existing installation.
