@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/26/2023
+ms.date: 10/31/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,18 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## October 31, 2023
+
+Version 2.53.1
+
+### AKS
+
+* Hotfix: `az aks update`: Fix bug where supportPlan can be reset to None
+
+### App Service
+
+* [BREAKING CHANGE] Redact appsettings output on set/delete commands
 
 ## September 26, 2023
 
