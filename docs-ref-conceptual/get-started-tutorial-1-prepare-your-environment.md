@@ -1,6 +1,6 @@
 ---
-title: Get started with the Azure CLI by changing your subscription | Microsoft Docs
-description: Learn how to use the Azure CLI by changing your subscription.
+title: Learn to use the Azure CLI by first configuring your environment | Microsoft Docs
+description: Learn Azure CLI terms, change a subscription, set environment variables, and create resource groups containing a random ID.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -9,9 +9,9 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli
-keywords: azure subscription, az account
+keywords: azure, az account, az group, az config, az init, configuration
 ---
-# Learn how to use the Azure CLI
+# Prepare your environment for the Azure CLI
 
 Automated tools that use Azure services should always have restricted permissions to ensure that Azure resources are secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals. An Azure service principal is an identity created for use with applications, hosted services, and automated tools. This identity is used to access resources.
 
@@ -39,7 +39,7 @@ This tutorial also covers these advanced topics:
 
 ## Prerequisites
 
-* If you don't have an [Azure subscription](../articles/guides/developer/azure-developer-guide.md#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
+* If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
@@ -51,12 +51,12 @@ This tutorial also covers these advanced topics:
 
 The Azure CLI is comprised of four objects:
 
-* Reference groups
-* Space-delimited reference subgroups
-* Reference commands
-* Reference command parameters
+* Reference **groups**
+* Space-delimited reference **subgroups**
+* Reference **commands**
+* Reference command **parameters**
 
-These objects all sit under one of two "umbrellas" often refered to as "type":
+These objects all sit under one of two "umbrellas" often referred to as "type":
 
 * Core
 * Extension
@@ -67,7 +67,7 @@ Every Azure CLI reference group, subgroup, command and parameter has one of thre
 * Preview
 * GA (General acceptance)
 
-Here are examples, but _check the reference link for actual information._
+Here are examples, but _use the reference link for actual information._
 
 |Type|Group|space-delimited subgroups|Command|Parameter example|Status|Link|
 |-|-|-|-|-|-|-|
@@ -82,19 +82,22 @@ For a history of each command group, see [release notes](release-notes-azure-cli
 After logging into the Azure CLI, always check your default subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here is a code example you can use.
 
 ```azurecli-interactive
+# see your current default subscription
+az account show
+
 # find the list of subscriptions available to you
 az account list --output table
 
 # set your default subscription
 az account set --subscription mySubscriptionName
 
-# you can also use your subscription ID
+# you can also set your subscription using your subscription ID
 az account set --subscription 00000000-0000-0000-0000-000000000000
 ```
 
 ## Create and remove a resource group
 
-A resource group is a container for Azure resources.  To create a resource group, you need `contributor` permissions in your subscription.
+A resource group is a container for Azure resources. To create a resource group, you need permissions of a `contributor` role or higher in your subscription.
 
 ### Create a resource group
 
@@ -104,7 +107,7 @@ A resource group is a container for Azure resources.  To create a resource group
    az group exist --name theNameIwant
    ```
 
-1. Determine the location where your resource group will reside. For a list of available Azure locations, see [Choose the right Azure region for you](/explore/global-infrastructure/geographies/#overview).
+1. Determine the location where your resource group will reside. For a list of available Azure locations, see [Choose the right Azure region for you](https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview).
 
 1. It is time to create your resource group!
 
@@ -150,47 +153,47 @@ az group list --output table
 az group delete --name "msdocs-tutorial-rg-0000000" --no-wait
 ```
 
-## Set default environment variables
+## Work with environment variables
 
 The Azure CLI offers several options to allow you to reuse common parameter values. These default values are stored in environment variables.
 
-1. Set your default resource group
+1. Set your default resource group.
 
    ```azurecli-interactive
-   az config set defaults.group=msdocs-tutorial-rg-0000000
+   az config set defaults.group="msdocs-tutorial-rg-0000000"
    ```
 
-1. Set multiple environment variables at once
+1. Set multiple environment variables at once.
 
    When working with the Azure CLI, many parameters take multiple values separated by a space. Configuration values is one such instance. This example sets both the `.location` and `.group` defaults that will be used by the `--location` and `--resource-group` parameters.
 
    ```azurecli-interactive
-   az config set defaults.location=westus2 defaults.group=msdocs-tutorial-rg-0000000
+   az config set defaults.location=westus2 defaults.group="msdocs-tutorial-rg-0000000"
    ```
 
-1. Set your default output
+1. Set your default output.
 
-   When you installed the Azure CLI the default output is automatically sent to `json`.  However, this is one of the most important defaults to understand and set.  **Output determines what appears on your console and what is written to your log file.** Always use `none` when you are creating resources that return keys, passwords and secrets.
+   When you chose to work in Azure Cloud Shell, or installed the Azure CLI locally, the default output is automatically sent to `json`.  However, this is one of the most important defaults to understand and set.  **Output determines what appears on your console and what is written to your log file.** Always use an output of `none` when you are creating resources that return keys, passwords and secrets.
 
    ```azurecli-interactive
    az config set core.output=none
    ```
 
-   In this tutorial we are not working with secrets, so set the default back to `json` so you can see the returned output of each reference command.
+   In this tutorial we are not working with secrets.  Set the default back to `json` so you can see the returned output of each reference command.
 
    ```azurecli-interactive
    az config set core.output=json
    ```
 
-1. Learn to use `az init`
+1. Learn to use `az init`.
 
-   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press <kbd>Enter</kbd>.  Follow the prompts provided. (The first nice thing about `az init` is that it gives you all of your current settings!)
+   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press <kbd>Enter</kbd>.  Follow the prompts provided. (The first nice thing about [az init](/cli/azure/reference-index#az-init) is that it gives you all of your current settings!)
 
    ```azurecli-interactive
    az init
    ```
 
-1. Find and read your configuration file
+1. Find and read your configuration file.
 
    If you work under a "trust but verify" mindset, you'll want to know where your configuration files are stored and what they contain.  The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS, and `%USERPROFILE%\.azure` on Windows. Find your config file now and see what it contains.
 
@@ -198,7 +201,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 ## Get more detail
 
-Do you want more detail on one of the topics covered in this article? Use the links in this table to learn more.
+Do you want more detail on one of the topics covered in this tutorial step? Use the links in this table to learn more.
 
 |Topic| Learn more|
 |-|-|
