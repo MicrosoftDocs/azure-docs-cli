@@ -1,5 +1,5 @@
 ---
-title: Learn to use the Azure CLI by first configuring your environment | Microsoft Docs
+title: Use the Azure CLI by first configuring your environment | Microsoft Docs
 description: Learn Azure CLI terms, change a subscription, set environment variables, and create resource groups containing a random ID.
 manager: jasongroce
 author: dbradish-microsoft
@@ -13,14 +13,13 @@ keywords: azure, az account, az group, az config, az init, configuration
 ---
 # Prepare your environment for the Azure CLI
 
-Automated tools that use Azure services should always have restricted permissions to ensure that Azure resources are secure. Therefore, instead of having applications sign in as a fully privileged user, Azure offers service principals. An Azure service principal is an identity created for use with applications, hosted services, and automated tools. This identity is used to access resources.
+{opening paragraph}
 
 In this tutorial, you learn how to:
 
 > [!div class="checklist"]
 >
-> * List and change subscriptions
-> * Set configuration variables (output, location, and maybe two others)
+> * Prepare your environment to use the Azure CLI
 > * Change a script to run in both Bash and PowerShell
 > * Store command output in a variable (`--query`)
 > * Get a value from a file
@@ -213,7 +212,7 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 ## Next Step
 
-Now that you've learned how to configure your environment to work successfully with the Azure CLI, proceed to the next step to learn how to ...
+Now that you've learned how to configure your environment to work successfully with the Azure CLI, proceed to the next step to learn the scripting differences between Bash and PowerShell.
 
 > [!div class="nextstepaction"]
-> [next step name](./azure-cli-sp-tutorial-2.md)
+> [next step name](get-started-2-work-in-both-bash-and-powershell.md)
