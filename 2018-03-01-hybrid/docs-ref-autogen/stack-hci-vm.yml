@@ -31,6 +31,7 @@ directCommands:
                            [--computer-name]
                            [--enable-agent {false, true}]
                            [--enable-secure-boot {false, true}]
+                           [--enable-vm-config-agent {false, true}]
                            [--enable-vtpm {false, true}]
                            [--image]
                            [--location]
@@ -86,6 +87,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable secure boot.
+  - name: --enable-vm-config-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Indicates whether virtual machine configuration agent should be provisioned on the virtual machine. When this property is not specified, default behavior is to set it to false.
   - name: --enable-vtpm
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -331,7 +336,10 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'stack-hci-vm' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az stack-hci-vm update [--ids]
+    az stack-hci-vm update [--computer-name]
+                           [--enable-agent {false, true}]
+                           [--enable-vm-config-agent {false, true}]
+                           [--ids]
                            [--memory-mb]
                            [--name]
                            [--nics]
@@ -346,6 +354,17 @@ directCommands:
       UpdateVirtualMachine
     syntax: az stack-hci-vm update --resource-group "test-rg" --tags additionalProperties="sample" --name "test-vm" --v-cpus-available XX --memory-mb XX
   optionalParameters:
+  - name: --computer-name
+    summary: |-
+      Update the hostname of the VM.
+  - name: --enable-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Indicates whether virtual machine agent should be provisioned on the virtual machine during virtual machine update. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later.
+  - name: --enable-vm-config-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Indicates whether virtual machine configuration agent should be provisioned on the virtual machine during the virtual machine update .
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -395,18 +414,18 @@ commands:
 - az_stack-hci-vm_image_update
 - az_stack-hci-vm_list
 - az_stack-hci-vm_network
+- az_stack-hci-vm_network_lnet
+- az_stack-hci-vm_network_lnet_create
+- az_stack-hci-vm_network_lnet_delete
+- az_stack-hci-vm_network_lnet_list
+- az_stack-hci-vm_network_lnet_show
+- az_stack-hci-vm_network_lnet_update
 - az_stack-hci-vm_network_nic
 - az_stack-hci-vm_network_nic_create
 - az_stack-hci-vm_network_nic_delete
 - az_stack-hci-vm_network_nic_list
 - az_stack-hci-vm_network_nic_show
 - az_stack-hci-vm_network_nic_update
-- az_stack-hci-vm_network_vnet
-- az_stack-hci-vm_network_vnet_create
-- az_stack-hci-vm_network_vnet_delete
-- az_stack-hci-vm_network_vnet_list
-- az_stack-hci-vm_network_vnet_show
-- az_stack-hci-vm_network_vnet_update
 - az_stack-hci-vm_nic
 - az_stack-hci-vm_nic_add
 - az_stack-hci-vm_nic_remove
