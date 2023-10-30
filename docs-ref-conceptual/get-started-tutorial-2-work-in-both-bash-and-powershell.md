@@ -140,14 +140,26 @@ The Azure CLI returns at least 100 lines of JSON as output when a new storage ac
 }
 ```
 
+## Become aware of line continuation characters
+
+Line continuation characters are different between environments and are not interchangeable.
+
+| Environment | Line continuation character |
+| - | - |
+| Bash | Backslash (`\`)
+| PowerShell | Backtick (``\``)
+| Cmd | Carrot (`^`)
+
+ The <kbd>Copy</kbd> button of the Azure CLI code block removes the backslash (`\`) and the backtick (``\``) by design. If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
+
 ## Learn about quoting differences
 
-There are different quoting rules for the Bash, PowerShell and Cmd environments. Here is an example of a parameter value that contains double quotes:
+There are also different quoting rules for each environment. Here is an example of a parameter value that contains double quotes:
 
 * Bash or PowerShell: `'{"key": "value"}'`
 * Cmd: `"{\"key\": \"value\"}"`
 
-Many Azure CLI parameters accept a space-separated list of values.
+Many Azure CLI parameters accept a space-separated list of values. This impacts quoting.
 
 * Unquoted space-separated list: `--parameterName firstValue secondValue`
 * Quoted space-separated list: `--parameterName "firstValue" "secondValue"`
@@ -193,10 +205,6 @@ expected: {"key":"value"}
 ```
 
 ---
-
-## Understand line continuation characters
-
-Line continuation characters are also different between environments. The <kbd>Copy</kbd> button of the Azure CLI code block removes the backslash (`\`) and the backtick (``\``) by design. If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
 
 Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about line continuation and quoting differences. The `--tags` parameter accepts a space-separated list of values.
 
