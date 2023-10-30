@@ -13,16 +13,14 @@ keywords: azure, az account, az group, az config, az init, configuration
 ---
 # Prepare your environment for the Azure CLI
 
-{opening paragraph}
-
-In this tutorial, you learn how to:
+Welcome to the Azure CLI! You have chosen a tool that will allow you to create, update, and delete Azure resources from a command-line. In this tutorial, you will onboard with the Azure CLI and learn how to complete the following tasks:
 
 > [!div class="checklist"]
 >
 > * Prepare your environment to use the Azure CLI
 > * Change a script to run in both Bash and PowerShell
 > * Store command output in a variable (`--query`)
-> * Get a value from a file
+> * Get a value from a file and store it in a variable
 > * Use interactive commands (az `interactive`, `scenario`, `next` and `find`)
 > * Get error details (`--debug` and azPS error handling, where is my log?)
 > * Find examples for a specific commands (ref content, conceptual index, sample index)
@@ -88,10 +86,10 @@ az account show
 az account list --output table
 
 # set your default subscription
-az account set --subscription mySubscriptionName
+az account set --subscription <mySubscriptionName>
 
 # you can also set your subscription using your subscription ID
-az account set --subscription 00000000-0000-0000-0000-000000000000
+az account set --subscription <00000000-0000-0000-0000-000000000000>
 ```
 
 ## Create and remove a resource group
@@ -100,18 +98,22 @@ A resource group is a container for Azure resources. To create a resource group,
 
 ### Create a resource group
 
-1. A resource group name must be unique. First check if the name you want is available.
+1. A resource group name must be unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command.
 
    ```azurecli-interactive
-   az group exist --name theNameIwant
+   az group exists --name <theNameIwant>
    ```
 
-1. Determine the location where your resource group will reside. For a list of available Azure locations, see [Choose the right Azure region for you](https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview).
-
-1. It is time to create your resource group!
+1. Retrieve a list of supported regions for your subscription with the [az account list-locations](/cli/azure/account#az-account-list-locations) command. For a list of available Azure locations, see [Choose the right Azure region for you](https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview).
 
    ```azurecli-interactive
-   az group create --location eastus --name myRG1
+   az account list-locations --query "[].{Region:name}" --output table
+   ```
+
+1. It is time to create your resource group! Use the [az group create](/cli/azure/group#az-group-create) command.
+
+   ```azurecli-interactive
+   az group create --location <eastus> --name <myRG1>
    ```
 
 ### Use a random ID
@@ -123,7 +125,7 @@ When testing, it is better to create a resource group that contains a random ID.
 let "randomIdentifier=$RANDOM*$RANDOM"
 location="East US"
 resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
-az group create --name $resourceGroup --location "$location" --output json
+az group create --name $resourceGroup --location $location --output json
 ```
 
 ```output
@@ -149,7 +151,7 @@ When you delete a resource group, you delete every object inside that resource g
 az group list --output table
 
 # Delete a resource group and tell your console not to wait
-az group delete --name "msdocs-tutorial-rg-0000000" --no-wait
+az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
 ```
 
 ## Work with environment variables
@@ -159,7 +161,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 1. Set your default resource group.
 
    ```azurecli-interactive
-   az config set defaults.group="msdocs-tutorial-rg-0000000"
+   az config set defaults.group=<msdocs-tutorial-rg-0000000>
    ```
 
 1. Set multiple environment variables at once.
@@ -167,7 +169,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
    When working with the Azure CLI, many parameters take multiple values separated by a space. Configuration values is one such instance. This example sets both the `.location` and `.group` defaults that will be used by the `--location` and `--resource-group` parameters.
 
    ```azurecli-interactive
-   az config set defaults.location=westus2 defaults.group="msdocs-tutorial-rg-0000000"
+   az config set defaults.location=westus2 defaults.group=<msdocs-tutorial-rg-0000000>
    ```
 
 1. Set your default output.
