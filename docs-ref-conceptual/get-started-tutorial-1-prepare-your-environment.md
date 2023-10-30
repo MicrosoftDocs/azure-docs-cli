@@ -18,12 +18,22 @@ Welcome to the Azure CLI! You have chosen a tool that will allow you to create, 
 > [!div class="checklist"]
 >
 > * Prepare your environment to use the Azure CLI
+>   * Terms
+>   * Find and change subscription
+>   * Using random IDs (create/remove resource groups)
+>   * Setting environment variables (defaults)
 > * Write commands for both Bash and PowerShell environments
-> * Store command output in a variable (`--query`)
-> * Get a value from a file and store it in a variable
+>   * line continuation
+>   * quoting
+>   * debugging (`--debug` and azPS error handling, where is my log?)
+> * Using variables
+>   * Store command output in a variable (`--query`)
+>   * Get a value from a blob storage (CosmosDB?) and store it in a variable 
+>   * Get a value from a local file and store it in a variable
 > * Use interactive commands (az `interactive`, `scenario`, `next` and `find`)
-> * Get error details (`--debug` and azPS error handling, where is my log?)
-> * Find examples for a specific commands (ref content, conceptual index, sample index)
+> * Find examples for a specific commands 
+>   * Information/links to ref content, conceptual index, sample index
+>   * Give examples of Portal CoPilot for Azure CLI searches specifically
 
 This tutorial also covers these advanced topics:
 
@@ -32,7 +42,7 @@ This tutorial also covers these advanced topics:
 > * Use generic commands (`az rest`, `az resource`)
 > * Run scripts concurrently
 > * Learn advanced Bash commands
-> * Use az-dif site before you upgrade
+> * Use az-dif-x site before you upgrade
 
 ## Prerequisites
 

@@ -11,9 +11,11 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 
 ---
-# Write Azure CLI commands for both Bash and PowerShell environments
+# Write Azure CLI commands for different environments
 
-Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash), [Windows PowerShell](/powershell/scripting/overview), and [Windows command shell (Cmd)](/windows-server/administration/windows-commands/windows-commands) environments. However, there are subtile scripting  and line continuation character differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for all three environments.
+Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash), [PowerShell](/powershell/scripting/overview), and [Windows command shell (Cmd)](/windows-server/administration/windows-commands/windows-commands) environments. However, there are subtile scripting differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for all three environments.
+
+> [!NOTE] The Azure CLI also runs in Azure Cloud Shell (Bash or PowerShell) and Docker Containers (Bash), but these are technically "tools" and not "environments". For more information, see [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
 
 ## Prerequisites
 
@@ -140,7 +142,7 @@ The Azure CLI returns at least 100 lines of JSON as output when a new storage ac
 }
 ```
 
-## Become aware of line continuation characters
+## Be aware of line continuation characters
 
 Line continuation characters are different between environments and are not interchangeable.
 
@@ -152,7 +154,7 @@ Line continuation characters are different between environments and are not inte
 
  The <kbd>Copy</kbd> button of the Azure CLI code block removes the backslash (`\`) and the backtick (``\``) by design. If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
 
-## Learn about quoting differences
+## Understand quoting differences
 
 There are also different quoting rules for each environment. Here is an example of a parameter value that contains double quotes:
 
@@ -165,46 +167,7 @@ Many Azure CLI parameters accept a space-separated list of values. This impacts 
 * Quoted space-separated list: `--parameterName "firstValue" "secondValue"`
 * Passing values that contain a space: `--parameterName "value1a value1b" "value2a value2b" "value3"`
 
-If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console.
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-strExpression='{"key":"value"}'
-echo $strExpression
-```
-
-```output
-{"key":"value"}
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-$strExpression='{"key":"value"}'
-echo $strExpression
-```
-
-```output
-{"key":"value"}
-```
-
-# [Cmd](#tab/cmd)
-
-```azurecli-interactive
-set strExpression="{\"key\": \"value\"}"
-set strExpression="{^"key^": ^"value^"}"
-echo %strExpression%
-```
-
-```output
-"{\"key\": \"value\"}"
-expected: {"key":"value"}
-
-"{^"key^": ^"value^"}"
-```
-
----
+If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug and error handling](#debug-and-error-handling).
 
 Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about line continuation and quoting differences. The `--tags` parameter accepts a space-separated list of values.
 
@@ -271,6 +234,7 @@ az storage account update --name <msdocssa00000000> `
 az storage account update --name <msdocssa00000000> `
                           --resource-group <msdocs-tutorial-rg-00000000> `
                           --tags "Floor number=f1" "Cost center=cc1"
+
 # Create a new tag with an empty value.
 az storage account update --name <msdocssa00000000> `
                           --resource-group <msdocs-tutorial-rg-00000000> `
@@ -281,7 +245,7 @@ az storage account update --name <msdocssa00000000> `
 $newTag="tag1=tag value with spaces"
 az storage account update --name <msdocssa00000000> \
                           --resource-group <msdocs-tutorial-rg-00000000> \
-                          --tags "$newTag"  
+                          --tags "$newTag"
 ```
 
 # [Cmd](#tab/cmd)
@@ -315,9 +279,9 @@ Error: (InvalidTagNameCharacters) The tag names '\$newTag' have reserved charact
 
 ## Compare more environment-specific scripts
 
-Most Microsoft articles are written and tested in a Bash environment using Azure Cloud Shell.  If you prefer to work in PowerShell or Windows Command, modify the Bash example before executing it in another environment.
+Most Microsoft articles are written and tested in a Bash environment using Azure Cloud Shell. If you prefer to work in PowerShell or Windows Command, modify the Bash example before executing it in another environment.
 
-Take a deeper look at these script differences. 
+Take a deeper look at these script differences.
 
 # [Bash](#tab/bash)
 
@@ -377,11 +341,203 @@ az vm list --resource-group QueryDemo ^
 
 ---
 
+## Debug and error handling
+
+The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is extensive, but it will give you more information on execution errors.
+
+# [Bash](#tab/bash)
+
+These examples reveal the actual arguments received by the Azure CLI in Python's syntax.
+
+This example is **correct**.
+
+```azurecli-interactive
+az '{"key":"value"}' --debug
+```
+
+See what the Azure CLI is interpreting in the `Command arguments` line of the output.
+
+```output
+Command arguments: ['{"key":"value"}', '--debug']
+```
+
+This second example is also **correct**. (The Bash `clear` command provides a clean screen for the second test.)
+
+```azurecli-interactive
+clear
+az "{\"key\":\"value\"}" --debug
+```
+
+```output
+Command arguments: ['{"key":"value"}', '--debug']
+```
+
+This third example is also **incorrect** as quotes are interpreted by Bash.
+
+```azurecli-interactive
+clear
+az {"key":"value"} --debug
+```
+
+```output
+Command arguments: ['{key:value}', '--debug']
+```
+
+This last example is also **incorrect** as spaces are interpreted by Bash. (Note the space before `: "value"`.)
+
+```azurecli-interactive
+clear
+az {"key": "value"} --debug
+```
+
+```output
+Command arguments: ['{key:', 'value}', '--debug']
+```
+
+# [PowerShell](#tab/powershell)
+
+This example is **correct** in both bash and PowerShell.
+
+```azurecli-interactive
+az '{"key":"value"}' --debug
+```
+
+In PowerShell, the double quotes around the `key:value` pair is removed by design.
+
+```output
+Command arguments: ['{key:value}', '--debug']
+```
+
+> [!TODO] Why are the double quotes missing? How do I keep the quotes?
+> Compare to
+>
+>$strExpression='{"key":"value"}'
+>echo $strExpression
+
+These examples are all **incorrect**.
+
+```azurecli-interactive
+# Example 2
+cls
+az "{\"key\":\"value\"}" --debug
+
+# Example 2 output
+Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
+
+# Example 3
+cls
+az {"key":"value"} --debug
+
+# Example 3 output
+Unexpected token ':"value"' in expression or statement.
+
+#Example 4
+cls
+az {"key": "value"} --debug
+
+# Example 4 output
+Error: Unexpected token ':' in expression or statement.
+```
+
+# [Cmd](#tab/cmd)
+
+This example is **correct**.
+
+```azurecli-interactive
+az "{\"key\":\"value\"}" --debug
+```
+
+```output
+Command arguments: ['{"key":"value"}', '--debug']
+```
+
+These examples are all **incorrect**.
+
+```azurecli-interactive
+# Example 2
+cls
+az '{"key":"value"}' --debug
+
+# Example 2 output
+Command arguments: ["'{key:value}'", '--debug']
+
+# Example 3
+cls
+az {"key":"value"} --debug
+
+# Example 3 output
+Command arguments: ['{key:value}', '--debug']
+
+# Example 4
+cls
+az "{"key":"value"}" --debug
+
+# Example 4 output
+Command arguments: ['{key:value}', '--debug']
+```
+
+---
+
+Although `--debug` tells you exactly what the Azure CLI is interpreting, a second option is to return the value of an expression to your console. This method is very helpful when verifying the results of `--query` that is covered in detail in [tutorial step 3]().
+
+# [Bash](#tab/bash)
+
+```azurecli-interactive
+strExpression='{"key":"value"}'
+echo $strExpression
+```
+
+```output
+{"key":"value"}
+```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+$strExpression='{"key":"value"}'
+echo $strExpression
+```
+
+```output
+{"key":"value"}
+```
+
+# [Cmd](#tab/cmd)
+
+In Cmd, the `echo` command returns the literal string including escape characters. Compare the `--debug` and `echo` output of Cmd:
+
+|CLI|Output|
+|-|-|
+|az "{\"key\":\"value\"}" --debug | Command arguments: ['{"key":"value"}', '--debug']
+|set strExpression='"{\"key\": \"value\"}"' |
+| echo %strExpression% | "{\"key\": \"value\"}"
+
+> [!TODO] How do I get {"key":"value"} in CMD?
+
+```azurecli-interactive
+az "{\"key\":\"value\"}" --debug
+
+set strExpression='"{\"key\": \"value\"}"'
+set strExpression="{^"key^": ^"value^"}"
+echo %strExpression%
+```
+
+```output
+"{\"key\": \"value\"}"
+expected: {"key":"value"}
+
+"{^"key^": ^"value^"}"
+```
+
+---
+
 ## Troubleshooting
 
 There are common errors when an Azure CLI reference command is not written properly.
 
 * "Bad request ...{something} is invalid" might be caused by a quotation mark or lack of one.
+
+* "Unexpected token..." is seen when there is an extra space or quote.
 
 * "Invalid jmespath_type value" error often comes from incorrect quoting in the `--query` parameter.
 
@@ -399,7 +555,7 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 |Scripting differences | [Bash quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)|
 | | [PowerShell quoting](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
 | | [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
-| | [Windows command line tips](https://ss64.com/nt/syntax-esc.html)
+| | [Windows command-line tips](https://ss64.com/nt/syntax-esc.html)
 | | [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
 | | Compare syntax of Cmd, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
 
