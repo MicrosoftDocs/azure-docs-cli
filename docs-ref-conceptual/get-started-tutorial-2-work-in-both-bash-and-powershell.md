@@ -13,7 +13,7 @@ keywords: azure,
 ---
 # Write Azure CLI commands for both Bash and PowerShell
 
-Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash) and [PowerShell](/powershell/scripting/overview) environments. However, there are subtile scripting differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for both environments.
+Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash) and [PowerShell](/powershell/scripting/overview) environments. However, there are subtile scripting  and line continuation character differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for both environments.
 
 ## Prerequisites
 
@@ -196,9 +196,9 @@ For more information on quoting rules, see [Use quotation marks in parameters](u
 
 These three scripts are identical except for the line continuation character.  The <kbd>Copy</kbd> button of the Azure CLI code block removes the backslash (`\`) and the backtick (``\``). If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
 
-These examples also demonstrate the quoting rules of blank spaces.
+These examples also demonstrate quoting blank spaces, double quotes, and using variables containing quotes.
 
-Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account. The `--tags` parameter accepts a space-separated list of values.
+Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about quoting differences. The `--tags` parameter accepts a space-separated list of values.
 
 # [Bash](#tab/bash)
 
@@ -312,12 +312,14 @@ Take a deeper look at these Bash and PowerShell script differences.
 
 # [Bash](#tab/bash)
 
-Example of escaping double quotes in Bash.
+Example of using double quotes in Bash.
 
 ```azurecli-interactive
-az rest --method Put \
-        --uri /subscriptions/mySubscriptionID/resourceGroups/myGroupName/providers/Microsoft.Sql/servers/serverName/sqlVulnerabilityAssessments/default?api-version=2022-02-01-preview \
-        --body '{   \"properties\": {     \"state\": \"Enabled\" }}'
+az rest --method patch \
+        --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.HybridCompute/machines/<machineName>?api-version=2022-12-27-preview \
+        --resource https://management.azure.com/ \
+        --headers Content-Type=application/json \
+        --body '{"properties": {"agentUpgrade": {"enableAutomaticUpgrade": false}}}'
 
 Example of escaping single quotes in Bash.
 
@@ -329,12 +331,14 @@ az vm list --resource-group QueryDemo \
 
 # [PowerShell](#tab/powershell)
 
-Example of using double quotes in PowerShell.
+Example of escaping double quotes in PowerShell.
 
 ```azurecli-interactive
-az rest --method Put `
-        --uri /subscriptions/mySubscriptionID/resourceGroups/myGroupName/providers/Microsoft.Sql/servers/serverName/sqlVulnerabilityAssessments/default?api-version=2022-02-01-preview `
-        --body ‘{ "properties": { "state": "Enabled" } }’
+az rest --method patch `
+        --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.HybridCompute/machines/<machineName>?api-version=2022-12-27-preview `
+        --resource https://management.azure.com/ `
+        --headers Content-Type=application/json `
+        --body '{\"properties\": {\"agentUpgrade\": {\"enableAutomaticUpgrade\": false}}}'
 ```
 
 Example of using single quotes in Powershell.
