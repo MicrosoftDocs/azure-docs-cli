@@ -13,7 +13,7 @@ keywords: azure,
 ---
 # Write Azure CLI commands for both Bash and PowerShell environments
 
-Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash) and [PowerShell](/powershell/scripting/overview) environments. However, there are subtile scripting  and line continuation character differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for both environments.
+Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash), [Windows PowerShell](/powershell/scripting/overview), and [Windows command shell (Cmd)](/windows-server/administration/windows-commands/windows-commands) environments. However, there are subtile scripting  and line continuation character differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for all three environments.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ Azure CLI commands can be executed in both [Bash](https://opensource.com/resourc
 
 ## Create a storage account
 
-Create an Azure storage account for use with quoting examples. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+Create an Azure storage account to use in this tutorial. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
 
 ```azurecli-interactive
 # Variable block
@@ -36,7 +36,7 @@ az storage account create --name $storageAccount \
                           --output json
 ```
 
-The Azure CLI returns at least 100 lines of JSON as output. Here are a few properties that are used in this tutorial.
+The Azure CLI returns at least 100 lines of JSON as output when a new storage account is created. Here are a few properties that are used in this tutorial.
 
 ```output
 {
@@ -140,12 +140,12 @@ The Azure CLI returns at least 100 lines of JSON as output. Here are a few prope
 }
 ```
 
-## Learn about quoting rules
+## Learn about quoting differences
 
-There are different quoting rules for the Bash, PowerShell and Windows Command environments. Here is an example of a parameter value that contains double quotes:
+There are different quoting rules for the Bash, PowerShell and Cmd environments. Here is an example of a parameter value that contains double quotes:
 
 * Bash or PowerShell: `'{"key": "value"}'`
-* Widows command: `"{\"key\": \"value\"}"`
+* Cmd: `"{\"key\": \"value\"}"`
 
 Many Azure CLI parameters accept a space-separated list of values.
 
@@ -177,29 +177,30 @@ echo $strExpression
 {"key":"value"}
 ```
 
-# [Windows command](#tab/cmd)
+# [Cmd](#tab/cmd)
 
 ```azurecli-interactive
 set strExpression="{\"key\": \"value\"}"
+set strExpression="{^"key^": ^"value^"}"
 echo %strExpression%
 ```
 
 ```output
 "{\"key\": \"value\"}"
 expected: {"key":"value"}
+
+"{^"key^": ^"value^"}"
 ```
 
 ---
 
-For more information on quoting rules, see [Use quotation marks in parameters](use-cli-effectively.md#use-quotation-marks-in-parameters). 
-
 ## Understand line continuation characters
 
-These three scripts are identical except for the line continuation character.  The <kbd>Copy</kbd> button of the Azure CLI code block removes the backslash (`\`) and the backtick (``\``). If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
+Line continuation characters are also different between environments. The <kbd>Copy</kbd> button of the Azure CLI code block removes the backslash (`\`) and the backtick (``\``) by design. If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
 
-These examples also demonstrate quoting blank spaces, double quotes, and using variables containing quotes.
+Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about line continuation and quoting differences. The `--tags` parameter accepts a space-separated list of values.
 
-Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about quoting differences. The `--tags` parameter accepts a space-separated list of values.
+These examples demonstrate line continuation, double quotes, quoting blank spaces, and using variables containing quotes.
 
 # [Bash](#tab/bash)
 
@@ -224,6 +225,29 @@ newTag="tag1=tag value with spaces"
 az storage account update --name <msdocssa00000000> \
                           --resource-group <msdocs-tutorial-rg-00000000> \
                           --tags "$newTag"
+```
+
+If you don't want to overwrite previous tags, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
+
+```azurecli-interactive
+# Bash script to append to existing tags.
+
+# Get the resource ID of your storage account.
+saID=$(az resource show --resource-group <msdocs-tutorial-rg-00000000> \
+                        --name <msdocssa00000000> \
+                        --resource-type Microsoft.Storage/storageAccounts \
+                        --query "id" \
+                        --output tsv)
+
+echo My storage account ID is $saID
+
+# Append new tags.
+az tag update --resource-id $saID \
+              --operation merge
+              --tags <tagName>=<tagValue>
+
+# Get a list of all tags.
+az tag list --resource-id $saID
 ```
 
 # [PowerShell](#tab/powershell)
@@ -252,7 +276,7 @@ az storage account update --name <msdocssa00000000> \
                           --tags "$newTag"  
 ```
 
-# [Windows command](#tab/cmd)
+# [Cmd](#tab/cmd)
 
 ```azurecli-interactive
 # Create new tags.
@@ -281,39 +305,15 @@ Error: (InvalidTagNameCharacters) The tag names '\$newTag' have reserved charact
 
 ---
 
-If you don't want to overwrite previous tags, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
+## Compare more environment-specific scripts
 
-```azurecli-interactive
-# Bash script to append to existing tags.
+Most Microsoft articles are written and tested in a Bash environment using Azure Cloud Shell.  If you prefer to work in PowerShell or Windows Command, modify the Bash example before executing it in another environment.
 
-# Get the resource ID of your storage account.
-saID=$(az resource show --resource-group <msdocs-tutorial-rg-00000000> \
-                        --name <msdocssa00000000> \
-                        --resource-type Microsoft.Storage/storageAccounts \
-                        --query "id" \
-                        --output tsv)
-
-echo My storage account ID is $saID
-
-# Append new tags.
-az tag update --resource-id $saID \
-              --operation merge
-              --tags <tagName>=<tagValue>
-# Get a list of all tags.
-az tag list --resource-id $saID
-```
-
-## Compare more Bash and PowerShell scripts
-
-Most Microsoft articles are written and tested in a Bash environment using Azure Cloud Shell.  If you prefer to work in PowerShell, it is important to be aware of quoting differences between the two environments.
-
-The rules for using single quotes, double quotes and escape characters have slight differences and can cause errors when copying scripts. If you have an Azure CLI command that is giving a "Bad request ...{something} is invalid" error, it may be caused by a quotation mark or lack of one.
-
-Take a deeper look at these Bash and PowerShell script differences.
+Take a deeper look at these script differences. 
 
 # [Bash](#tab/bash)
 
-Example of using double quotes in Bash.
+Example of using double quotes in Bash within the `--body` parameter.
 
 ```azurecli-interactive
 az rest --method patch \
@@ -322,7 +322,7 @@ az rest --method patch \
         --headers Content-Type=application/json \
         --body '{"properties": {"agentUpgrade": {"enableAutomaticUpgrade": false}}}'
 
-Example of escaping single quotes in Bash.
+Example of escaping single quotes in Bash within the `--query` parameter.
 
 ```azurecli-interactive
 az vm list --resource-group QueryDemo \
@@ -332,7 +332,7 @@ az vm list --resource-group QueryDemo \
 
 # [PowerShell](#tab/powershell)
 
-Example of escaping double quotes in PowerShell.
+Example of escaping double quotes in PowerShell within the `--body` parameter.
 
 ```azurecli-interactive
 az rest --method patch `
@@ -342,7 +342,7 @@ az rest --method patch `
         --body '{\"properties\": {\"agentUpgrade\": {\"enableAutomaticUpgrade\": false}}}'
 ```
 
-Example of using single quotes in Powershell.
+Example of using single quotes in Powershell within the `--query` parameter.
 
 ```azurecli-interactive
 az vm list --resource-group QueryDemo `
@@ -350,16 +350,16 @@ az vm list --resource-group QueryDemo `
            --output table
 ```
 
-# [PowerShell](#tab/cmd)
+# [Cmd](#tab/cmd)
 
-Example of using double quotes in Windows Command Prompt.
+Example of using double quotes in Windows Command Prompt within the `--body` parameter.
 
 ```azurecli-interactive
 # Need az rest syntax for CMD here
 
 ```
 
-Example of using single quotes in Windows Command Prompt.
+Example of using single quotes in Windows Command Prompt within the `--query` parameter.
 
 ```azurecli-interactive
 az vm list --resource-group QueryDemo ^
@@ -369,9 +369,17 @@ az vm list --resource-group QueryDemo ^
 
 ---
 
-## Error handling differences between Bash and Powershell
+## Troubleshooting
 
+There are common errors when an Azure CLI reference command is not written properly.
 
+* "Bad request ...{something} is invalid" might be caused by a quotation mark or lack of one.
+
+* "Invalid jmespath_type value" error often comes from incorrect quoting in the `--query` parameter.
+
+* "Unrecognized arguments" is often caused by an incorrect line continuation character.
+
+* "Missing expression after unary operator" is seen when a line continuation character is missing.
 
 ## Get more detail
 
@@ -379,17 +387,17 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 |Topic| Learn more|
 |-|-|
-Scripting differences | [Bash quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)|
-| | [PowerShell quoting rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
-| | [Windows command line tips](https://ss64.com/nt/syntax-esc.html)
+|Environments | [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
+|Scripting differences | [Bash quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)|
+| | [PowerShell quoting](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
 | | [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+| | [Windows command line tips](https://ss64.com/nt/syntax-esc.html)
 | | [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
-| | Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
-|Error handling| [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
+| | Compare syntax of Cmd, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
 
 ## Next Step
 
-Now that you've learned how to modify parameter values for Bash and Powersehll, proceed to the next step to learn how to ...
+Now that you've learned how to modify parameter values for Bash, PowerShell and Windows Command, proceed to the next step to learn how to ...
 
 > [!div class="nextstepaction"]
 > [next step name](./azure-cli-sp-tutorial-2.md)
