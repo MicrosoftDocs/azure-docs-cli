@@ -27,7 +27,7 @@ to format CLI output. The argument values and types of output are:
 `none`   | No output other than errors and warnings
 
 > [!WARNING]
-> The output you choose can be written to your log file.
+> The output you choose can be written to the log file of the environment where Azure CLI is executed.
 > Use an output format of `none` or store command output in a variable to avoid exposing secrets such as API keys and credentials.
 > For more information, see [None output format](#none-output-format).
 
@@ -269,7 +269,7 @@ Azure CLI commands provide output that can be controlled in two ways:
 
 |Output control | Benefit | How-to
 |-|-|-|
-|Global setting| Select a default output value that you use the most so you don't have to continually provide an `--output` parameter for each reference command.| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
+|Environment variable| Set the `output` environment variable to change the default output of the Azure CLI.  Select an output type that you use the most so you don't have to continually provide the `--output` parameter for each reference command.| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
 |Command parameter| Specify output at the command level and give your scripts maximum flexibility. You control console output, logging and variable input for each reference command. | Override the default setting using a reference command's `--output` parameter.
 
 The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging isn't needed.
