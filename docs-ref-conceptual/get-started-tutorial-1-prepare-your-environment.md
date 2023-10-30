@@ -18,7 +18,7 @@ Welcome to the Azure CLI! You have chosen a tool that will allow you to create, 
 > [!div class="checklist"]
 >
 > * Prepare your environment to use the Azure CLI
-> * Change a script to run in both Bash and PowerShell
+> * Write commands for both Bash and PowerShell environments
 > * Store command output in a variable (`--query`)
 > * Get a value from a file and store it in a variable
 > * Use interactive commands (az `interactive`, `scenario`, `next` and `find`)

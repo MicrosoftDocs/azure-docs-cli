@@ -11,13 +11,14 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 
 ---
-# Write Azure CLI commands for both Bash and PowerShell
+# Write Azure CLI commands for both Bash and PowerShell environments
 
 Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash) and [PowerShell](/powershell/scripting/overview) environments. However, there are subtile scripting  and line continuation character differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for both environments.
 
 ## Prerequisites
 
-* You will need a resource group with `contributor` permissions to complete this tutorial step.
+* You have completed the prerequisites for step one.
+* You have access to a resource group with `contributor` permissions.
 
 ## Create a storage account
 
@@ -347,13 +348,26 @@ Example of using single quotes in Powershell.
 az vm list --resource-group QueryDemo `
            --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" `
            --output table
+```
+
+# [PowerShell](#tab/cmd)
+
+Example of using double quotes in Windows Command Prompt.
+
+```azurecli-interactive
+# Need az rest syntax for CMD here
 
 ```
 
+Example of using single quotes in Windows Command Prompt.
+
+```azurecli-interactive
+az vm list --resource-group QueryDemo ^
+           --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" ^
+           --output table
+```
+
 ---
-
-
-
 
 ## Error handling differences between Bash and Powershell
 
