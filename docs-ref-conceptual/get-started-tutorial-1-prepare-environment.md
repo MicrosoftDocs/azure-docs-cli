@@ -227,4 +227,4 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 Now that you've learned how to configure your environment to work successfully with the Azure CLI, proceed to the next step to learn the scripting differences between Bash and PowerShell.
 
 > [!div class="nextstepaction"]
-> [next step name](./get-started-tutorial-2-work-in-both-bash-and-powershell.md)
+> [next step name](./get-started-tutorial-2-work-environments.md)

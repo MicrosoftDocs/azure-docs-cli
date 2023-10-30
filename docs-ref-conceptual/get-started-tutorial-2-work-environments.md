@@ -1,6 +1,6 @@
 ---
-title: Write scripts for both Bash and Powershell environments | Microsoft Docs
-description: Learn to write Azure CLI commands for both Bash and PowerShell.
+title: Write scripts for Bash, PowerShell and Windows Cmd | Microsoft Docs
+description: Learn about quoting differences, line continuation and debugging in Bash, PowerShell and Windows Cmd environments.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -19,7 +19,7 @@ Azure CLI commands can be executed in both [Bash](https://opensource.com/resourc
 
 ## Prerequisites
 
-* You have completed the prerequisites for step one.
+* You have completed the prerequisites to [prepare your environment](./get-started-tutorial-1-prepare-environment.md).
 * You have access to a resource group with `contributor` permissions.
 
 ## Create a storage account
@@ -39,6 +39,8 @@ az storage account create --name $storageAccount \
 ```
 
 The Azure CLI returns at least 100 lines of JSON as output when a new storage account is created. Here are a few properties that are used in this tutorial.
+
+> [!TODO]: Remove extra output not used in any tutorial step.
 
 ```output
 {
@@ -341,7 +343,9 @@ az vm list --resource-group QueryDemo ^
 
 ---
 
-## Debug and error handling
+## Debug a reference command
+
+### Use `--debug` parameter
 
 The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is extensive, but it will give you more information on execution errors.
 
@@ -402,7 +406,7 @@ This example is **correct** in both bash and PowerShell.
 az '{"key":"value"}' --debug
 ```
 
-In PowerShell, the double quotes around the `key:value` pair is removed by design.
+See what the Azure CLI is interpreting in the `Command arguments` line of the output. In PowerShell, the double quotes around the `key:value` pair is removed by design.
 
 ```output
 Command arguments: ['{key:value}', '--debug']
@@ -447,6 +451,8 @@ This example is **correct**.
 az "{\"key\":\"value\"}" --debug
 ```
 
+See what the Azure CLI is interpreting in the `Command arguments` line of the output.
+
 ```output
 Command arguments: ['{"key":"value"}', '--debug']
 ```
@@ -477,6 +483,8 @@ Command arguments: ['{key:value}', '--debug']
 ```
 
 ---
+
+### Use `echo` command
 
 Although `--debug` tells you exactly what the Azure CLI is interpreting, a second option is to return the value of an expression to your console. This method is very helpful when verifying the results of `--query` that is covered in detail in [tutorial step 3]().
 
