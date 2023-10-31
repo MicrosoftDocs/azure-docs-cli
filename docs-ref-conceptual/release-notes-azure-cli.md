@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/01/2023
+ms.date: 10/24/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,196 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## October 24, 2023
+
+Version 2.53.1
+
+### AKS
+
+* Hotfix: `az aks update`: Fix bug where supportPlan can be reset to None
+
+### App Service
+
+* [BREAKING CHANGE] Redact appsettings output on set/delete commands
+
+## September 26, 2023
+
+Version 2.53.0
+
+### ACR
+
+* `az acr token create`: Fix random order of repo valid actions and gateway valid actions in the help message
+
+### AKS
+
+* `az aks update`: Add new parameter `--private-dns-zone` to support private DNS zone for AKS private cluster
+* `az aks update`: Add new parameter `--disable-windows-gmsa` to support disabling Windows gMSA in an AKS cluster
+* `az aks update`: Add forceupgrade settings to aks stable cli
+
+### App Config
+
+* `az appconfig kv import/export`: Remove `skip-features` and `skip-keyvault` restriction for snapshots
+
+### App Service
+
+* `az functionapp create`: Enable distributed tracing for non consumption apps
+
+### ARM
+
+* `az deployment group create`: Make `--template-file` parameter optional when used with `.bicepparam` parameter file
+* `az account list-locations`: Add new parameter `--include-extended-locations` to support listing extended locations
+
+### Backup
+
+* `az backup backup-properties`: Add option for setting `--soft-delete-feature-state` to "AlwaysOn", and `--soft-delete-duration` with values between 14 to 180 (inclusive)
+* `az backup vault list-soft-deleted-containers`: List all soft-deleted containers in a backup vault
+
+### Compute
+
+* `az vm/vmss extension set`: Enable auto upgrade by default for CodeIntegrityAgent extension
+* `az vm create`: Add warning message for Basic option removal
+* `az vmss create`: Add warning message for Basic option removal
+
+### Containerapp
+
+* `az containerapp`: Move `containerapp` from CLI extension to core CLI
+* `az containerapp env create`: Add `--enable-workload-profiles` to specify if the environment is enabled to have workload profiles
+* `az containerapp env dapr-component create`: Fix the sample link for `--yaml` parameter
+
+### Cosmos DB
+
+* `az cosmosdb postgres`: GA Cosmos DB for PostgreSQL
+
+### MySQL
+
+* `az mysql flexible-server replica create`: Add new parameters to support replica creation
+
+### NetAppFiles
+
+* `az netappfiles volume`: Add new command `get-groupid-list-for-ldapuser` to Get Group Id List for LDAP User
+* `az netappfiles account update`: Add parameter `--identity-type`
+* `az netappfiles volume update`: Add parameter `--snapshot-dir-visible`. If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true)
+
+### Network
+
+* `az network virtual-appliance`: Add parameter `--additional-nics`
+* `az network vnet subnet`: Add parameter `--default-outbound-access`
+* `az network public-ip create`: Add warning message for Basic option removal
+* `az network lb create`: Add warning message for Basic option removal
+
+### RDBMS
+
+* `az postgres flexible-server create/update`: Add capability to enable/disable storage auto-grow during creation and update
+
+### Service Connector
+
+* `az spring connection`: Add deprecated message for `--deployment` breaking change
+* `az webapp connection`: Add new parameter `--slot` to support webapp slot connection
+
+### SQL
+
+* `az sql failover-group set-primary`: Add parameter `--try-planned-before-forced-failover` to support hybrid geo-failover
+
+### Storage
+
+* Fix #26732: `az storage blob copy start-batch`: Add `--rehydrate-priority` to batch copy
+* Fix #27052: `az storage blob delete-batch`: Use utc as default timezone to remove "Datetime with no tzinfo will be considered UTC." warning
+
+## September 05, 2023
+
+Version 2.52.0
+
+### AKS
+
+* `az aks create/update`: Add new parameter `--enable-vpa` to support enabling vertical pod autoscaler for cluster
+* `az aks update`: Add new parameter `--network-dataplane` to specify the network dataplane used in the Kubernetes cluster
+* `az aks create/update`: Add new parameter `--node-os-upgrade-channel` to specify which OS on your nodes is updated
+* `az aks update`: Retain value in network profile in mc object only when decorator is in update mode
+* `az aks update`: Outbound ip/outbound ipprefix and managed outbound ip should be mutually exclusive
+
+### App Config
+
+* `az apponfig kv import`: Add new parameter `--import-mode` to specify whether to overwrite already existing key-values or ignore matching keys
+* `az appconfig kv export`: Add new parameter `--snapshot` to support exporting all key values from a snapshot of the source configuration
+* `az appconfig kv import`: Add new parameter `--src-snapshot` to support importing all key values from a snapshot of the source configuration
+
+### App Service
+
+* Fix #26736: `az logicapp create`: Add `--runtime-version` and `--functions-version` optional parameters
+* `az webapp config connection-string set`: Allow users to use json file to set the connection string
+
+### ARM
+
+* Fix #26112: `az deployment group create`: Fix the warning log `mode is not a known attribute of class TemplateLink`
+* `az bicep build-params`: Support generating `parameters.json` file from the given `bicepparam` file with the `--file` argument
+* `az bicep decompile-params`: Support generating `parameters.bicepparam` file from the given `parameters.json` file with the `--file` argument
+* `az bicep generate-params`: Support generating `main.parameters.json` with the parameters that doesn't have default values in the given `.bicep` file
+* `az bicep generate-params`: Add new parameter `--output-format` to support generating parameter file in `bicepparam` and `json` formats
+* `az bicep generate-params`: Add new parameter `--include-params` to support generating parameter file with all the parameters in the given `bicep` file, or with only parameters that doesn't have default values in the given `bicep` file
+
+### ARO
+
+* `az aro create`: Add new `--outbound-type` parameter, allowing users to select "Loadbalancer" (default) or "UserDefinedRouting"
+* `az aro create`: Perform pre-flight validation of prerequisite permissions before creation
+* `az aro validate`: New command to perform explicit validation of prerequisite permissions
+
+### Backup
+
+* `az backup restore restore-azurefileshare`: Add `--target-rg-name` parameter to specify the resource group of the destination storage account
+
+### Batch
+
+* `az batch`: Fix batch cloud console authentication issue
+
+### Cognitive Services
+
+* `az cognitiveservices account deployment create`: Add `--model-source` parameter
+
+### Compute
+
+* `az vmss create/update`: Add `--enable-hibernation` parameter to enable hibernation capability on VMSS
+* `az vmss update`: Add `--security-type` parameter to enable Trusted Launch on existing VMSS
+* `az vmss deallocate`: Add `--hibernate` parameter to support hibernating a VM while deallocating
+* `az ppg update`: Add new parameter `--type` to support setting proximity placement group type
+
+### Cosmos DB
+
+* `az cosmosdb restore`: Support enabling/disabling public network access
+
+### Key Vault
+
+* Fix #27220: `az keyvault certificate import`: Fix invalid policy issue when no `content_type` provided
+* `az keyvault storage`: Announce deprecation since keyvault service doesn't maintain this since long ago
+
+### MySQL
+
+* `az mysql flexible-server parameter set-batch`: Add new command to support updating multiple parameters
+* `az mysql flexible-server export create`: Add Export Backup CLI implementation
+
+### Network
+
+* `az network private-endpoint-connection`: Add provider `Microsoft.EventGrid/namespaces` and `Microsoft.EventGrid/partnerNamespaces`
+* Fix #27066: `az network vnet list`: Fix -o table cannot be used
+* `az network express-route port delete`: Add confirmation while deleting
+* `az network application-gateway waf-policy custom-rule`: Add an example of using `--group-by-user-session`
+* `az network express-route update`: Fix `properties.SeriveProviderProperties` unexpected null
+* Fix #26730: `az network public-ip update`: `--ip-tags` cannot be correctly parsed
+* `az network application-gateway waf-policy managed-rule rule-set`: Support Microsoft_BotManagerRuleSet version 1.0
+* `az network vnet peering create`: Mark `--remote-vnet` as required
+
+### Redis
+
+* `az redis update`: Fix public network access default value issue
+
+### Storage
+
+* `az storage file upload-batch`: Allow uploading files in parallel to improve performance
+* Fix #27202: `az storage entity insert`: Fix case when using sas token with only `add` permission
+
+### Upgrade
+
+* `az upgrade`: Support upgrading with 64-bit MSI
 
 ## August 01, 2023
 
@@ -1612,6 +1802,16 @@ Version 2.39.0
 
 * `az synapse workspace`: Add `--last-commit-id` for git repo config
 * `az synapse ad-only-auth`: New command group for supporting synapse azure ad only authentication
+
+## September 01, 2023
+
+Version 2.38.1
+
+This version is only available on CentOS 7 and RHEL 7.
+
+### App Service
+
+* `az webapp ssh`: Backport #25141 to 2.38
 
 ## July 05, 2022
 

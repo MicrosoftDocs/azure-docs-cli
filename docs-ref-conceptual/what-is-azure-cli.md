@@ -61,7 +61,7 @@ az role assignment create --assignee servicePrincipalName --role Reader --scope 
 az role assignment delete --assignee userSign-inName --role Contributor
 ```
 
-See [Create an Azure service principal with the Azure CLI](create-an-azure-service-principal-azure-cli.md) for an in-depth tutorial on managing service principals and role assignments.
+See [Create an Azure service principal with the Azure CLI](./azure-cli-sp-tutorial-1.md) for an in-depth tutorial on managing service principals and role assignments.
 
 ## PowerShell syntax comparison
 
@@ -74,7 +74,6 @@ See [Create an Azure service principal with the Azure CLI](create-an-azure-servi
 
 ## See Also
 
+* [Onboarding Cheat Sheet](./cheat-sheet-onboarding.md)
 * [Get started with the Azure CLI](./get-started-with-azure-cli.md)
-* [Control Azure services with the Azure CLI](/learn/modules/control-azure-services-with-cli/)
-* [Azure resources that the Azure CLI can manage](./azure-services-the-azure-cli-can-manage.md)
 * [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)

@@ -14,7 +14,7 @@ keywords: microsoft graph, ms graph, active directory graph, ad graph
 
 # Microsoft Graph migration
 
-Due to [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), the underlying Active Directory Graph API replaces [Microsoft Graph API](/graph/api/overview) in Azure CLI 2.37.0.
+Because of [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), the underlying Active Directory Graph API is replaced by [Microsoft Graph API](/graph/api/overview) in Azure CLI 2.37.0.
 
 ## Breaking changes
 
@@ -77,7 +77,7 @@ Command argument and behavior breaking changes are listed in the next section.
 
 ## Known issues
 
-- Regarding generic update arguments, the only supported operation is using `--set` on the root level of a Graph object. When you use `--add`, `--remove` or `--set` on sublevels currently doesn't work (due to the underlying infrastructure change). For unsupported scenarios, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview). Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
+- Regarding generic update arguments, the only supported operation is `--set` on the root level of a Graph object. Due to the underlying infrastructure change, the use of `--add`, `--remove` or `--set` on sublevels currently doesn't work. For unsupported scenarios, you may use `az rest` to directly call [Microsoft Graph API](/graph/api/overview). Examples can be found at https://github.com/Azure/azure-cli/issues/22580.
 - Microsoft Graph related commands like `az ad` and `az role` fail in Azure Stack environments that don't have Microsoft Graph support. Use Azure CLI 2.36.0 or earlier versions for Azure Stack environments.
 
 ## Install a previous version

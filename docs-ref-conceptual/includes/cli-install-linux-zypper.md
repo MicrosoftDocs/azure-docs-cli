@@ -11,9 +11,9 @@ ms.custom: devx-track-azurecli
 
 ## Before you begin
 
-- Azure CLI [2.38.0](/cli/azure/release-notes-azure-cli#july-05-2022) (released on 07/05/2022) is the last version supported on SUSE Linux Enterprise Server (SLES), and OpenSUSE (Leap).  Microsoft will not provide additional updates or bug fixes for these distributions.
+- Azure CLI [2.38.1](/cli/azure/release-notes-azure-cli#september-01-2023) (released on September 01, 2023)  is the lastest version supported on SUSE Linux Enterprise Server (SLES) and OpenSUSE (Leap) and will continue to receive security fixes until the end of June 2024. Microsoft isn't providing other updates or bug fixes for these distributions.
 
-- Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script) will continue to be developed and supported by Microsoft. Packages provided by SUSE/OpenSUSE repositories are maintained and supported by SUSE.
+- Microsoft continues to develop and support the Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script). SUSE maintains and supports packages provided by SUSE/OpenSUSE repositories.
 
 - In Azure, SUSE and OpenSUSE virtual machines (VMs) based on Azure Marketplace images already have the Azure CLI installed.
 
