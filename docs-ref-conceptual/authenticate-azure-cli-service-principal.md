@@ -54,4 +54,5 @@ az login --service-principal -u <app-id> -p <password-or-cert> --tenant <tenant>
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
 * [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
+* [Create an Azure service principal using Azure CLI](./azure-cli-sp-tutorial-1.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
