@@ -18,14 +18,14 @@ Welcome to the Azure CLI! You have chosen a tool that will allow you to create, 
 > [!div class="checklist"]
 >
 > * Prepare your environment to use the Azure CLI
->   * Terms
->   * Find and change subscription
->   * Using random IDs (create/remove resource groups)
->   * Setting environment variables (defaults)
-> * Write commands for both Bash and PowerShell environments
->   * line continuation
->   * quoting
->   * debugging (`--debug` and azPS error handling, where is my log?)
+>   * Understand Azure CLI terms
+>   * Find and change a subscription
+>   * Use random IDs for resources
+>   * Set environment variables (defaults)
+> * Write commands for Bash, Powershell and Cmd environments
+>   * Be aware of line continuation
+>   * Learn quoting differences
+>   * Debug
 > * Using variables
 >   * Store command output in a variable (`--query`)
 >   * Get a value from a blob storage (CosmosDB?) and store it in a variable 
@@ -56,12 +56,14 @@ This tutorial also covers these advanced topics:
 
 ## Understand Azure CLI terms
 
+This first section of the tutorial is a brief summary of Azure CLI terms and status options. For a full explanation, see [Azure CLI terminology and support levels](reference-types-and-status.md).
+
 The Azure CLI is comprised of four objects:
 
-* Reference **groups**
-* Space-delimited reference **subgroups**
-* Reference **commands**
-* Reference command **parameters**
+* Reference **groups**: `az account`, `az vm`, and `az iot` are all examples of reference groups.
+* Space-delimited reference **subgroups**: `subscription-enable` is the subgroup in `az account subscription-enabled`.
+* Reference **commands**: `az account create` is a reference command.
+* Reference command **parameters**: `--name`, `--resource-group` and `--debug` are all examples of parameters.
 
 These objects all sit under one of two "umbrellas" often referred to as "type":
 
@@ -74,7 +76,7 @@ Every Azure CLI reference group, subgroup, command and parameter has one of thre
 * Preview
 * GA (General acceptance)
 
-Here are examples, but _use the reference link for actual information._
+Here is a table showing how all the terms fit together, but _use the reference link for actual information._
 
 |Type|Group|space-delimited subgroups|Command|Parameter example|Status|Link|
 |-|-|-|-|-|-|-|
@@ -227,4 +229,4 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 Now that you've learned how to configure your environment to work successfully with the Azure CLI, proceed to the next step to learn the scripting differences between Bash and PowerShell.
 
 > [!div class="nextstepaction"]
-> [next step name](./get-started-tutorial-2-work-environments.md)
+> [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)

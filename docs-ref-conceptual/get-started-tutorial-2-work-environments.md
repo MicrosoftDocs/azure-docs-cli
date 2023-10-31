@@ -29,7 +29,14 @@ Create an Azure storage account to use in this tutorial. Storage account names m
 ```azurecli-interactive
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
+location="East US"
+resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
 storageAccount="msdocssa$randomIdentifier"
+
+# Create a resource group.
+az group create --name $resourceGroup --location $location
+
+# Create a storage account.
 az storage account create --name $storageAccount \
                           --resource-group <msdocs-tutorial-rg-00000000> \
                           --location eastus \
@@ -171,6 +178,8 @@ Many Azure CLI parameters accept a space-separated list of values. This impacts 
 
 If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug and error handling](#debug-and-error-handling).
 
+## Add tags to use what you've learned
+
 Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about line continuation and quoting differences. The `--tags` parameter accepts a space-separated list of values.
 
 These examples demonstrate line continuation, double quotes, quoting blank spaces, and using variables containing quotes.
@@ -277,6 +286,8 @@ Error: (InvalidTagNameCharacters) The tag names '\$newTag' have reserved charact
        or without escape, tag value is empty
 ```
 
+> [!TODO] Get proper syntx to Cmd. Without the escape character, the tag value is empty
+> --tags "\%newTag%"  result in "\"tag1": "tag value with spaces\""
 ---
 
 ## Compare more environment-specific scripts
@@ -417,6 +428,7 @@ Command arguments: ['{key:value}', '--debug']
 >
 >$strExpression='{"key":"value"}'
 >echo $strExpression
+>output - {"key":"value"}
 
 These examples are all **incorrect**.
 
@@ -425,21 +437,21 @@ These examples are all **incorrect**.
 cls
 az "{\"key\":\"value\"}" --debug
 
-# Example 2 output
+# output
 Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
 
 # Example 3
 cls
 az {"key":"value"} --debug
 
-# Example 3 output
+# output
 Unexpected token ':"value"' in expression or statement.
 
 #Example 4
 cls
 az {"key": "value"} --debug
 
-# Example 4 output
+# output
 Error: Unexpected token ':' in expression or statement.
 ```
 
@@ -464,21 +476,21 @@ These examples are all **incorrect**.
 cls
 az '{"key":"value"}' --debug
 
-# Example 2 output
+# output
 Command arguments: ["'{key:value}'", '--debug']
 
 # Example 3
 cls
 az {"key":"value"} --debug
 
-# Example 3 output
+# output
 Command arguments: ['{key:value}', '--debug']
 
 # Example 4
 cls
 az "{"key":"value"}" --debug
 
-# Example 4 output
+# output
 Command arguments: ['{key:value}', '--debug']
 ```
 
@@ -572,4 +584,4 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 Now that you've learned how to modify parameter values for Bash, PowerShell and Windows Command, proceed to the next step to learn how to ...
 
 > [!div class="nextstepaction"]
-> [next step name](./azure-cli-sp-tutorial-2.md)
+> [Use variables](./get-started-tutorial-3-use-variables.md)
