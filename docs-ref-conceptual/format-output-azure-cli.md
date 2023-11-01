@@ -27,7 +27,7 @@ to format CLI output. The argument values and types of output are:
 `none`   | No output other than errors and warnings
 
 > [!WARNING]
-> Use an output format of `none` or store command output in a variable to avoid exposing secrets such as API keys and credentials.
+> Use an output format of `none` or store command output in a variable to avoid exposing secrets such as API keys and credentials. **Note:** Certain CI/CD environments may store the output of the executed commands in logs. It is a good practice to confirm what is written in those log files and who has access to the logs.
 > For more information, see [None output format](#none-output-format).
 
 ## JSON output format (default)
