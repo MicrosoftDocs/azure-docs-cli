@@ -239,7 +239,7 @@ The use of `--query` to store output in a variable is technically not an output 
 Reset a service principal credential returning output in the default json format:
 
 ```azurecli-interactive
-# reset service principal credentials returning.
+# reset service principal credentials using default output format (json).
 az ad sp credential reset --id myServicePrincipalID --output json
 ```
 
