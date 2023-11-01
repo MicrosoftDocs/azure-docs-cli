@@ -253,7 +253,7 @@ Console output showing the new password in the console.
 }
 ```
 
-A better solution is to return security information to a variable.
+A better solution is to return sensitive information to a variable.
 
 ```azurecli-interactive
 # reset service principal credentials returning results to a variable
