@@ -215,7 +215,7 @@ To protect secrets and keys when using Azure CLI commands, choose one of these o
 
 |Option|Benefit|Use case|
 |-|-|-|
-|`--output none` output format| Keeps security information from displaying in your console. If your command fails, you'll still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
+|`--output none` output format| Keeps sensitive information from being displayed in your console. If your command fails, you'll still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
 | | | 2. Use when you have no need for output.
 | | | 3. A common choice when a managed identity or a service principal is being used to manage Azure resources.
 |`--query` parameter | Stores output in a variable. |1. Use when command output _can't be_ retrieved at a later time.|
