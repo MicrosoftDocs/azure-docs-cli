@@ -19,7 +19,6 @@ In addition to specifying values directly in a command, you can provide values i
 * Use shell variables
 * Set a subscription for use in multiple commands
 * Create default values for some parameters
-* Use persistent values for some parameters
 
 This article discusses various ways to specify values in Azure CLI commands.
 
