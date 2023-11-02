@@ -80,7 +80,7 @@ All Azure CLI reference commands are one of two reference types:
 * Core components of the Azure are part of the primary Azure CLI service and ship from Microsoft on a [release schedule](./release-notes-azure-cli.md). 
 * [Extensions](./azure-cli-extensions-overview.md) are not shipped as part of the core Azure CLI but they run as CLI commands. With extensions, you gain access to experimental and prerelease commands along with the ability to write your own CLI interfaces.
 
-An Azure CLI syntax has four parts. For example, this is how [az storage account local-user create](/cli/azure/storage/account/local-user&branch=main#az-storage-account-local-user-create) breaks down into parts:
+An Azure CLI syntax has four parts. For example, this is how [az storage account local-user create](/cli/azure/storage/account/local-user#az-storage-account-local-user-create) breaks down into parts:
 
 | Name | Examples |
 |-|-|
