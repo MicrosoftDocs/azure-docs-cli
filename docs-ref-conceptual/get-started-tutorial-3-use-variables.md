@@ -22,131 +22,135 @@ keywords: azure,
 
 There are times when you want to get information about an Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to perform this task. The syntax for `--query` is case sensitive, so if you are receiving a blank return value, check your capitalization.
 
-Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md), get all the properties of the `primaryEndpoints` object.
+The script examples in this section run in both Bash and PowerShell.
 
-```azurecli-interactive
-az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
-                        --name <msdocssa603242000> \
-                        --query primaryEndpoints
-```
+1. Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md), get all the properties of the `primaryEndpoints` object.
 
-Console output:
+   ```azurecli-interactive
+   az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
+                           --name <msdocssa000000000> \
+                           --query primaryEndpoints
+   ```
 
-```output
-{
-  "blob": "https://msdocssa00000000.blob.core.windows.net/",
-  "dfs": "https://msdocssa00000000.dfs.core.windows.net/",
-  "file": "https://msdocssa00000000.file.core.windows.net/",
-  "internetEndpoints": null,
-  "microsoftEndpoints": null,
-  "queue": "https://msdocssa00000000.queue.core.windows.net/",
-  "table": "https://msdocssa00000000.table.core.windows.net/",
-  "web": "https://msdocssa00000000.z13.web.core.windows.net/"
-}
-```
+   Console output:
 
-Get multiple individual properties.
+   ```output
+   {
+     "blob": "https://msdocssa00000000.blob.core.windows.net/",
+     "dfs": "https://msdocssa00000000.dfs.core.windows.net/",
+     "file": "https://msdocssa00000000.file.core.windows.net/",
+     "internetEndpoints": null,
+     "microsoftEndpoints": null,
+     "queue": "https://msdocssa00000000.queue.core.windows.net/",
+     "table": "https://msdocssa00000000.table.core.windows.net/",
+     "web": "https://msdocssa00000000.z13.web.core.windows.net/"
+   }
+   ```
 
-```azurecli-interactive
-az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
-                        --name <msdocssa603242000> \
-                        --query "[id, primaryLocation, primaryEndpoints.blob, encryption.services.blob.lastEnabledTime]"
-```
+1. Get multiple individual properties.
 
-Console output:
+   ```azurecli-interactive
+   az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
+                           --name <msdocssa000000000> \
+                           --query "[id, primaryLocation, primaryEndpoints.blob, encryption.services.blob.lastEnabledTime]"
+   ```
 
-```output
-[
-  "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/msdocs-tutorial-rg-00000000/providers/Microsoft.Storage/storageAccounts/msdocssa000000000",
-  "eastus",
-  "https://msdocssa000000000.blob.core.windows.net/",
-  "yyyy-mm-ddT19:11:56.399484+00:00"
-]
-```
+   Console output:
 
-Use curly brackets (`{}`) and a comma-delimited list to rename properties. The new property names cannot contain spaces. This example returns output in `table` format.
+   ```output
+   [
+     "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/msdocs-tutorial-rg-00000000/providers/Microsoft.Storage/storageAccounts/   msdocssa000000000",
+     "eastus",
+     "https://msdocssa000000000.blob.core.windows.net/",
+     "yyyy-mm-ddT19:11:56.399484+00:00"
+   ]
+   ```
 
-```azurecli-interactive
-az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
-                        --name <msdocssa603242000> \
-                        --query "{saName:name, saKind:kind, saMinTLSVersion:minimumTlsVersion}"
-                        --output table
-```
+1. Use curly brackets (`{}`) and a comma-delimited list to rename properties. The new property names cannot contain spaces. This example returns output in `table` format.
 
-Console output.  The first letter of each column is capitalized by design in `table` output:
+   ```azurecli-interactive
+   az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
+                           --name <msdocssa000000000> \
+                           --query "{saName:name, saKind:kind, saMinTLSVersion:minimumTlsVersion}"
+                           --output table
+   ```
 
-```output
-SaName             SaKind     SaMinTLSversion
------------------  ---------  -----------------
-msdocssa603242000  StorageV2  TLS1_0
-```
+   Console output.  The first letter of each column is capitalized by design in `table` output:
 
-Get a list of storage accounts in a resource group using [az storage account list](/cli/azure/storage/account#az-storage-account-list).
+   ```output
+   SaName             SaKind     SaMinTLSversion
+   -----------------  ---------  -----------------
+   msdocssa000000000  StorageV2  TLS1_0
+   ```
 
-```azurecli-interactive
-az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
-                        --query "[].{saName:name, saKind:kind, PrimaryLoc:primaryLocation, SecondaryLoc:secondaryLocation}"
-```
+1. Get a list of storage accounts in a resource group using [az storage account list](/cli/azure/storage/account#az-storage-account-list).
 
-Console output in JSON format.
+   ```azurecli-interactive
+   az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
+                           --query "[].{saName:name, saKind:kind, PrimaryLoc:primaryLocation, SecondaryLoc:secondaryLocation}"
+   ```
 
-```output
-[
-  {
-    "saName": "msdocssa000000001"
-    "saKind": "StorageV2",
-    "PrimaryLoc": "eastus",
-    "SecondaryLoc": "westus",
-  },
-  {
-    "saName": "msdocssa000000002"
-    "saKind": "BlobStorage",
-    "PrimaryLoc": "eastus",
-    "SecondaryLoc": "westus",
-  }
-]
-```
+   Console output in JSON format.
 
-Use variables to store command output.
+   ```output
+   [
+     {
+       "saName": "msdocssa000000001"
+       "saKind": "StorageV2",
+       "PrimaryLoc": "eastus",
+       "SecondaryLoc": "westus",
+     },
+     {
+       "saName": "msdocssa000000002"
+       "saKind": "BlobStorage",
+       "PrimaryLoc": "eastus",
+       "SecondaryLoc": "westus",
+     }
+   ]
+   ```
 
-```azurecli-interactive
-rgName=<msdocs-tutorial-rg-00000000>
-saName=<msdocssa000000000> 
+1. Use variables to store command output.
 
-saLastEnabled=$(az storage account show --resource-group $rgName \
-                                        --name $saName \  
-                                        --query encryption.services.blob.lastEnabledTime
-                                        --output tsv)
+   ```azurecli-interactive
+   rgName=<msdocs-tutorial-rg-00000000>
+   saName=<msdocssa000000000> 
+   
+   saLastEnabled=$(az storage account show --resource-group $rgName \
+                                           --name $saName \  
+                                           --query encryption.services.blob.lastEnabledTime
+                                           --output tsv)
+   
+   # Verify the variable value
+   echo "The encryption services blob was last enabled on $saLastEnabled"
+   ```
 
-# Verify the variable value
-echo "The encryption services blob was last enabled on $saLastEnabled"
-```
+1. Combine what you have learned about quoting with what you have just learned about `--query`. These examples apply a filter.
 
-Combine what you have learned about quoting with what you have just learned about `--query`. These examples apply a filter.
+   ```azurecli-interactive
+   rgName=<msdocs-tutorial-rg-00000000>
+   
+   # Get a list of all Azure storage accounts that allow blob public access.
+   # Notice the backticks and escape characters needed for boolean values.
+   az storage account list --resource-group $rgName \
+                           --query "[?allowBlobPublicAccess == \`true\`].name"
+   
+   # Get a list of Azure storage accounts that were created in the last 30 days. Return the results as a table.
+   saDate=$(date +%F -d "-30days")
+   az storage account list --resource-group $rgName \
+                           --query "[?creationTime >='$saDate'].{saName:name, createdTimeStamp:creationTime}"
+                           --output table
+   
+   # Get a list of Azure storage accounts created in this tutorial
+   az storage account list --resource-group $rgName \
+                           --query "[?contains(name, 'msdocs')].{saName:name, saKind:kind, saPrimaryLocation:primaryLocation,    createdTimeStamp:creationTime}" \
+                           --output table
+   ```
 
-```azurecli-interactive
-rgName=<msdocs-tutorial-rg-00000000>
+## Create a new Azure resource storing output in a variable
 
-# Get a list of all Azure storage accounts that allow blob public access.
-# Notice the backticks and escape characters needed for boolean values.
-az storage account list --resource-group $rgName \
-                        --query "[?allowBlobPublicAccess == \`true\`].name"
+This next section demonstrates how to create a new Azure resource and store the output in a variable. This is a "stretch task", but learning this concept is beneficial when creating Azure resources with authentication output, such as an Azure service principal or an Azure key vault. Are you ready to stretch your Azure CLI skills?
 
-# Get a list of Azure storage accounts that were created in the last 30 days. Return the results as a table.
-saDate=$(date +%F -d "-30days")
-az storage account list --resource-group $rgName \
-                        --query "[?creationTime >='$saDate'].{saName:name, createdTimeStamp:creationTime}"
-                        --output table
-
-# Get a list of Azure storage accounts created in this tutorial
-az storage account list --resource-group $rgName \
-                        --query "[?contains(name, 'msdocs')].{saName:name, saKind:kind, saPrimaryLocation:primaryLocation, createdTimeStamp:creationTime}" \
-                        --output table
-```
-
-This next step demonstrates how to create a new Azure resource and store the output in a variable. This is a "stretch task", but learning this concept is beneficial when creating Azure resources with authentication output, such as an Azure service principal or an Azure key vault. Are you ready to stretch your Azure CLI skills?
-
-Create a new Azure Key Vault returning output to variables. Your Azure Key Vault name must be globally unique. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
+Create a new Azure Key Vault returning output to variables. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used once again. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
 
 ```azurecli-interactive
 # Set your variables.
