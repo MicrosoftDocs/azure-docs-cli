@@ -48,7 +48,7 @@ az storage account create --name $storageAccount \
 
 The Azure CLI returns at least 100 lines of JSON as output when a new storage account is created. Here are a few properties that are used in this tutorial.
 
-TODO: Remove extra output not used in any tutorial step.
+**TODO**: Remove extra output not used in any tutorial step.
 
 ```output
 {
@@ -518,7 +518,7 @@ In Cmd, the `echo` command returns the literal string including escape character
 |-|-|
 |az "{\"key\":\"value\"}" --debug | Command arguments: ['{"key":"value"}', '--debug']
 |set strExpression='"{\"key\": \"value\"}"' |
-| echo %strExpression% | \"{\"key\": \"value\"}"
+| echo %strExpression% | "{\\"key\\": \\"value\\"}"
 
 ---
 

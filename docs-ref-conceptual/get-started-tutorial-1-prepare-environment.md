@@ -159,8 +159,6 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
    If you work under a "trust but verify" mindset, you'll want to know where your configuration files are stored and what they contain.  The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS, and `%USERPROFILE%\.azure` on Windows. Find your config file now and see what it contains.
 
-A key take-way from this step is that configuration settings are user-specific.
-
 ## Get more detail
 
 Do you want more detail on one of the topics covered in this tutorial step? Use the links in this table to learn more.
