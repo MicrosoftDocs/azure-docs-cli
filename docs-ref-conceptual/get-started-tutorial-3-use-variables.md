@@ -13,6 +13,8 @@ keywords: azure,
 ---
 # Use variables in commands
 
+TODO: Need intro paragraph
+
 ## Prerequisites
 
 * You have completed the prerequisites to [prepare your environment](./get-started-tutorial-1-prepare-environment.md).

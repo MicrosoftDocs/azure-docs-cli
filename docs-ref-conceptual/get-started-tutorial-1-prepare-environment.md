@@ -19,9 +19,9 @@ In this tutorial step, you onboard with the Azure CLI! This includes choosing th
 
 * If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
-* *Use the Bash environment in [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the <kbd>Open Cloud Shell</kbd> button in the top right corner of each Azure CLI code block. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+* Use the Bash environment in [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the <kbd>Open Cloud Shell</kbd> button in the top right corner of each Azure CLI code block. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
-* If you prefer to run CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI.
+* If you prefer to run the Azure CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI.
 
 * To complete the steps in this tutorial, you will need `contributor` permissions in your subscription.
 
@@ -29,15 +29,7 @@ In this tutorial step, you onboard with the Azure CLI! This includes choosing th
 
 ## Sign in with Azure CLI
 
-There are several authentication options when working with the Azure CLI. For this tutorial, use [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the "Open Cloud Shell" or [sign in interactively](./authenticate-azure-cli-interactively.md) using `az login`.
-
-Run the `az login` command.
-
-   ```azurecli-interactive
-   az login
-   ```
-
-The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
+There are several authentication options when working with the Azure CLI. The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
@@ -61,7 +53,7 @@ az account set --subscription <00000000-0000-0000-0000-000000000000>
 
 ## Learn about resource groups
 
-A resource group is a container for Azure resources. To create a resource group, you need permissions of a `contributor` role or higher in your subscription.
+A resource group is a container for Azure resources. To create a resource group, you need role permissions of  `contributor` or higher in your subscription.
 
 ### Create a resource group
 

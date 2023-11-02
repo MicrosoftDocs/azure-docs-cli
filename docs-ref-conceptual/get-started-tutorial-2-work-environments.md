@@ -524,7 +524,7 @@ In Cmd, the `echo` command returns the literal string including escape character
 
 ## Troubleshooting
 
-There are common errors when an Azure CLI reference command is not written properly. This list is not all-inclusive, but are actual errors received while testing this tutorial.
+There are common errors when an Azure CLI reference command is not written properly. (This list is not all-inclusive.)
 
 * "Bad request ...{something} is invalid" might be caused by a space, single or double quotation mark, or lack of a quote.
 
