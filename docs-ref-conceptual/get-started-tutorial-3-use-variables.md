@@ -29,8 +29,6 @@ Using the storage account created in [Write Azure CLI commands for different env
 az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
                         --name <msdocssa603242000> \
                         --query primaryEndpoints
-
-
 ```
 
 Console output:
@@ -110,7 +108,7 @@ Console output in JSON format.
 ]
 ```
 
-Use variables.
+Use variables to store command output.
 
 ```azurecli-interactive
 rgName=<msdocs-tutorial-rg-00000000>
@@ -147,24 +145,46 @@ az storage account list --resource-group $rgName \
                         --output table
 ```
 
+This next step demonstrates how to create a new Azure resource and store the output in a variable. This is a "stretch task", but learning this concept is beneficial when creating Azure resources with authentication output, such as an Azure service principal or an Azure key vault. Are you ready to stretch your Azure CLI skills?
 
+Create a new Azure Key Vault returning output to variables. Your Azure Key Vault name must be globally unique. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
 
+```azurecli-interactive
+# Set your variables.
+let "randomIdentifier=$RANDOM*$RANDOM"
+rgName=<msdocs-tutorial-rg-00000000>
+kvName=msdocs-kv-$randomIdentifier
+location=eastus
 
+# Set your default output to none
+az config set core.output=none
 
+# Create a new Azure Key Vault returning the Key Vault ID
+myNewKeyVaultID=$(az keyvault create --name $kvName --resource-group $rgName --location $location --query id --output tsv)
+echo "My new Azure Kev Vault ID is $myNewKeyVaultID"
+
+# Create a new secret returning the secret ID
+kvSecretName=myKVSecretName-$randomIdentifier
+kvSecretValue=myKVSecret-$randomIdentifier
+myNewSecretID=$(az keyvault secret set --vault-name $kvName --name $kvSecretName --value $kvSecretValue --query id --output tsv)
+echo "My new secret ID is $myNewSecretID"
+
+az config set core.output=json
+```
 
 # Get a value from a text file and store it in a variable
 
 
-
+TODO
 
 # Pass variable values between commands
 
 
-
+TODO
 
 ## Troubleshooting
 
-
+TODO
 
 ## Get more detail
 
