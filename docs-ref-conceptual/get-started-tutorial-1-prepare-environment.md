@@ -15,36 +15,7 @@ keywords: azure, az account, az group, az config, az init, configuration
 
 Welcome to the Azure CLI! You have chosen a tool that will allow you to create, update, and delete Azure resources from a command-line. In this tutorial, you will onboard with the Azure CLI and learn how to complete the following tasks:
 
-> [!div class="checklist"]
->
-> * Prepare your environment to use the Azure CLI
->   * Understand Azure CLI terms
->   * Find and change a subscription
->   * Use random IDs for resources
->   * Set environment variables (defaults)
-> * Write commands for Bash, Powershell and Cmd environments
->   * Be aware of line continuation
->   * Learn quoting differences
->   * Debug
-> * Using variables
->   * Store command output in a variable (`--query`)
->   * Get a value from a blob storage (CosmosDB?) and store it in a variable 
->   * Get a value from a local file and store it in a variable
-> * Use interactive commands (az `interactive`, `scenario`, `next` and `find`)
-> * Find examples for a specific commands 
->   * Information/links to ref content, conceptual index, sample index
->   * Give examples of Portal CoPilot for Azure CLI searches specifically
-
-This tutorial also covers these advanced topics:
-
-> [!div class="checklist"]
->
-> * Use generic commands (`az rest`, `az resource`)
-> * Run scripts concurrently
-> * Learn advanced Bash commands
-> * Use az-dif-x site before you upgrade
-
-## Prerequisites
+## Install the Azure CLI
 
 * If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
@@ -54,37 +25,19 @@ This tutorial also covers these advanced topics:
 
 [!INCLUDE [include](./includes/current-version.md)]
 
-## Understand Azure CLI terms
+## Sign in
 
-This first section of the tutorial is a brief summary of Azure CLI terms and status options. For a full explanation, see [Azure CLI terminology and support levels](reference-types-and-status.md).
+There are several authentication options when working with the Azure CLI. For this tutorial, use [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the "Open Cloud Shell" or [sign in interactively](./authenticate-azure-cli-interactively.md) using `az login`.
 
-The Azure CLI is comprised of four objects:
+Run the `az login` command.
 
-* Reference **groups**: `az account`, `az vm`, and `az iot` are all examples of reference groups.
-* Space-delimited reference **subgroups**: `subscription-enable` is the subgroup in `az account subscription-enabled`.
-* Reference **commands**: `az account create` is a reference command.
-* Reference command **parameters**: `--name`, `--resource-group` and `--debug` are all examples of parameters.
+   ```azurecli-interactive
+   az login
+   ```
 
-These objects all sit under one of two "umbrellas" often referred to as "type":
+The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
 
-* Core
-* Extension
-
-Every Azure CLI reference group, subgroup, command and parameter has one of three statuses. The status determines the support level.
-
-* Experimental
-* Preview
-* GA (General acceptance)
-
-Here is a table showing how all the terms fit together, but _use the reference link for actual information._
-
-|Type|Group|space-delimited subgroups|Command|Parameter example|Status|Link|
-|-|-|-|-|-|-|-|
-|Extension|az account| | create| `--offer-type`| GA | [az account create](/cli/azure/account#az-account-create)
-|Extension|az account|subscription|enable|`--id`|Experimental|[az account subscription enable](/cli/azure/account/subscription#az-account-subscription-enable)
-|Core|az network|application-gateway waf-policy managed-rule exclusion|add | `--match-operator` | Preview | [az network application-gateway waf-policy managed-rule exclusion add](/cli/azure/cdn/waf/policy/managed-rule-set/rule-group-override#az-cdn-waf-policy-managed-rule-set-rule-group-override-list-available)
-
-For a history of each command group, see [release notes](release-notes-azure-cli.md).
+[!INCLUDE [interactive_login](includes/interactive-login.md)]
 
 ## Find and change your subscription
 
@@ -104,7 +57,7 @@ az account set --subscription <mySubscriptionName>
 az account set --subscription <00000000-0000-0000-0000-000000000000>
 ```
 
-## Create and remove a resource group
+## Learn about resource groups
 
 A resource group is a container for Azure resources. To create a resource group, you need permissions of a `contributor` role or higher in your subscription.
 
@@ -156,7 +109,7 @@ az group create --name $resourceGroup --location $location --output json
 
 ### Remove a resource group
 
-When you delete a resource group, you delete every object inside that resource group. It is an easy way to cleanup resources, but make sure you delete the right group!
+Using random IDs and running every step in this tutorial multiple times creates test resource groups that can be removed. When you delete a resource group, you delete every object inside that resource group so when you cleanup, make sure you delete the right group!
 
 ```azurecli-interactive
 # Get a list of resource groups
@@ -168,7 +121,7 @@ az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
 
 ## Work with environment variables
 
-The Azure CLI offers several options to allow you to reuse common parameter values. These default values are stored in environment variables.
+The Azure CLI offers several options to allow you to reuse common parameter values. These default values are stored in environment variables and are unique for each login.
 
 1. Set your default resource group.
 
@@ -210,7 +163,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
    If you work under a "trust but verify" mindset, you'll want to know where your configuration files are stored and what they contain.  The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS, and `%USERPROFILE%\.azure` on Windows. Find your config file now and see what it contains.
 
-   A key take-way from this step is that configuration settings are user-specific.
+A key take-way from this step is that configuration settings are user-specific.
 
 ## Get more detail
 
@@ -221,12 +174,12 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 |Sign in options|[Sign in with Azure CLI](authenticate-azure-cli.md)
 |Terms| [Azure CLI terminology and support levels](reference-types-and-status.md) |
 |Subscriptions| [Manage subscriptions using the Azure CLI](manage-azure-subscriptions-azure-cli.md)
-|Resource groups|[Manage resource groups using the Azure CLI](manage-azure-groups-azure-cli.md)
-|Configurations|[Configure the Azure CLI](azure-cli-configuration.md)
+|Resource groups| [Manage resource groups using the Azure CLI](manage-azure-groups-azure-cli.md)
+|Configurations| [Configure the Azure CLI](azure-cli-configuration.md)
 
 ## Next Step
 
-Now that you've learned how to configure your environment to work successfully with the Azure CLI, proceed to the next step to learn the scripting differences between Bash and PowerShell.
+Now that you've learned how to configure your environment, proceed to the next step to learn the scripting differences between Bash, PowerShell and Cmd.
 
 > [!div class="nextstepaction"]
 > [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)

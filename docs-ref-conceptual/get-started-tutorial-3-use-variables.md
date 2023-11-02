@@ -21,6 +21,136 @@ keywords: azure,
 
 # Get command output and store it in a variable
 
+There are times when you want to get information about an Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to perform this task. The syntax for `--query` is case sensitive, so if you are receiving a blank return value, check your capitalization.
+
+Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md), get all the properties of the `primaryEndpoints` object.
+
+```azurecli-interactive
+az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
+                        --name <msdocssa603242000> \
+                        --query primaryEndpoints
+
+
+```
+
+Console output:
+
+```output
+{
+  "blob": "https://msdocssa00000000.blob.core.windows.net/",
+  "dfs": "https://msdocssa00000000.dfs.core.windows.net/",
+  "file": "https://msdocssa00000000.file.core.windows.net/",
+  "internetEndpoints": null,
+  "microsoftEndpoints": null,
+  "queue": "https://msdocssa00000000.queue.core.windows.net/",
+  "table": "https://msdocssa00000000.table.core.windows.net/",
+  "web": "https://msdocssa00000000.z13.web.core.windows.net/"
+}
+```
+
+Get multiple individual properties.
+
+```azurecli-interactive
+az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
+                        --name <msdocssa603242000> \
+                        --query "[id, primaryLocation, primaryEndpoints.blob, encryption.services.blob.lastEnabledTime]"
+```
+
+Console output:
+
+```output
+[
+  "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/msdocs-tutorial-rg-00000000/providers/Microsoft.Storage/storageAccounts/msdocssa000000000",
+  "eastus",
+  "https://msdocssa000000000.blob.core.windows.net/",
+  "yyyy-mm-ddT19:11:56.399484+00:00"
+]
+```
+
+Use curly brackets (`{}`) and a comma-delimited list to rename properties. The new property names cannot contain spaces. This example returns output in `table` format.
+
+```azurecli-interactive
+az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
+                        --name <msdocssa603242000> \
+                        --query "{saName:name, saKind:kind, saMinTLSVersion:minimumTlsVersion}"
+                        --output table
+```
+
+Console output.  The first letter of each column is capitalized by design in `table` output:
+
+```output
+SaName             SaKind     SaMinTLSversion
+-----------------  ---------  -----------------
+msdocssa603242000  StorageV2  TLS1_0
+```
+
+Get a list of storage accounts in a resource group using [az storage account list](/cli/azure/storage/account#az-storage-account-list).
+
+```azurecli-interactive
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
+                        --query "[].{saName:name, saKind:kind, PrimaryLoc:primaryLocation, SecondaryLoc:secondaryLocation}"
+```
+
+Console output in JSON format.
+
+```output
+[
+  {
+    "saName": "msdocssa000000001"
+    "saKind": "StorageV2",
+    "PrimaryLoc": "eastus",
+    "SecondaryLoc": "westus",
+  },
+  {
+    "saName": "msdocssa000000002"
+    "saKind": "BlobStorage",
+    "PrimaryLoc": "eastus",
+    "SecondaryLoc": "westus",
+  }
+]
+```
+
+Use variables.
+
+```azurecli-interactive
+rgName=<msdocs-tutorial-rg-00000000>
+saName=<msdocssa000000000> 
+
+saLastEnabled=$(az storage account show --resource-group $rgName \
+                                        --name $saName \  
+                                        --query encryption.services.blob.lastEnabledTime
+                                        --output tsv)
+
+# Verify the variable value
+echo "The encryption services blob was last enabled on $saLastEnabled"
+```
+
+Combine what you have learned about quoting with what you have just learned about `--query`. These examples apply a filter.
+
+```azurecli-interactive
+rgName=<msdocs-tutorial-rg-00000000>
+
+# Get a list of all Azure storage accounts that allow blob public access.
+# Notice the backticks and escape characters needed for boolean values.
+az storage account list --resource-group $rgName \
+                        --query "[?allowBlobPublicAccess == \`true\`].name"
+
+# Get a list of Azure storage accounts that were created in the last 30 days. Return the results as a table.
+saDate=$(date +%F -d "-30days")
+az storage account list --resource-group $rgName \
+                        --query "[?creationTime >='$saDate'].{saName:name, createdTimeStamp:creationTime}"
+                        --output table
+
+# Get a list of Azure storage accounts created in this tutorial
+az storage account list --resource-group $rgName \
+                        --query "[?contains(name, 'msdocs')].{saName:name, saKind:kind, saPrimaryLocation:primaryLocation, createdTimeStamp:creationTime}" \
+                        --output table
+```
+
+
+
+
+
 
 # Get a value from a text file and store it in a variable
 

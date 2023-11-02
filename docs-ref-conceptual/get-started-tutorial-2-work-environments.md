@@ -38,7 +38,7 @@ az group create --name $resourceGroup --location $location
 
 # Create a storage account.
 az storage account create --name $storageAccount \
-                          --resource-group <msdocs-tutorial-rg-00000000> \
+                          --resource-group $resourceGroup \
                           --location eastus \
                           --sku Standard_RAGRS \
                           --kind StorageV2 \
@@ -281,7 +281,7 @@ az storage account update --name <msdocssa00000000> ^
 set newTag="tag1=tag value with spaces"
 az storage account update --name <msdocssa00000000> ^
                           --resource-group <msdocs-tutorial-rg-00000000> ^
-                          --tags "\$newTag" 
+                          --tags "%newTag%" 
 Error: (InvalidTagNameCharacters) The tag names '\$newTag' have reserved characters '<,>,%,&,\,?,/' 
        or without escape, tag value is empty
 ```
@@ -411,24 +411,17 @@ Command arguments: ['{key:', 'value}', '--debug']
 
 # [PowerShell](#tab/powershell)
 
-This example is **correct** in both bash and PowerShell.
+This example is **partially correct** in both bash and PowerShell.
 
 ```azurecli-interactive
 az '{"key":"value"}' --debug
 ```
 
-See what the Azure CLI is interpreting in the `Command arguments` line of the output. In PowerShell, the double quotes around the `key:value` pair is removed by design.
+See what the Azure CLI is interpreting in the `Command arguments` line of the output. In PowerShell, the double quotes missing around the `key:value` pair is a known issue.
 
 ```output
 Command arguments: ['{key:value}', '--debug']
 ```
-
-> [!TODO] Why are the double quotes missing? How do I keep the quotes?
-> Compare to
->
->$strExpression='{"key":"value"}'
->echo $strExpression
->output - {"key":"value"}
 
 These examples are all **incorrect**.
 
@@ -537,9 +530,12 @@ In Cmd, the `echo` command returns the literal string including escape character
 ```azurecli-interactive
 az "{\"key\":\"value\"}" --debug
 
-set strExpression='"{\"key\": \"value\"}"'
-set strExpression="{^"key^": ^"value^"}"
-echo %strExpression%
+set strExpression="{\"key\": \"value\"}"
+echo %strExpression%  -- shows the raw string
+
+In Bash, a string expression is a string
+In Cmd, a variable is being literally replaced
+in Bash, you will get a syntax error 
 ```
 
 ```output
