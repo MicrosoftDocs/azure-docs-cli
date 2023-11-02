@@ -53,11 +53,11 @@ az account set --subscription <00000000-0000-0000-0000-000000000000>
 
 ## Learn about resource groups
 
-A resource group is a container for Azure resources. To create a resource group, you need role permissions of  `contributor` or higher in your subscription.
+A resource group is a container for Azure resources. To create a resource group, you need role permissions of `contributor` or higher in your subscription.
 
 ### Create a resource group
 
-1. A resource group name must be unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command.
+1. A resource group name must be globally unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command.
 
    ```azurecli-interactive
    az group exists --name <theNameIwant>
@@ -77,7 +77,7 @@ A resource group is a container for Azure resources. To create a resource group,
 
 ### Use a random ID
 
-When testing, it is better to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure.
+When testing, it is best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure.
 
 ```azurecli-interactive
 # Variable block
@@ -103,7 +103,9 @@ az group create --name $resourceGroup --location $location --output json
 
 ### Remove a resource group
 
-Using random IDs and running every step in this tutorial multiple times creates test resource groups that can be removed. When you delete a resource group, you delete every object inside that resource group so when you cleanup, make sure you delete the right group!
+**TODO**: Move this to final step cleanup doc
+
+Using random IDs and running every step in this tutorial multiple times creates test resource groups that should be removed. When you delete a resource group, you delete every object inside that resource group so when you cleanup, make sure you delete the right group!
 
 ```azurecli-interactive
 # Get a list of resource groups
@@ -165,11 +167,12 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 |Topic| Learn more|
 |-|-|
-|Sign in options|[Sign in with Azure CLI](authenticate-azure-cli.md)
-|Terms| [Azure CLI terminology and support levels](reference-types-and-status.md) |
-|Subscriptions| [Manage subscriptions using the Azure CLI](manage-azure-subscriptions-azure-cli.md)
-|Resource groups| [Manage resource groups using the Azure CLI](manage-azure-groups-azure-cli.md)
-|Configurations| [Configure the Azure CLI](azure-cli-configuration.md)
+| Sign in options | [Sign in with Azure CLI](authenticate-azure-cli.md)
+| Terms | [Azure CLI terminology and support levels](reference-types-and-status.md) |
+| Subscriptions | [Manage subscriptions using the Azure CLI](manage-azure-subscriptions-azure-cli.md)
+| Resource groups | [Manage resource groups using the Azure CLI](manage-azure-groups-azure-cli.md)
+| Configurations | [Configure the Azure CLI](azure-cli-configuration.md)
+| Azure roles | [Azure roles, Microsoft Entra roles, and classic subscription administrator roles](/azure/role-based-access-control/rbac-and-directory-admin-roles)
 
 ## Next Step
 

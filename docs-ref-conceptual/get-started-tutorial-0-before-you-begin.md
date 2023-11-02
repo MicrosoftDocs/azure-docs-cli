@@ -17,10 +17,10 @@ Welcome to the Azure CLI! You have chosen a tool that will allow you to create, 
 
 > [!div class="checklist"]
 >
-> * 1 - Learn to use the Azure CLI
-> * [2 - Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
-> * [3 - Write commands for Bash, Powershell and Cmd environments](./get-started-tutorial-2-work-environments.md)
-> * [4 - Use variables to store values for a script](./get-started-tutorial-3-use-variables.md)
+> * Learn to use the Azure CLI
+> * [Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
+> * [Write commands for Bash, Powershell and Cmd environments](./get-started-tutorial-2-work-environments.md)
+> * [Use variables to store values for a script](./get-started-tutorial-3-use-variables.md)
 
 ## What is the Azure CLI?
 
