@@ -27,8 +27,7 @@ to format CLI output. The argument values and types of output are:
 `none`   | No output other than errors and warnings
 
 > [!WARNING]
-> The output you choose can be written to your log file.
-> Use an output format of `none` or store command output in a variable to avoid exposing secrets such as API keys and credentials.
+> Use an output format of `none` or store command output in a variable to avoid exposing secrets such as API keys and credentials. **Note:** Certain CI/CD environments may store the output of the executed commands in logs. It is a good practice to confirm what is written in those log files and who has access to the logs.
 > For more information, see [None output format](#none-output-format).
 
 ## JSON output format (default)
@@ -212,14 +211,14 @@ Some Azure CLI commands output information you must protect. Here are four examp
 - secrets
 - keys
 
-To avoid command output being written to your log, use one of these options:
+To protect secrets and keys when using Azure CLI commands, choose one of these options:
 
 |Option|Benefit|Use case|
 |-|-|-|
-|`--output none` output format| Keeps security information from displaying in your console _and from being written to your log_. If your command fails, you'll still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
+|`--output none` output format| Keeps sensitive information from being displayed in your console. If your command fails, you'll still receive error messages.| 1. Use when command output _can be_ retrieved at a later time.|
 | | | 2. Use when you have no need for output.
 | | | 3. A common choice when a managed identity or a service principal is being used to manage Azure resources.
-|`--query` parameter | Stores output in a variable. Doesn't store command output in the log.|1. Use when command output _can't be_ retrieved at a later time.|
+|`--query` parameter | Stores output in a variable. |1. Use when command output _can't be_ retrieved at a later time.|
 | | | 2. Use when you need to use a command output value in a script.
 
 ### Use `none` and retrieve security information at a later time
@@ -240,11 +239,11 @@ The use of `--query` to store output in a variable is technically not an output 
 Reset a service principal credential returning output in the default json format:
 
 ```azurecli-interactive
-# reset service principal credentials returning results to the console and the log
+# reset service principal credentials using default output format (json).
 az ad sp credential reset --id myServicePrincipalID --output json
 ```
 
-Console output showing the new password in the console. This information is also written in the log.
+Console output showing the new password in the console.
 
 ```output
 {
@@ -254,7 +253,7 @@ Console output showing the new password in the console. This information is also
 }
 ```
 
-A better solution is to return security information to a variable. This example _doesn't_ write the service principal password to the log. When testing, use the `echo` command to see the value of your variable, but understand that `echo` writes to the log.
+A better solution is to return sensitive information to a variable.
 
 ```azurecli-interactive
 # reset service principal credentials returning results to a variable
@@ -270,9 +269,9 @@ Azure CLI commands provide output that can be controlled in two ways:
 |Output control | Benefit | How-to
 |-|-|-|
 |Global setting| Select a default output value that you use the most so you don't have to continually provide an `--output` parameter for each reference command.| Specify a default output format using [az config set](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
-|Command parameter| Specify output at the command level and give your scripts maximum flexibility. You control console output, logging and variable input for each reference command. | Override the default setting using a reference command's `--output` parameter.
+|Command parameter| Specify output at the command level and give your scripts maximum flexibility. You control console output and variable input for each reference command. | Override the default setting using a reference command's `--output` parameter.
 
-The default output for the Azure CLI is `json`. Set the default output to `none` when console output and logging isn't needed.
+The default output for the Azure CLI is `json`. Set the default output to `none` when console output isn't needed.
 
 ```azurecli-interactive
 az config set core.output=none
