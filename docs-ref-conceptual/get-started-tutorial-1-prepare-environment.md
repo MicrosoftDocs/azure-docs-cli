@@ -13,7 +13,15 @@ keywords: azure, az account, az group, az config, az init, configuration
 ---
 # Prepare your environment for the Azure CLI
 
-Welcome to the Azure CLI! You have chosen a tool that will allow you to create, update, and delete Azure resources from a command-line. In this tutorial, you will onboard with the Azure CLI and learn how to complete the following tasks:
+In this tutorial step, you onboard with the Azure CLI and learn the following skills:
+
+> [!div class="checklist"]
+>
+> * [Install the Azure CLI](#install-the-azure-cli)
+> * [Sign in with Azure CLI](#sign-in-with-azure-cli)
+> * [Find and change your active subscription](#find-and-change-your-active-subscription)
+> * [Learn about resource groups](#learn-about-resource-groups)
+> * [Set environment variables](#set-environment-variables)
 
 ## Install the Azure CLI
 
@@ -25,7 +33,7 @@ Welcome to the Azure CLI! You have chosen a tool that will allow you to create, 
 
 [!INCLUDE [include](./includes/current-version.md)]
 
-## Sign in
+## Sign in with Azure CLI
 
 There are several authentication options when working with the Azure CLI. For this tutorial, use [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the "Open Cloud Shell" or [sign in interactively](./authenticate-azure-cli-interactively.md) using `az login`.
 
@@ -39,7 +47,7 @@ The Azure CLI's default authentication method for logins uses a web browser and 
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
-## Find and change your subscription
+## Find and change your active subscription
 
 After logging into the Azure CLI, always check your default subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here is a code example you can use.
 
@@ -119,7 +127,7 @@ az group list --output table
 az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
 ```
 
-## Work with environment variables
+## Set environment variables
 
 The Azure CLI offers several options to allow you to reuse common parameter values. These default values are stored in environment variables and are unique for each login.
 

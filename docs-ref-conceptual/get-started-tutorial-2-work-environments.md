@@ -178,7 +178,9 @@ Many Azure CLI parameters accept a space-separated list of values. This impacts 
 
 If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug and error handling](#debug-and-error-handling).
 
-## Add tags to use what you've learned
+> [!TIP] Most Microsoft articles containing Azure CLI commands are written and tested in a Bash environment using Azure Cloud Shell. If you prefer to work in PowerShell or Cmd, modify the Bash example before executing it in another environment.
+
+## Create tags to test what you've learned
 
 Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about line continuation and quoting differences. The `--tags` parameter accepts a space-separated list of values.
 
@@ -209,7 +211,7 @@ az storage account update --name <msdocssa00000000> \
                           --tags "$newTag"
 ```
 
-If you don't want to overwrite previous tags, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
+If you don't want to overwrite previous tags while you work through this tutorial step, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
 
 ```azurecli-interactive
 # Bash script to append to existing tags.
@@ -267,32 +269,23 @@ az storage account update --name <msdocssa00000000> ^
                           --resource-group <msdocs-tutorial-rg-00000000> ^
                           --tags Team=t1 Environment=e1
 
-
 # Create new tags containing spaces.
 az storage account update --name <msdocssa00000000> ^
                           --resource-group <msdocs-tutorial-rg-00000000> ^
                           --tags "Floor number=f1" "Cost center=cc1"
+
 # Create a new tag with an empty value.
 az storage account update --name <msdocssa00000000> ^
                           --resource-group sdocs-tutorial-rg-00000000> ^
                           --tags "Floor number="''""
 
-# Create a tag from a variable.
-set newTag="tag1=tag value with spaces"
-az storage account update --name <msdocssa00000000> ^
-                          --resource-group <msdocs-tutorial-rg-00000000> ^
-                          --tags "%newTag%" 
-Error: (InvalidTagNameCharacters) The tag names '\$newTag' have reserved characters '<,>,%,&,\,?,/' 
-       or without escape, tag value is empty
 ```
 
-> [!TODO] Get proper syntx to Cmd. Without the escape character, the tag value is empty
-> --tags "\%newTag%"  result in "\"tag1": "tag value with spaces\""
+If you need to modify an Azure resource using a variable, we suggest using Bash. Cmd often does not interpret variable values with special characters as expected. You often receive an "InvalidCharacters" error or your Azure property value is empty.
+
 ---
 
 ## Compare more environment-specific scripts
-
-Most Microsoft articles are written and tested in a Bash environment using Azure Cloud Shell. If you prefer to work in PowerShell or Windows Command, modify the Bash example before executing it in another environment.
 
 Take a deeper look at these script differences.
 
@@ -338,6 +331,8 @@ az vm list --resource-group QueryDemo `
 # [Cmd](#tab/cmd)
 
 Example of using double quotes in Windows Command Prompt within the `--body` parameter.
+
+[!TODO] need Cmd example
 
 ```azurecli-interactive
 # Need az rest syntax for CMD here
@@ -524,26 +519,6 @@ In Cmd, the `echo` command returns the literal string including escape character
 |az "{\"key\":\"value\"}" --debug | Command arguments: ['{"key":"value"}', '--debug']
 |set strExpression='"{\"key\": \"value\"}"' |
 | echo %strExpression% | "{\"key\": \"value\"}"
-
-> [!TODO] How do I get {"key":"value"} in CMD?
-
-```azurecli-interactive
-az "{\"key\":\"value\"}" --debug
-
-set strExpression="{\"key\": \"value\"}"
-echo %strExpression%  -- shows the raw string
-
-In Bash, a string expression is a string
-In Cmd, a variable is being literally replaced
-in Bash, you will get a syntax error 
-```
-
-```output
-"{\"key\": \"value\"}"
-expected: {"key":"value"}
-
-"{^"key^": ^"value^"}"
-```
 
 ---
 
