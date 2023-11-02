@@ -13,13 +13,12 @@ keywords: azure,
 ---
 # Use variables in commands
 
-
 ## Prerequisites
 
 * You have completed the prerequisites to [prepare your environment](./get-started-tutorial-1-prepare-environment.md).
 * You have access to a resource group and storage account with `contributor` permissions.
 
-# Get command output and store it in a variable
+## Get command output and store it in a variable
 
 There are times when you want to get information about an Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to perform this task. The syntax for `--query` is case sensitive, so if you are receiving a blank return value, check your capitalization.
 
@@ -172,12 +171,12 @@ echo "My new secret ID is $myNewSecretID"
 az config set core.output=json
 ```
 
-# Get a value from a text file and store it in a variable
+## Get a value from a text file and store it in a variable
 
 
 TODO
 
-# Pass variable values between commands
+## Pass variable values between commands
 
 
 TODO

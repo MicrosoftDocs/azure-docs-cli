@@ -15,7 +15,8 @@ keywords: azure,
 
 Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash), [PowerShell](/powershell/scripting/overview), and [Windows command shell (Cmd)](/windows-server/administration/windows-commands/windows-commands) environments. However, there are subtile scripting differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for all three environments.
 
-> [!NOTE] The Azure CLI also runs in Azure Cloud Shell (Bash or PowerShell) and Docker Containers (Bash), but these are technically "tools" and not "environments". For more information, see [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
+> [!NOTE]
+> The Azure CLI also runs in Azure Cloud Shell (Bash or PowerShell) and Docker Containers (Bash), but these are technically "tools" and not "environments". For more information, see [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
 
 ## Prerequisites
 
@@ -47,7 +48,7 @@ az storage account create --name $storageAccount \
 
 The Azure CLI returns at least 100 lines of JSON as output when a new storage account is created. Here are a few properties that are used in this tutorial.
 
-> [!TODO]: Remove extra output not used in any tutorial step.
+TODO: Remove extra output not used in any tutorial step.
 
 ```output
 {
@@ -176,9 +177,10 @@ Many Azure CLI parameters accept a space-separated list of values. This impacts 
 * Quoted space-separated list: `--parameterName "firstValue" "secondValue"`
 * Passing values that contain a space: `--parameterName "value1a value1b" "value2a value2b" "value3"`
 
-If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug and error handling](#debug-and-error-handling).
+If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug and error handling](#use---debug-parameter).
 
-> [!TIP] Most Microsoft articles containing Azure CLI commands are written and tested in a Bash environment using Azure Cloud Shell. If you prefer to work in PowerShell or Cmd, modify the Bash example before executing it in another environment.
+> [!TIP]
+> Most Microsoft articles containing Azure CLI commands are written and tested in a Bash environment using Azure Cloud Shell. If you prefer to work in PowerShell or Cmd, modify the Bash example before executing it in another environment.
 
 ## Create tags to test what you've learned
 
