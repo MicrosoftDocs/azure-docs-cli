@@ -27,7 +27,9 @@ In this tutorial step, you onboard with the Azure CLI and learn the following sk
 
 * If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
-[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
+* *Use the Bash environment in [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the <kbd>Open Cloud Shell</kbd> button in the top right corner of each Azure CLI code block. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+
+* If you prefer to run CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI. 
 
 * To complete the steps in this tutorial, you will need `contributor` permissions in your subscription.
 
