@@ -19,7 +19,6 @@ In addition to specifying values directly in a command, you can provide values i
 * Use shell variables
 * Set a subscription for use in multiple commands
 * Create default values for some parameters
-* Use persistent values for some parameters
 
 This article discusses various ways to specify values in Azure CLI commands.
 
@@ -92,30 +91,6 @@ Notice that there's no resource group specified in the command. For more informa
 
 You can specify values for several parameters this way. For more information, see [Azure CLI configuration](azure-cli-configuration.md).
 
-## Use persistent values
-
-Persisted parameter values allow you to specify a value only once. If you're doing several related actions in a resource group, you don't have to specify that group repeatedly.
-
-Run this command to persist a parameter value:
-
-```azurecli
-az config param-persist on
-```
-
-After turning on persistence, create a resource group:
-
- ```azurecli
-az group create --name ContosoStorageRG --location eastus
-```
-
-As long as persistence is on, your can leave the `--resource-group` parameter out of future commands. The following command creates a storage account in the ContosoStorageRG resource group:
-
-```azurecli
-az storage account create --name storage135 --location eastus --sku Standard_LRS
-```
-
-For more information, see [Azure CLI persisted parameter](./param-persist-howto.md).
-
 ## Clean up resources
 
 If you created resources to try any of the commands in this article, you can remove them by using the [az group delete](/cli/azure/group#az_group_delete) command:
@@ -126,12 +101,6 @@ az group delete --name ContosoStorageRG
 ```
 
 This command removes the group and all the resources that it contains at once.
-
-You can remove the persistent parameters by running the [az config param-persist delete](/cli/azure/config/param-persist#az_config_param_persist_delete) command:
-
-```azurecli
-az config param-persist delete --all
-```
 
 ## See also
 
