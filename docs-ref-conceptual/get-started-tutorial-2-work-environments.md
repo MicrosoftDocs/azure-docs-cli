@@ -376,7 +376,7 @@ See what the Azure CLI is interpreting in the `Command arguments` line of the ou
 Command arguments: ['{"key":"value"}', '--debug']
 ```
 
-This second example is also **correct**. (The Bash `clear` command provides a clean screen for the second test.)
+This second example is also **correct**. (The Bash `clear` command provides a clean screen for the next test.)
 
 ```azurecli-interactive
 clear
@@ -387,7 +387,7 @@ az "{\"key\":\"value\"}" --debug
 Command arguments: ['{"key":"value"}', '--debug']
 ```
 
-This third example is also **incorrect** as quotes are interpreted by Bash.
+These next two examples are **incorrect** as quotes and spaces are interpreted by Bash.
 
 ```azurecli-interactive
 clear
@@ -398,7 +398,7 @@ az {"key":"value"} --debug
 Command arguments: ['{key:value}', '--debug']
 ```
 
-This last example is also **incorrect** as spaces are interpreted by Bash. (Note the space before `: "value"`.)
+Note the space before `: "value"` which results in undesired output.
 
 ```azurecli-interactive
 clear
@@ -491,7 +491,7 @@ Command arguments: ['{key:value}', '--debug']
 
 ### Use `echo` command
 
-Although `--debug` tells you exactly what the Azure CLI is interpreting, a second option is to return the value of an expression to your console. This method is very helpful when verifying the results of `--query` that is covered in detail in [tutorial step 3]().
+Although `--debug` tells you exactly what the Azure CLI is interpreting, a second option is to return the value of an expression to your console. This method is very helpful when verifying the results of `--query` that is covered in detail in [Use variables in commands](./get-started-tutorial-3-use-variables.md).
 
 # [Bash](#tab/bash)
 
@@ -577,7 +577,7 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 ## Next Step
 
-Now that you've learned how to modify parameter values for Bash, PowerShell and Windows Command, proceed to the next step to learn how to ...
+Now that you've learned how to modify parameter values for Bash, PowerShell and Cmd, proceed to the next step to learn how to extract values to a variable.
 
 > [!div class="nextstepaction"]
-> [Use variables](./get-started-tutorial-3-use-variables.md)
+> [Use variables in commands](./get-started-tutorial-3-use-variables.md)
