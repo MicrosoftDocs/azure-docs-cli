@@ -301,6 +301,7 @@ az rest --method patch \
         --resource https://management.azure.com/ \
         --headers Content-Type=application/json \
         --body '{"properties": {"agentUpgrade": {"enableAutomaticUpgrade": false}}}'
+```
 
 Example of escaping single quotes in Bash within the `--query` parameter.
 
@@ -387,34 +388,31 @@ Command arguments: ['{"key":"value"}', '--debug']
 These next two examples are **incorrect** as quotes and spaces are interpreted by Bash.
 
 ```azurecli-interactive
+# Example 3
 clear
 az {"key":"value"} --debug
-```
 
-```output
+# output
 Command arguments: ['{key:value}', '--debug']
-```
 
-Note the space before `: "value"` which results in undesired output.
-
-```azurecli-interactive
+# Example 4
+# Note the space before `: "value"` which results in undesired output.
 clear
 az {"key": "value"} --debug
-```
 
-```output
+# output
 Command arguments: ['{key:', 'value}', '--debug']
 ```
 
 # [PowerShell](#tab/powershell)
 
-This example is **partially correct** in both bash and PowerShell.
+This example is **correct** in both bash and PowerShell although the double quotes missing around the output `key:value` pair is a known issue in PowerShell.
 
 ```azurecli-interactive
 az '{"key":"value"}' --debug
 ```
 
-See what the Azure CLI is interpreting in the `Command arguments` line of the output. In PowerShell, the double quotes missing around the `key:value` pair is a known issue.
+See what the Azure CLI is interpreting in the `Command arguments` line of the output.
 
 ```output
 Command arguments: ['{key:value}', '--debug']
@@ -520,7 +518,7 @@ In Cmd, the `echo` command returns the literal string including escape character
 |-|-|
 |az "{\"key\":\"value\"}" --debug | Command arguments: ['{"key":"value"}', '--debug']
 |set strExpression='"{\"key\": \"value\"}"' |
-| echo %strExpression% | "{\"key\": \"value\"}"
+| echo %strExpression% | \"{\"key\": \"value\"}"
 
 ---
 
