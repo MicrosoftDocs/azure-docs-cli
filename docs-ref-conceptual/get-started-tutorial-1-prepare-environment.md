@@ -13,15 +13,7 @@ keywords: azure, az account, az group, az config, az init, configuration
 ---
 # Prepare your environment for the Azure CLI
 
-In this tutorial step, you onboard with the Azure CLI and learn the following skills:
-
-> [!div class="checklist"]
->
-> * [Install the Azure CLI](#install-the-azure-cli)
-> * [Sign in with Azure CLI](#sign-in-with-azure-cli)
-> * [Find and change your active subscription](#find-and-change-your-active-subscription)
-> * [Learn about resource groups](#learn-about-resource-groups)
-> * [Set environment variables](#set-environment-variables)
+In this tutorial step, you onboard with the Azure CLI! This includes choosing the environment that works best for you, and setting your default values. You will also learn how to find and change your active Azure subscription, and use random IDs to always guarantee unique resource names.
 
 ## Install the Azure CLI
 
@@ -29,7 +21,7 @@ In this tutorial step, you onboard with the Azure CLI and learn the following sk
 
 * *Use the Bash environment in [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the <kbd>Open Cloud Shell</kbd> button in the top right corner of each Azure CLI code block. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
-* If you prefer to run CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI. 
+* If you prefer to run CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI.
 
 * To complete the steps in this tutorial, you will need `contributor` permissions in your subscription.
 

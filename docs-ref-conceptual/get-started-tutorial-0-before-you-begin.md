@@ -17,26 +17,10 @@ Welcome to the Azure CLI! You have chosen a tool that will allow you to create, 
 
 > [!div class="checklist"]
 >
-> * [1 - Learn to use the Azure CLI](#what-is-the-azure-cli)
->   * What is Azure CLI?
->   * Compare to Azure PowerShell
->   * Choose a shell environment
->   * Understand Azure CLI terms
+> * 1 - Learn to use the Azure CLI
 > * [2 - Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
->   * Install
->   * Sign in
->   * Find and change a subscription
->   * Create a resource group with random ID
->   * Set environment defaults
 > * [3 - Write commands for Bash, Powershell and Cmd environments](./get-started-tutorial-2-work-environments.md)
->   * Create a storage account
->   * Compare line continuation characters
->   * Learn about quoting differences
->   * Debug
 > * [4 - Use variables to store values for a script](./get-started-tutorial-3-use-variables.md)
->   * Store command output in a variable
->   * Read a file in Azure blob storage
->   * Get a value from a local file
 
 ## What is the Azure CLI?
 
