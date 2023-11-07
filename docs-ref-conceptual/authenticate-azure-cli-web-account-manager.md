@@ -40,4 +40,5 @@ At the current stage of development, there are a few known limitations to WAM:
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
 * [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
+* [Learn more about Web Account Manager](/windows/uwp/security/web-account-manager)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)

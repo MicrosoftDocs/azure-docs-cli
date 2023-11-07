@@ -20,12 +20,16 @@ directCommands:
     az devcenter admin pool create --devbox-definition-name
                                    --local-administrator {Disabled, Enabled}
                                    --name
-                                   --network-connection-name
                                    --project
                                    --resource-group
+                                   [--display-name]
                                    [--location]
+                                   [--managed-virtual-network-regions]
+                                   [--network-connection-name]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--single-sign-on-status {Disabled, Enabled}]
                                    [--tags]
+                                   [--virtual-network-type {Managed, Unmanaged}]
   examples:
   - summary: |-
       Create
@@ -45,10 +49,6 @@ directCommands:
     summary: |-
       Name of the pool.
   - isRequired: true
-    name: --network-connection-name -c
-    summary: |-
-      Name of a network connection in parent project of this pool.
-  - isRequired: true
     name: --project --project-name
     summary: |-
       The name of the project. Use `az configure -d project=<project_name>` to configure a default.
@@ -57,16 +57,33 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --display-name
+    summary: |-
+      The display name of the pool.
   - name: --location -l
     summary: |-
       The geo-location where the resource lives. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.  When not specified, the location of the resource group will be used.
+  - name: --managed-virtual-network-regions -m
+    summary: |-
+      The regions of the managed virtual network (required when managedNetworkType is Managed).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --network-connection-name -c
+    summary: |-
+      Name of a network connection in parent project of this pool.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --single-sign-on-status
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --virtual-network-type
+    parameterValueGroup: "Managed, Unmanaged"
+    summary: |-
+      Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network.
 - uid: az_devcenter_admin_pool_delete
   name: az devcenter admin pool delete
   summary: |-
@@ -218,9 +235,11 @@ directCommands:
   syntax: >-
     az devcenter admin pool update [--add]
                                    [--devbox-definition-name]
+                                   [--display-name]
                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--ids]
                                    [--local-administrator {Disabled, Enabled}]
+                                   [--managed-virtual-network-regions]
                                    [--name]
                                    [--network-connection-name]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -228,8 +247,10 @@ directCommands:
                                    [--remove]
                                    [--resource-group]
                                    [--set]
+                                   [--single-sign-on-status {Disabled, Enabled}]
                                    [--subscription]
                                    [--tags]
+                                   [--virtual-network-type {Managed, Unmanaged}]
   examples:
   - summary: |-
       Update
@@ -241,6 +262,9 @@ directCommands:
   - name: --devbox-definition-name -d
     summary: |-
       Name of a dev box definition in parent project of this pool.
+  - name: --display-name
+    summary: |-
+      The display name of the pool.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -252,6 +276,9 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Indicates whether owners of dev boxes in this pool are added as local administrators on the dev box.
+  - name: --managed-virtual-network-regions -m
+    summary: |-
+      The regions of the managed virtual network (required when managedNetworkType is Managed).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --name --pool-name -n
     summary: |-
       Name of the pool.
@@ -274,12 +301,20 @@ directCommands:
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --single-sign-on-status
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --virtual-network-type
+    parameterValueGroup: "Managed, Unmanaged"
+    summary: |-
+      Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network.
 - uid: az_devcenter_admin_pool_wait
   name: az devcenter admin pool wait
   summary: |-
