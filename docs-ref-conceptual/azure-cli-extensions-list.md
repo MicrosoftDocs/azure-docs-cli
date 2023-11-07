@@ -52,7 +52,7 @@ You will be prompted to install an extension on first use.
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.26.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.50.0 | Manage Azure Firewall resources. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.23.0](https://github.com/azure/azure-iot-cli-extension) |
-|[azure-sphere](https://learn.microsoft.com/azure-sphere) | 2.45.0 | Microsoft Azure Command-Line Tools Azure Sphere Extension | Preview | [0.1.4](https://learn.microsoft.com/azure-sphere) |
+|[azure-sphere](/azure-sphere) | 2.45.0 | Microsoft Azure Command-Line Tools Azure Sphere Extension | Preview | [0.1.4](/azure-sphere) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.12.0 | Additional commands for working with BareMetal instances. | GA | [1.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
 |[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.43.0 | Microsoft Azure Command-Line Tools Bastion Extension. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
