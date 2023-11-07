@@ -240,6 +240,8 @@ directCommands:
                         [--asg-ids]
                         [--crg-id]
                         [--disable-windows-outbound-nat]
+                        [--drain-timeout]
+                        [--enable-artifact-streaming]
                         [--enable-cluster-autoscaler]
                         [--enable-custom-ca-trust]
                         [--enable-encryption-at-host]
@@ -265,6 +267,7 @@ directCommands:
                         [--node-osdisk-type {Ephemeral, Managed}]
                         [--node-public-ip-prefix-id]
                         [--node-public-ip-tags]
+                        [--node-soak-duration]
                         [--node-taints]
                         [--node-vm-size]
                         [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
@@ -278,7 +281,7 @@ directCommands:
                         [--tags]
                         [--vm-set-type]
                         [--vnet-subnet-id]
-                        [--workload-runtime {KataMshvVmIsolation, OCIContainer, WasmWasi}]
+                        [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                         [--zones {1, 2, 3}]
   examples:
   - summary: |-
@@ -321,24 +324,32 @@ directCommands:
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
   - name: --allowed-host-ports
     summary: |-
-      Expose host ports on the node pool. When specified, format should be a comma-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
+      Expose host ports on the node pool. When specified, format should be a comma-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP. Must use VMSS agent pool type.
     isPreview: true
   - name: --asg-ids
     summary: |-
-      The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a comma-separated list of IDs.
+      The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a comma-separated list of IDs. Must use VMSS agent pool type.
     isPreview: true
   - name: --crg-id
     summary: |-
-      The crg-id used to associate the new nodepool with the existed Capacity Reservation Group resource.
+      The crg-id used to associate the new nodepool with the existed Capacity Reservation Group resource. Must use VMSS agent pool type.
     isPreview: true
   - name: --disable-windows-outbound-nat
     defaultValue: "False"
     summary: |-
-      Disable Windows OutboundNAT on Windows agent node pool.
+      Disable Windows OutboundNAT on Windows agent node pool. Must use VMSS agent pool type.
+  - name: --drain-timeout
+    summary: |-
+      When nodes are drain how many minutes to wait for all pods to be evicted.
+  - name: --enable-artifact-streaming
+    defaultValue: "False"
+    summary: |-
+      Enable artifact streaming for VirtualMachineScaleSets managed by a node pool, to speed up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false.
+    isPreview: true
   - name: --enable-cluster-autoscaler -e
     defaultValue: "False"
     summary: |-
-      Enable cluster autoscaler.
+      Enable cluster autoscaler. Must use VMSS agent pool type.
   - name: --enable-custom-ca-trust
     defaultValue: "False"
     summary: |-
@@ -354,11 +365,11 @@ directCommands:
   - name: --enable-node-public-ip
     defaultValue: "False"
     summary: |-
-      Enable VMSS node public IP.
+      Enable VMSS node public IP. Must use VMSS agent pool type.
   - name: --enable-ultra-ssd
     defaultValue: "False"
     summary: |-
-      Enable UltraSSD on agent node pool.
+      Enable UltraSSD on agent node pool. Must use VMSS agent pool type.
   - name: --eviction-policy
     defaultValue: "Delete"
     parameterValueGroup: "Deallocate, Delete"
@@ -370,7 +381,7 @@ directCommands:
       GPU instance profile to partition multi-gpu Nvidia GPUs.
   - name: --host-group-id
     summary: |-
-      (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
+      (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool. Must use VMSS agent pool type.
   - name: --kubelet-config
     summary: |-
       Kubelet configurations for agent nodes.
@@ -425,10 +436,13 @@ directCommands:
       OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
   - name: --node-public-ip-prefix-id
     summary: |-
-      Public IP prefix ID used to assign public IPs to VMSS nodes.
+      Public IP prefix ID used to assign public IPs to VMSS nodes. Must use VMSS agent pool type.
   - name: --node-public-ip-tags
     summary: |-
-      The ipTags of the node public IPs.
+      The ipTags of the node public IPs. Must use VMSS agent pool type.
+  - name: --node-soak-duration
+    summary: |-
+      The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node.
   - name: --node-taints
     summary: |-
       The node taints for the node pool.
@@ -441,13 +455,13 @@ directCommands:
       The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019 or Windows2022 when os-type is Windows, the current default is Windows2019 if not set, and the default will be changed to Windows2022 after Windows2019 is deprecated.
   - name: --os-type
     summary: |-
-      The OS Type. Linux or Windows.
+      The OS Type. Linux or Windows. Windows not supported yet for "VirtualMachines" VM set type.
   - name: --pod-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
   - name: --ppg
     summary: |-
-      The ID of a PPG.
+      The ID of a PPG. Must use VMSS agent pool type.
   - name: --priority
     defaultValue: "Regular"
     parameterValueGroup: "Regular, Spot"
@@ -460,7 +474,7 @@ directCommands:
       Describes how VMs are added to or removed from nodepools.
   - name: --snapshot-id
     summary: |-
-      The source snapshot id used to create this nodepool.
+      The source snapshot id used to create this nodepool. Must use VMSS agent pool type.
   - name: --spot-max-price
     defaultValue: "nan"
     summary: |-
@@ -470,19 +484,19 @@ directCommands:
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --vm-set-type
     summary: |-
-      Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(internal use only).
+      Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
   - name: --workload-runtime
     defaultValue: "OCIContainer"
-    parameterValueGroup: "KataMshvVmIsolation, OCIContainer, WasmWasi"
+    parameterValueGroup: "KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi"
     summary: |-
       Determines the type of workload a node can run. Defaults to OCIContainer.
   - name: --zones -z
     parameterValueGroup: "1, 2, 3"
     summary: |-
-      Space-separated list of availability zones where agent nodes will be placed.
+      Space-separated list of availability zones where agent nodes will be placed. Must use VMSS agent pool type.
 - uid: az_aks_nodepool_delete
   name: az aks nodepool delete
   summary: |-
@@ -1108,6 +1122,8 @@ directCommands:
                            [--asg-ids]
                            [--dcat]
                            [--disable-cluster-autoscaler]
+                           [--drain-timeout]
+                           [--enable-artifact-streaming]
                            [--enable-cluster-autoscaler]
                            [--enable-custom-ca-trust]
                            [--labels]
@@ -1116,7 +1132,9 @@ directCommands:
                            [--min-count]
                            [--mode {System, User}]
                            [--no-wait]
+                           [--node-soak-duration]
                            [--node-taints]
+                           [--os-sku {AzureLinux, CBLMariner, Mariner}]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--tags]
                            [--update-cluster-autoscaler]
@@ -1155,11 +1173,11 @@ directCommands:
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
   - name: --allowed-host-ports
     summary: |-
-      Expose host ports on the node pool. When specified, format should be a comma-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
+      Expose host ports on the node pool. When specified, format should be a comma-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP. Must use VMSS agent pool type.
     isPreview: true
   - name: --asg-ids
     summary: |-
-      The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a comma-separated list of IDs.
+      The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a comma-separated list of IDs. Must use VMSS agent pool type.
     isPreview: true
   - name: --dcat --disable-custom-ca-trust
     defaultValue: "False"
@@ -1169,10 +1187,18 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable cluster autoscaler.
+  - name: --drain-timeout
+    summary: |-
+      When nodes are drain how many minutes to wait for all pods to be evicted.
+  - name: --enable-artifact-streaming
+    defaultValue: "False"
+    summary: |-
+      Enable artifact streaming for VirtualMachineScaleSets managed by a node pool, to speed up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false.
+    isPreview: true
   - name: --enable-cluster-autoscaler -e
     defaultValue: "False"
     summary: |-
-      Enable cluster autoscaler.
+      Enable cluster autoscaler. Must use VMSS agent pool type.
   - name: --enable-custom-ca-trust
     defaultValue: "False"
     summary: |-
@@ -1197,9 +1223,16 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --node-soak-duration
+    summary: |-
+      The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node.
   - name: --node-taints
     summary: |-
       The node taints for the node pool.
+  - name: --os-sku
+    parameterValueGroup: "AzureLinux, CBLMariner, Mariner"
+    summary: |-
+      The os-sku of the agent node pool.
   - name: --scale-down-mode
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
@@ -1279,10 +1312,12 @@ directCommands:
                             --name
                             --resource-group
                             [--aks-custom-headers]
+                            [--drain-timeout]
                             [--kubernetes-version]
                             [--max-surge]
                             [--no-wait]
                             [--node-image-only]
+                            [--node-soak-duration]
                             [--snapshot-id]
                             [--yes]
   requiredParameters:
@@ -1302,6 +1337,9 @@ directCommands:
   - name: --aks-custom-headers
     summary: |-
       Send custom headers. When specified, format should be Key1=Value1,Key2=Value2.
+  - name: --drain-timeout
+    summary: |-
+      When nodes are drain how many minutes to wait for all pods to be evicted.
   - name: --kubernetes-version -k
     summary: |-
       Version of Kubernetes to upgrade the node pool to, such as "1.11.12".
@@ -1316,9 +1354,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Only upgrade agent pool's node image.
+  - name: --node-soak-duration
+    summary: |-
+      The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node.
   - name: --snapshot-id
     summary: |-
-      The source snapshot id used to upgrade this nodepool.
+      The source snapshot id used to upgrade this nodepool. Must use VMSS agent pool type.
   - name: --yes -y
     defaultValue: "False"
     summary: |-

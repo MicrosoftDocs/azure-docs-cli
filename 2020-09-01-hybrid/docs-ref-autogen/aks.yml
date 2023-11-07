@@ -982,6 +982,7 @@ directCommands:
                   [--enable-addons]
                   [--enable-ahub]
                   [--enable-apiserver-vnet-integration]
+                  [--enable-app-routing]
                   [--enable-asm]
                   [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
@@ -1060,6 +1061,7 @@ directCommands:
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
+                  [--node-provisioning-mode {Auto, Manual}]
                   [--node-public-ip-prefix-id]
                   [--node-public-ip-tags]
                   [--node-resource-group]
@@ -1095,7 +1097,7 @@ directCommands:
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
-                  [--workload-runtime {KataMshvVmIsolation, OCIContainer, WasmWasi}]
+                  [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                   [--workspace-resource-id]
                   [--yes]
                   [--zones {1, 2, 3}]
@@ -1381,6 +1383,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable integration of user vnet with control plane apiserver pods.
+    isPreview: true
+  - name: --enable-app-routing
+    defaultValue: "False"
+    summary: |-
+      Enable Application Routing addon.
     isPreview: true
   - name: --enable-asm --enable-azure-service-mesh
     summary: |-
@@ -1721,6 +1728,11 @@ directCommands:
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
       OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
+  - name: --node-provisioning-mode
+    parameterValueGroup: "Auto, Manual"
+    summary: |-
+      Set the node provisioning mode of the cluster. Valid values are "Auto" and "Manual". For more information on "Auto" mode see aka.ms/aks/nap.
+    isPreview: true
   - name: --node-public-ip-prefix-id
     summary: |-
       Public IP prefix ID used to assign public IPs to VMSS nodes.
@@ -1845,7 +1857,7 @@ directCommands:
       Specify SKU tier for managed clusters. '--tier standard' enables a standard managed cluster service with a financially backed SLA. '--tier free' does not have a financially backed SLA.
   - name: --vm-set-type
     summary: |-
-      Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(internal use only).
+      Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -1875,7 +1887,7 @@ directCommands:
       Reference: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.compute.models.virtualmachinescalesetosprofile.adminusername?view=azure-dotnet.
   - name: --workload-runtime
     defaultValue: "OCIContainer"
-    parameterValueGroup: "KataMshvVmIsolation, OCIContainer, WasmWasi"
+    parameterValueGroup: "KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi"
     summary: |-
       Determines the type of workload a node can run. Defaults to OCIContainer.
   - name: --workspace-resource-id
@@ -3639,6 +3651,7 @@ directCommands:
                   [--disable-image-integrity]
                   [--disable-keda]
                   [--disable-local-accounts]
+                  [--disable-network-observability]
                   [--disable-node-restriction]
                   [--disable-pod-identity]
                   [--disable-pod-security-policy]
@@ -3705,10 +3718,12 @@ directCommands:
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
                   [--network-dataplane {azure, cilium}]
+                  [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
                   [--network-policy]
                   [--no-wait]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
+                  [--node-provisioning-mode {Auto, Manual}]
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
@@ -3966,6 +3981,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (Preview) If set to true, getting static credential will be disabled for this cluster.
+  - name: --disable-network-observability
+    summary: |-
+      Disable network observability on a cluster.
+    isPreview: true
   - name: --disable-node-restriction
     defaultValue: "False"
     summary: |-
@@ -4252,6 +4271,12 @@ directCommands:
     description: |-
       Network dataplane used in the Kubernetes cluster.
       Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
+  - name: --network-plugin
+    parameterValueGroup: "azure, kubenet, none"
+    summary: |-
+      The Kubernetes network plugin to use.
+    description: |-
+      Specify "azure" for routable pod IPs from VNET, "kubenet" for non-routable pod IPs with an overlay network, or "none" for no networking configured.
   - name: --network-plugin-mode
     summary: |-
       The network plugin mode to use.
@@ -4272,6 +4297,11 @@ directCommands:
     parameterValueGroup: "NodeImage, None, SecurityPatch, Unmanaged"
     summary: |-
       Manner in which the OS on your nodes is updated. It could be NodeImage, None, SecurityPatch or Unmanaged.
+  - name: --node-provisioning-mode
+    parameterValueGroup: "Auto, Manual"
+    summary: |-
+      Set the node provisioning mode of the cluster. Valid values are "Auto" and "Manual". For more information on "Auto" mode see aka.ms/aks/nap.
+    isPreview: true
   - name: --nodepool-labels
     summary: |-
       The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
@@ -4749,6 +4779,15 @@ commands:
 - az_aks_addon_update
 - az_aks_app
 - az_aks_app_up
+- az_aks_approuting
+- az_aks_approuting_disable
+- az_aks_approuting_enable
+- az_aks_approuting_update
+- az_aks_approuting_zone
+- az_aks_approuting_zone_add
+- az_aks_approuting_zone_delete
+- az_aks_approuting_zone_list
+- az_aks_approuting_zone_update
 - az_aks_browse
 - az_aks_browse(aks-preview)
 - az_aks_check-acr
