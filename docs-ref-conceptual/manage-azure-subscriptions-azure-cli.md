@@ -28,6 +28,19 @@ _[Subscriptions](/azure/cloud-adoption-framework/ready/landing-zone/design-area/
 
 An Azure _resource group_ is a container that holds related resources for an Azure solution. To learn how to manage resource groups within your subscription, see [How to manage Azure resource groups with the Azure CLI](manage-azure-groups-azure-cli.md)
 
+## Access Tokens 
+
+When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. When a access token is granted, it is only valid for a short amount of time. Therefore, a refresh token is also generated at the same time, so that the client application can exchange this refresh token for a new access token when needed. to learn more about refresh tokens, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens). 
+
+Use [az account get-access-token](/cli/azure/account?view=azure-cli-latest#az-account-get-access-token) to retrieve the access token. 
+
+```azurecli-interactive
+az account get-access-token --scope
+
+```
+
+It should be noted that this command, now returns expiration timestamps that have been updated to a Portable Operating System Interface (POSIX), which is supported by MSAL-based Azure CLI. To learn more about updates that have been made to access tokens, see [MSAL-based Azure CLI](./msal-based-azure-cli.md).
+
 ## Get the active tenant
 
 Use [az account tenant list](/cli/azure/account/tenant) or [az account show](/cli/azure/account#az-account-show) to get the active tenant ID.
