@@ -46,6 +46,30 @@ az account get-access-token
 # get access token for a specific subscription
 az account get-access-token --subscription "<subscription ID or name>"
 ```
+It should be noted that running `az account get-access-token`, now returns expiration timestamps that have been updated to a Portable Operating System Interface (POSIX), which is supported by MSAL-based Azure CLI. 
+
+```azurecli
+
+# Before:
+
+{
+  "accessToken": "...",
+  "expiresOn": "2023-10-31 21:59:10.000000",
+  "subscription": "...",
+  "tenant": "...",
+  "tokenType": "Bearer"
+}
+# After:
+
+{
+  "accessToken": "...",
+  "expiresOn": "2023-10-31 21:59:10.000000",
+  "expires_on": 1698760750,
+  "subscription": "...",
+  "tenant": "...",
+  "tokenType": "Bearer"
+}
+```
 
 ### Using `AzureCliCredential`
 
