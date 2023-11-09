@@ -24,9 +24,9 @@ TODO: Need intro paragraph
 
 There are times when you want to get information about an Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to perform this task. The syntax for `--query` is case sensitive, so if you are receiving a blank return value, check your capitalization.
 
-The script examples in this section run in both Bash and PowerShell.
+The script examples in this section run in both Bash and PowerShell. The resource group name is carried forward from tutorial step one, [Prepare your environment](./get-started-tutorial-1-prepare-environment.md), and the storage account from step two, [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md).
 
-1. Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md), get all the properties of the `primaryEndpoints` object.
+1. Get all the properties of the `primaryEndpoints` object.
 
    ```azurecli-interactive
    az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
@@ -68,7 +68,7 @@ The script examples in this section run in both Bash and PowerShell.
    ]
    ```
 
-1. Use curly brackets (`{}`) and a comma-delimited list to rename properties. The new property names cannot contain spaces. This example returns output in `table` format.
+1. Rename properties using curly brackets (`{}`) and a comma-delimited list. The new property names cannot contain spaces. This example returns output in `table` format.
 
    ```azurecli-interactive
    az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
@@ -152,7 +152,7 @@ The script examples in this section run in both Bash and PowerShell.
 
 This next section demonstrates how to create a new Azure resource and store the output in a variable. This is a "stretch task", but learning this concept is beneficial when creating Azure resources with authentication output, such as an Azure service principal or an Azure key vault. Are you ready to stretch your Azure CLI skills?
 
-Create a new Azure Key Vault returning output to variables. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used once again. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
+Create a new Azure Key Vault returning output to variables. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used in this example. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
 
 ```azurecli-interactive
 # Set your variables.
