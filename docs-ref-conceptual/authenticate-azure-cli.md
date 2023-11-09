@@ -34,7 +34,7 @@ After you sign in, CLI commands are run against your default subscription. If yo
 
 ## Refresh tokens
 
-When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. Because access tokens are valid for only a short period of time, a refresh token is issued at the same time the access token is issued. The client application can then exchange this refresh token for a new access token when needed. For more information on token lifetime and expiration, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens).
+When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. Because access tokens are valid for only a short period of time, a refresh token is issued at the same time the access token is issued. The client application can then exchange this refresh token for a new access token when needed. Expiration dates are now updated in a format that is supported by [MSAL-based Azure CLI](./msal-based-azure-cli.md). For more information on token lifetime and expiration, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens).
 
 > [!NOTE]
 > Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
