@@ -22,11 +22,15 @@ TODO: Need intro paragraph
 
 ## Get command output and store it in a variable
 
-There are times when you want to get information about an Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to perform this task. The syntax for `--query` is case sensitive, so if you are receiving a blank return value, check your capitalization.
+There are times when you want to get information about an Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to perform this task. The syntax for `--query` is case sensitive and environment-specific.  If receive a blank variable value, check your capitalization. Apply the quoting rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)
 
-The script examples in this section run in both Bash and PowerShell. The resource group name is carried forward from tutorial step one, [Prepare your environment](./get-started-tutorial-1-prepare-environment.md), and the storage account from step two, [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md).
+The resource group and storage account names are  carried forward from previous tutorial steps.
+
+Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json`.
 
 1. Get all the properties of the `primaryEndpoints` object.
+
+   # [Bash](#tab/bash)
 
    ```azurecli-interactive
    az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
@@ -34,7 +38,17 @@ The script examples in this section run in both Bash and PowerShell. The resourc
                            --query primaryEndpoints
    ```
 
-   Console output:
+   # [PowerShell](#tab/powershell)
+
+   ```azurecli-interactive
+   az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
+                           --name <msdocssa000000000> \
+                           --query primaryEndpoints
+   ```
+
+   ---
+
+   Console dictionary output:
 
    ```output
    {
@@ -57,7 +71,7 @@ The script examples in this section run in both Bash and PowerShell. The resourc
                            --query "[id, primaryLocation, primaryEndpoints.blob, encryption.services.blob.lastEnabledTime]"
    ```
 
-   Console output:
+   Console array output:
 
    ```output
    [
@@ -73,11 +87,11 @@ The script examples in this section run in both Bash and PowerShell. The resourc
    ```azurecli-interactive
    az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
                            --name <msdocssa000000000> \
-                           --query "{saName:name, saKind:kind, saMinTLSVersion:minimumTlsVersion}"
+                           --query "{saName:name, saKind:kind, saMinTLSVersion:minimumTlsVersion}" \
                            --output table
    ```
 
-   Console output.  The first letter of each column is capitalized by design in `table` output:
+   Console table output.  The first letter of each column is capitalized by design in `--output table`:
 
    ```output
    SaName             SaKind     SaMinTLSversion
@@ -92,7 +106,7 @@ The script examples in this section run in both Bash and PowerShell. The resourc
                            --query "[].{saName:name, saKind:kind, PrimaryLoc:primaryLocation, SecondaryLoc:secondaryLocation}"
    ```
 
-   Console output in JSON format.
+   Console array output.
 
    ```output
    [
@@ -119,7 +133,7 @@ The script examples in this section run in both Bash and PowerShell. The resourc
    
    saLastEnabled=$(az storage account show --resource-group $rgName \
                                            --name $saName \  
-                                           --query encryption.services.blob.lastEnabledTime
+                                           --query encryption.services.blob.lastEnabledTime \
                                            --output tsv)
    
    # Verify the variable value
@@ -139,7 +153,7 @@ The script examples in this section run in both Bash and PowerShell. The resourc
    # Get a list of Azure storage accounts that were created in the last 30 days. Return the results as a table.
    saDate=$(date +%F -d "-30days")
    az storage account list --resource-group $rgName \
-                           --query "[?creationTime >='$saDate'].{saName:name, createdTimeStamp:creationTime}"
+                           --query "[?creationTime >='$saDate'].{saName:name, createdTimeStamp:creationTime}" \
                            --output table
    
    # Get a list of Azure storage accounts created in this tutorial
@@ -150,9 +164,11 @@ The script examples in this section run in both Bash and PowerShell. The resourc
 
 ## Create a new Azure resource storing output in a variable
 
-This next section demonstrates how to create a new Azure resource and store the output in a variable. This is a "stretch task", but learning this concept is beneficial when creating Azure resources with authentication output, such as an Azure service principal or an Azure key vault. Are you ready to stretch your Azure CLI skills?
+This next section is a "stretch task", but learning this concept is beneficial when creating Azure resources that output secrets that should be protected. For example, when you create a service principal, reset a credential, or get an Azure key vault secret, store the results of the Azure CLI command in a variable.
 
-Create a new Azure Key Vault returning output to variables. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used in this example. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
+Are you ready to stretch your Azure CLI skills? Create a new Azure Key Vault and secret returning command output to a variable. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used in this example. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
+
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 # Set your variables.
@@ -169,13 +185,43 @@ myNewKeyVaultID=$(az keyvault create --name $kvName --resource-group $rgName --l
 echo "My new Azure Kev Vault ID is $myNewKeyVaultID"
 
 # Create a new secret returning the secret ID
-kvSecretName=myKVSecretName-$randomIdentifier
-kvSecretValue=myKVSecret-$randomIdentifier
+kvSecretName=<myKVSecretName>
+kvSecretValue=<myKVSecretValue>
 myNewSecretID=$(az keyvault secret set --vault-name $kvName --name $kvSecretName --value $kvSecretValue --query id --output tsv)
 echo "My new secret ID is $myNewSecretID"
 
+# Reset your default output to json
 az config set core.output=json
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# Set your variables.
+$randomIdentifier=(New-Guid).ToString().Substring(0,8)
+$rgName="<msdocs-tutorial-rg-00000000>"
+$kvName="msdocs-kv-$randomIdentifier"
+$location="eastus"
+
+# Set your default output to none
+az config set core.output=none
+
+# Create a new Azure Key Vault returning the Key Vault ID
+$myNewKeyVaultID=$(az keyvault create --name $kvName --resource-group $rgName --location $location --query id --output tsv)
+echo "My new Azure Kev Vault ID is $myNewKeyVaultID"
+
+# Create a new secret returning the secret ID
+$kvSecretName="<myKVSecretName>"
+$kvSecretValue="<myKVSecretValue>"
+$myNewSecretID=$(az keyvault secret set --vault-name $kvName --name $kvSecretName --value $kvSecretValue --query id --output tsv)
+echo "My new secret ID is $myNewSecretID"
+
+# Reset your default output to json
+az config set core.output=json
+```
+
+---
+
 
 ## Get a value from a text file and store it in a variable
 
@@ -201,6 +247,9 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 || Read a good overview of variables in [How to use variables in Azure CLI commands](./azure-cli-variables.md)|
 |Querying| Find a wide range of examples in [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md)
 | | Take a deeper dive in Bash using `--query` in [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
+|Azure key vault| [About Azure Key Vault](/azure/key-vault/general/overview)
+| | [Provide access to Key Vault keys, certificates, and secrets with an Azure role-based access control](/azure/key-vault/general/rbac-guide?tabs=azure)
+| | [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes)
 
 
 ## Next Step

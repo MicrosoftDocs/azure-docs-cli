@@ -1,10 +1,10 @@
 ---
-title: Reference types, status and support levels – Azure CLI | Microsoft Docs
-description: Learn about the Azure CLI reference types, statuses and support levels
+title: Azure CLI reference types and status | Microsoft Docs
+description: Learn about the Azure CLI reference types and status
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/1/2023
+ms.date: 11/13/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli references, reference types, reference status
 ---
 
-# Overview: Azure CLI terminology and support levels
+# Azure CLI terminology and status
 
 This article explains Azure CLI terminologies.  There are syntax components, reference types, and statuses.  it's the status that determines the support level.
 
@@ -74,12 +74,7 @@ You can learn more about extension references including installation and updatin
 
 ## What is reference status?
 
-Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It's the reference command status (not type) that determines stability and support level.
-
-| | GA  | Public preview | Experimental
-|-|-|-|-|
-| **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback. Often migrates to public preview.  Can be removed.
-| **Support level** | Full | Partial | None
+Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It's the reference command status (not type) that determines stability and support level. For more information on reference status and support, see [Azure CLI support lifecycle](./azure-cli-support-lifecycle.md).
 
 > [!NOTE]
 > Warnings indicating **public preview** or **experimental** are part of the Azure CLI command output and should be expected.
@@ -98,9 +93,10 @@ Most commands and parameters for a single reference have a single status, but no
 |                            | --newFutureParameter2                                                | Extension |     |                | yes          |
 | az network firewall create | All                                                                  | Extension |     |                | yes          |
 
-The above table is only an example and **isn't** representative of current reference status for examples.
+The above table is only an example and **isn't** representative of current reference status.
 
 ## See also
 
+- [Azure CLI support lifecycle](./azure-cli-support-lifecycle.md)
 - [Azure CLI A - Z reference list](../latest/docs-ref-autogen/reference-index.yml)
 - [Available extensions for the Azure CLI](azure-cli-extensions-list.md)

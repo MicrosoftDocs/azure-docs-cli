@@ -46,7 +46,7 @@ az storage account create --name $storageAccount \
                           --output json
 ```
 
-The Azure CLI returns at least 100 lines of JSON as output when a new storage account is created. Here are a few properties that are used in this tutorial.
+The Azure CLI returns at least 100 lines of JSON as output when a new storage account is created. The following JSON dictionary output has some fields omitted for brevity.
 
 **TODO**: Remove extra output not used in any tutorial step.
 
@@ -311,6 +311,14 @@ az vm list --resource-group QueryDemo \
            --output table
 ```
 
+Example of using variables.
+
+```azurecli-interactive
+let "randomIdentifier=$RANDOM*$RANDOM"
+resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
+echo "My new resource group name will be $resourceGroup"
+```
+
 # [PowerShell](#tab/powershell)
 
 Example of escaping double quotes in PowerShell within the `--body` parameter.
@@ -331,16 +339,15 @@ az vm list --resource-group QueryDemo `
            --output table
 ```
 
-# [Cmd](#tab/cmd)
-
-Example of using double quotes in Windows Command Prompt within the `--body` parameter.
-
-[!TODO] need Cmd example
+Example of using variables.
 
 ```azurecli-interactive
-# Need az rest syntax for CMD here
-
+$randomIdentifier=(New-Guid).ToString().Substring(0,8)
+$resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
+echo "My new resource group name will be $resourceGroup"
 ```
+
+# [Cmd](#tab/cmd)
 
 Example of using single quotes in Windows Command Prompt within the `--query` parameter.
 
@@ -350,13 +357,21 @@ az vm list --resource-group QueryDemo ^
            --output table
 ```
 
+Example of using variables.
+
+```azurecli-interactive
+set randomIdentifier=%RANDOM%
+set resourceGroup="msdocs-tutorial-rg-%randomIdentifier%"
+echo "My new resource group name will be %resourceGroup%"
+```
+
 ---
 
 ## Debug a reference command
 
 ### Use `--debug` parameter
 
-The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is extensive, but it will give you more information on execution errors.
+The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is extensive, but it will give you more information on execution errors. Use the Bash `clear` command to remove console output between tests.
 
 # [Bash](#tab/bash)
 
@@ -387,22 +402,10 @@ Command arguments: ['{"key":"value"}', '--debug']
 
 These next two examples are **incorrect** as quotes and spaces are interpreted by Bash.
 
-```azurecli-interactive
-# Example 3
-clear
-az {"key":"value"} --debug
-
-# output
-Command arguments: ['{key:value}', '--debug']
-
-# Example 4
-# Note the space before `: "value"` which results in undesired output.
-clear
-az {"key": "value"} --debug
-
-# output
-Command arguments: ['{key:', 'value}', '--debug']
-```
+|Command|Console output|
+|-|-|
+|az {"key":"value"} --debug |Command arguments: ['{key:value}', '--debug']
+|az {"key": "value"} --debug |Command arguments: ['{key:', 'value}', '--debug']
 
 # [PowerShell](#tab/powershell)
 
@@ -418,30 +421,13 @@ See what the Azure CLI is interpreting in the `Command arguments` line of the ou
 Command arguments: ['{key:value}', '--debug']
 ```
 
-These examples are all **incorrect**.
+These examples are all **incorrect**. Use PowerShells's `cls` command to remove console output between tests.
 
-```azurecli-interactive
-# Example 2
-cls
-az "{\"key\":\"value\"}" --debug
-
-# output
-Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
-
-# Example 3
-cls
-az {"key":"value"} --debug
-
-# output
-Unexpected token ':"value"' in expression or statement.
-
-#Example 4
-cls
-az {"key": "value"} --debug
-
-# output
-Error: Unexpected token ':' in expression or statement.
-```
+|Command|Console output|
+|-|-|
+|az "{\"key\":\"value\"}" --debug | Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
+|az {"key":"value"} --debug | Unexpected token ':"value"' in expression or statement.
+|az {"key": "value"} --debug | Error: Unexpected token ':' in expression or statement.
 
 # [Cmd](#tab/cmd)
 
@@ -457,30 +443,13 @@ See what the Azure CLI is interpreting in the `Command arguments` line of the ou
 Command arguments: ['{"key":"value"}', '--debug']
 ```
 
-These examples are all **incorrect**.
+These examples are all **incorrect**. Use the Cmd's `cls` command to remove console output between tests.
 
-```azurecli-interactive
-# Example 2
-cls
-az '{"key":"value"}' --debug
-
-# output
-Command arguments: ["'{key:value}'", '--debug']
-
-# Example 3
-cls
-az {"key":"value"} --debug
-
-# output
-Command arguments: ['{key:value}', '--debug']
-
-# Example 4
-cls
-az "{"key":"value"}" --debug
-
-# output
-Command arguments: ['{key:value}', '--debug']
-```
+|Command|Console output|
+|-|-|
+|az '{"key":"value"}' --debug |Command arguments: ["'{key:value}'", '--debug']
+|az {"key":"value"} --debug | Command arguments: ['{key:value}', '--debug']
+|az "{"key":"value"}" --debug | Command arguments: ['{key:value}', '--debug']
 
 ---
 
@@ -524,7 +493,7 @@ In Cmd, the `echo` command returns the literal string including escape character
 
 ## Troubleshooting
 
-There are common errors when an Azure CLI reference command is not written properly. (This list is not all-inclusive.)
+There are common errors when an Azure CLI reference command is not written properly.
 
 * "Bad request ...{something} is invalid" might be caused by a space, single or double quotation mark, or lack of a quote.
 
@@ -542,7 +511,6 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 |Topic| Learn more|
 |-|-|
-|Environments | [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
 |Scripting differences | [Bash quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)|
 | | [PowerShell quoting](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
 | | [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)

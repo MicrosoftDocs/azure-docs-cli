@@ -19,7 +19,7 @@ In this tutorial step, you onboard with the Azure CLI! This includes choosing th
 
 * If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
-* Use the Bash environment in [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the <kbd>Open Cloud Shell</kbd> button in the top right corner of each Azure CLI code block. For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+* Use the Bash environment in [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the **Open Cloud Shell** button in the top right corner of each Azure CLI code block.
 
 * If you prefer to run the Azure CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI.
 
@@ -77,15 +77,29 @@ A resource group is a container for Azure resources. To create a resource group,
 
 ### Use a random ID
 
-When testing, it is best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure.
+When testing, it is best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure. Bash and PowerShell variable syntax is different. Copy the correct script for your environment.
+
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
-# Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
-location="East US"
+location="eastus"
 resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
 az group create --name $resourceGroup --location $location --output json
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+$randomIdentifier = (New-Guid).ToString().Substring(0,8)
+$location="eastus"
+$resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
+az group create --name $resourceGroup --location $location --output json
+```
+
+---
+
+Console output in both Bash and PowerShell:
 
 ```output
 {
@@ -99,7 +113,7 @@ az group create --name $resourceGroup --location $location --output json
   "tags": null,
   "type": "Microsoft.Resources/resourceGroups"
 }
-```
+
 
 ### Remove a resource group
 
@@ -165,6 +179,7 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 |Topic| Learn more|
 |-|-|
+| Environments | [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
 | Sign in options | [Sign in with Azure CLI](authenticate-azure-cli.md)
 | Terms | [Azure CLI terminology and support levels](reference-types-and-status.md) |
 | Subscriptions | [Manage subscriptions using the Azure CLI](manage-azure-subscriptions-azure-cli.md)
