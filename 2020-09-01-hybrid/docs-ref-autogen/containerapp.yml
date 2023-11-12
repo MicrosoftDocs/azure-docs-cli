@@ -50,12 +50,14 @@ directCommands:
                            --resource-group
                            [--allow-insecure {false, true}]
                            [--args]
+                           [--artifact]
                            [--bind]
                            [--branch]
                            [--command]
                            [--container-name]
                            [--context-path]
                            [--cpu]
+                           [--customized-keys]
                            [--dal]
                            [--dapr-app-id]
                            [--dapr-app-port]
@@ -199,9 +201,14 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+  - name: --artifact
+    summary: |-
+      Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
+    isPreview: true
   - name: --bind
     summary: |-
       Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
+    isPreview: true
   - name: --branch -b
     summary: |-
       Branch in the provided GitHub repository. Assumed to be the GitHub repository's default branch if not specified.
@@ -219,6 +226,10 @@ directCommands:
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+    isPreview: true
   - name: --dal --dapr-enable-api-logging
     defaultValue: "False"
     summary: |-
@@ -568,6 +579,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az containerapp up --name
+                       [--artifact]
                        [--branch]
                        [--browse]
                        [--context-path]
@@ -609,6 +621,10 @@ directCommands:
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   optionalParameters:
+  - name: --artifact
+    summary: |-
+      Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
+    isPreview: true
   - name: --branch -b
     summary: |-
       The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
@@ -685,10 +701,12 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az containerapp update [--args]
+                           [--artifact]
                            [--bind]
                            [--command]
                            [--container-name]
                            [--cpu]
+                           [--customized-keys]
                            [--ids]
                            [--image]
                            [--max-replicas]
@@ -748,9 +766,14 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+  - name: --artifact
+    summary: |-
+      Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
+    isPreview: true
   - name: --bind
     summary: |-
       Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
+    isPreview: true
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
@@ -760,6 +783,10 @@ directCommands:
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+    isPreview: true
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -835,6 +862,7 @@ directCommands:
   - name: --unbind
     summary: |-
       Space separated list of services(bindings) to be removed from this app. e.g. BIND_NAME1...
+    isPreview: true
   - name: --workload-profile-name -w
     summary: |-
       The friendly name for the workload profile.
@@ -842,6 +870,23 @@ directCommands:
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
 commands:
+- az_containerapp_add-on
+- az_containerapp_add-on_kafka
+- az_containerapp_add-on_kafka_create
+- az_containerapp_add-on_kafka_delete
+- az_containerapp_add-on_list
+- az_containerapp_add-on_mariadb
+- az_containerapp_add-on_mariadb_create
+- az_containerapp_add-on_mariadb_delete
+- az_containerapp_add-on_postgres
+- az_containerapp_add-on_postgres_create
+- az_containerapp_add-on_postgres_delete
+- az_containerapp_add-on_qdrant
+- az_containerapp_add-on_qdrant_create
+- az_containerapp_add-on_qdrant_delete
+- az_containerapp_add-on_redis
+- az_containerapp_add-on_redis_create
+- az_containerapp_add-on_redis_delete
 - az_containerapp_auth
 - az_containerapp_auth_apple
 - az_containerapp_auth_apple_show
@@ -959,8 +1004,15 @@ commands:
 - az_containerapp_env_certificate_upload
 - az_containerapp_env_create
 - az_containerapp_env_dapr-component
+- az_containerapp_env_dapr-component_init
 - az_containerapp_env_dapr-component_list
 - az_containerapp_env_dapr-component_remove
+- az_containerapp_env_dapr-component_resiliency
+- az_containerapp_env_dapr-component_resiliency_create
+- az_containerapp_env_dapr-component_resiliency_delete
+- az_containerapp_env_dapr-component_resiliency_list
+- az_containerapp_env_dapr-component_resiliency_show
+- az_containerapp_env_dapr-component_resiliency_update
 - az_containerapp_env_dapr-component_set
 - az_containerapp_env_dapr-component_show
 - az_containerapp_env_delete
@@ -980,6 +1032,7 @@ commands:
 - az_containerapp_env_workload-profile_delete
 - az_containerapp_env_workload-profile_list
 - az_containerapp_env_workload-profile_list-supported
+- az_containerapp_env_workload-profile_set
 - az_containerapp_env_workload-profile_show
 - az_containerapp_env_workload-profile_update
 - az_containerapp_exec
@@ -1053,6 +1106,12 @@ commands:
 - az_containerapp_replica_count
 - az_containerapp_replica_list
 - az_containerapp_replica_show
+- az_containerapp_resiliency
+- az_containerapp_resiliency_create
+- az_containerapp_resiliency_delete
+- az_containerapp_resiliency_list
+- az_containerapp_resiliency_show
+- az_containerapp_resiliency_update
 - az_containerapp_revision
 - az_containerapp_revision_activate
 - az_containerapp_revision_copy
