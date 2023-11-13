@@ -27,7 +27,7 @@ In this tutorial step, you onboard with the Azure CLI! This includes choosing th
 
 [!INCLUDE [include](./includes/current-version.md)]
 
-## Sign in with Azure CLI
+## Sign in to Azure using the Azure CLI
 
 There are several authentication options when working with the Azure CLI. The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
 
@@ -35,7 +35,7 @@ There are several authentication options when working with the Azure CLI. The Az
 
 ## Find and change your active subscription
 
-After logging into the Azure CLI, always check your default subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here is a code example you can use.
+After logging into the Azure CLI, always check your default subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here is a code example to use.
 
 ```azurecli-interactive
 # see your current default subscription
@@ -60,7 +60,7 @@ A resource group is a container for Azure resources. To create a resource group,
 1. A resource group name must be globally unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command.
 
    ```azurecli-interactive
-   az group exists --name <theNameIwant>
+   az group exists --name <myUniqueRGname>
    ```
 
 1. Retrieve a list of supported regions for your subscription with the [az account list-locations](/cli/azure/account#az-account-list-locations) command. For a list of available Azure locations, see [Choose the right Azure region for you](https://azure.microsoft.com/explore/global-infrastructure/geographies/#overview).
@@ -72,12 +72,14 @@ A resource group is a container for Azure resources. To create a resource group,
 1. It is time to create your resource group! Use the [az group create](/cli/azure/group#az-group-create) command.
 
    ```azurecli-interactive
-   az group create --location <eastus> --name <myRG1>
+   az group create --location <myLocation> --name <myUniqueRGname>
    ```
 
-### Use a random ID
+### Use a random ID to create a resource group
 
-When testing, it is best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure. Bash and PowerShell variable syntax is different. Copy the correct script for your environment.
+When testing, it is best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure. 
+
+When working with variables, Bash and PowerShell syntax is different. Copy the correct script for your environment.
 
 # [Bash](#tab/bash)
 
@@ -113,7 +115,7 @@ Console output in both Bash and PowerShell:
   "tags": null,
   "type": "Microsoft.Resources/resourceGroups"
 }
-
+```
 
 ### Remove a resource group
 

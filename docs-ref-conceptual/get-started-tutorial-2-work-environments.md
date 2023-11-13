@@ -15,36 +15,135 @@ keywords: azure,
 
 Azure CLI commands can be executed in both [Bash](https://opensource.com/resources/what-bash), [PowerShell](/powershell/scripting/overview), and [Windows command shell (Cmd)](/windows-server/administration/windows-commands/windows-commands) environments. However, there are subtile scripting differences. This tutorial will teach you how to create your first Azure Storage Account and format Azure CLI parameter values for all three environments.
 
-> [!NOTE]
-> The Azure CLI also runs in Azure Cloud Shell (Bash or PowerShell) and Docker Containers (Bash), but these are technically "tools" and not "environments". For more information, see [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
-
 ## Prerequisites
 
 * You have completed the prerequisites to [prepare your environment](./get-started-tutorial-1-prepare-environment.md).
 * You have access to a resource group with `contributor` permissions.
 
-## Create a storage account
+## Be aware of line continuation characters
 
-Create an Azure storage account to use in this tutorial. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+Most Azure CLI documentation is written and tested in Bash using Azure Cloud Shell.  One of the first things to remember when copying Azure CLI syntax is to remove or verify line continuation characters for your chosen environment. Line continuation characters are environment-specific and are not interchangeable.
+
+| Environment | Line continuation character |
+| - | - |
+| Bash | Backslash (`\`)
+| PowerShell | Backtick (````), (`\```), (``\``), (`\``)
+| Cmd | Carrot (`^`)
+
+ The **Copy** button in the upper right corner of Azure CLI code blocks removes the backslash (`\`) and the backtick (`\``) by design. If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
+
+## Understand syntax differences when using variables
+
+The syntax for using variables varies slightly between environments.
+
+| Environment | Variable syntax | Example
+| - | - |
+| Bash | variableName=variableValue | varResourceGroup=myResourceGroupName
+| PowerShell | $variableName=variableValue | $varResourceGroup=myResourceGroupName
+| Cmd | set variableName=variableValue | set varResourceGroup=myResourceGroupName
+
+To return a variable value to your console, use this syntax for each environment:
+
+* Bash: `echo $varResourceGroup`
+* PowerShell: `echo $varResourceGroup`
+* Cmd: `echo %varResourceGroup%`
+
+Learn tips and see in-depth examples for variable syntax in Bash and PowerShell when you work through tutorial step three, [Use variables in commands](./get-started-tutorial-3-use-variables.md).
+
+## Learn about quoting differences between environments
+
+There are also different quoting rules for each environment. Here is an example of a parameter value that contains double quotes:
+
+* Bash or PowerShell: `'{"key": "value"}'`
+* Cmd: `"{\"key\": \"value\"}"`
+
+Many Azure CLI parameters accept a space-separated list of values. This impacts quoting.
+
+* Unquoted space-separated list: `--parameterName firstValue secondValue`
+* Quoted space-separated list: `--parameterName "firstValue" "secondValue"`
+* Passing values that contain a space: `--parameterName "value1a value1b" "value2a value2b" "value3"`
+
+If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug and error handling](#use---debug-parameter).
+
+## Create a storage account to apply what you've learned
+
+Create an Azure storage account to use in this tutorial. This example shows difference syntax for the following:
+
+* Line continuation
+* Variable usage
+* Random identifiers
+* `echo` command
+
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
-location="East US"
+location=eastus
 resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
 storageAccount="msdocssa$randomIdentifier"
 
 # Create a resource group.
+echo "Creating resource group $resourceGroup"
 az group create --name $resourceGroup --location $location
 
 # Create a storage account.
+echo "Creating storage account $storageAccount"
 az storage account create --name $storageAccount \
                           --resource-group $resourceGroup \
-                          --location eastus \
+                          --location $location \
                           --sku Standard_RAGRS \
                           --kind StorageV2 \
                           --output json
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# Variable block
+let "randomIdentifier=$RANDOM*$RANDOM"
+$location=eastus
+$resourceGroup="msdocs-tutorial-rg-$randomIdentifier"
+$storageAccount="msdocssa$randomIdentifier"
+
+# Create a resource group.
+echo "Creating resource group $resourceGroup"
+az group create --name $resourceGroup --location $location
+
+# Create a storage account.
+echo "Creating storage account $storageAccount"
+az storage account create --name $storageAccount \
+                          --resource-group $resourceGroup \
+                          --location $location \
+                          --sku Standard_RAGRS \
+                          --kind StorageV2 \
+                          --output json
+```
+
+# [Cmd](#tab/cmd)
+
+```azurecli-interactive
+:: Variable block
+set randomIdentifier=%RANDOM%
+set resourceGroup="msdocs-tutorial-rg-%randomIdentifier%"
+set location=eastus
+set storageAccount="msdocssa%randomIdentifier%"
+
+:: Create a resource group.
+echo "Creating storage account %storageAccount%"
+az group create --name %resourceGroup% --location %location%
+
+:: Create a storage account.
+echo "Creating storage account %storageAccount%"
+az storage account create --name %storageAccount% ^
+                          --resource-group %resourceGroup% ^
+                          --location %location% ^
+                          --sku Standard_RAGRS ^
+                          --kind StorageV2 ^
+                          --output json
+```
+
+---
 
 The Azure CLI returns at least 100 lines of JSON as output when a new storage account is created. The following JSON dictionary output has some fields omitted for brevity.
 
@@ -152,41 +251,15 @@ The Azure CLI returns at least 100 lines of JSON as output when a new storage ac
 }
 ```
 
-## Be aware of line continuation characters
+## Create tags to apply quoting differences
 
-Line continuation characters are different between environments and are not interchangeable.
+Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about quoting differences. These examples demonstrate the following:
 
-| Environment | Line continuation character |
-| - | - |
-| Bash | Backslash (`\`)
-| PowerShell | Backtick (``\``)
-| Cmd | Carrot (`^`)
+* Double quotes
+* Quoting blank spaces
+* Using variables containing quotes.
 
- The <kbd>Copy</kbd> button of the Azure CLI code block removes the backslash (`\`) and the backtick (``\``) by design. If you want to copy a formatted code block, use your keyboard or mouse to select and copy the example.
-
-## Understand quoting differences
-
-There are also different quoting rules for each environment. Here is an example of a parameter value that contains double quotes:
-
-* Bash or PowerShell: `'{"key": "value"}'`
-* Cmd: `"{\"key\": \"value\"}"`
-
-Many Azure CLI parameters accept a space-separated list of values. This impacts quoting.
-
-* Unquoted space-separated list: `--parameterName firstValue secondValue`
-* Quoted space-separated list: `--parameterName "firstValue" "secondValue"`
-* Passing values that contain a space: `--parameterName "value1a value1b" "value2a value2b" "value3"`
-
-If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug and error handling](#use---debug-parameter).
-
-> [!TIP]
-> Most Microsoft articles containing Azure CLI commands are written and tested in a Bash environment using Azure Cloud Shell. If you prefer to work in PowerShell or Cmd, modify the Bash example before executing it in another environment.
-
-## Create tags to test what you've learned
-
-Using [az storage account update](/cli/azure/storage/account#az-storage-account-update), add tags to help you identify your storage account and learn about line continuation and quoting differences. The `--tags` parameter accepts a space-separated list of values.
-
-These examples demonstrate line continuation, double quotes, quoting blank spaces, and using variables containing quotes.
+The `--tags` parameter accepts a space-separated list of values.
 
 # [Bash](#tab/bash)
 
@@ -216,8 +289,6 @@ az storage account update --name <msdocssa00000000> \
 If you don't want to overwrite previous tags while you work through this tutorial step, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
 
 ```azurecli-interactive
-# Bash script to append to existing tags.
-
 # Get the resource ID of your storage account.
 saID=$(az resource show --resource-group <msdocs-tutorial-rg-00000000> \
                         --name <msdocssa00000000> \
@@ -229,7 +300,7 @@ echo My storage account ID is $saID
 
 # Append new tags.
 az tag update --resource-id $saID \
-              --operation merge
+              --operation merge \
               --tags <tagName>=<tagValue>
 
 # Get a list of all tags.
@@ -263,27 +334,48 @@ az storage account update --name <msdocssa00000000> \
                           --tags "$newTag"
 ```
 
+If you don't want to overwrite previous tags while you work through this tutorial step, use the [az tag update](/cli/azure/tag#az-tag-update) command setting the `--operation` parameter to `merge`.
+
+```azurecli-interactive
+# Get the resource ID of your storage account.
+$saID=$(az resource show --resource-group <msdocs-tutorial-rg-00000000> `
+                         --name <msdocssa00000000> `
+                         --resource-type Microsoft.Storage/storageAccounts `
+                         --query "id" `
+                         --output tsv)
+
+echo My storage account ID is $saID
+
+# Append new tags.
+az tag update --resource-id $saID `
+              --operation merge `
+              --tags <tagName>=<tagValue>
+
+# Get a list of all tags.
+az tag list --resource-id $saID
+```
+
 # [Cmd](#tab/cmd)
 
 ```azurecli-interactive
-# Create new tags.
+:: Create new tags.
 az storage account update --name <msdocssa00000000> ^
                           --resource-group <msdocs-tutorial-rg-00000000> ^
                           --tags Team=t1 Environment=e1
 
-# Create new tags containing spaces.
+:: Create new tags containing spaces.
 az storage account update --name <msdocssa00000000> ^
                           --resource-group <msdocs-tutorial-rg-00000000> ^
                           --tags "Floor number=f1" "Cost center=cc1"
 
-# Create a new tag with an empty value.
+:: Create a new tag with an empty value.
 az storage account update --name <msdocssa00000000> ^
                           --resource-group sdocs-tutorial-rg-00000000> ^
                           --tags "Floor number="''""
 
 ```
 
-If you need to modify an Azure resource using a variable, we suggest using Bash. Cmd often does not interpret variable values with special characters as expected. You often receive an "InvalidCharacters" error or your Azure property value is empty.
+If you need to modify an Azure resource using a variable, we suggest using Bash. Cmd often does not interpret variable values with special characters as expected. You often receive an "InvalidCharacters" error or your tag value is empty.
 
 ---
 
@@ -389,7 +481,7 @@ See what the Azure CLI is interpreting in the `Command arguments` line of the ou
 Command arguments: ['{"key":"value"}', '--debug']
 ```
 
-This second example is also **correct**. (The Bash `clear` command provides a clean screen for the next test.)
+This second example is also **correct**. Use the Bash `clear` command to remove console output between tests.
 
 ```azurecli-interactive
 clear
@@ -402,10 +494,10 @@ Command arguments: ['{"key":"value"}', '--debug']
 
 These next two examples are **incorrect** as quotes and spaces are interpreted by Bash.
 
-|Command|Console output|
-|-|-|
-|az {"key":"value"} --debug |Command arguments: ['{key:value}', '--debug']
-|az {"key": "value"} --debug |Command arguments: ['{key:', 'value}', '--debug']
+|Incorrect format|Problem|Console output|
+|-|-|-|
+|az {"key":"value"} --debug |Missing single quotes or escape characters| Command arguments: ['{key:value}', '--debug']
+|az {"key": "value"} --debug |Missing single quotes or escape characters, and contains extra space | Command arguments: ['{key:', 'value}', '--debug']
 
 # [PowerShell](#tab/powershell)
 
@@ -423,11 +515,11 @@ Command arguments: ['{key:value}', '--debug']
 
 These examples are all **incorrect**. Use PowerShells's `cls` command to remove console output between tests.
 
-|Command|Console output|
-|-|-|
-|az "{\"key\":\"value\"}" --debug | Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
-|az {"key":"value"} --debug | Unexpected token ':"value"' in expression or statement.
-|az {"key": "value"} --debug | Error: Unexpected token ':' in expression or statement.
+|Incorrect format|Problem |Console output|
+|-|-|-|
+|az "{\\"key\\":\\"value\\"}" --debug | Contains escape characters | Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
+|az {"key":"value"} --debug | Missing single quotes | Unexpected token ':"value"' in expression or statement.
+|az {"key": "value"} --debug | Missing single quotes and contains an extra space | Error: Unexpected token ':' in expression or statement.
 
 # [Cmd](#tab/cmd)
 
@@ -445,11 +537,11 @@ Command arguments: ['{"key":"value"}', '--debug']
 
 These examples are all **incorrect**. Use the Cmd's `cls` command to remove console output between tests.
 
-|Command|Console output|
-|-|-|
-|az '{"key":"value"}' --debug |Command arguments: ["'{key:value}'", '--debug']
-|az {"key":"value"} --debug | Command arguments: ['{key:value}', '--debug']
-|az "{"key":"value"}" --debug | Command arguments: ['{key:value}', '--debug']
+|Incorrect format|Problem |Console output|
+|-|-|-|
+|az "{"key":"value"}" --debug | Missing escape characters | Command arguments: ['{key:value}', '--debug']
+|az '{"key":"value"}' --debug |Missing escape characters and is using single quotes where double quotes are expected.| Command arguments: ["'{key:value}'", '--debug']
+|az {"key":"value"} --debug | Missing escape characters and double quotes | Command arguments: ['{key:value}', '--debug']
 
 ---
 
