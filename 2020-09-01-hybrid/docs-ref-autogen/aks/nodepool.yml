@@ -22,6 +22,7 @@ directCommands:
                         --name
                         --resource-group
                         [--aks-custom-headers]
+                        [--drain-timeout]
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
                         [--enable-fips-image]
@@ -56,7 +57,7 @@ directCommands:
                         [--spot-max-price]
                         [--tags]
                         [--vnet-subnet-id]
-                        [--zones {1, 2, 3}]
+                        [--zones]
   examples:
   - summary: |-
       Create a nodepool in an existing AKS cluster with ephemeral os enabled.
@@ -96,6 +97,9 @@ directCommands:
   - name: --aks-custom-headers
     summary: |-
       Comma-separated key-value pairs to specify custom headers.
+  - name: --drain-timeout
+    summary: |-
+      When nodes are drain how many minutes to wait for all pods to be evicted.
   - name: --enable-cluster-autoscaler -e
     defaultValue: "False"
     summary: |-
@@ -170,7 +174,7 @@ directCommands:
       Number of nodes in the Kubernetes agent pool. After creating a cluster, you can change the size of its node pool with `az aks scale`.
   - name: --node-osdisk-size
     summary: |-
-      Size in GB of the OS disk for each node in the agent pool. Minimum 30 GB.
+      Size in GiB of the OS disk for each node in the agent pool. Minimum 30 GiB.
   - name: --node-osdisk-type
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
@@ -221,7 +225,6 @@ directCommands:
     summary: |-
       The Resource Id of a subnet in an existing VNet into which to deploy the cluster.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Availability zones where agent nodes will be placed. Also, to install agent nodes to more than one zone you need to pass zone numbers separated by blanks.  For example -  To have all 3 zones, you are expected to enter `--zones 1 2 3`.
 - uid: az_aks_nodepool_add(aks-preview)
@@ -282,7 +285,7 @@ directCommands:
                         [--vm-set-type]
                         [--vnet-subnet-id]
                         [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
-                        [--zones {1, 2, 3}]
+                        [--zones]
   examples:
   - summary: |-
       Create a nodepool in an existing AKS cluster with ephemeral os enabled.
@@ -494,7 +497,6 @@ directCommands:
     summary: |-
       Determines the type of workload a node can run. Defaults to OCIContainer.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Space-separated list of availability zones where agent nodes will be placed. Must use VMSS agent pool type.
 - uid: az_aks_nodepool_delete
@@ -1021,6 +1023,7 @@ directCommands:
                            --resource-group
                            [--aks-custom-headers]
                            [--disable-cluster-autoscaler]
+                           [--drain-timeout]
                            [--enable-cluster-autoscaler]
                            [--labels]
                            [--max-count]
@@ -1066,6 +1069,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable cluster autoscaler.
+  - name: --drain-timeout
+    summary: |-
+      When nodes are drain how many minutes to wait for all pods to be evicted.
   - name: --enable-cluster-autoscaler -e
     defaultValue: "False"
     summary: |-
@@ -1256,6 +1262,7 @@ directCommands:
                             --name
                             --resource-group
                             [--aks-custom-headers]
+                            [--drain-timeout]
                             [--kubernetes-version]
                             [--max-surge]
                             [--no-wait]
@@ -1279,6 +1286,9 @@ directCommands:
   - name: --aks-custom-headers
     summary: |-
       Comma-separated key-value pairs to specify custom headers.
+  - name: --drain-timeout
+    summary: |-
+      When nodes are drain how long to wait for all pods to be evicted.
   - name: --kubernetes-version -k
     summary: |-
       Version of Kubernetes to upgrade the node pool to, such as "1.16.9".

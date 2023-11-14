@@ -270,7 +270,7 @@ directCommands:
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
   - name: --admin-user -u
-    defaultValue: "puffypear7"
+    defaultValue: "worriedsausage4"
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
   - name: --backup-identity
@@ -474,6 +474,11 @@ directCommands:
         --source-server testserver --vnet newVnet --subnet newSubnet \
         --address-prefixes 172.0.0.0/16 --subnet-prefixes 172.0.0.0/24 \
         --private-dns-zone testDNS.postgres.database.azure.com --location newLocation
+  - summary: |-
+      Geo-restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different subscription / resource group. \ Here --restore-group is for the target server's resource group, and --source-server must be passed as resource ID. \ This resource ID can be in a subscription different than the subscription used for az account set.
+    syntax: >-
+      az postgres flexible-server geo-restore --resource-group testGroup --name testserverNew --location newLocation \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName}
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -643,6 +648,16 @@ directCommands:
   - summary: |-
       Restore 'testserver' to current point-in-time as a new server 'testserverNew'.
     syntax: az postgres flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver
+  - summary: |-
+      Restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different resource group. \ Here --restore-group is for the target server's resource group, and --source-server must be passed as resource ID.
+    syntax: >-
+      az postgres flexible-server restore --resource-group testGroup --name testserverNew \
+        --source-server /subscriptions/{testSubscription}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName}
+  - summary: |-
+      Restore 'testserver' to current point-in-time as a new server 'testserverNew' in a different subscription. \ Here --restore-group is for the target server's resource group, and --source-server must be passed as resource ID. \ This resource ID can be in a subscription different than the subscription used for az account set.
+    syntax: >-
+      az postgres flexible-server restore --resource-group testGroup --name testserverNew \
+        --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName}
   requiredParameters:
   - isRequired: true
     name: --source-server
@@ -686,7 +701,7 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --restore-time
-    defaultValue: "2023-11-13T12:09:36+00:00"
+    defaultValue: "2023-11-14T07:50:32+00:00"
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --subnet
@@ -1113,7 +1128,7 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az postgres flexible-server upgrade --version {12, 13, 14}
+    az postgres flexible-server upgrade --version {12, 13, 14, 15}
                                         [--ids]
                                         [--name]
                                         [--resource-group]
@@ -1126,7 +1141,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --version -v
-    parameterValueGroup: "12, 13, 14"
+    parameterValueGroup: "12, 13, 14, 15"
     summary: |-
       Server major version.
   optionalParameters:

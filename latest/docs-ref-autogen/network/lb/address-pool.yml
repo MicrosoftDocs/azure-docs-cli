@@ -17,11 +17,12 @@ directCommands:
     az network lb address-pool create --address-pool-name
                                       --lb-name
                                       --resource-group
-                                      [--admin-state {Down, Drain, None, Up}]
+                                      [--admin-state {Down, None, Up}]
                                       [--backend-address]
                                       [--drain-period]
                                       [--location]
                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--sync-mode {Automatic, Manual}]
                                       [--tunnel-interfaces]
                                       [--vnet]
   examples:
@@ -52,7 +53,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --admin-state
-    parameterValueGroup: "Down, Drain, None, Up"
+    parameterValueGroup: "Down, None, Up"
     summary: |-
       Default administrative state to backend addresses in `--backend-addresses`.
   - name: --backend-address --backend-addresses
@@ -68,6 +69,11 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --sync-mode
+    parameterValueGroup: "Automatic, Manual"
+    summary: |-
+      Backend address synchronous mode for the backend pool.
+    isPreview: true
   - name: --tunnel-interfaces
     summary: |-
       An array of gateway load balancer tunnel interfaces.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -118,6 +124,8 @@ directCommands:
   syntax: >-
     az network lb address-pool list --lb-name
                                     --resource-group
+                                    [--max-items]
+                                    [--next-token]
   examples:
   - summary: |-
       List address pools.
@@ -131,6 +139,13 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_network_lb_address-pool_show
   name: az network lb address-pool show
   summary: |-
@@ -174,7 +189,7 @@ directCommands:
   syntax: >-
     az network lb address-pool update [--add]
                                       [--address-pool-name]
-                                      [--admin-state {Down, Drain, None, Up}]
+                                      [--admin-state {Down, None, Up}]
                                       [--backend-address]
                                       [--drain-period]
                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -186,6 +201,7 @@ directCommands:
                                       [--resource-group]
                                       [--set]
                                       [--subscription]
+                                      [--sync-mode {Automatic, Manual}]
                                       [--tunnel-interfaces]
                                       [--vnet]
   examples:
@@ -209,7 +225,7 @@ directCommands:
     summary: |-
       The name of the backend address pool.
   - name: --admin-state
-    parameterValueGroup: "Down, Drain, None, Up"
+    parameterValueGroup: "Down, None, Up"
     summary: |-
       Default administrative state to backend addresses in `--backend-addresses`.
   - name: --backend-address --backend-addresses
@@ -247,6 +263,11 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --sync-mode
+    parameterValueGroup: "Automatic, Manual"
+    summary: |-
+      Backend address synchronous mode for the backend pool.
+    isPreview: true
   - name: --tunnel-interfaces
     summary: |-
       An array of gateway load balancer tunnel interfaces.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -362,5 +383,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 06/27/2023
+  ms.date: 10/11/2023
   description: Manage address pools of a load balancer.
