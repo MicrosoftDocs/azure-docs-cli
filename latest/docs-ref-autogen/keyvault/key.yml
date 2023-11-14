@@ -49,7 +49,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
   syntax: >-
-    az keyvault key create [--curve {Ed25519, P-256, P-256K, P-384, P-521}]
+    az keyvault key create [--curve {P-256, P-256K, P-384, P-521}]
                            [--default-cvm-policy]
                            [--disabled {false, true}]
                            [--expires]
@@ -57,7 +57,7 @@ directCommands:
                            [--hsm-name]
                            [--id]
                            [--immutable {false, true}]
-                           [--kty {EC, EC-HSM, OKP, OKP-HSM, RSA, RSA-HSM, oct, oct-HSM}]
+                           [--kty {EC, EC-HSM, RSA, RSA-HSM, oct, oct-HSM}]
                            [--name]
                            [--not-before]
                            [--ops {decrypt, encrypt, export, import, sign, unwrapKey, verify, wrapKey}]
@@ -68,7 +68,7 @@ directCommands:
                            [--vault-name]
   optionalParameters:
   - name: --curve
-    parameterValueGroup: "Ed25519, P-256, P-256K, P-384, P-521"
+    parameterValueGroup: "P-256, P-256K, P-384, P-521"
     summary: |-
       Elliptic curve name. For valid values, see: https://docs.microsoft.com/rest/api/keyvault/keys/create-key/create-key#jsonwebkeycurvename.
   - name: --default-cvm-policy
@@ -98,7 +98,7 @@ directCommands:
     summary: |-
       Mark a release policy as immutable. An immutable release policy cannot be changed or updated after being marked immutable. Release policies are mutable by default.
   - name: --kty
-    parameterValueGroup: "EC, EC-HSM, OKP, OKP-HSM, RSA, RSA-HSM, oct, oct-HSM"
+    parameterValueGroup: "EC, EC-HSM, RSA, RSA-HSM, oct, oct-HSM"
     summary: |-
       The type of key to create. For valid values, see: https://docs.microsoft.com/rest/api/keyvault/keys/create-key/create-key#jsonwebkeytype.
   - name: --name -n
@@ -152,7 +152,7 @@ directCommands:
                             [--version]
   examples:
   - summary: |-
-      Decrypt value(Base64 encoded string returned by encrypt command) with valut's key using RSA-OAEP and get result as base64 encoded.
+      Decrypt value(Base64 encoded string returned by encrypt command) with vault's key using RSA-OAEP and get result as base64 encoded.
     syntax: az keyvault key decrypt --name mykey --vault-name myvault --algorithm RSA-OAEP --data-type base64 --value "CbFcCxHG7WTU+nbpFRrHoqSduwlPy8xpWxf1JxZ2y12BY/qFJirMSYq1i4SO9rvSmvmEMxFV5kw5s9Tc+YoKmv8X6oe+xXx+JytYV8obA5l3OQD9epuuQHWW0kir/mp88lzhcYWxYuF7mKDpPKDV4if+wnAZqQ4woB6t2JEZU5MVK3s+3E/EU4ehb5XrVxAl6xpYy8VYbyF33uJ5s+aUsYIrsVtXgrW99HQ3ic7tJtIOGuWqKhPCdQRezRkOcyxkJcmnDHOLjWA/9strzzx/dyg/t884gT7qrkmIHh8if9SFal/vi1h4XhoDqUleMTnKev2IFHyDNcYVYG3pftJiuA=="
   - summary: |-
       Decrypt value(Base64 encoded string returned by encrypt command) with MHSM's key using AES-GCM and get result as plaintext.
@@ -299,7 +299,7 @@ directCommands:
                             [--version]
   examples:
   - summary: |-
-      Encrypt value(Base64 encoded string) with valut's key using RSA-OAEP.
+      Encrypt value(Base64 encoded string) with vault's key using RSA-OAEP.
     syntax: az keyvault key encrypt --name mykey --vault-name myvault --algorithm RSA-OAEP --value "YWJjZGVm" --data-type base64
   - summary: |-
       Encrypt value(plaintext) with MHSM's key using AES-GCM.
@@ -363,7 +363,7 @@ directCommands:
   syntax: >-
     az keyvault key import [--byok-file]
                            [--byok-string]
-                           [--curve {Ed25519, P-256, P-256K, P-384, P-521}]
+                           [--curve {P-256, P-256K, P-384, P-521}]
                            [--default-cvm-policy]
                            [--disabled {false, true}]
                            [--expires]
@@ -390,7 +390,7 @@ directCommands:
     summary: |-
       BYOK string containing the key to be imported. Must not be password protected.
   - name: --curve
-    parameterValueGroup: "Ed25519, P-256, P-256K, P-384, P-521"
+    parameterValueGroup: "P-256, P-256K, P-384, P-521"
     summary: |-
       The curve name of the key to import (only for BYOK).
   - name: --default-cvm-policy
@@ -474,7 +474,7 @@ directCommands:
   optionalParameters:
   - name: --hsm-name
     summary: |-
-      Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
+      Name of the HSM. Can be omitted if --id is specified.
   - name: --id
     summary: |-
       Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
@@ -482,10 +482,10 @@ directCommands:
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
-      Include managed keys. Default: false.
+      Include managed keys.
   - name: --maxresults
     summary: |-
-      Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+      Maximum number of results to return.
   - name: --vault-name
     summary: |-
       Name of the Vault.
@@ -506,22 +506,22 @@ directCommands:
   optionalParameters:
   - name: --hsm-name
     summary: |-
-      Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
+      Name of the HSM. Can be omitted if --id is specified.
   - name: --id
     summary: |-
       Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
   - name: --maxresults
     summary: |-
-      Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+      Maximum number of results to return.
   - name: --vault-name
     summary: |-
       Name of the Vault.
 - uid: az_keyvault_key_list-versions
   name: az keyvault key list-versions
   summary: |-
-    Retrieves a list of individual key versions with the same key name.
+    List the identifiers and properties of a key's versions.
   description: |-
-    The full key identifier, attributes, and tags are provided in the response. This operation requires the keys/list permission.
+    Requires keys/list permission.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
@@ -540,7 +540,7 @@ directCommands:
       Id of the key. If specified all other 'Id' arguments should be omitted.
   - name: --maxresults
     summary: |-
-      Maximum number of results to return in a page. If not specified the service will return up to 25 results.
+      Maximum number of results to return.
   - name: --name -n
     summary: |-
       Name of the key. Required if --id is not specified.
@@ -657,7 +657,7 @@ directCommands:
       Local key backup from which to restore key.
   - name: --hsm-name
     summary: |-
-      Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
+      Name of the HSM. Can be omitted if --id is specified.
   - name: --id
     summary: |-
       Full URI of the Vault or HSM. If specified all other 'Id' arguments should be omitted.
@@ -818,7 +818,7 @@ directCommands:
       Name of the HSM. (--hsm-name and --vault-name are mutually exclusive, please specify just one of them).
   - name: --id
     summary: |-
-      The recovery id of the key. If specified all other 'Id' arguments should be omitted.
+      Id of the key. If specified all other 'Id' arguments should be omitted.
   - name: --name -n
     summary: |-
       Name of the key. Required if --id is not specified.
@@ -833,7 +833,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
   syntax: >-
-    az keyvault key sign --algorithm {ES256, ES256K, ES384, ES512, EdDSA, PS256, PS384, PS512, RS256, RS384, RS512}
+    az keyvault key sign --algorithm {ES256, ES256K, ES384, ES512, PS256, PS384, PS512, RS256, RS384, RS512}
                          --digest
                          [--hsm-name]
                          [--id]
@@ -847,7 +847,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --algorithm -a
-    parameterValueGroup: "ES256, ES256K, ES384, ES512, EdDSA, PS256, PS384, PS512, RS256, RS384, RS512"
+    parameterValueGroup: "ES256, ES256K, ES384, ES512, PS256, PS384, PS512, RS256, RS384, RS512"
     summary: |-
       Algorithm identifier.
   - isRequired: true
@@ -878,7 +878,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/keyvault/_help.py
   syntax: >-
-    az keyvault key verify --algorithm {ES256, ES256K, ES384, ES512, EdDSA, PS256, PS384, PS512, RS256, RS384, RS512}
+    az keyvault key verify --algorithm {ES256, ES256K, ES384, ES512, PS256, PS384, PS512, RS256, RS384, RS512}
                            --digest
                            --signature
                            [--hsm-name]
@@ -893,7 +893,7 @@ directCommands:
   requiredParameters:
   - isRequired: true
     name: --algorithm -a
-    parameterValueGroup: "ES256, ES256K, ES384, ES512, EdDSA, PS256, PS384, PS512, RS256, RS384, RS512"
+    parameterValueGroup: "ES256, ES256K, ES384, ES512, PS256, PS384, PS512, RS256, RS384, RS512"
     summary: |-
       Algorithm identifier.
   - isRequired: true
@@ -970,5 +970,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/19/2023
+  ms.date: 11/06/2023
   description: Manage keys.

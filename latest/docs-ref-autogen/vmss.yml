@@ -42,7 +42,6 @@ directCommands:
                    [--data-disk-iops]
                    [--data-disk-mbps]
                    [--data-disk-sizes-gb]
-                   [--disable-integrity-monitoring]
                    [--disable-integrity-monitoring-autoupgrade]
                    [--disable-overprovision]
                    [--disk-controller-type {NVMe, SCSI}]
@@ -52,6 +51,7 @@ directCommands:
                    [--enable-auto-update {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-hibernation {false, true}]
+                   [--enable-integrity-monitoring]
                    [--enable-osimage-notification {false, true}]
                    [--enable-secure-boot {false, true}]
                    [--enable-spot-restore {false, true}]
@@ -130,7 +130,7 @@ directCommands:
                    [--vm-sku]
                    [--vnet-address-prefix]
                    [--vnet-name]
-                   [--zones {1, 2, 3}]
+                   [--zones]
   examples:
   - summary: |-
       Create a Windows VM scale set with 5 instances, a load balancer, a public IP address, a 2GB data disk and 40GB OS disk.
@@ -288,10 +288,6 @@ directCommands:
   - name: --data-disk-sizes-gb
     summary: |-
       Space-separated empty managed data disk sizes in GB to create.
-  - name: --disable-integrity-monitoring
-    defaultValue: "False"
-    summary: |-
-      Disable the default behavior of installing guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
   - name: --disable-integrity-monitoring-autoupgrade
     defaultValue: "False"
     summary: |-
@@ -326,6 +322,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       The flag that enable or disable hibernation capability on the VMSS.
+  - name: --enable-integrity-monitoring
+    defaultValue: "False"
+    summary: |-
+      Enable installing Microsoft propietary and not security supported guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
   - name: --enable-osimage-notification
     parameterValueGroup: "false, true"
     summary: |-
@@ -383,9 +383,10 @@ directCommands:
     summary: |-
       Name to use for the NAT rule v2 when creating a new load balancer. (NAT rule V2 is used to replace NAT pool).
   - name: --lb-sku
+    defaultValue: "Standard"
     parameterValueGroup: "Basic, Gateway, Standard"
     summary: |-
-      Sku of the Load Balancer to create. Default to 'Standard' when single placement group is turned off; otherwise, default to 'Basic'. The public IP is supported to be created on edge zone only when it is 'Standard'.
+      Sku of the Load Balancer to create. The public IP is supported to be created on edge zone only when it is 'Standard'.
   - name: --license-type
     parameterValueGroup: "None, RHEL_BASE, RHEL_BASESAPAPPS, RHEL_BASESAPHA, RHEL_BYOS, RHEL_ELS_6, RHEL_EUS, RHEL_SAPAPPS, RHEL_SAPHA, SLES, SLES_BYOS, SLES_HPC, SLES_SAP, SLES_STANDARD, UBUNTU, UBUNTU_PRO, Windows_Client, Windows_Server"
     summary: |-
@@ -422,6 +423,7 @@ directCommands:
     summary: |-
       Name or ID of an existing Network Security Group.
   - name: --orchestration-mode
+    defaultValue: "Flexible"
     parameterValueGroup: "Flexible, Uniform"
     summary: |-
       Choose how virtual machines are managed by the scale set. In Uniform mode, you define a virtual machine model and Azure will generate identical instances based on that model. In Flexible mode, you manually create and add a virtual machine of any configuration to the scale set or generate identical instances based on virtual machine model defined for the scale set.
@@ -597,7 +599,6 @@ directCommands:
     summary: |-
       Name of the virtual network when creating a new one or referencing an existing one.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
 - uid: az_vmss_deallocate

@@ -143,7 +143,7 @@ directCommands:
       Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
   - name: --service-level-objective --service-objective
     summary: |-
-      The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.
+      The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_S_Gen5_8, BC_Gen5_2, HS_Gen5_32.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -182,8 +182,10 @@ directCommands:
                      [--elastic-pool]
                      [--encryption-protector]
                      [--encryption-protector-auto-rotation {false, true}]
+                     [--exhaustion-behavior {AutoPause, BillOverUsage}]
                      [--family]
                      [--federated-client-id]
+                     [--free-limit {false, true}]
                      [--ha-replicas]
                      [--keys]
                      [--ledger-on {Disabled, Enabled}]
@@ -225,6 +227,9 @@ directCommands:
   - summary: |-
       Create a database with VBS enclave enabled.
     syntax: az sql db create -g mygroup -s myserver -n mydb --preferred-enclave-type VBS
+  - summary: |-
+      Create a database with free limit applied
+    syntax: az sql db create -g mygroup -s myserver -n mydb -e GeneralPurpose -f Gen5 -c 2 --compute-model Serverless --use-free-limit --free-limit-exhaustion-behavior AutoPause
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -279,12 +284,20 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Specifies the database encryption protector key auto rotation flag. Can be either true, false or null.
+  - name: --exhaustion-behavior --fleb --free-limit-exhaustion-behavior
+    parameterValueGroup: "AutoPause, BillOverUsage"
+    summary: |-
+      Specifies the behavior when monthly free limits are exhausted for the free database.AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.BillForUsage: The database will continue to be online upon exhaustion of free limitsand any overage will be billed.
   - name: --family -f
     summary: |-
       The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.
   - name: --federated-client-id
     summary: |-
       The federated client id for the SQL Database. It is used for cross tenant CMK scenario.
+  - name: --free-limit --use-free-limit
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether or not the database uses free monthly limits. Allowed on one database in a subscription.
   - name: --ha-replicas --read-replicas
     summary: |-
       The number of high availability replicas to provision for the database. Only settable for Hyperscale edition.
@@ -326,7 +339,7 @@ directCommands:
       The name of the sample schema to apply when creating thisdatabase.
   - name: --service-level-objective --service-objective
     summary: |-
-      The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.
+      The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_S_Gen5_8, BC_Gen5_2, HS_Gen5_32.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -865,7 +878,7 @@ directCommands:
       Name of the Azure SQL Server. You can configure the default using `az configure --defaults sql-server=<name>`.
   - name: --service-level-objective --service-objective
     summary: |-
-      The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_Gen5_S_8, BC_Gen5_2, HS_Gen5_32.
+      The service objective for the new database. For example: Basic, S0, P1, GP_Gen4_1, GP_S_Gen5_8, BC_Gen5_2, HS_Gen5_32.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -1032,10 +1045,12 @@ directCommands:
                      [--elastic-pool]
                      [--encryption-protector]
                      [--encryption-protector-auto-rotation {false, true}]
+                     [--exhaustion-behavior {AutoPause, BillOverUsage}]
                      [--family]
                      [--federated-client-id]
                      [--filter]
                      [--force-string]
+                     [--free-limit {false, true}]
                      [--ha-replicas]
                      [--ids]
                      [--keys]
@@ -1083,6 +1098,9 @@ directCommands:
   - summary: |-
       Update database with VBS enclave enabled.
     syntax: az sql db update -g mygroup -s myserver -n mydb --preferred-enclave-type VBS
+  - summary: |-
+      Update exhaustion behavior of free limit database to BillOverUsage
+    syntax: az sql db update -g mygroup -s myserver -n mydb --free-limit-exhaustion-behavior BillOverUsage
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -1119,6 +1137,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Specifies the database encryption protector key auto rotation flag. Can be either true, false or null.
+  - name: --exhaustion-behavior --fleb --free-limit-exhaustion-behavior
+    parameterValueGroup: "AutoPause, BillOverUsage"
+    summary: |-
+      Specifies the behavior when monthly free limits are exhausted for the free database.AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.BillForUsage: The database will continue to be online upon exhaustion of free limitsand any overage will be billed.
   - name: --family -f
     summary: |-
       The compute generation component of the sku (for vcore skus only). Allowed values include: Gen4, Gen5.
@@ -1132,6 +1154,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --free-limit --use-free-limit
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether or not the database uses free monthly limits. Allowed on one database in a subscription.
   - name: --ha-replicas --read-replicas
     summary: |-
       The number of high availability replicas to provision for the database. Only settable for Hyperscale edition.
@@ -1290,5 +1316,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 06/21/2023
+  ms.date: 10/18/2023
   description: Manage databases.
