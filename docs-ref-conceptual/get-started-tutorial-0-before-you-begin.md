@@ -34,12 +34,12 @@ You can install the Azure CLI locally on Linux, macOS, or Windows computers. Azu
 
 Windows PowerShell, PowerShell, Cmd, and Bash are shell environments. Your shell environment not only determines which tools you can use but also changes your command-line experience. For example, there are important quoting differences between shells. An Azure CLI parameter value that contains a quote cannot always be copied successfully between shells.
 
-| Shell Environment | Azure CLI | Azure PowerShell | Quoting experience | Variable syntax
+| Shell Environment | Azure CLI | Azure PowerShell | Quoting example | Variable example
 |-|-|-|-|-|
-|[Cmd](/windows-server/administration/windows-commands/cmd) | Yes | | >=\`50`|set variableName=variableValue
-|[Bash](https://opensource.com/resources/what-bash)| Yes | | >=\\`50\\`| variableName=variableValue
-|[Windows PowerShell](/powershell/scripting/windows-powershell/overview) | Yes |Yes| >=\`\`50\`\`| $variableName=variableValue
-|[PowerShell](/powershell/scripting/overview) | Yes | Yes| >=\`\`50\`\`| $variableName=variableValue
+|[Cmd](/windows-server/administration/windows-commands/cmd) | Yes | | \`50`|set variableName=variableValue
+|[Bash](https://opensource.com/resources/what-bash)| Yes | | \\\`50\\`| variableName=variableValue
+|[Windows PowerShell](/powershell/scripting/windows-powershell/overview) | Yes |Yes| \`\`50\`\`| $variableName=variableValue
+|[PowerShell](/powershell/scripting/overview) | Yes | Yes| \`\`50\`\`| $variableName=variableValue
 
 [Azure Cloud Shell](/azure/cloud-shell/get-started) is a hosted shell environment that runs on an Ubuntu container. Cloud Shell provides two shell environments: Bash (with Azure CLI preinstalled) and PowerShell (with Azure PowerShell preinstalled).
 
@@ -74,6 +74,8 @@ An Azure CLI syntax has four parts. For example, this is how [az storage account
 | Space-delimited reference _subgroups_ | `account` `local-user`
 | Reference _command_ | az storage account local-user `create`
 | Reference command _parameters_ | `name`, `--account-name`, `--resource-group`
+
+## What are Azure CLI status options?
 
 Every Azure CLI reference group, subgroup, command and parameter has one of three statuses. The status determines the support level.
 

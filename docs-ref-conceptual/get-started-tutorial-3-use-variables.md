@@ -24,7 +24,8 @@ In this tutorial step you will learn to query command output and store the resul
 
 ## Get command output using JMESPath query
 
-> [!TIP] The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)
+> [!TIP]
+> The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)
 
 Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json`.
 
@@ -204,20 +205,78 @@ az config set core.output=json
 
 ---
 
+## Get the contents of a JSON file and store it in a variable
 
-## Get a value from a text file and store it in a variable
+Create a JSON file containing the following JSON, or your file contents of choice. Save the text file to you local drive. If you are working in Azure Cloud Shell, use the `upload/download files` icon in the menu bar to store the text file in your cloud storage drive.
 
+```text
+{
+  "environments": {
+    "dev": [
+      {
+        "id": "1",
+        "kv-secretName": "dev1SecretName",
+        "status": "inactive",
+      },
+      {
+        "id": "2",
+        "kv-secretName": "dev2SecretName",
+        "status": "active"
+      }
+    ],
+    "stg": {
+      "id": "3",
+      "kv-secretName": "dev3SecretName"
+    },
+    "prod": {
+      "id": "4",
+      "kv-secretName": "dev4SecretName"
+    }
+  }
+}
+```
 
-TODO
+Store the contents of your json file in a variable for further use in your Azure CLI commands. In this example, change `msdocs-tutorial.json` to the name of your file
 
-## Pass variable values between commands
+# [Bash](#tab/bash)
 
+This Bash script was tested in [Azure Cloud Shell](/azure/cloud-shell/overview) and depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command.
 
-TODO
+```azurecli-interactive
+# Show the contents of a file in the console
+fileName=msdocs-tutorial.json
+cat $fileName | jq
 
-## Troubleshooting
+# Get a JSON dictionary object
+stgKV=$(jq -r '.environments.stg."kv-secretName"' $fileName)
+echo $stgKV
 
-TODO
+# Filter a JSON array
+devKV=$(jq -r '.environments.dev[] | select(.status=="active") | ."kv-secretName"' $fileName)
+echo $devKV
+```
+
+# [PowerShell](#tab/powershell)
+
+This PowerShell script was tested in [Windows PowerShell](/powershell/scripting/developer/windows-powershell) and [PowerShell 7](/powershell/scripting/overview).
+
+```powershell
+# Show the contents of a file in the console
+$fileName="c:\_msft\msdocs-tutorial.json"
+$fileContents = Get-Content -Path $fileName | ConvertFrom-Json
+
+# Get a JSON dictionary object
+$stgKV=$($fileContents.environments.stg."kv-secretName")
+echo $stgKV
+
+# Filter a JSON array
+$devKV=$($fileContents.environments.dev | 
+    Where-Object status -eq 'active' | 
+    Select-Object -ExpandProperty 'kv-secretName')
+echo $devKV
+```
+
+You now have an environment-specific Azure Key Vault secret name stored in a variable and can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts between environments.
 
 ## Get more detail
 
@@ -232,11 +291,11 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 |Azure key vault| [About Azure Key Vault](/azure/key-vault/general/overview)
 | | [Provide access to Key Vault keys, certificates, and secrets with an Azure role-based access control](/azure/key-vault/general/rbac-guide?tabs=azure)
 | | [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes)
-
+|PowerShell| Reference links: [Get-content](/powershell/module/microsoft.powershell.management/get-content), [Where-Object](/powershell/module/microsoft.powershell.core/where-object), [Select-Object](/powershell/module/microsoft.powershell.utility/select-object)
 
 ## Next Step
 
-Now that you've learned how to modify parameter values for Bash, PowerShell and Windows Command, proceed to the next step to learn how to ...
+Now that you've learned how to use variables to store Azure CLI command output and JSON property values, proceed to the next step to learn how to use scripts to delete Azure resources.
 
 > [!div class="nextstepaction"]
-> [next step name](./azure-cli-sp-tutorial-3.md)
+> [Delete Azure resources with a script](./get-started-tutorial-4-delete-resources.md)

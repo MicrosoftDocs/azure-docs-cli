@@ -187,7 +187,7 @@ The Azure CLI returns at least 100 lines of JSON as output when a new storage ac
 "extendedLocation": null,
 "failoverInProgress": null,
 "geoReplicationStats": null,
-"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ sdocs-tutorial-rg-00000000/providers/Microsoft.Storage/storageAccounts/ msdocssa00000000",
+"id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ msdocs-tutorial-rg-00000000/providers/Microsoft.Storage/storageAccounts/msdocssa00000000",
 "identity": null,
 "immutableStorageWithVersioning": null,
 "isHnsEnabled": null,
