@@ -28,13 +28,13 @@ In this tutorial step you will learn how to get information from a local JSON fi
 There are times when you want to get information about an existing Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to execute a [JMESPath query](https://jmespath.org/) to perform these tasks.
 
 > [!TIP]
-> The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)
+> The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-environment-syntax.md)
 
 Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json` set in [Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
 
 ### Get JSON dictionary properties of an Azure resource
 
-Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md), get the `primaryEndpoints` of your storage account.
+Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-environment-syntax.md), get the `primaryEndpoints` of your storage account.
 
 ```azurecli-interactive
 az storage account show --resource-group <msdocs-tutorial-rg-00000000> \

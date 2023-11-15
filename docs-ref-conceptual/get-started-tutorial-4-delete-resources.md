@@ -17,7 +17,7 @@ In this tutorial step learn to delete Azure resources at scale using a Bash or P
 
 ## Prerequisites
 
-* You have created storage accounts as described in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-work-environments.md).
+* You have created storage accounts as described in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md).
 
 ## Delete a resource group by name
 
@@ -95,7 +95,7 @@ Do you want more detail on one of the references used in this tutorial step? Use
 |-|-|
 |References| [az group list](/cli/azure/group#az-group-list)
 | | [az group delete](/cli/azure/group#az-group-delete)
-| | [az storage account list](/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-list)
-| | [az storage account delete](/cli/azure/storage/account?view=azure-cli-latest#az-storage-account-delete)
+| | [az storage account list](/cli/azure/storage/account#az-storage-account-list)
+| | [az storage account delete](/cli/azure/storage/account#az-storage-account-delete)
 
 This is the end of the tutorial, but look at all you have accomplished! You are now officially onboarded with the Azure CLI. Well done!
