@@ -101,7 +101,7 @@ az group create --name $resourceGroup --location $location --output json
 
 ---
 
-Console output in both Bash and PowerShell:
+Bash and PowerShell console output:
 
 ```output
 {
@@ -115,20 +115,6 @@ Console output in both Bash and PowerShell:
   "tags": null,
   "type": "Microsoft.Resources/resourceGroups"
 }
-```
-
-### Remove a resource group
-
-**TODO**: Move this to final step cleanup doc
-
-Using random IDs and running every step in this tutorial multiple times creates test resource groups that should be removed. When you delete a resource group, you delete every object inside that resource group so when you cleanup, make sure you delete the right group!
-
-```azurecli-interactive
-# Get a list of resource groups
-az group list --output table
-
-# Delete a resource group and tell your console not to wait
-az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
 ```
 
 ## Set environment variables
@@ -194,4 +180,4 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 Now that you've learned how to configure your environment, proceed to the next step to learn the scripting differences between Bash, PowerShell and Cmd.
 
 > [!div class="nextstepaction"]
-> [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)
+> [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)

@@ -18,9 +18,10 @@ We are glad you are here! You have chosen a tool that will allow you to create, 
 > [!div class="checklist"]
 >
 > * Get to know the Azure CLI is this tutorial step
-> * [Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
-> * [Write commands for Bash, Powershell and Cmd environments](./get-started-tutorial-2-work-environments.md)
-> * [Use variables to store values for a script](./get-started-tutorial-3-use-variables.md)
+> * [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
+> * [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
+> * [Propagate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
+> * [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)
 
 ## What is the Azure CLI?
 
@@ -34,12 +35,12 @@ You can install the Azure CLI locally on Linux, macOS, or Windows computers. Azu
 
 Windows PowerShell, PowerShell, Cmd, and Bash are shell environments. Your shell environment not only determines which tools you can use but also changes your command-line experience. For example, there are important quoting differences between shells. An Azure CLI parameter value that contains a quote cannot always be copied successfully between shells.
 
-| Shell Environment | Azure CLI | Azure PowerShell | Quoting example | Variable example
-|-|-|-|-|-|
-|[Cmd](/windows-server/administration/windows-commands/cmd) | Yes | | \`50`|set variableName=variableValue
-|[Bash](https://opensource.com/resources/what-bash)| Yes | | \\\`50\\`| variableName=variableValue
-|[Windows PowerShell](/powershell/scripting/windows-powershell/overview) | Yes |Yes| \`\`50\`\`| $variableName=variableValue
-|[PowerShell](/powershell/scripting/overview) | Yes | Yes| \`\`50\`\`| $variableName=variableValue
+| Shell Environment | Azure CLI | Azure PowerShell
+|-|-|-|
+|[Cmd](/windows-server/administration/windows-commands/cmd) | Yes
+|[Bash](https://opensource.com/resources/what-bash)| Yes |
+|[Windows PowerShell](/powershell/scripting/windows-powershell/overview) | Yes |Yes
+|[PowerShell](/powershell/scripting/overview) | Yes | Yes
 
 [Azure Cloud Shell](/azure/cloud-shell/get-started) is a hosted shell environment that runs on an Ubuntu container. Cloud Shell provides two shell environments: Bash (with Azure CLI preinstalled) and PowerShell (with Azure PowerShell preinstalled).
 
@@ -59,7 +60,7 @@ Azure CLI and [Azure PowerShell](/powershell/azure/) are both command-line tools
 |Syntax example | [az storage account create](/cli/azure/storage/account#az-storage-account-create) | [New-AzStorageAccount](/powershell/module/az.storage/new-azstorageaccount) |
 |Learn more | [What is Azure CLI?](./what-is-azure-cli.md) | [What is Azure PowerShell?](/powershell/azure/what-is-azure-powershell)
 
-## What are the Azure CLI command components?
+## What are Azure CLI command components?
 
 All Azure CLI reference commands are one of two reference types:
 
@@ -103,4 +104,4 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 Now that you've learned about the Azure CLI, proceed to the next step to prepare your environment and execute your first Azure CLI reference command.
 
 > [!div class="nextstepaction"]
-> [Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
+> [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)

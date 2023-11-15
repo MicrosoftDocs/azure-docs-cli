@@ -11,27 +11,28 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 
 ---
-# Store command output in variables
+# Propagate variables for use in scripts
 
-There are times when you want to get information about an Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to execute a [JMESPath query](https://jmespath.org/) to perform these tasks.
+In this tutorial step you will learn how to get information from a local JSON file, new and existing Azure resources, and store the information in a variable. The variable can then be used in Azure CLI to perform build and destroy jobs at scale.
 
-In this tutorial step you will learn to query command output and store the results in a variable.
+* Get information about an existing Azure resource, such as a resource ID.
+* Get output from an Azure CLI command, such as a password.
+* Get JSON objects for environment information, such as development, stage and production IDs.
 
 ## Prerequisites
 
-* You have completed the prerequisites to [prepare your environment](./get-started-tutorial-1-prepare-environment.md).
 * You have access to a resource group and storage account with `contributor` permissions.
 
 ## Get command output using JMESPath query
 
+There are times when you want to get information about an existing Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to execute a [JMESPath query](https://jmespath.org/) to perform these tasks.
+
 > [!TIP]
 > The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md)
 
-Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json`.
+Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json` set in [Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
 
-When a separate PowerShell example is not provided, use the **Copy** button in the upper right corner of the Azure CLI code block to remove Bash line continuation characters.
-
-### Get JSON dictionary properties
+### Get JSON dictionary properties of an Azure resource
 
 Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-work-environments.md), get the `primaryEndpoints` of your storage account.
 
@@ -56,7 +57,7 @@ Console JSON dictionary output:
 }
 ```
 
-### Get multiple individual properties
+### Get individual JSON objects
 
 ```azurecli-interactive
 az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
@@ -262,7 +263,7 @@ This PowerShell script was tested in [Windows PowerShell](/powershell/scripting/
 
 ```powershell
 # Show the contents of a file in the console
-$fileName="c:\_msft\msdocs-tutorial.json"
+$fileName="c:\myPath\msdocs-tutorial.json"
 $fileContents = Get-Content -Path $fileName | ConvertFrom-Json
 
 # Get a JSON dictionary object
@@ -298,4 +299,4 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 Now that you've learned how to use variables to store Azure CLI command output and JSON property values, proceed to the next step to learn how to use scripts to delete Azure resources.
 
 > [!div class="nextstepaction"]
-> [Delete Azure resources with a script](./get-started-tutorial-4-delete-resources.md)
+> [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)
