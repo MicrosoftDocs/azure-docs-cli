@@ -1,5 +1,5 @@
 ---
-title: Write scripts for Bash, PowerShell and Windows Cmd | Microsoft Docs
+title: Run Azure CLI commands with Bash, PowerShell Cmd syntax | Microsoft Docs
 description: Learn about quoting differences, line continuation and debugging in Bash, PowerShell and Windows Cmd environments.
 manager: jasongroce
 author: dbradish-microsoft
@@ -463,7 +463,7 @@ az storage account list --resource-group msdocs-tutorial-rg-55276056 ^
 
 ---
 
-## Debug a reference command
+## Debug an Azure CLI reference command
 
 ### Use `--debug` parameter
 
@@ -621,4 +621,4 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 Now that you've learned how to modify parameter values for Bash, PowerShell and Cmd, proceed to the next step to learn how to extract values to a variable.
 
 > [!div class="nextstepaction"]
-> [Propagate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
+> [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md)

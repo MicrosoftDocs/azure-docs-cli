@@ -1,6 +1,6 @@
 ---
-title: Use the Azure CLI by first configuring your environment | Microsoft Docs
-description: Learn Azure CLI terms, change a subscription, set environment variables, and create resource groups containing a random ID.
+title: Configure your Azure CLI environment | Microsoft Docs
+description: Learn Azure CLI installation, sign in, setting environment variables, and creating Azure resources containing a random ID.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish

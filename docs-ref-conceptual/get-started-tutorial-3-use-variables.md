@@ -1,6 +1,6 @@
 ---
-title: Use variables in commands to manage Azure resources | Microsoft Docs
-description: Learn about using variables to store query output and text file input.
+title: Get variable values from Azure resources or a local JSON file | Microsoft Docs
+description: Learn how to use variables to store JSON file properties and query output.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -11,7 +11,7 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 
 ---
-# Propagate variables for use in scripts
+# Populate variables for use in scripts
 
 In this tutorial step you will learn how to get information from a local JSON file, new and existing Azure resources, and store the information in a variable. The variable can then be used in Azure CLI to perform build and destroy jobs at scale.
 
