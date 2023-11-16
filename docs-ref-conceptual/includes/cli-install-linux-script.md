@@ -15,7 +15,7 @@ It's strongly recommend to install the CLI with a package manager. A package man
 
 The CLI requires the following software:
 
-* [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/).
+* [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/). This install script is not written to work with Python 3.12.
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
