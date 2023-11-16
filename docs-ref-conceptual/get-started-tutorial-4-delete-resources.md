@@ -31,6 +31,9 @@ az group list --output table
 az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
 ```
 
+> [!TIP]
+> The `--yes` parameter of the [az group delete](/cli/azure/group#az-group-delete) command will by-pass the console confirmation prompt.
+
 ## Delete multiple storage accounts using for-each
 
 When you are working with a large number of resources and you do not want to delete all the objects within a group, consider using a script. This example gets a list of all the Azure storage accounts created in this tutorial and deletes them in a for-each loop.
@@ -38,15 +41,15 @@ When you are working with a large number of resources and you do not want to del
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
--- Set your resource group variable
+# Set your resource group variable
 resourceGroup=<msdocs-tutorial-rg-0000000>
 
--- Get the name of all storage accounts in a resource group.
+# Get the name of all storage accounts in a resource group.
 az storage account list --resource-group $resource-group \
     --query "[].{Name:name}" \
     --output table
 
--- Delete storage accounts without a confirmation prompt.
+# Delete storage accounts without a confirmation prompt.
 for saList in $(az storage account list --resource-group $resource-group \
     --query "[?starts_with(name, 'msdocs') == \`true\`].id" \
     --output tsv); do
@@ -54,7 +57,7 @@ for saList in $(az storage account list --resource-group $resource-group \
     az storage account delete --ids $saList --yes
 done
 
--- Verify the storage accounts are gone.
+# Verify the storage accounts are gone.
 az storage account list --resource-group $resource-group \
     --query "[?starts_with(name, 'msdocs') == \`true\`].name"
 ```
@@ -62,15 +65,15 @@ az storage account list --resource-group $resource-group \
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
--- Set your resource group variable
+# Set your resource group variable
 $resourceGroup=<msdocs-tutorial-rg-0000000>
 
--- Get the name of all storage accounts in a resource group.
+# Get the name of all storage accounts in a resource group.
 az storage account list --resource-group $resourceGroup `
     --query "[].{Name:name}" `
     --output table
 
--- Delete storage accounts without a confirmation prompt.
+# Delete storage accounts without a confirmation prompt.
 ForEach ($saList in $(az storage account list --resource-group $resourceGroup `
     --query "[?starts_with(name, 'msdocs') == ``true``].id" `
     --output tsv)
@@ -80,7 +83,7 @@ ForEach ($saList in $(az storage account list --resource-group $resourceGroup `
     az storage account delete --ids $saList --yes
     }
 
--- Verify the storage accounts are gone.
+# Verify the storage accounts are gone.
 az storage account list --resource-group $resourceGroup `
     --query "[?starts_with(name, 'msdocs') == ``true``].name"
 ```

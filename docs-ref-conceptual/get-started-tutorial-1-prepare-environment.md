@@ -29,7 +29,7 @@ In this tutorial step, you onboard with the Azure CLI! This includes choosing th
 
 ## Sign in to Azure using the Azure CLI
 
-There are several authentication options when working with the Azure CLI. The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
+There are several [authentication options](./authenticate-azure-cli.md) when working with the Azure CLI. The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
@@ -129,7 +129,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Set multiple environment variables at once.
 
-   When working with the Azure CLI, many parameters take multiple values separated by a space. Configuration values is one such instance. This example sets both the `.location` and `.group` defaults that will be used by the `--location` and `--resource-group` parameters.
+   When working with the Azure CLI, many parameters take multiple values separated by a space. Configuration values is one such instance. This example sets both the `.location` and `.group` defaults that will be used by the `--location` and `--resource-group` parameters of every Azure CLI command.
 
    ```azurecli-interactive
    az config set defaults.location=westus2 defaults.group=<msdocs-tutorial-rg-0000000>
@@ -137,13 +137,13 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Set your default output.
 
-   When you chose to work in Azure Cloud Shell, or installed the Azure CLI locally, the default output is automatically sent to `json`.  However, this is one of the most important defaults to understand and set.  **Output determines what appears on your console and what is written to your log file.** Always use an output of `none` when you are creating resources that return keys, passwords and secrets.
+   When you chose to work in Azure Cloud Shell, or installed the Azure CLI locally, the default output is automatically set to `json`.  However, this is one of the most important defaults to understand and set.  **Output determines what appears on your console and what is written to your log file.** Always use an output of `none` when you are creating resources that return keys, passwords and secrets.
 
    ```azurecli-interactive
    az config set core.output=none
    ```
 
-   In this tutorial we are not working with secrets.  Set the default back to `json` so you can see the returned output of each reference command.
+   In this tutorial we are not working with secrets.  Set the default back to `json` so you can see the returned output of each reference command in this tutorial.
 
    ```azurecli-interactive
    az config set core.output=json

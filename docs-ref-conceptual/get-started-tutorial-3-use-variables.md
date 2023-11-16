@@ -13,7 +13,7 @@ keywords: azure,
 ---
 # Populate variables for use in scripts
 
-In this tutorial step you will learn how to get information from a local JSON file, new and existing Azure resources, and store the information in a variable. The variable can then be used in Azure CLI to perform build and destroy jobs at scale.
+In this tutorial step you will learn how to get information from a local JSON file, new and existing Azure resources, and store the information in a variable. The variable can then be used in Azure CLI to perform build and destroy jobs at scale. Some common use-cases are:
 
 * Get information about an existing Azure resource, such as a resource ID.
 * Get output from an Azure CLI command, such as a password.
@@ -30,11 +30,11 @@ There are times when you want to get information about an existing Azure resourc
 > [!TIP]
 > The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-environment-syntax.md)
 
-Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json` set in [Prepare your environment](./get-started-tutorial-1-prepare-environment.md)
+Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json` set in [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
 
 ### Get JSON dictionary properties of an Azure resource
 
-Using the storage account created in [Write Azure CLI commands for different environments](./get-started-tutorial-2-environment-syntax.md), get the `primaryEndpoints` of your storage account.
+Using the storage account created in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md), get the `primaryEndpoints` of your new storage account.
 
 ```azurecli-interactive
 az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
@@ -127,7 +127,6 @@ az storage account list --resource-group $rgName \
 rgName="<msdocs-tutorial-rg-00000000>"
 
 # Get a list of all Azure storage accounts that allow blob public access.
-# Notice the backticks and escape characters needed for boolean values.
 az storage account list --resource-group $rgName `
                         --query "[?allowBlobPublicAccess == ``true``].name"
 
@@ -148,9 +147,9 @@ az storage account list --resource-group $rgName `
 
 ## Create a new Azure resource storing output in a variable
 
-This next section is a "stretch task", but learning this concept is beneficial when creating Azure resources that output secrets that should be protected. For example, when you create a service principal, reset a credential, or get an Azure key vault secret, store the results of the Azure CLI command in a variable.
+Learning to store command output in a variable is beneficial when creating Azure resources which output secrets that should be protected. For example, when you create a service principal, reset a credential, or get an Azure key vault secret, the command output should be protected.
 
-Are you ready to stretch your Azure CLI skills? Create a new Azure Key Vault and secret returning command output to a variable. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used in this example. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
+Create a new Azure Key Vault and secret returning command output to a variable. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used in this example. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
 
 # [Bash](#tab/bash)
 
@@ -208,7 +207,9 @@ az config set core.output=json
 
 ## Get the contents of a JSON file and store it in a variable
 
-Create a JSON file containing the following JSON, or your file contents of choice. Save the text file to you local drive. If you are working in Azure Cloud Shell, use the `upload/download files` icon in the menu bar to store the text file in your cloud storage drive.
+This next section is a "stretch task" for an onboarding tutorial. However, to manage Azure resources in a development/stage/production scenario, you need to be able to read a configuration file.
+
+Are you ready to stretch your Azure CLI skills? Create a JSON file containing the following JSON, or your file contents of choice. Save the text file to you local drive. If you are working in Azure Cloud Shell, use the `upload/download files` icon in the menu bar to store the text file in your cloud storage drive.
 
 ```text
 {
@@ -237,7 +238,7 @@ Create a JSON file containing the following JSON, or your file contents of choic
 }
 ```
 
-Store the contents of your json file in a variable for further use in your Azure CLI commands. In this example, change `msdocs-tutorial.json` to the name of your file
+Store the contents of your json file in a variable for further use in your Azure CLI commands. In this example, change `msdocs-tutorial.json` to the name of your file. Do not save the `echo` command in production-level scripts as the output is saved in your log file.
 
 # [Bash](#tab/bash)
 
@@ -259,7 +260,7 @@ echo $devKV
 
 # [PowerShell](#tab/powershell)
 
-This PowerShell script was tested in [Windows PowerShell](/powershell/scripting/developer/windows-powershell) and [PowerShell 7](/powershell/scripting/overview).
+This PowerShell script was tested in [Windows PowerShell](/powershell/scripting/developer/windows-powershell) and [PowerShell 7](/powershell/scripting/overview). 
 
 ```powershell
 # Show the contents of a file in the console
@@ -276,6 +277,8 @@ $devKV=$($fileContents.environments.dev |
     Select-Object -ExpandProperty 'kv-secretName')
 echo $devKV
 ```
+
+---
 
 You now have an environment-specific Azure Key Vault secret name stored in a variable and can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts between environments.
 

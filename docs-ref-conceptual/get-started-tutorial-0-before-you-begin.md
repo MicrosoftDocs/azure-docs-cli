@@ -17,38 +17,31 @@ We are glad you are here! You have chosen a tool that will allow you to create, 
 
 > [!div class="checklist"]
 >
-> * Get to know the Azure CLI is this tutorial step
-> * [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
-> * [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
-> * [Propagate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
-> * [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)
+> * 1 - Get to know the Azure CLI in this tutorial step
+> * 2 - [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
+> * 3 - [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
+> * 4 - [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
+> * 5 - [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)
 
 ## What is the Azure CLI?
 
 The Azure Command-Line Interface (CLI) is a cross-platform command-line tool to connect to Azure and execute administrative commands on Azure resources. It allows the execution of commands through a terminal using interactive command-line prompts or a script.
 
-For interactive use, you first launch a shell such as cmd.exe on Windows, or Bash on Linux or macOS, and then issue a command at the shell prompt. To automate repetitive tasks, you assemble the CLI commands into a shell script using the script syntax of your chosen shell, and then you execute the script.
+For interactive use, first launch a shell such as Bash, PowerShell, or Cmd.exe on Windows, Linux or macOS.  Then issue a command at the shell prompt. To automate repetitive tasks, assemble the Azure CLI commands into a shell script using the script syntax of your chosen shell, and then execute the script.
 
-You can install the Azure CLI locally on Linux, macOS, or Windows computers. Azure CLI can also be used from a browser through Azure Cloud Shell or run from inside a Docker container.
+Install the Azure CLI locally on Linux, macOS, or Windows computers. Azure CLI can also be used from a browser through Azure Cloud Shell or run from inside a Docker container.
 
 ## What shell environment should I use?
 
-Windows PowerShell, PowerShell, Cmd, and Bash are shell environments. Your shell environment not only determines which tools you can use but also changes your command-line experience. For example, there are important quoting differences between shells. An Azure CLI parameter value that contains a quote cannot always be copied successfully between shells.
+Windows PowerShell, PowerShell, Cmd, and Bash are shell environments. Your shell environment not only determines which tools you can use, but your shell also changes your command-line experience. For example, there are important quoting differences, line continuation characters, and variable syntax between shells.
 
-| Shell Environment | Azure CLI | Azure PowerShell
-|-|-|-|
-|[Cmd](/windows-server/administration/windows-commands/cmd) | Yes
-|[Bash](https://opensource.com/resources/what-bash)| Yes |
-|[Windows PowerShell](/powershell/scripting/windows-powershell/overview) | Yes |Yes
-|[PowerShell](/powershell/scripting/overview) | Yes | Yes
-
-[Azure Cloud Shell](/azure/cloud-shell/get-started) is a hosted shell environment that runs on an Ubuntu container. Cloud Shell provides two shell environments: Bash (with Azure CLI preinstalled) and PowerShell (with Azure PowerShell preinstalled).
-
-Both the Azure CLI and Azure PowerShell also run inside a [Docker container](./run-azure-cli-docker.md).
+The Azure CLI reference examples in this tutorial are written for Bash, PowerShell and Cmd to help you evaluate each shell experience.
 
 ## How does the Azure CLI compare to Azure PowerShell?
 
 Azure CLI and [Azure PowerShell](/powershell/azure/) are both command-line tools that enable you to create and manage Azure resources, but they are distinctly different.
+
+Here's a brief comparison of the two tools:
 
 | Compare | Azure CLI | Azure PowerShell |
 |-|-|-|
@@ -58,6 +51,7 @@ Azure CLI and [Azure PowerShell](/powershell/azure/) are both command-line tools
 |Run in|Windows PowerShell, Cmd, Bash, Azure CLoud Shell, Docker container, and other Unix shells.| Windows PowerShell, PowerShell, Azure Cloud Shell, Docker container
 |Terms| Reference groups, reference subgroups and reference commands | Modules, cmdlets and aliases
 |Syntax example | [az storage account create](/cli/azure/storage/account#az-storage-account-create) | [New-AzStorageAccount](/powershell/module/az.storage/new-azstorageaccount) |
+|Support lifecycle| [Azure CLI Support Lifecycle](./azure-cli-support-lifecycle.md) | [Azure PowerShell Support Lifecycle](/powershell/azure/azureps-support-lifecycle)
 |Learn more | [What is Azure CLI?](./what-is-azure-cli.md) | [What is Azure PowerShell?](/powershell/azure/what-is-azure-powershell)
 
 ## What are Azure CLI command components?
@@ -65,28 +59,16 @@ Azure CLI and [Azure PowerShell](/powershell/azure/) are both command-line tools
 All Azure CLI reference commands are one of two reference types:
 
 * **Core** components of the Azure are part of the primary Azure CLI service and ship from Microsoft on a [release schedule](./release-notes-azure-cli.md).
-* **[Extensions](./azure-cli-extensions-overview.md)** are not shipped as part of the core Azure CLI but they run as CLI commands. With extensions, you gain access to experimental and prerelease commands along with the ability to write your own CLI interfaces.
+* **[Extensions](./azure-cli-extensions-overview.md)** are not shipped as part of the core Azure CLI but they run as CLI commands. With extensions, you gain access to experimental and prerelease commands along with the ability to write your own CLI interfaces. You are prompted to install an extension on first use.
 
 An Azure CLI syntax has four parts. For example, this is how [az storage account local-user create](/cli/azure/storage/account/local-user#az-storage-account-local-user-create) breaks down into syntax parts:
 
 | Term | Example |
 |-|-|
-| Reference _group_ | az `storage`
-| Space-delimited reference _subgroups_ | `account` `local-user`
-| Reference _command_ | az storage account local-user `create`
-| Reference command _parameters_ | `name`, `--account-name`, `--resource-group`
-
-## What are Azure CLI status options?
-
-Every Azure CLI reference group, subgroup, command and parameter has one of three statuses. The status determines the support level.
-
-* Experimental
-* Preview
-* GA (General acceptance)
-
-Find the reference type and status of a command in [reference documentation](/cli/azure/reference-index).
-
-![status table](./media/status-table.png)
+| Reference `group` | az `storage`
+| Space-delimited reference `subgroups` | `account` `local-user`
+| Reference `command` | az storage account local-user `create`
+| Reference command `parameters` | `name`, `--account-name`, `--resource-group`
 
 ## Get more detail
 
@@ -97,7 +79,6 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 | Environments | [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
 | Terms | [Azure CLI terms and status](reference-types-and-status.md) |
 | Extensions | [Use and manage extensions with the Azure CLI](./azure-cli-extensions-overview.md)
-| Lifecycle | [Azure CLI support lifecycle]()
 
 ## Next Step
 
