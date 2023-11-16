@@ -611,7 +611,7 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 |Topic| Learn more|
 |-|-|
-|Scripting differences | [Bash quoting](https://www.gnu.org/software/Bash/manual/html_node/Quoting.html)|
+|Scripting differences | [Bash quoting](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Quoting)|
 | | [PowerShell quoting](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
 | | [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 | | [Windows command-line tips](https://ss64.com/nt/syntax-esc.html)
