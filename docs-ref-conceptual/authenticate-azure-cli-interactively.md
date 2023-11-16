@@ -9,10 +9,10 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in 
+keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure cli  
 ---
 
-# Sign in interactively
+# Sign in interactively with Azure CLI 
 
 The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
 
