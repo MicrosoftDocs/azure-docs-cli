@@ -9,10 +9,10 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in
+keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure cli 
 ---
 
-# Sign in with a managed identity
+# Sign in with a managed identity using Azure CLI 
 
 On resources configured for managed identities for Azure resources, you can sign in using the managed identity.
 Here are some of the benefits of using managed identities:
