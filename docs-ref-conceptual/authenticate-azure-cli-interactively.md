@@ -1,6 +1,6 @@
 ---
 title: Sign in with Azure CLI interactively at a command line | Microsoft Docs
-description: Learn how to sign into the Azure CIL interactively using az login
+description: Learn how to sign into the Azure CLI interactively using az login, Azure CLI
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
