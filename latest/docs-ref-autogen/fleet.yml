@@ -13,7 +13,7 @@ directCommands:
 - uid: az_fleet_create
   name: az fleet create
   summary: |-
-    Creates or updates a Fleet.
+    Creates or updates a fleet.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -33,11 +33,17 @@ directCommands:
                     [--vm-size]
   examples:
   - summary: |-
-      Create a hubless fleet
-    syntax: az fleet create -g MyResourceGroup -l MyLocation -n MyFleetName --tags "TagKey=TagValue"
+      Create a hubless fleet.
+    syntax: az fleet create -g MyFleetResourceGroup -l MyLocation -n MyFleetName --tags "TagKey=TagValue"
   - summary: |-
-      Create a hubful fleet
-    syntax: az fleet create -g MyResourceGroup -l MyLocation -n MyFleetName --enable-hub --tags "TagKey=TagValue"
+      Create a hubful fleet.
+    syntax: az fleet create -g MyFleetResourceGroup -l MyLocation -n MyFleetName --enable-hub --tags "TagKey=TagValue"
+  - summary: |-
+      Create a fleet with a system assigned managed service identity.
+    syntax: az fleet create -g MyFleetResourceGroup -l MyLocation -n MyFleetName --enable-managed-identity
+  - summary: |-
+      Create a fleet with a user provided managed service identity.
+    syntax: az fleet create -g MyFleetResourceGroup -l MyLocation -n MyFleetName --enable-managed-identity --assign-identity "/subscription/00000000-0000-0000-0000-000000000000/resourcegroup/MyFleetResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -61,7 +67,7 @@ directCommands:
       With --enable-managed-identity, enable user assigned managed identity (MSI) on the Fleet resource. Specify the existing user assigned identity resource.
   - name: --dns-name-prefix -p
     summary: |-
-      Prefix for hostnames that are created. If not specified, generate a hostname using the managed cluster and resource group names.
+      Prefix for host names that are created. If not specified, generate a host name using the managed cluster and resource group names.
     isPreview: true
   - name: --enable-hub
     defaultValue: "False"
@@ -99,7 +105,7 @@ directCommands:
 - uid: az_fleet_delete
   name: az fleet delete
   summary: |-
-    Deletes a Fleet.
+    Deletes a fleet.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -107,6 +113,10 @@ directCommands:
                     --resource-group
                     [--no-wait]
                     [--yes]
+  examples:
+  - summary: |-
+      Delete a specific fleet.
+    syntax: az fleet delete -g MyFleetResourceGroup -n MyFleetName
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -128,7 +138,7 @@ directCommands:
 - uid: az_fleet_get-credentials
   name: az fleet get-credentials
   summary: |-
-    Lists the user credentials of a Fleet.
+    For hubful fleets, gets the kubeconfig for the fleet's hub cluster.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -137,6 +147,13 @@ directCommands:
                              [--context]
                              [--file]
                              [--overwrite-existing]
+  examples:
+  - summary: |-
+      Get a fleet's hub cluster kubeconfig.
+    syntax: az fleet get-credentials -g MyFleetResourceGroup -n MyFleetName
+  - summary: |-
+      Get a fleet's hub cluster kubeconfig, and save it to a specific file.
+    syntax: az fleet get-credentials -g MyFleetResourceGroup -n MyFleetName -f ~/mykubeconfigfile.txt
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -161,10 +178,17 @@ directCommands:
 - uid: az_fleet_list
   name: az fleet list
   summary: |-
-    Lists fleets in the specified subscription and resource group.
+    Lists all fleets within a resource group.
   status: GA
   sourceType: Extension
   syntax: az fleet list [--resource-group]
+  examples:
+  - summary: |-
+      List all fleets with a specific subscription.
+    syntax: az fleet list
+  - summary: |-
+      List all fleets that exist within a specific subscription and resource group.
+    syntax: az fleet list -g MyResourceGroup
   optionalParameters:
   - name: --resource-group -g
     summary: |-
@@ -172,12 +196,16 @@ directCommands:
 - uid: az_fleet_show
   name: az fleet show
   summary: |-
-    Gets a Fleet.
+    Gets a fleet.
   status: GA
   sourceType: Extension
   syntax: >-
     az fleet show --name
                   --resource-group
+  examples:
+  - summary: |-
+      Show the details of a fleet.
+    syntax: az fleet show -g MyFleetResourceGroup -n MyFleetName
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -202,14 +230,14 @@ directCommands:
                     [--tags]
   examples:
   - summary: |-
-      Update a Fleet's tags
-    syntax: az fleet update -g MyResourceGroup -n MyFleetName --tags Key=Value
+      Update a fleet's tags.
+    syntax: az fleet update -g MyFleetResourceGroup -n MyFleetName --tags Key=Value
   - summary: |-
-      Update a Fleet to use a system assigned managed service identity.
-    syntax: az fleet update -g MyResourceGroup -n MyFleetName --enable-managed-identity --tags Key=Value
+      Update a fleet to use a system assigned managed service identity.
+    syntax: az fleet update -g MyFleetResourceGroup -n MyFleetName --enable-managed-identity --tags Key=Value
   - summary: |-
-      Update a Fleet to use a user assigned managed service identity.
-    syntax: az fleet update -g MyResourceGroup -n MyFleetName --enable-managed-identity --assign-identity "/subscription/00000000-0000-0000-0000-000000000000/resourcegroup/MyResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity" --tags Key=Value
+      Update a fleet to use a user assigned managed service identity.
+    syntax: az fleet update -g MyFleetResourceGroup -n MyFleetName --enable-managed-identity --assign-identity "/subscription/00000000-0000-0000-0000-000000000000/resourcegroup/MyFleetResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/MyIdentity" --tags Key=Value
   requiredParameters:
   - isRequired: true
     name: --name -n
