@@ -34,23 +34,13 @@ Alternatives you may consider for stability:
 
 ### Calling `az account get-access-token`
 
-You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in [`az account show`](/cli/azure/account#az_account_show).
+You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use a subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in [`az account show`](/cli/azure/account#az_account_show). 
 
-```azurecli
-# get the active subscription
-az account show --output table
+Starting from Azure CLI 2.54.0, `az account get-access-token` returns an additional property which makes it supported by MSAL-based Azure CLI. See the following for an example of the access token output of the changes:
 
-# get access token for the active subscription
-az account get-access-token
+Output Console:
 
-# get access token for a specific subscription
-az account get-access-token --subscription "<subscription ID or name>"
-```
-
-Starting from Azure CLI 2.54.0, `az account get-access-token` returns the `expires_on` property alongside the `expiresOn` property for the token expiration time. `expires_on` represents a Portable Operating System Interface (POSIX) timestamp and `expiresOn` represents a local datetime. We recommend for downstream applications to use the `expires_on` property, because it uses the Universal Time Code (UTC). However, tt should be noted that `expiresOn` cannot express "fold" when Daylight Saving Time ends. This can cause problems in countries or regions where Daylight Saving Time is adopted. For more information on "fold", see [PEP 495 – Local Time Disambiguation](https://peps.python.org/pep-0495/).
-
-```azurecli
-
+```output
 # Before:
 
 {
@@ -60,6 +50,7 @@ Starting from Azure CLI 2.54.0, `az account get-access-token` returns the `expir
   "tenant": "...",
   "tokenType": "Bearer"
 }
+
 # After:
 
 {
@@ -71,6 +62,8 @@ Starting from Azure CLI 2.54.0, `az account get-access-token` returns the `expir
   "tokenType": "Bearer"
 }
 ```
+
+To learn more in-depth about the changes presented in this access token output example, see [Manage Azure Subscriptions for Azure CLI](./manage-azure-subscriptions-azure-cli.md#access-tokens). 
 
 ### Using `AzureCliCredential`
 
