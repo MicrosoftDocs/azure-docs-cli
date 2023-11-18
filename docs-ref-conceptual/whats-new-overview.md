@@ -17,19 +17,19 @@ This page highlights new features, articles and learning paths for the Azure CLI
 
 ## Azure Copilot for Azure CLI
 
-[Microsoft Copilot for Azure](https://techcommunity.microsoft.com/t5/azure-infrastructure-blog/simplify-it-management-with-microsoft-copilot-for-azure-save/ba-p/3981106) (preview) has been published! CoPilot for Azure is an an AI companion that helps you design, operate, optimize, and troubleshoot your cloud infrastructure and services. This benefits Azure CLI users because Azure CLI commands and documentation have been added to Copilot.
+[Microsoft Copilot for Azure](https://techcommunity.microsoft.com/t5/azure-infrastructure-blog/simplify-it-management-with-microsoft-copilot-for-azure-save/ba-p/3981106) (preview) is published! Copilot for Azure is an AI companion that helps you design, operate, optimize, and troubleshoot your cloud infrastructure and services. This benefits Azure CLI users because the knowledge of Azure CLI is built into Copilot.
 
-Ask Copilot for Azure anything about managing Azure resources with Azure CLI! For example:
+Ask Copilot for Azure a question about managing Azure resources using Azure CLI! For example:
 
 - How do I create a virtual machine with Azure CLI?
 - How do I update service principal credentials using Azure CLI?
 - Where can I find an `az rest` example?
 
-[Click here to sign up](https://aka.ms/MSCopilotforAzurePreviewRequest). Microsoft is onboarding customers into the preview on a weekly basis!
+[Request Access](https://aka.ms/MSCopilotforAzurePreviewRequest) to Preview Microsoft Copilot for Azure. Microsoft is onboarding customers into the preview on a weekly basis!
 
 ## Reduced Docker image size
 
-With the release of Azure CLI version 2.54.0, the size of the Docker image of `azure-cli` has been reduced from from 1.1GB to 700MB! This is a 36.3% decrease resulting in improved download speed and faster start up. For more information, see "Trim Azure CLI’s docker image size" in [Azure Command-line Tools Ignite 2023 Announcement](https://techcommunity.microsoft.com/t5/azure-tools-blog/azure-command-line-tools-ignite-2023-announcement/ba-p/3984502).
+With the release of Azure CLI version 2.54.0, the size of the Docker image of `azure-cli` is reduced from 1.1 GB to 700 MB! This reduction is a 36.3% decrease resulting in improved download speed and faster startup. For more information, see "Trim Azure CLI’s docker image size" in [Azure Command-line Tools Ignite 2023 Announcement](https://techcommunity.microsoft.com/t5/azure-tools-blog/azure-command-line-tools-ignite-2023-announcement/ba-p/3984502).
 
 ## 64-bit Windows install
 
@@ -61,9 +61,9 @@ You see this information in three places:
 
   ![status badges](./media/status-badges.png)
 
-  If there is no status indicator, the command group or reference command is GA (Generally Available). For a live example, see [az account subscription](/cli/azure/account/subscription).
+  If there's no status indicator, the command group or reference command is GA (Generally Available). For a live example, see [az account subscription](/cli/azure/account/subscription).
 
-- **New status indicator for parameters.** Only deprecated parameters show a status. All other paremters inherit the status of the reference command.
+- **New status indicator for parameters.** Only deprecated parameters show a status. All other parameters inherit the status of the reference command.
 
 For more information on Azure CLI statuses, see [Azure CLI terminology and support levels](./reference-types-and-status.md#what-is-reference-status).
 
