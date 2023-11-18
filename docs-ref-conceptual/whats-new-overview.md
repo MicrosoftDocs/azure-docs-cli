@@ -15,11 +15,17 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 
 This page highlights new features, articles and learning paths for the Azure CLI.
 
-## Azure CoPilot for Azure CLI
+## Azure Copilot for Azure CLI
 
 [Microsoft Copilot for Azure](https://techcommunity.microsoft.com/t5/azure-infrastructure-blog/simplify-it-management-with-microsoft-copilot-for-azure-save/ba-p/3981106) (preview) has been published! CoPilot for Azure is an an AI companion that helps you design, operate, optimize, and troubleshoot your cloud infrastructure and services. This benefits Azure CLI users because Azure CLI commands and documentation have been added to Copilot.
 
-[Click here to sign up](https://aka.ms/MSCopilotforAzurePreviewRequest). Microsoft is onboarding customers into the preview on a weekly basis.
+Ask Copilot for Azure anything about managing Azure resources with Azure CLI! For example:
+
+- How do I create a virtual machine with Azure CLI?
+- How do I update service principal credentials using Azure CLI?
+- Where can I find an `az rest` example?
+
+[Click here to sign up](https://aka.ms/MSCopilotforAzurePreviewRequest). Microsoft is onboarding customers into the preview on a weekly basis!
 
 ## Reduced Docker image size
 
