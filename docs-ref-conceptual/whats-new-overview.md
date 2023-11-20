@@ -25,7 +25,7 @@ Access Microsoft Copilot for Azure (preview) in the Azure portal, and tell Copil
 - I want to update service principal credentials using Azure CLI.
 - I want to create a web app using Azure CLI.
 
-To enable access to Microsoft Copilot for Azure (preview) for your organization, [complete the registration form](https://aka.ms/MSCopilotforAzurePreviewRequest) The application process only needs to be completed once per tenant. Check with your administrator if you have questions about joining the preview.
+To enable access to Microsoft Copilot for Azure (preview) for your organization, [complete the registration form](https://aka.ms/MSCopilotforAzurePreviewRequest). The application process only needs to be completed once per tenant. Check with your administrator if you have questions about joining the preview.
 
 ## Reduced Docker image size
 
