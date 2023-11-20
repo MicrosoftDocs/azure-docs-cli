@@ -17,7 +17,7 @@ This page highlights new features, articles and learning paths for the Azure CLI
 
 ## Azure Copilot for Azure CLI
 
-[Microsoft Copilot for Azure](https://aka.ms/MicrosoftCopilotforAzureDocs) (preview) is published! Copilot is an AI-powered tool to help you do more with Azure. It leverages Large Language Models (LLMs), the Azure control plane, and provides insights about your Azure environment. Copilot makes high-quality recommendations and takes action while respecting your organization's policy and privacy. This benefits Azure CLI users because the knowledge of Azure CLI is built into Copilot!
+[Microsoft Copilot for Azure](https://aka.ms/MicrosoftCopilotforAzureDocs) (preview) is published! Copilot is an AI-powered tool to help you do more with Azure. It unifies knowledge and data across hundreds of services to increase productivity, reduce costs, and provide deep insights. Microsoft Copilot for Azure (preview) can help you learn about Azure by answering questions, and it can provide information tailored to your own Azure resources and environment. By letting you express your goals in natural language, Microsoft Copilot for Azure (preview) can simplify your Azure management experience. This benefits Azure CLI users because the knowledge of Azure CLI is built into Copilot!
 
 You can access Microsoft Copilot for Azure in the Azure portal. Tell Copilot what you would like to do using Azure CLI. For example:
 
