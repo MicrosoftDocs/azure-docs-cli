@@ -21,7 +21,7 @@ This page highlights new features, articles and learning paths for the Azure CLI
 
 Ask Copilot for Azure a question about managing Azure resources using Azure CLI! For example:
 
-- How do I create a virtual machine with Azure CLI?
+- I want to create a virtual machine usign Azure CLI
 - How do I update service principal credentials using Azure CLI?
 - I want to create a web app using Azure CLI
 
