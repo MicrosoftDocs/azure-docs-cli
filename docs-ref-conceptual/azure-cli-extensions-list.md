@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/16/2023
+ms.date: 11/18/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -42,7 +42,7 @@ You will be prompted to install an extension on first use.
 |[aosm](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm) | 2.45.0 | Microsoft Azure Command-Line Tools Aosm Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm/HISTORY.rst) |
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.50.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
-|[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.51.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.0.0](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
+|[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.51.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.0.1](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.7](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.11.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
@@ -97,11 +97,11 @@ You will be prompted to install an extension on first use.
 |[dns-resolver](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver) | 2.39.0 | Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dns-resolver/HISTORY.rst) |
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.41.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
-|[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.49.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Experimental | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
+|[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.51.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Experimental | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
 |[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.51.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 2.0.41 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) |
-|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.48.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
+|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.48.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
 |[footprint](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint/HISTORY.rst) |
 |[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.0.68 | Manage networking Front Doors. | GA | [1.0.17](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
