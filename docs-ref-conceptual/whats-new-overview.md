@@ -23,7 +23,7 @@ Ask Copilot for Azure a question about managing Azure resources using Azure CLI!
 
 - How do I create a virtual machine with Azure CLI?
 - How do I update service principal credentials using Azure CLI?
-- Where can I find an `az rest` example?
+- I want to create a web app using Azure CLI
 
 [Request Access](https://aka.ms/MSCopilotforAzurePreviewRequest) to Preview Microsoft Copilot for Azure. Microsoft is onboarding customers into the preview on a weekly basis!
 
