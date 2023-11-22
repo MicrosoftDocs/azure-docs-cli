@@ -1,6 +1,6 @@
 ---
 title: Sign in with Azure CLI using a service principal | Microsoft Docs
-description: Learn how to sign into the Azure CIL using a service principal
+description: Learn how to sign into the Azure CLI using a service principal.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan

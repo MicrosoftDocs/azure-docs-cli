@@ -1,6 +1,6 @@
 ---
 title: Sign in with Azure CLI using web account manager (WAM) | Microsoft Docs
-description: Learn how to sign into the Azure CIL using web account manager (WAM)
+description: Learn how to sign into the Azure CLI using web account manager (WAM).
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
