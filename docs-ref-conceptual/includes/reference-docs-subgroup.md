@@ -175,7 +175,6 @@ ms.custom: devx-track-azurecli
 |  | [Tutorial: Using automation to set up the Microsoft Entra admin for SQL Server](/sql/relational-databases/security/authentication-access/azure-ad-authentication-sql-server-automation-setup-tutorial)
 |  | [Configure Microsoft Entra authentication for an Azure Red Hat OpenShift 4 cluster (CLI)](/azure/openshift/configure-azure-ad-cli)
 | [az ad group](/cli/azure/ad/group) | [Assign a Key Vault access policy (legacy)](/azure/key-vault/general/assign-access-policy)
-|  | [AKS-managed Microsoft Entra integration](/azure/aks/managed-azure-ad)
 |  | [Tutorial: Connect to SQL Database from .NET App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-sql-database)
 |  | [Use Kubernetes role-based access control with Microsoft Entra ID in Azure Kubernetes Service](/azure/aks/azure-ad-rbac)
 |  | [Tutorial: Connect to Azure databases from App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-azure-database)
@@ -278,7 +277,6 @@ ms.custom: devx-track-azurecli
 |  | [Create a private Azure Kubernetes Service (AKS) cluster](/azure/aks/private-clusters)
 |  | [Run a self-hosted agent in Docker](/azure/devops/pipelines/agents/docker)
 |  | [Use a managed identity in Azure Kubernetes Service (AKS)](/azure/aks/use-managed-identity)
-|  | [AKS-managed Microsoft Entra integration](/azure/aks/managed-azure-ad)
 |  | [Configure Azure CNI networking in Azure Kubernetes Service (AKS)](/azure/aks/configure-azure-cni)
 |  | [Auto-upgrade Azure Kubernetes Service cluster node OS images](/azure/aks/auto-upgrade-node-image)
 |  | [Create and use a volume with Azure Files in Azure Kubernetes Service (AKS)](/azure/aks/azure-csi-files-storage-provision)
@@ -2402,8 +2400,6 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Set and retrieve a secret from Azure Key Vault using Azure CLI](/azure/key-vault/secrets/quick-create-cli)
 | [az keyvault security-domain](/cli/azure/keyvault/security-domain) | [Quickstart: Provision and activate a Managed HSM using Azure CLI](/azure/key-vault/managed-hsm/quick-create-cli)
 |  | [Managed HSM disaster recovery](/azure/key-vault/managed-hsm/disaster-recovery-guide)
-| [az keyvault storage](/cli/azure/keyvault/storage) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
-| [az keyvault storage sas-definition](/cli/azure/keyvault/storage/sas-definition) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
 
 ## az kusto
 
