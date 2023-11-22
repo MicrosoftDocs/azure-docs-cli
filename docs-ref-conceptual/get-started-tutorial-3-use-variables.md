@@ -13,28 +13,29 @@ keywords: azure,
 ---
 # Populate variables for use in scripts
 
+In this tutorial step, learn to work with variables:
 
-|Variable name/create|variableName=|$variableName=| set variableName=
-|Use a variable as a parameter value |variableName|$variableName|%variableName%
-|Use a variable in `--query` string|'$variableName'|'$variableName'|'$variableName'
+- Execute an Azure CLI command and store output in a variable.
+- Read a local JSON file and store property values in a variable.
 
+Some common use-cases are:
 
-In this tutorial step you learn how to get information from a local JSON file, new and existing Azure resources, and store the information in a variable. The variable can then be used in Azure CLI to perform build and destroy jobs at scale. Some common use-cases are:
+- Get information about an existing Azure resource, such as a resource ID.
+- Get output from an Azure CLI command, such as a password.
+- Get JSON objects for environment information, such as development, stage and production IDs.
 
-* Get information about an existing Azure resource, such as a resource ID.
-* Get output from an Azure CLI command, such as a password.
-* Get JSON objects for environment information, such as development, stage and production IDs.
+The variable can then be used in Azure CLI to perform build and destroy jobs at scale.
 
 ## Prerequisites
 
-* You have access to a resource group and storage account with `contributor` permissions.
+- You have access to a resource group and storage account with `contributor` permissions.
 
 ## Get command output using JMESPath query
 
-There are times when you want to get information about an existing Azure resource and return that information to your console screen, or store it in a variable for use within a script. In the Azure CLI, use the `--query` parameter to execute a [JMESPath query](https://jmespath.org/) to perform these tasks.
+Get information about an existing Azure resource using the `--query` parameter of the `show` command. A [JMESPath query](https://jmespath.org/) is executed and one or more property values of an Azure resource are returned.
 
 > [!TIP]
-> The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Write Azure CLI commands for different environments](./get-started-tutorial-2-environment-syntax.md)
+> The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
 
 Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json` set in [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
 
@@ -156,6 +157,8 @@ az storage account list --resource-group $rgName `
 Learning to store command output in a variable is beneficial when creating Azure resources that output secrets that should be protected. For example, when you create a service principal, reset a credential, or get an Azure key vault secret, the command output should be protected.
 
 Create a new Azure Key Vault and secret returning command output to a variable. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used in this example. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
+
+These examples use `echo` to verify variable values because this is a teaching tutorial. Don't use `echo` for secret and password values in production-level environments.
 
 # [Bash](#tab/bash)
 
@@ -287,6 +290,16 @@ echo $devKV
 ---
 
 You now have an environment-specific Azure Key Vault secret name stored in a variable and can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts between environments.
+
+## Variable usage comparison
+
+Did you notice how variable syntax is sometimes different between environments? Here's a comparison table for future reference:
+
+|Use case|Azure CLI|PowerShell|Cmd
+|-|-|-|-|
+|Create variable |variableName=|$variableName=| set variableName=
+|Use variable as parameter value |variableName|$variableName|%variableName%
+|Use variable in `--query` parameter|'$variableName'|'$variableName'|'$variableName'
 
 ## Get more details
 
