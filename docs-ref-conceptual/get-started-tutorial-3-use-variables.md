@@ -13,7 +13,13 @@ keywords: azure,
 ---
 # Populate variables for use in scripts
 
-In this tutorial step you will learn how to get information from a local JSON file, new and existing Azure resources, and store the information in a variable. The variable can then be used in Azure CLI to perform build and destroy jobs at scale. Some common use-cases are:
+
+|Variable name/create|variableName=|$variableName=| set variableName=
+|Use a variable as a parameter value |variableName|$variableName|%variableName%
+|Use a variable in `--query` string|'$variableName'|'$variableName'|'$variableName'
+
+
+In this tutorial step you learn how to get information from a local JSON file, new and existing Azure resources, and store the information in a variable. The variable can then be used in Azure CLI to perform build and destroy jobs at scale. Some common use-cases are:
 
 * Get information about an existing Azure resource, such as a resource ID.
 * Get output from an Azure CLI command, such as a password.
@@ -78,7 +84,7 @@ Console JSON array (list) output:
 
 ### Rename properties
 
-Rename properties using curly brackets (`{}`) and a comma-delimited list. The new property names cannot contain spaces. This example returns output in `table` format.
+Rename properties using curly brackets (`{}`) and a comma-delimited list. The new property names can't contain spaces. This example returns output in `table` format.
 
 ```azurecli-interactive
 az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
@@ -87,7 +93,7 @@ az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
                         --output table
 ```
 
-Console table output.  The first letter of each column is capitalized by design in `--output table`:
+Console table output.  The first letter of each column is capitalized in `--output table`:
 
 ```output
 SaName             SaKind     SaMinTLSversion
@@ -97,7 +103,7 @@ msdocssa000000000  StorageV2  TLS1_0
 
 ## Filter query results
 
-Combine what you have learned about quoting with what you have just learned about `--query`. These examples apply a filter.
+Combine what you learned about quoting with what you just learned about `--query`. These examples apply a filter.
 
 # [Bash](#tab/bash)
 
@@ -147,7 +153,7 @@ az storage account list --resource-group $rgName `
 
 ## Create a new Azure resource storing output in a variable
 
-Learning to store command output in a variable is beneficial when creating Azure resources which output secrets that should be protected. For example, when you create a service principal, reset a credential, or get an Azure key vault secret, the command output should be protected.
+Learning to store command output in a variable is beneficial when creating Azure resources that output secrets that should be protected. For example, when you create a service principal, reset a credential, or get an Azure key vault secret, the command output should be protected.
 
 Create a new Azure Key Vault and secret returning command output to a variable. Your Azure Key Vault name must be globally unique, so the `$RANDOM` identifier is used in this example. For more Azure Key Vault naming rules, see [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes).
 
@@ -209,9 +215,9 @@ az config set core.output=json
 
 This next section is a "stretch task" for an onboarding tutorial. However, to manage Azure resources in a development/stage/production scenario, you need to be able to read a configuration file.
 
-Are you ready to stretch your Azure CLI skills? Create a JSON file containing the following JSON, or your file contents of choice. Save the text file to you local drive. If you are working in Azure Cloud Shell, use the `upload/download files` icon in the menu bar to store the text file in your cloud storage drive.
+Are you ready to stretch your Azure CLI skills? Create a JSON file containing the following JSON, or your file contents of choice. Save the text file to your local drive. If you're working in Azure Cloud Shell, use the `upload/download files` icon in the menu bar to store the text file in your cloud storage drive.
 
-```text
+```json
 {
   "environments": {
     "dev": [
@@ -238,7 +244,7 @@ Are you ready to stretch your Azure CLI skills? Create a JSON file containing th
 }
 ```
 
-Store the contents of your json file in a variable for further use in your Azure CLI commands. In this example, change `msdocs-tutorial.json` to the name of your file. Do not save the `echo` command in production-level scripts as the output is saved in your log file.
+Store the contents of your json file in a variable for further use in your Azure CLI commands. In this example, change `msdocs-tutorial.json` to the name of your file. Don't save the `echo` command in production-level scripts as the output is saved in your log file.
 
 # [Bash](#tab/bash)
 
@@ -282,11 +288,11 @@ echo $devKV
 
 You now have an environment-specific Azure Key Vault secret name stored in a variable and can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts between environments.
 
-## Get more detail
+## Get more details
 
-Do you want more detail on one of the topics covered in this tutorial step? Use the links in this table to learn more.
+Do you want more detail on one of the subjects covered in this tutorial step? Use the links in this table to learn more.
 
-|Topic| Learn more|
+|Subject| Learn more|
 |-|-|
 |Variables| See advanced examples in [Use the Azure CLI successfully - Pass values to another command](./use-cli-effectively.md#pass-values-to-another-command)
 || Read a good overview of variables in [How to use variables in Azure CLI commands](./azure-cli-variables.md)|
@@ -299,7 +305,7 @@ Do you want more detail on one of the topics covered in this tutorial step? Use 
 
 ## Next Step
 
-Now that you've learned how to use variables to store Azure CLI command output and JSON property values, proceed to the next step to learn how to use scripts to delete Azure resources.
+Now that you understand how to use variables to store Azure CLI command output and JSON property values, proceed to the next step to learn how to use scripts to delete Azure resources.
 
 > [!div class="nextstepaction"]
 > [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)

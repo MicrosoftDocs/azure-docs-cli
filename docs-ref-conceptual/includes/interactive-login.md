@@ -5,7 +5,7 @@ ms.date: 08/1/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
-1. Run the `login` command.
+1. Run the `az login` command.
 
     ```azurecli-interactive
     az login

@@ -13,9 +13,11 @@ keywords: azure, az account, az group, az config, az init, configuration
 ---
 # Prepare your environment for the Azure CLI
 
-In this tutorial step, you onboard with the Azure CLI! This includes choosing the environment that works best for you, and setting your default values. You will also learn how to find and change your active Azure subscription, and use random IDs to always guarantee unique resource names.
+In this tutorial step, you execute your first Azure CLI commands! This includes finding and setting your active subscription and setting default values. You also learn how to create resource groups containing a random ID to always guarantee a unique resource name.
 
 ## Install the Azure CLI
+
+Get started by first selecting your environment.
 
 * If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
 
@@ -23,7 +25,7 @@ In this tutorial step, you onboard with the Azure CLI! This includes choosing th
 
 * If you prefer to run the Azure CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI.
 
-* To complete the steps in this tutorial, you will need `contributor` permissions in your subscription.
+* To complete the steps in this tutorial, you need `contributor` permissions in your subscription.
 
 [!INCLUDE [include](./includes/current-version.md)]
 
@@ -35,19 +37,19 @@ There are several [authentication options](./authenticate-azure-cli.md) when wor
 
 ## Find and change your active subscription
 
-After logging into the Azure CLI, always check your default subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here is a code example to use.
+After logging into the Azure CLI, always check your current subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here's a code example to use.
 
 ```azurecli-interactive
-# see your current default subscription
+# see your current/default subscription
 az account show
 
 # find the list of subscriptions available to you
 az account list --output table
 
-# set your default subscription
+# change your current/default subscription
 az account set --subscription <mySubscriptionName>
 
-# you can also set your subscription using your subscription ID
+# you can also set your subscription using a subscription ID
 az account set --subscription <00000000-0000-0000-0000-000000000000>
 ```
 
@@ -57,7 +59,7 @@ A resource group is a container for Azure resources. To create a resource group,
 
 ### Create a resource group
 
-1. A resource group name must be globally unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command.
+1. A resource group name must be globally unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command. An output value of `false` means that the name is available.
 
    ```azurecli-interactive
    az group exists --name <myUniqueRGname>
@@ -69,7 +71,7 @@ A resource group is a container for Azure resources. To create a resource group,
    az account list-locations --query "[].{Region:name}" --output table
    ```
 
-1. It is time to create your resource group! Use the [az group create](/cli/azure/group#az-group-create) command.
+1. It's time to create your resource group! Use the [az group create](/cli/azure/group#az-group-create) command.
 
    ```azurecli-interactive
    az group create --location <myLocation> --name <myUniqueRGname>
@@ -77,9 +79,9 @@ A resource group is a container for Azure resources. To create a resource group,
 
 ### Use a random ID to create a resource group
 
-When testing, it is best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure. 
+When testing, it's best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure.
 
-When working with variables, Bash and PowerShell syntax is different. Copy the correct script for your environment.
+Bash and PowerShell variable syntax is different. Copy the correct script for your environment.
 
 # [Bash](#tab/bash)
 
@@ -119,7 +121,7 @@ Bash and PowerShell console output:
 
 ## Set environment variables
 
-The Azure CLI offers several options to allow you to reuse common parameter values. These default values are stored in environment variables and are unique for each login.
+The Azure CLI offers several options to allow you to reuse common parameter values. These default values are stored in environment variables and are unique for each sign in.
 
 1. Set your default resource group.
 
@@ -129,7 +131,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Set multiple environment variables at once.
 
-   When working with the Azure CLI, many parameters take multiple values separated by a space. Configuration values is one such instance. This example sets both the `.location` and `.group` defaults that will be used by the `--location` and `--resource-group` parameters of every Azure CLI command.
+  Many Azure CLI parameters take multiple values separated by a space. Configuration values are one such instance. This example sets both the `.location` and `.group` defaults that are used by the `--location` and `--resource-group` parameters of every Azure CLI command.
 
    ```azurecli-interactive
    az config set defaults.location=westus2 defaults.group=<msdocs-tutorial-rg-0000000>
@@ -137,13 +139,13 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Set your default output.
 
-   When you chose to work in Azure Cloud Shell, or installed the Azure CLI locally, the default output is automatically set to `json`.  However, this is one of the most important defaults to understand and set.  **Output determines what appears on your console and what is written to your log file.** Always use an output of `none` when you are creating resources that return keys, passwords and secrets.
+   When you chose to work in Azure Cloud Shell, or install the Azure CLI locally, the default output is automatically set to `json`.  However, this is one of the most important defaults to understand and set.  **Output determines what appears on your console and what is written to your log file.** Always use an output of `none` when you're creating resources that return keys, passwords and secrets.
 
    ```azurecli-interactive
    az config set core.output=none
    ```
 
-   In this tutorial we are not working with secrets.  Set the default back to `json` so you can see the returned output of each reference command in this tutorial.
+   In this tutorial, we aren't working with secrets.  Set the default back to `json` so you can see the returned output of each reference command in this tutorial.
 
    ```azurecli-interactive
    az config set core.output=json
@@ -151,21 +153,59 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Learn to use `az init`.
 
-   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press <kbd>Enter</kbd>.  Follow the prompts provided. (The first nice thing about [az init](/cli/azure/reference-index#az-init) is that it gives you all of your current settings!)
-
+   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press <kbd>Enter</kbd>.  Follow the prompts provided. 
+   
    ```azurecli-interactive
    az init
    ```
 
+   The first nice thing about [az init](/cli/azure/reference-index#az-init) is that it gives you all of your current settings! Here's example output:
+
+   ```output
+   Your current config settings:
+
+     Output format: JSON 
+     [core.output = json]
+
+     Standard error stream (stderr): All events 
+     [core.only_show_errors = false]
+
+     Error output: Show recommendations 
+     [core.error_recommendation = on]
+
+     Syntax highlighting: On 
+     [core.no_color = false]
+
+     Progress Bar: On 
+     [core.disable_progress_bar = false]
+
+
+   Select an option by typing it's number
+
+     [1] Optimize for interaction
+         These settings improve the output legibility and optimize for human interaction
+
+     [2] Optimize for automation
+         These settings optimize for machine efficiency
+
+     [3] Customize settings
+         A walk through to customize common configurations
+
+     [4] Exit (default)
+         Return to the command prompt
+
+   ? Your selection: 
+   ```
+
 1. Find and read your configuration file.
 
-   If you work under a "trust but verify" mindset, you'll want to know where your configuration files are stored and what they contain.  The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS, and `%USERPROFILE%\.azure` on Windows. Find your config file now and see what it contains.
+   If you work under a "trust but verify" mindset, you want to know where your configuration files are stored and what they contain.  The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS, and `%USERPROFILE%\.azure` on Windows. Find your config file now and see what it contains.
 
-## Get more detail
+## Get more details
 
-Do you want more detail on one of the topics covered in this tutorial step? Use the links in this table to learn more.
+Do you want more detail on one of the subjects covered in this tutorial step? Use the links in this table to learn more.
 
-|Topic| Learn more|
+|Subject| Learn more|
 |-|-|
 | Environments | [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
 | Sign in options | [Sign in with Azure CLI](authenticate-azure-cli.md)

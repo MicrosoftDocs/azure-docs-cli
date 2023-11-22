@@ -13,15 +13,15 @@ keywords: azure,
 ---
 # Delete Azure resources at scale using a script
 
-In this tutorial step learn to delete Azure resources at scale using a Bash or PowerShell script. This is especially helpful when you are managing a large number of Azure resources and need to tear down development or testing environments.
+In this tutorial step, learn to delete Azure resources at scale using a Bash or PowerShell script. This skill is especially helpful when you're managing a large number of Azure resources and need to tear down development or testing environments.
 
 ## Prerequisites
 
-* You have created storage accounts as described in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md).
+* You created at least two storage accounts as described in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md).
 
 ## Delete a resource group by name
 
-Using random IDs and running these tutorial steps creates test resource groups that can be removed. The easiest way to clean up Azure resources is to delete the resource group. However, when you delete a resource group, _you delete every object inside the group_, so it is important delete the right resource group name!
+Using random IDs and running these tutorial steps creates test resource groups that can be removed. The easiest way to clean up Azure resources is to delete the resource group. However, when you delete a resource group, _you delete every object inside the group_, so it's important delete the right resource group name!
 
 ```azurecli-interactive
 # Get a list of resource groups in the active subscription
@@ -36,7 +36,7 @@ az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
 
 ## Delete multiple storage accounts using for-each
 
-When you are working with a large number of resources and you do not want to delete all the objects within a group, consider using a script. This example gets a list of all the Azure storage accounts created in this tutorial and deletes them in a for-each loop.
+When you're working with a large number of resources and you don't want to delete all the objects within a group, consider using a script. This example gets a list of all the Azure storage accounts created in this tutorial and deletes them in a for-each loop.
 
 # [Bash](#tab/bash)
 
@@ -90,15 +90,15 @@ az storage account list --resource-group $resourceGroup `
 
 ---
 
-## Get more detail
+## Get more details
 
 Do you want more detail on one of the references used in this tutorial step? Use the links in this table to learn more.
 
-|Topic| Learn more|
+|Subject| Learn more|
 |-|-|
 |References| [az group list](/cli/azure/group#az-group-list)
 | | [az group delete](/cli/azure/group#az-group-delete)
 | | [az storage account list](/cli/azure/storage/account#az-storage-account-list)
 | | [az storage account delete](/cli/azure/storage/account#az-storage-account-delete)
 
-This is the end of the tutorial, but look at all you have accomplished! You are now officially onboarded with the Azure CLI. Well done!
+This is the end of the tutorial, but look at all you accomplished! You're now officially onboarded with the Azure CLI. Well done!
