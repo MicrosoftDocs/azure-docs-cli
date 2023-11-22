@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 11/18/2023
+ms.date: 11/22/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -53,11 +53,11 @@ You will be prompted to install an extension on first use.
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [0.26.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.50.0 | Manage Azure Firewall resources. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.23.0](https://github.com/azure/azure-iot-cli-extension) |
-|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.42.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.1.0b1](https://github.com/azure/azure-iot-ops-cli-extension) |
+|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.42.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.1.0b2](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | Microsoft Azure Command-Line Tools Azure Sphere Extension | Preview | [0.1.4](https://docs.microsoft.com/azure-sphere) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.53.0 | Additional commands for working with BareMetal instances. | GA | [2.0.0](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
-|[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.43.0 | Microsoft Azure Command-Line Tools Bastion Extension. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
+|[bastion](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion) | 2.43.0 | Microsoft Azure Command-Line Tools Bastion Extension. | Preview | [0.2.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/bastion/HISTORY.rst) |
 |[billing-benefits](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits) | 2.43.0 | Microsoft Azure Command-Line Tools BillingBenefits Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/billing-benefits/HISTORY.rst) |
 |[blockchain](https://github.com/Azure/azure-cli-extensions/tree/master/src/blockchain) | 2.3.1 | Microsoft Azure Command-Line Tools BlockchainManagementClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/blockchain/HISTORY.rst) |
 |[blueprint](https://github.com/Azure/azure-cli-extensions/tree/main/src/blueprint) | 2.50.0 | Microsoft Azure Command-Line Tools Blueprint Extension | Experimental | [0.3.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/blueprint/HISTORY.rst) |
@@ -71,7 +71,7 @@ You will be prompted to install an extension on first use.
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.5.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.49.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | Preview | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
-|[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
+|[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.2.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
 |[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.53.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.44](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
 |[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.26.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
