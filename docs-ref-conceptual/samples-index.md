@@ -20,7 +20,7 @@ Not every Azure CLI reference command is used in a sample script. For a complete
 
 ## List of samples
 
-Use these three tabs to find Azure CLI samples.  [List by subject area](#list-by-subject-area) and [List by reference group](#list-by-reference-group) contain the same samples. Only the sort is different. The [Azure CLI samples GitHub repository](#azure-cli-samples-github-repository) tab has more samples as not every GitHub sample is used in an article.
+Use these three tabs to find Azure CLI samples.  [List by subject area](/cli/azure/samples-index?tabs=service) and [List by reference group](/cli/azure/samples-index?tabs=command) tabs contain the same samples. Only the sort is different. The [Azure CLI samples GitHub repository](/cli/azure/samples-index?tabs=github) tab has more samples as not every GitHub sample is used in an article.
 
 # [List by subject area](#tab/service)
 
