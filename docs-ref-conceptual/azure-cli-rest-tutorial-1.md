@@ -1,6 +1,6 @@
 ---
-title: Learn how to use Azure Rest with Azure CLI - Prerequisites | Microsoft Docs
-description: Learn how to use Azure rest and its capabilties with Azure Command Line (CLI) 
+title: Learn how to use the Azure REST API with Azure CLI| Microsoft Docs
+description: Learn how to use Azure rest with Azure Command Line (CLI) 
 manager: jasongroce
 author: daphnemamsft
 ms.author: dbradish
@@ -12,42 +12,40 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# Use Azure Rest with Azure CLI
+# Use the Azure REST API with Azure CLI
 
-Representational State Transfer (REST) APIs are service endpoints that support sets of HTTP operations (or methods). These HTTP methods allow you to access the service's resources. To learn more about the specifics of Azure REST API and its components, see [Azure REST API Reference](/rest/api/azure/).
+Representational State Transfer (REST) APIs are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform create/retrieve/update/delete actions for your service's resources. This tutorial will show you how to use Azure Rest specifically with Azure CLI when accessing your service's resources. 
 
-This tutorial will show you how to use Azure Rest with Azure CLI in order to perform different operations when accessing your service's resources. 
+A REST API request/response pair is made up of five basic components:
 
-In this tutorial, you learn how to:
+1. The request URI, which is the URL in your request. The URL consists of the URI-scheme, URI-hot, resource-path, and query-string. 
+2. HTTP request message header fields.
+3. Optional HTTP request message body fields, to support the URI and HTTP operation. 
+4. HTTP response message header fields.
+5. Optional HTTP response message body fields.
+
+To learn more about the definitions of Azure REST API components, see [Azure REST API Reference](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse).
+
+In this tutorial, you learn how to construct a REST API response using different methods with Azure CLI:
 
 > [!div class="checklist"]
 >
-> * Overview of Azure Rest 
-> * The different HTTP methods: delete, get, head, options, patch, post, put
-> * Azure Rest Azure CLI examples 
+> * Overview and Prerequisites of Azure REST API
+> * Creating an Azure REST API request with Azure CLI
+> * Sending an Azure REST API request with Azure CLI
+> * Reviewing the Azure REST API response message 
+
 
 ## Prerequisites 
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
+Azure Active Directory (AD) must be able to identify your client application's configuration before running it. Therefore, you must register your application with an Azure AD tenant. In order to do so, make sure you have the necessary [prerequisites](/rest/api/gettingstarted/#prerequisites) for [registering your client application](rest/api/gettingstarted/#register-your-client-application-with-azure-ad). 
 
-Your client application must make its identity configuration known to Azure Active Directory (AD) before run-time. You can do so by registering it in with an Azure AD tenant. Before you register your client with Azure AD, make sure you have the necessary prerequisites for [registering your client application](/rest/api/azure/#prerequisites).
-
-# Invoke a custom request with Azure Rest using Azure CLI
-
-Invoke a custom request.
-
-This command automatically authenticates using the logged-in credential: If Authorization header is not set, it attaches header Authorization: Bearer <token>, where <token> is retrieved from AAD. The target resource of the token is derived from --url if --url starts with an endpoint from az cloud show --query endpoints. You may also use --resource for a custom resource.
-
-If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
-
-```azurecli-interactive
-az rest --uri
-```
 
 ## Next Steps
 
-Now that you've learned the fundamentals of how Azure Rest works while using Azure CLI, proceed to the next step to learn how to use Azure Rest with its many different methods to invoke custom requests. 
+Now that you've learned the prerequisites needed to create an Azure REST API response, proceed to the next step to learn how to create an Azure REST API response with Azure CLI. 
 
 > [!div class="nextstepaction"]
-> [Learn how to use different Azure Rest methods with Azure CLI](./azure-cli-rest-tutorial-2.md)
+> [Learn how to create an Azure REST API response with Azure CLI](./azure-cli-rest-tutorial-2.md)
