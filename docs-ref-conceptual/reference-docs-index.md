@@ -18,6 +18,4 @@ This article provides an A - Z list of published content for each Azure CLI refe
 
 With over 9,000 reference commands, not every Azure CLI command has been used in Azure published content. For a complete list of Azure CLI commands, see the [A - Z reference list](/cli/azure/reference-index). For a list of Azure CIL samples, see [Azure CLI sample scripts](samples-index.md)
 
-If it is your first time working with the Azure CLI, see [Get started with Azure CLI](get-started-with-azure-cli.md) or [Onboarding cheat sheet](cheat-sheet-onboarding.md) to learn about installation and sign in.
-
 [!INCLUDE [reference-docs-subgroup](includes/reference-docs-subgroup.md)]
