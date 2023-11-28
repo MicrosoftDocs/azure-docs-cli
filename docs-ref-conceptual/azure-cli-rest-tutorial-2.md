@@ -1,6 +1,6 @@
 ---
 title: Learn how to create an Azure REST API response with Azure CLI | Microsoft Docs
-description: Learn how to use Azure rest and its different methods with Azure Command Line (CLI) 
+description: Learn how to create an Azure REST API response with Azure Command Line (CLI).
 manager: jasongroce
 author: daphnemamsft
 ms.author: dbradish
@@ -12,6 +12,7 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
+# Learn how to create an Azure REST API response wiht Azure CLI
 
 ## Next Steps
 

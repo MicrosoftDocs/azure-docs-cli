@@ -1,6 +1,6 @@
 ---
 title: Learn how to send an Azure REST API response with Azure CLI| Microsoft Docs
-description: See different examples of how to use Azure rest with Azure Command Line (CLI) 
+description: Learn how to send an Azure REST API response by using Azure Command Line (CLI).
 manager: jasongroce
 author: daphnemamsft
 ms.author: dbradish
@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 
-# Use different Azure Rest methods with Azure CLI
+# Learn how to send an Azure REST API response with Azure CLI
 
 ## Get
 
