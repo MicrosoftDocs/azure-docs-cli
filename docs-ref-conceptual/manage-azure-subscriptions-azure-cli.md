@@ -28,7 +28,7 @@ _[Subscriptions](/azure/cloud-adoption-framework/ready/landing-zone/design-area/
 
 An Azure _resource group_ is a container that holds related resources for an Azure solution. To learn how to manage resource groups within your subscription, see [How to manage Azure resource groups with the Azure CLI](manage-azure-groups-azure-cli.md)
 
-## Access Tokens 
+## Access tokens 
 
 When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. When a access token is granted, it is only valid for a short amount of time. Therefore, a refresh token is also generated at the same time, so that the client application can exchange this refresh token for a new access token when needed. to learn more about refresh tokens, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens). 
 
