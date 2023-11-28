@@ -35,7 +35,7 @@ The variable can then be used in Azure CLI to perform build and destroy jobs at 
 Get information about an existing Azure resource using the `--query` parameter of the `show` command. A [JMESPath query](https://jmespath.org/) is executed and one or more property values of an Azure resource are returned.
 
 > [!TIP]
-> The syntax for `--query` is case sensitive _and environment-specific_.  If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
+> The syntax for `--query` is case sensitive _and environment-specific_. If you receive empty results, check your capitalization. Avoid quoting errors by applying the rules you learned in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
 
 Unless the `--output` parameter is specified, these examples rely on a default output configuration of `json` set in [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
 
@@ -94,7 +94,7 @@ az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
                         --output table
 ```
 
-Console table output.  The first letter of each column is capitalized in `--output table`:
+Console table output. The first letter of each column is capitalized in `--output table`:
 
 ```output
 SaName             SaKind     SaMinTLSversion
@@ -108,7 +108,7 @@ Combine what you learned about quoting with what you just learned about `--query
 
 # [Bash](#tab/bash)
 
-In Bash, you cannot have a space before or after the `=` sign. You can opt to use quotes around the variable value, so `msdocs-tutorial-rg-00000000` and `"msdocs-tutorial-rg-00000000"` are both correct.
+In Bash, you can't have a space before or after the `=` sign. You can opt to use quotes around the variable value, so `msdocs-tutorial-rg-00000000` and `"msdocs-tutorial-rg-00000000"` are both correct.
 
 ```azurecli-interactive
 rgName=<msdocs-tutorial-rg-00000000>
@@ -126,7 +126,7 @@ az storage account list --resource-group $rgName \
 
 # Get a list of Azure storage accounts created in this tutorial
 az storage account list --resource-group $rgName \
-                        --query "[?contains(name, 'msdocs')].{saName:name, saKind:kind, saPrimaryLocation:primaryLocation,    createdTimeStamp:creationTime}" \
+                        --query "[?contains(name, 'msdocs')].{saName:name, saKind:kind, saPrimaryLocation:primaryLocation, createdTimeStamp:creationTime}" \
                         --output table
 ```
 
@@ -150,7 +150,7 @@ az storage account list --resource-group $rgName `
 
 # Get a list of Azure storage accounts created in this tutorial
 az storage account list --resource-group $rgName `
-                        --query "[?contains(name, 'msdocs')].{saName:name, saKind:kind, saPrimaryLocation:primaryLocation,    createdTimeStamp:creationTime}" `
+                        --query "[?contains(name, 'msdocs')].{saName:name, saKind:kind, saPrimaryLocation:primaryLocation, createdTimeStamp:creationTime}" `
                         --output table
 ```
 
@@ -224,7 +224,7 @@ az config set core.output=json
 
 ## Get the contents of a JSON file and store it in a variable
 
-This next section is a "stretch task" for an onboarding tutorial. However, to manage Azure resources in a development/stage/production scenario, you need to be able to read a configuration file.
+This next section is a "stretch task" for an onboarding tutorial. However, to manage Azure resources in a development/stage/production scenario, you need to read a configuration file.
 
 Are you ready to stretch your Azure CLI skills? Create a JSON file containing the following JSON, or your file contents of choice. Save the text file to your local drive. If you're working in Azure Cloud Shell, use the `upload/download files` icon in the menu bar to store the text file in your cloud storage drive.
 
@@ -299,7 +299,7 @@ echo $devKV
 
 ---
 
-You now have an environment-specific Azure Key Vault secret name stored in a variable and can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts between environments.
+You now have an environment-specific Azure Key Vault secret name stored in a variable, and you can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts between environments.
 
 ## Variable usage comparison
 

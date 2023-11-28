@@ -22,7 +22,7 @@ Azure CLI commands can be executed in both [Bash](https://opensource.com/resourc
 
 ## Be aware of line continuation characters
 
-Most Azure CLI documentation is written and tested in Bash using Azure Cloud Shell.  One of the first things to remember when copying Azure CLI syntax is to verify the line continuation characters for your chosen environment as they aren't interchangeable.
+Most Azure CLI documentation is written and tested in Bash using Azure Cloud Shell. One of the first things to remember when copying Azure CLI syntax is to verify the line continuation characters for your chosen environment as they aren't interchangeable.
 
 | Environment | Line continuation character |
 | - | - |
@@ -43,7 +43,7 @@ The syntax for using variables varies slightly between environments. Here's a co
 | **PowerShell** | $variableName=variableValue | $varResourceGroup=msdocs-rg-123
 | **Cmd** | set variableName=variableValue | set varResourceGroup=msdocs-rg-123
 
-There are several different ways to return variable information to your console screen, but `echo` works in most circumstances.  Here's a comparison:
+There are several different ways to return variable information to your console screen, but `echo` works in most circumstances. Here's a comparison:
 
 * **Bash**: echo $varResourceGroup
 * **PowerShell**: echo $varResourceGroup
@@ -341,7 +341,7 @@ Example of filtering a numeric value. Unless you have a VM in your current subsc
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> \
-           --query "[?storageProfile.osDisk.diskSizeGb >=\`50\`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" \
+           --query "[?storageProfile.osDisk.diskSizeGb >=\`50\`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb}" \
            --output table
 ```
 
@@ -385,7 +385,7 @@ Example of filtering a numeric value. Unless you have a VM in your current subsc
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> `
-           --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" `
+           --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" `
            --output table
 ```
 
@@ -419,7 +419,7 @@ Example of using double quotes within a complex parameter value. This example is
 
 ```azurecli-interactive
 az vm list --resource-group QueryDemo ^
-    --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" ^
+    --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" ^
     --output table
 ```
 
@@ -427,7 +427,7 @@ Example of filtering a numeric value. Unless you have a VM in your current subsc
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> `
-           --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" `
+           --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" `
            --output table
 ```
 
@@ -443,7 +443,7 @@ Examples of filtering a date.
 ```azurecli-interactive
 # include time
 az vm list --resource-group DevEx-Data-Analysis2 ^
-           --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" ^
+           --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" ^
            --output table
 
 az storage account list --resource-group msdocs-tutorial-rg-55276056 ^

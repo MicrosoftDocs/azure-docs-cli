@@ -139,13 +139,13 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Set your default output.
 
-   When you chose to work in Azure Cloud Shell, or install the Azure CLI locally, the default output is automatically set to `json`.  However, this is one of the most important defaults to understand and set.  **Output determines what appears on your console and what is written to your log file.** Always use an output of `none` when you're creating resources that return keys, passwords and secrets.
+   When you chose to work in Azure Cloud Shell, or install the Azure CLI locally, the default output is automatically set to `json`. However, this is one of the most important defaults to understand and set. **Output determines what appears on your console and what is written to your log file.** Always use an output of `none` when you're creating resources that return keys, passwords and secrets.
 
    ```azurecli-interactive
    az config set core.output=none
    ```
 
-   In this tutorial, we aren't working with secrets.  Set the default back to `json` so you can see the returned output of each reference command in this tutorial.
+   In this tutorial, we aren't working with secrets. Set the default back to `json` so you can see the returned output of each reference command in this tutorial.
 
    ```azurecli-interactive
    az config set core.output=json
@@ -153,7 +153,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Learn to use `az init`.
 
-   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press <kbd>Enter</kbd>.  Follow the prompts provided. 
+   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press <kbd>Enter</kbd>. Follow the prompts provided.
    
    ```azurecli-interactive
    az init
@@ -199,13 +199,13 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Find and read your configuration file.
 
-   If you work under a "trust but verify" mindset, you want to know where your configuration files are stored and what they contain.  The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS, and `%USERPROFILE%\.azure` on Windows. Find your config file now and see what it contains.
+   If you work under a "trust but verify" mindset, you want to know where your configuration files are stored and what they contain. The configuration file itself is located at `$AZURE_CONFIG_DIR/config`. The default value of `AZURE_CONFIG_DIR` is `$HOME/.azure` on Linux and macOS, and `%USERPROFILE%\.azure` on Windows. Find your config file now and see what it contains.
 
 ## Get more details
 
 Do you want more detail on one of the subjects covered in this tutorial step? Use the links in this table to learn more.
 
-|Subject| Learn more|
+| Subject | Learn more |
 |-|-|
 | Environments | [Choose the right Azure command-line tool](./choose-the-right-azure-command-line-tool.md)
 | Sign in options | [Sign in with Azure CLI](authenticate-azure-cli.md)
