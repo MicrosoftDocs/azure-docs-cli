@@ -35,13 +35,13 @@ Most Azure CLI documentation is written and tested in Bash using Azure Cloud She
 
 ## Understand syntax differences when using variables
 
-The syntax for using variables varies slightly between environments. Here's a comparison of creating/setting a variable.
+The syntax for using variables varies slightly between environments. Here's a comparison:
 
-| Environment | Variable syntax | Example
-| - | - |
-| **Bash** | variableName=variableValue | varResourceGroup=msdocs-rg-123
-| **PowerShell** | $variableName=variableValue | $varResourceGroup=msdocs-rg-123
-| **Cmd** | set variableName=variableValue | set varResourceGroup=msdocs-rg-123
+|Use case|Bash|PowerShell|Cmd
+|-|-|-|-|
+|Create variable | variableName=varValue | $variableName="varValue" | set variableName=varValue
+|Use variable as parameter value |variableName|$variableName|%variableName%
+|Use variable in `--query` parameter|'$variableName'|'$variableName'|'$variableName'
 
 There are several different ways to return variable information to your console screen, but `echo` works in most circumstances. Here's a comparison:
 
@@ -58,8 +58,8 @@ Every Azure CLI parameter is a string. However, each environment has its own rul
 |String value|Azure CLI|PowerShell|Cmd
 |-|-|-|-|
 |Text|'abc' or "abc"|'abc' or "abc"|"abc"
-|Number|\\\`50\\`|\`\`50\`\`|\`50\`
-|Boolean|\\\`true\\`|\`\`false\`\`|\'true\'
+|Number|\\\`50\\\` | \`\`50\`\` | \`50\`
+|Boolean|\\\`true\\\` | \`\`false\`\` | \'true\'
 |Date|'2021-11-15'|'2021-11-15'|'2021-11-15'
 |JSON|'{"key":"value"}' or "{\"key\":\"value\"}" |'{"key":"value"}'|"{\"key\":\"value\"}"
 
@@ -69,13 +69,13 @@ Many Azure CLI parameters accept a space-separated list of values. This impacts 
 * **Quoted space-separated list**: --parameterName "firstValue" "secondValue"
 * **Values that contain a space**: --parameterName "value1a value1b" "value2a value2b" "value3"
 
-If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug an Azure CLI reference command](#debug-an-azure-cli-reference-command).
+If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug Azure CLI reference commands](#debug-azure-cli-reference-commands).
 
 ## Create a storage account to apply what you've learned
 
 The remainder of this tutorial step demonstrates quoting rules in Azure CLI commands, and uses the resource group created in [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md). Substitute `<msdocs-tutorial-rg-00000000>` with the name of your resource group.
 
-Create an Azure storage account to use in this tutorial. This script example demonstrates environment-specific syntax for the following:
+Create an Azure storage account to use in this tutorial. This next script example demonstrates environment-specific syntax for the following:
 
 * Line continuation
 * Variable usage
@@ -415,14 +415,6 @@ az storage account list --resource-group msdocs-tutorial-rg-00000000 `
 
 # [Cmd](#tab/cmd)
 
-Example of using double quotes within a complex parameter value. This example is given for future reference.
-
-```azurecli-interactive
-az vm list --resource-group QueryDemo ^
-    --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" ^
-    --output table
-```
-
 Example of filtering a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
@@ -612,7 +604,7 @@ Do you want more detail on one of the subjects covered in this tutorial step? Us
 | | [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 | | [Windows command-line tips](https://ss64.com/nt/syntax-esc.html)
 |Parameters | [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
-| | Compare syntax of Bash, PowerShell and Cmd in [Query command output using JMESPath](./query-azure-cli.md)
+| | Find more syntax examples of Bash, PowerShell and Cmd in [Query command output using JMESPath](./query-azure-cli.md)
 
 ## Next Step
 

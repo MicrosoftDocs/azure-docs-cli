@@ -17,11 +17,11 @@ We're glad you're here! You chose a tool that allows you to create, update, and 
 
 > [!div class="checklist"]
 >
-> * 1 - Get to know the Azure CLI in this tutorial step
+> * 1 - Get to know the Azure CLI (in this tutorial step)
 > * 2 - [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
 > * 3 - [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
 > * 4 - [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
-> * 5 - [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)
+> * 5 - [Delete multiple Azure resources using a script](./get-started-tutorial-4-delete-resources.md)
 
 ## What is the Azure CLI?
 
@@ -29,24 +29,20 @@ The Azure Command-Line Interface (CLI) is a cross-platform command-line tool to 
 
 For interactive use, first launch a shell such as Bash, PowerShell, or Cmd.exe on Windows, Linux or macOS. Then issue a command at the shell prompt. To automate repetitive tasks, assemble the Azure CLI commands into a shell script using the script syntax of your chosen shell, and then execute the script.
 
-The Azure CLI can be installed locally on Linux, macOS, or Windows computers. Azure CLI can also be used from a browser through Azure Cloud Shell or run from inside a Docker container.
-
 ## What shell environment should I use?
 
 Windows PowerShell, PowerShell, Cmd, and Bash are different shell environments. Your shell environment not only determines which tools you can use, but your shell also changes your command-line experience. For example, there are important quoting differences, line continuation characters, and variable syntax differences between shells.
 
 The Azure CLI reference examples in this tutorial are written for Bash, PowerShell and Cmd to help you evaluate each shell experience. Here's a brief comparison:
 
-|Shell environment | Use Azure CLI? | Use Azure PowerShell?|
+|Shell environment | Can I use Azure CLI? | Can I use Azure PowerShell?|
 |-|-|-|
 | CMD | Yes ||
 | Bash | Yes ||
 | Windows PowerShell | Yes | Yes |
 | PowerShell | Yes | Yes |
 
-Azure Cloud Shell is a hosted shell environment that runs on an Ubuntu container.
-
-Cloud Shell provides two shell environments: Bash (with Azure CLI preinstalled) and PowerShell (with Azure PowerShell preinstalled). A dropdown list at the top of the Cloud Shell window allows you to easily switch between the two environments.
+Azure Cloud Shell is a hosted shell environment that runs on an Ubuntu container. Cloud Shell provides two shell environments: Bash (with Azure CLI preinstalled) and PowerShell (with Azure PowerShell preinstalled).
 
 ## How does the Azure CLI compare to Azure PowerShell?
 
@@ -77,7 +73,7 @@ The Azure CLI syntax has four parts. For example, this is how [az storage accoun
 | Reference `group` | az `storage`
 | Space-delimited reference `subgroups` | az storage `account` `local-user`
 | Reference `command` | az storage account local-user `create`
-| Reference command `parameters` | az storage account local-user create `name`, `--account-name`, `--resource-group`
+| Reference command `parameters` | az storage account local-user create `--name`, `--account-name`, `--resource-group`
 
 ## Get more details
 

@@ -15,17 +15,17 @@ keywords: azure, az account, az group, az config, az init, configuration
 
 In this tutorial step, you execute your first Azure CLI commands! This includes finding and setting your active subscription and setting default values. You also learn how to create resource groups containing a random ID to always guarantee a unique resource name.
 
+If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
+
+To complete the steps in this tutorial, you need `contributor` permissions in your subscription.
+
 ## Install the Azure CLI
 
 Get started by first selecting your environment.
 
-* If you don't have an [Azure subscription](/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), create an [Azure free account](https://azure.microsoft.com/free/?ref=microsoft.com&utm_source=microsoft.com&utm_medium=docs&utm_campaign=visualstudio) before you begin.
-
 * Use the Bash environment in [Azure Cloud Shell](/azure/cloud-shell/overview) by selecting the **Open Cloud Shell** button in the top right corner of each Azure CLI code block.
 
 * If you prefer to run the Azure CLI reference commands locally, [install](/cli/azure/install-azure-cli) the Azure CLI.
-
-* To complete the steps in this tutorial, you need `contributor` permissions in your subscription.
 
 [!INCLUDE [include](./includes/current-version.md)]
 
@@ -37,7 +37,7 @@ There are several [authentication options](./authenticate-azure-cli.md) when wor
 
 ## Find and change your active subscription
 
-After logging into the Azure CLI, always check your current subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here's a code example to use.
+After logging into the Azure CLI, always check your current subscription. If you aren't working under the subscription you prefer, change your subscription using [az account set](/cli/azure/account#az-account-set). Here's a code example to use:
 
 ```azurecli-interactive
 # see your current/default subscription
@@ -55,7 +55,7 @@ az account set --subscription <00000000-0000-0000-0000-000000000000>
 
 ## Learn about resource groups
 
-A resource group is a container for Azure resources. To create a resource group, you need role permissions of `contributor` or higher in your subscription.
+A resource group is a container for Azure resources. To create a resource group, you need `contributor` permissions or higher in your subscription.
 
 ### Create a resource group
 
@@ -131,7 +131,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Set multiple environment variables at once.
 
-  Many Azure CLI parameters take multiple values separated by a space. Configuration values are one such instance. The next example sets both the `.location` and `.group` defaults that are used by the `--location` and `--resource-group` parameters of every Azure CLI command.
+   Many Azure CLI parameters take multiple values separated by a space. Configuration values are one such instance. The next example sets both the `.location` and `.group` defaults that are used by the `--location` and `--resource-group` parameters of every Azure CLI command.
 
    ```azurecli-interactive
    az config set defaults.location=westus2 defaults.group=<msdocs-tutorial-rg-0000000>
@@ -153,8 +153,8 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Learn to use `az init`.
 
-   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press <kbd>Enter</kbd>. Follow the prompts provided.
-   
+   The Azure CLI has a reference command that walks you through configuring your environment. Type `az init` in your console and press **Enter**. Follow the prompts provided.
+
    ```azurecli-interactive
    az init
    ```

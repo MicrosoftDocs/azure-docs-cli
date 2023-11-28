@@ -18,7 +18,7 @@ In this tutorial step, learn to work with variables:
 - Execute an Azure CLI command and store output in a variable.
 - Read a local JSON file and store property values in a variable.
 
-Some common use-cases are:
+Some common use-cases for variable usage are:
 
 - Get information about an existing Azure resource, such as a resource ID.
 - Get output from an Azure CLI command, such as a password.
@@ -224,7 +224,7 @@ az config set core.output=json
 
 ## Get the contents of a JSON file and store it in a variable
 
-This next section is a "stretch task" for an onboarding tutorial. However, to manage Azure resources in a development/stage/production scenario, you need to read a configuration file.
+This next section is a "stretch task" for an onboarding tutorial. However, to manage Azure resources in development, stage and production environments, you often need to read a configuration file.
 
 Are you ready to stretch your Azure CLI skills? Create a JSON file containing the following JSON, or your file contents of choice. Save the text file to your local drive. If you're working in Azure Cloud Shell, use the `upload/download files` icon in the menu bar to store the text file in your cloud storage drive.
 
@@ -255,7 +255,7 @@ Are you ready to stretch your Azure CLI skills? Create a JSON file containing th
 }
 ```
 
-Store the contents of your json file in a variable for further use in your Azure CLI commands. In this example, change `msdocs-tutorial.json` to the name of your file. Don't save the `echo` command in production-level scripts as the output is saved in your log file.
+Store the contents of your JSON file in a variable for further use in your Azure CLI commands. In this example, change `msdocs-tutorial.json` to the name of your file. Don't save the `echo` command in production-level scripts as the output is saved in your log file.
 
 # [Bash](#tab/bash)
 
@@ -299,18 +299,7 @@ echo $devKV
 
 ---
 
-You now have an environment-specific Azure Key Vault secret name stored in a variable, and you can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts between environments.
-
-## Variable usage comparison
-
-Did you notice how variable syntax is different between environments? Here's a comparison table for future reference:
-
-|Use case|Azure CLI|PowerShell|Cmd
-|-|-|-|-|
-|Create variable (no blank spaces) | variableName=varValue | $variableName="varValue" | set variableName=varValue
-|Create variable (with spaces) | | $variableName = "varValue" | set variableName = varValue
-|Use variable as parameter value |variableName|$variableName|%variableName%
-|Use variable in `--query` parameter|'$variableName'|'$variableName'|'$variableName'
+You now have an environment-specific Azure Key Vault secret name stored in a variable, and you can use it to connect to Azure resources. This same method is good for IP addresses of Azure VMs and SQL Server connection strings when you want to reuse Azure CLI scripts.
 
 ## Get more details
 

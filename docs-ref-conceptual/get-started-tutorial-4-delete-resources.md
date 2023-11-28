@@ -13,7 +13,7 @@ keywords: azure,
 ---
 # Delete Azure resources at scale using a script
 
-In this tutorial step, learn to delete Azure resources at scale using a Bash or PowerShell script. This skill is especially helpful when you're managing a large number of Azure resources and need to tear down development or testing environments.
+In this tutorial step, learn to delete multiple Azure resources using a Bash or PowerShell script. This skill is especially helpful when you're managing a large number of Azure resources and need to tear down development or testing environments.
 
 ## Prerequisites
 
