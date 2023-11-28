@@ -39,7 +39,7 @@ In this tutorial, you learn how to construct a REST API response using different
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
-Azure Active Directory (AD) must be able to identify your client application's configuration before running it. Therefore, you must register your application with an Azure AD tenant. In order to do so, make sure you have the necessary [prerequisites](/rest/api/gettingstarted/#prerequisites) for [registering your client application](rest/api/gettingstarted/#register-your-client-application-with-azure-ad). 
+Azure Active Directory (AD) must be able to identify your client application's configuration before running it. Therefore, you must register your application with an Azure AD tenant. In order to do so, make sure you have the necessary [prerequisites](/rest/api/gettingstarted/#prerequisites) for [registering your client application](/rest/api/gettingstarted/#register-your-client-application-with-azure-ad). 
 
 
 ## Next Steps
