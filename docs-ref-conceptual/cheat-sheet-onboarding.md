@@ -54,7 +54,18 @@ See script comparisons between Bash, PowerShell, and Cmd in [How to query Azure 
 
 ## Learning Azure CLI
 
-There are several reference commands that provide interactive prompts to help you learn the Azure CLI.
+The [Learn to use the Azure CLI tutorial](./get-started-tutorial-0-before-you-begin.md) walks you through many common Azure CLI tasks with examples in Bash, PowerShell and Cmd. Here are some of the topics covered:
+
+- [Decide what environment I should use](./get-started-tutorial-0-before-you-begin.md#what-shell-environment-should-i-use)
+- [Find and change my default subscription](./get-started-tutorial-1-prepare-environment. md#find-and-change-your-active-subscription)
+- [Create an Azure resource containing a random ID](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
+- [Set environment variables](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
+- [Learn syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
+- [Debug Azure CLI reference commands](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
+- [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable)
+- [Delete multiple resources using a script](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
+
+There are also several reference commands that provide interactive prompts to help you learn the Azure CLI.
 
 | Command | Description | Example
 |-|-|-|
@@ -75,15 +86,3 @@ Another great way to learn to use the Azure CLI is through [Microsoft Learn Modu
 | How do I query command output? | `az account show --query "{tenantId:tenantId,subscriptionid:id}"` | See [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md) for many `--query` examples in Bash, PowerShell and Cmd.
 | How do I format output from a command? | `az account list --output table` | [Output formats for Azure CLI commands](format-output-azure-cli.md)
 | Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different technical strengths, and for that reason, Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md)
-
-## See also
-
-- [Learn to use the Azure CLI tutorial](./get-started-tutorial-0-before-you-begin.md)
-  - [What environment should I use?](./get-started-tutorial-0-before-you-begin.md#what-shell-environment-should-i-use)
-  - [Find and change my default subscription](./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription)
-  - [Create a resource containing a random ID](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
-  - [Set environment variables](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
-  - [Syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
-  - [Debug Azure CLI reference commands](./get-started-tutorial-2-environment-syntax.md#debug-an-azure-cli-reference-command)
-  - [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable)
-  - [Delete multiple resources using a script](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)

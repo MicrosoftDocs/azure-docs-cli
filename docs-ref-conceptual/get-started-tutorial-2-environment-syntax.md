@@ -57,7 +57,7 @@ Every Azure CLI parameter is a string. However, each environment has its own rul
 
 |String value|Azure CLI|PowerShell|Cmd
 |-|-|-|-|
-|Text|'abc' or "abc"|'abc' or "abc"|"abc"
+|Text|'text' or "text"|'text' or "text"|"text"
 |Number|\\\`50\\\` | \`\`50\`\` | \`50\`
 |Boolean|\\\`true\\\` | \`\`false\`\` | \'true\'
 |Date|'2021-11-15'|'2021-11-15'|'2021-11-15'
@@ -188,7 +188,7 @@ The `--tags` parameter accepts a space-separated list of key:value pairs. Substi
 # [Bash](#tab/Bash)
 
 ```azurecli-interactive
-# Create new tags without quotes.
+# Create new tags. This syntax works with or without quotes in the tags parameter.
 az storage account update --name <msdocssa00000000> \
                           --resource-group <msdocs-tutorial-rg-00000000> \
                           --tags Team=t1 Environment=e1
@@ -239,7 +239,7 @@ az tag list --resource-id $saID
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
-# Create new tags without quotes.
+# Create new tags. This syntax works with or without quotes in the tags parameter.
 az storage account update --name <msdocssa00000000> `
                           --resource-group <msdocs-tutorial-rg-00000000> `
                           --tags Team=t1 Environment=e1
@@ -323,7 +323,6 @@ Take a deeper look at these script differences. These examples demonstrate quoti
   * Numbers
   * Boolean values
   * Dates
-
 
 # [Bash](#tab/Bash)
 

@@ -66,6 +66,8 @@ Console JSON dictionary output:
 
 ### Get individual JSON objects
 
+Use a comma-delimited list of properties to return individual properties in an array (list).
+
 ```azurecli-interactive
 az storage account show --resource-group <msdocs-tutorial-rg-00000000> \
                         --name <msdocssa000000000> \
@@ -259,7 +261,7 @@ Store the contents of your JSON file in a variable for further use in your Azure
 
 # [Bash](#tab/bash)
 
-This Bash script was tested in [Azure Cloud Shell](/azure/cloud-shell/overview) and **depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command.**
+This Bash script was tested in [Azure Cloud Shell](/azure/cloud-shell/overview) and **depends on the Bash [jq](https://jqlang.github.io/jq/manual/) which must be installed in your environment.**
 
 ```azurecli-interactive
 # Show the contents of a file in the console
