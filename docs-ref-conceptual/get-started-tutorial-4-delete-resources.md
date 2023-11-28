@@ -92,13 +92,11 @@ az storage account list --resource-group $resourceGroup `
 
 ## Get more details
 
-Do you want more detail on one of the references used in this tutorial step? Use the links in the table to learn more.
+Do you want more detail on one of the references used in this tutorial step? Use these links to learn more.
 
-|Learn more|
-|-|
-|[az group list](/cli/azure/group#az-group-list)
-| [az group delete](/cli/azure/group#az-group-delete)
-| [az storage account list](/cli/azure/storage/account#az-storage-account-list)
-| [az storage account delete](/cli/azure/storage/account#az-storage-account-delete)
+* [az group list](/cli/azure/group#az-group-list)
+* [az group delete](/cli/azure/group#az-group-delete)
+* [az storage account list](/cli/azure/storage/account#az-storage-account-list)
+* [az storage account delete](/cli/azure/storage/account#az-storage-account-delete)
 
 This is the end of the tutorial, and look at all you accomplished! You're now officially onboarded with the Azure CLI. Well done!

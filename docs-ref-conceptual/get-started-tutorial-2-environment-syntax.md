@@ -18,7 +18,7 @@ Azure CLI commands can be executed in both [Bash](https://opensource.com/resourc
 ## Prerequisites
 
 * You completed the prerequisites to [prepare your environment](./get-started-tutorial-1-prepare-environment.md).
-* You have access to a resource group with `contributor` permissions.
+* You have access to a resource group with `contributor` or higher permissions at a resource group level.
 
 ## Be aware of line continuation characters
 
