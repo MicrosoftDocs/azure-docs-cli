@@ -71,7 +71,7 @@ Many Azure CLI parameters accept a space-separated list of values. This impacts 
 
 If you aren't sure how your string will be evaluated by your environment, return the value of a string to your console or use `--debug` as explained in [Debug an Azure CLI reference command](#debug-an-azure-cli-reference-command).
 
-## Create a storage account to apply what you learned
+## Create a storage account to apply what you've learned
 
 The remainder of this tutorial step demonstrates quoting rules in Azure CLI commands, and uses the resource group created in [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md). Substitute `<msdocs-tutorial-rg-00000000>` with the name of your resource group.
 
@@ -461,7 +461,7 @@ az storage account list --resource-group msdocs-tutorial-rg-55276056 ^
 
 ---
 
-## Debug an Azure CLI reference command
+## Debug Azure CLI reference commands
 
 ### Use `--debug` parameter
 

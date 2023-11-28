@@ -34,7 +34,7 @@ az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
 > [!TIP]
 > The `--yes` parameter of the [az group delete](/cli/azure/group#az-group-delete) command will by-pass the console confirmation prompt.
 
-## Delete multiple storage accounts using for-each
+## Delete multiple Azure resources using a script
 
 When you're working with a large number of resources and you don't want to delete all the objects within a group, consider using a script. This example gets a list of all the Azure storage accounts created in this tutorial and deletes them in a for-each loop.
 
