@@ -105,13 +105,13 @@ az storage account create --name $storageAccount \
 
 ```azurecli-interactive
 # Variable block
-let "randomIdentifier=$RANDOM*$RANDOM"
-$location=eastus
+$randomIdentifier = (New-Guid).ToString().Substring(0,8)
+$location="eastus"
 $resourceGroup="<msdocs-tutorial-rg-00000000>"
 $storageAccount="msdocssa$randomIdentifier"
 
 # Create a storage account.
-echo "Creating storage account $storageAccount in resource group $resourceGroup""
+echo "Creating storage account $storageAccount in resource group $resourceGroup"
 az storage account create --name $storageAccount `
                           --resource-group $resourceGroup `
                           --location $location `
@@ -188,12 +188,12 @@ The `--tags` parameter accepts a space-separated list of key:value pairs. Substi
 # [Bash](#tab/Bash)
 
 ```azurecli-interactive
-# Create new tags. This syntax works with or without quotes in the tags parameter.
+# Create new tags. This syntax works with or without quotes around each key-value pair.
 az storage account update --name <msdocssa00000000> \
                           --resource-group <msdocs-tutorial-rg-00000000> \
                           --tags Team=t1 Environment=e1
 
-# Create new tags containing spaces.
+# Create new tags containing spaces. You must use quotes.
 az storage account update --name <msdocssa00000000> \
                           --resource-group <msdocs-tutorial-rg-00000000> \
                           --tags "Floor number=f1" "Cost center=cc1"
@@ -239,13 +239,13 @@ az tag list --resource-id $saID
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
-# Create new tags. This syntax works with or without quotes in the tags parameter.
+# Create new tags. This syntax works with or without quotes around each key-value pair.
 az storage account update --name <msdocssa00000000> `
                           --resource-group <msdocs-tutorial-rg-00000000> `
                           --tags Team=t1 Environment=e1
 
 
-# Create new tags containing spaces.
+# Create new tags containing spaces. You must use quotes.
 az storage account update --name <msdocssa00000000> `
                           --resource-group <msdocs-tutorial-rg-00000000> `
                           --tags "Floor number=f1" "Cost center=cc1"
@@ -293,12 +293,12 @@ az tag list --resource-id $saID
 # [Cmd](#tab/cmd)
 
 ```azurecli-interactive
-:: Create new tags.
+:: Create new tags. This syntax works with or without quotes around each key-value pair.
 az storage account update --name <msdocssa00000000> ^
                           --resource-group <msdocs-tutorial-rg-00000000> ^
                           --tags Team=t1 Environment=e1
 
-:: Create new tags containing spaces.
+:: Create new tags containing spaces. You must use quotes.
 az storage account update --name <msdocssa00000000> ^
                           --resource-group <msdocs-tutorial-rg-00000000> ^
                           --tags "Floor number=f1" "Cost center=cc1"
