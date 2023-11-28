@@ -35,7 +35,6 @@ In this tutorial, you learn how to construct a REST API response using different
 > * Sending an Azure REST API request with Azure CLI
 > * Reviewing the Azure REST API response message 
 
-
 ## Prerequisites 
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
