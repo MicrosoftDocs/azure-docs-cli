@@ -33,9 +33,20 @@ The Azure CLI can be installed locally on Linux, macOS, or Windows computers. Az
 
 ## What shell environment should I use?
 
-Windows PowerShell, PowerShell, Cmd, and Bash are shell environments. Your shell environment not only determines which tools you can use, but your shell also changes your command-line experience. For example, there are important quoting differences, line continuation characters, and variable syntax differences between shells.
+Windows PowerShell, PowerShell, Cmd, and Bash are different shell environments. Your shell environment not only determines which tools you can use, but your shell also changes your command-line experience. For example, there are important quoting differences, line continuation characters, and variable syntax differences between shells.
 
-The Azure CLI reference examples in this tutorial are written for Bash, PowerShell and Cmd to help you evaluate each shell experience.
+The Azure CLI reference examples in this tutorial are written for Bash, PowerShell and Cmd to help you evaluate each shell experience. Here is a brief comparison:
+
+|Shell environment | Use Azure CLI? | Use Azure PowerShell?|
+|-|-|-|
+| CMD | Yes ||
+| Bash | Yes ||
+| Windows PowerShell | Yes | Yes |
+| PowerShell | Yes | Yes |
+
+Azure Cloud Shell is a hosted shell environment that runs on an Ubuntu container.
+
+Cloud Shell provides two shell environments: Bash (with Azure CLI preinstalled) and PowerShell (with Azure PowerShell preinstalled). A dropdown list at the top of the Cloud Shell window allows you to easily switch between the two environments.
 
 ## How does the Azure CLI compare to Azure PowerShell?
 
@@ -64,9 +75,9 @@ The Azure CLI syntax has four parts. For example, this is how [az storage accoun
 | Term | Example |
 |-|-|
 | Reference `group` | az `storage`
-| Space-delimited reference `subgroups` | `account` `local-user`
+| Space-delimited reference `subgroups` | az storage `account` `local-user`
 | Reference `command` | az storage account local-user `create`
-| Reference command `parameters` | `name`, `--account-name`, `--resource-group`
+| Reference command `parameters` | az storage account local-user create `name`, `--account-name`, `--resource-group`
 
 ## Get more details
 

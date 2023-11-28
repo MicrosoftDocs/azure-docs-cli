@@ -77,7 +77,7 @@ A resource group is a container for Azure resources. To create a resource group,
    az group create --location <myLocation> --name <myUniqueRGname>
    ```
 
-### Use a random ID to create a resource group
+### Create a resource group containing a random ID
 
 When testing, it's best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure.
 
@@ -131,7 +131,7 @@ The Azure CLI offers several options to allow you to reuse common parameter valu
 
 1. Set multiple environment variables at once.
 
-  Many Azure CLI parameters take multiple values separated by a space. Configuration values are one such instance. This example sets both the `.location` and `.group` defaults that are used by the `--location` and `--resource-group` parameters of every Azure CLI command.
+  Many Azure CLI parameters take multiple values separated by a space. Configuration values are one such instance. The next example sets both the `.location` and `.group` defaults that are used by the `--location` and `--resource-group` parameters of every Azure CLI command.
 
    ```azurecli-interactive
    az config set defaults.location=westus2 defaults.group=<msdocs-tutorial-rg-0000000>

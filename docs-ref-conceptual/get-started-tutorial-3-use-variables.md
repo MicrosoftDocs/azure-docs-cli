@@ -108,6 +108,8 @@ Combine what you learned about quoting with what you just learned about `--query
 
 # [Bash](#tab/bash)
 
+In Bash, you cannot have a space before or after the `=` sign. You can opt to use quotes around the variable value, so `msdocs-tutorial-rg-00000000` and `"msdocs-tutorial-rg-00000000"` are both correct.
+
 ```azurecli-interactive
 rgName=<msdocs-tutorial-rg-00000000>
 
@@ -129,6 +131,8 @@ az storage account list --resource-group $rgName \
 ```
 
 # [PowerShell](#tab/powershell)
+
+PowerShell allows you to create variables with or without spaces surrounding the `=` sign, so `rgName="msdocs-tutorial-rg-00000000"` and `rgName = "msdocs-tutorial-rg-00000000"` are both correct. However, in PowerShell, you must use quotes around the variable value.
 
 ```azurecli-interactive
 rgName="<msdocs-tutorial-rg-00000000>"
@@ -176,6 +180,8 @@ az config set core.output=none
 myNewKeyVaultID=$(az keyvault create --name $kvName --resource-group $rgName --location $location --query id --output tsv)
 echo "My new Azure Kev Vault ID is $myNewKeyVaultID"
 
+# Wait about 1 minute for your Key Vault creation to complete.
+
 # Create a new secret returning the secret ID
 kvSecretName=<myKVSecretName>
 kvSecretValue=<myKVSecretValue>
@@ -201,6 +207,8 @@ az config set core.output=none
 # Create a new Azure Key Vault returning the Key Vault ID
 $myNewKeyVaultID=$(az keyvault create --name $kvName --resource-group $rgName --location $location --query id --output tsv)
 echo "My new Azure Kev Vault ID is $myNewKeyVaultID"
+
+# Wait about 1 minute for your Key Vault creation to complete.
 
 # Create a new secret returning the secret ID
 $kvSecretName="<myKVSecretName>"
@@ -251,7 +259,7 @@ Store the contents of your json file in a variable for further use in your Azure
 
 # [Bash](#tab/bash)
 
-This Bash script was tested in [Azure Cloud Shell](/azure/cloud-shell/overview) and depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command.
+This Bash script was tested in [Azure Cloud Shell](/azure/cloud-shell/overview) and **depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command.**
 
 ```azurecli-interactive
 # Show the contents of a file in the console
@@ -267,9 +275,11 @@ devKV=$(jq -r '.environments.dev[] | select(.status=="active") | ."kv-secretName
 echo $devKV
 ```
 
+Did you just receive a "jq command not found" error? This is because this script depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command. [Install jq](https://jqlang.github.io/jq/download/) in your environment, or run this script in Azure Cloud Shell.
+
 # [PowerShell](#tab/powershell)
 
-This PowerShell script was tested in [Windows PowerShell](/powershell/scripting/developer/windows-powershell) and [PowerShell 7](/powershell/scripting/overview). 
+This PowerShell script was tested in [Windows PowerShell](/powershell/scripting/developer/windows-powershell) and [PowerShell 7](/powershell/scripting/overview).
 
 ```powershell
 # Show the contents of a file in the console
@@ -293,11 +303,12 @@ You now have an environment-specific Azure Key Vault secret name stored in a var
 
 ## Variable usage comparison
 
-Did you notice how variable syntax is sometimes different between environments? Here's a comparison table for future reference:
+Did you notice how variable syntax is different between environments? Here's a comparison table for future reference:
 
 |Use case|Azure CLI|PowerShell|Cmd
 |-|-|-|-|
-|Create variable |variableName=|$variableName=| set variableName=
+|Create variable (no blank spaces) | variableName=varValue | $variableName="varValue" | set variableName=varValue
+|Create variable (with spaces) | | $variableName = "varValue" | set variableName = varValue
 |Use variable as parameter value |variableName|$variableName|%variableName%
 |Use variable in `--query` parameter|'$variableName'|'$variableName'|'$variableName'
 
