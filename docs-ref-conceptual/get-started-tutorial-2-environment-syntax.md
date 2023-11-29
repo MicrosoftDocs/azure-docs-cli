@@ -318,8 +318,8 @@ If you need to modify an Azure resource using a variable, we suggest using Bash.
 
 Take a deeper look at these script differences. These examples demonstrate quoting differences for the following:
 
-* Complex string parameters
-* `--query` filtering
+* Pass a JSON string as a parameter value
+* Filter results with the `--query` parameter
   * Numbers
   * Boolean values
   * Dates

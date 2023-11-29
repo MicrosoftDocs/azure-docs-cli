@@ -79,7 +79,7 @@ A resource group is a container for Azure resources. To create a resource group,
 
 ### Create a resource group containing a random ID
 
-When testing, it's best to create a resource group that contains a random ID. Using a random ID allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure.
+When testing, it's best to create a resource group that contains a random ID in the name. Adding a random ID to your resource group name allows you to retest your code without having to wait for a prior resource group of the same name to be removed from Azure.
 
 Bash and PowerShell variable syntax is different. Copy the correct script for your environment.
 

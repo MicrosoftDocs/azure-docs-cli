@@ -133,5 +133,6 @@ az feedback
 ## See also
 
 * [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
+* [Tutorial: Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md)
 * [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
 * [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
