@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/14/2023
+ms.date: 12/05/2023
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,78 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## December 05, 2023
+
+Version 2.55.0
+
+### ACR
+
+* `az acr login`: Allow registry names with hyphen
+* Fix #27487: `az acr check-health`: Fix DOCKER_PULL_ERROR when acr check-health for Mac OS
+
+### AKS
+
+* `az aks update`: Update outbound ip description and remove limitation
+* `az aks create`: Add arguments `--asg-ids` and `--allowed-host-ports`
+* `az aks nodepool add/update`: Add arguments `--asg-ids` and `--allowed-host-ports`
+
+### App Service
+
+* Fix #27189: `az webapp log tail`: Catch exception when scm connection is lost
+
+### Billing
+
+* `az billing period list`: Fix `--top` does not work as expected
+* `az billing invoice download`: Fix command does not work
+* `az billing invoice list`: Fix `--period-end-date` and `--period-start-date` help message error
+
+### Compute
+
+* `az disk create`: Add new parameter `--optimized-for-frequent-attach` to improve reliability and performance of data disks that are frequently attached
+* `az disk/snapshot create`: Add new parameter `--elastic-san-resource-id` to support creating through the ARM id of elastic san volume snapshot
+
+### Containerapp
+
+* `az containerapp ingress cors enable`: Only update arguments `--allow-headers`, `--allow-credentials`, `--allow-methods`, `--expose-methods`, `--max-age` when the value is not `None`
+* `az containerapp`: Change the container-app name and container-app job name in the example to legal names
+
+### Key Vault
+
+* `az keyvault backup start`: Add `status` in output
+
+### Monitor
+
+* `az monitor activity-log alert`: Upgrade api-version to `2020-10-01` to include `any-of` query condition
+* `az monitor activity-log alert`: Expose parameter `all-of` to enable user modifying query condition specifically
+
+### Network
+
+* `az network private-endpoint-connection`: Add provider `Microsoft.DBforPostgreSQL/flexibleServers`
+* `az network public-ip prefix`: Add parameter `--tier`
+
+### RDBMS
+
+* `az postgres flexible-server replica create`: Add support for parameters like `--tier`, `--sku-name`, `--storage-size` during replica creation
+* `az postgres flexible-server update`: Add support for custom IOPS update for flexible server using `--performance-tier`
+* `az postgres flexible-server advanced-threat-protection-setting show`: Show advanced threat protection setting
+* `az postgres flexible-server advanced-threat-protection-setting update`: Update advanced threat protection setting using `--state` as Enabled/Disabled
+
+### Service Connector
+
+* `az containerapp connection create`: Enable Key Vault Reference in Container Apps
+
+### SQL
+
+* `az instance-pool create/update`: Add optional parameter `--maintenance-configuration-id` for SQL Instance Pool resource
+* `az mi create/update`: Add optional parameter `--instance-pool-name` for SQL Managed Server resource
+
+### Storage
+
+* `az storage blob upload`: Increase `max_block_size` for append/block blobs of size >= 8mb to 8mb instead of 4mb
+* `az storage blob upload`: Change default `max_connections` for append blob to 1
+* `az storage file upload/upload-batch`: Fix `--allow-trailing-dot` breaking `--connection-string` usage
+* Fix #27899: `az storage account create`: Run `check_name_availability()` first and throw a warning when an existing account with the name is found
 
 ## November 14, 2023
 
