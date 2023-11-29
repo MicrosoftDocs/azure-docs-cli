@@ -45,7 +45,7 @@ az account show --output table
 # Get access token for the active subscription.
 az account get-access-token
 
-
+```
 Console output:
 
 ```output
