@@ -35,7 +35,6 @@ When you sign in with a user account, Azure CLI generates and stores an authenti
 Use [az account get-access-token](/cli/azure/account#az-account-get-access-token) to retrieve the access token: 
 
 ```azurecli
-az account show --output table
 
 # get access token for the active subscription
 az account get-access-token
