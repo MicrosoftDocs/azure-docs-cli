@@ -63,7 +63,7 @@ Output Console:
 }
 ```
 
-To learn more in-depth about the changes presented in this access token output example, see [Manage Azure Subscriptions for Azure CLI](./manage-azure-subscriptions-azure-cli.md#access-tokens). 
+To learn more about the access tokens, see [Sign in with Azure CLI](./authenticate-azure-cli#refresh-tokens). 
 
 ### Using `AzureCliCredential`
 
