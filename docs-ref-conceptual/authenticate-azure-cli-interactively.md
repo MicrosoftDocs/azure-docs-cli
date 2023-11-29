@@ -45,6 +45,29 @@ az login --user <username> --password <password>
 > az login -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password
 > ```
 
+## Refresh tokens
+
+When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. When a access token is granted, it is only valid for a short amount of time. Therefore, a refresh token is also generated at the same time, so that the client application can exchange this refresh token for a new access token when needed. to learn more about refresh tokens, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens). 
+
+Use [az account get-access-token](/cli/azure/account#az-account-get-access-token) to retrieve the access token: 
+
+```azurecli
+az account show --output table
+
+# get access token for the active subscription
+az account get-access-token
+
+# get access token for a specific subscription
+az account get-access-token --subscription "<subscription ID or name>"
+
+
+az account get-access-token --scope "myScope" --subscription "mySubscriptionName" --name "resourceGroupName"
+
+```
+
+Starting from Azure CLI 2.54.0, `az account get-access-token` returns the `expires_on` property alongside the `expiresOn` property for the token expiration time. `expires_on` represents a Portable Operating System Interface (POSIX) timestamp and `expiresOn` represents a local datetime. We recommend for downstream applications to use the `expires_on` property, because it uses the Universal Time Code (UTC). However, it should be noted that `expiresOn` cannot express "fold" when Daylight Saving Time ends. This can cause problems in countries or regions where Daylight Saving Time is adopted. For more information on "fold", see [PEP 495 – Local Time Disambiguation](https://peps.python.org/pep-0495/).
+
+
 ## Sign in with a different tenant
 
 You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive and command-line sign-in methods work with `--tenant`.
