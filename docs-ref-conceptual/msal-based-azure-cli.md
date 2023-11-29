@@ -39,6 +39,7 @@ You can manually call [`az account get-access-token`](/cli/azure/account#az_acco
 Starting from Azure CLI 2.54.0, `az account get-access-token` returns an additional property which makes it supported by MSAL-based Azure CLI. See the following for an example of the access token output of the changes:
 
 ```azurecli-interactive
+
 # Verify the active subscription.
 az account show --output table
 
