@@ -54,7 +54,7 @@ See script comparisons between Bash, PowerShell, and Cmd in [How to query Azure 
 
 ## Learning Azure CLI
 
-The [Learn to use the Azure CLI tutorial](./get-started-tutorial-0-before-you-begin.md) walks you through many common Azure CLI tasks with examples in Bash, PowerShell and Cmd. Here are some of the topics covered:
+The [Learn to use the Azure CLI tutorial](./get-started-tutorial-0-before-you-begin.md) walks you through many common Azure CLI tasks with examples in Bash, PowerShell and Cmd. Here are some of the skills covered while working with Azure Storage:
 
 - [Decide what environment I should use](./get-started-tutorial-0-before-you-begin.md#what-shell-environment-should-i-use)
 - [Find and change my default subscription](./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription)

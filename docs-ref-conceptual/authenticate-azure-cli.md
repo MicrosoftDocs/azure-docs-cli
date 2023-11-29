@@ -44,4 +44,4 @@ When you sign in with a user account, Azure CLI generates and stores an authenti
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
 * [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
-* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+* Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)

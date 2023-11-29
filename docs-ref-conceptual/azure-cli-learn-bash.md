@@ -432,4 +432,4 @@ fi
 - [Tutorial: Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md)
 - [How to use the Azure CLI successfully](use-cli-effectively.md)
 - [How to query Azure CLI command output](query-azure-cli.md)
-- [Find Azure CLI articles by reference group](./reference-docs-index.md)
+- Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)
