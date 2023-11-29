@@ -72,7 +72,7 @@ Console output:
 }
 ```
 
-To learn more about the access tokens, see [Sign in with Azure CLI](./authenticate-azure-cli#refresh-tokens). 
+To learn more about the access tokens, see [Sign in with Azure CLI](./authenticate-azure-cli-interactively.md#refresh-tokens).
 
 ### Using `AzureCliCredential`
 
