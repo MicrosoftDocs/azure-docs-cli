@@ -32,7 +32,7 @@ An Azure _resource group_ is a container that holds related resources for an Azu
 
 When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. When a access token is granted, it is only valid for a short amount of time. Therefore, a refresh token is also generated at the same time, so that the client application can exchange this refresh token for a new access token when needed. to learn more about refresh tokens, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens). 
 
-Use [az account get-access-token](/cli/azure/account?view=azure-cli-latest#az-account-get-access-token) to retrieve the access token: 
+Use [az account get-access-token](/cli/azure/account#az-account-get-access-token) to retrieve the access token: 
 
 ```azurecli
 # get the active subscription
