@@ -44,7 +44,6 @@ az account get-access-token
 # get access token for a specific subscription
 az account get-access-token --subscription "<subscription ID or name>"
 
-# an example of getting the access token with a specific subscription ID
 az account get-access-token --subscription "00000000-0000-0000-0000-00000000000"
 
 # an example of getting the access token with a specific scope, subscription, and resource group
