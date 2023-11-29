@@ -326,7 +326,7 @@ Take a deeper look at these script differences. These examples demonstrate quoti
 
 # [Bash](#tab/Bash)
 
-Example of using double quotes within a complex parameter value. This example is given for future reference.
+Example of a parameter containing a JSON string. This script is given for future reference as we are not working with `az rest` in this tutorial.
 
 ```azurecli
 az rest --method patch \
@@ -336,7 +336,7 @@ az rest --method patch \
         --body '{"properties": {"agentUpgrade": {"enableAutomaticUpgrade": false}}}'
 ```
 
-Example of filtering a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
+Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> \
@@ -344,14 +344,14 @@ az vm list --resource-group <myResourceGroup> \
            --output table
 ```
 
-Example of filtering a boolean value.
+Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
 az storage account list --resource-group <myResourceGroup> \
     --query "[?allowBlobPublicAccess == \`true\`].id"
 ```
 
-Examples of filtering a date.
+Examples of filtering a date using the storage account created in this tutorial.
 
 ```azurecli-interactive
 # include time
@@ -370,7 +370,7 @@ az storage account list --resource-group msdocs-tutorial-rg-00000000 \
 
 # [PowerShell](#tab/powershell)
 
-Example of using double quotes within a complex parameter value. This example is given for future reference.
+Example of a parameter containing a JSON string. This script is given for future reference as we are not working with `az rest` in this tutorial.
 
 ```azurecli
 az rest --method patch `
@@ -380,7 +380,7 @@ az rest --method patch `
         --body '{\"properties\": {\"agentUpgrade\": {\"enableAutomaticUpgrade\": false}}}'
 ```
 
-Example of filtering a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
+Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> `
@@ -388,14 +388,14 @@ az vm list --resource-group <myResourceGroup> `
            --output table
 ```
 
-Example of filtering a boolean value.
+Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
 az storage account list --resource-group <myResourceGroup> `
                        --query "[?allowBlobPublicAccess == ``true``].id"
 ```
 
-Examples of filtering a date.
+Examples of filtering a date using the storage account created in this tutorial.
 
 ```azurecli-interactive
 # include time
@@ -414,7 +414,7 @@ az storage account list --resource-group msdocs-tutorial-rg-00000000 `
 
 # [Cmd](#tab/cmd)
 
-Example of filtering a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
+Example of filtering for a numeric value. Unless you have a VM in your current subscription, this example is given for future reference.
 
 ```azurecli
 az vm list --resource-group <myResourceGroup> `
@@ -422,14 +422,14 @@ az vm list --resource-group <myResourceGroup> `
            --output table
 ```
 
-Example of filtering a boolean value.
+Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
 az storage account list --resource-group msdocs-tutorial-rg-00000000 ^
     --query "[?allowBlobPublicAccess == `true`].id"
 ```
 
-Examples of filtering a date.
+Examples of filtering a date using the storage account created in this tutorial.
 
 ```azurecli-interactive
 # include time
