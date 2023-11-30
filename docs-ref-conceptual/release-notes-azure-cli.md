@@ -123,6 +123,10 @@ Version 2.54.0
 * `az containerapp compose create`: Fix containerapp invalid memory resource
 * `az containerapp job create`: Fix problem of parsing parameters `minExecutions` and `maxExecutions` from `--yaml`
 
+### Core
+
+* [PREVIEW] Support disabling instance discovery by running `az config set core.instance_discovery=false`
+
 ### Cosmos DB
 
 * `az cosmosdb create/update`: Add support for minimum allowed TLS version and burst capacity configuration
