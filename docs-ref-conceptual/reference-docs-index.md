@@ -4,7 +4,7 @@ description: Find links to Azure CLI articles demonstrating the use of reference
 author: dbradish-microsoft
 manager: jasongroce
 ms.author: dbradish
-ms.date: 08/02/2023
+ms.date: 11/27/2023
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.topic: reference

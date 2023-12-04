@@ -4,7 +4,7 @@ description: Find links to Azure CLI samples.  Search by Azure service, command 
 author: dbradish-microsoft
 manager: jasongroce
 ms.author: dbradish
-ms.date: 08/10/2023
+ms.date: 11/27/2023
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.topic: sample 
