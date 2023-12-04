@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/05/2023
+ms.date: 11/27/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -3791,7 +3791,6 @@ ms.custom: devx-track-azurecli
 |  | [Managed identity for storage](/azure/azure-cache-for-redis/cache-managed-identity)
 |  | [How to upgrade an existing Redis 4 cache to Redis 6](/azure/azure-cache-for-redis/cache-how-to-upgrade)
 |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache)
-|  | [Set Redis version for Azure Cache for Redis](/azure/azure-cache-for-redis/cache-how-to-version)
 |  | [Tutorial: Connect services in Azure Container Apps (preview)](/azure/container-apps/connect-services)
 |  | [Getting started with databases on Azure](/azure/developer/javascript/database-developer-guide)
 |  | [Quickstart: Load application secrets using Key Vault](/azure/spring-apps/quickstart-key-vault-enterprise)
