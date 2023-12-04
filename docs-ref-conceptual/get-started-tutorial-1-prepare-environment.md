@@ -4,7 +4,7 @@ description: Learn Azure CLI installation, sign in, setting environment variable
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/15/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -51,6 +51,26 @@ az account set --subscription <mySubscriptionName>
 
 # you can also set your subscription using a subscription ID
 az account set --subscription <00000000-0000-0000-0000-000000000000>
+```
+
+Console output for `az account show` command:
+
+```output
+{
+  "environmentName": "AzureCloud",
+  "homeTenantId": "00000000-0000-0000-0000-000000000000",
+  "id": "00000000-0000-0000-0000-000000000000",
+  "isDefault": true,
+  "managedByTenants": [],
+  "name": "Your storage account name",
+  "state": "Enabled",
+  "tenantId": "00000000-0000-0000-0000-000000000000",
+  "user": {
+    "name": "yourName@contoso.com",
+    "type": "user"
+  }
+}
+
 ```
 
 ## Learn about resource groups

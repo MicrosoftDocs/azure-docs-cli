@@ -4,7 +4,7 @@ description: Learn the environments you can use to execute Azure CLI commands, A
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/15/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli

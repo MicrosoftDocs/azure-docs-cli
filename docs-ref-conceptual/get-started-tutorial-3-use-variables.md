@@ -4,7 +4,7 @@ description: Learn how to use variables to store JSON file properties and query 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/15/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -263,7 +263,7 @@ Store the contents of your JSON file in a variable for further use in your Azure
 
 This Bash script was tested in [Azure Cloud Shell](/azure/cloud-shell/overview) and **depends on the Bash [jq](https://jqlang.github.io/jq/manual/) which must be installed in your environment.**
 
-```azurecli-interactive
+```bash
 # Show the contents of a file in the console
 fileName=msdocs-tutorial.json
 cat $fileName | jq

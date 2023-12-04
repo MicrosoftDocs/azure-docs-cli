@@ -4,7 +4,7 @@ description: Quickly onboard with the Azure CLI. Get answers to common CLI quest
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/02/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 

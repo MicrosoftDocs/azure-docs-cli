@@ -4,7 +4,7 @@ description: Learn tips for using Azure CLI successfully, such as output formats
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/13/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli

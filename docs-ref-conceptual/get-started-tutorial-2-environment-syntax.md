@@ -4,7 +4,7 @@ description: Learn about quoting differences, line continuation and debugging in
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/15/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -75,7 +75,9 @@ If you aren't sure how your string will be evaluated by your environment, return
 
 The remainder of this tutorial step demonstrates quoting rules in Azure CLI commands, and uses the resource group created in [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md). Substitute `<msdocs-tutorial-rg-00000000>` with the name of your resource group.
 
-Create an Azure storage account to use in this tutorial. This next script example demonstrates environment-specific syntax for the following:
+Create an Azure storage account to use in this tutorial. This example assigns a random ID to the storage account name, but if you want to use a different name, see [Storage account overview](/azure/storage/common/storage-account-overview#storage-account-name) for storage account name rules.
+
+This next script example demonstrates environment-specific syntax for the following:
 
 * Line continuation
 * Variable usage

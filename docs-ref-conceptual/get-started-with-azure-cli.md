@@ -4,7 +4,7 @@ description: Learn how to start using the Azure CLI by completing common command
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/2/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
