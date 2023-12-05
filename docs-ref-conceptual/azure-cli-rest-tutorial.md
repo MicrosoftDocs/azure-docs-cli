@@ -55,12 +55,20 @@ az rest --url
 
 Use the "get" HTTP method to create a new app service plan. Here is an example of the syntax:
 
-```azurecli-interactive
+# [Bash](#tab/bash)
 
-az rest --method get --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewAppServiceName>?api-version=2022-03-01 --body "{\"location\": \"locationName\"}" 
+```azurecli-interactive
+# Bash script
+az rest --method get --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewAppServiceName>?api-version=2022-03-01 --body  '{"location": "locationName"}" 
 
 ```
+# [PowerShell](#tab/powershell)
 
+```azurecli-interactive
+# Bash script
+az rest --method get --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewAppServiceName>?api-version=2022-03-01 --body  '{\"location\": \"locationName\"} ' 
+
+```
 Here is an example with completed parameters:
 
 ```azurecli-interactive
