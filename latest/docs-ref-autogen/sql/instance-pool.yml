@@ -26,13 +26,14 @@ directCommands:
                                 --resource-group
                                 --subnet
                                 [--license-type {BasePrice, LicenseIncluded}]
+                                [--maint-config-id]
                                 [--no-wait]
                                 [--tags]
                                 [--vnet-name]
   examples:
   - summary: |-
       Example to create an instance pool (include --no-wait in the end to get an asynchronous experience)
-    syntax: az sql instance-pool create -g resource_group_name -n instance_pool_name -l location --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --license-type LicenseIncluded --capacity 8 -e GeneralPurpose -f Gen5 --no-wait
+    syntax: az sql instance-pool create -g resource_group_name -n instance_pool_name -l location --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --license-type LicenseIncluded --capacity 8 -e GeneralPurpose -f Gen5 -m SQL_{Region}_{MaintenanceConfigName} --no-wait
   - summary: |-
       Example to create an instance pool with subnet name and vnet-name
     syntax: az sql instance-pool create --license-type LicenseIncluded -l northcentralus -n myinstancepool -c 8 -e GeneralPurpose -f Gen5 -g billingPools --subnet mysubnetname --vnet-name myvnetname
@@ -70,6 +71,9 @@ directCommands:
     parameterValueGroup: "BasePrice, LicenseIncluded"
     summary: |-
       The license type to apply for this instance pool.
+  - name: --maint-config-id -m
+    summary: |-
+      Assign maintenance configuration to this managed instance.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -175,14 +179,20 @@ directCommands:
     az sql instance-pool update --name
                                 --resource-group
                                 [--add]
+                                [--capacity]
+                                [--edition]
+                                [--family]
                                 [--force-string]
+                                [--license-type {BasePrice, LicenseIncluded}]
+                                [--maint-config-id]
+                                [--no-wait]
                                 [--remove]
                                 [--set]
                                 [--tags]
   examples:
   - summary: |-
       Update an instance pool with new tags (make sure they are space separated if there are multiple tags)
-    syntax: az sql instance-pool update -n myinstancepool -g mygroup --tags mykey1=myvalue1 mykey2=myvalue2
+    syntax: az sql instance-pool update -n myinstancepool -g mygroup --tags mykey1=myvalue1 mykey2=myvalue2 --license-type LicenseIncluded --capacity 8 -e GeneralPurpose -f Gen5 -m SQL_{Region}_{MaintenanceConfigName}
   - summary: |-
       Clear the tags assigned to an instance pool
     syntax: az sql instance-pool update -n myinstancepool -g mygroup --tags ""
@@ -200,10 +210,30 @@ directCommands:
     defaultValue: "[]"
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --capacity -c
+    summary: |-
+      Capacity of the instance pool in vcores.
+  - name: --edition --tier -e
+    summary: |-
+      The edition component of the sku. Allowed values include: GeneralPurpose, BusinessCritical.
+  - name: --family -f
+    summary: |-
+      The compute generation component of the sku. Allowed values include: Gen4, Gen5.
   - name: --force-string
     defaultValue: "False"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --license-type
+    parameterValueGroup: "BasePrice, LicenseIncluded"
+    summary: |-
+      The license type to apply for this instance pool.
+  - name: --maint-config-id -m
+    summary: |-
+      Assign maintenance configuration to this managed instance.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --remove
     defaultValue: "[]"
     summary: |-
@@ -307,5 +337,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 10/18/2023
+  ms.date: 11/24/2023
   description: Manage instance pools.

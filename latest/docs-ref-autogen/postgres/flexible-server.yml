@@ -75,6 +75,7 @@ directCommands:
                                        [--location]
                                        [--name]
                                        [--password-auth {Disabled, Enabled}]
+                                       [--performance-tier]
                                        [--private-dns-zone]
                                        [--public-access]
                                        [--resource-group]
@@ -252,11 +253,12 @@ directCommands:
 
       az postgres flexible-server create -g testGroup -n testServer --location testLocation --geo-redundant-backup Enabled \
         --key $keyIdentifier --identity testIdentity --backup-key $geoKeyIdentifier --backup-identity geoIdentity
-
-
-      # create flexible server with storage auto-grow as Enabled. Accepted values Enabled / Disabled. Default value for storage auto-grow is "Disabled".
-
-      az postgres flexible-server create -g testGroup -n testServer --location testLocation --storage-auto-grow Enabled
+  - summary: |-
+      Create flexible server with custom storage performance tier. Accepted values "P4", "P6", "P10", "P15", "P20", "P30", \ "P40", "P50", "P60", "P70", "P80". Actual allowed values depend on the --storage-size selection for flexible server creation. \ Default value for storage performance tier depends on the --storage-size selected for flexible server creation.
+    syntax: az postgres flexible-server create -g testGroup -n testServer --location testLocation --performance-tier P15
+  - summary: |-
+      create flexible server with storage auto-grow as Enabled. Accepted values Enabled / Disabled. Default value for storage auto-grow is "Disabled".
+    syntax: az postgres flexible-server create -g testGroup -n testServer --location testLocation --storage-auto-grow Enabled
   optionalParameters:
   - name: --active-directory-auth
     defaultValue: "Disabled"
@@ -270,7 +272,7 @@ directCommands:
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
   - name: --admin-user -u
-    defaultValue: "violentpenguin1"
+    defaultValue: "liquidoatmeal8"
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
   - name: --backup-identity
@@ -313,6 +315,9 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Whether password authentication is enabled.
+  - name: --performance-tier
+    summary: |-
+      Performance tier of the server.
   - name: --private-dns-zone
     summary: |-
       This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
@@ -701,7 +706,7 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --restore-time
-    defaultValue: "2023-12-04T12:11:11+00:00"
+    defaultValue: "2023-12-05T03:32:54+00:00"
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
   - name: --subnet
@@ -986,6 +991,7 @@ directCommands:
                                        [--maintenance-window]
                                        [--name]
                                        [--password-auth {Disabled, Enabled}]
+                                       [--performance-tier]
                                        [--private-dns-zone]
                                        [--remove]
                                        [--resource-group]
@@ -1033,6 +1039,9 @@ directCommands:
   - summary: |-
       Update a flexible server's storage to enable / disable storage auto-grow.
     syntax: az postgres flexible-server update --resource-group testGroup --name testserver --storage-auto-grow Enabled
+  - summary: |-
+      Update a flexible server's storage to set custom storage performance tier.
+    syntax: az postgres flexible-server update --resource-group testGroup --name testserver --performance-tier P15
   optionalParameters:
   - name: --active-directory-auth
     parameterValueGroup: "Disabled, Enabled"
@@ -1081,6 +1090,9 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Whether password authentication is enabled.
+  - name: --performance-tier
+    summary: |-
+      Performance tier of the server.
   - name: --private-dns-zone
     summary: |-
       This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
@@ -1225,6 +1237,9 @@ commands:
 - az_postgres_flexible-server_ad-admin_list
 - az_postgres_flexible-server_ad-admin_show
 - az_postgres_flexible-server_ad-admin_wait
+- az_postgres_flexible-server_advanced-threat-protection-setting
+- az_postgres_flexible-server_advanced-threat-protection-setting_show
+- az_postgres_flexible-server_advanced-threat-protection-setting_update
 - az_postgres_flexible-server_backup
 - az_postgres_flexible-server_backup_list
 - az_postgres_flexible-server_backup_show

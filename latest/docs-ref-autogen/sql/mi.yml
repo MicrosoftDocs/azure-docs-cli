@@ -30,6 +30,7 @@ directCommands:
                      [--external-admin-sid]
                      [--family]
                      [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
+                     [--instance-pool-name]
                      [--key-id]
                      [--license-type {BasePrice, LicenseIncluded}]
                      [--location]
@@ -81,6 +82,9 @@ directCommands:
   - summary: |-
       Create managed instance with zone redundancy explicitly disabled
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} -z false
+  - summary: |-
+      Create managed instance with instance pool name
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --instance-pool-name myinstancepool
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -137,6 +141,9 @@ directCommands:
     parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
     summary: |-
       Type of Identity to be used. Possible values are SystemAsssigned,UserAssigned, SystemAssignedUserAssigned and None.
+  - name: --instance-pool-name
+    summary: |-
+      Name of the Instance Pool where managed instance will be placed.
   - name: --key-id -k
     summary: |-
       The key vault URI for encryption.
@@ -428,6 +435,7 @@ directCommands:
                      [--force-string]
                      [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
                      [--ids]
+                     [--instance-pool-name]
                      [--key-id]
                      [--license-type {BasePrice, LicenseIncluded}]
                      [--maint-config-id]
@@ -492,6 +500,12 @@ directCommands:
   - summary: |-
       Enable zone redundancy on a managed instance
     syntax: az sql mi update -g mygroup -n myinstance -z
+  - summary: |-
+      Move managed instance to instance pool
+    syntax: az sql mi update -g mygroup -n myinstance --instance-pool-name myinstancepool
+  - summary: |-
+      Move managed instance out of instance pool
+    syntax: az sql mi update -g mygroup -n myinstance --remove instancePoolId --capacity vcorecapacity
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -527,6 +541,9 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --instance-pool-name
+    summary: |-
+      Name of the Instance Pool where managed instance will be placed.
   - name: --key-id -k
     summary: |-
       The key vault URI for encryption.
@@ -688,5 +705,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 10/18/2023
+  ms.date: 11/24/2023
   description: Manage SQL managed instances.
