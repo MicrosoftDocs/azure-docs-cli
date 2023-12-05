@@ -4,7 +4,7 @@ description: Learn tips for using Azure CLI successfully, such as output formats
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/13/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -467,4 +467,4 @@ For more information about PowerShell error handling, see [Everything you wanted
 - [Learn to use Bash with Azure CLI](./azure-cli-learn-bash.md)
 - [Query Azure CLI command output](./query-azure-cli.md)
 - [Use variables in Azure CLI commands](./azure-cli-variables.md)
-- [Find Azure CLI samples](./samples-index.md)
+- Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)

@@ -7,7 +7,7 @@ ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: sample
 ms.custom: devx-track-azurecli
-ms.date: 08/1/2023
+ms.date: 12/04/2023
 ms.tool: azure-cli
 ---
 # Learn to use Bash with the Azure CLI
@@ -429,6 +429,7 @@ fi
 
 ## See also
 
+- [Tutorial: Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md)
 - [How to use the Azure CLI successfully](use-cli-effectively.md)
 - [How to query Azure CLI command output](query-azure-cli.md)
-- [Find Azure CLI samples](./samples-index.md)
+- Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)
