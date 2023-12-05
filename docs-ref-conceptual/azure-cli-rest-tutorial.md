@@ -36,6 +36,9 @@ In order to demonstrate how to use the Azure REST API with Azure CLI, you can wa
 
 To invoke a custom Azure REST API request with Azure CLI, you use the `az rest` command, followed by the `--url` parameter. The `--url` parameter defines the URL of the requested resource, and is the only required parameter, while the others listed are all optional. 
 
+> [!NOTE]
+> If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
+
 ```azurecli-interactive
 
 az rest --url
@@ -50,29 +53,38 @@ az rest --url
 
 ### Creating your custom request with Azure CLI 
 
-In this scenario, you will use the "get" HTTP method in order to create you app service plan. To construct the URL that the HTTP method will call from, you use:
-
-https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}?api-version=2022-03-01
-
-Your request should look like: 
+Use the "get" HTTP method to create a new app service plan. Here is an example of the syntax:
 
 ```azurecli-interactive
 
-# Syntax for creating your app service plan
-az rest --method get --url https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}?api-version=2022-03-01 --body "{\"location\": \"locationName\"}"
-
-# An example with susbscriptionID, resourceGroupName, the name of your app service plan, and the locationName included in your body.
-
-az rest --method put --url  https://management.azure.com/subscriptions/subscriptionId/resourceGroups/az-rest-example/providers/Microsoft.Web/serverfarms/tutorial-plan?api-version=2022-03-01 --body "{\"location\": \"eastus\"}"
+az rest --method get --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewAppServiceName>?api-version=2022-03-01 --body "{\"location\": \"locationName\"}" 
 
 ```
 
-```output console
+Here is an example with completed parameters:
+
+```azurecli-interactive
+
+# Variable block
+let "randomIdentifier=$RANDOM*$RANDOM"
+subscriptionId="00000000-0000-0000-0000-000000000000"
+location="East US"
+resourceGroup="msdocs-app-service-rg-$randomIdentifier"
+myNewAppServicePlanName="msdocs-app-service-plan-$randomIdentifier"
+
+# invoke request
+az rest --method put --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Web/serverfarms/$myNewAppServicePlanName?api-version=2022-03-01 --body "{\"location\": \"$location\"}"
+
+```
+
+Console Output:
+
+```output
 
 {
-  "id": "/subscriptions/subscriptionId/resourceGroups/az-rest-example/providers/Microsoft.Web/serverfarms/tutorial-plan",
+  "id": "/subscriptions/<subscriptionId>/resourceGroups/az-rest-example/providers/Microsoft.Web/serverfarms/<myNewServicePlanName>",
   "kind": "app",
-  "location": "eastus",
+  "location": "<location>",
   "name": "tutorial-plan",
   "properties": {
     "adminRuntimeSiteName": null,
@@ -105,7 +117,7 @@ az rest --method put --url  https://management.azure.com/subscriptions/subscript
     "planName": "VirtualDedicatedPlan",
     "provisioningState": "Succeeded",
     "reserved": false,
-    "resourceGroup": "az-rest-example",
+    "resourceGroup": "<resourceGroup>",
     "serverFarmId": 145850,
     "siteMode": null,
     "sku": {
@@ -117,14 +129,14 @@ az rest --method put --url  https://management.azure.com/subscriptions/subscript
     },
     "spotExpirationTime": null,
     "status": "Ready",
-    "subscription": "subscriptionID",
+    "subscription": "<subscriptionID>",
     "tags": null,
     "targetWorkerCount": 0,
     "targetWorkerSizeId": 0,
     "vnetConnectionsMax": 2,
     "vnetConnectionsUsed": 0,
     "webSiteId": null,
-    "webSpace": "az-rest-example-EastUSwebspace",
+    "webSpace": "<resourceGroup-location>webspace",
     "workerSize": "Default",
     "workerSizeId": 0,
     "workerTierName": null,
