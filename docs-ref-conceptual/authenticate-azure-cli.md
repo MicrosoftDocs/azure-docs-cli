@@ -4,7 +4,7 @@ description: Learn the different authentication types for your Azure CLI login â
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 09/22/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -44,4 +44,4 @@ When you sign in with a user account, Azure CLI generates and stores an authenti
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
 * [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
-* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+* Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)

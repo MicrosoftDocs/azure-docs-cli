@@ -244,6 +244,8 @@ directCommands:
                   [--node-public-ip-prefix-id]
                   [--node-resource-group]
                   [--node-vm-size]
+                  [--nodepool-allowed-host-ports]
+                  [--nodepool-asg-ids]
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
@@ -270,7 +272,7 @@ directCommands:
                   [--windows-admin-username]
                   [--workspace-resource-id]
                   [--yes]
-                  [--zones {1, 2, 3}]
+                  [--zones]
   examples:
   - summary: |-
       Create a Kubernetes cluster with an existing SSH public key.
@@ -698,7 +700,7 @@ directCommands:
     summary: |-
       Load balancer managed outbound IPv6 IP count.
     description: |-
-      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only.
   - name: --load-balancer-outbound-ip-prefixes
     summary: |-
       Load balancer outbound IP prefix resource IDs.
@@ -769,7 +771,7 @@ directCommands:
       The Kubernetes network policy to use.
     description: |-
       Using together with "azure" network plugin.
-      Specify "azure" for Azure network policy manager and "calico" for calico network policy controller.
+      Specify "azure" for Azure network policy manager, "calico" for calico network policy controller, "cilium" for Azure CNI powered by Cilium.
       Defaults to "" (network policy disabled).
   - name: --no-ssh-key -x
     defaultValue: "False"
@@ -794,7 +796,7 @@ directCommands:
       ResourceId of the disk encryption set to use for enabling encryption at rest on agent node os disk.
   - name: --node-osdisk-size
     summary: |-
-      Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
+      Size in GiB of the OS disk for each node in the node pool. Minimum 30 GiB.
   - name: --node-osdisk-type
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
@@ -808,6 +810,12 @@ directCommands:
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes.
+  - name: --nodepool-allowed-host-ports
+    summary: |-
+      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
+  - name: --nodepool-asg-ids
+    summary: |-
+      The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a space-separated list of IDs.
   - name: --nodepool-labels
     summary: |-
       The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
@@ -928,7 +936,6 @@ directCommands:
     summary: |-
       Do not prompt for confirmation.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Availability zones where agent nodes will be placed. Also, to install agent nodes to more than one zones you need to pass zone numbers (1,2 or 3) separated by blanks.  For example -  To have all 3 zones, you are expected to enter `--zones 1 2 3`.
 - uid: az_aks_create(aks-preview)
@@ -1101,7 +1108,7 @@ directCommands:
                   [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                   [--workspace-resource-id]
                   [--yes]
-                  [--zones {1, 2, 3}]
+                  [--zones]
   examples:
   - summary: |-
       Create a Kubernetes cluster with an existing SSH public key.
@@ -1899,7 +1906,6 @@ directCommands:
     summary: |-
       Do not prompt for confirmation.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Space-separated list of availability zones where agent nodes will be placed.
 - uid: az_aks_delete
@@ -3020,7 +3026,7 @@ directCommands:
   name: az aks stop
   extensionSuffix: aks-preview
   summary: |-
-    Stops a Managed Cluster.
+    Stop a managed cluster.
   description: |-
     This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See `stopping a cluster <https://docs.microsoft.com/azure/aks/start-stop-cluster>`_ for more details about stopping a cluster.
   status: GA
@@ -3130,6 +3136,7 @@ directCommands:
                   [--nat-gateway-managed-outbound-ip-count]
                   [--network-dataplane {azure, cilium}]
                   [--network-plugin-mode]
+                  [--network-policy]
                   [--no-wait]
                   [--node-os-upgrade-channel]
                   [--nodepool-labels]
@@ -3497,22 +3504,22 @@ directCommands:
     summary: |-
       Load balancer managed outbound IP count.
     description: |-
-      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs. If the new value is greater than the original value, new additional outbound IPs will be created. If the value is less than the original value, existing outbound IPs will be deleted and outbound connections may fail due to configuration update.
+      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If the new value is greater than the original value, new additional outbound IPs will be created. If the value is less than the original value, existing outbound IPs will be deleted and outbound connections may fail due to configuration update.
   - name: --load-balancer-managed-outbound-ipv6-count
     summary: |-
       Load balancer managed outbound IPv6 IP count.
     description: |-
-      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only.
   - name: --load-balancer-outbound-ip-prefixes
     summary: |-
       Load balancer outbound IP prefix resource IDs.
     description: |-
-      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count and Load balancer outbound IP resource IDs.
+      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ips
     summary: |-
       Load balancer outbound IP resource IDs.
     description: |-
-      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ports
     summary: |-
       Load balancer outbound allocated ports.
@@ -3544,6 +3551,12 @@ directCommands:
   - name: --network-plugin-mode
     summary: |-
       Update the mode of a network plugin to migrate to a different pod networking setup.
+  - name: --network-policy
+    summary: |-
+      Update the mode of a network policy.
+    description: |-
+      Specify "azure" for Azure network policy manager, "cilium" for Azure CNI powered by Cilium.
+      Defaults to "" (network policy disabled).
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -4229,22 +4242,22 @@ directCommands:
     summary: |-
       Load balancer managed outbound IP count.
     description: |-
-      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-managed-outbound-ipv6-count
     summary: |-
       Load balancer managed outbound IPv6 IP count.
     description: |-
-      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only.
   - name: --load-balancer-outbound-ip-prefixes
     summary: |-
       Load balancer outbound IP prefix resource IDs.
     description: |-
-      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ips
     summary: |-
       Load balancer outbound IP resource IDs.
     description: |-
-      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ports
     summary: |-
       Load balancer outbound allocated ports.

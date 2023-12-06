@@ -16,72 +16,76 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor activity-log alert create --name
+    az monitor activity-log alert create --activity-log-alert-name
                                          --resource-group
                                          [--action-group]
+                                         [--all-of]
                                          [--condition]
                                          [--description]
-                                         [--disable]
+                                         [--disable {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--scope]
                                          [--tags]
                                          [--webhook-properties]
   examples:
   - summary: |-
       Create an alert rule with default settings.
-    syntax: az monitor activity-log alert create -n {AlertName} -g {ResourceGroup}
+    syntax: az monitor activity-log alert create -n AlertName -g ResourceGroup
   - summary: |-
       Create an alert rule with condition about error level service health log.
-    syntax: >-
-      az monitor activity-log alert create -n {AlertName} -g {ResourceGroup} \
-        --condition category=ServiceHealth and level=Error
+    syntax: az monitor activity-log alert create -n AlertName -g ResourceGroup \ --condition category=ServiceHealth and level=Error
   - summary: |-
       Create an alert rule with an action group and specify webhook properties.
-    syntax: >-
-      az monitor activity-log alert create -n {AlertName} -g {ResourceGroup} \
-        -a /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/microsoft.insights/actionGroups/{ActionGroup} \
-        -w usage=test owner=jane
+    syntax: az monitor activity-log alert create -n AlertName -g ResourceGroup \ -a /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/microsoft.insights/acti onGroups/{ActionGroup} \ -w usage=test owner=jane
   - summary: |-
       Create an alert rule which is initially disabled.
-    syntax: az monitor activity-log alert create -n {AlertName} -g {ResourceGroup} --disable
+    syntax: az monitor activity-log alert create -n AlertName -g ResourceGroup --disable
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --activity-log-alert-name --name -n
     summary: |-
-      Name of the activity log alert rule.
+      The name of the activity log alert.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --action-group -a
-    defaultValue: "frozenset()"
     summary: |-
-      Add an action group. Accepts space-separated action group identifiers. The identifier can be the action group's name or its resource ID.
+      Add an action group. Accepts space-separated action group identifiers. The identifier can be the action group's name or its resource ID.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --all-of
+    summary: |-
+      The list of Activity Log Alert rule conditions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --condition -c
     summary: |-
-      The condition that will cause the alert rule to activate. The format is FIELD=VALUE[ and FIELD=VALUE...].
-    description: |-
-      The possible values for the field are 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties.'.
+      The condition that will cause the alert rule to activate. The format is FIELD=VALUE[ and FIELD=VALUE...]
+              The possible values for the field are 'resourceId', 'category', 'caller',
+              'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status',
+              'subStatus', 'resourceType', or anything beginning with 'properties'.
+                Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --description
     summary: |-
-      A description of this activity log alert rule.
+      A description of this Activity Log Alert rule.
   - name: --disable
     defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Disable the activity log alert rule after it is created.
   - name: --scope -s
     summary: |-
       A list of strings that will be used as prefixes.
-    description: |-
-      The alert rule will only apply to activity logs with resourceIDs that fall under one of these prefixes. If not provided, the path to the resource group will be used.
+              The alert rule will only apply to activity logs with resourceIDs that fall under one of
+              these prefixes. If not provided, the subscriptionId will be used.
+                Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      The tags of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --webhook-properties -w
     summary: |-
       Space-separated webhook properties in 'key[=value]' format. These properties are associated with the action groups added in this command.
-    description: |-
-      For any webhook receiver in these action group, this data is appended to the webhook payload. To attach different webhook properties to different action groups, add the action groups in separate update-action commands.
+              For any webhook receiver in these action group, this data is appended to the webhook
+              payload. To attach different webhook properties to different action groups, add the
+              action groups in separate update-action commands.
+                Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_monitor_activity-log_alert_delete
   name: az monitor activity-log alert delete
   summary: |-
@@ -90,17 +94,17 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor activity-log alert delete [--ids]
-                                         [--name]
+    az monitor activity-log alert delete [--activity-log-alert-name]
+                                         [--ids]
                                          [--resource-group]
                                          [--subscription]
   optionalParameters:
+  - name: --activity-log-alert-name --name -n
+    summary: |-
+      The name of the activity log alert.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
-    summary: |-
-      The name of the activity log alert. Required.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -118,7 +122,7 @@ directCommands:
   optionalParameters:
   - name: --resource-group -g
     summary: |-
-      Name of the resource group under which the activity log alert rules are being listed. If it is omitted, all the activity log alert rules under the current subscription are listed.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_monitor_activity-log_alert_show
   name: az monitor activity-log alert show
   summary: |-
@@ -127,17 +131,17 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor activity-log alert show [--ids]
-                                       [--name]
+    az monitor activity-log alert show [--activity-log-alert-name]
+                                       [--ids]
                                        [--resource-group]
                                        [--subscription]
   optionalParameters:
+  - name: --activity-log-alert-name --name -n
+    summary: |-
+      The name of the activity log alert.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
-    summary: |-
-      The name of the activity log alert. Required.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -147,18 +151,19 @@ directCommands:
 - uid: az_monitor_activity-log_alert_update
   name: az monitor activity-log alert update
   summary: |-
-    Update the details of this activity log alert rule.
+    Update a new activity log alert or update an existing one.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
   syntax: >-
-    az monitor activity-log alert update [--add]
+    az monitor activity-log alert update [--activity-log-alert-name]
+                                         [--add]
+                                         [--all-of]
                                          [--condition]
                                          [--description]
-                                         [--enabled {false, true}]
-                                         [--force-string]
+                                         [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--ids]
-                                         [--name]
                                          [--remove]
                                          [--resource-group]
                                          [--set]
@@ -167,52 +172,54 @@ directCommands:
   examples:
   - summary: |-
       Update the condition
-    syntax: >-
-      az monitor activity-log alert update -n {AlertName} -g {ResourceGroup} \
-        --condition category=ServiceHealth and level=Error
+    syntax: az monitor activity-log alert update -n AlertName -g ResourceGroup \ --condition category=ServiceHealth and level=Error
   - summary: |-
       Disable an alert rule.
-    syntax: az monitor activity-log alert update -n {AlertName} -g {ResourceGroup} --enable false
+    syntax: az monitor activity-log alert update -n AlertName -g ResourceGroup --enable false
   - summary: |-
-      Update the details of this activity log alert rule. (autogenerated)
-    syntax: az monitor activity-log alert update --enabled true --name MyActivityLogAlerts --resource-group MyResourceGroup --subscription MySubscription
+      Update the details of this activity log alert rule.
+    syntax: az monitor activity-log alert update --enabled true --name MyActivityLogAlerts --resource- group MyResourceGroup --subscription MySubscription
   - summary: |-
-      Update the details of this activity log alert. (autogenerated)
+      Update the details of this activity log alert.
     syntax: az monitor activity-log alert update --name MyActivityLogAlerts --resource-group MyResourceGroup --tags key=value
   optionalParameters:
+  - name: --activity-log-alert-name --name -n
+    summary: |-
+      The name of the activity log alert.
   - name: --add
-    defaultValue: "[]"
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --all-of
+    summary: |-
+      The list of Activity Log Alert rule conditions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --condition -c
     summary: |-
-      The conditional expression that will cause the alert rule to activate. The format is FIELD=VALUE[ and FIELD=VALUE...].
-    description: |-
-      The possible values for the field are 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties.'.
+      The condition that will cause the alert rule to activate. The format is FIELD=VALUE[ and FIELD=VALUE...]
+              The possible values for the field are 'resourceId', 'category', 'caller',
+              'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status',
+              'subStatus', 'resourceType', or anything beginning with 'properties'.
+                Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --description
     summary: |-
-      A description of this activity log alert rule.
+      A description of this Activity Log Alert rule.
   - name: --enabled
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
-    summary: |-
-      The name of the activity log alert. Required.
   - name: --remove
-    defaultValue: "[]"
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
-    defaultValue: "[]"
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
@@ -220,7 +227,7 @@ directCommands:
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      The tags of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 commands:
 - az_monitor_activity-log_alert_action-group
 - az_monitor_activity-log_alert_action-group_add
@@ -258,5 +265,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/19/2023
+  ms.date: 10/11/2023
   description: Manage activity log alert rules.
