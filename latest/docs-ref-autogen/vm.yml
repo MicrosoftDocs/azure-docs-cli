@@ -226,7 +226,6 @@ directCommands:
                  [--data-disk-delete-option]
                  [--data-disk-encryption-sets]
                  [--data-disk-sizes-gb]
-                 [--disable-integrity-monitoring]
                  [--disable-integrity-monitoring-autoupgrade]
                  [--disk-controller-type {NVMe, SCSI}]
                  [--edge-zone]
@@ -234,6 +233,7 @@ directCommands:
                  [--enable-auto-update {false, true}]
                  [--enable-hibernation {false, true}]
                  [--enable-hotpatching {false, true}]
+                 [--enable-integrity-monitoring]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
                  [--encryption-at-host {false, true}]
@@ -298,7 +298,7 @@ directCommands:
                  [--vnet-address-prefix]
                  [--vnet-name]
                  [--workspace]
-                 [--zone {1, 2, 3}]
+                 [--zone]
   examples:
   - summary: |-
       Create a default Ubuntu2204 VM with automatic SSH authentication.
@@ -448,10 +448,6 @@ directCommands:
   - name: --data-disk-sizes-gb
     summary: |-
       Space-separated empty managed data disk sizes in GB to create.
-  - name: --disable-integrity-monitoring
-    defaultValue: "False"
-    summary: |-
-      Disable the default behavior of installing guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
   - name: --disable-integrity-monitoring-autoupgrade
     defaultValue: "False"
     summary: |-
@@ -480,6 +476,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Patch VMs without requiring a reboot. --enable-agent must be set and --patch-mode must be set to AutomaticByPlatform.
+  - name: --enable-integrity-monitoring
+    defaultValue: "False"
+    summary: |-
+      Enable installing Microsoft propietary and not security supported guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -614,9 +614,10 @@ directCommands:
     summary: |-
       Globally unique DNS name for a newly created public IP.
   - name: --public-ip-sku
+    defaultValue: "Standard"
     parameterValueGroup: "Basic, Standard"
     summary: |-
-      Public IP SKU. It is set to Basic by default. The public IP is supported to be created on edge zone only when it is 'Standard'.
+      Public IP SKU. The public IP is supported to be created on edge zone only when it is 'Standard'.
   - name: --role
     summary: |-
       Role name or id the system assigned identity will have.
@@ -703,7 +704,6 @@ directCommands:
       Name or ID of Log Analytics Workspace. If you specify the workspace through its name, the workspace should be in the same resource group with the vm, otherwise a new workspace will be created.
     isPreview: true
   - name: --zone -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Availability zone into which to provision the resource.
 - uid: az_vm_deallocate

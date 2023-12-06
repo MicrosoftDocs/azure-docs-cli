@@ -30,7 +30,7 @@ vmName=TutorialVM1
 az vm create \
   --resource-group $resourceGroup \
   --name $vmName \
-  --image UbuntuLTS \
+  --image Ubuntu2204 \
   --vnet-name $vnetName \
   --subnet $subnetName \
   --generate-ssh-keys \

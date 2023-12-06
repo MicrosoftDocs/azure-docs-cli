@@ -25,7 +25,7 @@ directCommands:
   examples:
   - summary: |-
       open a containerapp in the browser
-    syntax: az containerapp browse -n MyContainerapp -g MyResourceGroup
+    syntax: az containerapp browse -n my-containerapp -g MyResourceGroup
   optionalParameters:
   - name: --ids
     summary: |-
@@ -50,12 +50,14 @@ directCommands:
                            --resource-group
                            [--allow-insecure {false, true}]
                            [--args]
+                           [--artifact]
                            [--bind]
                            [--branch]
                            [--command]
                            [--container-name]
                            [--context-path]
                            [--cpu]
+                           [--customized-keys]
                            [--dal]
                            [--dapr-app-id]
                            [--dapr-app-port]
@@ -105,7 +107,7 @@ directCommands:
   - summary: |-
       Create a container app and retrieve its fully qualified domain name.
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
           --image myregistry.azurecr.io/my-app:v1.0 --environment MyContainerappEnv \
           --ingress external --target-port 80 \
           --registry-server myregistry.azurecr.io --registry-username myregistry --registry-password $REGISTRY_PASSWORD \
@@ -113,21 +115,21 @@ directCommands:
   - summary: |-
       Create a container app with resource requirements and replica count limits.
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
           --image nginx --environment MyContainerappEnv \
           --cpu 0.5 --memory 1.0Gi \
           --min-replicas 4 --max-replicas 8
   - summary: |-
       Create a container app with secrets and environment variables.
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappEnv \
           --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
           --env-vars GREETING="Hello, world" SECRETENV=secretref:anothersecret
   - summary: |-
       Create a container app using a YAML configuration. Example YAML configuration - https://aka.ms/azure-container-apps-yaml
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
           --environment MyContainerappEnv \
           --yaml "path/to/yaml/file.yml"
   - summary: |-
@@ -139,7 +141,7 @@ directCommands:
   - summary: |-
       Create a container app with a custom scale rule
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
           --image my-queue-processor --environment MyContainerappEnv \
           --min-replicas 4 --max-replicas 8 \
           --scale-rule-name queue-based-autoscaling \
@@ -151,20 +153,20 @@ directCommands:
   - summary: |-
       Create a container app with secrets and mounts them in a volume.
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappEnv \
           --secrets mysecret=secretvalue1 anothersecret="secret value 2" \
           --secret-volume-mount "mnt/secrets"
   - summary: |-
       Create a container app hosted on a Connected Environment.
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
           --image my-app:v1.0 --environment MyContainerappConnectedEnv \
           --environment-type connected
   - summary: |-
       Create a container app from a new GitHub Actions workflow in the provided GitHub repository
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
 
       --environment MyContainerappEnv --registry-server MyRegistryServer \
 
@@ -174,7 +176,7 @@ directCommands:
   - summary: |-
       Create a Container App from the provided application source
     syntax: >-
-      az containerapp create -n MyContainerapp -g MyResourceGroup \
+      az containerapp create -n my-containerapp -g MyResourceGroup \
 
       --environment MyContainerappEnv --registry-server MyRegistryServer \
 
@@ -199,9 +201,14 @@ directCommands:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+  - name: --artifact
+    summary: |-
+      Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
+    isPreview: true
   - name: --bind
     summary: |-
       Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
+    isPreview: true
   - name: --branch -b
     summary: |-
       Branch in the provided GitHub repository. Assumed to be the GitHub repository's default branch if not specified.
@@ -219,6 +226,10 @@ directCommands:
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+    isPreview: true
   - name: --dal --dapr-enable-api-logging
     defaultValue: "False"
     summary: |-
@@ -430,13 +441,13 @@ directCommands:
   examples:
   - summary: |-
       exec into a container app
-    syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup
+    syntax: az containerapp exec -n my-containerapp -g MyResourceGroup
   - summary: |-
       exec into a particular container app replica and revision
-    syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup --replica MyReplica --revision MyRevision
+    syntax: az containerapp exec -n my-containerapp -g MyResourceGroup --replica MyReplica --revision MyRevision
   - summary: |-
       open a bash shell in a containerapp
-    syntax: az containerapp exec -n MyContainerapp -g MyResourceGroup --command bash
+    syntax: az containerapp exec -n my-containerapp -g MyResourceGroup --command bash
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -526,7 +537,7 @@ directCommands:
   examples:
   - summary: |-
       Show the details of a container app.
-    syntax: az containerapp show -n MyContainerapp -g MyResourceGroup
+    syntax: az containerapp show -n my-containerapp -g MyResourceGroup
   optionalParameters:
   - name: --ids
     summary: |-
@@ -568,9 +579,12 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az containerapp up --name
+                       [--artifact]
                        [--branch]
                        [--browse]
+                       [--connected-cluster-id]
                        [--context-path]
+                       [--custom-location]
                        [--env-vars]
                        [--environment]
                        [--image]
@@ -593,22 +607,32 @@ directCommands:
   examples:
   - summary: |-
       Create a container app from a dockerfile in a GitHub repo (setting up github actions)
-    syntax: az containerapp up -n MyContainerapp --repo https://github.com/myAccount/myRepo
+    syntax: az containerapp up -n my-containerapp --repo https://github.com/myAccount/myRepo
   - summary: |-
       Create a container app from a dockerfile in a local directory (or autogenerate a container if no dockerfile is found)
-    syntax: az containerapp up -n MyContainerapp --source .
+    syntax: az containerapp up -n my-containerapp --source .
   - summary: |-
       Create a container app from an image in a registry
-    syntax: az containerapp up -n MyContainerapp --image myregistry.azurecr.io/myImage:myTag
+    syntax: az containerapp up -n my-containerapp --image myregistry.azurecr.io/myImage:myTag
   - summary: |-
       Create a container app from an image in a registry with ingress enabled and a specified environment
-    syntax: az containerapp up -n MyContainerapp --image myregistry.azurecr.io/myImage:myTag --ingress external --target-port 80 --environment MyEnv
+    syntax: az containerapp up -n my-containerapp --image myregistry.azurecr.io/myImage:myTag --ingress external --target-port 80 --environment MyEnv
+  - summary: |-
+      Create a container app from an image in a registry on a Connected cluster
+    syntax: az containerapp up -n my-containerapp --image myregistry.azurecr.io/myImage:myTag --connected-cluster-id MyConnectedClusterResourceId
+  - summary: |-
+      Create a container app from an image in a registry on a connected environment
+    syntax: az containerapp up -n my-containerapp --image myregistry.azurecr.io/myImage:myTag --environment MyConnectedEnvironmentId
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
       The name of the Containerapp. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
   optionalParameters:
+  - name: --artifact
+    summary: |-
+      Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
+    isPreview: true
   - name: --branch -b
     summary: |-
       The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
@@ -616,15 +640,23 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Open the app in a web browser after creation and deployment, if possible.
+  - name: --connected-cluster-id
+    summary: |-
+      Resource ID of connected cluster. List using 'az connectedk8s list'.
+    isPreview: true
   - name: --context-path
     summary: |-
       Path in the repo from which to run the docker build. Defaults to "./". Dockerfile is assumed to be named "Dockerfile" and in this directory.
+  - name: --custom-location
+    summary: |-
+      Resource ID of custom location. List using 'az customlocation list'.
+    isPreview: true
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
   - name: --environment
     summary: |-
-      Name or resource ID of the container app's environment.
+      Name or resource ID of the container app's managed environment or connected environment.
   - name: --image -i
     summary: |-
       Container image, e.g. publisher/image-name:tag.
@@ -685,10 +717,12 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az containerapp update [--args]
+                           [--artifact]
                            [--bind]
                            [--command]
                            [--container-name]
                            [--cpu]
+                           [--customized-keys]
                            [--ids]
                            [--image]
                            [--max-replicas]
@@ -719,12 +753,12 @@ directCommands:
   - summary: |-
       Update a container app's container image.
     syntax: >-
-      az containerapp update -n MyContainerapp -g MyResourceGroup \
+      az containerapp update -n my-containerapp -g MyResourceGroup \
           --image myregistry.azurecr.io/my-app:v2.0
   - summary: |-
       Update a container app's resource requirements and scale limits.
     syntax: >-
-      az containerapp update -n MyContainerapp -g MyResourceGroup \
+      az containerapp update -n my-containerapp -g MyResourceGroup \
           --cpu 0.5 --memory 1.0Gi \
           --min-replicas 4 --max-replicas 8
   - summary: |-
@@ -743,14 +777,19 @@ directCommands:
           --scale-rule-auth triggerparam=secretref triggerparam=secretref
   - summary: |-
       Update a Container App from the provided application source
-    syntax: az containerapp update -n MyContainerapp -g MyResourceGroup --source .
+    syntax: az containerapp update -n my-containerapp -g MyResourceGroup --source .
   optionalParameters:
   - name: --args
     summary: |-
       A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+  - name: --artifact
+    summary: |-
+      Local path to the application artifact for building the container image. See the supported artifacts here: https://aka.ms/SourceToCloudSupportedArtifacts.
+    isPreview: true
   - name: --bind
     summary: |-
       Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
+    isPreview: true
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
@@ -760,6 +799,10 @@ directCommands:
   - name: --cpu
     summary: |-
       Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+    isPreview: true
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -835,6 +878,7 @@ directCommands:
   - name: --unbind
     summary: |-
       Space separated list of services(bindings) to be removed from this app. e.g. BIND_NAME1...
+    isPreview: true
   - name: --workload-profile-name -w
     summary: |-
       The friendly name for the workload profile.
@@ -842,6 +886,23 @@ directCommands:
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
 commands:
+- az_containerapp_add-on
+- az_containerapp_add-on_kafka
+- az_containerapp_add-on_kafka_create
+- az_containerapp_add-on_kafka_delete
+- az_containerapp_add-on_list
+- az_containerapp_add-on_mariadb
+- az_containerapp_add-on_mariadb_create
+- az_containerapp_add-on_mariadb_delete
+- az_containerapp_add-on_postgres
+- az_containerapp_add-on_postgres_create
+- az_containerapp_add-on_postgres_delete
+- az_containerapp_add-on_qdrant
+- az_containerapp_add-on_qdrant_create
+- az_containerapp_add-on_qdrant_delete
+- az_containerapp_add-on_redis
+- az_containerapp_add-on_redis_create
+- az_containerapp_add-on_redis_delete
 - az_containerapp_auth
 - az_containerapp_auth_apple
 - az_containerapp_auth_apple_show
@@ -903,13 +964,17 @@ commands:
 - az_containerapp_connection_create_keyvault
 - az_containerapp_connection_create_mysql
 - az_containerapp_connection_create_mysql-flexible
+- az_containerapp_connection_create_mysql-flexible(serviceconnector-passwordless)
 - az_containerapp_connection_create_postgres
+- az_containerapp_connection_create_postgres(serviceconnector-passwordless)
 - az_containerapp_connection_create_postgres-flexible
+- az_containerapp_connection_create_postgres-flexible(serviceconnector-passwordless)
 - az_containerapp_connection_create_redis
 - az_containerapp_connection_create_redis-enterprise
 - az_containerapp_connection_create_servicebus
 - az_containerapp_connection_create_signalr
 - az_containerapp_connection_create_sql
+- az_containerapp_connection_create_sql(serviceconnector-passwordless)
 - az_containerapp_connection_create_storage-blob
 - az_containerapp_connection_create_storage-file
 - az_containerapp_connection_create_storage-queue
@@ -959,8 +1024,15 @@ commands:
 - az_containerapp_env_certificate_upload
 - az_containerapp_env_create
 - az_containerapp_env_dapr-component
+- az_containerapp_env_dapr-component_init
 - az_containerapp_env_dapr-component_list
 - az_containerapp_env_dapr-component_remove
+- az_containerapp_env_dapr-component_resiliency
+- az_containerapp_env_dapr-component_resiliency_create
+- az_containerapp_env_dapr-component_resiliency_delete
+- az_containerapp_env_dapr-component_resiliency_list
+- az_containerapp_env_dapr-component_resiliency_show
+- az_containerapp_env_dapr-component_resiliency_update
 - az_containerapp_env_dapr-component_set
 - az_containerapp_env_dapr-component_show
 - az_containerapp_env_delete
@@ -980,6 +1052,7 @@ commands:
 - az_containerapp_env_workload-profile_delete
 - az_containerapp_env_workload-profile_list
 - az_containerapp_env_workload-profile_list-supported
+- az_containerapp_env_workload-profile_set
 - az_containerapp_env_workload-profile_show
 - az_containerapp_env_workload-profile_update
 - az_containerapp_exec
@@ -1053,6 +1126,12 @@ commands:
 - az_containerapp_replica_count
 - az_containerapp_replica_list
 - az_containerapp_replica_show
+- az_containerapp_resiliency
+- az_containerapp_resiliency_create
+- az_containerapp_resiliency_delete
+- az_containerapp_resiliency_list
+- az_containerapp_resiliency_show
+- az_containerapp_resiliency_update
 - az_containerapp_revision
 - az_containerapp_revision_activate
 - az_containerapp_revision_copy

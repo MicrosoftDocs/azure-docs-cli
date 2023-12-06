@@ -40,6 +40,7 @@ directCommands:
                    [--max-shares]
                    [--network-access-policy {AllowAll, AllowPrivate, DenyAll}]
                    [--no-wait]
+                   [--optimized-for-frequent-attach {false, true}]
                    [--os-type {Linux, Windows}]
                    [--performance-plus {false, true}]
                    [--public-network-access {Disabled, Enabled}]
@@ -55,7 +56,7 @@ directCommands:
                    [--tier]
                    [--upload-size-bytes]
                    [--upload-type {Upload, UploadWithSecurityData}]
-                   [--zone {1, 2, 3}]
+                   [--zone]
   examples:
   - summary: |-
       Create a managed disk by importing from a blob uri.
@@ -167,7 +168,6 @@ directCommands:
     summary: |-
       If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null.
   - name: --hyper-v-generation
-    defaultValue: "V1"
     parameterValueGroup: "V1, V2"
     summary: |-
       The hypervisor generation of the Virtual Machine. Applicable to OS disks only.
@@ -194,6 +194,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --optimized-for-frequent-attach
+    parameterValueGroup: "false, true"
+    summary: |-
+      Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine.
   - name: --os-type
     parameterValueGroup: "Linux, Windows"
     summary: |-
@@ -249,7 +253,6 @@ directCommands:
     summary: |-
       Create the disk for upload scenario. 'Upload' is for Standard disk only upload. 'UploadWithSecurityData' is for OS Disk upload along with VM Guest State. Please note the 'UploadWithSecurityData' is not valid for data disk upload, it only to be used for OS Disk upload at present.
   - name: --zone
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Availability zone into which to provision the resource.
 - uid: az_disk_delete

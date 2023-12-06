@@ -1,6 +1,6 @@
 ---
 title: Sign in with Azure CLI using a service principal | Microsoft Docs
-description: Learn how to sign into the Azure CIL using a service principal
+description: Learn how to sign into the Azure CLI using a service principal.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
@@ -9,10 +9,10 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in 
+keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure CLI  
 ---
 
-# Sign in with a service principal
+# Sign in with a service principal using Azure CLI 
 
 Service principals are accounts not tied to any particular user, which can have permissions on them assigned through
 predefined roles. Authenticating with a service principal is the best way to write secure scripts or programs,

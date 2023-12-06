@@ -197,6 +197,7 @@ directCommands:
                              [--client-secret]
                              [--cpu]
                              [--enable-cert-verify {false, true}]
+                             [--enable-response-cache {false, true}]
                              [--exposed-headers]
                              [--https-only {false, true}]
                              [--instance-count]
@@ -205,6 +206,9 @@ directCommands:
                              [--memory]
                              [--no-wait]
                              [--properties]
+                             [--response-cache-scope]
+                             [--response-cache-size]
+                             [--response-cache-ttl]
                              [--scope]
                              [--secrets]
                              [--server-url]
@@ -212,6 +216,15 @@ directCommands:
   - summary: |-
       Update gateway property.
     syntax: az spring gateway update -s MyService -g MyResourceGroup --assign-endpoint true --https-only true
+  - summary: |-
+      Enable and configure response cache at Route level and set ttl to 5 minutes.
+    syntax: az spring gateway update -s MyService -g MyResourceGroup --enable-response-cache --response-cache-scope Route --response-cache-ttl 5m
+  - summary: |-
+      When response cache is enabled, update ttl to 3 minutes.
+    syntax: az spring gateway update -s MyService -g MyResourceGroup --response-cache-ttl 3m
+  - summary: |-
+      Disable response cache.
+    syntax: az spring gateway update -s MyService -g MyResourceGroup --enable-response-cache false
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -282,6 +295,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       If true, will verify certificate in TLS connection from gateway to app.
+  - name: --enable-response-cache
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable response cache settings in Spring Cloud Gateway.
   - name: --exposed-headers
     summary: |-
       Comma-separated list of HTTP response headers to expose for cross-site requests.
@@ -308,6 +325,15 @@ directCommands:
   - name: --properties
     summary: |-
       Non-sensitive properties for environment variables. Format "key[=value]" and separated by space.
+  - name: --response-cache-scope
+    summary: |-
+      Scope for response cache, available values are [Route, Instance].
+  - name: --response-cache-size
+    summary: |-
+      Maximum size of the cache that determines whether the cache needs to evict some entries. Examples are [1GB, 10MB, 100KB]. Use "default" to reset, and Gateway will manage this property.
+  - name: --response-cache-ttl
+    summary: |-
+      Time before a cached entry expires. Examples are [1h, 30m, 50s]. Use "default" to reset, and Gateway will manage this property.
   - name: --scope
     summary: |-
       Comma-separated list of the specific actions applications can be allowed to do on a user's behalf.
