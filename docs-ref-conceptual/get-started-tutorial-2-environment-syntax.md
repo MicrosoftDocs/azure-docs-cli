@@ -307,7 +307,7 @@ az storage account update --name <msdocssa00000000> ^
 
 :: Create a new tag with an empty value.
 az storage account update --name <msdocssa00000000> ^
-                          --resource-group sdocs-tutorial-rg-00000000> ^
+                          --resource-group <msdocs-tutorial-rg-00000000> ^
                           --tags "Floor number="''""
 
 ```
@@ -349,7 +349,7 @@ az vm list --resource-group <myResourceGroup> \
 Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
-az storage account list --resource-group <myResourceGroup> \
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
     --query "[?allowBlobPublicAccess == \`true\`].id"
 ```
 
@@ -357,16 +357,16 @@ Examples of filtering a date using the storage account created in this tutorial.
 
 ```azurecli-interactive
 # include time
-az storage account list --resource-group <myResourceGroup> \
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
     --query "[?creationTime >='2021-11-15T19:14:27.103127+00:00'].{saName:name, saID: id, sku: sku.name}"
 
 # exclude time
-az storage account list --resource-group <myResourceGroup> \
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
     --query "[?creationTime >='2021-11-15'].{saName:name, saID: id, sku: sku.name}"
 
 # subtract days and use a variable
 saDate=$(date +%F -d "-30days")
-az storage account list --resource-group msdocs-tutorial-rg-00000000 \
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> \
     --query "[?creationTime >='$saDate'].{saName:name, saID: id, sku: sku.name}"
 ```
 
@@ -393,7 +393,7 @@ az vm list --resource-group <myResourceGroup> `
 Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
-az storage account list --resource-group <myResourceGroup> `
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> `
                        --query "[?allowBlobPublicAccess == ``true``].id"
 ```
 
@@ -401,16 +401,16 @@ Examples of filtering a date using the storage account created in this tutorial.
 
 ```azurecli-interactive
 # include time
-az storage account list --resource-group msdocs-tutorial-rg-00000000 `
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> `
     --query "[?creationTime >='2021-11-15T19:14:27.103127+00:00'].{saName:name, saID: id, sku: sku.name}"
 
 # exclude time
-az storage account list --resource-group msdocs-tutorial-rg-00000000 `
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> `
     --query "[?creationTime >='2021-11-15'].{saName:name, saID: id, sku: sku.name}"
 
 # subtract days and use a variable
 $saDate=$saDate.AddDays(-30).tostring("yyyy-mm-dd")
-az storage account list --resource-group msdocs-tutorial-rg-00000000 `
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> `
     --query "[?creationTime >='$saDate'].{saName:name, saID: id, sku: sku.name}"
 ```
 
@@ -427,7 +427,7 @@ az vm list --resource-group <myResourceGroup> `
 Example of filtering a boolean value using the storage account created in this tutorial.
 
 ```azurecli-interactive
-az storage account list --resource-group msdocs-tutorial-rg-00000000 ^
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> ^
     --query "[?allowBlobPublicAccess == `true`].id"
 ```
 
@@ -439,16 +439,16 @@ az vm list --resource-group DevEx-Data-Analysis2 ^
            --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" ^
            --output table
 
-az storage account list --resource-group msdocs-tutorial-rg-55276056 ^
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> ^
     --query "[?creationTime >='2021-11-15T19:14:27.103127+00:00'].{saName:name, saID: id, sku: sku.name}"
 
 # exclude time
-az storage account list --resource-group msdocs-tutorial-rg-55276056 ^
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> ^
     --query "[?creationTime >='2021-11-15'].{saName:name, saID: id, sku: sku.name}"
 
 # subtract days and use a variable
 saDate=$(date +%F -d "-30days")
-az storage account list --resource-group msdocs-tutorial-rg-55276056 ^
+az storage account list --resource-group <msdocs-tutorial-rg-00000000> ^
     --query "[?creationTime >='$saDate'].{saName:name, saID: id, sku: sku.name}"
 ```
 
