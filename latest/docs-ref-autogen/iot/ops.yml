@@ -22,10 +22,14 @@ directCommands:
   summary: |-
     Evaluate IoT Operations service deployment for health, configuration and usability.
   description: |-
-    [Supported service APIs]
-        mq.iotoperations.azure.com/[v1beta1]
-        dataprocessor.iotoperations.azure.com/[v1]
-        layerednetworkmgmt.iotoperations.azure.com/[v1beta1].
+    The command by default shows a human friendly _summary_ view of the selected service.
+    More detail can be requested via `--detail-level`.
+
+    {Supported service APIs}
+    - mq.iotoperations.azure.com/[v1beta1]
+    - dataprocessor.iotoperations.azure.com/[v1]
+    - layerednetworkmgmt.iotoperations.azure.com/[v1beta1]
+    - opcuabroker.iotoperations.azure.com/[v1beta1].
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -34,10 +38,23 @@ directCommands:
     az iot ops check [--as-object {false, true}]
                      [--context]
                      [--detail-level {0, 1, 2}]
-                     [--ops-service {dataprocessor, lnm, mq}]
+                     [--ops-service {dataprocessor, lnm, mq, opcua}]
                      [--post {false, true}]
                      [--pre {false, true}]
-                     [--resources {broker, brokerlistener, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, mqttbridgeconnector, pipeline}]
+                     [--resources {assettype, broker, brokerlistener, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline}]
+  examples:
+  - summary: |-
+      Basic usage. Checks `mq` health with summary output.
+    syntax: az iot ops check
+  - summary: |-
+      Evaluates `mq` like prior example, however output is optimized for CI.
+    syntax: az iot ops check --as-object
+  - summary: |-
+      Checks `dataprocessor` health and configuration with detailed output.
+    syntax: az iot ops check --svc dataprocessor --detail-level 1
+  - summary: |-
+      Same as prior example, except constraining results to the `pipeline` resource.
+    syntax: az iot ops check --svc dataprocessor --detail-level 1 --resources pipeline
   optionalParameters:
   - name: --as-object
     parameterValueGroup: "false, true"
@@ -50,10 +67,10 @@ directCommands:
     defaultValue: "0"
     parameterValueGroup: "0, 1, 2"
     summary: |-
-      Controls the level of detail displayed in the check output. Choose 0 for a summary view, (minimal output), 1 for a detailed view, (more comprehensive information) or 2 for a verbose view, (all available information).
+      Controls the level of detail displayed in the check output. Choose 0 for a summary view (minimal output), 1 for a detailed view (more comprehensive information), or 2 for a verbose view (all available information).
   - name: --ops-service --svc
     defaultValue: "mq"
-    parameterValueGroup: "dataprocessor, lnm, mq"
+    parameterValueGroup: "dataprocessor, lnm, mq, opcua"
     summary: |-
       The IoT Operations service deployment that will be evaluated.
   - name: --post
@@ -65,13 +82,15 @@ directCommands:
     summary: |-
       Run pre-requisite checks to determine if the minimum requirements of a service deployment are fulfilled.
   - name: --resources
-    parameterValueGroup: "broker, brokerlistener, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, mqttbridgeconnector, pipeline"
+    parameterValueGroup: "assettype, broker, brokerlistener, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline"
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
 - uid: az_iot_ops_init
   name: az iot ops init
   summary: |-
     Bootstrap, configure and deploy IoT Operations to the target cluster.
+  description: |-
+    For additional resources including how to arc-enable a cluster see https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/howto-prepare-cluster.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -120,6 +139,25 @@ directCommands:
                     [--sp-object-id]
                     [--sp-secret]
                     [--target]
+  examples:
+  - summary: |-
+      Minimum input for complete setup. This includes Key Vault configuration, CSI driver deployment, TLS config and deployment of IoT Operations.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id /subscriptions/2cb3a427-1abc-48d0-9d03-dd240819742a/resourceGroups/myresourcegroup/providers/Microsoft.KeyVault/vaults/mykeyvault
+  - summary: |-
+      Same setup as prior example, except with the usage of an existing app Id and a flag to include a simulated PLC server as part of the deployment. Including the app Id will prevent `init` from creating an app registration.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --simulate-plc
+  - summary: |-
+      To skip deployment and focus only on the Key Vault CSI driver and TLS config workflows simple pass in `--no-deploy`. This can be useful when desiring to deploy from a different tool such as Portal.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --no-deploy
+  - summary: |-
+      To only deploy IoT Operations on a cluster that has already been prepped, simply omit `--kv-id` and include `--no-tls`.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --no-tls
+  - summary: |-
+      Use `--no-block` to do other work while the deployment is on-going vs waiting for the deployment to finish before starting the other work.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --no-block
+  - summary: |-
+      To avoid calling MS Graph such as for CI scenarios where the logged-in to az cli service principal permissions are limited or an existing service principal should be re-used, provide all of `--sp-app-id`, `--sp-object-id` and `--sp-secret`. These values should reflect the desired service principal that will be used for the Key Vault CSI driver setup.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --sp-object-id 224a7a3f-c63d-4923-8950-c4a85f0d2f29 --sp-secret $SP_SECRET
   requiredParameters:
   - isRequired: true
     name: --cluster

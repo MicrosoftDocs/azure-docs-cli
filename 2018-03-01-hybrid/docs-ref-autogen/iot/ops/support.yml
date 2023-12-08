@@ -17,14 +17,14 @@ directCommands:
   summary: |-
     Creates a standard support bundle zip archive for use in troubleshooting and diagnostics.
   description: |-
-    [Supported service APIs]
-        mq.iotoperations.azure.com/[v1beta1]
-        opcuabroker.iotoperations.azure.com/[v1beta1]
-        dataprocessor.iotoperations.azure.com/[v1]
-        orchestrator.iotoperations.azure.com/[v1]
-        akri.sh/[v0]
-        layerednetworkmgmt.iotoperations.azure.com/[v1beta1]
-        deviceregistry.microsoft.com/[v1beta1].
+    {Supported service APIs}
+    - mq.iotoperations.azure.com/[v1beta1]
+    - opcuabroker.iotoperations.azure.com/[v1beta1]
+    - dataprocessor.iotoperations.azure.com/[v1]
+    - orchestrator.iotoperations.azure.com/[v1]
+    - akri.sh/[v0]
+    - layerednetworkmgmt.iotoperations.azure.com/[v1beta1]
+    - deviceregistry.microsoft.com/[v1beta1].
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -33,7 +33,21 @@ directCommands:
     az iot ops support create-bundle [--bundle-dir]
                                      [--context]
                                      [--log-age]
+                                     [--mq-traces {false, true}]
                                      [--ops-service {akri, auto, dataprocessor, deviceregistry, lnm, mq, opcua, orc}]
+  examples:
+  - summary: |-
+      Basic usage with default options. This form of the command will auto detect IoT Operations APIs and build a suitable bundle capturing the last 24 hours of container logs. The bundle will be produced in the current working directory.
+    syntax: az iot ops support create-bundle
+  - summary: |-
+      Constrain data capture on a specific service as well as producing the bundle in a custom output dir.
+    syntax: az iot ops support create-bundle --ops-service opcua --bundle-dir ~/ops
+  - summary: |-
+      Specify a custom container log age in seconds.
+    syntax: az iot ops support create-bundle --ops-service mq --log-age 172800
+  - summary: |-
+      Include mq traces in the support bundle. This is an alias for stats trace fetch capability.
+    syntax: az iot ops support create-bundle --ops-service mq --mq-traces
   optionalParameters:
   - name: --bundle-dir
     summary: |-
@@ -45,6 +59,10 @@ directCommands:
     defaultValue: "86400"
     summary: |-
       Container log age in seconds.
+  - name: --mq-traces
+    parameterValueGroup: "false, true"
+    summary: |-
+      Include mq traces in the support bundle. Usage may add considerable size to the produced bundle.
   - name: --ops-service --svc
     defaultValue: "auto"
     parameterValueGroup: "akri, auto, dataprocessor, deviceregistry, lnm, mq, opcua, orc"

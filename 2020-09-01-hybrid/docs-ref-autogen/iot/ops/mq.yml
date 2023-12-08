@@ -23,6 +23,10 @@ directCommands:
   syntax: >-
     az iot ops mq get-password-hash --phrase
                                     [--iterations]
+  examples:
+  - summary: |-
+      Produce a hash of the phrase 'mypassphrase' using the default number of hash iterations.
+    syntax: az iot ops mq get-password-hash -p mypassphrase
   requiredParameters:
   - isRequired: true
     name: --phrase -p
@@ -38,8 +42,8 @@ directCommands:
   summary: |-
     Show dmqtt running statistics.
   description: |-
-    [Supported service APIs]
-        mq.iotoperations.azure.com/v1beta1.
+    {Supported service APIs}
+    - mq.iotoperations.azure.com/v1beta1.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -51,7 +55,25 @@ directCommands:
                         [--protobuf-port]
                         [--raw {false, true}]
                         [--refresh]
+                        [--trace-dir]
+                        [--trace-ids]
                         [--watch {false, true}]
+  examples:
+  - summary: |-
+      Fetch key performance indicators from the diagnostics Prometheus metrics endpoint.
+    syntax: az iot ops mq stats
+  - summary: |-
+      Same as prior example except with a dynamic display that refreshes periodically.
+    syntax: az iot ops mq stats --watch
+  - summary: |-
+      Return the raw output of the metrics endpoint with minimum processing.
+    syntax: az iot ops mq stats --raw
+  - summary: |-
+      Fetch all available mq traces from the diagnostics Protobuf endpoint. This will produce a `.zip` with both `Otel` and Grafana `tempo` file formats. A trace files last modified attribute will match the trace timestamp.
+    syntax: az iot ops mq stats --trace-dir .
+  - summary: |-
+      Fetch traces by trace Ids provided in space-separated hex format. Only `Otel` format is shown.
+    syntax: az iot ops mq stats --trace-ids 4e84000155a98627cdac7de46f53055d
   optionalParameters:
   - name: --context
     summary: |-
@@ -75,6 +97,12 @@ directCommands:
     defaultValue: "10"
     summary: |-
       Number of seconds between a stats refresh. Applicable with --watch.
+  - name: --trace-dir
+    summary: |-
+      Local directory where traces will be bundled and stored at.
+  - name: --trace-ids
+    summary: |-
+      Space-separated trace ids in hex format.
   - name: --watch
     parameterValueGroup: "false, true"
     summary: |-
