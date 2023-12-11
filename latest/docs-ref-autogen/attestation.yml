@@ -4,7 +4,7 @@ name: az attestation
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **attestation** extension for the Azure CLI (version 2.11.0 or higher). The extension will automatically install the first time you run an **az attestation** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **attestation** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az attestation** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Microsoft Azure Attestation (MAA).
 status: Experimental
@@ -21,35 +21,35 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'attestation' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az attestation create --location
-                          --name
-                          --resource-group
-                          [--certs-input-path]
+    az attestation create [--certs-input-path]
+                          [--id]
+                          [--location]
+                          [--name]
+                          [--resource-group]
                           [--tags]
   examples:
   - summary: |-
       AttestationProviders_Create
     syntax: az attestation create --name "myattestationprovider" --resource-group "MyResourceGroup" -l westus
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
-    summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the attestation service instance.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --certs-input-path
     summary: |-
-      Space-separated file paths to PEM/DER files containing certificates.
+      Space-separated file paths to PEM/DER files containing certificates.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --id
+    summary: |-
+      Resource ID of the provider. Please omit --resource-group/-g or --name/-n if you have already specified --id.
+  - name: --location -l
+    summary: |-
+      The supported Azure location where the attestation provider should be created.  When not specified, the location of the resource group will be used.
+  - name: --name -n
+    summary: |-
+      Name of the attestation provider.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      The tags that will be assigned to the attestation provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_attestation_delete
   name: az attestation delete
   summary: |-
@@ -89,16 +89,24 @@ directCommands:
   isExperimental: true
   previewOrExperimentalInfo: "Command group 'attestation' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
-  syntax: az attestation get-default-by-location --location
+  syntax: >-
+    az attestation get-default-by-location [--ids]
+                                           [--location]
+                                           [--subscription]
   examples:
   - summary: |-
       AttestationProviders_GetDefaultWithLocation
     syntax: az attestation get-default-by-location --location "Central US"
-  requiredParameters:
-  - isRequired: true
-    name: --location -l
+  optionalParameters:
+  - name: --ids
     summary: |-
-      Location. (eg: "West US").
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_attestation_list
   name: az attestation list
   summary: |-
@@ -167,29 +175,31 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'attestation' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az attestation update --name
-                          --resource-group
+    az attestation update [--ids]
+                          [--name]
+                          [--resource-group]
+                          [--subscription]
                           [--tags]
   examples:
   - summary: |-
       AttestationProviders_Update
-    syntax: >-
-      az attestation update --name "myattestationprovider" --resource-group "MyResourceGroup" \
-
-      --tags Property1="Value1" Property2="Value2" Property3="Value3"
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
+    syntax: az attestation update --name "myattestationprovider" --resource-group "MyResourceGroup" --tags Property1="Value1" Property2="Value2" Property3="Value3"
+  optionalParameters:
+  - name: --ids
     summary: |-
-      Name of the attestation service instance.
-  - isRequired: true
-    name: --resource-group -g
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the attestation provider.
+  - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      The tags that will be assigned to the attestation provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 commands:
 - az_attestation_create
 - az_attestation_delete
