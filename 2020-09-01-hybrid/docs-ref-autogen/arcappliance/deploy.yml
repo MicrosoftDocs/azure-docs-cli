@@ -18,7 +18,9 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az arcappliance deploy hci --config-file
+                               [--cloudagent]
                                [--location]
+                               [--loginconfigfile]
                                [--name]
                                [--outfile]
                                [--resource-group]
@@ -29,16 +31,22 @@ directCommands:
     syntax: az arcappliance deploy hci --config-file [REQUIRED]
   - summary: |-
       Deploy Arc resource bridge on Azure Stack HCI with a specified outfile for the kubeconfig
-    syntax: az arcappliance deploy hci --config-file [REQUIRED] --outfile [OPTIONAL]
+    syntax: az arcappliance deploy hci --config-file [REQUIRED] --outfile [OPTIONAL] --cloudagent [OPTIONAL] --loginconfigfile [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --config-file
     summary: |-
       Path to the Arc resource bridge appliance config file, <resourceName>-appliance.yaml.
   optionalParameters:
+  - name: --cloudagent
+    summary: |-
+      FQDN or IP address of the Azure Stack HCI MOC cloud agent service used by Arc resource bridge. This can be found in the <BridgeName>-infra.yaml configuration file stored locally on the HCI cluster.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --loginconfigfile
+    summary: |-
+      File path for the Azure Stack HCI login configuration file, kvatoken.tok. By default, it is stored locally on the HCI cluster.
   - name: --name -n
     summary: |-
       Name of the Arc resource bridge.
@@ -60,24 +68,31 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az arcappliance deploy scvmm --config-file
+                                 [--address]
                                  [--location]
                                  [--name]
                                  [--outfile]
+                                 [--password]
+                                 [--port]
                                  [--resource-group]
                                  [--tags]
+                                 [--username]
   examples:
   - summary: |-
       Deploy Arc resource bridge on SCVMM
     syntax: az arcappliance deploy scvmm --config-file [REQUIRED]
   - summary: |-
       Deploy Arc resource bridge on SCVMM with a specified outfile for the kubeconfig
-    syntax: az arcappliance deploy scvmm --config-file [REQUIRED] --outfile [OPTIONAL] --tags [OPTIONAL]
+    syntax: az arcappliance deploy scvmm --config-file [REQUIRED] --outfile [OPTIONAL] --tags [OPTIONAL] --address [OPTIONAL] --port [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --config-file
     summary: |-
       Path to the Arc resource bridge appliance config file, <resourceName>-appliance.yaml.
   optionalParameters:
+  - name: --address
+    summary: |-
+      SCVMM Server FQDN(Role name in case of HAVMM) or IP address.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -88,12 +103,21 @@ directCommands:
     defaultValue: "kubeconfig"
     summary: |-
       File output path for the kubeconfig, defaults to ./kubeconfig.
+  - name: --password
+    summary: |-
+      SCVMM Administrator Password.
+  - name: --port
+    summary: |-
+      SCVMM server port (The default is 8100. This is the port number specified for VMM console to server connection e.g. vmmserver.constoso.com:8100).
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --username
+    summary: |-
+      SCVMM Administrator Username (domain\username).
 - uid: az_arcappliance_deploy_vmware
   name: az arcappliance deploy vmware
   summary: |-
@@ -102,24 +126,30 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az arcappliance deploy vmware --config-file
+                                  [--address]
                                   [--location]
                                   [--name]
                                   [--outfile]
+                                  [--password]
                                   [--resource-group]
                                   [--tags]
+                                  [--username]
   examples:
   - summary: |-
       Deploy Arc resource bridge on VMware
     syntax: az arcappliance deploy vmware --config-file [REQUIRED]
   - summary: |-
       Deploy Arc resource bridge on VMware with a specified outfile for the kubeconfig
-    syntax: az arcappliance deploy vmware --config-file [REQUIRED] --outfile [OPTIONAL]
+    syntax: az arcappliance deploy vmware --config-file [REQUIRED] --outfile [OPTIONAL] --address [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --config-file
     summary: |-
       Path to the Arc resource bridge appliance config file, <resourceName>-appliance.yaml.
   optionalParameters:
+  - name: --address
+    summary: |-
+      FQDN or IP address for vCenter Server instance. Ex: 10.160.0.1.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -130,12 +160,18 @@ directCommands:
     defaultValue: "kubeconfig"
     summary: |-
       File output path for the kubeconfig, defaults to ./kubeconfig.
+  - name: --password
+    summary: |-
+      Password for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --username
+    summary: |-
+      Username for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
 commands:
 - az_arcappliance_deploy_hci
 - az_arcappliance_deploy_scvmm
