@@ -21,10 +21,11 @@ In order to demonstrate how to use the Azure REST API with Azure CLI, you can wa
 > [!div class="checklist"]
 >
 > * Prerequisites
-> * Create an app service plan 
-> * Get an app service plan 
-> * List your app service plans
-> * Delete an app service plan 
+> * Create an app service plan with PUT
+> * Update your app service plan with PATCH
+> * Get the description of your app service plan with GET
+> * Restart your app in your app service plan with POST
+> * Delete an app service plan with DELETE
 
 ## Prerequisites 
 
@@ -62,6 +63,7 @@ Use the "put" HTTP method to create a new app service plan. Here is an example o
 az rest --method put --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewAppServicePlanName>?api-version=2022-03-01 --body  '{"location": "locationName"}'  
 
 ```
+
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
@@ -162,6 +164,7 @@ Console output:
 }
 
 ```
+
 ## Use PATCH to update your app service plan
 
 Update your service plan by using the "put" HTTP method again and editing the `--body` parameter with the properties you want to update/change. Here is an example of the syntax:
@@ -173,6 +176,7 @@ Update your service plan by using the "put" HTTP method again and editing the `-
 az rest --method get --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewAppServicePlanName>?api-version=2022-03-01 --body  '{\"location\": \"<location>\", \"sku\": {\"name\": \"<skuName>\", \"tier\": \"<skuTier>\", \"size\": \"<skuSize\", \"family\": \"<skuFamily>\", \"capacity\": \"<skuCapacity>\"}} '
 
 ```
+
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
@@ -288,6 +292,7 @@ Use the "get" HTTP method to get the description of the app service plan you jus
 az rest --method get --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewAppServicePlanName>?api-version=2022-03-01 
 
 ```
+
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
@@ -397,6 +402,7 @@ Use the "post" HTTP method to restart your app in your app service plan. Here is
 az rest --method put --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/sites/<myAppName>/restart?api-version=2022-03-01
 
 ```
+
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
@@ -432,6 +438,7 @@ Use the "delete" HTTP method to delete an existing app service plan. Here is an 
 az rest --method put --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroupName>/providers/Microsoft.Web/serverfarms/<myNewServiceAppPlanName>?api-version=2022-03-01
 
 ```
+
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
