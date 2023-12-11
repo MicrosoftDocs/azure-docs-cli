@@ -24,7 +24,7 @@ for the list of supported package managers or how to install manually under WSL.
 
 ## Install or update
 
-The MSI distributable is used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI updates any existing version.
+The MSI and ZIP distributable are used for installing or updating the Azure CLI on Windows. You don't need to uninstall current versions before using the MSI installer because the MSI updates any existing version.
 
 > [!IMPORTANT]
 > After the installation is complete, you will need to **close and reopen any active terminal window to use the Azure CLI**.
@@ -104,7 +104,7 @@ You can use the ZIP package to install the Azure CLI on Windows. This package is
 Please unzip the package to a folder, then follow the steps below to add the Azure CLI to your PATH environment variable.
 1. Open the Start Menu and search for `environment variables`, click `Edit the system environment variables`.
 2. Click `Environment Variables...` button.
-3. In the `User valiables for <user>` box, select `Path` and click `Edit...` button.
+3. In the `User varibles for <username>` box, select `Path` and click `Edit...` button.
 4. Click `New` button and add the `path_of_unzipped_folder\wbin` to the list. (Don't forge the `\wbin` at the end of the path)
 5. Restart your terminal.
 
@@ -120,9 +120,9 @@ If you prefer, you can download a specific version of the Azure CLI by using a U
 
 To download the ZIP package for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>.zip` (32-bit) or `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>-x64.zip` (64-bit).
 
-For example, to install the 32-bit MSI of Azure CLI version 2.56.0, your URL would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0.zip`. The corresponding 64-bit install would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0-x64.zip`.
+For example, to install the 32-bit ZIP of Azure CLI version 2.56.0, your URL would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0.zip`. The corresponding 64-bit install would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0-x64.zip`.
 
-Available Azure CLI versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md). The ZIP is available from version 2.56.0.
+Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The ZIP is available from version 2.56.0.
 
 ---
 
