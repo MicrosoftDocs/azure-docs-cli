@@ -97,6 +97,33 @@ You can also use `winget`, Microsoft's Package manager for Windows, to install a
 
 The `-e` option is to ensure the official Azure CLI package is installed. This command installs the latest version by default. To specify a version, add a `-v <version>` with your desired version to the command.
 
+# [ZIP Package](#tab/zip)
+
+You can use the ZIP package to install the Azure CLI on Windows. This package is useful when you don't have administrative privilege.
+
+Please unzip the package to a folder, then follow the steps below to add the Azure CLI to your PATH environment variable.
+1. Open the Start Menu and search for `environment variables`, click `Edit the system environment variables`.
+2. Click `Environment Variables...` button.
+3. In the `User valiables for <user>` box, select `Path` and click `Edit...` button.
+4. Click `New` button and add the `path_of_unzipped_folder\wbin` to the list. (Don't forge the `\wbin` at the end of the path)
+5. Restart your terminal.
+
+### Latest version
+> [!div class="nextstepaction"]
+> [Latest release of the Azure CLI ZIP Package (32-bit)](https://aka.ms/installazurecliwindowszip)
+
+> [!div class="nextstepaction"]
+> [Latest release of the Azure CLI ZIP Package (64-bit)](https://aka.ms/installazurecliwindowszipx64)
+
+### Specific version
+If you prefer, you can download a specific version of the Azure CLI by using a URL.
+
+To download the ZIP package for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>.zip` (32-bit) or `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>-x64.zip` (64-bit).
+
+For example, to install the 32-bit MSI of Azure CLI version 2.56.0, your URL would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0.zip`. The corresponding 64-bit install would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0-x64.zip`.
+
+Available Azure CLI versions can be found at [Azure CLI release notes](../release-notes-azure-cli.md). The ZIP is available from version 2.56.0.
+
 ---
 
 ## Run the Azure CLI
