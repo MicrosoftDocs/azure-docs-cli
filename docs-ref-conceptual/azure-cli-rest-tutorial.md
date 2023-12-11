@@ -165,9 +165,11 @@ Console output:
 
 ```
 
+You have now successfully created your new app service plan. 
+
 ## Use PATCH to update your app service plan
 
-Update your service plan by using the "put" HTTP method again and editing the `--body` parameter with the properties you want to update/change. Here is an example of the syntax:
+Update your service plan by using the "put" HTTP method again and editing the `--body` parameter with the properties you want to update/change. In this specific scenario, you are changing the SKU values of your app service plan. Here is an example of the syntax:
 
 # [Bash](#tab/bash)
 
@@ -281,6 +283,8 @@ Console output:
 }
 ```
 
+You have now successfully updated the SKU properties in your app service plan description.
+
 ## Use GET to retrieve your app service plan
 
 Use the "get" HTTP method to get the description of the app service plan you just created along with its new update. Here is an example of the syntax:
@@ -391,6 +395,8 @@ Console output:
 }
 ```
 
+You can now see the description of your app service plan. This is also helpful to ensure that your updates have been correctly changed in your app service plan description. 
+
 ## Use POST to restart your app 
 
 Use the "post" HTTP method to restart your app in your app service plan. Here is an example of the syntax:
@@ -462,3 +468,38 @@ az rest --method put --url https://management.azure.com/subscriptions/$subscript
 ```
 
 After the request is sent through, your service plan will be deleted. 
+
+# Clean up resources
+
+If you are finished with the resources created in this article, you can delete the resource group. When you delete the resource group, all resources in that resource group (including your apps and app service plans) are deleted. 
+
+# [Bash](#tab/bash)
+
+```azurecli-interactive
+# Bash script
+az group delete --resource-group <resourceGroupName>
+
+```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# Powershell script
+Remove-AzResourceGroup -Name <resourceGroupName>
+```
+
+Here is an example with completed parameters:
+
+```azurecli-interactive
+
+# Variable block
+let "randomIdentifier=$RANDOM*$RANDOM"
+resourceGroupName="msdocs-app-service-rg-$randomIdentifier"
+
+# Delete resource group 
+az group delete --resource-group $resourceGroupName
+```
+
+After completing this step, your resource group along with all of its resources will be deleted. 
+
+Congratulations! After completing this tutorial, you have now used several HTTP methods in order to invoke REST API requests to perform various actions for app service plans. 
