@@ -106,7 +106,7 @@ Please unzip the package to a folder, then follow the steps below to add the Azu
 2. Click `Environment Variables...` button.
 3. In the `User varibles for <username>` box, select `Path` and click `Edit...` button.
 4. Click `New` button and add the `path_of_unzipped_folder\wbin` to the list. (Don't forge the `\wbin` at the end of the path)
-5. Restart your terminal.
+5. Restart your terminal and you should be able to run `az` command.
 
 ### Latest version
 > [!div class="nextstepaction"]
