@@ -21,30 +21,31 @@ directCommands:
                      --name
                      --resource-group
                      [--aad-admin-group-object-ids]
+                     [--control-plane-count]
                      [--control-plane-ip]
-                     [--control-plane-node-count]
                      [--control-plane-vm-size]
+                     [--disable-nfs-driver]
+                     [--disable-smb-driver]
                      [--enable-ahub]
                      [--generate-ssh-keys]
                      [--kubernetes-version]
                      [--load-balancer-count]
                      [--location]
                      [--max-pods]
-                     [--no-ssh-key]
                      [--no-wait]
                      [--node-count]
                      [--node-vm-size]
                      [--nodepool-labels]
                      [--nodepool-taints]
                      [--pod-cidr]
-                     [--ssh-authorized-ip-ranges]
+                     [--ssh-auth-ips]
                      [--ssh-key-value]
                      [--tags]
                      [--vnet-ids]
   examples:
   - summary: |-
       PutProvisionedCluster
-    syntax: az aksarc create -g sample-rg --custom-location sample-cl -n sample-aksarccluster --vnet-id vnet1
+    syntax: az aksarc create -g sample-rg --custom-location sample-cl -n sample-aksarccluster --vnet-ids "vnet-arm-id"
   requiredParameters:
   - isRequired: true
     name: --custom-location
@@ -62,15 +63,23 @@ directCommands:
   - name: --aad-admin-group-object-ids -i
     summary: |-
       Comma-separated list of aad group object IDs that will be set as cluster admin on the provisioned cluster.
+  - name: --control-plane-count --control-plane-node-count
+    summary: |-
+      Number of control plane nodes.
   - name: --control-plane-ip
     summary: |-
       API server IP Address for the control plane.
-  - name: --control-plane-node-count
-    summary: |-
-      Number of control plane nodes.
   - name: --control-plane-vm-size
     summary: |-
       VM Size of control plane.
+  - name: --disable-nfs-driver
+    defaultValue: "False"
+    summary: |-
+      Disable NFS driver for the provisioned cluster.
+  - name: --disable-smb-driver
+    defaultValue: "False"
+    summary: |-
+      Disable SMB driver for the provisioned cluster.
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
@@ -91,15 +100,12 @@ directCommands:
   - name: --max-pods -m
     summary: |-
       Maximum number of pods that can run on a node.
-  - name: --no-ssh-key -x
-    defaultValue: "False"
-    summary: |-
-      Do not use inject any public ssh key.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --node-count -c
+    defaultValue: "1"
     summary: |-
       Number of nodes to be created in the nodepool.
   - name: --node-vm-size
@@ -114,7 +120,7 @@ directCommands:
   - name: --pod-cidr
     summary: |-
       The CIDR notation IP ranges from which to assign pod IPs.
-  - name: --ssh-authorized-ip-ranges
+  - name: --ssh-auth-ips --ssh-authorized-ip-ranges
     summary: |-
       Comma-separated list of IP addresses or CIDR that are allowed to ssh to the cluster vm.
   - name: --ssh-key-value
@@ -315,9 +321,13 @@ directCommands:
     az aksarc update --name
                      --resource-group
                      [--aad-admin-group-object-ids]
-                     [--control-plane-node-count]
+                     [--control-plane-count]
                      [--disable-ahub]
+                     [--disable-nfs-driver]
+                     [--disable-smb-driver]
                      [--enable-ahub]
+                     [--enable-nfs-driver]
+                     [--enable-smb-driver]
                      [--tags]
   examples:
   - summary: |-
@@ -345,17 +355,33 @@ directCommands:
   - name: --aad-admin-group-object-ids -i
     summary: |-
       Comma-separated list of aad group object IDs that will be set as cluster admin on the provisioned cluster.
-  - name: --control-plane-node-count
+  - name: --control-plane-count --control-plane-node-count
     summary: |-
-      Number of nodes to Scale Up the control plane to.
+      Number of nodes to scale the Control Plane to.
   - name: --disable-ahub
     defaultValue: "False"
     summary: |-
-      Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
+      Disable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --disable-nfs-driver
+    defaultValue: "False"
+    summary: |-
+      Disable NFS driver for the provisioned cluster.
+  - name: --disable-smb-driver
+    defaultValue: "False"
+    summary: |-
+      Disable SMB driver for the provisioned cluster.
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
-      Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+      Enable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --enable-nfs-driver
+    defaultValue: "False"
+    summary: |-
+      Enable NFS driver for the provisioned cluster.
+  - name: --enable-smb-driver
+    defaultValue: "False"
+    summary: |-
+      Enable SMB driver for the provisioned cluster.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -374,10 +400,7 @@ directCommands:
   examples:
   - summary: |-
       UpgradeProvisionedCluster
-    syntax: az aksarc upgrade --name "sample-aksarccluster" --resource-group "sample-rg" --kubernetes-version v1.22.2
-  - summary: |-
-      UpgradeProvisionedClusterNodeImage
-    syntax: az aksarc upgrade --name "sample-aksarccluster" --resource-group "sample-rg" --node-image-only
+    syntax: az aksarc upgrade --name "sample-aksarccluster" --resource-group "sample-rg" --kubernetes-version "1.22.2"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -415,6 +438,9 @@ commands:
 - az_aksarc_nodepool_scale
 - az_aksarc_nodepool_show
 - az_aksarc_notice
+- az_aksarc_release
+- az_aksarc_release_download
+- az_aksarc_release_save
 - az_aksarc_show
 - az_aksarc_update
 - az_aksarc_upgrade
