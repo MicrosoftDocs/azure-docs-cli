@@ -120,9 +120,9 @@ If you prefer, you can download a specific version of the Azure CLI by using a U
 
 To download the ZIP package for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>.zip` (32-bit) or `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>-x64.zip` (64-bit).
 
-For example, to install the 32-bit ZIP of Azure CLI version 2.56.0, your URL would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0.zip`. The corresponding 64-bit install would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.56.0-x64.zip`.
+For example, to install the 32-bit ZIP of Azure CLI version 2.57.0, your URL would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.57.0.zip`. The corresponding 64-bit install would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.57.0-x64.zip`.
 
-Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The ZIP is available from version 2.56.0.
+Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The ZIP is available from version 2.57.0.
 
 ---
 
