@@ -4,7 +4,7 @@ name: az monitor data-collection rule
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **monitor-control-service** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az monitor data-collection rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **monitor-control-service** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az monitor data-collection rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage data collection rule for monitor control service.
 status: GA
@@ -17,11 +17,18 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az monitor data-collection rule create --name
+    az monitor data-collection rule create --data-collection-rule-name
                                            --resource-group
-                                           --rule-file
+                                           [--data-collection-endpoint-id]
+                                           [--data-flows]
+                                           [--data-sources]
                                            [--description]
+                                           [--destinations]
+                                           [--identity]
+                                           [--kind {Linux, Windows}]
                                            [--location]
+                                           [--rule-file]
+                                           [--stream-declarations]
                                            [--tags]
   examples:
   - summary: |-
@@ -29,58 +36,78 @@ directCommands:
     syntax: az monitor data-collection rule create --resource-group "myResourceGroup" --location "eastus" --name "myCollectionRule" --rule-file "C:\samples\dcrEx1.json"
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --data-collection-rule-name --name --rule-name -n
     summary: |-
       The name of the data collection rule. The name is case insensitive.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --rule-file
-    summary: |-
-      The json file for rule parameters.
-    description: |-
-      Usage:   --rule-file sample.json
-      rule json file should be rule parameters organized as json format, like below:
-      {
-          "properties": {
-              "destinations": {
-                  "azureMonitorMetrics": {
-                      "name": "azureMonitorMetrics-default"
-                  }
-              },
-              "dataFlows": [
-                  {
-                      "streams": [
-                          "Microsoft-InsightsMetrics"
-                      ],
-                      "destinations": [
-                          "azureMonitorMetrics-default"
-                      ]
-                  }
-              ]
-          }
-      }.
   optionalParameters:
+  - name: --data-collection-endpoint-id --endpoint-id
+    summary: |-
+      The resource ID of the data collection endpoint that is to be associated.
+  - name: --data-flows
+    summary: |-
+      The specification of data flows.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --data-sources
+    summary: |-
+      The specification of data sources. This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --description
     summary: |-
-      Description of the data collection rule.
+      Description of the association.
+  - name: --destinations
+    summary: |-
+      The specification of destinations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --identity
+    summary: |-
+      Managed service identity of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --kind
+    parameterValueGroup: "Linux, Windows"
+    summary: |-
+      The kind of the resource.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      The geo-location where the resource lives.
+  - name: --rule-file
+    summary: |-
+      The json file for rule parameters. If provided, corresponding parameter will be overwrited by value from rule file
+                  Usage:   --rule-file sample.json
+                  rule json file should be rule parameters organized as json format, like below:
+              {
+                  "properties": {
+                      "destinations": {
+                          "azureMonitorMetrics": {
+                              "name": "azureMonitorMetrics-default"
+                          }
+                      },
+                      "dataFlows": [
+                          {
+                              "streams": [
+                                  "Microsoft-InsightsMetrics"
+                              ],
+                              "destinations": [
+                                  "azureMonitorMetrics-default"
+                              ]
+                          }
+                      ]
+                  }
+              }.
+  - name: --stream-declarations
+    summary: |-
+      Declaration of custom streams used in this rule.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_monitor_data-collection_rule_delete
   name: az monitor data-collection rule delete
   summary: |-
-    Deletes a data collection rule.
+    Delete a data collection rule.
   status: GA
   sourceType: Extension
   syntax: >-
-    az monitor data-collection rule delete [--ids]
-                                           [--name]
+    az monitor data-collection rule delete [--data-collection-rule-name]
+                                           [--ids]
                                            [--resource-group]
                                            [--subscription]
                                            [--yes]
@@ -89,12 +116,12 @@ directCommands:
       Delete data collection rule
     syntax: az monitor data-collection rule delete --name "myCollectionRule" --resource-group "myResourceGroup"
   optionalParameters:
+  - name: --data-collection-rule-name --name --rule-name -n
+    summary: |-
+      The name of the data collection rule. The name is case insensitive.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
-    summary: |-
-      The name of the data collection rule. The name is case insensitive.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -111,7 +138,10 @@ directCommands:
     List all data collection rules in the specified resource group. And Lists all data collection rules in the specified subscription.
   status: GA
   sourceType: Extension
-  syntax: az monitor data-collection rule list [--resource-group]
+  syntax: >-
+    az monitor data-collection rule list [--max-items]
+                                         [--next-token]
+                                         [--resource-group]
   examples:
   - summary: |-
       List data collection rules by resource group
@@ -120,6 +150,12 @@ directCommands:
       List data collection rules by subscription
     syntax: az monitor data-collection rule list
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -130,8 +166,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az monitor data-collection rule show [--ids]
-                                         [--name]
+    az monitor data-collection rule show [--data-collection-rule-name]
+                                         [--ids]
                                          [--resource-group]
                                          [--subscription]
   examples:
@@ -139,12 +175,12 @@ directCommands:
       Get data collection rule
     syntax: az monitor data-collection rule show --name "myCollectionRule" --resource-group "myResourceGroup"
   optionalParameters:
+  - name: --data-collection-rule-name --name --rule-name -n
+    summary: |-
+      The name of the data collection rule. The name is case insensitive.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
-    summary: |-
-      The name of the data collection rule. The name is case insensitive.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -158,112 +194,144 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az monitor data-collection rule update [--data-flows]
+    az monitor data-collection rule update [--add]
+                                           [--data-collection-endpoint-id]
+                                           [--data-collection-rule-name]
+                                           [--data-flows]
+                                           [--data-flows-raw]
+                                           [--data-sources]
                                            [--description]
+                                           [--destinations]
                                            [--extensions]
+                                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--identity]
                                            [--ids]
+                                           [--kind {Linux, Windows}]
                                            [--log-analytics]
                                            [--monitor-metrics]
-                                           [--name]
                                            [--performance-counters]
+                                           [--remove]
                                            [--resource-group]
+                                           [--set]
+                                           [--stream-declarations]
                                            [--subscription]
                                            [--syslog]
                                            [--tags]
                                            [--windows-event-logs]
-  examples:
-  - summary: |-
-      Update data collection rule
-    syntax: az monitor data-collection rule update --resource-group "myResourceGroup" --name "myCollectionRule" --data-flows destinations="centralWorkspace" streams="Microsoft-Perf" streams="Microsoft-Syslog" streams="Microsoft-WindowsEvent" --log-analytics name="centralWorkspace" resource-id="/subscriptions/703362b3-f278-4e4b-9179-c76eaf41ffc2/resourceGroups/myResourceGroup/providers/Microsoft.OperationalInsights/workspaces/centralTeamWorkspace" --performance-counters name="appTeamExtraCounters" counter-specifiers="\\Process(_Total)\\Thread Count" sampling-frequency=30 streams="Microsoft-Perf" --syslog name="cronSyslog" facility-names="cron" log-levels="Debug" log-levels="Critical" log-levels="Emergency" streams="Microsoft-Syslog" --windows-event-logs name="cloudSecurityTeamEvents" streams="Microsoft-WindowsEvent" x-path-queries="Security!"
   optionalParameters:
-  - name: --data-flows
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --data-collection-endpoint-id --endpoint-id
+    summary: |-
+      The resource ID of the data collection endpoint that is to be associated.
+  - name: --data-collection-rule-name --name --rule-name -n
+    summary: |-
+      The name of the data collection rule. The name is case insensitive.
+  - name: --data-flows --data-flows-remain
     summary: |-
       The specification of data flows.
-    description: |-
-      Usage: --data-flows streams=XX1 streams=XX2 destinations=XX1 destinations=XX2
-
-      streams: Required. List of streams for this data flow.
-      destinations: Required. List of destinations for this data flow.
-
-      Multiple actions can be specified by using more than one --data-flows argument.
+              Usage: --data-flows streams=XX1 streams=XX2 destinations=XX1 destinations=XX2
+              streams: Required. List of streams for this data flow.
+              destinations: Required. List of destinations for this data flow.
+              Multiple actions can be specified by using more than one --data-flows argument.
+                Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --data-flows-raw
+    summary: |-
+      The specification of data flows.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --data-sources
+    summary: |-
+      The specification of data sources. This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --description
     summary: |-
-      Description of the data collection rule.
+      Description of the association.
+  - name: --destinations
+    summary: |-
+      The specification of destinations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --extensions
     summary: |-
       The list of Azure VM extension data source configurations. Expected value: json-string/@json-file.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --identity
+    summary: |-
+      Managed service identity of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --kind
+    parameterValueGroup: "Linux, Windows"
+    summary: |-
+      The kind of the resource.
   - name: --log-analytics
     summary: |-
       List of Log Analytics destinations.
-    description: |-
-      Usage: --log-analytics resource-id=XX name=XX
-
-      resource-id: Required. The resource ID of the Log Analytics workspace.
-      name: Required. A friendly name for the destination.  This name should be unique across all destinations (regardless of type) within the data collection rule.
-
-      Multiple actions can be specified by using more than one --log-analytics argument.
+                  Usage: --log-analytics resource-id=XX name=XX
+                  resource-id: Required. The resource ID of the Log Analytics workspace.
+                  name: Required. A friendly name for the destination.  This name should be unique across all destinations (regardless of type) within the data collection rule.
+                  Multiple actions can be specified by using more than one --log-analytics argument.
+                    Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --monitor-metrics
     summary: |-
       Azure Monitor Metrics destination.
-    description: |-
-      Usage: --monitor-metrics name=XX
-
-      name: Required. A friendly name for the destination.  This name should be unique across all destinations (regardless of type) within the data collection rule.
-  - name: --name -n
-    summary: |-
-      The name of the data collection rule. The name is case insensitive.
+                  Usage: --monitor-metrics name=XX
+                  name: Required. A friendly name for the destination.  This name should be unique across all destinations (regardless of type) within the data collection rule.
+                    Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --performance-counters
     summary: |-
       The list of performance counter data source configurations.
-    description: |-
-      Usage: --performance-counters streams=XX1 streams=XX2 sampling-frequency=XX counter-specifiers=XX1 counter-specifiers=XX2 name=XX
-
-      streams: Required. List of streams that this data source will be sent to. A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
-      sampling-frequency: Required. The number of seconds between consecutive counter measurements (samples).
-      counter-specifiers: Required. A list of specifier names of the performance counters you want to collect. Use a wildcard (*) to collect a counter for all instances. To get a list of performance counters on Windows, run the command 'typeperf'.
-      name: Required. A friendly name for the data source.  This name should be unique across all data sources (regardless of type) within the data collection rule.
-
-      Multiple actions can be specified by using more than one --performance-counters argument.
+                  Usage: --performance-counters streams=XX1 streams=XX2 sampling-frequency=XX counter-specifiers=XX1 counter-specifiers=XX2 name=XX
+                  streams: Required. List of streams that this data source will be sent to. A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+                  sampling-frequency: Required. The number of seconds between consecutive counter measurements(samples).
+                  counter-specifiers: Required. A list of specifier names of the performance counters you want to collect. Use a wildcard (*) to collect a counter for all instances. To get a list of performance counters on Windows, run the command 'typeperf'.
+                  name: Required. A friendly name for the data source.  This name should be unique across all data sources (regardless of type) within the data collection rule.
+                  Multiple actions can be specified by using more than one --performance-counters argument.
+                    Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --stream-declarations
+    summary: |-
+      Declaration of custom streams used in this rule.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --syslog
     summary: |-
       The list of Syslog data source configurations.
-    description: |-
-      Usage: --syslog streams=XX1 streams=XX2 facility-names=XX1 facility-names=XX2 log-levels=XX1 log-levels=XX2 name=XX
-
-      streams: Required. List of streams that this data source will be sent to. A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
-      facility-names: Required. The list of facility names.
-      log-levels: The log levels to collect.
-      name: Required. A friendly name for the data source.  This name should be unique across all data sources (regardless of type) within the data collection rule.
-
-      Multiple actions can be specified by using more than one --syslog argument.
+                  Usage: --syslog streams=XX1 streams=XX2 facility-names=XX1 facility-names=XX2 log-levels=XX1 log-levels=XX2 name=XX
+                  streams: Required. List of streams that this data source will be sent to. A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+                  facility-names: Required. The list of facility names.
+                  log-levels: The log levels to collect.
+                  name: Required. A friendly name for the data source.  This name should be unique across all data sources (regardless of type) within the data collection rule.
+                  Multiple actions can be specified by using more than one --syslog argument.
+                    Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --windows-event-logs
     summary: |-
       The list of Windows Event Log data source configurations.
-    description: |-
-      Usage: --windows-event-logs streams=XX1 streams=XX2 x-path-queries=XX1 x-path-queries=XX2 name=XX
-
-      streams: Required. List of streams that this data source will be sent to. A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
-      x-path-queries: Required. A list of Windows Event Log queries in XPATH format.
-      name: Required. A friendly name for the data source.  This name should be unique across all data sources (regardless of type) within the data collection rule.
-
-      Multiple actions can be specified by using more than one --windows-event-logs argument.
+                  Usage: --windows-event-logs streams=XX1 streams=XX2 x-path-queries=XX1 x-path-queries=XX2 name=XX
+                  streams: Required. List of streams that this data source will be sent to. A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
+                  x-path-queries: Required. A list of Windows Event Log queries in XPATH format.
+                  name: Required. A friendly name for the data source.  This name should be unique across all data sources (regardless of type) within the data collection rule.
+                  Multiple actions can be specified by using more than one --windows-event-logs argument.
+                    Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 commands:
 - az_monitor_data-collection_rule_association
 - az_monitor_data-collection_rule_association_create
 - az_monitor_data-collection_rule_association_delete
 - az_monitor_data-collection_rule_association_list
+- az_monitor_data-collection_rule_association_list-by-resource
 - az_monitor_data-collection_rule_association_show
 - az_monitor_data-collection_rule_association_update
 - az_monitor_data-collection_rule_create
