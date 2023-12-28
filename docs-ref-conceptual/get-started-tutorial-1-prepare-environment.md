@@ -79,7 +79,7 @@ A resource group is a container for Azure resources. To create a resource group,
 
 ### Create a resource group
 
-1. A resource group name must be globally unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command. An output value of `false` means that the name is available.
+1. Within a subscription, a resource group name must be unique. First check if the name you want is available using the [az group exists](/cli/azure/group#az-group-exists) command. An output value of `false` means that the name is available.
 
    ```azurecli-interactive
    az group exists --name <myUniqueRGname>
