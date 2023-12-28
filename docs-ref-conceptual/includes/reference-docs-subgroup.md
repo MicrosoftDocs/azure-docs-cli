@@ -2404,8 +2404,6 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Set and retrieve a secret from Azure Key Vault using Azure CLI](/azure/key-vault/secrets/quick-create-cli)
 | [az keyvault security-domain](/cli/azure/keyvault/security-domain) | [Quickstart: Provision and activate a Managed HSM using Azure CLI](/azure/key-vault/managed-hsm/quick-create-cli)
 |  | [Managed HSM disaster recovery](/azure/key-vault/managed-hsm/disaster-recovery-guide)
-| [az keyvault storage](/cli/azure/keyvault/storage) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
-| [az keyvault storage sas-definition](/cli/azure/keyvault/storage/sas-definition) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
 
 ## az kusto
 
