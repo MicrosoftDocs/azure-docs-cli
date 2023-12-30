@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 12/29/2023
+ms.date: 12/30/2023
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
