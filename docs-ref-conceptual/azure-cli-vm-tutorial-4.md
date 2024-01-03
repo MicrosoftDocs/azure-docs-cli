@@ -47,7 +47,8 @@ Since the returned value is a single bare string, it's safe to assign directly t
 
 For more information about querying Azure CLI output, see [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
 
-Go ahead and assign the NIC object ID to a shell variable now.
+Go ahead and assign the NIC object ID to a shell variable now. 
+In PowerShell, declare variables with a "$", such as "$nicID".
 
 ```azurecli
 nicId=$(az vm show \
