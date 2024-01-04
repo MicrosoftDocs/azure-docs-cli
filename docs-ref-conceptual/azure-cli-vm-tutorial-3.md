@@ -24,6 +24,8 @@ To deploy a VM on a VNet, they must have the same Azure location. Once a VM is c
 Use the [az vm create](/cli/azure/vm#az_vm_create) command to create a new virtual machine running Ubuntu. This virtual machine uses SSH authentication for sign in, and is connected to the subnet and VNet you created in the previous section.
 In PowerShell, declare variables with a "$", and use quotes for values, such as $vmName = "TutorialVM1".
 
+# [Bash](#tab/bash)
+
 ```azurecli-interactive
 # create shell variables
 vmName=TutorialVM1
@@ -37,6 +39,23 @@ az vm create \
   --generate-ssh-keys \
   --output json \
   --verbose 
+```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# Create PowerShell variables
+$vmName = "TutorialVM1"
+
+az vm create `
+    --resource-group $resourceGroup `
+    --name $vmName `
+    --image Ubuntu2204 `
+    --vnet-name $vnetName `
+    --subnet $subnetName `
+    --generate-ssh-keys `
+    --output json `
+    --verbose
 ```
 
 > [!NOTE]

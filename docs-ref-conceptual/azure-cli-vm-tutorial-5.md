@@ -45,6 +45,8 @@ for command-line tools, it helps with human readability and can be used with cus
 In order to use command-line tools, change the command to remove the custom JSON keys and output as `tsv`. The `read` command processes this style of output by loading results into multiple variables. Since two values are displayed on separate lines, the `read` command
 delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
+# [Bash](#tab/bash)
+
 ```azurecli
 read -d '' ipId subnetId <<< $(az network nic show \
   --ids $nicId \
@@ -52,12 +54,33 @@ read -d '' ipId subnetId <<< $(az network nic show \
   -o tsv)
 ```
 
+# [PowerShell](#tab/powershell)
+
+```azurecli
+
+$output = az network nic show --ids $nicId --query "[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]" -o tsv
+
+# Split the output into two variables
+$ipId, $subnetId = $output -split "`t"
+```
+
 Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI. Therefore, it isn't be needed for the rest of the tutorial.
+
+# [Bash](#tab/bash)
 
 ```azurecli
 vmIpAddress=$(az network public-ip show --ids $ipId \
   --query ipAddress \
   -o tsv)
+```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli
+$vmIpAddress = $(az network public-ip show `
+    --ids $ipId `
+    --query ipAddress `
+    -o tsv)
 ```
 
 Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it's the same value that you used to initially connect to the VM.
