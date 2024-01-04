@@ -16,22 +16,22 @@ keywords: azure service principal, create service principal azure, create servic
 
 [Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources, that the user cannot perform with Azure CLI commands alone. 
 
-In order to demonstrate how to use the Azure REST API with Azure CLI, you can walkthrough the following tutorial in which you learn how to create and update your Azure container registry:
+In order to demonstrate how to use the Azure REST API with Azure CLI, you can walkthrough the following tutorial in which you learn how to create and update your Azure Container Registry (ACR):
 
 > [!div class="checklist"]
 >
 > * Prerequisites
-> * Create an Azure container registry with PUT
-> * Update your Azure container registry with PATCH
-> * Get the description of your Azure container registry with GET
-> * Regenerate your Azure container registry credentials with POST
-> * Delete an Azure Container registry with DELETE
+> * Create an Azure Container Registry with PUT
+> * Update your Azure Container Registry with PATCH
+> * Get the description of your Azure Container Registry with GET
+> * Regenerate your Azure Container Registry credentials with POST
+> * Delete an Azure Container Registry with DELETE
 
 ## Prerequisites 
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
-## Use PUT to create an Azure container registry
+## Use PUT to create an Azure Container Registry
 
 ### Set up your custom Azure REST API request:
 
@@ -54,7 +54,7 @@ az rest --url
 
 ### Creating your custom request with Azure CLI 
 
-Use the "put" HTTP method to create a new Azure container registry. Here is an example of the syntax:
+Use the "put" HTTP method to create a new Azure Container Registry. Here is an example of the syntax:
 
 # [Bash](#tab/bash)
 
@@ -170,11 +170,11 @@ JSON output:
 
 ```
 
-You have now successfully created your new Azure container registry. 
+You have now successfully created your new Azure Container Registry. 
 
-## Use PATCH to update your Azure container registry
+## Use PATCH to update your Azure Container Registry
 
-Update your Azure container registry by using the "put" HTTP method again and editing the `--body` parameter with the properties you want to update/change. In this specific scenario, you are changing the SKU name of your Azure container registry. Here is an example of the syntax:
+Update your Azure Container Registry by using the "put" HTTP method again and editing the `--body` parameter with the properties you want to update/change. In this specific scenario, you are changing the SKU name of your Azure Container Registry. Here is an example of the syntax:
 
 # [Bash](#tab/bash)
 
@@ -241,11 +241,11 @@ JSON output:
 
 ```
 
-You have now successfully updated the SKU properties in your Azure container registry description.
+You have now successfully updated the SKU properties in your Azure Container Registry description.
 
-## Use GET to retrieve your Azure container registry
+## Use GET to retrieve your Azure Container Registry
 
-Use the "get" HTTP method to get the description of the Azure container registry you just created along with its new update. Here is an example of the syntax:
+Use the "get" HTTP method to get the description of the Azure Container Registry you just created along with its new update. Here is an example of the syntax:
 
 # [Bash](#tab/bash)
 
@@ -292,9 +292,9 @@ az rest --method patch <br> --url https://management.azure.com/subscriptions/$su
 
 Note that the JSON output is the same as the one shown in the previous step.
 
-This function is to see the description of your Azure container registry. This is helpful to ensure that your updates have been correctly changed after the patch function.
+This function is to see the description of your Azure Container Registry. This is helpful to ensure that your updates have been correctly changed after the patch function.
 
-## Use POST to regenerate your Azure container registry credentials
+## Use POST to regenerate your Azure Container Registry credentials
 
 Use the "post" HTTP method to regenerate one of the login credentials for the specified container registry. Here is an example of the syntax:
 
@@ -359,11 +359,11 @@ JSON output:
 
 ```
 
-After the request is sent through, your specified Azure container registry credentials will be regenerated with a new password along with your existing password (password2).
+After the request is sent through, your specified Azure Container Registry credentials will be regenerated with a new password along with your existing password (password2).
 
-## Use DELETE to delete your Azure container registry
+## Use DELETE to delete your Azure Container Registry
 
-Use the "delete" HTTP method to delete an existing Azure container registry. Here is an example of the syntax:
+Use the "delete" HTTP method to delete an existing Azure Container Registry. Here is an example of the syntax:
 
 # [Bash](#tab/bash)
 
@@ -407,7 +407,7 @@ az rest --method delete --url https://management.azure.com/subscriptions/$subscr
 ```
 ***
 
-After the request is sent through, your specified Azure container registry will be deleted. 
+After the request is sent through, your specified Azure Container Registry will be deleted. 
 
 # Clean up resources
 
