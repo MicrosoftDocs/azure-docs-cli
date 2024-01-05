@@ -14,7 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Use the Azure REST API with Azure Command Line Interface (CLI)
 
-[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources, that the user cannot perform with Azure CLI commands alone. 
+[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources which cannot be performed with regular Azure CLI commands.
 
 In order to demonstrate how to use the Azure REST API with Azure CLI, you can walkthrough the following tutorial in which you learn how to create and update your Azure Container Registry (ACR):
 
@@ -26,6 +26,7 @@ In order to demonstrate how to use the Azure REST API with Azure CLI, you can wa
 > * Get the description of your Azure Container Registry with GET
 > * Regenerate your Azure Container Registry credentials with POST
 > * Delete an Azure Container Registry with DELETE
+> * Clean up your Azure Container Registry resources
 
 ## Prerequisites 
 
@@ -38,6 +39,7 @@ In order to demonstrate how to use the Azure REST API with Azure CLI, you can wa
 To invoke a custom Azure REST API request with Azure CLI, you use the `az rest` command, followed by the `--url` parameter. The `--url` parameter defines the URL of the requested resource, and is the only required parameter, while the others listed are all optional. 
 
 > [!NOTE]
+> This command automatically authenticates using the logged-in credential: If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from Azure Active Directory (AAD). The target resource of the token will be derived from the `--url` parameter when the `--url` parameter starts with an endpoint from the `az cloud show --query endpoints`. You may also use the `--resource` parameter for a custom resource.
 > If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
 
 ```azurecli-interactive
@@ -61,8 +63,9 @@ Use the "put" HTTP method to create a new Azure Container Registry. Here is an e
 ```azurecli-interactive
 
 # Bash script
-az rest --method put <br> --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {key': 'value'}, 'sku': {'name': 'Standard'},
-'properties': {'adminUserEnabled': 'true'}}"
+az rest --method put \
+--url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview \
+--body "{'location': 'westus', 'tags': {key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 # Here is an example with completed parameters:
 
@@ -74,7 +77,9 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method put <br> --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
+az rest --method put \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview \
+--body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 ```
 
@@ -83,7 +88,9 @@ az rest --method put <br> --url https://management.azure.com/subscriptions/$subs
 ```azurecli-interactive
 
 # Powershell script
-az rest --method put <br> --url https://management.azure.com/subscriptions/<subscriptionid>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
+az rest --method put \
+--url https://management.azure.com/subscriptions/<subscriptionid>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview \ 
+--body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 # Here is an example with completed parameters:
 
@@ -95,7 +102,9 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method put <br> --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
+az rest --method put \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview \
+--body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 ```
 
@@ -181,7 +190,9 @@ Update your Azure Container Registry by using the "put" HTTP method again and ed
 ```azurecli-interactive
 
 # Bash script
-az rest --method patch <br> --url https://management.azure.com/subscriptions/e0e0637e-211d-440f-8c77-b93e32534188/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
+az rest --method patch \
+--url https://management.azure.com/subscriptions/e0e0637e-211d-440f-8c77-b93e32534188/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview \
+--body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 # Here is an example with completed parameters:
 
@@ -193,7 +204,9 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method patch <br> --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
+az rest --method patch \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview \
+--body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 ```
 
@@ -202,7 +215,9 @@ az rest --method patch <br> --url https://management.azure.com/subscriptions/$su
 ```azurecli-interactive
 
 # Powershell script
-az rest --method patch <br> --url https://management.azure.com/subscriptions/<subscriptionid>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
+az rest --method patch \ 
+--url https://management.azure.com/subscriptions/<subscriptionid>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview \
+--body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 # Here is an example with completed parameters:
 
@@ -214,7 +229,9 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method patch <br> --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview <br> --body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
+az rest --method patch \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview \
+--body "{'location': 'westus', 'tags': {'key': 'value'}, 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
 
 ```
 
@@ -252,7 +269,8 @@ Use the "get" HTTP method to get the description of the Azure Container Registry
 ```azurecli-interactive
 
 # Bash script
-az rest --method get <br> --url https://management.azure.com/subscriptions/e0e0637e-211d-440f-8c77-b93e32534188/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview 
+az rest --method get \
+--url https://management.azure.com/subscriptions/e0e0637e-211d-440f-8c77-b93e32534188/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview 
 
 # Here is an example with completed parameters:
 
@@ -264,7 +282,8 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method put <br> --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview 
+az rest --method get \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview 
 
 ```
 
@@ -273,7 +292,8 @@ az rest --method put <br> --url https://management.azure.com/subscriptions/$subs
 ```azurecli-interactive
 
 # Powershell script
-az rest --method patch <br> --url https://management.azure.com/subscriptions/<subscriptionid>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview 
+az rest --method get \
+--url https://management.azure.com/subscriptions/<subscriptionid>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview 
 
 # Here is an example with completed parameters:
 
@@ -285,7 +305,8 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method patch <br> --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview
+az rest --method get \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview
 ```
 
 ***
@@ -303,7 +324,9 @@ Use the "post" HTTP method to regenerate one of the login credentials for the sp
 ```azurecli-interactive
 
 # Bash script
-az rest --method post --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>/regenerateCredential?api-version=2023-01-01-preview --body "{'name': 'password'}"
+az rest --method post \
+--url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>/regenerateCredential?api-version=2023-01-01-preview \
+--body "{'name': 'password'}"
 
 # Here is an example with completed parameters:
 
@@ -315,7 +338,9 @@ me="msdocs-app-$randomIdentifier"
 location="East US"
 
 # Invoke request
-az rest --method put --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Web/sites/$myAppName/restart?api-version=2022-03-01
+az rest --method post \
+--url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Web/sites/$myAppName/restart?api-version=2022-03-01 \
+--body "{'name': 'password'}"
 
 ```
 
@@ -323,7 +348,9 @@ az rest --method put --url  https://management.azure.com/subscriptions/$subscrip
 
 ```azurecli-interactive
 # Powershell script
-az rest --method post --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>/regenerateCredential?api-version=2023-01-01-preview --body "{'name': 'password'}"
+az rest --method post \
+--url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>/regenerateCredential?api-version=2023-01-01-preview \
+--body "{'name': 'password'}"
 
 # Here is an example with completed parameters:
 
@@ -335,7 +362,9 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method put --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Web/sites/$myAppName/restart?api-version=2022-03-01
+az rest --method post \
+ --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Web/sites/$myAppName/restart?api-version=2022-03-01 \
+--body "{'name': 'password'}"
 ```
 
 ***
@@ -370,7 +399,8 @@ Use the "delete" HTTP method to delete an existing Azure Container Registry. Her
 ```azurecli-interactive
 
 # Bash script
-az rest --method delete --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview
+az rest --method delete \
+--url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview
 
 # Here is an example with completed parameters:
 
@@ -382,7 +412,8 @@ myContainerRegistryName="msdocs-container-registry$randomIdentifier"
 location="westus"
 
 # Invoke request
-az rest --method delete --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview
+az rest --method delete \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview
 
 ```
 
@@ -391,7 +422,8 @@ az rest --method delete --url https://management.azure.com/subscriptions/$subscr
 ```azurecli-interactive
 
 # Powershell script
-az rest --method delete --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview
+az rest --method delete \
+--url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<myContainerRegistryName>?api-version=2023-01-01-preview
 
 # Here is an example with completed parameters:
 
@@ -403,13 +435,14 @@ myNewAppServicePlanName="msdocs-app-service-plan-$randomIdentifier"
 location="East US"
 
 # Invoke request
-az rest --method delete --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview
+az rest --method delete \
+--url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$myContainerRegistryName?api-version=2023-01-01-preview
 ```
 ***
 
 After the request is sent through, your specified Azure Container Registry will be deleted. 
 
-# Clean up resources
+## Clean up resources
 
 If you are finished with the resources created in this article, you can delete the resource group. When you delete the resource group, all resources in that resource group are deleted. 
 
