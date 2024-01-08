@@ -39,6 +39,7 @@ az network vnet create \
   --subnet-name $subnetName \
   --subnet-prefixes $subnetAddressPrefix
 ```
+
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive

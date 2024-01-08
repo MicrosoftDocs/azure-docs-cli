@@ -47,6 +47,8 @@ delimiter must be set to the empty string rather than the default of non-newline
 
 # [Bash](#tab/bash)
 
+---
+
 ```azurecli-interactive
 read -d '' ipId subnetId <<< $(az network nic show \
   --ids $nicId \
@@ -54,7 +56,11 @@ read -d '' ipId subnetId <<< $(az network nic show \
   -o tsv)
 ```
 
+---
+
 # [PowerShell](#tab/powershell)
+
+---
 
 ```azurecli-interactive
 
@@ -64,9 +70,13 @@ $output = az network nic show --ids $nicId --query "[ipConfigurations[].publicIp
 $ipId, $subnetId = $output -split "`t"
 ```
 
+---
+
 Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI. Therefore, it isn't be needed for the rest of the tutorial.
 
 # [Bash](#tab/bash)
+
+---
 
 ```azurecli-interactive
 vmIpAddress=$(az network public-ip show --ids $ipId \
@@ -74,7 +84,11 @@ vmIpAddress=$(az network public-ip show --ids $ipId \
   -o tsv)
 ```
 
+---
+
 # [PowerShell](#tab/powershell)
+
+---
 
 ```azurecli-interactive
 $vmIpAddress = $(az network public-ip show `
@@ -82,6 +96,8 @@ $vmIpAddress = $(az network public-ip show `
     --query ipAddress `
     -o tsv)
 ```
+
+---
 
 Now you have the IP address of the VM stored in a shell variable. Go ahead and check that it's the same value that you used to initially connect to the VM.
 

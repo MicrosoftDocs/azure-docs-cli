@@ -30,6 +30,8 @@ with getting the network interface controller (NIC) object ID.
 
 # [Bash](#tab/bash)
 
+---
+
 ```azurecli-interactive
 az vm show --name $vmName \
   --resource-group $resourceGroup \
@@ -37,7 +39,11 @@ az vm show --name $vmName \
   --output tsv
 ```
 
+---
+
 # [PowerShell](#tab/powershell)
+
+---
 
 ```azurecli-interactive
 az vm show --name $vmName `
@@ -46,6 +52,7 @@ az vm show --name $vmName `
     --output tsv
 ```
 
+---
 There's a lot going on here, just by adding the query. Each part of it references a key in the output JSON, or is a JMESPath operator.
 
 * `networkProfile` is a key of the top-level JSON, which has `networkInterfaces` as a subkey. If a JSON value is a dictionary,
@@ -62,6 +69,8 @@ Go ahead and assign the NIC object ID to a shell variable now.
 
 # [Bash](#tab/bash)
 
+---
+
 ```azurecli-interactive
 nicId=$(az vm show \
   -n $vmName \
@@ -74,10 +83,12 @@ nicId=$(az vm show \
 
 ```azurecli-interactive
 $nicId = $(az vm show `
-    -n $vmName `
+   -n $vmName `
     -g $resourceGroup `
     --query 'networkProfile.networkInterfaces[].id' `
     -o tsv)
 ```
+
+---
 
 This example also demonstrates the use of short arguments. You may use `-g` instead of `--resource-group`, `-n` instead of `--name`, and `-o` instead of `--output`.
