@@ -72,10 +72,8 @@ read -d '' ipId subnetId <<< $(az network nic show \
 
 ```azurecli-interactive
 
-$output = az network nic show --ids $nicId --query "[ipConfigurations[].publicIPAddress.id, ipConfigurations[].subnet.id]" -o tsv
-
-# Split the output into two variables
-$ipId, $subnetId = $output -split "`t"
+$ipId = az network nic show --ids $nicId --query '[ipConfigurations[].publicIPAddress.id]' -o tsv
+$subnetId = az network nic show --ids $nicId --query '[ipConfigurations[].subnet.id]' -o tsv
 ```
 
 ---
@@ -84,7 +82,6 @@ Use the public IP object ID to look up the public IP address and store it in a s
 
 ---
 # [Bash](#tab/bash)
-
 
 ```azurecli-interactive
 vmIpAddress=$(az network public-ip show --ids $ipId \
