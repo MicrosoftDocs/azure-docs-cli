@@ -56,8 +56,6 @@ read -d '' ipId subnetId <<< $(az network nic show \
   -o tsv)
 ```
 
----
-
 # [PowerShell](#tab/powershell)
 
 ---
@@ -83,8 +81,6 @@ vmIpAddress=$(az network public-ip show --ids $ipId \
   --query ipAddress \
   -o tsv)
 ```
-
----
 
 # [PowerShell](#tab/powershell)
 

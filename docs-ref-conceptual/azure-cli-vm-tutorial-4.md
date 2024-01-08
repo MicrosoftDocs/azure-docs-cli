@@ -39,8 +39,6 @@ az vm show --name $vmName \
   --output tsv
 ```
 
----
-
 # [PowerShell](#tab/powershell)
 
 ---
