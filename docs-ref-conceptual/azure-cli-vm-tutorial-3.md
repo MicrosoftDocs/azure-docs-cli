@@ -58,6 +58,8 @@ az vm create `
     --verbose
 ```
 
+---
+
 > [!NOTE]
 > If you have an SSH key named `id_rsa` already available, this key is used for authentication rather than having a new
 > key generated.
