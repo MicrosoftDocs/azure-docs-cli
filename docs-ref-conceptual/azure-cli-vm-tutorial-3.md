@@ -27,7 +27,7 @@ In PowerShell, declare variables with a "$", and use quotes for values, such as 
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
-# create shell variables
+# create Bash variables
 vmName=TutorialVM1
 
 az vm create \
