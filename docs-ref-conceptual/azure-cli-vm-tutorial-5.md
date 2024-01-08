@@ -69,7 +69,6 @@ read -d '' ipId subnetId <<< $(az network nic show \
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
-
 $ipId = az network nic show --ids $nicId --query '[ipConfigurations[].publicIPAddress.id]' -o tsv
 $subnetId = az network nic show --ids $nicId --query '[ipConfigurations[].subnet.id]' -o tsv
 ```
