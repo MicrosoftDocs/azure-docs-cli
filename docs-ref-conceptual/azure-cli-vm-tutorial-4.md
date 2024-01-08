@@ -28,7 +28,6 @@ to get more information about the VM's configuration and capabilities.
 In order to extract the object ID, the `--query` argument is used. Queries are written in the [JMESPath query language](http://jmespath.org)Start
 with getting the network interface controller (NIC) object ID.
 
----
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
@@ -48,6 +47,7 @@ az vm show --name $vmName `
 ```
 
 ---
+
 There's a lot going on here, just by adding the query. Each part of it references a key in the output JSON, or is a JMESPath operator.
 
 * `networkProfile` is a key of the top-level JSON, which has `networkInterfaces` as a subkey. If a JSON value is a dictionary,
@@ -61,8 +61,6 @@ Since the returned value is a single bare string, it's safe to assign directly t
 For more information about querying Azure CLI output, see [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md)
 
 Go ahead and assign the NIC object ID to a shell variable now.
-
----
 
 # [Bash](#tab/bash)
 
