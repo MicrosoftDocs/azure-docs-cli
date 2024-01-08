@@ -1,7 +1,7 @@
 ---
 title: Get virtual machines information with queries (VM) – Azure CLI | Microsoft Docs
 description: Learn how to get virtual machines (VM) information with Azure CLI queries.
-ms.date: 08/1/2023
+ms.date: 01/08/2024
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -79,9 +79,9 @@ nicId=$(az vm show \
 ```azurecli-interactive
 $nicId = $(az vm show `
    -n $vmName `
-    -g $resourceGroup `
-    --query 'networkProfile.networkInterfaces[].id' `
-    -o tsv)
+   -g $resourceGroup `
+   --query 'networkProfile.networkInterfaces[].id' `
+   -o tsv)
 ```
 
 ---
