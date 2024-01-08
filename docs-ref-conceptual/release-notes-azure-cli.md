@@ -58,7 +58,6 @@ Version 2.56.0
 
 ### Containerapp
 
-* `az containerapp update`: Fix issue for minReplicas in `--yaml` or `--min-replicas` is not set when the value is `0`
 * `az containerapp job update`: Fix bug for minExecutions in `--yaml` is not set when the value is `0`
 * `az containerapp hostname bind`: Fix an issue about parsing the environment's resource group when the `--environment` is a resource id
 
