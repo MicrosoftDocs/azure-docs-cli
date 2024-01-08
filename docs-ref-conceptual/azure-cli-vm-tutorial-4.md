@@ -28,9 +28,8 @@ to get more information about the VM's configuration and capabilities.
 In order to extract the object ID, the `--query` argument is used. Queries are written in the [JMESPath query language](http://jmespath.org)Start
 with getting the network interface controller (NIC) object ID.
 
-# [Bash](#tab/bash)
-
 ---
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 az vm show --name $vmName \
@@ -40,8 +39,6 @@ az vm show --name $vmName \
 ```
 
 # [PowerShell](#tab/powershell)
-
----
 
 ```azurecli-interactive
 az vm show --name $vmName `
@@ -65,9 +62,9 @@ For more information about querying Azure CLI output, see [How to query Azure CL
 
 Go ahead and assign the NIC object ID to a shell variable now.
 
-# [Bash](#tab/bash)
-
 ---
+
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 nicId=$(az vm show \

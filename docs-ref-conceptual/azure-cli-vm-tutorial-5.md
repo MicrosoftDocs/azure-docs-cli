@@ -45,9 +45,8 @@ for command-line tools, it helps with human readability and can be used with cus
 In order to use command-line tools, change the command to remove the custom JSON keys and output as `tsv`. The `read` command processes this style of output by loading results into multiple variables. Since two values are displayed on separate lines, the `read` command
 delimiter must be set to the empty string rather than the default of non-newline whitespace.
 
-# [Bash](#tab/bash)
-
 ---
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
 read -d '' ipId subnetId <<< $(az network nic show \
@@ -57,8 +56,6 @@ read -d '' ipId subnetId <<< $(az network nic show \
 ```
 
 # [PowerShell](#tab/powershell)
-
----
 
 ```azurecli-interactive
 
@@ -72,9 +69,9 @@ $ipId, $subnetId = $output -split "`t"
 
 Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI. Therefore, it isn't be needed for the rest of the tutorial.
 
+---
 # [Bash](#tab/bash)
 
----
 
 ```azurecli-interactive
 vmIpAddress=$(az network public-ip show --ids $ipId \
@@ -83,8 +80,6 @@ vmIpAddress=$(az network public-ip show --ids $ipId \
 ```
 
 # [PowerShell](#tab/powershell)
-
----
 
 ```azurecli-interactive
 $vmIpAddress = $(az network public-ip show `
