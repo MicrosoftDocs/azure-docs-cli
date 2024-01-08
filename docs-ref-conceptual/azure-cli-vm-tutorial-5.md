@@ -22,11 +22,24 @@ az network nic show --ids $nicId
 
 This command shows all of the information for the network interface of the VM. This data includes DNS settings, IP information, security settings, and the MAC address. The following query shows how to obtain the public IP address and subnet object IDs.
 
+---
+# [Bash](#tab/bash)
+
 ```azurecli-interactive
 az network nic show --ids $nicId \
-  --query '{IP:ipConfigurations[].publicIpAddress.id, Subnet:ipConfigurations[].subnet.id}' \
+  --query '{IP:ipConfigurations[].publicIPAddress.id, Subnet:ipConfigurations[].subnet.id}' \
   -o json
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+az network nic show --ids $nicId `
+  --query '{IP:ipConfigurations[].publicIPAddress.id, Subnet:ipConfigurations[].subnet.id}' `
+  -o json
+```
+
+---
 
 ```json
 {
@@ -59,7 +72,7 @@ read -d '' ipId subnetId <<< $(az network nic show \
 
 ```azurecli-interactive
 
-$output = az network nic show --ids $nicId --query "[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]" -o tsv
+$output = az network nic show --ids $nicId --query "[ipConfigurations[].publicIPAddress.id, ipConfigurations[].subnet.id]" -o tsv
 
 # Split the output into two variables
 $ipId, $subnetId = $output -split "`t"
