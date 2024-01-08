@@ -36,7 +36,7 @@ that make them easier to work with as a collection. Use the [az group create](/c
 # [Bash](#tab/bash)
 
 ```azurecli
-# create Bash variables
+# create Bash shell variables
 resourceGroup=VMTutorialResources
 location=eastus
 
