@@ -47,7 +47,7 @@ delimiter must be set to the empty string rather than the default of non-newline
 
 # [Bash](#tab/bash)
 
-```azurecli
+```azurecli-interactive
 read -d '' ipId subnetId <<< $(az network nic show \
   --ids $nicId \
   --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
@@ -56,7 +56,7 @@ read -d '' ipId subnetId <<< $(az network nic show \
 
 # [PowerShell](#tab/powershell)
 
-```azurecli
+```azurecli-interactive
 
 $output = az network nic show --ids $nicId --query "[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]" -o tsv
 
@@ -68,7 +68,7 @@ Use the public IP object ID to look up the public IP address and store it in a s
 
 # [Bash](#tab/bash)
 
-```azurecli
+```azurecli-interactive
 vmIpAddress=$(az network public-ip show --ids $ipId \
   --query ipAddress \
   -o tsv)
@@ -76,7 +76,7 @@ vmIpAddress=$(az network public-ip show --ids $ipId \
 
 # [PowerShell](#tab/powershell)
 
-```azurecli
+```azurecli-interactive
 $vmIpAddress = $(az network public-ip show `
     --ids $ipId `
     --query ipAddress `

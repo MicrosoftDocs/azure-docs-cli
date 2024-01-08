@@ -62,7 +62,7 @@ Go ahead and assign the NIC object ID to a shell variable now.
 
 # [Bash](#tab/bash)
 
-```azurecli
+```azurecli-interactive
 nicId=$(az vm show \
   -n $vmName \
   -g $resourceGroup \
