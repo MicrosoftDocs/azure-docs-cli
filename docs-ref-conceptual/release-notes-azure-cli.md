@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 12/05/2023
+ms.date: 01/09/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,113 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## January 09, 2024
+
+Version 2.56.0
+
+### AKS
+
+* `az aks create/update`: Add new parameter `--load-balancer-backend-pool-type` to define the Load Balancer backend pool type of managed inbound backend pool
+* `az aks create`: Add parameter `--node-public-ip-tags` to specify the ipTags of the node public IPs
+* `az aks nodepool`: Add parameter `--node-public-ip-tags` to specify the ipTags of the node public IPs
+* `az aks create` and `az aks nodepool add`: Add crg-id option to create nodepool with Capacity Reservation Group
+* `az aks stop`: Add warning when private link cluster is stopped
+* `az aks trustedaccess role`: Add new command group to manage trusted access roles
+* `az aks trustedaccess rolebinding`: Add new command group to manage trusted access role bindings
+* `az aks trustedaccess rolebinding list`: Add new command to list all the trusted access role bindings
+* `az aks trustedaccess rolebinding show`: Add new command to get the specific trusted access role binding according to binding name
+* `az aks trustedaccess rolebinding create`: Add new command to create a new trusted access role binding
+* `az aks trustedaccess rolebinding update`: Add new command to update an existing trusted access role binding
+* `az aks trustedaccess rolebinding delete`: Add new command to delete a trusted access role binding according to name
+* `az aks update`: Add parameter `--network-plugin` to update the network plugin of the AKS cluster
+
+### App Config
+
+* `az appconfig feature set`: Add requirement type to feature command
+
+### App Service
+
+* `az functionapp create`: Add DAPR support for Centauri apps
+* `az functionapp create`: Remove workarounds for Centauri
+* `az webapp deploy`: Add `--track-status` arg to use deploymentstatus API
+* `az functionapp create`: Add workload profile support for Centauri apps
+
+### ARM
+
+* `az bicep publish`: Add optional parameter `--with-source` to publish source code with the module (experimental)
+* `az lock delete`: Fix the case sensitive comparison issue for resource group name
+
+### Compute
+
+* `az vmss create`: Change `--orchestration-mode` to support only `uniform` for old profile
+* `az vm/vmss create/update`: Add new parameters `--enable-proxy-agent` and `--proxy-agent-mode` to support azure metadata security protocol
+* `az vm/vmss create`: Add new option `NonPersistedTPM` for parameter `--os-disk-security-encryption-type` to support creating Intel TDX based Confidential VM
+
+### Containerapp
+
+* `az containerapp job update`: Fix bug for minExecutions in `--yaml` is not set when the value is `0`
+* `az containerapp hostname bind`: Fix an issue about parsing the environment's resource group when the `--environment` is a resource id
+
+### Cosmos DB
+
+* `az cosmosdb sql database restore`: Add support for restore of deleted database resource in the same SQL account
+* `az cosmosdb sql container restore`: Add support for restore of deleted container resource in the same SQL account
+* `az cosmosdb mongodb database restore`: Add support for restore of deleted database resource in the same MongoDB account
+* `az cosmosdb mongodb collection restore`: Add support for restore of deleted collection resource in the same MongoDB account
+* `az cosmosdb gremlin database restore`: Add support for restore of deleted database resource in the same gremlin account
+* `az cosmosdb gremlin graph restore`: Add support for restore of deleted graph resource in the same gremlin account
+* `az cosmosdb table restore`: Add support for restore of deleted table resource in the same account
+
+### Eventhub
+
+* `az eventhubs georecovery-alias create`: Name parameter is required
+
+### Extension
+
+* `az extension`: Enable extension semantic versioning and join `experimental` into `preview`
+* `az extension add/update`: Add `--allow-preview` to distinguish stable-only installation with preview-included installation
+
+### Key Vault
+
+* `az keyvault create/update-hsm`: GA `--mi-user-assigned`
+* `az keyvault backup/restore start`: GA `--use-managed-identity`
+
+### Monitor
+
+* `az monitor log-analytics workspace`: Add `list-link-target` and `list-available-service-tier`
+
+### Network
+
+* `az network application-gateway waf-config list-dynamic-rule-sets`: Support to get the WAF dynamic manifest
+* `az network nsg rule list`: Fix ranges and prefixes disappeared with `-o table` option
+* `az network vnet subnet`: Add `--private-endpoint-network-policies` and `--private-link-service-network-policies`
+
+### RDBMS
+
+* `az postgres flexible-server virtual-endpoint`: Add support for virtual endpoints for PostgreSQL flexible server
+* `az postgres flexible-server replica promote`: Add capability to stop replication and promote to primary or standalone server with the selection of planned/force data syncs.
+* `az postgres flexible-server server-logs list`: List server log files for PostgreSQL flexible server
+* `az postgres flexible-server server-logs download`: Download server log files for PostgreSQL flexible server
+* `az postgres flexible-server create`: Add capability to set storage type to PremiumV2_LRS and provide values for IOPS and Throughput during creation
+* `az postgres flexible-server update`: Add capability to update the values of IOPS and Throughput during update
+* `az postgres flexible-server migration create`: Add migration option like Migrate, Validate and ValidateAndMigrate using parameter `--migration-option` and json file for Migration configuration to support additional properties like sourceType and sslMode
+
+### Redis
+
+* `az redis import/export`: Add `--storage-subscription-id` support while importing/exporting data
+
+### Service Bus
+
+* `az servicebus georecovery-alias create`: Name parameter is required
+
+### Storage
+
+* [BREAKING CHANGE] `az storage account create`: Server change default value for `--allow-blob-public-access` and `--allow-cross-tenant-replication` to `False` for security concerns
+
+### Upgrade
+
+* `az upgrade`: Add `--allow-preview` to distinguish stable-only extension installation with preview-included extension installation
 
 ## December 05, 2023
 
