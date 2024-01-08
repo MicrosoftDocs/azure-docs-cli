@@ -32,15 +32,14 @@ In order to demonstrate how to use the Azure REST API with Azure CLI, you can wa
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
-## Use PUT to create an Azure Container Registry
 
-### Set up your custom Azure REST API request:
+## Set up your custom Azure REST API request:
 
 To invoke a custom Azure REST API request with Azure CLI, you use the `az rest` command, followed by the `--url` parameter. The `--url` parameter defines the URL of the requested resource, and is the only required parameter, while the others listed are all optional. 
 
 > [!NOTE]
-> This command automatically authenticates using the logged-in credential: If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from Azure Active Directory (AAD). The target resource of the token will be derived from the `--url` parameter when the `--url` parameter starts with an endpoint from the `az cloud show --query endpoints`. You may also use the `--resource` parameter for a custom resource.
-> If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
+> - This command automatically authenticates using the logged-in credential: If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from Azure Active Directory (AAD). The target resource of the token will be derived from the `--url` parameter when the `--url` parameter starts with an endpoint from the `az cloud show --query endpoints`. You may also use the `--resource` parameter for a custom resource.
+> - If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
 
 ```azurecli-interactive
 
@@ -53,6 +52,8 @@ az rest --url
         [--skip-authorization-header]
         [--uri-parameters]
 ```
+
+## Use PUT to create an Azure Container Registry
 
 ### Creating your custom request with Azure CLI 
 
@@ -335,7 +336,7 @@ let "randomIdentifier=$RANDOM*$RANDOM"
 subscriptionId="00000000-0000-0000-0000-000000000000"
 resourceGroup="msdocs-app-service-rg-$randomIdentifier"
 me="msdocs-app-$randomIdentifier"
-location="East US"
+location="westus"
 
 # Invoke request
 az rest --method post \
@@ -432,7 +433,7 @@ let "randomIdentifier=$RANDOM*$RANDOM"
 subscriptionId="00000000-0000-0000-0000-000000000000"
 resourceGroup="msdocs-app-service-rg-$randomIdentifier"
 myNewAppServicePlanName="msdocs-app-service-plan-$randomIdentifier"
-location="East US"
+location="westus"
 
 # Invoke request
 az rest --method delete \
