@@ -23,7 +23,7 @@ Use the [az network vnet create](/cli/azure/network/vnet#az_network_vnet_create)
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
-# create shell variables
+# create Bash shell variables
 vnetName=TutorialVNet1
 subnetName=TutorialSubnet1
 vnetAddressPrefix=10.0.0.0/16
@@ -43,7 +43,7 @@ az network vnet create \
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
-# create shell variables
+# create PowerShell variables
 $vnetName = "TutorialVNet1"
 $subnetName = "TutorialSubnet1"
 $vnetAddressPrefix = "10.0.0.0/16"
