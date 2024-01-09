@@ -32,10 +32,6 @@ You can install the Azure CLI on macOS by updating your brew repository informat
 brew update && brew install azure-cli
 ```
 
-> [!IMPORTANT]
->
-> The Azure CLI has a dependency on the Homebrew `python@3.10` package, and will install it.
-
 ## Troubleshooting
 
 If you encounter a problem when installing the CLI through Homebrew, here are some common errors. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
