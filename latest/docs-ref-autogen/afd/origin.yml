@@ -3,8 +3,6 @@ uid: az_afd_origin
 name: az afd origin
 summary: |-
   Manage origins within the specified origin group.
-description: |-
-  Origins are the application servers where Front Door will route your client requests. Utilize any publicly accessible application server, including App Service, Traffic Manager, Private Link, and many others.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -13,22 +11,23 @@ directCommands:
 - uid: az_afd_origin_create
   name: az afd origin create
   summary: |-
-    Create an AFD origin.
+    Create a new origin within the specified origin group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
-    az afd origin create --enabled-state {Disabled, Enabled}
-                         --host-name
+    az afd origin create --name
                          --origin-group-name
-                         --origin-name
                          --profile-name
                          --resource-group
-                         [--enable-private-link {false, true}]
-                         [--enforce-certificate-name-check {false, true}]
+                         [--enable-private-link {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--enabled-state {Disabled, Enabled}]
+                         [--enforce-certificate-name-check {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--host-name]
                          [--http-port]
                          [--https-port]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--origin-host-header]
                          [--priority]
                          [--private-link-location]
@@ -39,61 +38,62 @@ directCommands:
   examples:
   - summary: |-
       Create an regular origin
-    syntax: az afd origin create -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 1 --weight 500 --enabled-state Enabled --http-port 80 --https-port 443
+    syntax: 'az afd origin create -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 1 --weight 500 --enabled-state Enabled --http-port 80 --https-port 443 - name: Create a private link origin'
   - summary: |-
       Create a private link origin
     syntax: az afd origin create -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --origin-host-header example.contoso.com --priority 1 --weight 500 --enabled-state Enabled --http-port 80 --https-port 443 --private-link-resource /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group/providers/Microsoft.Storage/storageAccounts/plstest --private-link-location EastUS --private-link-request-message 'Please approve this request' --private-link-sub-resource-type table
   requiredParameters:
   - isRequired: true
-    name: --enabled-state
-    parameterValueGroup: "Disabled, Enabled"
+    name: --name --origin-name -n
     summary: |-
-      Whether to enable this origin.
-  - isRequired: true
-    name: --host-name
-    summary: |-
-      The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in a origin group.
+      Name of the origin that is unique within the profile.
   - isRequired: true
     name: --origin-group-name
     summary: |-
-      Name of the origin group which is unique within the endpoint.
-  - isRequired: true
-    name: --origin-name
-    summary: |-
-      Name of the origin.
+      Name of the origin group which is unique within the profile.
   - isRequired: true
     name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --enable-private-link
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Indicates whether private link is enanbled on that origin.
+  - name: --enabled-state
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
   - name: --enforce-certificate-name-check
     defaultValue: "True"
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      "Whether to enable certificate name check at origin level.
+      Whether to enable certificate name check at origin level.
+  - name: --host-name
+    summary: |-
+      The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
   - name: --http-port
     defaultValue: "80"
     summary: |-
-      The port used for http requests to the origin.
+      The value of the HTTP port. Must be between 1 and 65535.
   - name: --https-port
     defaultValue: "443"
     summary: |-
-      The port used for https requests to the origin.
+      The value of the HTTPS port. Must be between 1 and 65535.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origin-host-header
     summary: |-
-      The Host header to send for requests to this origin. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
+      The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint.
   - name: --priority
-    defaultValue: "1"
     summary: |-
-      Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy. Must be between 1 and 5.
+      Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
   - name: --private-link-location
     summary: |-
       The location of origin that will be connected to using the private link.
@@ -107,21 +107,21 @@ directCommands:
     summary: |-
       The sub-resource type of the origin that will be connected to using the private link.You can use "az network private-link-resource list" to obtain the supported sub-resource types.
   - name: --weight
-    defaultValue: "1000"
     summary: |-
       Weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
 - uid: az_afd_origin_delete
   name: az afd origin delete
   summary: |-
-    Deletes an existing origin within an origin group.
+    Delete an existing origin within an origin group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
     az afd origin delete [--ids]
+                         [--name]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--origin-group-name]
-                         [--origin-name]
                          [--profile-name]
                          [--resource-group]
                          [--subscription]
@@ -130,15 +130,19 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --origin-name -n
+    summary: |-
+      Name of the origin which is unique within the profile.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origin-group-name
     summary: |-
-      Name of the origin group which is unique within the endpoint.
-  - name: --origin-name
-    summary: |-
-      Name of the origin.
+      Name of the origin group which is unique within the profile.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -152,7 +156,7 @@ directCommands:
 - uid: az_afd_origin_list
   name: az afd origin list
   summary: |-
-    Lists all of the existing origins within an origin group.
+    List all of the existing origins within an origin group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -161,31 +165,40 @@ directCommands:
     az afd origin list --origin-group-name
                        --profile-name
                        --resource-group
+                       [--max-items]
+                       [--next-token]
   requiredParameters:
   - isRequired: true
     name: --origin-group-name
     summary: |-
-      Name of the origin group which is unique within the endpoint.
+      Name of the origin group which is unique within the profile.
   - isRequired: true
     name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_afd_origin_show
   name: az afd origin show
   summary: |-
-    Gets an existing origin within an origin group.
+    Get an existing origin within an origin group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
     az afd origin show [--ids]
+                       [--name]
                        [--origin-group-name]
-                       [--origin-name]
                        [--profile-name]
                        [--resource-group]
                        [--subscription]
@@ -193,15 +206,15 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --origin-name -n
+    summary: |-
+      Name of the origin which is unique within the profile.
   - name: --origin-group-name
     summary: |-
-      Name of the origin group which is unique within the endpoint.
-  - name: --origin-name
-    summary: |-
-      Name of the origin.
+      Name of the origin group which is unique within the profile.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -211,29 +224,34 @@ directCommands:
 - uid: az_afd_origin_update
   name: az afd origin update
   summary: |-
-    Update the settings of the specified AFD origin.
+    Update a new origin within the specified origin group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
-    az afd origin update [--enable-private-link {false, true}]
+    az afd origin update [--add]
+                         [--enable-private-link {0, 1, f, false, n, no, t, true, y, yes}]
                          [--enabled-state {Disabled, Enabled}]
-                         [--enforce-certificate-name-check {false, true}]
+                         [--enforce-certificate-name-check {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                          [--host-name]
                          [--http-port]
                          [--https-port]
                          [--ids]
+                         [--name]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--origin-group-name]
                          [--origin-host-header]
-                         [--origin-name]
                          [--priority]
                          [--private-link-location]
                          [--private-link-request-message]
                          [--private-link-resource]
                          [--private-link-sub-resource-type]
                          [--profile-name]
+                         [--remove]
                          [--resource-group]
+                         [--set]
                          [--subscription]
                          [--weight]
   examples:
@@ -244,42 +262,53 @@ directCommands:
       Disable private link of the origin.
     syntax: az afd origin update -g group --host-name example.contoso.com --profile-name profile --origin-group-name originGroup --origin-name origin1 --enable-private-link False
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --enable-private-link
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Indicates whether private link is enanbled on that origin.
   - name: --enabled-state
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Whether to enable this origin.
+      Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
   - name: --enforce-certificate-name-check
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      "Whether to enable certificate name check at origin level.
+      Whether to enable certificate name check at origin level.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --host-name
     summary: |-
-      The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in a origin group.
+      The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
   - name: --http-port
     summary: |-
-      The port used for http requests to the origin.
+      The value of the HTTP port. Must be between 1 and 65535.
   - name: --https-port
     summary: |-
-      The port used for https requests to the origin.
+      The value of the HTTPS port. Must be between 1 and 65535.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --origin-name -n
+    summary: |-
+      Name of the origin which is unique within the profile.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origin-group-name
     summary: |-
-      Name of the origin group which is unique within the endpoint.
+      Name of the origin group which is unique within the profile.
   - name: --origin-host-header
     summary: |-
-      The Host header to send for requests to this origin. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default.
-  - name: --origin-name
-    summary: |-
-      Name of the origin.
+      The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint.
   - name: --priority
     summary: |-
-      Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy. Must be between 1 and 5.
+      Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
   - name: --private-link-location
     summary: |-
       The location of origin that will be connected to using the private link.
@@ -294,22 +323,97 @@ directCommands:
       The sub-resource type of the origin that will be connected to using the private link.You can use "az network private-link-resource list" to obtain the supported sub-resource types.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --weight
     summary: |-
       Weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
+- uid: az_afd_origin_wait
+  name: az afd origin wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  syntax: >-
+    az afd origin wait [--created]
+                       [--custom]
+                       [--deleted]
+                       [--exists]
+                       [--ids]
+                       [--interval]
+                       [--name]
+                       [--origin-group-name]
+                       [--profile-name]
+                       [--resource-group]
+                       [--subscription]
+                       [--timeout]
+                       [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --origin-name -n
+    summary: |-
+      Name of the origin which is unique within the profile.
+  - name: --origin-group-name
+    summary: |-
+      Name of the origin group which is unique within the profile.
+  - name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_afd_origin_create
 - az_afd_origin_delete
 - az_afd_origin_list
 - az_afd_origin_show
 - az_afd_origin_update
+- az_afd_origin_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -335,4 +439,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Origins are the application servers where Front Door will route your client requests. Utilize any publicly accessible application server, including App Service, Traffic Manager, Private Link, and many others.
+  description: Manage origins within the specified origin group.
