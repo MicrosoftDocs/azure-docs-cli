@@ -62,18 +62,27 @@ delimiter must be set to the empty string rather than the default of non-newline
 ```azurecli-interactive
 read -d '' ipId subnetId <<< $(az network nic show \
   --ids $nicId \
-  --query '[ipConfigurations[].publicIpAddress.id, ipConfigurations[].subnet.id]' \
+  --query '[ipConfigurations[].publicIPAddress.id, ipConfigurations[].subnet.id]' \
   -o tsv)
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
-$ipId = az network nic show --ids $nicId --query '[ipConfigurations[].publicIPAddress.id]' -o tsv
-$subnetId = az network nic show --ids $nicId --query '[ipConfigurations[].subnet.id]' -o tsv
+$output = az network nic show --ids $nicId --query "[ipConfigurations[].publicIPAddress.id, ipConfigurations[].subnet.id]" -o tsv
+
+# Split the output into two variables
+$ipId, $subnetId = $output -split "`t"
 ```
 
 ---
+
+If you don't want to use the Bash `read` or PowerShell `-split` command, you can set each variable separately.
+
+```azurecli-interactive
+$ipId = az network nic show --ids $nicId --query '[ipConfigurations[].publicIPAddress.id]' -o tsv
+$subnetId = az network nic show --ids $nicId --query '[ipConfigurations[].subnet.id]' -o tsv
+```
 
 Use the public IP object ID to look up the public IP address and store it in a shell variable. The subnet ID was used to demonstrate how to query and store multiple values in the Azure CLI. Therefore, it isn't be needed for the rest of the tutorial.
 
