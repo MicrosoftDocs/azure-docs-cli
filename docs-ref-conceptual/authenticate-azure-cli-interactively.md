@@ -47,25 +47,7 @@ az login --user <username> --password <password>
 
 ## Refresh tokens
 
-When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. When an access token is granted, it is only valid for a short amount of time. Therefore, a refresh token is generated at the same time, so that the client application can exchange an expired token for a new access token when needed. 
-
-Use [az account get-access-token](/cli/azure/account#az-account-get-access-token) to retrieve the access token: 
-
-```azurecli
-az account show --output table
-
-# get access token for the active subscription
-az account get-access-token
-
-# get access token for a specific subscription
-az account get-access-token --subscription "<subscription ID or name>"
-
-
-az account get-access-token --scope "myScope" --subscription "mySubscriptionName" --name "resourceGroupName"
-
-```
-
-[!INCLUDE [access-token](includes/access-token.md)]
+[!INCLUDE [refresh-token](includes/refresh-token.md)]
 
 ## Sign in with a different tenant
 

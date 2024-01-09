@@ -36,17 +36,7 @@ Alternatives you may consider for stability:
 
 You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use a subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in [`az account show`](/cli/azure/account#az_account_show). 
 
-Starting from Azure CLI 2.54.0, `az account get-access-token` returns an additional property which makes it supported by MSAL-based Azure CLI. See the following for an example of the access token output of the changes:
-
-```azurecli-interactive
-
-# Verify the active subscription.
-az account show --output table
-
-# Get access token for the active subscription.
-az account get-access-token
-
-```
+[!INCLUDE [refresh-token](includes/refresh-token.md)]
 
 Console output:
 
