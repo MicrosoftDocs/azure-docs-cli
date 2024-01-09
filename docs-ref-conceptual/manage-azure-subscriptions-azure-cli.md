@@ -30,25 +30,7 @@ An Azure _resource group_ is a container that holds related resources for an Azu
 
 ## Refresh tokens
 
-When you sign in with a user account, Azure CLI generates and stores an authentication refresh token. When a access token is granted, it is only valid for a short amount of time. Therefore, a refresh token is also generated at the same time, so that the client application can exchange this refresh token for a new access token when needed. to learn more about refresh tokens, see [Refresh tokens in the Microsoft identity platform](/azure/active-directory/develop/refresh-tokens). 
-
-Use [az account get-access-token](/cli/azure/account#az-account-get-access-token) to retrieve the access token: 
-
-```azurecli
-
-# get access token for the active subscription
-az account get-access-token
-
-# get access token for a specific subscription
-az account get-access-token --subscription "<subscription ID or name>"
-
-
-az account get-access-token --scope "myScope" --subscription "mySubscriptionName" --name "resourceGroupName"
-
-```
-
-Starting from Azure CLI 2.54.0, `az account get-access-token` returns a new `expires_on` property alongside the existing `expiresOn` property for the token expiration time. Find your local datetime in `expiresOn`. The new `expires_on` property represents a Portable Operating System Interface (POSIX) timestamp. We recommend for downstream applications to use the `expires_on` property, because it uses the Universal Time Code (UTC). However, it should be noted that `expiresOn` cannot express "fold" when Daylight Saving Time ends. This can cause problems in countries or regions where Daylight Saving Time is adopted. For more information on "fold", see [PEP 495 – Local Time Disambiguation](https://peps.python.org/pep-0495/).
-
+[!INCLUDE [refresh-token](includes/refresh-token.md)]
 
 ## Get the active tenant
 
