@@ -27,6 +27,13 @@ directCommands:
                           [--app-insights-key]
                           [--assign-identity]
                           [--consumption-plan-location]
+                          [--cpu]
+                          [--dal {false, true}]
+                          [--dapr-app-id]
+                          [--dapr-app-port]
+                          [--dapr-http-max-request-size]
+                          [--dapr-http-read-buffer-size]
+                          [--dapr-log-level {debug, error, info, warn}]
                           [--deployment-container-image-name]
                           [--deployment-local-git]
                           [--deployment-source-branch]
@@ -34,11 +41,13 @@ directCommands:
                           [--disable-app-insights {false, true}]
                           [--docker-registry-server-password]
                           [--docker-registry-server-user]
+                          [--enable-dapr {false, true}]
                           [--environment]
                           [--functions-version {2, 3, 4}]
                           [--https-only {false, true}]
                           [--image]
                           [--max-replicas]
+                          [--memory]
                           [--min-replicas]
                           [--os-type {Linux, Windows}]
                           [--plan]
@@ -52,6 +61,7 @@ directCommands:
                           [--subnet]
                           [--tags]
                           [--vnet]
+                          [--workload-profile-name]
                           [--workspace]
   examples:
   - summary: |-
@@ -89,6 +99,31 @@ directCommands:
   - name: --consumption-plan-location -c
     summary: |-
       Geographic location where function app will be hosted. Use `az functionapp list-consumption-locations` to view available locations.
+  - name: --cpu
+    summary: |-
+      The CPU in cores of the container app. e.g 0.75.
+    isPreview: true
+  - name: --dal --dapr-enable-api-logging
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable/Disable API logging for the Dapr sidecar.
+  - name: --dapr-app-id
+    summary: |-
+      The Dapr application identifier.
+  - name: --dapr-app-port
+    summary: |-
+      The port Dapr uses to communicate to the application.
+  - name: --dapr-http-max-request-size --dhmrs
+    summary: |-
+      Max size of request body http and grpc servers in MB to handle uploading of large files.
+  - name: --dapr-http-read-buffer-size --dhrbs
+    summary: |-
+      Max size of http header read buffer in KB to handle when sending multi-KB headers.
+  - name: --dapr-log-level
+    parameterValueGroup: "debug, error, info, warn"
+    summary: |-
+      The log level for the Dapr sidecar.
   - name: --deployment-container-image-name
     summary: |-
       Container image, e.g. publisher/image-name:tag.
@@ -118,6 +153,11 @@ directCommands:
       The container registry server username.
     isDeprecated: true
     deprecateInfo: Option '--docker-registry-server-user' has been deprecated and will be removed in a future release. Use '--registry-username' instead.
+  - name: --enable-dapr
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable/Disable Dapr for a function app on an Azure Container App environment.
   - name: --environment
     summary: |-
       Name of the container app environment.
@@ -136,11 +176,15 @@ directCommands:
       Container image, e.g. publisher/image-name:tag.
   - name: --max-replicas
     summary: |-
-      The maximum number of replicas when create funtion app on container app.
+      The maximum number of replicas when create function app on container app.
+    isPreview: true
+  - name: --memory
+    summary: |-
+      The memory size of the container app. e.g. 1.0Gi,.
     isPreview: true
   - name: --min-replicas
     summary: |-
-      The minimum number of replicas when create funtion app on container app.
+      The minimum number of replicas when create function app on container app.
     isPreview: true
   - name: --os-type
     parameterValueGroup: "Linux, Windows"
@@ -181,6 +225,10 @@ directCommands:
   - name: --vnet
     summary: |-
       Name or resource ID of the regional virtual network. If there are multiple vnets of the same name across different resource groups, use vnet resource id to specify which vnet to use. If vnet name is used, by default, the vnet in the same resource group as the webapp will be used. Must be used with --subnet argument.
+  - name: --workload-profile-name
+    summary: |-
+      The workload profile name to run the container app on.
+    isPreview: true
   - name: --workspace
     summary: |-
       Name of an existing log analytics workspace to be used for the application insights component.

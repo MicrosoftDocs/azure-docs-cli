@@ -1,7 +1,7 @@
 ---
 title: Create virtual machine (VM) on a virtual network (VNet) prerequisites – Azure CLI | Microsoft Docs
 description: Prerequisites for creating a virtual machines (VM) on a virtual network (VNet) with the Azure CLI.
-ms.date: 08/2/2023
+ms.date: 01/08/2024
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -33,10 +33,22 @@ Shell variables store values for future use and can be used to pass values to co
 In Azure, all resources are allocated in a resource management group. Resource groups provide logical groupings of resources
 that make them easier to work with as a collection. Use the [az group create](/cli/azure/group#az_group_create) command to create a resource group named `VMTutorialResources`.
 
+# [Bash](#tab/bash)
+
 ```azurecli
-# create shell variables
+# create Bash shell variables
 resourceGroup=VMTutorialResources
 location=eastus
 
 az group create --name $resourceGroup --location $location
- ```
+```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli
+# Create PowerShell variables
+$resourceGroup = "VMTutorialResources"
+$location = "eastus"
+
+az group create --name $resourceGroup --location $location
+```

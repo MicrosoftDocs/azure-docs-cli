@@ -24,6 +24,7 @@ directCommands:
                         [--aks-custom-headers]
                         [--allowed-host-ports]
                         [--asg-ids]
+                        [--crg-id]
                         [--drain-timeout]
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
@@ -47,6 +48,7 @@ directCommands:
                         [--node-osdisk-size]
                         [--node-osdisk-type {Ephemeral, Managed}]
                         [--node-public-ip-prefix-id]
+                        [--node-public-ip-tags]
                         [--node-taints]
                         [--node-vm-size]
                         [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
@@ -82,6 +84,9 @@ directCommands:
   - summary: |-
       create a nodepool in an existing AKS cluster with host group id
     syntax: az aks nodepool add -g MyResourceGroup -n MyNodePool --cluster-name MyMC --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize
+  - summary: |-
+      create a nodepool with a Capacity Reservation Group(CRG) ID.
+    syntax: az aks nodepool add -g MyResourceGroup -n MyNodePool --cluster-name MyMC --node-vm-size VMSize --crg-id "/subscriptions/SubID/resourceGroups/ResourceGroupName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -101,10 +106,13 @@ directCommands:
       Comma-separated key-value pairs to specify custom headers.
   - name: --allowed-host-ports
     summary: |-
-      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
+      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. `80/TCP 443/TCP 4000-5000/TCP`.
   - name: --asg-ids
     summary: |-
       The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a space-separated list of IDs.
+  - name: --crg-id
+    summary: |-
+      The crg id used to associate the new nodepool with the existed Capacity Reservation Group resource.
   - name: --drain-timeout
     summary: |-
       When nodes are drain how many minutes to wait for all pods to be evicted.
@@ -190,6 +198,9 @@ directCommands:
   - name: --node-public-ip-prefix-id
     summary: |-
       Public IP prefix ID used to assign public IPs to VMSS nodes.
+  - name: --node-public-ip-tags
+    summary: |-
+      The ipTags of the node public IPs.
   - name: --node-taints
     summary: |-
       The node taints for the node pool.
@@ -1077,7 +1088,7 @@ directCommands:
       Comma-separated key-value pairs to specify custom headers.
   - name: --allowed-host-ports
     summary: |-
-      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
+      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. `80/TCP 443/TCP 4000-5000/TCP`.
   - name: --asg-ids
     summary: |-
       The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a space-separated list of IDs.

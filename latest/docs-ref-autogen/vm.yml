@@ -234,6 +234,7 @@ directCommands:
                  [--enable-hibernation {false, true}]
                  [--enable-hotpatching {false, true}]
                  [--enable-integrity-monitoring]
+                 [--enable-proxy-agent {false, true}]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
                  [--encryption-at-host {false, true}]
@@ -257,7 +258,7 @@ directCommands:
                  [--os-disk-encryption-set]
                  [--os-disk-name]
                  [--os-disk-secure-vm-disk-encryption-set]
-                 [--os-disk-security-encryption-type {DiskWithVMGuestState, VMGuestStateOnly}]
+                 [--os-disk-security-encryption-type {DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly}]
                  [--os-disk-size-gb]
                  [--os-type {linux, windows}]
                  [--patch-mode {AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual}]
@@ -269,6 +270,7 @@ directCommands:
                  [--ppg]
                  [--priority {Low, Regular, Spot}]
                  [--private-ip-address]
+                 [--proxy-agent-mode {Audit, Enforce}]
                  [--public-ip-address]
                  [--public-ip-address-allocation {dynamic, static}]
                  [--public-ip-address-dns-name]
@@ -480,6 +482,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable installing Microsoft propietary and not security supported guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
+  - name: --enable-proxy-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -566,7 +572,7 @@ directCommands:
     summary: |-
       Specify the customer managed disk encryption set resource ID or name for the managed disk that is used for customer managed key encrypted Confidential VM OS disk and VM guest blob.
   - name: --os-disk-security-encryption-type
-    parameterValueGroup: "DiskWithVMGuestState, VMGuestStateOnly"
+    parameterValueGroup: "DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly"
     summary: |-
       Specify the encryption type of the OS managed disk.
   - name: --os-disk-size-gb
@@ -605,6 +611,10 @@ directCommands:
   - name: --private-ip-address
     summary: |-
       Static private IP address (e.g. 10.0.0.5).
+  - name: --proxy-agent-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --public-ip-address
     summary: |-
       Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None ('""' in Azure CLI using PowerShell or --% operator). For Azure CLI using powershell core edition 7.3.4, specify  or "" (--public-ip-address  or --public-ip-address "").
@@ -1627,6 +1637,7 @@ directCommands:
                  [--disk-caching]
                  [--disk-controller-type {NVMe, SCSI}]
                  [--enable-hibernation {false, true}]
+                 [--enable-proxy-agent {false, true}]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
                  [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
@@ -1641,6 +1652,7 @@ directCommands:
                  [--os-disk]
                  [--ppg]
                  [--priority {Low, Regular, Spot}]
+                 [--proxy-agent-mode {Audit, Enforce}]
                  [--remove]
                  [--resource-group]
                  [--security-type {TrustedLaunch}]
@@ -1706,6 +1718,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       The flag that enable or disable hibernation capability on the VM.
+  - name: --enable-proxy-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -1758,6 +1774,10 @@ directCommands:
     parameterValueGroup: "Low, Regular, Spot"
     summary: |-
       Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
+  - name: --proxy-agent-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --remove
     defaultValue: "[]"
     summary: |-

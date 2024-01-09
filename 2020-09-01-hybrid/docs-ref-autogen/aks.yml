@@ -164,6 +164,7 @@ directCommands:
                   [--azure-monitor-workspace-resource-id]
                   [--ca-profile]
                   [--client-secret]
+                  [--crg-id]
                   [--data-collection-settings]
                   [--defender-config]
                   [--disable-disk-driver]
@@ -217,6 +218,7 @@ directCommands:
                   [--kubelet-config]
                   [--kubernetes-version]
                   [--linux-os-config]
+                  [--load-balancer-backend-pool-type {nodeIP, nodeIPConfiguration}]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-managed-outbound-ipv6-count]
@@ -242,6 +244,7 @@ directCommands:
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
                   [--node-public-ip-prefix-id]
+                  [--node-public-ip-tags]
                   [--node-resource-group]
                   [--node-vm-size]
                   [--nodepool-allowed-host-ports]
@@ -382,6 +385,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with vertical pod autoscaler enaled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-vpa
+  - summary: |-
+      create a kubernetes cluster with a Capacity Reservation Group(CRG) ID.
+    syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.9 --node-vm-size VMSize --assign-identity "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID" --enable-managed-identity --crg-id "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -460,6 +466,9 @@ directCommands:
   - name: --client-secret
     summary: |-
       Secret associated with the service principal. This argument is required if `--service-principal` is specified.
+  - name: --crg-id
+    summary: |-
+      The crg id used to associate the new cluster with the existed Capacity Reservation Group resource.
   - name: --data-collection-settings
     summary: |-
       Path to JSON file containing data collection settings for Monitoring addon.
@@ -685,6 +694,12 @@ directCommands:
   - name: --linux-os-config
     summary: |-
       Path to JSON file containing OS configurations for Linux agent nodes. https://aka.ms/aks/custom-node-config.
+  - name: --load-balancer-backend-pool-type
+    parameterValueGroup: "nodeIP, nodeIPConfiguration"
+    summary: |-
+      Load balancer backend pool type.
+    description: |-
+      Define the LoadBalancer backend pool type of managed inbound backend pool. The nodeIP means the VMs will be attached to the LoadBalancer by adding its private IP address to the backend pool. The nodeIPConfiguration means the VMs will be attached to the LoadBalancer by referencing the backend pool ID in the VM's NIC.
   - name: --load-balancer-idle-timeout
     summary: |-
       Load balancer idle timeout in minutes.
@@ -803,6 +818,9 @@ directCommands:
   - name: --node-public-ip-prefix-id
     summary: |-
       Public IP prefix ID used to assign public IPs to VMSS nodes.
+  - name: --node-public-ip-tags
+    summary: |-
+      The ipTags of the node public IPs.
   - name: --node-resource-group
     summary: |-
       The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
@@ -811,7 +829,7 @@ directCommands:
       Size of Virtual Machines to create as Kubernetes nodes.
   - name: --nodepool-allowed-host-ports
     summary: |-
-      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. 80/TCP,443/TCP,4000-5000/TCP.
+      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. `80/TCP 443/TCP 4000-5000/TCP`.
   - name: --nodepool-asg-ids
     summary: |-
       The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a space-separated list of IDs.
@@ -2996,9 +3014,9 @@ directCommands:
 - uid: az_aks_stop
   name: az aks stop
   summary: |-
-    Stop Managed Cluster.
+    Stop a managed cluster.
   description: |-
-    Stops a Running Managed Cluster.
+    This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See `stopping a cluster <https://docs.microsoft.com/azure/aks/start-stop-cluster>`_ for more details about stopping a cluster.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/acs/_help.py
@@ -3122,6 +3140,7 @@ directCommands:
                   [--k8s-support-plan]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
+                  [--load-balancer-backend-pool-type {nodeIP, nodeIPConfiguration}]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-managed-outbound-ipv6-count]
@@ -3133,6 +3152,7 @@ directCommands:
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
                   [--network-dataplane {azure, cilium}]
+                  [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
                   [--network-policy]
                   [--no-wait]
@@ -3492,6 +3512,12 @@ directCommands:
   - name: --ksm-metric-labels-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g. '=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
+  - name: --load-balancer-backend-pool-type
+    parameterValueGroup: "nodeIP, nodeIPConfiguration"
+    summary: |-
+      Load balancer backend pool type.
+    description: |-
+      Define the LoadBalancer backend pool type of managed inbound backend pool. The nodeIP means the VMs will be attached to the LoadBalancer by adding its private IP address to the backend pool. The nodeIPConfiguration means the VMs will be attached to the LoadBalancer by referencing the backend pool ID in the VM's NIC.
   - name: --load-balancer-idle-timeout
     summary: |-
       Load balancer idle timeout in minutes.
@@ -3545,6 +3571,12 @@ directCommands:
     description: |-
       Network dataplane used in the Kubernetes cluster.
       Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
+  - name: --network-plugin
+    parameterValueGroup: "azure, kubenet, none"
+    summary: |-
+      The Kubernetes network plugin to use.
+    description: |-
+      Specify "azure" along with --network-plugin-mode=overlay to update a cluster to use Azure CNI Overlay. For more information see https://aka.ms/aks/azure-cni-overlay.
   - name: --network-plugin-mode
     summary: |-
       Update the mode of a network plugin to migrate to a different pod networking setup.
@@ -4921,12 +4953,18 @@ commands:
 - az_aks_trustedaccess
 - az_aks_trustedaccess_role
 - az_aks_trustedaccess_role_list
+- az_aks_trustedaccess_role_list(aks-preview)
 - az_aks_trustedaccess_rolebinding
 - az_aks_trustedaccess_rolebinding_create
+- az_aks_trustedaccess_rolebinding_create(aks-preview)
 - az_aks_trustedaccess_rolebinding_delete
+- az_aks_trustedaccess_rolebinding_delete(aks-preview)
 - az_aks_trustedaccess_rolebinding_list
+- az_aks_trustedaccess_rolebinding_list(aks-preview)
 - az_aks_trustedaccess_rolebinding_show
+- az_aks_trustedaccess_rolebinding_show(aks-preview)
 - az_aks_trustedaccess_rolebinding_update
+- az_aks_trustedaccess_rolebinding_update(aks-preview)
 - az_aks_update
 - az_aks_update(aks-preview)
 - az_aks_update-credentials
