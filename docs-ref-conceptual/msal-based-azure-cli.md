@@ -47,6 +47,7 @@ az account show --output table
 az account get-access-token
 
 ```
+
 Console output:
 
 ```output

@@ -38,7 +38,8 @@ When you sign in with a user account, Azure CLI generates and stores an authenti
 
 > [!NOTE]
 > Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
->
+
+[!INCLUDE [access-token](includes/access-token.md)]
 
 ## See also
 
