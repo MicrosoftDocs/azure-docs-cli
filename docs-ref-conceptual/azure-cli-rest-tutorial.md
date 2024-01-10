@@ -14,7 +14,7 @@ keywords: azure service principal, create service principal azure, create servic
 
 # Use the Azure REST API with Azure Command Line Interface (CLI)
 
-[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources which cannot be performed with regular Azure CLI commands. It should be noted however, that `az rest` is not meant to replace any existing [Azure CLI command](/cli/azure/use-cli-effectively?view=azure-cli-latest&branch=main&tabs=bash%2Cbash2). 
+[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources which cannot be performed with regular Azure CLI commands. It should be noted however, that `az rest` is not meant to replace any existing [Azure CLI command](/cli/azure/use-cli-effectively). 
 
 In order to demonstrate how to use the Azure REST API with Azure CLI, you can walkthrough the following tutorial in which you learn how to create and update your Azure Container Registry (ACR). The [Azure Container Registry](/azure/container-registry/container-registry-intro) is a managed registry service that allows you to create and maintain Azure container registries, in order to store and manage your container images and related artifacts.
 
@@ -27,11 +27,11 @@ By walking through this tutorial, you learn how to utilize the HTTP methods: PUT
 
 ## Set up your custom Azure REST API request:
 
-To invoke a custom Azure REST API request with Azure CLI, you use the [`az rest`](/cli/azure/reference-index?view=azure-cli-latest#az-rest) command, followed by the `--url` parameter. The `--url` parameter defines the URL of the requested resource, and is the only required parameter, while the others listed are all optional. 
+To invoke a custom Azure REST API request with Azure CLI, you use the [`az rest`](/cli/azure/reference-index?view=azure-cli-latest#az-rest&preserve-view=true) command, followed by the `--url` parameter. The `--url` parameter defines the URL of the requested resource, and is the only required parameter, while the others listed are all optional. 
 
 > [!NOTE]
 > - This command automatically authenticates using the logged-in credential: If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from Azure Active Directory (AAD). The target resource of the token will be derived from the `--url` parameter when the `--url` parameter starts with an endpoint from the `az cloud show --query endpoints`. You may also use the `--resource` parameter for a custom resource.
-> - If Content-Type header is not set and --body is a valid JSON string, Content-Type header will default to application/json.
+> - If Content-Type header is not set and `--body` is a valid JSON string, Content-Type header will default to application/json.
 
 ```azurecli-interactive
 
