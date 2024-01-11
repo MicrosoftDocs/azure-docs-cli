@@ -70,8 +70,6 @@ To see the subscription you're currently using or to get a list of available sub
 
 Here are examples showing how to get subscription information.
 
----
-
 ```azurecli-interactive
 # get the current default subscription using show
 az account show --output table
@@ -81,11 +79,12 @@ az account list --query "[?isDefault]"
 
 # get a subscription that contains search words or phrases
 az account list --query "[?contains(name,'search phrase')].{SubscriptionName:name, SubscriptionID:id, TenantID:tenantId}" --output table
+```
+
 ---
+# [Bash](#tab/bash)
 
- # [Bash](#tab/bash)
-
-```azurecli-interactive
+```azurecli
 # store the default subscription in a variable
 subscriptionId="$(az account list --query "[?isDefault].id" --output tsv)"
 echo $subscriptionId
@@ -121,6 +120,7 @@ az account set --subscription "My Demos"
 
 # change the active subscription using the subscription ID
 az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```
 
 ---
  # [Bash](#tab/bash)
