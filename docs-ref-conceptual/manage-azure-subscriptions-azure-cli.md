@@ -70,6 +70,8 @@ To see the subscription you're currently using or to get a list of available sub
 
 Here are examples showing how to get subscription information.
 
+---
+
 ```azurecli-interactive
 # get the current default subscription using show
 az account show --output table
@@ -79,7 +81,11 @@ az account list --query "[?isDefault]"
 
 # get a subscription that contains search words or phrases
 az account list --query "[?contains(name,'search phrase')].{SubscriptionName:name, SubscriptionID:id, TenantID:tenantId}" --output table
+---
 
+ # [Bash](#tab/bash)
+
+```azurecli-interactive
 # store the default subscription in a variable
 subscriptionId="$(az account list --query "[?isDefault].id" --output tsv)"
 echo $subscriptionId
@@ -89,6 +95,19 @@ subscriptionId="$(az account list --query "[?name=='my case sensitive subscripti
 echo $subscriptionId
 ```
 
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# store the default subscription in a variable
+$subscriptionId = az account list --query "[?isDefault].id" --output tsv
+Write-Host $subscriptionId
+
+# store a subscription of certain name in a variable
+$subscriptionId = az account list --query "[?name=='my case sensitive subscription full name'].id" --output tsv
+Write-Host $subscriptionId
+```
+
+---
 > [!TIP]
 > The `--output` parameter is a global parameter, available for all commands. The **table** value presents output in a friendly format. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
@@ -103,10 +122,24 @@ az account set --subscription "My Demos"
 # change the active subscription using the subscription ID
 az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
+---
+ # [Bash](#tab/bash)
+
+```azurecli-interactive
 # change the active subscription using a variable
 subscriptionId="$(az account list --query "[?name=='my case sensitive subscription full name'].id" --output tsv)"
 az account set --subscription $subscriptionId
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# change the active subscription using a variable
+$subscriptionId = az account list --query "[?name=='my case sensitive subscription full name'].id" -o tsv
+az account set --subscription $subscriptionId
+```
+
+---
 
 If you change to a subscription that is in a different tenant, you will also be changing the active tenant. To learn how to add a new subscription to your Microsoft Entra tenant, see [Associate or add an Azure subscription to your Microsoft Entra tenant](/azure/active-directory/active-directory-how-subscriptions-associated-directory).
 
