@@ -81,6 +81,7 @@ az account list --query "[?isDefault]"
 az account list --query "[?contains(name,'search phrase')].{SubscriptionName:name, SubscriptionID:id, TenantID:tenantId}" --output table
 ```
 You can also store subscription information in a variable for use within a script.
+
 ---
 # [Bash](#tab/bash)
 
@@ -122,6 +123,7 @@ az account set --subscription "My Demos"
 az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 You can also change your subscription using a variable. Here is an example:
+
 ---
  # [Bash](#tab/bash)
 
