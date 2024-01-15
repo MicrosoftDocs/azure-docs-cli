@@ -5,7 +5,7 @@ ms.date: 08/01/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
-Beginning with version [2.11.0](/cli/azure/release-notes-azure-cli#august-25-2020), the Azure CLI provides an in-tool command to update to the latest version for MSI distribution.
+Beginning with version [2.11.0](/cli/azure/release-notes-azure-cli#august-25-2020), the Azure CLI provides an in-tool command to update to the latest version.
 
 ```azurecli
 az upgrade
