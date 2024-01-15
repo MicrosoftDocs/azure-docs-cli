@@ -174,6 +174,8 @@ If you have issues after migration, you can uninstall the 64-bit and reinstall t
 
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
 
+If you are using ZIP distribution, please delete the old installation folder and extract the new version to the same location.
+
 ## Uninstall
 
 [!INCLUDE [uninstall-boilerplate.md](includes/uninstall-boilerplate.md)]
