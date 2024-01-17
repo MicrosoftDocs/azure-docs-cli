@@ -101,7 +101,7 @@ The `-e` option is to ensure the official Azure CLI package is installed. This c
 
 You can use the ZIP package to install the Azure CLI on Windows. This package is useful when you don't have administrative privilege.
 
-Please unzip the package to a folder, then you can run the Azure CLI with the `& "<unzipped folder path>\wbin\az.cmd"` command.
+Please unzip the package to a folder, then you can run the Azure CLI with `<unzipped folder path>\wbin\az.cmd`. (If the path contains spaces, please use `& "<unzipped folder path>\wbin\az.cmd"` instead.)
 
 If you want to run the `az` command directly, then follow the steps below to add the Azure CLI to your PATH environment variable.
 1. Open the Start Menu and search for `environment variables`, click `Edit the system environment variables`.
