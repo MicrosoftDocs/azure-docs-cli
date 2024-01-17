@@ -123,7 +123,7 @@ You can also look at a specific example using `::#`.
 az>> vm create ::8
 ```
 
-## New artificial intelligence (AI) functionality 
+## New artificial intelligence (AI) functionalities
 
 As of July 2023, the Azure CLI team has combined AI with Azure CLI interactive mode to provide users with a more beginner-friendly interactive experience. These new AI functionalities allow users to learn and understand how to utilize Azure CLI interactive mode with more ease and efficiency. 
 
