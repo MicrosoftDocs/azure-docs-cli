@@ -122,3 +122,45 @@ You can also look at a specific example using `::#`.
 ```azurecli
 az>> vm create ::8
 ```
+
+## New artificial intelligence (AI) functionality 
+
+As of July 2023, the Azure CLI team has combined AI with Azure CLI interactive mode to provide users with a more beginner-friendly interactive experience. These new AI functionalities allow users to learn and understand how to utilize Azure CLI interactive mode with more ease and efficiency. 
+
+The new AI features consist of:
+
+- **Intelligent completion**: The AI-powered recommendation system uses telemetry analysis in order to predict and analyze customer behavior. These results lead to the prioritization of the most used and needed content options for the user. 
+- **Command recommendation**: The AI offers subsequent commands based on the most used commands in other similar sessions.
+- **Scenario identification**: The AI can identify the current possible scenarios and recommend a set of related command combinations for your specific end-to-end scenario.
+- **Usable knowledge search**: The AI allows the user to input natural language in order to search for commands for specific usage scenarios. 
+
+### How to use AI functionalities with Azure CLI interactive mode 
+
+If you already have Azure CLI interactive mode, then you just need to upgrade to the latest version to use the new features. Do so by inputting the following command:
+
+# [Bash](#tab/bash)
+
+```azurecli-interactive
+$ az extension add --name interactive --upgrade
+```
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+az extension add --name interactive --upgrade
+```
+***
+
+To disable the new AI features for Azure CLI interactive mode input the following command:
+
+# [Bash](#tab/bash)
+
+```azurecli-interactive
+$ az config set interactive.enable_recommender=False
+```
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+az config set interactive.enable_recommender=False
+```
+
+***
