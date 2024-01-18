@@ -8,7 +8,7 @@ ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: linux-related-content, seo-azure-cli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 # Get started with Azure CLI

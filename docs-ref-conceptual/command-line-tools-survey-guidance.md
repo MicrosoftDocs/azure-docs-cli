@@ -8,7 +8,7 @@ ms.date: 06/19/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 
 # Azure command line tools survey guidance

@@ -8,7 +8,7 @@ ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: linux-related-content, seo-azure-cli
 keywords:
 ---
 # How to query Azure CLI command output using a JMESPath query

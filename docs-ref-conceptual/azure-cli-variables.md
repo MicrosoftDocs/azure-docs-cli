@@ -8,7 +8,7 @@ ms.service: azure-cli
 ms.topic: how-to
 ms.date: 06/19/2023
 ms.tool: azure-cli
-ms.custom: template-how-to, devx-track-azurecli, seo-azure-cli
+ms.custom: template-how-to, linux-related-content, seo-azure-cli
 keywords: azure cli variables, azure cli commands, value of variable, shell variables
 ---
 

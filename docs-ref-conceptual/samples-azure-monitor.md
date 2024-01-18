@@ -7,7 +7,7 @@ ms.date: 06/13/2023
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.topic: sample 
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 
 # Azure CLI samples for Azure Monitor

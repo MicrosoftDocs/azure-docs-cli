@@ -4,7 +4,7 @@ ms.author: dbradish
 manager: barbkess
 ms.date: 09/13/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 To download the MSI installer for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>.msi` (32-bit) or `https://azcliprod.blob.core.windows.net/msi/azure-cli-<version>-x64.msi` (64-bit).
 

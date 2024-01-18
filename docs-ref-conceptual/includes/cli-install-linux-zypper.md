@@ -6,7 +6,7 @@ ms.date: 08/2/2023
 ms.topic: include
 ms.service: azure-cli
 ms.devlang: azurecli
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 
 ## Before you begin

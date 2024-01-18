@@ -8,7 +8,7 @@ ms.date: 10/10/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---
 # Create an Azure service principal with Azure CLI

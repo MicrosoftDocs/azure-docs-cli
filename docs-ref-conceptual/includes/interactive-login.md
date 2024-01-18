@@ -3,7 +3,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 12/04/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 1. Run the `az login` command.
 

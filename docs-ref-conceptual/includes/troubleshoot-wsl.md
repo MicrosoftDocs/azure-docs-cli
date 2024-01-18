@@ -3,7 +3,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 08/1/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 ### CLI fails to install or run on Windows Subsystem for Linux
 

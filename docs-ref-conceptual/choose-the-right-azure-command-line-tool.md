@@ -8,7 +8,7 @@ ms.topic: quickstart
 ms.service: azure
 ms.date: 06/19/2023
 ms.tool: azure-cli, azure-powershell
-ms.custom: devx-track-azurecli, seo-azure-cli, mode-api, devx-track-azurepowershell
+ms.custom: linux-related-content, seo-azure-cli, mode-api, devx-track-azurepowershell
 Keywords: azure command line tool, azure cli tools, azure cli vs powershell, azure cli powershell, powershell cli, azure cli vs cloud shell, shell environment
 ---
 

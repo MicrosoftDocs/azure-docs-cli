@@ -8,7 +8,7 @@ ms.author: dbradish
 ms.tool: azure-cli
 ms.topic: tutorial
 ms.service: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: linux-related-content, seo-azure-cli
 keywords: more information about azure cli and vm, virtual machine in azure cli
 ---
 

@@ -8,7 +8,7 @@ ms.date: 09/29/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 keywords: Azure CLI, new articles, new references, new samples, announcements
 ---
 # What's new in the Azure CLI

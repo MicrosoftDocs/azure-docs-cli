@@ -9,7 +9,7 @@ ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 keywords: az extension, azure cli extensions, azure extensions
 ---
 

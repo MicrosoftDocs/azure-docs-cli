@@ -3,7 +3,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 08/01/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 Beginning with version [2.11.0](/cli/azure/release-notes-azure-cli#august-25-2020), the Azure CLI provides an in-tool command to update to the latest version.
 

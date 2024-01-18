@@ -8,7 +8,7 @@ ms.service: azure-supportability
 ms.topic: how-to
 ms.date: 07/13/2023
 ms.tool: azure-cli
-ms.custom: template-how-to, devx-track-azurecli, seo-azure-cli
+ms.custom: template-how-to, linux-related-content, seo-azure-cli
 keywords: azure support request, azure support, azure support ticket, support ticket management
 ---
 

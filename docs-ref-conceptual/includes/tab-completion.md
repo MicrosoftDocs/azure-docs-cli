@@ -3,7 +3,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 09/13/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: linux-related-content
 ---
 Tab completion, also known as "Azure CLI completers", provides completion on inputs to provide hints, enable discovery and speed up input entry. Command names, command group names, parameters and certain parameter values can be automatically inserted into the command line by pressing the <kbd>Tab</kbd> key.
 
