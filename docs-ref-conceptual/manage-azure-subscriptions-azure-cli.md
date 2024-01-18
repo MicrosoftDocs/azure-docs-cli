@@ -82,7 +82,6 @@ az account list --query "[?contains(name,'search phrase')].{SubscriptionName:nam
 ```
 You can also store subscription information in a variable for use within a script.
 
----
 # [Bash](#tab/bash)
 
 ```azurecli
@@ -124,7 +123,6 @@ az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 You can also change your subscription using a variable. Here is an example:
 
----
  # [Bash](#tab/bash)
 
 ```azurecli-interactive
