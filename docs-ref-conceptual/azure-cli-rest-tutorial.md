@@ -65,7 +65,7 @@ az rest --method put \
 --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<containerRegistryName>?api-version=2023-01-01-preview \
 --body "{'location': 'westus', 'tags': {key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
 ```
-
+---
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
