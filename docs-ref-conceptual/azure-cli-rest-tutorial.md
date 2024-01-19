@@ -228,7 +228,7 @@ az rest --method get `
 
 ---
 
-The output for GET method is the same as the one shown for PATCH.
+The output for GET method is the same as the one shown for PUT.
 
 ## Use POST to regenerate your Azure Container Registry credentials
 
