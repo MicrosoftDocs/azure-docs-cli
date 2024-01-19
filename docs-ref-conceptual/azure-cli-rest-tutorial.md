@@ -46,6 +46,17 @@ az rest --url
 
 ### Creating your custom request with Azure CLI 
 
+Here is an example with completed parameters:
+
+```azurecli-interactive
+# Variable block
+let "randomIdentifier=$RANDOM*$RANDOM"
+subscriptionId="00000000-0000-0000-0000-000000000000"
+resourceGroupName="msdocs-app-service-rg-$randomIdentifier"
+myNewAppServicePlanName="msdocs-app-service-plan-$randomIdentifier"
+location="East US"
+# Invoke request
+az rest --method put --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroupName/providers/Microsoft.Web/serverfarms/$myNewAppServicePlanName?api-version=2022-03-01 --body '{"location": "$location"}' 
 Use the PUT HTTP method to create a new Azure Container Registry.
 
 ```azurecli
