@@ -50,7 +50,7 @@ Here is an example with completed parameters:
 
 ```azurecli-interactive
 # Variable block
-let "randomIdentifier=$RANDOM*$RANDOM"
+$randomIdentifier = (New-Guid).ToString().Substring(0,8)
 subscriptionId="00000000-0000-0000-0000-000000000000"
 resourceGroupName="msdocs-app-service-rg-$randomIdentifier"
 myNewAppServicePlanName="msdocs-app-service-plan-$randomIdentifier"
