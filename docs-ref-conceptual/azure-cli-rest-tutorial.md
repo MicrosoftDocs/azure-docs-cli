@@ -251,6 +251,7 @@ az rest --method post `
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}/regenerateCredential?api-version=2023-01-01-preview `
     --body "{'name': 'password'}"
 ```
+
 ---
 
 The following JSON dictionary output has fields omitted for brevity: 
