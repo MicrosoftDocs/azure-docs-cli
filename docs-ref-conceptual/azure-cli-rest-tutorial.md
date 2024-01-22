@@ -46,17 +46,6 @@ az rest --url
 
 ### Creating your custom request with Azure CLI 
 
-Here is an example with completed parameters:
-
-```azurecli-interactive
-# Variable block
-$randomIdentifier = (New-Guid).ToString().Substring(0,8)
-$subscriptionId="00000000-0000-0000-0000-000000000000"
-resourceGroupName="msdocs-app-service-rg-$randomIdentifier"
-myNewAppServicePlanName="msdocs-app-service-plan-$randomIdentifier"
-location="East US"
-# Invoke request
-az rest --method put --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroupName/providers/Microsoft.Web/serverfarms/$myNewAppServicePlanName?api-version=2022-03-01 --body '{"location": "$location"}' 
 Use the PUT HTTP method to create a new Azure Container Registry.
 
 ```azurecli
@@ -65,7 +54,9 @@ az rest --method put \
 --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<containerRegistryName>?api-version=2023-01-01-preview \
 --body "{'location': 'westus', 'tags': {key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
 ```
----
+
+Here is an example with completed parameters:
+
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
@@ -244,8 +235,6 @@ The output for GET method is the same as the one shown for PUT.
 ## Use POST to regenerate your Azure Container Registry credentials
 
 Use the POST HTTP request to regenerate one of the login credentials for the Azure Container Registry created in this article.
-
-TODO: Where does the variable `$myAppName` come from?
 
 # [Bash](#tab/bash)
 
