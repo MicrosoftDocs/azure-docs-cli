@@ -48,7 +48,7 @@ az rest --url
 
 Use the PUT HTTP method to create a new Azure Container Registry.
 
-```azurecli
+```azurecli-interactive
 # Command format example
 az rest --method put \
 --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<containerRegistryName>?api-version=2023-01-01-preview \
@@ -225,7 +225,7 @@ az rest --method get \
 
 ```azurecli-interactive
 az rest --method get `
---url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview 
+    --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview 
 ```
 
 ---
@@ -240,7 +240,7 @@ Use the POST HTTP request to regenerate one of the login credentials for the Azu
 
 ```azurecli-interactive
 az rest --method post \
-    --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Web/sites/$myAppName/restart?api-version=2022-03-01 \
+    --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$containerRegistryName/regenerateCredential?api-version=2023-01-01-preview \
     --body "{'name': 'password'}"
 ```
 
@@ -248,7 +248,7 @@ az rest --method post \
 
 ```azurecli-interactive
 az rest --method post `
-    --url  https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Web/sites/$myAppName/restart?api-version=2022-03-01 `
+    --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}/regenerateCredential?api-version=2023-01-01-preview `
     --body "{'name': 'password'}"
 ```
 ---
