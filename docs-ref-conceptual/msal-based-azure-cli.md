@@ -36,33 +36,6 @@ Alternatives you may consider for stability:
 
 You can manually call [`az account get-access-token`](/cli/azure/account#az_account_get_access_token) in a terminal or use a subprocess to call it from another programming language. By default, the returned access token is for Azure Resource Manager (ARM) and the default subscription/tenant shown in [`az account show`](/cli/azure/account#az_account_show). 
 
-[!INCLUDE [refresh-token](includes/refresh-token.md)]
-
-Console output:
-
-```output
-# Before:
-
-{
-  "accessToken": "...",
-  "expiresOn": "2023-10-31 21:59:10.000000",
-  "subscription": "...",
-  "tenant": "...",
-  "tokenType": "Bearer"
-}
-
-# After:
-
-{
-  "accessToken": "...",
-  "expiresOn": "2023-10-31 21:59:10.000000",
-  "expires_on": 1698760750,
-  "subscription": "...",
-  "tenant": "...",
-  "tokenType": "Bearer"
-}
-```
-
 To learn more about the access tokens, see [Sign in with Azure CLI](./authenticate-azure-cli-interactively.md#refresh-tokens).
 
 ### Using `AzureCliCredential`
