@@ -28,10 +28,6 @@ _[Subscriptions](/azure/cloud-adoption-framework/ready/landing-zone/design-area/
 
 An Azure _resource group_ is a container that holds related resources for an Azure solution. To learn how to manage resource groups within your subscription, see [How to manage Azure resource groups with the Azure CLI](manage-azure-groups-azure-cli.md)
 
-## Refresh tokens
-
-[!INCLUDE [refresh-token](includes/refresh-token.md)]
-
 ## Get the active tenant
 
 Use [az account tenant list](/cli/azure/account/tenant) or [az account show](/cli/azure/account#az-account-show) to get the active tenant ID.
