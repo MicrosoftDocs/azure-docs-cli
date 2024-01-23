@@ -24,3 +24,16 @@ Here is some additional information about access token expiration dates:
 * The `expires_on` property represents a Portable Operating System Interface (POSIX) timestamp while the `expiresOn` property represents a local datetime.
 * The `expiresOn` property doesn't express "fold" when Daylight Saving Time ends. This can cause problems in countries or regions where Daylight Saving Time is adopted. For more information on "fold", see [PEP 495 – Local Time Disambiguation](https://peps.python.org/pep-0495/).
 * We recommend for downstream applications to use the `expires_on` property, because it uses the Universal Time Code (UTC). 
+
+Example output:
+
+```json
+{
+  "accessToken": "...",
+  "expiresOn": "2023-10-31 21:59:10.000000",
+  "expires_on": 1698760750,
+  "subscription": "...",
+  "tenant": "...",
+  "tokenType": "Bearer"
+}
+```
