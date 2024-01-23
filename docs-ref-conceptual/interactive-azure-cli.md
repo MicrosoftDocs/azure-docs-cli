@@ -1,5 +1,5 @@
 ---
-title: Azure CLI interactive mode | Microsoft Docs
+title: Learn to use Azure CLI interactive mode | Microsoft Docs
 description: The Azure CLI interactive mode is an interactive shell with autocompletion, command descriptions, and examples. 
 manager: jasongroce
 author: dbradish-microsoft
@@ -30,11 +30,11 @@ Azure CLI Interactive Mode (az interactive) provides users an interactive enviro
 ## Configure
 
 Interactive mode optionally displays command descriptions, parameter descriptions, and command examples.
-Turn descriptions and examples on or off using `F1`.
+Turn descriptions and examples on or off using <kbd>`F1`</kbd>.
 
 ![Descriptions and examples on/off](./media/interactive-azure-cli/descriptions-and-examples.png)
 
-You can turn the display of parameter defaults on or off using `F2`.
+You can turn the display of parameter defaults on or off using <kbd>`F2`</kbd>.
 
 ![Display parameter default on/off](./media/interactive-azure-cli/defaults.png)
 
@@ -51,7 +51,7 @@ It's a great shorthand if you're doing all your work in that command group.
 Instead of typing these commands:
 
 ```azurecli
-az>> vm create -n myVM -g myRG --image UbuntuLTS
+az>> vm create -n myVM -g myRG --image Ubuntu2204
 az>> vm list -o table
 ```
 
@@ -59,7 +59,7 @@ You can scope to the vm command group and type these commands:
 
 ```azurecli
 az>> %%vm
-az vm>> create -n myVM -g myRG --image UbuntuLTS
+az vm>> create -n myVM -g myRG --image Ubuntu2204
 az vm>>list -o table
 ```
 
@@ -94,7 +94,7 @@ You can also use this syntax to use the result of the previous command as an arg
 For instance after having listed all groups, list all the resources of type `virtualMachine`on the first group whose location is westeurope. 
 
 ```azurecli
-az>> vm create --name myVM --resource-group myRG --image UbuntuLTS --no-wait -o json
+az>> vm create --name myVM --resource-group myRG --image Ubuntu2204 --no-wait -o json
 az>> group list -o json
 az>> resource list -g "?? [?location=='westeurope'].name | [0]" --query "[?type=='Microsoft.Compute/virtualMachines'].name
 ```
@@ -113,7 +113,7 @@ az>> #dir
 ## Examples
 
 Some commands have lots of examples.
-You can scroll to the next page of examples using `CTRL-N` and the previous page using `CTRL-Y`.
+You can scroll to the next page of examples using <kbd>`CTRL-N`</kbd> and the previous page using <kbd>`CTRL-Y`</kbd>.
 
 ![Scroll to next page of examples](./media/interactive-azure-cli/examples.png)
 
@@ -142,18 +142,18 @@ When using interactive mode within Azure CLI, upgrade to the latest version to u
 $ az extension add --name interactive --upgrade
 ```
 
-To use command recommendation, run a command and click `space` or `next`. 
+To use command recommendation, run a command and click <kbd>`space`</kbd> or <kbd>`next`</kbd>. 
 
-![Command recommendation](./media/interactive-azure-cli/command_recommendation.gif)
+<img src="./media/interactive-azure-cli/command_recommendation.gif" width="40" height="40" />
 
 To use scenario identification, run `:: [num]` to complete a recommended scenario step-by-step.
 
-![Scenario identification](./media/interactive-azure-cli/scenario_identification.gif)
+<img src="./media/interactive-azure-cli/scenario_identification.gif" width="40" height="40" /> 
 
 To use usable knowledge search, run `/ [keyword]` to search for commands and scenarios.
 
-![Usable knowledge search](./media/interactive-azure-cli/scenario_search.gif)
-run `/ [keyword]`
+<img src="./media/interactive-azure-cli/scenario_search.gif" width="40" height="40" /> 
+
 
 To disable the new AI features for Azure CLI interactive mode input the following command:
 
