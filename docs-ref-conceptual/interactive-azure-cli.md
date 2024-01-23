@@ -30,11 +30,11 @@ Azure CLI Interactive Mode (az interactive) provides users an interactive enviro
 ## Configure
 
 Interactive mode optionally displays command descriptions, parameter descriptions, and command examples.
-Turn descriptions and examples on or off using <kbd>`F1`</kbd>.
+Turn descriptions and examples on or off using `F1`.
 
 ![Descriptions and examples on/off](./media/interactive-azure-cli/descriptions-and-examples.png)
 
-You can turn the display of parameter defaults on or off using <kbd>`F2`</kbd>.
+You can turn the display of parameter defaults on or off using `F2`.
 
 ![Display parameter default on/off](./media/interactive-azure-cli/defaults.png)
 
@@ -113,7 +113,7 @@ az>> #dir
 ## Examples
 
 Some commands have lots of examples.
-You can scroll to the next page of examples using <kbd>`CTRL-N`</kbd> and the previous page using <kbd>`CTRL-Y`</kbd>.
+You can scroll to the next page of examples using `CTRL-N`< and the previous page using `CTRL-Y`.
 
 ![Scroll to next page of examples](./media/interactive-azure-cli/examples.png)
 
