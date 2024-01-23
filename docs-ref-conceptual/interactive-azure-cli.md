@@ -125,42 +125,38 @@ az>> vm create ::8
 
 ## New artificial intelligence (AI) functionalities
 
-As of July 2023, the Azure CLI team has combined AI with Azure CLI interactive mode to provide users with a more beginner-friendly interactive experience. These new AI functionalities allow users to learn and understand how to utilize Azure CLI interactive mode with more ease and efficiency. 
+The Azure CLI team has combined AI with Azure CLI interactive mode to provide users with a more beginner-friendly interactive experience. These new AI functionalities allow users to learn and understand how to utilize Azure CLI interactive mode with more ease and efficiency. 
 
 The new AI features consist of:
 
-- **Intelligent completion**: The AI-powered recommendation system uses telemetry analysis in order to predict and analyze customer behavior. These results lead to the prioritization of the most used and needed content options for the user. 
+- **Intelligent completion**: The AI-powered recommendation system uses telemetry analysis in order to predict and analyze customer behavior. These results lead to the prioritization of the most used and needed content options.
 - **Command recommendation**: The AI offers subsequent commands based on the most used commands in other similar sessions.
 - **Scenario identification**: The AI can identify the current possible scenarios and recommend a set of related command combinations for your specific end-to-end scenario.
-- **Usable knowledge search**: The AI allows the user to input natural language in order to search for commands for specific usage scenarios. 
+- **Usable knowledge search**: The AI allows you to input natural language in order to search for commands for specific usage scenarios. 
 
 ### How to use AI functionalities with Azure CLI interactive mode 
 
-If you already have Azure CLI interactive mode, then you just need to upgrade to the latest version to use the new features. Do so by inputting the following command:
-
-# [Bash](#tab/bash)
+When using interactive mode within Azure CLI, upgrade to the latest version to use the new features.
 
 ```azurecli-interactive
 $ az extension add --name interactive --upgrade
 ```
-# [PowerShell](#tab/powershell)
 
-```azurecli-interactive
-az extension add --name interactive --upgrade
-```
-***
+To use command recommendation, run a command and click `space` or `next`. 
+
+![Command recommendation](./media/interactive-azure-cli/command_recommendation.gif)
+
+To use scenario identification, run `:: [num]` to complete a recommended scenario step-by-step.
+
+![Scenario identification](./media/interactive-azure-cli/scenario_identification.gif)
+
+To use usable knowledge search, run `/ [keyword]` to search for commands and scenarios.
+
+![Usable knowledge search](./media/interactive-azure-cli/scenario_search.gif)
+run `/ [keyword]`
 
 To disable the new AI features for Azure CLI interactive mode input the following command:
-
-# [Bash](#tab/bash)
 
 ```azurecli-interactive
 $ az config set interactive.enable_recommender=False
 ```
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az config set interactive.enable_recommender=False
-```
-
-***
