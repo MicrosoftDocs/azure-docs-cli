@@ -55,6 +55,10 @@ az login --tenant 00000000-0000-0000-0000-000000000000
 
 After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant).
 
+## Refresh tokens
+
+[!INCLUDE [refresh-token](includes/refresh-token.md)]
+
 ## Troubleshooting
 
 When your default browser is Microsoft Edge, you might encounter the following error when attempting

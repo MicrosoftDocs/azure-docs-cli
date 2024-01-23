@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 01/18/2024
+ms.date: 01/20/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -41,8 +41,8 @@ You will be prompted to install an extension on first use.
 |[amg](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg) | 2.38.0 | Microsoft Azure Command-Line Tools Azure Managed Grafana Extension | GA | [1.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/amg/HISTORY.rst) |
 |[amlfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs) | 2.49.0 | Microsoft Azure Command-Line Tools Amlfs Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/amlfs/HISTORY.rst) |
 |[aosm](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm) | 2.45.0 | Microsoft Azure Command-Line Tools Aosm Extension | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/master/src/aosm/HISTORY.rst) |
-|[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.51.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
-|[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.50.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
+|[apic-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension) | 2.51.0 | Microsoft Azure Command-Line Tools ApicExtension Extension. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/apic-extension/HISTORY.rst) |
+|[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.55.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.51.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.0.2](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
 |[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.8](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
@@ -178,7 +178,7 @@ You will be prompted to install an extension on first use.
 |[serial-console](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console) | 2.15.0 | Microsoft Azure Command-Line Tools for Serial Console Extension | Preview | [0.1.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/serial-console/HISTORY.rst) |
 |[serviceconnector-passwordless](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless) | 2.53.0 | Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension | Preview | [0.3.13](https://github.com/Azure/azure-cli-extensions/tree/master/src/serviceconnector-passwordless/HISTORY.rst) |
 |[site-recovery](https://github.com/Azure/azure-cli-extensions/tree/main/src/site-recovery) | 2.51.0 | Microsoft Azure Command-Line Tools SiteRecovery Extension. | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/site-recovery/HISTORY.rst) |
-|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.19.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
+|[spring](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) | 2.45.0 | Microsoft Azure Command-Line Tools spring Extension | GA | [1.19.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring) |
 |[spring-cloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) | 2.45.0 | Microsoft Azure Command-Line Tools spring-cloud Extension | GA | [3.1.8](https://github.com/Azure/azure-cli-extensions/tree/main/src/spring-cloud) |
 |[ssh](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) | 2.45.0 | SSH into Azure VMs using RBAC and AAD OpenSSH Certificates | GA | [2.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/ssh) |
 |[stack-hci](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci) | 2.54.0 | Microsoft Azure Command-Line Tools AzureStackHCIClient Extension | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/stack-hci/HISTORY.rst) |
