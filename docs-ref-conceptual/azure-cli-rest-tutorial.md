@@ -301,3 +301,4 @@ WHen you are finished with the resources created in this article, you can delete
 ```azurecli-interactive
 az group delete --resource-group <resourceGroupName>
 ```
+
