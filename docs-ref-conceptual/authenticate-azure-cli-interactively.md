@@ -45,10 +45,6 @@ az login --user <username> --password <password>
 > az login -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password
 > ```
 
-## Refresh tokens
-
-[!INCLUDE [refresh-token](includes/refresh-token.md)]
-
 ## Sign in with a different tenant
 
 You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive and command-line sign-in methods work with `--tenant`.
@@ -58,6 +54,10 @@ az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
 After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant).
+
+## Refresh tokens
+
+[!INCLUDE [refresh-token](includes/refresh-token.md)]
 
 ## Troubleshooting
 
