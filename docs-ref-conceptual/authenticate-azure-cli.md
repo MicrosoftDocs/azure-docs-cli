@@ -34,10 +34,10 @@ After you sign in, CLI commands are run against your default subscription. If yo
 
 ## Refresh tokens
 
-> [!NOTE]
-> Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources. See []
-
 [!INCLUDE [refresh-token](includes/refresh-token.md)]
+
+> [!NOTE]
+> Depending on your sign in method, your tenant may have Conditional Access policies that restrict your access to certain resources.
 
 ## See also
 
