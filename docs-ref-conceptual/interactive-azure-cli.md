@@ -144,15 +144,15 @@ $ az extension add --name interactive --upgrade
 
 To use command recommendation, run a command and click <kbd>`space`</kbd> or <kbd>`next`</kbd>. 
 
-<img src="./media/interactive-azure-cli/command_recommendation.gif" width="40" height="40" />
+![Command recommendation](./media/interactive-azure-cli/command_recommendation.png)
 
 To use scenario identification, run `:: [num]` to complete a recommended scenario step-by-step.
 
-<img src="./media/interactive-azure-cli/scenario_identification.gif" width="40" height="40" /> 
+![Scenario identification](./media/interactive-azure-cli/scenario_identification.png)
 
 To use usable knowledge search, run `/ [keyword]` to search for commands and scenarios.
 
-<img src="./media/interactive-azure-cli/scenario_search.gif" width="40" height="40" /> 
+![Usable knowledge search](./media/interactive-azure-cli/scenario_search.png)
 
 
 To disable the new AI features for Azure CLI interactive mode input the following command:
