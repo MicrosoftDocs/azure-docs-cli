@@ -142,15 +142,15 @@ When using interactive mode within Azure CLI, upgrade to the latest version to u
 $ az extension add --name interactive --upgrade
 ```
 
-To use command recommendation, run a command and click <kbd>`space`</kbd> or <kbd>`next`</kbd>. 
+To use **command recommendation**, run a command and click <kbd>`space`</kbd> or <kbd>`next`</kbd>. 
 
 ![Command recommendation](./media/interactive-azure-cli/command_recommendation.png)
 
-To use scenario identification, run `:: [num]` to complete a recommended scenario step-by-step.
+To use **scenario identification**, run `:: [num]` to complete a recommended scenario step-by-step.
 
 ![Scenario identification](./media/interactive-azure-cli/scenario_identification.png)
 
-To use usable knowledge search, run `/ [keyword]` to search for commands and scenarios.
+To use **usable knowledge search**, run `/ [keyword]` to search for commands and scenarios.
 
 ![Usable knowledge search](./media/interactive-azure-cli/scenario_search.png)
 
