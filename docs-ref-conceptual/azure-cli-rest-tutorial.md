@@ -67,7 +67,9 @@ let "randomIdentifier=$RANDOM*$RANDOM"
 subscriptionId="00000000-0000-0000-0000-000000000000"
 resourceGroup="msdocs-app-rg$randomIdentifier"
 containerRegistryName="msdocscr$randomIdentifier"
-location="westus"
+locationName="westus"
+skuName="Standard"
+propertyValue="true"
 
 # Create resource group
 az group create --name $resourceGroup --location $location --output json
@@ -75,7 +77,7 @@ az group create --name $resourceGroup --location $location --output json
 # Invoke request
 az rest --method put \
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$containerRegistryName?api-version=2023-01-01-preview \
-    --body "{'location': 'westus', 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
+    --body "{'location': '$locationName', 'sku': {'name': '$skuName'}, 'properties': {'adminUserEnabled': '$propertyValue'}}"
 
 ```
 
@@ -89,15 +91,17 @@ $randomIdentifier = (New-Guid).ToString().Substring(0,8)
 $subscriptionId="00000000-0000-0000-0000-000000000000"
 $resourceGroup="msdocs-app-rg$randomIdentifier"
 $containerRegistryName="msdocscr$randomIdentifier"
-$location="westus"
+$locationName="westus"
+$skuName="Standard"
+$propertyValue="true"
 
 # Create resource group
 az group create --name $resourceGroup --location $location --output json
 
 # Invoke request
 az rest --method put `
-    --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview `
-    --body "{'location': 'westus', 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
+     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview `
+     --body "{'location': '$locationName', 'sku': {'name': '$skuName'}, 'properties': {'adminUserEnabled': '$propertyValue'}}"
 
 ```
 
@@ -172,22 +176,30 @@ You have now successfully created your new Azure Container Registry using `az re
 
 ## Use PATCH to update your Azure Container Registry
 
-Update your Azure Container Registry by using the PATCH HTTP request. Edit the `--body` parameter with the properties you want to update. This example uses the variables set in the previous section, and updates the SKU name of the Azure Container Registry. This script runs in both Bash and PowerShell.
+Update your Azure Container Registry by using the PATCH HTTP request. Edit the `--body` parameter with the properties you want to update. This example uses the variables set in the previous section, and updates the SKU name ($skuName="Premium") of the Azure Container Registry. This script runs in both Bash and PowerShell.
 
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
+
+#Variable Block
+$skuName="Premium"
+
 az rest --method patch \
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$containerRegistryName?api-version=2023-01-01-preview \
-    --body "{'location': 'westus', 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
+    --body "{'location': '$locationName', 'sku': {'name': '$skuName'}, 'properties': {'adminUserEnabled': '$propertyValue'}}"
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
+
+#Variable Block
+$skuName="Premium"
+
 az rest --method patch `
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview `
-    --body "{'location': 'westus', 'sku': {'name': 'Premium'}, 'properties': {'adminUserEnabled': 'true'}}"
+    --body "{'location': '$locationName', 'sku': {'name': '$skuName'}, 'properties': {'adminUserEnabled': '$propertyValue'}}"
 ```
 
 ---
@@ -239,17 +251,25 @@ Use the POST HTTP request to regenerate one of the login credentials for the Azu
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
+
+# Variable block
+$passwordValue="password"
+
 az rest --method post \
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$containerRegistryName/regenerateCredential?api-version=2023-01-01-preview \
-    --body "{'name': 'password'}"
+    --body "{'name': '$passwordValue'}"
 ```
 
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
+
+# Variable block
+$passwordValue="password"
+
 az rest --method post `
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}/regenerateCredential?api-version=2023-01-01-preview `
-    --body "{'name': 'password'}"
+    --body "{'name': '$passwordValue'}"
 ```
 
 ---
