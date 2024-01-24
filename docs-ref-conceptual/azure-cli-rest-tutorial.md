@@ -52,7 +52,7 @@ Use the PUT HTTP method to create a new Azure Container Registry.
 # Command format example
 az rest --method put \
 --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<containerRegistryName>?api-version=2023-01-01-preview \
---body "{'location': 'westus', 'tags': {key': 'value'}, 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
+--body "{'location': 'westus', 'sku': {'name': 'Standard'}, 'properties': {'adminUserEnabled': 'true'}}"
 ```
 
 Here is an example with completed parameters:
