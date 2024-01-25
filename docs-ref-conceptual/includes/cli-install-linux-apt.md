@@ -59,7 +59,7 @@ If you prefer a step-by-step installation process, complete the following steps 
     Suites: ${AZ_DIST}
     Components: main
     Architectures: $(dpkg --print-architecture)
-    Signed-by: /usr/share/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
+    Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
     ```
 
 4. Update repository information and install the `azure-cli` package:
@@ -198,7 +198,7 @@ URIs: https://packages.microsoft.com/repos/azure-cli/
 Suites: hera
 Components: main
 Architectures: amd64
-Signed-by: /usr/share/keyrings/microsoft-archive-keyring.gpg
+Signed-by: /etc/apt/keyrings/microsoft.gpg
 ```
 
 Modified file contents
@@ -209,7 +209,7 @@ URIs: https://packages.microsoft.com/repos/azure-cli/
 Suites: bionic
 Components: main
 Architectures: amd64
-Signed-by: /usr/share/keyrings/microsoft-archive-keyring.gpg
+Signed-by: /etc/apt/keyrings/microsoft.gpg
 ```
 
 ### Proxy blocks connection
