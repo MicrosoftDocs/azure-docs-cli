@@ -4,7 +4,7 @@ name: az iot ops
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.42.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure IoT Operations.
 description: |-
@@ -20,7 +20,7 @@ directCommands:
 - uid: az_iot_ops_check
   name: az iot ops check
   summary: |-
-    Evaluate IoT Operations service deployment for health, configuration and usability.
+    Evaluate cluster-side runtime health of deployed IoT Operations services.
   description: |-
     The command by default shows a human friendly _summary_ view of the selected service.
     More detail can be requested via `--detail-level`.
@@ -89,7 +89,7 @@ directCommands:
 - uid: az_iot_ops_init
   name: az iot ops init
   summary: |-
-    Bootstrap, configure and deploy IoT Operations to the target cluster.
+    Bootstrap, configure and deploy IoT Operations to the target arc-enabled cluster.
   description: |-
     For additional resources including how to arc-enable a cluster see https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/howto-prepare-cluster.
   status: Preview
@@ -102,6 +102,7 @@ directCommands:
                     [--ca-dir]
                     [--ca-file]
                     [--ca-key-file]
+                    [--ca-valid-days]
                     [--cluster-location]
                     [--cluster-namespace]
                     [--context]
@@ -130,6 +131,7 @@ directCommands:
                     [--mq-service-type {clusterIp, loadBalancer, nodePort}]
                     [--no-block {false, true}]
                     [--no-deploy {false, true}]
+                    [--no-preflight {false, true}]
                     [--no-progress {false, true}]
                     [--no-tls {false, true}]
                     [--opcua-discovery-url]
@@ -139,6 +141,7 @@ directCommands:
                     [--sp-app-id]
                     [--sp-object-id]
                     [--sp-secret]
+                    [--sp-secret-valid-days]
                     [--target]
   examples:
   - summary: |-
@@ -178,6 +181,10 @@ directCommands:
   - name: --ca-key-file
     summary: |-
       The path to the CA private key file in PEM format. !Required! when --ca-file is provided.
+  - name: --ca-valid-days
+    defaultValue: "365"
+    summary: |-
+      Option to control the duration in days of the init generated x509 CA. Applicable if --ca-file and --ca-key-file are not provided.
   - name: --cluster-location
     summary: |-
       The cluster ARM location.
@@ -281,7 +288,11 @@ directCommands:
   - name: --no-deploy
     parameterValueGroup: "false, true"
     summary: |-
-      The deployment of IoT Operations will be skipped.
+      The IoT Operations deployment workflow will be skipped.
+  - name: --no-preflight
+    parameterValueGroup: "false, true"
+    summary: |-
+      The pre-flight workflow will be skipped.
   - name: --no-progress
     parameterValueGroup: "false, true"
     summary: |-
@@ -289,7 +300,7 @@ directCommands:
   - name: --no-tls
     parameterValueGroup: "false, true"
     summary: |-
-      The configuration of TLS in the init workflow will be skipped.
+      The TLS configuration workflow will be skipped.
   - name: --opcua-discovery-url
     summary: |-
       Configures an OPC-UA server endpoint for Akri discovery handlers. If not provided and --simulate-plc is set, this value becomes 'opc.tcp://opcplc-000000.{cluster_namespace}:50000'.
@@ -314,9 +325,36 @@ directCommands:
   - name: --sp-secret
     summary: |-
       The secret corresponding to the provided service principal app Id. If provided it will be used for CSI driver setup. Otherwise a new secret will be requested from MS graph. !Required! if the logged in principal does not have permissions to query graph.
+  - name: --sp-secret-valid-days
+    defaultValue: "365"
+    summary: |-
+      Option to control the duration in days of the init generated service principal secret. Applicable if --sp-secret is not provided.
   - name: --target
     summary: |-
       Target name for ops orchestrator. The default is in the form '{cluster_name}-ops-init-target'.
+- uid: az_iot_ops_verify-host
+  name: az iot ops verify-host
+  summary: |-
+    Runs a set of cluster host verifications for IoT Operations deployment compatibility.
+  description: |-
+    Intended to be run directly on a target cluster host. The command may prompt to apply a set of privileged actions such as installing a dependency. In this case the CLI must be run with elevated permissions. For example
+    `sudo AZURE_EXTENSION_DIR=/home/me/.azure/cliextensions az iot ops verify-host`.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops verify-host [--no-progress {false, true}]
+                           [--yes {false, true}]
+  optionalParameters:
+  - name: --no-progress
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable visual representation of work.
+  - name: --yes -y
+    parameterValueGroup: "false, true"
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
 commands:
 - az_iot_ops_asset
 - az_iot_ops_asset_create
@@ -349,6 +387,7 @@ commands:
 - az_iot_ops_mq_stats
 - az_iot_ops_support
 - az_iot_ops_support_create-bundle
+- az_iot_ops_verify-host
 globalParameters:
 - name: --debug
   summary: |-
