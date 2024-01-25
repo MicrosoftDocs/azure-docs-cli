@@ -275,7 +275,6 @@ myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query pass
 
 # Display the new password (remove this line in production for security)
 echo "New password: $myNewPassword"
-
 ```
 # [PowerShell](#tab/powershell)
 
@@ -288,7 +287,6 @@ $myNewPassword = (az ad sp credential reset --id myServicePrincipalID --query pa
 Write-Host "New password: $myNewPassword"
 ```
 ---
-
 For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## Set the default output format
