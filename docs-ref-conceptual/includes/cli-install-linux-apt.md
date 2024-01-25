@@ -47,7 +47,7 @@ If you prefer a step-by-step installation process, complete the following steps 
 
     ```bash
     curl -fssL https://packages.microsoft.com/keys/microsoft.asc |\
-      gpg --dearmor -o /usr/share/keyrings/microsoft.gpg
+      gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg
     ```
 
 3. <div id="set-release"/>Add the Azure CLI software repository:
