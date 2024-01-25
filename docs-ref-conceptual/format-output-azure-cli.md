@@ -197,8 +197,8 @@ The `tsv` output format is often used when assigning values to variables. This e
 
 # [Bash](#tab/bash)
 
-#Bash Script
 ```azurecli-interactive
+# Bash ScripT
 subscriptionID=$(az account show --query id --output tsv)
 echo "Using subscription ID $subscriptionID"
 ```
@@ -268,8 +268,8 @@ A better solution is to return sensitive information to a variable.
 
 # [Bash](#tab/bash)
 
-#Bash Script
 ```azurecli-interactive
+# Bash Script
 # reset service principal credentials returning results to a variable
 myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
 
