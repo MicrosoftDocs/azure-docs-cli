@@ -198,7 +198,7 @@ The `tsv` output format is often used when assigning values to variables. This e
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
-# Bash ScripT
+# Bash Script
 subscriptionID=$(az account show --query id --output tsv)
 echo "Using subscription ID $subscriptionID"
 ```
