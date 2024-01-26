@@ -137,7 +137,7 @@ You can also use `apt-get upgrade` to update the CLI package. This command upgra
 3. If you aren't using other packages from Microsoft, remove the signing key:
 
     ```bash
-    sudo rm /usr/share/keyrings/microsoft.gpg
+    sudo rm /etc/apt/keyrings/microsoft.gpg
     ```
 
 4. Remove any unneeded packages:
