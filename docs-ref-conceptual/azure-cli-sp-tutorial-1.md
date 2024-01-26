@@ -29,13 +29,14 @@ In this tutorial, you learn how to:
 ## Prerequisites
 
 * In a subscription, you must have `User Access Administrator` or `Role Based Access Control Administrator` permissions, or higher, to create a service principal. For a list of roles available for Azure role-based access control (Azure RBAC), see [Azure built-in roles](/azure/role-based-access-control/built-in-roles).
-* In a Microsoft EntraID directory where user setting **Users can register applications** has been set to **No**, you will need to be a member of one of the following Entra ID Built-in Roles (which have the action 
-`microsoft.directory/applications/createAsOwner` or `microsoft.directory/applications/create`). *For more information about User Settings in EntraID see [Restrict who can create applications](/entra/identity/role-based-access-control/delegate-app-roles#restrict-who-can-create-applications)*: 
+* In a Microsoft EntraID directory where user setting **Users can register applications** has been set to **No**, you will need to be a member of one of the following EntraID Built-in Roles (which have the action: 
+`microsoft.directory/applications/createAsOwner` or `microsoft.directory/applications/create`): 
   * [`Application Developer`](/entra/identity/role-based-access-control/permissions-reference#application-developer)
   * [`Application Administrator`](/entra/identity/role-based-access-control/permissions-reference#application-administrator)
   * [`Cloud Application Administrator`](/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator)
   * [`Global Administrator`](/entra/identity/role-based-access-control/permissions-reference#global-administrator)
   * [`Hybrid Identity Administrator`](/entra/identity/role-based-access-control/permissions-reference#hybrid-identity-administrator)
+ * *For more information about User Settings in EntraID see [Restrict who can create applications](/entra/identity/role-based-access-control/delegate-app-roles#restrict-who-can-create-applications)*
 
 > [!NOTE]
 > If you do not meet the above prerequisites then you will receive the error `Insufficient privileges to complete the operation` when running the commands in this article.
