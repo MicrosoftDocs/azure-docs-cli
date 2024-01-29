@@ -16,22 +16,27 @@ When you manage Azure resources, there is sensitive information that must be pro
 
 TODO: Note about "global settings" as right now `az config` is user-specific.
 
-# Environment vs user configurations
+## Environment vs user configurations
 
 TODO: This belongs in azure-cli-configuration.md
 
-|Variable name| Variable type
+|Configuration name| Configuration type
 |-|-|
 |show_secrets_warning| system environment variable
-|show_secrets| user variable
-|show_secrets_allow_list | user variable
-|show_secrets_duration | user variable
+|show_secrets| user-specific configuration
+|show_secrets_allow_list | user-specific configuration
+|show_secrets_duration | user-specific configuration
 
-# Set show_secrets_warning
+## Set show_secrets_warning
 
-Beginning in Azure CLI x.y.z, a warning will display in your terminal if Azure CLI command output contains sensitive information. Turn these warnings off
+Beginning in Azure CLI x.y.z, a warning will display in your terminal if Azure CLI command output contains sensitive information. Turn these warnings on and off by setting the `show_secrets_warning` configuration property.
 
-# Set show_secrets
+|Configuration name| Allowed values | Warnings are written to log | Warnings are displayed in terminal
+|-|-|-|-|
+|show_secrets_warning| on | Yes | Yes
+| | off | Yes | No
+
+## Set show_secrets
 
 The Azure CLI `show_secrets` environment variable provides three options for protecting secrets:
 
@@ -45,14 +50,39 @@ In this example, replace `off` with your setting of choice:
 az config set show_secrets = off
 ```
 
-# Create a show_secrets_allow_list
+## Create a show_secrets_allow_list
 
 
 
-# Set show_secrets_duration 
+## Set show_secrets_duration 
 
 
-# Override settings for a command
+
+
+## Override settings for a command
+
+
+
+
+
+## Individual command notes
+
+
+
+
+
+### GitHub actions
+
+
+
+
+### some other command group?
+
+
+## Third-party tools message
+
+https://learn.microsoft.com/en-us/powershell/azure/command-line-tools-survey-guidance?view=azps-11.2.0#compatibility-with-third-party-tools
+
 
 
 
