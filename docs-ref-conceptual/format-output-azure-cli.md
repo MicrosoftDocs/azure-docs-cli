@@ -195,22 +195,9 @@ KBDemo020
 
 The `tsv` output format is often used when assigning values to variables. This example gets the active subscription ID and stores it into a variable for use in a script.
 
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-# Bash Script
-subscriptionID=$(az account show --query id --output tsv)
+$subscriptionID = az account show --query id --output tsv
 echo "Using subscription ID $subscriptionID"
 ```
-# [PowerShell](#tab/powershell)
-
-```azurecli
-# PowerShell script
-$subscriptionID = az account show --query id --output tsv
-Write-Host "Using subscription ID $subscriptionID"
-```
----
-
 For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## None output format
@@ -266,27 +253,13 @@ Console output showing the new password in the console.
 
 A better solution is to return sensitive information to a variable.
 
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-# Bash Script
+```azurecli
 # reset service principal credentials returning results to a variable
 myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
 
 # Display the new password (remove this line in production for security)
 echo "New password: $myNewPassword"
 ```
-# [PowerShell](#tab/powershell)
-
-```azurecli
-# PowerShell script
-# Reset service principal credentials and capture the new password
-$myNewPassword = (az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
-
-# Display the new password (remove this line in production for security)
-Write-Host "New password: $myNewPassword"
-```
----
 For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## Set the default output format
