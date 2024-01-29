@@ -4,7 +4,7 @@ description: The Azure CLI offers various output formats such as JSON and YAML. 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/18/2023
+ms.date: 01/29/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
