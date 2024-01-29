@@ -6,7 +6,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.service: azure-cli
 ms.topic: how-to
-ms.date: 06/19/2023
+ms.date: 01/29/2024
 ms.tool: azure-cli
 ms.custom: template-how-to, devx-track-azurecli, seo-azure-cli
 keywords: azure cli variables, azure cli commands, value of variable, shell variables
@@ -30,10 +30,7 @@ Azure CLI runs in a shell. This article uses Bash. For information about other s
 
 This example creates a new storage disk of the same type as the storage disk on an existing virtual machine.
 
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-# Bash script
+```azurecli
 # Assign values to variables
 MyResourceGroup=ContosoRGforVM
 MySubscription="Contoso subscription"
@@ -47,22 +44,6 @@ osType=$(az vm get-instance-view --resource-group $MyResourceGroup \
 # Create a disk of the same type by using the variable value
 az disk create --resource-group $MyResourceGroup --name DestinationDisk --size-gb 20 --os-type $osType
 ```
-# [PowerShell](#tab/powershell)
-
-```azurecli
-# PowerShell script
-# Assign values to variables
-$MyResourceGroup = "ContosoRGforVM"
-$MySubscription = "Contoso subscription"
-$vmName = "VM01"
-
-# Get a value for a variable based on an existing virtual machine
-$osType = (Get-AzVM -ResourceGroupName $MyResourceGroup -Name $vmName -SubscriptionName $MySubscription).StorageProfile.OsDisk.OsType
-
-# Create a disk of the same type by using the variable value
-New-AzDisk -ResourceGroupName $MyResourceGroup -DiskName DestinationDisk -DiskSizeGB 20 -OsType $osType
-```
----
 
 This example shows how to assign values to variables that are reused, like **MyResourceGroup** and **osType**. The command [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) combined with the query `storageProfile.osDisk.osType` returns the disk's OS type. Wrapping the command with `$()` assigns the command's return value to `osType`. To learn more about `--query` and JMESPath queries see [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md).
 
