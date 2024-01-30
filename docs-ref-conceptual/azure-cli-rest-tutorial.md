@@ -13,14 +13,13 @@ ms.custom: devx-track-azurecli
 
 # Use the Azure REST API with Azure Command Line Interface (CLI)
 
-[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources. The `az rest` command should only e used when an existing [Azure CLI command](/cli/azure/use-cli-effectively) isn't available. 
+[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources. The `az rest` command should only be used when an existing [Azure CLI command](/cli/azure/use-cli-effectively) isn't available. 
 
-Upon completion of this article, you will know how to use the PUT, PATCH, GET, POST, and DELETE HTTP requests to manage your Azure Container Registry resources. The [Azure Container Registry](/azure/container-registry/container-registry-intro) is a managed registry service that allows you to create and maintain Azure container registries that store container images and related artifacts.
+Upon completion of this article, you will know how to use the PUT, PATCH, GET, POST, and DELETE HTTP requests to manage Azure Container Registry resources. The [Azure Container Registry](/azure/container-registry/container-registry-intro) is a managed registry service that allows you to create and maintain Azure container registries that store container images and related artifacts.
 
 ## Prerequisites 
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
-
 
 ## Set up your custom Azure REST API request:
 
@@ -30,32 +29,18 @@ To invoke a custom Azure REST API request with Azure CLI, use the [`az rest`](/c
 > - The `az rest` command automatically authenticates using the logged-in credential. If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from [Microsoft Entra ID](/entra/identity/). The target resource of the token will be derived from the `--url` parameter when the `--url` parameter starts with an endpoint from the output of the `az cloud show --query endpoints` command. Use the `--resource` parameter for a custom resource.
 > - If Content-Type header is not set and `--body` is a valid JSON string, Content-Type header will default to "application/json".
 
-```azurecli-interactive
-
-az rest --url
-        [--body]
-        [--headers]
-        [--method {delete, get, head, options, patch, post, put}]
-        [--output-file]
-        [--resource]
-        [--skip-authorization-header]
-        [--uri-parameters]
-```
-
 ## Use PUT to create an Azure Container Registry
-
-### Creating your custom request with Azure CLI 
 
 Use the PUT HTTP method to create a new Azure Container Registry.
 
 ```azurecli-interactive
 # Command format example
 az rest --method put \
---url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<containerRegistryName>?api-version=2023-01-01-preview \
---body "{'location': '<locationName>', 'sku': {'name': '<skuName>'}, 'properties': {'adminUserEnabled': '<propertyValue>'}}"
+    --url https://management.azure.com/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>/providers/Microsoft.ContainerRegistry/registries/<containerRegistryName>?api-version=2023-01-01-preview \
+    --body "{'location': '<locationName>', 'sku': {'name': '<skuName>'}, 'properties': {'adminUserEnabled': '<propertyValue>'}}"
 ```
 
-Here is an example with completed parameters:
+Here's an example with completed parameters:
 
 # [Bash](#tab/bash)
 
@@ -176,7 +161,7 @@ You have now successfully created your new Azure Container Registry using `az re
 
 ## Use PATCH to update your Azure Container Registry
 
-Update your Azure Container Registry by using the PATCH HTTP request. Edit the `--body` parameter with the properties you want to update. This example uses the variables set in the previous section, and updates the SKU name ($skuName="Premium") of the Azure Container Registry. This script runs in both Bash and PowerShell.
+Update your Azure Container Registry by using the PATCH HTTP request. Edit the `--body` parameter with the properties you want to update. This example uses the variables set in the previous section, and updates the SKU name ($skuName="Premium") of the Azure Container Registry.
 
 # [Bash](#tab/bash)
 
@@ -191,6 +176,8 @@ az rest --method patch \
 ```
 
 # [PowerShell](#tab/powershell)
+
+In a PowerShell environment, add `{}` brackets around the `containerRegistryName` variable as a question mark is an allowed character in a variable name.
 
 ```azurecli-interactive
 
@@ -235,6 +222,8 @@ az rest --method get \
 
 # [PowerShell](#tab/powershell)
 
+In a PowerShell environment, add `{}` brackets around the `containerRegistryName` variable as a question mark is an allowed character in a variable name.
+
 ```azurecli-interactive
 az rest --method get `
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview 
@@ -268,7 +257,7 @@ az rest --method post \
 $passwordValue="password"
 
 az rest --method post `
-    --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}/regenerateCredential?api-version=2023-01-01-preview `
+    --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$containerRegistryName/regenerateCredential?api-version=2023-01-01-preview `
     --body "{'name': '$passwordValue'}"
 ```
 
@@ -308,6 +297,8 @@ az rest --method delete \
 
 # [PowerShell](#tab/powershell)
 
+In a PowerShell environment, add `{}` brackets around the `containerRegistryName` variable as a question mark is an allowed character in a variable name.
+
 ```azurecli-interactive
 az rest --method delete `
     --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview
@@ -316,9 +307,8 @@ az rest --method delete `
 
 ## Clean up resources
 
-WHen you are finished with the resources created in this article, you can delete the resource group. When you delete the resource group, all resources in that resource group are deleted. 
+When you are finished with the resources created in this article, you can delete the resource group. When you delete the resource group, all resources in that resource group are deleted. 
 
 ```azurecli-interactive
 az group delete --resource-group <resourceGroupName>
 ```
-
