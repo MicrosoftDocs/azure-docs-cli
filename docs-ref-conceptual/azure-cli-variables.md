@@ -30,8 +30,8 @@ Azure CLI runs in a shell. This article uses Bash. For information about other s
 
 This example creates a new storage disk of the same type as the storage disk on an existing virtual machine.
 
- [Bash](#tab/bash)
-
+```
+# [Bash](#tab/bash)
 ```azurecli
 # Bash script
 # Assign values to variables
@@ -48,7 +48,6 @@ osType=$(az vm get-instance-view --resource-group $MyResourceGroup \
 az disk create --resource-group $MyResourceGroup --name DestinationDisk --size-gb 20 --os-type $osType
 ```
 # [PowerShell](#tab/powershell)
-
 ```azurecli
 # PowerShell script
 # Assign values to variables
