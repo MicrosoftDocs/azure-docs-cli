@@ -30,8 +30,8 @@ Azure CLI runs in a shell. This article uses Bash. For information about other s
 
 This example creates a new storage disk of the same type as the storage disk on an existing virtual machine.
 
-```
 # [Bash](#tab/bash)
+
 ```azurecli
 # Bash script
 # Assign values to variables
@@ -47,7 +47,9 @@ osType=$(az vm get-instance-view --resource-group $MyResourceGroup \
 # Create a disk of the same type by using the variable value
 az disk create --resource-group $MyResourceGroup --name DestinationDisk --size-gb 20 --os-type $osType
 ```
+
 # [PowerShell](#tab/powershell)
+
 ```azurecli
 # PowerShell script
 # Assign values to variables
@@ -63,8 +65,8 @@ $osType=$(az vm get-instance-view --resource-group $MyResourceGroup `
 # Create a disk of the same type by using the variable value
 az disk create --resource-group $MyResourceGroup --name DestinationDisk --size-gb 20 --os-type $osType
 ```
----
 
+---
 This example shows how to assign values to variables that are reused, like **MyResourceGroup** and **osType**. The command [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) combined with the query `storageProfile.osDisk.osType` returns the disk's OS type. Wrapping the command with `$()` assigns the command's return value to `osType`. To learn more about `--query` and JMESPath queries see [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md).
 
 When you assign a value to a variable from another command, be sure that the command uses a compatible output format. The [az vm get-instance-view](/cli/azure/vm#az_vm_get_instance_view) command uses the `tsv` output format. This option returns values without extra formatting, keys, or other symbols. Some output formats include structure or characters like quotation marks. For more information, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
