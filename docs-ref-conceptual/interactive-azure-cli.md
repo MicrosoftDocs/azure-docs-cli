@@ -21,7 +21,7 @@ You can use Azure CLI in interactive mode by running the `az interactive` comman
 > [!NOTE]
 > We're not using the default style here, which doesn't read as well on a black background.
 
-If you're not already signed in to your account, use the `login` command.
+If you're not already signed in to your account, use the `az login` command.
 
 ## What is the Azure CLI interactive mode?
 
@@ -30,11 +30,11 @@ Azure CLI Interactive Mode (az interactive) provides users an interactive enviro
 ## Configure
 
 Interactive mode optionally displays command descriptions, parameter descriptions, and command examples.
-Turn descriptions and examples on or off using <kbd>`F1`</kbd>.
+Turn descriptions and examples on or off using `F1`.
 
 ![Descriptions and examples on/off](./media/interactive-azure-cli/descriptions-and-examples.png)
 
-You can turn the display of parameter defaults on or off using <kbd>`F2`</kbd>.
+You can turn the display of parameter defaults on or off using `F2`.
 
 ![Display parameter default on/off](./media/interactive-azure-cli/defaults.png)
 
@@ -113,7 +113,7 @@ az>> #dir
 ## Examples
 
 Some commands have lots of examples.
-You can scroll to the next page of examples using <kbd>`CTRL-N`</kbd> and the previous page using <kbd>`CTRL-Y`</kbd>.
+You can scroll to the next page of examples using `CTRL-N` and the previous page using `CTRL-Y`.
 
 ![Scroll to next page of examples](./media/interactive-azure-cli/examples.png)
 
@@ -123,9 +123,9 @@ You can also look at a specific example using `::#`.
 az>> vm create ::8
 ```
 
-## New artificial intelligence (AI) functionalities
+## Atificial intelligence (AI) functionalities
 
-The Azure CLI team has combined AI with Azure CLI interactive mode to provide users with a more beginner-friendly interactive experience. These new AI functionalities allow users to learn and understand how to utilize Azure CLI interactive mode with more ease and efficiency. 
+The Azure CLI team has combined AI with Azure CLI interactive mode to provide users with a more beginner-friendly interactive experience. These AI functionalities allow users to learn about how to utilize Azure CLI interactive mode with more ease and efficiency. 
 
 The new AI features consist of:
 
@@ -139,10 +139,10 @@ The new AI features consist of:
 When using interactive mode within Azure CLI, upgrade to the latest version to use the new features.
 
 ```azurecli-interactive
-$ az extension add --name interactive --upgrade
+az extension add --name interactive --upgrade
 ```
 
-To use **command recommendation**, run a command and click <kbd>`space`</kbd> or <kbd>`next`</kbd>. 
+To use **command recommendation**, run a command and click `space` or `next`. 
 
 ![Command recommendation](./media/interactive-azure-cli/command_recommendation.png)
 
@@ -158,5 +158,5 @@ To use **usable knowledge search**, run `/ [keyword]` to search for commands and
 To disable the new AI features for Azure CLI interactive mode input the following command:
 
 ```azurecli-interactive
-$ az config set interactive.enable_recommender=False
+az config set interactive.enable_recommender=False
 ```
