@@ -195,9 +195,22 @@ KBDemo020
 
 The `tsv` output format is often used when assigning values to variables. This example gets the active subscription ID and stores it into a variable for use in a script.
 
+# [Bash](#tab/bash)
+
+```azurecli
+# Bash Script
+subscriptionID=$(az account show --query id --output tsv)
+echo "Using subscription ID $subscriptionID"
+```
+# [PowerShell](#tab/powershell)
+
+```azurecli
+# PowerShell script
 $subscriptionID = az account show --query id --output tsv
 echo "Using subscription ID $subscriptionID"
 ```
+---
+
 For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## None output format
