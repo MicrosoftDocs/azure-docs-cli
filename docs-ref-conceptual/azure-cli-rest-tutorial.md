@@ -45,8 +45,6 @@ Here's an example with completed parameters:
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
-# Bash script
-
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
 subscriptionId="00000000-0000-0000-0000-000000000000"
@@ -69,8 +67,6 @@ az rest --method put \
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
-# Powershell script
-
 # Variable block
 $randomIdentifier = (New-Guid).ToString().Substring(0,8)
 $subscriptionId="00000000-0000-0000-0000-000000000000"
@@ -166,7 +162,6 @@ Update your Azure Container Registry by using the PATCH HTTP request. Edit the `
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
-
 #Variable Block
 $skuName="Premium"
 
@@ -180,7 +175,6 @@ az rest --method patch \
 In a PowerShell environment, add `{}` brackets around the `containerRegistryName` variable as a question mark is an allowed character in a variable name.
 
 ```azurecli-interactive
-
 #Variable Block
 $skuName="Premium"
 
@@ -240,7 +234,6 @@ Use the POST HTTP request to regenerate one of the login credentials for the Azu
 # [Bash](#tab/bash)
 
 ```azurecli-interactive
-
 # Variable block
 $passwordValue="password"
 
@@ -252,7 +245,6 @@ az rest --method post \
 # [PowerShell](#tab/powershell)
 
 ```azurecli-interactive
-
 # Variable block
 $passwordValue="password"
 
