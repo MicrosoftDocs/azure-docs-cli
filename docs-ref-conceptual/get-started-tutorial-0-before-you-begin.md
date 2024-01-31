@@ -8,7 +8,7 @@ ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, devx-track-azurepowershell
 keywords: azure, az account, az group, az config, az init, configuration
 ---
 # Welcome to Azure CLI
