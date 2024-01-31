@@ -4,14 +4,14 @@ description: Learn how to use Azure rest with Azure Command Line (CLI).
 manager: jasongroce
 author: daphnemamsft
 ms.author: daphnema
-ms.date: 01/19/2024
+ms.date: 01/31/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 ---
 
-# Use the Azure REST API with Azure Command Line Interface (CLI)
+# Use the Azure REST API with Azure CLI
 
 [Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources. The `az rest` command should only be used when an existing [Azure CLI command](/cli/azure/use-cli-effectively) isn't available. 
 
