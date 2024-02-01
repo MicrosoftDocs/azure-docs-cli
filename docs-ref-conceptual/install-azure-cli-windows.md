@@ -16,7 +16,7 @@ keywords: Install azure cli, azure cli download, cli for windows, install azure 
 
 The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on Windows computers. You can use the Azure CLI for Windows to connect to Azure and execute administrative commands on Azure resources. The Azure CLI for Windows can also be used from a browser through the Azure Cloud Shell or run from inside a Docker container.
 
-For Windows, the Azure CLI is installed via an MSI, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
+For Windows, the Azure CLI is installed via an MSI or a ZIP package, which gives you access to the CLI through the Windows Command Prompt (CMD) or PowerShell.
 When you perform an installation for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
