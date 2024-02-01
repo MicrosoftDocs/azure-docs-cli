@@ -99,6 +99,9 @@ The `-e` option is to ensure the official Azure CLI package is installed. This c
 
 # [ZIP Package](#tab/zip)
 
+> [!IMPORTANT]
+> This package is currently in preview.
+
 You can use the ZIP package to install the Azure CLI on Windows. This package is useful when you don't have administrative privilege.
 
 Please unzip the package to a folder, then you can run the Azure CLI with `<unzipped folder path>\bin\az.cmd`. (If the path contains spaces, please use `& "<unzipped folder path>\bin\az.cmd"` instead.)
