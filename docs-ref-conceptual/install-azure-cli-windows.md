@@ -104,11 +104,11 @@ You can use the ZIP package to install the Azure CLI on Windows. This package is
 Please unzip the package to a folder, then you can run the Azure CLI with `<unzipped folder path>\bin\az.cmd`. (If the path contains spaces, please use `& "<unzipped folder path>\bin\az.cmd"` instead.)
 
 If you want to run the `az` command directly, then follow the steps below to add the Azure CLI to your PATH environment variable.
-1. Open the Start Menu and search for `environment variables`, click `Edit the system environment variables`.
-2. Click `Environment Variables...` button.
-3. In the `User varibles for <username>` box, select `Path` and click `Edit...` button.
-4. Click `New` button and add the `<unzipped folder path>\bin` to the list.
-5. Restart your terminal and you should be able to run `az` command.
+1. Open the Start Menu and search for `environment variables`.  Click `Edit the system environment variables`.
+1. Click the `Environment Variables...` button.
+1. In the `User varibles for <username>` box, select `Path` and click the `Edit...` button.
+1. Click the `New` button and add the `<unzipped folder path>\bin` to the list.
+1. **Restart your terminal.**  You should now be able to run `az` commands.
 
 ### Latest version
 > [!div class="nextstepaction"]
@@ -121,7 +121,7 @@ To download the ZIP package for a specific version, change the version segment i
 
 For example, to install the 64-bit ZIP of Azure CLI version 2.57.0, your URL would be `https://azcliprod.blob.core.windows.net/zip/azure-cli-2.57.0-x64.zip`. 
 
-Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The ZIP package is available from version 2.57.0 and only 64-bit is available.
+Available Azure CLI versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md). The ZIP package is available from version 2.57.0. Only 64-bit is available.
 
 ---
 
@@ -174,7 +174,7 @@ If you have issues after migration, you can uninstall the 64-bit and reinstall t
 
 [!INCLUDE [az upgrade](includes/az-upgrade.md)]
 
-If you are using ZIP distribution, please delete the old installation folder and extract the new version to the same location.
+If you are using ZIP distribution, please delete the old installation folder and extract the new version to the _same location_.
 
 ## Uninstall
 
