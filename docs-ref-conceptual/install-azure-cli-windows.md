@@ -36,10 +36,10 @@ The MSI and ZIP distributable are used for installing or updating the Azure CLI 
 Download and install the latest release of the Azure CLI. When the installer asks if it can make changes to your computer, select the "Yes" box.
 
 > [!div class="nextstepaction"]
-> [Latest release of the Azure CLI (32-bit)](https://aka.ms/installazurecliwindows)
+> [Latest MSI of the Azure CLI (32-bit)](https://aka.ms/installazurecliwindows)
 
 > [!div class="nextstepaction"]
-> [Latest release of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowsx64)
+> [Latest MSI of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowsx64)
 
 If you have previously installed the Azure CLI, running either the 32-bit or 64-bit MSI will overwrite an existing installation.
 
@@ -116,7 +116,7 @@ If you want to run the `az` command directly, then follow the steps below to add
 ### Latest version
 
 > [!div class="nextstepaction"]
-> [Latest release of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowszipx64)
+> [Latest ZIP of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowszipx64)
 
 ### Specific version
 
