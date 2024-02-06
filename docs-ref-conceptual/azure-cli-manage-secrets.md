@@ -12,81 +12,28 @@ ms.custom: devx-track-azurecli
 
 # Use Azure CLI to manage sensitive Azure information such as keys, passwords and secrets
 
-When you manage Azure resources, there is sensitive information that must be protected. For example, keys, passwords and connection strings can be displayed in a terminal window and written to a log file. Protect sensitive information resulting from Azure CLI commands by setting environment variables.
+When you manage Azure resources, there is sensitive information that must be protected. For example, keys, passwords and connection strings can be created by Azure CLI commands and displayed in a terminal window.
+It is critical to protect this information which, when acquired publically, can cause serious damage and lead to a loss of trust in your company's products and services.
 
-TODO: Note about "global settings" as right now `az config` is user-specific.
+## Set show_secrets_warning (phase 1)
 
-## Environment vs user configurations
+Beginning in Azure CLI x.y.z, a warning message will display when reference commands result in the output of sensitive information. The purpose of the warning message is to decrease the unintentional exposure of secrets, but these messages may require you to make changes in existing scripts.
 
-TODO: This belongs in azure-cli-configuration.md
+> [!IMPORTANT]
+> The new warning messages are sent to Standard Error (STDERR), not Standard Out (STDOUT).
+> Therefore, if you are running an Azure CLI command that results in sensitive information output, you will need to trap for the warning message or turn warnings off using `az config set show_warnings = off`.
 
-|Configuration name| Configuration type
-|-|-|
-|show_secrets_warning| system environment variable
-|show_secrets| user-specific configuration
-|show_secrets_allow_list | user-specific configuration
-|show_secrets_duration | user-specific configuration
+The Azure CLI identifies "sensitive information" by **{infomation from engineering here}.**
 
-## Set show_secrets_warning
-
-Beginning in Azure CLI x.y.z, a warning will display in your terminal if Azure CLI command output contains sensitive information. Turn these warnings on and off by setting the `show_secrets_warning` configuration property.
-
-|Configuration name| Allowed values | Warnings are written to log | Warnings are displayed in terminal
-|-|-|-|-|
-|show_secrets_warning| on | Yes | Yes
-| | off | Yes | No
-
-## Set show_secrets
-
-The Azure CLI `show_secrets` environment variable provides three options for protecting secrets:
-
-- **off**: No secrets will be written to the output of the command. This is the default setting beginning in Azure CLI version x.y.z.
-- **custom**: Secrets will be written in the output of commands defined by the the [show_secrets_allowlist](#create-a-show_secrets_allow_list).
-- **on**: Secrets will be written in the output of all commands. This was the default behavior before Azure CLI version x.y.z.
-
-In this example, replace `off` with your setting of choice:
+Turn sensitive information warnings `on` and `off` by setting the `show_secrets_warning` configuration property.
 
 ```azurecli-interactive
-az config set show_secrets = off
+az config set show_warnings = off
 ```
 
-## Create a show_secrets_allow_list
-
-
-
-## Set show_secrets_duration 
-
-
-
-
-## Override settings for a command
-
-
-
-
-
-## Individual command notes
-
-
-
-
-
-### GitHub actions
-
-
-
-
-### some other command group?
-
-
-## Third-party tools message
-
-https://learn.microsoft.com/en-us/powershell/azure/command-line-tools-survey-guidance?view=azps-11.2.0#compatibility-with-third-party-tools
-
-
-
-
+> [!NOTE]
+> Warnings are **enabled** by default in Azure Cloud Shell. If you run the Azure CLI locally through Cmd or PowerShell, warnings are **disabled** by default.
 
 ## See also
 
-
+* [Azure CLI configuration](./azure-cli-configuration.md)
