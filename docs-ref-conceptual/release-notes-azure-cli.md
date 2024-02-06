@@ -88,7 +88,7 @@ Version 2.57.0
 
 ### Packaging
 
-* Support Windows ZIP package
+* Support Windows ZIP package (Preview)
 
 ### RDBMS
 
