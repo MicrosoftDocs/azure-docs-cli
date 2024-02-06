@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 01/09/2024
+ms.date: 02/06/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,115 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## February 06, 2024
+
+Version 2.57.0
+
+### AKS
+
+* `az aks upgrade`: Add forceupgrade settings to aks stable cli
+* `az aks mesh`: Add `az aks mesh` commands to manage Azure Service Mesh in given cluster
+* `az aks nodepool add/update/upgrade`: Add new parameter `--node-soak-duration` to wait after draining a node and before reimaging it and moving on to next node
+
+### App Service
+
+* `az functionapp create`: Use app insights connection string instead of instrumentation key
+* `az webapp create`: Add new parameter `--acr-use-identity` to configure pull image from ACR using MSI when creating a container web app
+* `az webapp up`: Add `--track-status` arg to use deploymentstatus API
+* `az webapp deployment source config-zip`: Add `--track-status` arg to use deploymentstatus API
+* `az functionapp create`: Only allow apps with functions version 4
+
+### Backup
+
+* `az backup restore restore-disks`: Add support for disk restore in edge-zone backups
+* `az backup restore restore-disks`: Support for Taiwan North and Taiwan North-West Cross region restore
+
+### Billing
+
+* `az billing account`: Add new command `list-invoice-section` to support listing invoice section
+* `az billing account`: Add new command group `invoice-section` to support managing account invoice section
+* `az billing`: Add new command `enrollment-account` to support managing enrollment account
+* `az billing invoice section`: Add new command `initiate-transfer` to support intiating transfer
+* `az billing profile`: Add new command `reservation list ` to support managing reservation
+* `az billing`: Add new command group `transfer` to support managing transfer
+
+### Compute
+
+* `az image builder error-handler`: Add group to manage error handling options upon a build failure
+* `az sshkey create`: Add parameter `--encryption-type` to specify the encryption type of SSH keys to be generated
+* `az vm monitor log show`: Deprecate `azure-loganalytics` and apply `azure-monitor-query`
+* `az vm/vmss create`: Support Trusted Launch as default deployment option
+
+### Consumption
+
+* Fix #20995 #23825: Update `az consumption` API version
+
+### Containerapp
+
+* `az containerapp update`: Fix issue for minReplicas in `--yaml` or `--min-replicas` is not set when the value is 0
+* `az containerapp up`: Fix issue when registry creds are provided for ACRs using `containerapp up` command
+
+### Key Vault
+
+* `az keyvault create`: Add warning for upcoming breaking change that `--enable-rbac-authorization` will default to `true`
+* `az keyvault secret set-attributes`: Fix 'Datetime with no tzinfo will be considered UTC' warning
+
+### Monitor
+
+* `az monitor metrics`: Add `list-sub` and `list-sub-definition`
+* `az monitor metrics list`: Fix `--top` help message
+
+### MySQL
+
+* `az mysql flexible-server import create`: Add support for operation progress estimated completion time for import from physical backup from azure blob to flexible server
+
+### Network
+
+* `az network vnet-gateway create/update`: Add parameter `--enable-private-ip`
+* Fix #28131: `az network vnet-gateway list`: Conflict key when apply client flatten
+* `az network express-route port authorization`: Support to manage authorization with express route port
+* `az network private-link-service list-auto-approved`: Support to list all auto-approved private link services
+* `az network public-ip ddos-protection-statu show`: Support to get the DDoS protection status of public IP address
+* `az network vnet-gateway`: Support ExpressRoute SKU
+* `az network lb create`: Support cross-subscription resource ID
+
+### Packaging
+
+* Support Windows ZIP package (Preview)
+
+### RDBMS
+
+* `az postgres flexible-server private-endpoint-connection`: Add support for private endpoint connection commands like list, show, approve, reject, delete for PostgreSQL flexible server
+* `az postgres flexible-server private-link-resource`: Add support for private link resource commands like list, show for PostgreSQL flexible server
+* `az postgres flexible-server replica stop-replication`: Stop replication to a read replica and make it a read/write server. This command is deprecated. Use `az postgres flexible-server replica promote` instead.
+
+### Redis
+
+* `az redis flush`: Add support for flush operation
+* `az redis create`: Add support for Microsoft Entra Authentication
+* `az redis access-policy/access-policy-assignment`: New command groups to manage access policy
+
+### Service Connector
+
+* `az webapp/containerapp/spring connection create/update app-insights`: Support App Insights as target service
+* `az webapp connection create sql`: Support auto install for serviceconnector-passwordless extension
+* `az webapp/functionapp/containerapp/springapp connection`: Support Microsoft Entra ID auth types for table storage
+* `az webapp/containerapp/spring connection create/update`: Support opt out action for configurationInfo and publicNetwork
+
+### SQL
+
+* `az sql db ltr-policy/ltr-backup`: Add support for backup storage access tier
+* `az sql db ltr-policy set`: Add the make-backups-immutable parameter to ltr policy
+* `az mi create/update`: Add optional parameter `--database-format` and `--pricing-model` for SQL Managed Server resource
+* `az sql mi refresh-external-governance-status`: Add a new command for Azure SQL Managed Instance refresh external governance status
+
+### Storage
+
+* `az storage file copy start`: Fix when copying between two storage accounts and source file has no parent directory
+* Fix #28202: `az storage container policy create`: Fix creating an access policy would delete public access permission
+* `az storage container set-permission`: Fix failing when updating public access permission with an existing access policy
+* Fix #21876: `az storage blob upload-batch/download-batch/delete-batch`: Add double quotes to `--pattern` value for unix shell
 
 ## January 09, 2024
 
