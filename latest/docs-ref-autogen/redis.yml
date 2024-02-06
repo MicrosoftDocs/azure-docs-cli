@@ -31,6 +31,7 @@ directCommands:
                     [--subnet-id]
                     [--tags]
                     [--tenant-settings]
+                    [--update-channel {Preview, Stable}]
                     [--zones]
   examples:
   - summary: |-
@@ -54,6 +55,9 @@ directCommands:
   - summary: |-
       Deploying a Premium Azure Cache for Redis inside an existing Azure Virtual Network
     syntax: az redis create --location westus2 --name MyRedisCache --resource-group MyResourceGroup --sku Premium --vm-size p1 --subnet-id "/subscriptions/{subid}/resourceGroups/{resourceGroupName}/providers/Microsoft.{Network|ClassicNetwork}/virtualNetworks/vnet1/subnets/subnet1"
+  - summary: |-
+      Deploying a Premium Azure Cache for Redis with Microsoft Entra Authentication configured
+    syntax: az redis create --location westus2 --name MyRedisCache --resource-group MyResourceGroup --sku Premium --vm-size p1 --redis-configuration @"config_enable-aad.json"
   requiredParameters:
   - isRequired: true
     name: --location -l
@@ -121,7 +125,12 @@ directCommands:
           "aof-storage-connection-string-0": "DefaultEndpointsProtocol=https;AccountName=mystorageaccount;AccountKey=myAccountKey;EndpointSuffix=core.windows.net",
           "aof-storage-connection-string-1": "DefaultEndpointsProtocol=https;AccountName=mystorageaccount;AccountKey=myAccountKey;EndpointSuffix=core.windows.net"
         }
-      ].
+      ]
+
+      The content for a json file for configuring Microsoft Entra Authentication is
+      {
+      "aad-enabled": "true",
+      }.
   - name: --redis-version
     summary: |-
       Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'.
@@ -143,6 +152,10 @@ directCommands:
   - name: --tenant-settings
     summary: |-
       Space-separated tenant settings in key[=value] format.
+  - name: --update-channel
+    parameterValueGroup: "Preview, Stable"
+    summary: |-
+      Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using "Preview" update channel get latest Redis updates at least 4 weeks ahead of "Stable" channel caches. Default value is "Stable".
   - name: --zones -z
     summary: |-
       Space-separated list of availability zones into which to provision the resource.
@@ -229,6 +242,36 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_redis_flush
+  name: az redis flush
+  summary: |-
+    Delete all of the keys in a cache.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/redis/_help.py
+  syntax: >-
+    az redis flush [--ids]
+                   [--name]
+                   [--resource-group]
+                   [--subscription]
+                   [--yes]
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      Name of the Redis cache.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_redis_force-reboot
   name: az redis force-reboot
   summary: |-
@@ -509,7 +552,7 @@ directCommands:
   - name: --add
     defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --force-string
     defaultValue: "False"
     summary: |-
@@ -523,14 +566,14 @@ directCommands:
   - name: --remove
     defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
     defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --sku
     parameterValueGroup: "Basic, Premium, Standard"
     summary: |-
@@ -543,6 +586,18 @@ directCommands:
     summary: |-
       Size of Redis cache to deploy. Basic and Standard Cache sizes start with C. Premium Cache sizes start with P.
 commands:
+- az_redis_access-policy
+- az_redis_access-policy-assignment
+- az_redis_access-policy-assignment_create
+- az_redis_access-policy-assignment_delete
+- az_redis_access-policy-assignment_list
+- az_redis_access-policy-assignment_show
+- az_redis_access-policy-assignment_update
+- az_redis_access-policy_create
+- az_redis_access-policy_delete
+- az_redis_access-policy_list
+- az_redis_access-policy_show
+- az_redis_access-policy_update
 - az_redis_create
 - az_redis_delete
 - az_redis_export
@@ -552,6 +607,7 @@ commands:
 - az_redis_firewall-rules_list
 - az_redis_firewall-rules_show
 - az_redis_firewall-rules_update
+- az_redis_flush
 - az_redis_force-reboot
 - az_redis_identity
 - az_redis_identity_assign
@@ -599,5 +655,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 12/06/2023
+  ms.date: 01/25/2024
   description: Manage dedicated Redis caches for your Azure applications.
