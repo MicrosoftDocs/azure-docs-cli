@@ -114,6 +114,7 @@ If you want to run the `az` command directly, then follow the steps below to add
 1. **Restart your terminal.**  You should now be able to run `az` commands.
 
 ### Latest version
+
 > [!div class="nextstepaction"]
 > [Latest release of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowszipx64)
 
