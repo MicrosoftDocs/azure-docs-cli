@@ -119,6 +119,7 @@ If you want to run the `az` command directly, then follow the steps below to add
 > [Latest release of the Azure CLI (64-bit)](https://aka.ms/installazurecliwindowszipx64)
 
 ### Specific version
+
 If you prefer, you can download a specific version of the Azure CLI by using a URL.
 
 To download the ZIP package for a specific version, change the version segment in URL `https://azcliprod.blob.core.windows.net/zip/azure-cli-<version>-x64.zip`.
