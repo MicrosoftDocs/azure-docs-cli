@@ -12,13 +12,13 @@ ms.custom: devx-track-azurecli
 
 # Use Azure CLI to manage sensitive information
 
-When you manage Azure resources, there's sensitive information that must be protected. For example, keys, passwords and connection strings can be created by Azure CLI commands and displayed in a terminal window. The output for some commands can also be stored in log files, This is often the case when working with GitHub actions and other DevOps runners.
+When you manage Azure resources, the output of an Azure CLI command might expose sensitive information that must be protected. For example, keys, passwords and connection strings can be created by Azure CLI commands and displayed in a terminal window. The output for some commands can also be stored in log files, This is often the case when working with GitHub actions and other DevOps runners.
 
-It's critical to protect this information. If acquired publicly, the exposure of secrets can cause serious damage and lead to a loss of trust in your company's products and services. To help you to protect sensitive information, the Azure CLI detects secrets in the output of some reference commands, and display a warning message when a secret is identified.
+It's critical to protect this information! If acquired publicly from environments with lesser permissions, the exposure of secrets can cause serious damage and lead to a loss of trust in your company's products and services. To help you to protect sensitive information, the Azure CLI detects secrets in the output of some reference commands, and display a warning message when a secret is identified.
 
 ## Overview
 
-Beginning in [Azure CLI 2.57](./lease-notes-azure-cli.md#february-06-2024), a warning message displays when reference commands result in the output of sensitive information. The `2.57` Azure CLI version identifies these sensitive information types:
+Beginning in [Azure CLI 2.57](./lease-notes-azure-cli.md#february-06-2024), a warning message can be displayed when reference commands result in the output of sensitive information. The `2.57` Azure CLI version identifies these sensitive information types:
 
 * Access tokens
 * Storage account keys
@@ -28,10 +28,10 @@ This list will be expanded in upcoming releases.
 
 ## Set secrets warning configuration
 
-Turn sensitive information warnings `on` and `off` by setting the `clients.show_secrets_warning` configuration property.
+Turn sensitive information warnings on/off by setting the `clients.show_secrets_warning` configuration property to `yes` or `no`.
 
 ```azurecli-interactive
-az config set clients.show_secrets_warning=off
+az config set clients.show_secrets_warning=yes
 ```
 
 ## Considerations
@@ -42,11 +42,11 @@ The purpose of the warning message is to decrease the unintentional exposure of 
 > The new warning messages are sent to Standard Error (STDERR), not Standard Out (STDOUT).
 > Therefore, if you are running an Azure CLI command that results in sensitive information output, you will need to trap for the warning message or turn warnings off using `az config set show_warnings = off`.
 
-For example, in an Azure DevOps pipeline, if the ‘failOnStderr’ parameter is set to ‘True’ of the Bash v3 task, the warning message halts the pipeline. Consider enabling the warning message to identify if any secrets are exposed in your pipelines and then take remediation actions.
+For example, in Azure DevOps Services [pipelines](/azure/devops/pipelines/get-started/what-is-azure-pipelines), if the `failOnStderr` parameter is set to `True` of the Bash v3 task, the warning message halts the pipeline. Consider enabling the `show_secrets_warning` message to identify if any secrets are exposed in your pipelines, and then take remediation actions.
 
 ## Default behavior
 
-Warnings are **enabled** by default in Azure Cloud Shell. If you run the Azure CLI locally through Cmd or PowerShell, warnings are **disabled** by default.
+Warnings are **enabled** by default in Azure Cloud Shell. If you run the Azure CLI locally through any supported shell (PowerShell or zsh for example), warnings are **disabled** by default.
 
 ## See also
 
