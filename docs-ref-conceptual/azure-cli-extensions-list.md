@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/06/2024
+ms.date: 02/07/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -101,7 +101,7 @@ You will be prompted to install an extension on first use.
 |[dynatrace](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace) | 2.41.0 | Microsoft Azure Command-Line Tools Dynatrace Extension. | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dynatrace/HISTORY.rst) |
 |[edgeorder](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder) | 2.15.0 | Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/edgeorder/HISTORY.rst) |
 |[elastic](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic) | 2.51.0 | Microsoft Azure Command-Line Tools MicrosoftElastic Extension | Experimental | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/elastic/HISTORY.rst) |
-|[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.51.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
+|[elastic-san](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san) | 2.55.0 | Microsoft Azure Command-Line Tools ElasticSan Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/elastic-san/HISTORY.rst) |
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 2.0.41 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) |
 |[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.48.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.0.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
