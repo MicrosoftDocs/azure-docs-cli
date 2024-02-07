@@ -1,7 +1,7 @@
 ---
 title: Create a virtual machines (VM) – Azure CLI | Microsoft Docs
 description: Learn how to create virtual machines (VM) connected to a virtual network (VNet) with the Azure CLI.
-ms.date: 08/1/2023
+ms.date: 01/08/2024
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -22,21 +22,43 @@ To deploy a VM on a VNet, they must have the same Azure location. Once a VM is c
 ## Create a VM
 
 Use the [az vm create](/cli/azure/vm#az_vm_create) command to create a new virtual machine running Ubuntu. This virtual machine uses SSH authentication for sign in, and is connected to the subnet and VNet you created in the previous section.
+In PowerShell, declare variables with a "$", and use quotes for values, such as $vmName = "TutorialVM1".
+
+# [Bash](#tab/bash)
 
 ```azurecli-interactive
-# create shell variables
+# create Bash shell variable
 vmName=TutorialVM1
 
 az vm create \
   --resource-group $resourceGroup \
   --name $vmName \
-  --image UbuntuLTS \
+  --image Ubuntu2204 \
   --vnet-name $vnetName \
   --subnet $subnetName \
   --generate-ssh-keys \
   --output json \
   --verbose 
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# Create PowerShell variable
+$vmName = "TutorialVM1"
+
+az vm create `
+    --resource-group $resourceGroup `
+    --name $vmName `
+    --image Ubuntu2204 `
+    --vnet-name $vnetName `
+    --subnet $subnetName `
+    --generate-ssh-keys `
+    --output json `
+    --verbose
+```
+
+---
 
 > [!NOTE]
 > If you have an SSH key named `id_rsa` already available, this key is used for authentication rather than having a new
@@ -45,7 +67,7 @@ az vm create \
 As the VM is created, you see the local values used and Azure resources being created due to the `--verbose` option.
 Once the VM is ready, a JSON is returned from the Azure service including the public IP address.
 
-```json
+```output
 {
   "fqdns": "",
   "id": "...",

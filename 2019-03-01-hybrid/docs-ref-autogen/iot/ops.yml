@@ -1,0 +1,424 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops
+name: az iot ops
+extensionInformation: >-
+  > [!NOTE]
+
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot ops** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage Azure IoT Operations.
+description: |-
+  Azure IoT Operations is a set of highly aligned, but loosely coupled, first-party
+  Kubernetes services that enable you to aggregate data from on-prem assets into an
+  industrial-grade MQTT Broker, add edge compute and set up bi-directional data flow with
+  a variety of services in the cloud.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_check
+  name: az iot ops check
+  summary: |-
+    Evaluate cluster-side runtime health of deployed IoT Operations services.
+  description: |-
+    The command by default shows a human friendly _summary_ view of the selected service.
+    More detail can be requested via `--detail-level`.
+
+    {Supported service APIs}
+    - mq.iotoperations.azure.com/[v1beta1]
+    - dataprocessor.iotoperations.azure.com/[v1]
+    - layerednetworkmgmt.iotoperations.azure.com/[v1beta1]
+    - opcuabroker.iotoperations.azure.com/[v1beta1]
+    - akri.sh/[v0].
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops check [--as-object {false, true}]
+                     [--context]
+                     [--detail-level {0, 1, 2}]
+                     [--ops-service {akri, dataprocessor, lnm, mq, opcua}]
+                     [--post {false, true}]
+                     [--pre {false, true}]
+                     [--resources {assettype, broker, brokerlistener, configuration, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline}]
+  examples:
+  - summary: |-
+      Basic usage. Checks `mq` health with summary output.
+    syntax: az iot ops check
+  - summary: |-
+      Evaluates `mq` like prior example, however output is optimized for CI.
+    syntax: az iot ops check --as-object
+  - summary: |-
+      Checks `dataprocessor` health and configuration with detailed output.
+    syntax: az iot ops check --svc dataprocessor --detail-level 1
+  - summary: |-
+      Same as prior example, except constraining results to the `pipeline` resource.
+    syntax: az iot ops check --svc dataprocessor --detail-level 1 --resources pipeline
+  optionalParameters:
+  - name: --as-object
+    parameterValueGroup: "false, true"
+    summary: |-
+      Output check content and validations in a CI friendly data structure.
+  - name: --context
+    summary: |-
+      Kubeconfig context name to use for k8s cluster communication. If no context is provided current_context is used.
+  - name: --detail-level
+    defaultValue: "0"
+    parameterValueGroup: "0, 1, 2"
+    summary: |-
+      Controls the level of detail displayed in the check output. Choose 0 for a summary view (minimal output), 1 for a detailed view (more comprehensive information), or 2 for a verbose view (all available information).
+  - name: --ops-service --svc
+    defaultValue: "mq"
+    parameterValueGroup: "akri, dataprocessor, lnm, mq, opcua"
+    summary: |-
+      The IoT Operations service deployment that will be evaluated.
+  - name: --post
+    parameterValueGroup: "false, true"
+    summary: |-
+      Run post-deployment checks.
+  - name: --pre
+    parameterValueGroup: "false, true"
+    summary: |-
+      Run pre-requisite checks to determine if the minimum requirements of a service deployment are fulfilled.
+  - name: --resources
+    parameterValueGroup: "assettype, broker, brokerlistener, configuration, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline"
+    summary: |-
+      Only run checks on specific resource kinds. Use space-separated values.
+- uid: az_iot_ops_init
+  name: az iot ops init
+  summary: |-
+    Bootstrap, configure and deploy IoT Operations to the target arc-enabled cluster.
+  description: |-
+    For additional resources including how to arc-enable a cluster see https://learn.microsoft.com/en-us/azure/iot-operations/deploy-iot-ops/howto-prepare-cluster.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops init --cluster
+                    --resource-group
+                    [--ca-dir]
+                    [--ca-file]
+                    [--ca-key-file]
+                    [--ca-valid-days]
+                    [--cluster-namespace]
+                    [--context]
+                    [--custom-location]
+                    [--disable-rotation {false, true}]
+                    [--disable-rsync-rules {false, true}]
+                    [--dp-instance]
+                    [--dp-message-stores]
+                    [--dp-reader-workers]
+                    [--dp-runner-workers]
+                    [--kv-id]
+                    [--kv-sat-secret-name]
+                    [--location]
+                    [--mq-authn]
+                    [--mq-backend-part]
+                    [--mq-backend-rf]
+                    [--mq-backend-workers]
+                    [--mq-broker]
+                    [--mq-frontend-replicas]
+                    [--mq-frontend-server]
+                    [--mq-frontend-workers]
+                    [--mq-insecure {false, true}]
+                    [--mq-instance]
+                    [--mq-listener]
+                    [--mq-mem-profile {high, low, medium, tiny}]
+                    [--mq-mode {auto, distributed}]
+                    [--mq-service-type {clusterIp, loadBalancer, nodePort}]
+                    [--no-block {false, true}]
+                    [--no-deploy {false, true}]
+                    [--no-preflight {false, true}]
+                    [--no-progress {false, true}]
+                    [--no-tls {false, true}]
+                    [--opcua-discovery-url]
+                    [--rotation-int]
+                    [--show-template {false, true}]
+                    [--simulate-plc {false, true}]
+                    [--sp-app-id]
+                    [--sp-object-id]
+                    [--sp-secret]
+                    [--sp-secret-valid-days]
+                    [--target]
+  examples:
+  - summary: |-
+      Minimum input for complete setup. This includes Key Vault configuration, CSI driver deployment, TLS config and deployment of IoT Operations.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id /subscriptions/2cb3a427-1abc-48d0-9d03-dd240819742a/resourceGroups/myresourcegroup/providers/Microsoft.KeyVault/vaults/mykeyvault
+  - summary: |-
+      Same setup as prior example, except with the usage of an existing app Id and a flag to include a simulated PLC server as part of the deployment. Including the app Id will prevent `init` from creating an app registration.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --simulate-plc
+  - summary: |-
+      To skip deployment and focus only on the Key Vault CSI driver and TLS config workflows simple pass in `--no-deploy`. This can be useful when desiring to deploy from a different tool such as Portal.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --no-deploy
+  - summary: |-
+      To only deploy IoT Operations on a cluster that has already been prepped, simply omit `--kv-id` and include `--no-tls`.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --no-tls
+  - summary: |-
+      Use `--no-block` to do other work while the deployment is on-going vs waiting for the deployment to finish before starting the other work.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --no-block
+  - summary: |-
+      To avoid calling MS Graph such as for CI scenarios where the logged-in to az cli service principal permissions are limited or an existing service principal should be re-used, provide all of `--sp-app-id`, `--sp-object-id` and `--sp-secret`. These values should reflect the desired service principal that will be used for the Key Vault CSI driver setup.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --sp-object-id 224a7a3f-c63d-4923-8950-c4a85f0d2f29 --sp-secret $SP_SECRET
+  requiredParameters:
+  - isRequired: true
+    name: --cluster
+    summary: |-
+      Target cluster name for IoT Operations deployment.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --ca-dir
+    summary: |-
+      The local directory the generated test CA and private key will be placed in. If no directory is provided the current directory is used. Applicable when no --ca-file and --ca-key-file are provided.
+  - name: --ca-file
+    summary: |-
+      The path to the desired CA file in PEM format.
+  - name: --ca-key-file
+    summary: |-
+      The path to the CA private key file in PEM format. !Required! when --ca-file is provided.
+  - name: --ca-valid-days
+    defaultValue: "365"
+    summary: |-
+      Option to control the duration in days of the init generated x509 CA. Applicable if --ca-file and --ca-key-file are not provided.
+  - name: --cluster-namespace
+    defaultValue: "azure-iot-operations"
+    summary: |-
+      The cluster namespace IoT Operations infra will be deployed to. Must be lowercase.
+  - name: --context
+    summary: |-
+      Kubeconfig context name to use for k8s cluster communication. If no context is provided current_context is used.
+  - name: --custom-location
+    summary: |-
+      The custom location name corresponding to the IoT Operations deployment. The default is in the form '{cluster_name}-ops-init-cl'.
+  - name: --disable-rotation
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag to disable secret rotation.
+  - name: --disable-rsync-rules
+    parameterValueGroup: "false, true"
+    summary: |-
+      Resource sync rules will not be included in the deployment.
+  - name: --dp-instance
+    summary: |-
+      Instance name for data processor. The default is in the form '{cluster_name}-ops-init-processor'.
+  - name: --dp-message-stores
+    defaultValue: "1"
+    summary: |-
+      Number of message store replicas.
+  - name: --dp-reader-workers
+    defaultValue: "1"
+    summary: |-
+      Number of reader worker replicas.
+  - name: --dp-runner-workers
+    defaultValue: "1"
+    summary: |-
+      Number of runner worker replicas.
+  - name: --kv-id
+    summary: |-
+      Key Vault ARM resource Id. Providing this resource Id will enable the client to setup all necessary resources and cluster side configuration to enable the Key Vault CSI driver for IoT Operations.
+  - name: --kv-sat-secret-name
+    defaultValue: "azure-iot-operations"
+    summary: |-
+      The Key Vault secret *name* to use for the IoT Operations service account (SAT). If the secret does not exist, it will be created with a cryptographically secure placeholder value.
+  - name: --location
+    summary: |-
+      The ARM location that will be used for provisioned RPSaaS collateral. If not provided the connected cluster location will be used.
+  - name: --mq-authn
+    summary: |-
+      The mq authN name. The default is 'authn'.
+  - name: --mq-backend-part
+    defaultValue: "2"
+    summary: |-
+      MQ backend partitions.
+  - name: --mq-backend-rf
+    defaultValue: "2"
+    summary: |-
+      MQ backend redundancy factor.
+  - name: --mq-backend-workers
+    defaultValue: "2"
+    summary: |-
+      MQ backend workers.
+  - name: --mq-broker
+    summary: |-
+      The mq broker name. The default is 'broker'.
+  - name: --mq-frontend-replicas
+    defaultValue: "2"
+    summary: |-
+      MQ frontend replicas.
+  - name: --mq-frontend-server
+    summary: |-
+      The mq frontend server name. The default is 'mq-dmqtt-frontend'.
+  - name: --mq-frontend-workers
+    defaultValue: "2"
+    summary: |-
+      MQ frontend workers.
+  - name: --mq-insecure
+    parameterValueGroup: "false, true"
+    summary: |-
+      When enabled the mq deployment will include a listener bound to port 1883 with no authN or authZ. The broker encryptInternalTraffic setting will be set to false. For non-production workloads only.
+  - name: --mq-instance
+    summary: |-
+      The mq instance name. The default is in the form 'init-{hash}-mq-instance'.
+  - name: --mq-listener
+    summary: |-
+      The mq listener name. The default is 'listener'.
+  - name: --mq-mem-profile
+    defaultValue: "medium"
+    parameterValueGroup: "high, low, medium, tiny"
+    summary: |-
+      MQ memory profile.
+  - name: --mq-mode
+    defaultValue: "distributed"
+    parameterValueGroup: "auto, distributed"
+    summary: |-
+      MQ mode of operation.
+  - name: --mq-service-type
+    defaultValue: "clusterIp"
+    parameterValueGroup: "clusterIp, loadBalancer, nodePort"
+    summary: |-
+      MQ service type.
+  - name: --no-block
+    parameterValueGroup: "false, true"
+    summary: |-
+      Return immediately after the IoT Operations deployment has started.
+  - name: --no-deploy
+    parameterValueGroup: "false, true"
+    summary: |-
+      The IoT Operations deployment workflow will be skipped.
+  - name: --no-preflight
+    parameterValueGroup: "false, true"
+    summary: |-
+      The pre-flight workflow will be skipped.
+  - name: --no-progress
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable init progress bar.
+  - name: --no-tls
+    parameterValueGroup: "false, true"
+    summary: |-
+      The TLS configuration workflow will be skipped.
+  - name: --opcua-discovery-url
+    summary: |-
+      Configures an OPC-UA server endpoint for Akri discovery handlers. If not provided and --simulate-plc is set, this value becomes 'opc.tcp://opcplc-000000.{cluster_namespace}:50000'.
+  - name: --rotation-int
+    defaultValue: "1h"
+    summary: |-
+      Rotation poll interval.
+  - name: --show-template
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag when set, will output the template intended for deployment.
+  - name: --simulate-plc
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag when set, will configure the OPC-UA broker installer to spin-up a PLC server.
+  - name: --sp-app-id
+    summary: |-
+      Service principal app Id. If provided it will be used for CSI driver setup. Otherwise an app registration will be created. !Required! if the logged in principal does not have permissions to query graph.
+  - name: --sp-object-id
+    summary: |-
+      Service principal object Id. If provided it will be used for CSI driver setup. Otherwise a service principal will be queried and in necessary will be created. !Required! if the logged in principal does not have permissions to query graph.
+  - name: --sp-secret
+    summary: |-
+      The secret corresponding to the provided service principal app Id. If provided it will be used for CSI driver setup. Otherwise a new secret will be requested from MS graph. !Required! if the logged in principal does not have permissions to query graph.
+  - name: --sp-secret-valid-days
+    defaultValue: "365"
+    summary: |-
+      Option to control the duration in days of the init generated service principal secret. Applicable if --sp-secret is not provided.
+  - name: --target
+    summary: |-
+      Target name for ops orchestrator. The default is in the form '{cluster_name}-ops-init-target'.
+- uid: az_iot_ops_verify-host
+  name: az iot ops verify-host
+  summary: |-
+    Runs a set of cluster host verifications for IoT Operations deployment compatibility.
+  description: |-
+    Intended to be run directly on a target cluster host. The command may prompt to apply a set of privileged actions such as installing a dependency. In this case the CLI must be run with elevated permissions. For example
+    `sudo AZURE_EXTENSION_DIR=/home/me/.azure/cliextensions az iot ops verify-host`.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops verify-host [--no-progress {false, true}]
+                           [--yes {false, true}]
+  optionalParameters:
+  - name: --no-progress
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable visual representation of work.
+  - name: --yes -y
+    parameterValueGroup: "false, true"
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
+commands:
+- az_iot_ops_asset
+- az_iot_ops_asset_create
+- az_iot_ops_asset_data-point
+- az_iot_ops_asset_data-point_add
+- az_iot_ops_asset_data-point_list
+- az_iot_ops_asset_data-point_remove
+- az_iot_ops_asset_delete
+- az_iot_ops_asset_endpoint
+- az_iot_ops_asset_endpoint_certificate
+- az_iot_ops_asset_endpoint_certificate_add
+- az_iot_ops_asset_endpoint_certificate_list
+- az_iot_ops_asset_endpoint_certificate_remove
+- az_iot_ops_asset_endpoint_create
+- az_iot_ops_asset_endpoint_delete
+- az_iot_ops_asset_endpoint_query
+- az_iot_ops_asset_endpoint_show
+- az_iot_ops_asset_endpoint_update
+- az_iot_ops_asset_event
+- az_iot_ops_asset_event_add
+- az_iot_ops_asset_event_list
+- az_iot_ops_asset_event_remove
+- az_iot_ops_asset_query
+- az_iot_ops_asset_show
+- az_iot_ops_asset_update
+- az_iot_ops_check
+- az_iot_ops_init
+- az_iot_ops_mq
+- az_iot_ops_mq_get-password-hash
+- az_iot_ops_mq_stats
+- az_iot_ops_support
+- az_iot_ops_support_create-bundle
+- az_iot_ops_verify-host
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: >-
+    Azure IoT Operations is a set of highly aligned, but loosely coupled, first-party
+
+    Kubernetes services that enable you to aggregate data from on-prem assets into an
+
+    industrial-grade MQTT Broker, add edge compute and set up bi-directional data flow with
+
+    a variety of services in the cloud.

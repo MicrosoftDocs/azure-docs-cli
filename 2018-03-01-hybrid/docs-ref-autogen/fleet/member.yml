@@ -6,14 +6,14 @@ extensionInformation: >-
 
   > This reference is part of the **fleet** extension for the Azure CLI (version 2.48.0 or higher). The extension will automatically install the first time you run an **az fleet member** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage a fleet member.
+  Commands to manage members.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_fleet_member_create
   name: az fleet member create
   summary: |-
-    Creates or updates a fleet member.
+    Creates or updates a member.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -23,6 +23,10 @@ directCommands:
                            --resource-group
                            [--no-wait]
                            [--update-group]
+  examples:
+  - summary: |-
+      Create a member and assign it to an update group.
+    syntax: az fleet member create -g MyFleetResourceGroup -f MyFleetName -n NameOfMember --update-group UpdateGroup1 --member-cluster-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MyFleetResourceGroup/providers/Microsoft.ContainerService/managedClusters/MyManagedCluster"
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
@@ -47,7 +51,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --update-group
     summary: |-
-      Group of the fleet member.
+      Update group of the member.
 - uid: az_fleet_member_delete
   name: az fleet member delete
   summary: |-
@@ -60,6 +64,10 @@ directCommands:
                            --resource-group
                            [--no-wait]
                            [--yes]
+  examples:
+  - summary: |-
+      Delete a specific fleet member.
+    syntax: az fleet member delete -g MyFleetResourceGroup -f MyFleetName -n NameOfMember
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
@@ -85,12 +93,16 @@ directCommands:
 - uid: az_fleet_member_list
   name: az fleet member list
   summary: |-
-    Lists the members of a fleet.
+    Lists a fleet's members.
   status: GA
   sourceType: Extension
   syntax: >-
     az fleet member list --fleet-name
                          --resource-group
+  examples:
+  - summary: |-
+      List all members for a given fleet.
+    syntax: az fleet member list -g MyFleetResourceGroup -f MyFleetName
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
@@ -100,16 +112,53 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_fleet_member_reconcile
+  name: az fleet member reconcile
+  summary: |-
+    Reconciles a member.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az fleet member reconcile --fleet-name
+                              --name
+                              --resource-group
+                              [--no-wait]
+  examples:
+  - summary: |-
+      Reconcile a member.
+    syntax: az fleet member reconcile -g MyFleetResourceGroup -f MyFleetName -n NameOfMember
+  requiredParameters:
+  - isRequired: true
+    name: --fleet-name -f
+    summary: |-
+      Specify the fleet name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Specify the fleet member name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
 - uid: az_fleet_member_show
   name: az fleet member show
   summary: |-
-    Gets a Fleet member.
+    Gets a fleet member.
   status: GA
   sourceType: Extension
   syntax: >-
     az fleet member show --fleet-name
                          --name
                          --resource-group
+  examples:
+  - summary: |-
+      Show the details of a specific fleet member.
+    syntax: az fleet member show -g MyFleetResourceGroup -f MyFleetName -n NameOfMember
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
@@ -126,7 +175,7 @@ directCommands:
 - uid: az_fleet_member_update
   name: az fleet member update
   summary: |-
-    Update a fleet member.
+    Update a member.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -134,6 +183,10 @@ directCommands:
                            --name
                            --resource-group
                            [--update-group]
+  examples:
+  - summary: |-
+      Update an existing member's update group.
+    syntax: az fleet member update -g MyFleetResourceGroup -f MyFleetName -n NameOfMember --update-group UpdateGroup2
   requiredParameters:
   - isRequired: true
     name: --fleet-name -f
@@ -150,13 +203,13 @@ directCommands:
   optionalParameters:
   - name: --update-group
     summary: |-
-      Group of the fleet member.
+      Update group of the member.
 - uid: az_fleet_member_wait
   name: az fleet member wait
   summary: |-
-    Wait for a fleet member resource to reach a desired state.
+    Wait for a member resource to reach a desired state.
   description: |-
-    If an operation on fleet member was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
+    If an operation on member was interrupted or was started with `--no-wait`, use this command to wait for it to complete.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -215,6 +268,7 @@ commands:
 - az_fleet_member_create
 - az_fleet_member_delete
 - az_fleet_member_list
+- az_fleet_member_reconcile
 - az_fleet_member_show
 - az_fleet_member_update
 - az_fleet_member_wait
@@ -243,4 +297,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage a fleet member.
+  description: Commands to manage members.

@@ -402,8 +402,11 @@ directCommands:
                      --resource-group
                      [--build-pool-size {S1, S2, S3, S4, S5, S6, S7, S8, S9}]
                      [--enable-dataplane-public-endpoint {false, true}]
+                     [--enable-planned-maintenance]
                      [--ingress-read-timeout]
                      [--no-wait]
+                     [--planned-maintenance-day {Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday}]
+                     [--planned-maintenance-start-hour]
                      [--sku {Basic, Enterprise, Standard, StandardGen2}]
                      [--tags]
   examples:
@@ -413,6 +416,9 @@ directCommands:
   - summary: |-
       Update the tags of the existing Azure Spring Apps.
     syntax: az spring update -n MyService -g MyResourceGroup --tags key1=value1 key2=value2
+  - summary: |-
+      Configure planned maintenance
+    syntax: az spring update -n MyService -g MyResourceGroup --enable-planned-maintenance --planned-maintenance-day Friday --planned-maintenance-start-hour 10
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -431,6 +437,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       If true, assign public endpoint for log streaming, remote debugging, app connect in vnet injection instance which could be accessed out of virtual network.
+  - name: --enable-planned-maintenance --enable-pm
+    defaultValue: "False"
+    summary: |-
+      If set, enable planned maintenance for the instance.
+    isPreview: true
   - name: --ingress-read-timeout
     summary: |-
       Ingress read timeout value in seconds. Minimum is 1, maximum is 1800.
@@ -438,6 +449,15 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --planned-maintenance-day --pm-day
+    parameterValueGroup: "Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday"
+    summary: |-
+      Day of the week which planned maintenance will be scheduled on.
+    isPreview: true
+  - name: --planned-maintenance-start-hour --pm-start-hour
+    summary: |-
+      Start time of the planned maintenance window in UTC. Must be between 0 and 23.
+    isPreview: true
   - name: --sku
     parameterValueGroup: "Basic, Enterprise, Standard, StandardGen2"
     summary: |-
@@ -591,6 +611,11 @@ commands:
 - az_spring_certificate_remove
 - az_spring_certificate_show
 - az_spring_certificate_update
+- az_spring_component
+- az_spring_component_instance
+- az_spring_component_instance_list
+- az_spring_component_list
+- az_spring_component_logs
 - az_spring_config-server
 - az_spring_config-server_clear
 - az_spring_config-server_disable
@@ -606,6 +631,7 @@ commands:
 - az_spring_config-server_show
 - az_spring_connection
 - az_spring_connection_create
+- az_spring_connection_create_app-insights
 - az_spring_connection_create_appconfig
 - az_spring_connection_create_confluent-cloud
 - az_spring_connection_create_cosmos-cassandra
@@ -635,6 +661,7 @@ commands:
 - az_spring_connection_list-support-types
 - az_spring_connection_show
 - az_spring_connection_update
+- az_spring_connection_update_app-insights
 - az_spring_connection_update_appconfig
 - az_spring_connection_update_confluent-cloud
 - az_spring_connection_update_cosmos-cassandra

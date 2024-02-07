@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/05/2023
+ms.date: 11/27/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -11,28 +11,8 @@ ms.custom: devx-track-azurecli
 |---|---|
 | **application-gateway** | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
 |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
-| **app-service** | [Backup and restore a web app from a backup using CLI](/azure/app-service/scripts/cli-backup-schedule-restore) |
-|  | [Bind a custom TLS/SSL certificate to an App Service app using CLI](/azure/app-service/scripts/cli-configure-ssl-certificate) |
-|  | [Connect an App Service app to a storage account using CLI](/azure/app-service/scripts/cli-connect-to-storage) |
-|  | [Connect an App Service app to an Azure Cache for Redis using CLI](/azure/app-service/scripts/cli-connect-to-redis) |
-|  | [Connect an App Service app to Azure Cosmos DB via the Azure CLI](/azure/app-service/scripts/cli-connect-to-documentdb) |
-|  | [Connect an App Service app to SQL Database using CLI](/azure/app-service/scripts/cli-connect-to-sql) |
-|  | [Create an App Service app and deploy code into a local Git repository using Azure CLI](/azure/app-service/scripts/cli-deploy-local-git) |
-|  | [Create an App Service app and deploy code to a staging environment using Azure CLI](/azure/app-service/scripts/cli-deploy-staging-environment) |
-|  | [Create an App Service app and deploy files with FTP using Azure CLI](/azure/app-service/scripts/cli-deploy-ftp) |
-|  | [Create an App Service app and deploy Private Endpoint using Azure CLI](/azure/app-service/scripts/cli-deploy-privateendpoint) |
-|  | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
-|  | [Create an App Service app with continuous deployment from GitHub using CLI](/azure/app-service/scripts/cli-continuous-deployment-github) |
-|  | [Create an App Service app with deployment from GitHub using Azure CLI](/azure/app-service/scripts/cli-deploy-github) |
-|  | [Create an ASP.NET Core app in a Docker container from Docker Hub using Azure CLI](/azure/app-service/scripts/cli-linux-docker-aspnetcore) |
+| **app-service** | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
 |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
-|  | [Integrate App Service with Application Gateway using CLI](/azure/app-service/scripts/cli-integrate-app-service-with-application-gateway) |
-|  | [Map a custom domain to an App Service app using CLI](/azure/app-service/scripts/cli-configure-custom-domain) |
-|  | [Monitor an App Service app-áwith web server logs using Azure CLI](/azure/app-service/scripts/cli-monitor) |
-|  | [Scale an App Service app manually using Azure CLI](/azure/app-service/scripts/cli-scale-manual) |
-|  | [Scale an App Service app worldwide with a high-availability architecture using Azure CLI](/azure/app-service/scripts/cli-scale-high-availability) |
-| **automation** | [Automate operational tasks](/azure/architecture/framework/devops/automation-tasks) |
-|  | [Configure infrastructure](/azure/architecture/framework/devops/automation-configuration) |
 | **azure-app-configuration** | [Create an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-create-service) |
 |  | [Delete an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-delete-service) |
 |  | [Export from an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-export) |
@@ -56,12 +36,12 @@ ms.custom: devx-track-azurecli
 |  | [Create a SignalR Service with an App Service](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service) |
 |  | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
 | **azure-sql-edge** | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
-| **batch** | [Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
-|  | [Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
-|  | [Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
-|  | [Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
-|  | [Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
-|  | [Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
+| **batch** | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
+|  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
+|  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
+|  | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
+|  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
+|  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | **cdn** | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
 | **chaos-studio** | [Use the Chaos Studio REST APIs to run and manage chaos experiments](/azure/chaos-studio/chaos-studio-samples-rest-api) |
 | **cosmos-db** | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |

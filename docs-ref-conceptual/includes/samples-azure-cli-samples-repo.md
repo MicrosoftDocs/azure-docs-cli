@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/05/2023
+ms.date: 11/27/2023
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -181,4 +181,4 @@ ms.custom: devx-track-azurecli
 |  | [route-traffic-through-nva.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/virtual-network/route-traffic-through-nva/route-traffic-through-nva.sh) | az network nic create * az network nsg create * az network nsg rule create * az network public-ip create * az network route-table create * az network route-table route create * az network vnet create * az network vnet subnet create * az network vnet subnet update * az vm create * az vm list-ip-addresses |
 |  | [virtual-network-cli-sample-ipv6-dual-stack.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/virtual-network/virtual-network-cli-sample-ipv6-dual-stack/virtual-network-cli-sample-ipv6-dual-stack.sh) | az feature register * az feature show * az network lb address-pool create * az network lb create * az network lb frontend-ip create * az network lb rule create * az network nic create * az network nic ip-config create * az network nsg create * az network nsg rule create * az network public-ip create * az network vnet create * az network vnet subnet create * az provider register * az vm availability-set create * az vm create |
 |  | [virtual-network-cli-sample-ipv6-dual-stack-standard-load-balancer.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/virtual-network/virtual-network-cli-sample-ipv6-dual-stack-standard-load-balancer/virtual-network-cli-sample-ipv6-dual-stack-standard-load-balancer.sh) | az feature register * az feature show * az network lb address-pool create * az network lb create * az network lb frontend-ip create * az network lb rule create * az network nic create * az network nic ip-config create * az network nsg create * az network nsg rule create * az network public-ip create * az network vnet create * az network vnet subnet create * az provider register * az vm availability-set create * az vm create |
-|  | [virtual-network-multi-tier-application.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/virtual-network/virtual-network-multi-tier-application/virtual-network-multi-tier-application.sh) | az network nic create * az network nsg create * az network nsg rule create * az network public-ip create * az network vnet create * az network vnet subnet create * az network vnet subnet update * az vm create
+|  | [virtual-network-multi-tier-application.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/virtual-network/virtual-network-multi-tier-application/virtual-network-multi-tier-application.sh) | az network nic create * az network nsg create * az network nsg rule create * az network public-ip create * az network vnet create * az network vnet subnet create * az network vnet subnet update * az vm create |

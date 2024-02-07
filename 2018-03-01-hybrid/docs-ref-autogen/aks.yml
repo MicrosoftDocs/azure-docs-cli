@@ -102,8 +102,10 @@ directCommands:
                   [--dns-zone-resource-ids]
                   [--edge-zone]
                   [--enable-aad]
+                  [--enable-addon-autoscaling]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
                   [--enable-asm]
@@ -223,7 +225,7 @@ directCommands:
                   [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                   [--workspace-resource-id]
                   [--yes]
-                  [--zones {1, 2, 3}]
+                  [--zones]
   examples:
   - summary: |-
       Create a Kubernetes cluster with an existing SSH public key.
@@ -483,6 +485,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable managed AAD feature for cluster.
+  - name: --enable-addon-autoscaling
+    defaultValue: "False"
+    summary: |-
+      Enable addon autoscaling for cluster.
+    isPreview: true
   - name: --enable-addons -a
     summary: |-
       Enable the Kubernetes addons in a comma-separated list.
@@ -502,6 +509,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+  - name: --enable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Enable AI toolchain operator to the cluster.
+    isPreview: true
   - name: --enable-apiserver-vnet-integration
     defaultValue: "False"
     summary: |-
@@ -649,7 +661,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Enable workload identity addon.
-    isPreview: true
   - name: --fqdn-subdomain
     summary: |-
       Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
@@ -850,7 +861,7 @@ directCommands:
   - name: --node-osdisk-type
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
-      OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
+      OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation. ('Ephemeral' or 'Managed').
   - name: --node-provisioning-mode
     parameterValueGroup: "Auto, Manual"
     summary: |-
@@ -1021,7 +1032,6 @@ directCommands:
     summary: |-
       Do not prompt for confirmation.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Space-separated list of availability zones where agent nodes will be placed.
 - uid: az_aks_delete
@@ -1592,7 +1602,7 @@ directCommands:
 - uid: az_aks_stop
   name: az aks stop
   summary: |-
-    Stops a Managed Cluster.
+    Stop a managed cluster.
   description: |-
     This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See `stopping a cluster <https://docs.microsoft.com/azure/aks/start-stop-cluster>`_ for more details about stopping a cluster.
   status: GA
@@ -1645,7 +1655,9 @@ directCommands:
                   [--cluster-snapshot-id]
                   [--defender-config]
                   [--detach-acr]
+                  [--disable-addon-autoscaling]
                   [--disable-ahub]
+                  [--disable-ai-toolchain-operator]
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-metrics]
@@ -1673,7 +1685,9 @@ directCommands:
                   [--disable-workload-identity]
                   [--disk-driver-version {v1, v2}]
                   [--enable-aad]
+                  [--enable-addon-autoscaling]
                   [--enable-ahub]
+                  [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
@@ -1712,6 +1726,7 @@ directCommands:
                   [--guardrails-version]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
+                  [--ip-families]
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
@@ -1925,10 +1940,20 @@ directCommands:
   - name: --detach-acr
     summary: |-
       Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
+  - name: --disable-addon-autoscaling
+    defaultValue: "False"
+    summary: |-
+      Disable addon autoscaling for cluster.
+    isPreview: true
   - name: --disable-ahub
     defaultValue: "False"
     summary: |-
       Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --disable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Disable AI toolchain operator.
+    isPreview: true
   - name: --disable-azure-container-storage
     defaultValue: "False"
     summary: |-
@@ -2037,7 +2062,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Disable Workload Identity addon for cluster.
-    isPreview: true
   - name: --disk-driver-version
     parameterValueGroup: "v1, v2"
     summary: |-
@@ -2046,10 +2070,20 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable managed AAD feature for cluster.
+  - name: --enable-addon-autoscaling
+    defaultValue: "False"
+    summary: |-
+      Enable addon autoscaling for cluster.
+    isPreview: true
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --enable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Enable AI toolchain operator to the cluster.
+    isPreview: true
   - name: --enable-apiserver-vnet-integration
     defaultValue: "False"
     summary: |-
@@ -2175,7 +2209,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Enable Workload Identity addon for cluster.
-    isPreview: true
   - name: --gmsa-dns-server
     summary: |-
       Specify DNS server for Windows gmsa on cluster.
@@ -2210,6 +2243,11 @@ directCommands:
   - name: --image-cleaner-interval-hours
     summary: |-
       ImageCleaner scanning interval.
+  - name: --ip-families
+    summary: |-
+      A comma separated list of IP versions to use for cluster networking.
+    description: |-
+      Each IP version should be in the format IPvN. For example, IPv4.
   - name: --k8s-support-plan
     parameterValueGroup: "AKSLongTermSupport, KubernetesOfficial"
     summary: |-
@@ -2237,22 +2275,22 @@ directCommands:
     summary: |-
       Load balancer managed outbound IP count.
     description: |-
-      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-managed-outbound-ipv6-count
     summary: |-
       Load balancer managed outbound IPv6 IP count.
     description: |-
-      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only.
   - name: --load-balancer-outbound-ip-prefixes
     summary: |-
       Load balancer outbound IP prefix resource IDs.
     description: |-
-      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ips
     summary: |-
       Load balancer outbound IP resource IDs.
     description: |-
-      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ports
     summary: |-
       Load balancer outbound allocated ports.

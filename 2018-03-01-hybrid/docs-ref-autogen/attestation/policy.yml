@@ -4,7 +4,7 @@ name: az attestation policy
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **attestation** extension for the Azure CLI (version 2.11.0 or higher). The extension will automatically install the first time you run an **az attestation policy** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **attestation** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az attestation policy** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage policies.
 status: Experimental
@@ -15,13 +15,13 @@ directCommands:
 - uid: az_attestation_policy_reset
   name: az attestation policy reset
   summary: |-
-    Resets the attestation policy for the specified tenant and reverts to the default policy.
+    Resets the attestation policy for the specified tenant and reverts     to the default policy.
   status: Experimental
   isExperimental: true
-  previewOrExperimentalInfo: "Command group 'attestation policy' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'attestation' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az attestation policy reset --attestation-type {SGX-IntelSDK, SGX-OpenEnclaveSDK, TPM}
+    az attestation policy reset --attestation-type {OpenEnclave, SevSnpVm, SgxEnclave, Tpm}
                                 [--id]
                                 [--name]
                                 [--policy-jws]
@@ -29,14 +29,11 @@ directCommands:
   examples:
   - summary: |-
       Resets the attestation policy for the specified tenant and reverts to the default policy.
-    syntax: >-
-      az attestation policy reset -n "myattestationprovider" -g "MyResourceGroup" \
-
-      --attestation-type SGX-OpenEnclaveSDK --policy-jws "eyJhbGciOiJub25lIn0.."
+    syntax: az attestation policy reset -n "myattestationprovider" -g "MyResourceGroup" --attestation-type SGX-OpenEnclaveSDK --policy-jws "eyJhbGciOiJub25lIn0.."
   requiredParameters:
   - isRequired: true
     name: --attestation-type
-    parameterValueGroup: "SGX-IntelSDK, SGX-OpenEnclaveSDK, TPM"
+    parameterValueGroup: "OpenEnclave, SevSnpVm, SgxEnclave, Tpm"
     summary: |-
       Type of the attestation.
   optionalParameters:
@@ -59,39 +56,30 @@ directCommands:
     Sets the policy for a given kind of attestation type.
   status: Experimental
   isExperimental: true
-  previewOrExperimentalInfo: "Command group 'attestation policy' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'attestation' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az attestation policy set --attestation-type {SGX-IntelSDK, SGX-OpenEnclaveSDK, TPM}
+    az attestation policy set --attestation-type {OpenEnclave, SevSnpVm, SgxEnclave, Tpm}
                               [--id]
                               [--name]
                               [--new-attestation-policy]
                               [--new-attestation-policy-file]
-                              [--policy-format {JWT, Text}]
+                              [--policy-format]
                               [--resource-group]
   examples:
   - summary: |-
       Sets the policy for a given kind of attestation type using JWT content.
-    syntax: >-
-      az attestation policy set -n "myattestationprovider" -g "MyResourceGroup" \
-
-      --attestation-type SGX-OpenEnclaveSDK --new-attestation-policy "{JWT}" --policy-format JWT
+    syntax: az attestation policy set -n "myattestationprovider" -g "MyResourceGroup" --attestation-type SGX-OpenEnclaveSDK --new-attestation-policy "{JWT}" --policy-format JWT
   - summary: |-
       Sets the policy for a given kind of attestation type using Text content.
-    syntax: >-
-      az attestation policy set -n "myattestationprovider" -g "MyResourceGroup" \
-
-      --attestation-type SGX-OpenEnclaveSDK --new-attestation-policy "{json_text}"
+    syntax: az attestation policy set -n "myattestationprovider" -g "MyResourceGroup" --attestation-type SGX-OpenEnclaveSDK --new-attestation-policy "{json_text}"
   - summary: |-
       Sets the policy for a given kind of attestation type using file name.
-    syntax: >-
-      az attestation policy set -n "myattestationprovider" -g "MyResourceGroup" \
-
-      --attestation-type SGX-OpenEnclaveSDK --new-attestation-policy-file "{file_name}" --policy-format JWT
+    syntax: az attestation policy set -n "myattestationprovider" -g "MyResourceGroup" --attestation-type SGX-OpenEnclaveSDK --new-attestation-policy-file "{file_name}" --policy- format JWT
   requiredParameters:
   - isRequired: true
     name: --attestation-type
-    parameterValueGroup: "SGX-IntelSDK, SGX-OpenEnclaveSDK, TPM"
+    parameterValueGroup: "OpenEnclave, SevSnpVm, SgxEnclave, Tpm"
     summary: |-
       Type of the attestation.
   optionalParameters:
@@ -109,9 +97,8 @@ directCommands:
       File name of the new attestation policy.
   - name: --policy-format
     defaultValue: "Text"
-    parameterValueGroup: "JWT, Text"
     summary: |-
-      Specifies the format for the policy, either Text or JWT (JSON Web Token).
+      Specifies the format for the policy, either Text or JWT (JSON Web Token).  Allowed values: JWT, Text.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -121,24 +108,21 @@ directCommands:
     Retrieves the current policy for a given kind of attestation type.
   status: Experimental
   isExperimental: true
-  previewOrExperimentalInfo: "Command group 'attestation policy' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: "Command group 'attestation' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az attestation policy show --attestation-type {SGX-IntelSDK, SGX-OpenEnclaveSDK, TPM}
+    az attestation policy show --attestation-type {OpenEnclave, SevSnpVm, SgxEnclave, Tpm}
                                [--id]
                                [--name]
                                [--resource-group]
   examples:
   - summary: |-
       Retrieves the current policy for a given kind of attestation type.
-    syntax: >-
-      az attestation policy show -n "myattestationprovider" -g "MyResourceGroup" \
-
-      --attestation-type SGX-OpenEnclaveSDK
+    syntax: az attestation policy show -n "myattestationprovider" -g "MyResourceGroup" --attestation-type SGX-OpenEnclaveSDK
   requiredParameters:
   - isRequired: true
     name: --attestation-type
-    parameterValueGroup: "SGX-IntelSDK, SGX-OpenEnclaveSDK, TPM"
+    parameterValueGroup: "OpenEnclave, SevSnpVm, SgxEnclave, Tpm"
     summary: |-
       Type of the attestation.
   optionalParameters:

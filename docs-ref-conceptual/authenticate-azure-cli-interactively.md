@@ -1,6 +1,6 @@
 ---
 title: Sign in with Azure CLI interactively at a command line | Microsoft Docs
-description: Learn how to sign into the Azure CIL interactively using az login
+description: Learn how to sign into the Azure CLI interactively using az login.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
@@ -9,10 +9,10 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in 
+keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure cli  
 ---
 
-# Sign in interactively
+# Sign in interactively with Azure CLI 
 
 The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
 
@@ -54,6 +54,10 @@ az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
 After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant).
+
+## Refresh tokens
+
+[!INCLUDE [refresh-token](includes/refresh-token.md)]
 
 ## Troubleshooting
 
