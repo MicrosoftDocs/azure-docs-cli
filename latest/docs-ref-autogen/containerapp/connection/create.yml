@@ -1,11 +1,95 @@
 ### YamlMime:AzureCLIGroup
 uid: az_containerapp_connection_create
 name: az containerapp connection create
+importantNote: >-
+  > [!NOTE]
+
+  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Create a connection between a containerapp and a target resource.
 status: GA
-sourceType: Core
+sourceType: Core and Extension
 directCommands:
+- uid: az_containerapp_connection_create_app-insights
+  name: az containerapp connection create app-insights
+  summary: |-
+    Create a containerapp connection to app-insights.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
+  syntax: >-
+    az containerapp connection create app-insights [--app-insights]
+                                                   [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python}]
+                                                   [--connection]
+                                                   [--container]
+                                                   [--customized-keys]
+                                                   [--name]
+                                                   [--no-wait]
+                                                   [--opt-out {configinfo, publicnetwork}]
+                                                   [--resource-group]
+                                                   [--secret]
+                                                   [--source-id]
+                                                   [--target-id]
+                                                   [--target-resource-group]
+                                                   [--vault-id]
+  examples:
+  - summary: |-
+      Create a connection between containerapp and app-insights interactively
+    syntax: az containerapp connection create app-insights
+  - summary: |-
+      Create a connection between containerapp and app-insights with resource name
+    syntax: az containerapp connection create app-insights -g ContainerAppRG -n MyContainerApp --tg AppInsightsRG --app-insights MyAppInsights --secret
+  - summary: |-
+      Create a connection between containerapp and app-insights with resource id
+    syntax: az containerapp connection create app-insights --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/microsoft.insights/components/{appinsights} --secret
+  optionalParameters:
+  - name: --app-insights
+    summary: |-
+      Name of the app insights. Required if '--target-id' is not specified.
+  - name: --client-type
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python"
+    summary: |-
+      The client type used on the containerapp.
+  - name: --connection
+    summary: |-
+      Name of the containerapp connection.
+  - name: --container -c
+    summary: |-
+      The container where the connection information will be saved (as environment variables).
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --name -n
+    summary: |-
+      Name of the container app. Required if '--source-id' is not specified.None.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the container app. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret.
+  - name: --source-id
+    summary: |-
+      The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--app-insights'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the app insights. Required if '--target-id' is not specified.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
 - uid: az_containerapp_connection_create_appconfig
   name: az containerapp connection create appconfig
   summary: |-
@@ -15,12 +99,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create appconfig [--app-config]
-                                                [--client-type {dotnet, java, nodejs, none, python}]
+                                                [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                 [--connection]
                                                 [--container]
                                                 [--customized-keys]
                                                 [--name]
                                                 [--no-wait]
+                                                [--opt-out {configinfo, publicnetwork}]
                                                 [--private-endpoint {false, true}]
                                                 [--resource-group]
                                                 [--secret]
@@ -46,7 +131,7 @@ directCommands:
     summary: |-
       Name of the app configuration. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -65,6 +150,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -125,12 +214,13 @@ directCommands:
                                                       --schema-key
                                                       --schema-registry
                                                       --schema-secret
-                                                      [--client-type {dotnet, go, java, none, python, springBoot}]
+                                                      [--client-type {dotnet, dotnet-internal, go, java, none, python, springBoot}]
                                                       [--connection]
                                                       [--container]
                                                       [--customized-keys]
                                                       [--name]
                                                       [--no-wait]
+                                                      [--opt-out {configinfo, publicnetwork}]
                                                       [--resource-group]
                                                       [--source-id]
                                                       [--vault-id]
@@ -165,7 +255,7 @@ directCommands:
       Schema registry API-Key (secret).
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -184,6 +274,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the container app. Required if '--source-id' is not specified.None.
@@ -202,13 +296,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create cosmos-cassandra [--account]
-                                                       [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+                                                       [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                        [--connection]
                                                        [--container]
                                                        [--customized-keys]
                                                        [--key-space]
                                                        [--name]
                                                        [--no-wait]
+                                                       [--opt-out {configinfo, publicnetwork}]
                                                        [--private-endpoint {false, true}]
                                                        [--resource-group]
                                                        [--secret]
@@ -235,7 +330,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -257,6 +352,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -316,7 +415,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create cosmos-gremlin [--account]
-                                                     [--client-type {dotnet, java, nodejs, none, php, python}]
+                                                     [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python}]
                                                      [--connection]
                                                      [--container]
                                                      [--customized-keys]
@@ -324,6 +423,7 @@ directCommands:
                                                      [--graph]
                                                      [--name]
                                                      [--no-wait]
+                                                     [--opt-out {configinfo, publicnetwork}]
                                                      [--private-endpoint {false, true}]
                                                      [--resource-group]
                                                      [--secret]
@@ -350,7 +450,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -375,6 +475,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -434,13 +538,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create cosmos-mongo [--account]
-                                                   [--client-type {dotnet, go, java, nodejs, none, springBoot}]
+                                                   [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, springBoot}]
                                                    [--connection]
                                                    [--container]
                                                    [--customized-keys]
                                                    [--database]
                                                    [--name]
                                                    [--no-wait]
+                                                   [--opt-out {configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
@@ -467,7 +572,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -489,6 +594,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -548,13 +657,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create cosmos-sql [--account]
-                                                 [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                 [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--container]
                                                  [--customized-keys]
                                                  [--database]
                                                  [--name]
                                                  [--no-wait]
+                                                 [--opt-out {configinfo, publicnetwork}]
                                                  [--private-endpoint {false, true}]
                                                  [--resource-group]
                                                  [--secret]
@@ -581,7 +691,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -603,6 +713,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -662,12 +776,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create cosmos-table [--account]
-                                                   [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                   [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                    [--connection]
                                                    [--container]
                                                    [--customized-keys]
                                                    [--name]
                                                    [--no-wait]
+                                                   [--opt-out {configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
@@ -695,7 +810,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -714,6 +829,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -775,13 +894,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create eventhub [--client-type {dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
+    az containerapp connection create eventhub [--client-type {dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
                                                [--connection]
                                                [--container]
                                                [--customized-keys]
                                                [--name]
                                                [--namespace]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -805,7 +925,7 @@ directCommands:
     syntax: az containerapp connection create eventhub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.EventHub/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -827,6 +947,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -885,13 +1009,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create keyvault [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+    az containerapp connection create keyvault [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                [--connection]
                                                [--container]
                                                [--customized-keys]
                                                [--name]
                                                [--new {false, true}]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--service-endpoint {false, true}]
@@ -921,7 +1046,7 @@ directCommands:
     syntax: az containerapp connection create keyvault --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -945,6 +1070,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1003,13 +1132,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create mysql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az containerapp connection create mysql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                             [--connection]
                                             [--container]
                                             [--customized-keys]
                                             [--database]
                                             [--name]
                                             [--no-wait]
+                                            [--opt-out {configinfo, publicnetwork}]
                                             [--private-endpoint {false, true}]
                                             [--resource-group]
                                             [--secret]
@@ -1031,7 +1161,7 @@ directCommands:
     syntax: az containerapp connection create mysql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBForMySQL/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1053,6 +1183,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1099,20 +1233,23 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create mysql-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az containerapp connection create mysql-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                      [--connection]
                                                      [--container]
                                                      [--customized-keys]
                                                      [--database]
                                                      [--name]
                                                      [--no-wait]
+                                                     [--opt-out {configinfo, publicnetwork}]
                                                      [--resource-group]
                                                      [--secret]
                                                      [--server]
+                                                     [--service-principal]
                                                      [--source-id]
                                                      [--system-identity]
                                                      [--target-id]
                                                      [--target-resource-group]
+                                                     [--user-identity]
                                                      [--vault-id]
   examples:
   - summary: |-
@@ -1126,7 +1263,125 @@ directCommands:
     syntax: az containerapp connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    summary: |-
+      The client type used on the containerapp.
+  - name: --connection
+    summary: |-
+      Name of the containerapp connection.
+  - name: --container -c
+    summary: |-
+      The container where the connection information will be saved (as environment variables).
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --database
+    summary: |-
+      Name of the mysql flexible database. Required if '--target-id' is not specified.
+  - name: --name -n
+    summary: |-
+      Name of the container app. Required if '--source-id' is not specified.None.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the container app. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret name=XX secret=XX
+             --secret name=XX secret-uri=XX
+             --secret name=XX secret-name=XX
+
+      name    : Required. Username or account name for secret auth.
+      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
+      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
+      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+  - name: --server
+    summary: |-
+      Name of the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
+  - name: --source-id
+    summary: |-
+      The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity mysql-identity-id=xx
+
+      mysql-identity-id      : Optional. ID of identity used for MySQL flexible server AAD Authentication. Ignore it if you are the server AAD administrator.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
+- uid: az_containerapp_connection_create_mysql-flexible(serviceconnector-passwordless)
+  name: az containerapp connection create mysql-flexible
+  extensionSuffix: serviceconnector-passwordless
+  summary: |-
+    Create a containerapp connection to mysql-flexible.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp connection create mysql-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                                     [--connection]
+                                                     [--container]
+                                                     [--customized-keys]
+                                                     [--database]
+                                                     [--name]
+                                                     [--no-wait]
+                                                     [--resource-group]
+                                                     [--secret]
+                                                     [--server]
+                                                     [--service-principal]
+                                                     [--source-id]
+                                                     [--system-identity]
+                                                     [--target-id]
+                                                     [--target-resource-group]
+                                                     [--user-identity]
+                                                     [--vault-id]
+                                                     [--yes]
+  examples:
+  - summary: |-
+      Create a connection between containerapp and mysql-flexible interactively
+    syntax: az containerapp connection create mysql-flexible
+  - summary: |-
+      Create a connection between containerapp and mysql-flexible with resource name
+    syntax: az containerapp connection create mysql-flexible -g ContainerAppRG -n MyContainerApp --tg MysqlRG --server MyServer --database MyDB --secret name=XX secret=XX
+  - summary: |-
+      Create a connection between containerapp and mysql-flexible with resource id
+    syntax: az containerapp connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
+  optionalParameters:
+  - name: --client-type
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1166,6 +1421,16 @@ directCommands:
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id            : Required. Client id of the service principal.
+      object-id            : Optional. Object id of the service principal (Enterprise Application).
+      secret               : Required. Secret of the service principal.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --source-id
     summary: |-
       The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1175,16 +1440,29 @@ directCommands:
     description: |-
       Usage: --system-identity mysql-identity-id=xx
 
-      mysql-identity-id      : Optional. ID of identity used for MySQL flexible server AAD Authentication. Ignore it if you are the server AAD administrator.
+      mysql-identity-id      : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id            : Required. Client id of the user assigned identity.
+      subs-id              : Required. Subscription id of the user assigned identity.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_containerapp_connection_create_postgres
   name: az containerapp connection create postgres
   summary: |-
@@ -1195,7 +1473,7 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create postgres [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az containerapp connection create postgres [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                [--connection]
                                                [--container]
                                                [--customized-keys]
@@ -1203,15 +1481,18 @@ directCommands:
                                                [--name]
                                                [--new {false, true}]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
                                                [--server]
                                                [--service-endpoint {false, true}]
+                                               [--service-principal]
                                                [--source-id]
                                                [--system-identity]
                                                [--target-id]
                                                [--target-resource-group]
+                                               [--user-identity]
                                                [--vault-id]
   examples:
   - summary: |-
@@ -1231,7 +1512,145 @@ directCommands:
     syntax: az containerapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    summary: |-
+      The client type used on the containerapp.
+  - name: --connection
+    summary: |-
+      Name of the containerapp connection.
+  - name: --container -c
+    summary: |-
+      The container where the connection information will be saved (as environment variables).
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --database
+    summary: |-
+      Name of postgres database. Required if '--target-id' is not specified.
+  - name: --name -n
+    summary: |-
+      Name of the container app. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Indicates whether to create a new postgres when creating the containerapp connection.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --private-endpoint
+    parameterValueGroup: "false, true"
+    summary: |-
+      Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the container app. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret name=XX secret=XX
+             --secret name=XX secret-uri=XX
+             --secret name=XX secret-name=XX
+
+      name    : Required. Username or account name for secret auth.
+      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
+      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
+      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+  - name: --server
+    summary: |-
+      Name of postgres server. Required if '--target-id' is not specified.
+  - name: --service-endpoint
+    parameterValueGroup: "false, true"
+    summary: |-
+      Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
+  - name: --source-id
+    summary: |-
+      The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
+- uid: az_containerapp_connection_create_postgres(serviceconnector-passwordless)
+  name: az containerapp connection create postgres
+  extensionSuffix: serviceconnector-passwordless
+  summary: |-
+    Create a containerapp connection to postgres.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp connection create postgres [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                               [--connection]
+                                               [--container]
+                                               [--customized-keys]
+                                               [--database]
+                                               [--name]
+                                               [--new {false, true}]
+                                               [--no-wait]
+                                               [--private-endpoint {false, true}]
+                                               [--resource-group]
+                                               [--secret]
+                                               [--server]
+                                               [--service-endpoint {false, true}]
+                                               [--service-principal]
+                                               [--source-id]
+                                               [--system-identity]
+                                               [--target-id]
+                                               [--target-resource-group]
+                                               [--user-identity]
+                                               [--vault-id]
+                                               [--yes]
+  examples:
+  - summary: |-
+      Create a connection between containerapp and postgres interactively
+    syntax: az containerapp connection create postgres
+  - summary: |-
+      Create a connection between containerapp and postgres with resource name
+    syntax: az containerapp connection create postgres -g ContainerAppRG -n MyContainerApp --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
+  - summary: |-
+      Create a connection between containerapp and postgres with resource id
+    syntax: az containerapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/servers/{server}/databases/{database} --secret name=XX secret=XX
+  - summary: |-
+      Create a new postgres and connect containerapp to it interactively
+    syntax: az containerapp connection create postgres --new
+  - summary: |-
+      Create a new postgres and connect containerapp to it
+    syntax: az containerapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --new
+  optionalParameters:
+  - name: --client-type
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1284,6 +1703,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1298,9 +1726,21 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_containerapp_connection_create_postgres-flexible
   name: az containerapp connection create postgres-flexible
   summary: |-
@@ -1309,20 +1749,23 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create postgres-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az containerapp connection create postgres-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                         [--connection]
                                                         [--container]
                                                         [--customized-keys]
                                                         [--database]
                                                         [--name]
                                                         [--no-wait]
+                                                        [--opt-out {configinfo, publicnetwork}]
                                                         [--resource-group]
                                                         [--secret]
                                                         [--server]
+                                                        [--service-principal]
                                                         [--source-id]
                                                         [--system-identity]
                                                         [--target-id]
                                                         [--target-resource-group]
+                                                        [--user-identity]
                                                         [--vault-id]
   examples:
   - summary: |-
@@ -1336,7 +1779,123 @@ directCommands:
     syntax: az containerapp connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    summary: |-
+      The client type used on the containerapp.
+  - name: --connection
+    summary: |-
+      Name of the containerapp connection.
+  - name: --container -c
+    summary: |-
+      The container where the connection information will be saved (as environment variables).
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --database
+    summary: |-
+      Name of postgres flexible database. Required if '--target-id' is not specified.
+  - name: --name -n
+    summary: |-
+      Name of the container app. Required if '--source-id' is not specified.None.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the container app. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret name=XX secret=XX
+             --secret name=XX secret-uri=XX
+             --secret name=XX secret-name=XX
+
+      name    : Required. Username or account name for secret auth.
+      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
+      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
+      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+  - name: --server
+    summary: |-
+      Name of postgres flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
+  - name: --source-id
+    summary: |-
+      The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
+- uid: az_containerapp_connection_create_postgres-flexible(serviceconnector-passwordless)
+  name: az containerapp connection create postgres-flexible
+  extensionSuffix: serviceconnector-passwordless
+  summary: |-
+    Create a containerapp connection to postgres-flexible.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp connection create postgres-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                                        [--connection]
+                                                        [--container]
+                                                        [--customized-keys]
+                                                        [--database]
+                                                        [--name]
+                                                        [--no-wait]
+                                                        [--resource-group]
+                                                        [--secret]
+                                                        [--server]
+                                                        [--service-principal]
+                                                        [--source-id]
+                                                        [--system-identity]
+                                                        [--target-id]
+                                                        [--target-resource-group]
+                                                        [--user-identity]
+                                                        [--vault-id]
+                                                        [--yes]
+  examples:
+  - summary: |-
+      Create a connection between containerapp and postgres-flexible interactively
+    syntax: az containerapp connection create postgres-flexible
+  - summary: |-
+      Create a connection between containerapp and postgres-flexible with resource name
+    syntax: az containerapp connection create postgres-flexible -g ContainerAppRG -n MyContainerApp --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
+  - summary: |-
+      Create a connection between containerapp and postgres-flexible with resource id
+    syntax: az containerapp connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
+  optionalParameters:
+  - name: --client-type
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1376,6 +1935,15 @@ directCommands:
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1390,9 +1958,21 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_containerapp_connection_create_redis
   name: az containerapp connection create redis
   summary: |-
@@ -1401,13 +1981,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create redis [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az containerapp connection create redis [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                             [--connection]
                                             [--container]
                                             [--customized-keys]
                                             [--database]
                                             [--name]
                                             [--no-wait]
+                                            [--opt-out {configinfo, publicnetwork}]
                                             [--private-endpoint {false, true}]
                                             [--resource-group]
                                             [--secret]
@@ -1428,7 +2009,7 @@ directCommands:
     syntax: az containerapp connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1450,6 +2031,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1485,13 +2070,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create redis-enterprise [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az containerapp connection create redis-enterprise [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                        [--connection]
                                                        [--container]
                                                        [--customized-keys]
                                                        [--database]
                                                        [--name]
                                                        [--no-wait]
+                                                       [--opt-out {configinfo, publicnetwork}]
                                                        [--resource-group]
                                                        [--secret]
                                                        [--server]
@@ -1511,7 +2097,7 @@ directCommands:
     syntax: az containerapp connection create redis-enterprise --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redisEnterprise/{server}/databases/{database} --secret
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1533,6 +2119,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the container app. Required if '--source-id' is not specified.None.
@@ -1564,13 +2154,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create servicebus [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az containerapp connection create servicebus [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--container]
                                                  [--customized-keys]
                                                  [--name]
                                                  [--namespace]
                                                  [--no-wait]
+                                                 [--opt-out {configinfo, publicnetwork}]
                                                  [--private-endpoint {false, true}]
                                                  [--resource-group]
                                                  [--secret]
@@ -1594,7 +2185,7 @@ directCommands:
     syntax: az containerapp connection create servicebus --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.ServiceBus/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1616,6 +2207,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1674,12 +2269,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create signalr [--client-type {dotnet, none}]
+    az containerapp connection create signalr [--client-type {dotnet, dotnet-internal, none}]
                                               [--connection]
                                               [--container]
                                               [--customized-keys]
                                               [--name]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -1703,7 +2299,7 @@ directCommands:
     syntax: az containerapp connection create signalr --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/SignalR/{signalr} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, none"
+    parameterValueGroup: "dotnet, dotnet-internal, none"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1722,6 +2318,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1779,22 +2379,25 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create sql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az containerapp connection create sql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                           [--connection]
                                           [--container]
                                           [--customized-keys]
                                           [--database]
                                           [--name]
                                           [--no-wait]
+                                          [--opt-out {configinfo, publicnetwork}]
                                           [--private-endpoint {false, true}]
                                           [--resource-group]
                                           [--secret]
                                           [--server]
                                           [--service-endpoint {false, true}]
+                                          [--service-principal]
                                           [--source-id]
                                           [--system-identity]
                                           [--target-id]
                                           [--target-resource-group]
+                                          [--user-identity]
                                           [--vault-id]
   examples:
   - summary: |-
@@ -1808,7 +2411,133 @@ directCommands:
     syntax: az containerapp connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
+    summary: |-
+      The client type used on the containerapp.
+  - name: --connection
+    summary: |-
+      Name of the containerapp connection.
+  - name: --container -c
+    summary: |-
+      The container where the connection information will be saved (as environment variables).
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --database
+    summary: |-
+      Name of the sql database. Required if '--target-id' is not specified.
+  - name: --name -n
+    summary: |-
+      Name of the container app. Required if '--source-id' is not specified.None.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --private-endpoint
+    parameterValueGroup: "false, true"
+    summary: |-
+      Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the container app. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret name=XX secret=XX
+             --secret name=XX secret-uri=XX
+             --secret name=XX secret-name=XX
+
+      name    : Required. Username or account name for secret auth.
+      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
+      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
+      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
+  - name: --server
+    summary: |-
+      Name of the sql server. Required if '--target-id' is not specified.
+  - name: --service-endpoint
+    parameterValueGroup: "false, true"
+    summary: |-
+      Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
+  - name: --source-id
+    summary: |-
+      The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the sql server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
+- uid: az_containerapp_connection_create_sql(serviceconnector-passwordless)
+  name: az containerapp connection create sql
+  extensionSuffix: serviceconnector-passwordless
+  summary: |-
+    Create a containerapp connection to sql.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp connection create sql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                          [--connection]
+                                          [--container]
+                                          [--customized-keys]
+                                          [--database]
+                                          [--name]
+                                          [--no-wait]
+                                          [--private-endpoint {false, true}]
+                                          [--resource-group]
+                                          [--secret]
+                                          [--server]
+                                          [--service-endpoint {false, true}]
+                                          [--service-principal]
+                                          [--source-id]
+                                          [--system-identity]
+                                          [--target-id]
+                                          [--target-resource-group]
+                                          [--user-identity]
+                                          [--vault-id]
+                                          [--yes]
+  examples:
+  - summary: |-
+      Create a connection between containerapp and sql interactively
+    syntax: az containerapp connection create sql
+  - summary: |-
+      Create a connection between containerapp and sql with resource name
+    syntax: az containerapp connection create sql -g ContainerAppRG -n MyContainerApp --tg SqlRG --server MyServer --database MyDB --secret name=XX secret=XX
+  - summary: |-
+      Create a connection between containerapp and sql with resource id
+    syntax: az containerapp connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
+  optionalParameters:
+  - name: --client-type
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1856,6 +2585,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1870,9 +2608,21 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the sql server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_containerapp_connection_create_storage-blob
   name: az containerapp connection create storage-blob
   summary: |-
@@ -1882,13 +2632,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create storage-blob [--account]
-                                                   [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                   [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                    [--connection]
                                                    [--container]
                                                    [--customized-keys]
                                                    [--name]
                                                    [--new {false, true}]
                                                    [--no-wait]
+                                                   [--opt-out {configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
@@ -1921,7 +2672,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -1945,6 +2696,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2004,12 +2759,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create storage-file [--account]
-                                                   [--client-type {dotnet, java, nodejs, none, php, python, ruby, springBoot}]
+                                                   [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot}]
                                                    [--connection]
                                                    [--container]
                                                    [--customized-keys]
                                                    [--name]
                                                    [--no-wait]
+                                                   [--opt-out {configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
@@ -2033,7 +2789,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -2052,6 +2808,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2089,12 +2849,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create storage-queue [--account]
-                                                    [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                    [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                     [--connection]
                                                     [--container]
                                                     [--customized-keys]
                                                     [--name]
                                                     [--no-wait]
+                                                    [--opt-out {configinfo, publicnetwork}]
                                                     [--private-endpoint {false, true}]
                                                     [--resource-group]
                                                     [--secret]
@@ -2121,7 +2882,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -2140,6 +2901,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2199,19 +2964,23 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
     az containerapp connection create storage-table [--account]
-                                                    [--client-type {dotnet, java, nodejs, none, python}]
+                                                    [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                     [--connection]
                                                     [--container]
                                                     [--customized-keys]
                                                     [--name]
                                                     [--no-wait]
+                                                    [--opt-out {configinfo, publicnetwork}]
                                                     [--private-endpoint {false, true}]
                                                     [--resource-group]
                                                     [--secret]
                                                     [--service-endpoint {false, true}]
+                                                    [--service-principal]
                                                     [--source-id]
+                                                    [--system-identity]
                                                     [--target-id]
                                                     [--target-resource-group]
+                                                    [--user-identity]
                                                     [--vault-id]
   examples:
   - summary: |-
@@ -2219,16 +2988,16 @@ directCommands:
     syntax: az containerapp connection create storage-table
   - summary: |-
       Create a connection between containerapp and storage-table with resource name
-    syntax: az containerapp connection create storage-table -g ContainerAppRG -n MyContainerApp --tg StorageRG --account MyAccount --secret
+    syntax: az containerapp connection create storage-table -g ContainerAppRG -n MyContainerApp --tg StorageRG --account MyAccount --system-identity
   - summary: |-
       Create a connection between containerapp and storage-table with resource id
-    syntax: az containerapp connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --secret
+    syntax: az containerapp connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --system-identity
   optionalParameters:
   - name: --account
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -2247,6 +3016,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2263,15 +3036,37 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a containerapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--account'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the storage account. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2283,12 +3078,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
   syntax: >-
-    az containerapp connection create webpubsub [--client-type {dotnet, java, nodejs, none, python}]
+    az containerapp connection create webpubsub [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                 [--connection]
                                                 [--container]
                                                 [--customized-keys]
                                                 [--name]
                                                 [--no-wait]
+                                                [--opt-out {configinfo, publicnetwork}]
                                                 [--private-endpoint {false, true}]
                                                 [--resource-group]
                                                 [--secret]
@@ -2312,7 +3108,7 @@ directCommands:
     syntax: az containerapp connection create webpubsub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.App/containerApps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/WebPubSub/{webpubsub} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the containerapp.
   - name: --connection
@@ -2331,6 +3127,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2381,6 +3181,7 @@ directCommands:
     summary: |-
       Name of the webpubsub service. Required if '--target-id' is not specified.
 commands:
+- az_containerapp_connection_create_app-insights
 - az_containerapp_connection_create_appconfig
 - az_containerapp_connection_create_confluent-cloud
 - az_containerapp_connection_create_cosmos-cassandra
@@ -2392,13 +3193,17 @@ commands:
 - az_containerapp_connection_create_keyvault
 - az_containerapp_connection_create_mysql
 - az_containerapp_connection_create_mysql-flexible
+- az_containerapp_connection_create_mysql-flexible(serviceconnector-passwordless)
 - az_containerapp_connection_create_postgres
+- az_containerapp_connection_create_postgres(serviceconnector-passwordless)
 - az_containerapp_connection_create_postgres-flexible
+- az_containerapp_connection_create_postgres-flexible(serviceconnector-passwordless)
 - az_containerapp_connection_create_redis
 - az_containerapp_connection_create_redis-enterprise
 - az_containerapp_connection_create_servicebus
 - az_containerapp_connection_create_signalr
 - az_containerapp_connection_create_sql
+- az_containerapp_connection_create_sql(serviceconnector-passwordless)
 - az_containerapp_connection_create_storage-blob
 - az_containerapp_connection_create_storage-file
 - az_containerapp_connection_create_storage-queue
@@ -2429,5 +3234,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/13/2023
   description: Create a connection between a containerapp and a target resource.

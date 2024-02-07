@@ -10,6 +10,82 @@ summary: |-
 status: GA
 sourceType: Core and Extension
 directCommands:
+- uid: az_functionapp_connection_create_app-insights
+  name: az functionapp connection create app-insights
+  summary: |-
+    Create a functionapp connection to app-insights.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+  syntax: >-
+    az functionapp connection create app-insights [--app-insights]
+                                                  [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python}]
+                                                  [--connection]
+                                                  [--customized-keys]
+                                                  [--name]
+                                                  [--no-wait]
+                                                  [--opt-out {configinfo, publicnetwork}]
+                                                  [--resource-group]
+                                                  [--secret]
+                                                  [--source-id]
+                                                  [--target-id]
+                                                  [--target-resource-group]
+                                                  [--vault-id]
+  examples:
+  - summary: |-
+      Create a connection between functionapp and app-insights interactively
+    syntax: az functionapp connection create app-insights
+  - summary: |-
+      Create a connection between functionapp and app-insights with resource name
+    syntax: az functionapp connection create app-insights -g FuncAppRG -n MyFunctionApp --tg AppInsightsRG --app-insights MyAppInsights --secret
+  - summary: |-
+      Create a connection between functionapp and app-insights with resource id
+    syntax: az functionapp connection create app-insights --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/microsoft.insights/components/{appinsights} --secret
+  optionalParameters:
+  - name: --app-insights
+    summary: |-
+      Name of the app insights. Required if '--target-id' is not specified.
+  - name: --client-type
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python"
+    summary: |-
+      The client type used on the functionapp.
+  - name: --connection
+    summary: |-
+      Name of the functionapp connection.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --name -n
+    summary: |-
+      Name of the function app. Required if '--source-id' is not specified.None.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the function app. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret.
+  - name: --source-id
+    summary: |-
+      The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--app-insights'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the app insights. Required if '--target-id' is not specified.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
 - uid: az_functionapp_connection_create_appconfig
   name: az functionapp connection create appconfig
   summary: |-
@@ -19,11 +95,12 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create appconfig [--app-config]
-                                               [--client-type {dotnet, java, nodejs, none, python}]
+                                               [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                [--connection]
                                                [--customized-keys]
                                                [--name]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -49,7 +126,7 @@ directCommands:
     summary: |-
       Name of the app configuration. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -65,6 +142,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -125,11 +206,12 @@ directCommands:
                                                      --schema-key
                                                      --schema-registry
                                                      --schema-secret
-                                                     [--client-type {dotnet, go, java, none, python, springBoot}]
+                                                     [--client-type {dotnet, dotnet-internal, go, java, none, python, springBoot}]
                                                      [--connection]
                                                      [--customized-keys]
                                                      [--name]
                                                      [--no-wait]
+                                                     [--opt-out {configinfo, publicnetwork}]
                                                      [--resource-group]
                                                      [--source-id]
                                                      [--vault-id]
@@ -164,7 +246,7 @@ directCommands:
       Schema registry API-Key (secret).
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -180,6 +262,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--source-id' is not specified.None.
@@ -198,12 +284,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create cosmos-cassandra [--account]
-                                                      [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+                                                      [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                       [--connection]
                                                       [--customized-keys]
                                                       [--key-space]
                                                       [--name]
                                                       [--no-wait]
+                                                      [--opt-out {configinfo, publicnetwork}]
                                                       [--private-endpoint {false, true}]
                                                       [--resource-group]
                                                       [--secret]
@@ -230,7 +317,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -249,6 +336,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -308,13 +399,14 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create cosmos-gremlin [--account]
-                                                    [--client-type {dotnet, java, nodejs, none, php, python}]
+                                                    [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python}]
                                                     [--connection]
                                                     [--customized-keys]
                                                     [--database]
                                                     [--graph]
                                                     [--name]
                                                     [--no-wait]
+                                                    [--opt-out {configinfo, publicnetwork}]
                                                     [--private-endpoint {false, true}]
                                                     [--resource-group]
                                                     [--secret]
@@ -341,7 +433,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -363,6 +455,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -422,12 +518,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create cosmos-mongo [--account]
-                                                  [--client-type {dotnet, go, java, nodejs, none, springBoot}]
+                                                  [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--database]
                                                   [--name]
                                                   [--no-wait]
+                                                  [--opt-out {configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -454,7 +551,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -473,6 +570,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -532,12 +633,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create cosmos-sql [--account]
-                                                [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                 [--connection]
                                                 [--customized-keys]
                                                 [--database]
                                                 [--name]
                                                 [--no-wait]
+                                                [--opt-out {configinfo, publicnetwork}]
                                                 [--private-endpoint {false, true}]
                                                 [--resource-group]
                                                 [--secret]
@@ -564,7 +666,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -583,6 +685,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -642,11 +748,12 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create cosmos-table [--account]
-                                                  [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                  [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--name]
                                                   [--no-wait]
+                                                  [--opt-out {configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -674,7 +781,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -690,6 +797,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -751,12 +862,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create eventhub [--client-type {dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
+    az functionapp connection create eventhub [--client-type {dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--name]
                                               [--namespace]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -780,7 +892,7 @@ directCommands:
     syntax: az functionapp connection create eventhub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.EventHub/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -799,6 +911,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -857,12 +973,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create keyvault [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+    az functionapp connection create keyvault [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--name]
                                               [--new {false, true}]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--service-endpoint {false, true}]
@@ -892,7 +1009,7 @@ directCommands:
     syntax: az functionapp connection create keyvault --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -913,6 +1030,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -971,12 +1092,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create mysql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create mysql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--database]
                                            [--name]
                                            [--no-wait]
+                                           [--opt-out {configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -998,7 +1120,7 @@ directCommands:
     syntax: az functionapp connection create mysql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBForMySQL/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1017,6 +1139,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1063,19 +1189,22 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create mysql-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create mysql-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                     [--connection]
                                                     [--customized-keys]
                                                     [--database]
                                                     [--name]
                                                     [--no-wait]
+                                                    [--opt-out {configinfo, publicnetwork}]
                                                     [--resource-group]
                                                     [--secret]
                                                     [--server]
+                                                    [--service-principal]
                                                     [--source-id]
                                                     [--system-identity]
                                                     [--target-id]
                                                     [--target-resource-group]
+                                                    [--user-identity]
                                                     [--vault-id]
   examples:
   - summary: |-
@@ -1089,7 +1218,7 @@ directCommands:
     syntax: az functionapp connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1108,6 +1237,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--source-id' is not specified.None.
@@ -1126,6 +1259,15 @@ directCommands:
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1142,6 +1284,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1153,7 +1303,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az functionapp connection create mysql-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create mysql-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                     [--connection]
                                                     [--customized-keys]
                                                     [--database]
@@ -1162,10 +1312,12 @@ directCommands:
                                                     [--resource-group]
                                                     [--secret]
                                                     [--server]
+                                                    [--service-principal]
                                                     [--source-id]
                                                     [--system-identity]
                                                     [--target-id]
                                                     [--target-resource-group]
+                                                    [--user-identity]
                                                     [--vault-id]
                                                     [--yes]
   examples:
@@ -1180,7 +1332,7 @@ directCommands:
     syntax: az functionapp connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1217,6 +1369,16 @@ directCommands:
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id            : Required. Client id of the service principal.
+      object-id            : Optional. Object id of the service principal (Enterprise Application).
+      secret               : Required. Secret of the service principal.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1226,13 +1388,22 @@ directCommands:
     description: |-
       Usage: --system-identity mysql-identity-id=xx
 
-      mysql-identity-id      : Optional. ID of identity used for MySQL flexible server AAD Authentication. Ignore it if you are the server AAD administrator.
+      mysql-identity-id      : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id            : Required. Client id of the user assigned identity.
+      subs-id              : Required. Subscription id of the user assigned identity.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1250,22 +1421,25 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create postgres [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create postgres [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--database]
                                               [--name]
                                               [--new {false, true}]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
                                               [--server]
                                               [--service-endpoint {false, true}]
+                                              [--service-principal]
                                               [--source-id]
                                               [--system-identity]
                                               [--target-id]
                                               [--target-resource-group]
+                                              [--user-identity]
                                               [--vault-id]
   examples:
   - summary: |-
@@ -1285,7 +1459,7 @@ directCommands:
     syntax: az functionapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1309,6 +1483,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1335,6 +1513,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1349,6 +1536,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1360,7 +1555,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az functionapp connection create postgres [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create postgres [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--database]
@@ -1372,10 +1567,12 @@ directCommands:
                                               [--secret]
                                               [--server]
                                               [--service-endpoint {false, true}]
+                                              [--service-principal]
                                               [--source-id]
                                               [--system-identity]
                                               [--target-id]
                                               [--target-resource-group]
+                                              [--user-identity]
                                               [--vault-id]
                                               [--yes]
   examples:
@@ -1396,7 +1593,7 @@ directCommands:
     syntax: az functionapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1446,6 +1643,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1460,6 +1666,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1475,19 +1689,22 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create postgres-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create postgres-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                        [--connection]
                                                        [--customized-keys]
                                                        [--database]
                                                        [--name]
                                                        [--no-wait]
+                                                       [--opt-out {configinfo, publicnetwork}]
                                                        [--resource-group]
                                                        [--secret]
                                                        [--server]
+                                                       [--service-principal]
                                                        [--source-id]
                                                        [--system-identity]
                                                        [--target-id]
                                                        [--target-resource-group]
+                                                       [--user-identity]
                                                        [--vault-id]
   examples:
   - summary: |-
@@ -1501,7 +1718,7 @@ directCommands:
     syntax: az functionapp connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1520,6 +1737,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--source-id' is not specified.None.
@@ -1538,6 +1759,15 @@ directCommands:
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1552,6 +1782,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1563,7 +1801,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az functionapp connection create postgres-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create postgres-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                        [--connection]
                                                        [--customized-keys]
                                                        [--database]
@@ -1572,10 +1810,12 @@ directCommands:
                                                        [--resource-group]
                                                        [--secret]
                                                        [--server]
+                                                       [--service-principal]
                                                        [--source-id]
                                                        [--system-identity]
                                                        [--target-id]
                                                        [--target-resource-group]
+                                                       [--user-identity]
                                                        [--vault-id]
                                                        [--yes]
   examples:
@@ -1590,7 +1830,7 @@ directCommands:
     syntax: az functionapp connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1627,6 +1867,15 @@ directCommands:
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -1641,6 +1890,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1656,12 +1913,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create redis [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az functionapp connection create redis [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--database]
                                            [--name]
                                            [--no-wait]
+                                           [--opt-out {configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -1682,7 +1940,7 @@ directCommands:
     syntax: az functionapp connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1701,6 +1959,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1736,12 +1998,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create redis-enterprise [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az functionapp connection create redis-enterprise [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                       [--connection]
                                                       [--customized-keys]
                                                       [--database]
                                                       [--name]
                                                       [--no-wait]
+                                                      [--opt-out {configinfo, publicnetwork}]
                                                       [--resource-group]
                                                       [--secret]
                                                       [--server]
@@ -1761,7 +2024,7 @@ directCommands:
     syntax: az functionapp connection create redis-enterprise --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redisEnterprise/{server}/databases/{database} --secret
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1780,6 +2043,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--source-id' is not specified.None.
@@ -1811,12 +2078,13 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create servicebus [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az functionapp connection create servicebus [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                 [--connection]
                                                 [--customized-keys]
                                                 [--name]
                                                 [--namespace]
                                                 [--no-wait]
+                                                [--opt-out {configinfo, publicnetwork}]
                                                 [--private-endpoint {false, true}]
                                                 [--resource-group]
                                                 [--secret]
@@ -1840,7 +2108,7 @@ directCommands:
     syntax: az functionapp connection create servicebus --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.ServiceBus/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1859,6 +2127,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1917,11 +2189,12 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create signalr [--client-type {dotnet, none}]
+    az functionapp connection create signalr [--client-type {dotnet, dotnet-internal, none}]
                                              [--connection]
                                              [--customized-keys]
                                              [--name]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -1945,7 +2218,7 @@ directCommands:
     syntax: az functionapp connection create signalr --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/SignalR/{signalr} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, none"
+    parameterValueGroup: "dotnet, dotnet-internal, none"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -1961,6 +2234,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2018,21 +2295,24 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create sql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create sql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--database]
                                          [--name]
                                          [--no-wait]
+                                         [--opt-out {configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
                                          [--server]
                                          [--service-endpoint {false, true}]
+                                         [--service-principal]
                                          [--source-id]
                                          [--system-identity]
                                          [--target-id]
                                          [--target-resource-group]
+                                         [--user-identity]
                                          [--vault-id]
   examples:
   - summary: |-
@@ -2046,7 +2326,7 @@ directCommands:
     syntax: az functionapp connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -2065,6 +2345,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2091,6 +2375,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -2105,6 +2398,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the sql server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2116,7 +2417,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az functionapp connection create sql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection create sql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--database]
@@ -2127,10 +2428,12 @@ directCommands:
                                          [--secret]
                                          [--server]
                                          [--service-endpoint {false, true}]
+                                         [--service-principal]
                                          [--source-id]
                                          [--system-identity]
                                          [--target-id]
                                          [--target-resource-group]
+                                         [--user-identity]
                                          [--vault-id]
                                          [--yes]
   examples:
@@ -2145,7 +2448,7 @@ directCommands:
     syntax: az functionapp connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -2190,6 +2493,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
@@ -2204,6 +2516,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the sql server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2220,12 +2540,13 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create storage-blob [--account]
-                                                  [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                  [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--name]
                                                   [--new {false, true}]
                                                   [--no-wait]
+                                                  [--opt-out {configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -2258,7 +2579,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -2279,6 +2600,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2338,11 +2663,12 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create storage-file [--account]
-                                                  [--client-type {dotnet, java, nodejs, none, php, python, ruby, springBoot}]
+                                                  [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--name]
                                                   [--no-wait]
+                                                  [--opt-out {configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -2366,7 +2692,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -2382,6 +2708,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2419,11 +2749,12 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create storage-queue [--account]
-                                                   [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                                   [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                    [--connection]
                                                    [--customized-keys]
                                                    [--name]
                                                    [--no-wait]
+                                                   [--opt-out {configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
@@ -2450,7 +2781,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -2466,6 +2797,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2525,18 +2860,22 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection create storage-table [--account]
-                                                   [--client-type {dotnet, java, nodejs, none, python}]
+                                                   [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                    [--connection]
                                                    [--customized-keys]
                                                    [--name]
                                                    [--no-wait]
+                                                   [--opt-out {configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
                                                    [--service-endpoint {false, true}]
+                                                   [--service-principal]
                                                    [--source-id]
+                                                   [--system-identity]
                                                    [--target-id]
                                                    [--target-resource-group]
+                                                   [--user-identity]
                                                    [--vault-id]
   examples:
   - summary: |-
@@ -2544,16 +2883,16 @@ directCommands:
     syntax: az functionapp connection create storage-table
   - summary: |-
       Create a connection between functionapp and storage-table with resource name
-    syntax: az functionapp connection create storage-table -g FuncAppRG -n MyFunctionApp --tg StorageRG --account MyAccount --secret
+    syntax: az functionapp connection create storage-table -g FuncAppRG -n MyFunctionApp --tg StorageRG --account MyAccount --system-identity
   - summary: |-
       Create a connection between functionapp and storage-table with resource id
-    syntax: az functionapp connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --secret
+    syntax: az functionapp connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --system-identity
   optionalParameters:
   - name: --account
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -2569,6 +2908,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2585,15 +2928,37 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--account'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the storage account. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2605,11 +2970,12 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection create webpubsub [--client-type {dotnet, java, nodejs, none, python}]
+    az functionapp connection create webpubsub [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                [--connection]
                                                [--customized-keys]
                                                [--name]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -2633,7 +2999,7 @@ directCommands:
     syntax: az functionapp connection create webpubsub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/WebPubSub/{webpubsub} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the functionapp.
   - name: --connection
@@ -2649,6 +3015,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2699,6 +3069,7 @@ directCommands:
     summary: |-
       Name of the webpubsub service. Required if '--target-id' is not specified.
 commands:
+- az_functionapp_connection_create_app-insights
 - az_functionapp_connection_create_appconfig
 - az_functionapp_connection_create_confluent-cloud
 - az_functionapp_connection_create_cosmos-cassandra

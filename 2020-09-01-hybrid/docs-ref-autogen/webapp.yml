@@ -59,6 +59,7 @@ directCommands:
     az webapp create --name
                      --plan
                      --resource-group
+                     [--acr-use-identity]
                      [--assign-identity]
                      [--deployment-container-image-name]
                      [--deployment-local-git]
@@ -113,6 +114,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --acr-use-identity
+    defaultValue: "False"
+    summary: |-
+      Enable or disable pull image from acr use managed identity.
   - name: --assign-identity
     summary: |-
       Accept system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity, or a resource id to refer user assigned identity. Check out help for more examples.
@@ -409,6 +414,7 @@ directCommands:
                      [--subscription]
                      [--target-path]
                      [--timeout]
+                     [--track-status {false, true}]
                      [--type {ear, jar, lib, startup, static, war, zip}]
   examples:
   - summary: |-
@@ -461,6 +467,11 @@ directCommands:
   - name: --timeout
     summary: |-
       Timeout for the deployment operation in milliseconds. Ignored when using "--src-url" since synchronous deployments are not yet supported when using "--src-url".
+  - name: --track-status
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, web app startup status during deployment will be tracked for linux web apps.
   - name: --type
     parameterValueGroup: "ear, jar, lib, startup, static, war, zip"
     summary: |-
@@ -829,6 +840,7 @@ directCommands:
                  [--runtime]
                  [--sku {B1, B2, B3, D1, F1, FREE, I1, I1v2, I2, I2v2, I3, I3v2, I4v2, I5v2, I6v2, P0V3, P1MV3, P1V2, P1V3, P2MV3, P2V2, P2V3, P3MV3, P3V2, P3V3, P4MV3, P5MV3, S1, S2, S3, SHARED, WS1, WS2, WS3}]
                  [--subscription]
+                 [--track-status {false, true}]
   examples:
   - summary: |-
       View the details of the app that will be created, without actually running the operation
@@ -900,6 +912,11 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --track-status
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, web app startup status during deployment will be tracked for linux web apps.
 - uid: az_webapp_update
   name: az webapp update
   summary: |-
@@ -935,7 +952,7 @@ directCommands:
   - name: --add
     defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --client-affinity-enabled
     parameterValueGroup: "false, true"
     summary: |-
@@ -971,14 +988,14 @@ directCommands:
   - name: --remove
     defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
     defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --skip-custom-domain-verification
     parameterValueGroup: "false, true"
     summary: |-
@@ -1035,7 +1052,7 @@ directCommands:
   - name: --add
     defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --client-affinity-enabled
     parameterValueGroup: "false, true"
     summary: |-
@@ -1065,14 +1082,14 @@ directCommands:
   - name: --remove
     defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
     defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --slot -s
     summary: |-
       The name of the slot. Default to the productions slot if not specified.
@@ -1170,6 +1187,7 @@ commands:
 - az_webapp_config_storage-account_update
 - az_webapp_connection
 - az_webapp_connection_create
+- az_webapp_connection_create_app-insights
 - az_webapp_connection_create_appconfig
 - az_webapp_connection_create_confluent-cloud
 - az_webapp_connection_create_cosmos-cassandra
@@ -1203,6 +1221,7 @@ commands:
 - az_webapp_connection_list-support-types
 - az_webapp_connection_show
 - az_webapp_connection_update
+- az_webapp_connection_update_app-insights
 - az_webapp_connection_update_appconfig
 - az_webapp_connection_update_confluent-cloud
 - az_webapp_connection_update_cosmos-cassandra

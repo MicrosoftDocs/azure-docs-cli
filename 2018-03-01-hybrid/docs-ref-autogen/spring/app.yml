@@ -162,6 +162,8 @@ directCommands:
                          [--assign-endpoint {false, true}]
                          [--assign-public-endpoint {false, true}]
                          [--backend-protocol {Default, GRPC}]
+                         [--bind-acs]
+                         [--bind-service-registry]
                          [--client-auth-certs]
                          [--cpu]
                          [--deployment-name]
@@ -183,7 +185,7 @@ directCommands:
                          [--min-replicas]
                          [--persistent-storage]
                          [--readiness-probe-config]
-                         [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--runtime-version {Java_11, Java_17, Java_21, Java_8, NetCore_31}]
                          [--scale-rule-auth]
                          [--scale-rule-http-concurrency]
                          [--scale-rule-metadata]
@@ -203,6 +205,9 @@ directCommands:
   - summary: |-
       Create an public accessible app with 3 instances and 2 cpu cores and 3 GB of memory per instance.
     syntax: az spring app create -n MyApp -s MyCluster -g MyResourceGroup --assign-endpoint true --cpu 2 --memory 3 --instance-count 3
+  - summary: |-
+      Create an app binding to the default Service Registry and Application Configuration Service.
+    syntax: az spring app create -n MyApp -s MyCluster -g MyResourceGroup --bind-service-registry --bind-application-configuration-service
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -230,6 +235,12 @@ directCommands:
     parameterValueGroup: "Default, GRPC"
     summary: |-
       Ingress backend protocol of app. Default means HTTP/HTTPS/WebSocket.
+  - name: --bind-acs --bind-application-configuration-service
+    summary: |-
+      Bind the app to the default Application Configuration Service automatically.
+  - name: --bind-service-registry --bind-sr
+    summary: |-
+      Bind the app to the default Service Registry automatically.
   - name: --client-auth-certs
     summary: |-
       A space-separated string containing resource ids of certificates for client authentication. e.g: --client_auth_certs='id0 id1'. Use '' to clear existing certificates.
@@ -309,7 +320,7 @@ directCommands:
       A json file path indicates the readiness probe config.
     isPreview: true
   - name: --runtime-version
-    parameterValueGroup: "Java_11, Java_17, Java_8, NetCore_31"
+    parameterValueGroup: "Java_11, Java_17, Java_21, Java_8, NetCore_31"
     summary: |-
       Runtime version of used language.
   - name: --scale-rule-auth --sra
@@ -414,7 +425,7 @@ directCommands:
                          [--readiness-probe-config]
                          [--registry-password]
                          [--registry-username]
-                         [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--runtime-version {Java_11, Java_17, Java_21, Java_8, NetCore_31}]
                          [--server-version]
                          [--source-path]
                          [--startup-probe-config]
@@ -564,7 +575,7 @@ directCommands:
     summary: |-
       The username of the container registry.
   - name: --runtime-version
-    parameterValueGroup: "Java_11, Java_17, Java_8, NetCore_31"
+    parameterValueGroup: "Java_11, Java_17, Java_21, Java_8, NetCore_31"
     summary: |-
       Runtime version of used language.
   - name: --server-version
@@ -1096,7 +1107,7 @@ directCommands:
                          [--no-wait]
                          [--persistent-storage]
                          [--readiness-probe-config]
-                         [--runtime-version {Java_11, Java_17, Java_8, NetCore_31}]
+                         [--runtime-version {Java_11, Java_17, Java_21, Java_8, NetCore_31}]
                          [--secrets]
                          [--session-affinity {Cookie, None}]
                          [--session-max-age]
@@ -1210,7 +1221,7 @@ directCommands:
       A json file path indicates the readiness probe config.
     isPreview: true
   - name: --runtime-version
-    parameterValueGroup: "Java_11, Java_17, Java_8, NetCore_31"
+    parameterValueGroup: "Java_11, Java_17, Java_21, Java_8, NetCore_31"
     summary: |-
       Runtime version of used language.
   - name: --secrets

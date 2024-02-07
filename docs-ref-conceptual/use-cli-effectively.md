@@ -4,7 +4,7 @@ description: Learn tips for using Azure CLI successfully, such as output formats
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/13/2023
+ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 
 # Tips for using the Azure CLI successfully
 
-Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments. First [choose the right command-line tool](./choose-the-right-azure-command-line-tool.md#different-shell-environments) and [install](./install-azure-cli.md) the Azure CLI.  Then use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
+Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments. After you [choose your preferred shell environment](./choose-the-right-azure-command-line-tool.md#different-shell-environments) and [install the Azure CLI](./install-azure-cli.md), use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
 
 To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](../latest/docs-ref-autogen/reference-index.yml).
 
@@ -273,10 +273,11 @@ If you're using Azure CLI over a proxy server that uses self-signed certificates
 
 | OS                     | Default certificate authority bundle                                                                      |
 |----------------------- |-----------------------------------------------------------------------------------------------------------|
-| Windows                | `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem`                   |
+| Windows 32-bit         | `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem`                   |
+| Windows 64-bit         | `C:\Program Files\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem`                         |
 | Ubuntu/Debian Linux    | `/opt/az/lib/python<version>/site-packages/certifi/cacert.pem`                                            |
 | CentOS/RHEL/SUSE Linux | `/usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem`                                      |
-| macOS                  | `/usr/local/Cellar/azure-cli/<cliversion>/libexec/lib/python<version>/site-packages/certifi/cacert.pem` |
+| macOS                  | `/usr/local/Cellar/azure-cli/<cliversion>/libexec/lib/python<version>/site-packages/certifi/cacert.pem`   |
 
 Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file.  Then set `REQUESTS_CA_BUNDLE` to the new file location. Here's an example:
 
@@ -467,4 +468,4 @@ For more information about PowerShell error handling, see [Everything you wanted
 - [Learn to use Bash with Azure CLI](./azure-cli-learn-bash.md)
 - [Query Azure CLI command output](./query-azure-cli.md)
 - [Use variables in Azure CLI commands](./azure-cli-variables.md)
-- [Find Azure CLI samples](./samples-index.md)
+- Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)

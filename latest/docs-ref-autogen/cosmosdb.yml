@@ -59,6 +59,7 @@ directCommands:
                        [--disable-key-based-metadata-write-access {false, true}]
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
+                       [--enable-burst-capacity {false, true}]
                        [--enable-free-tier {false, true}]
                        [--enable-multiple-write-locations {false, true}]
                        [--enable-partition-merge {false, true}]
@@ -71,6 +72,7 @@ directCommands:
                        [--locations]
                        [--max-interval]
                        [--max-staleness-prefix]
+                       [--minimal-tls-version {Tls, Tls11, Tls12}]
                        [--network-acl-bypass {AzureServices, None}]
                        [--network-acl-bypass-resource-ids]
                        [--public-network-access {DISABLED, ENABLED, SECUREDBYPERIMETER}]
@@ -107,7 +109,6 @@ directCommands:
   - name: --assign-identity
     summary: |-
       Assign system or user assigned identities separated by spaces. Use '[system]' to refer system assigned identity.
-    isPreview: true
   - name: --backup-interval
     summary: |-
       The frequency(in minutes) with which backups are taken (only for accounts with periodic mode backups).
@@ -141,7 +142,6 @@ directCommands:
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more. User-assigned identities are specified in format 'UserAssignedIdentity=<resource ID of the user-assigned identity>'.
-    isPreview: true
   - name: --disable-key-based-metadata-write-access
     parameterValueGroup: "false, true"
     summary: |-
@@ -154,6 +154,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account.
+  - name: --enable-burst-capacity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag to Enable/Disable burst capacity feature.
+    description: |-
+      Usage:    --enable-burst-capacity true
+      Default:  false
+      The accepted values for the enable-burst-capacity are true and false.
   - name: --enable-free-tier
     parameterValueGroup: "false, true"
     summary: |-
@@ -186,7 +194,6 @@ directCommands:
   - name: --key-uri
     summary: |-
       The URI of the key vault.
-    isPreview: true
   - name: --kind
     defaultValue: "GlobalDocumentDB"
     parameterValueGroup: "GlobalDocumentDB, MongoDB, Parse"
@@ -210,6 +217,15 @@ directCommands:
     defaultValue: "100"
     summary: |-
       When used with Bounded Staleness consistency, this value represents the number of stale requests tolerated. Accepted range for this value is 10 - 2,147,483,647.
+  - name: --minimal-tls-version
+    parameterValueGroup: "Tls, Tls11, Tls12"
+    summary: |-
+      Indicate the minimum allowed TLS version.
+    description: |-
+      Usage:    --minimal-tls-version TLSVersion
+      Default:  Tls, except for Cassandra and Mongo APIs, which only work with Tls12
+      The accepted values for the minimal TLS version are 'Tls', 'Tls11', and 'Tls12', which correspond to the
+      TLS versions 1.0, 1.1, and 1.2.
   - name: --network-acl-bypass
     parameterValueGroup: "AzureServices, None"
     summary: |-
@@ -948,6 +964,7 @@ directCommands:
                        [--disable-key-based-metadata-write-access {false, true}]
                        [--enable-analytical-storage {false, true}]
                        [--enable-automatic-failover {false, true}]
+                       [--enable-burst-capacity {false, true}]
                        [--enable-multiple-write-locations {false, true}]
                        [--enable-partition-merge {false, true}]
                        [--enable-virtual-network {false, true}]
@@ -957,6 +974,7 @@ directCommands:
                        [--locations]
                        [--max-interval]
                        [--max-staleness-prefix]
+                       [--minimal-tls-version {Tls, Tls11, Tls12}]
                        [--name]
                        [--network-acl-bypass {AzureServices, None}]
                        [--network-acl-bypass-resource-ids]
@@ -1006,7 +1024,6 @@ directCommands:
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more. User-assigned identities are specified in format 'UserAssignedIdentity=<resource ID of the user-assigned identity>'.
-    isPreview: true
   - name: --disable-key-based-metadata-write-access
     parameterValueGroup: "false, true"
     summary: |-
@@ -1019,6 +1036,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account.
+  - name: --enable-burst-capacity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag to Enable/Disable burst capacity feature.
+    description: |-
+      Usage:    --enable-burst-capacity true
+      Default:  false
+      The accepted values for the enable-burst-capacity are true and false.
   - name: --enable-multiple-write-locations
     parameterValueGroup: "false, true"
     summary: |-
@@ -1057,6 +1082,15 @@ directCommands:
   - name: --max-staleness-prefix
     summary: |-
       When used with Bounded Staleness consistency, this value represents the number of stale requests tolerated. Accepted range for this value is 10 - 2,147,483,647.
+  - name: --minimal-tls-version
+    parameterValueGroup: "Tls, Tls11, Tls12"
+    summary: |-
+      Indicate the minimum allowed TLS version.
+    description: |-
+      Usage:    --minimal-tls-version TLSVersion
+      Default:  Tls, except for Cassandra and Mongo APIs, which only work with Tls12
+      The accepted values for the minimal TLS version are 'Tls', 'Tls11', and 'Tls12', which correspond to the
+      TLS versions 1.0, 1.1, and 1.2.
   - name: --name -n
     summary: |-
       Name of the Cosmos DB database account.
@@ -1321,6 +1355,7 @@ commands:
 - az_cosmosdb_gremlin_database_exists
 - az_cosmosdb_gremlin_database_list
 - az_cosmosdb_gremlin_database_restore
+- az_cosmosdb_gremlin_database_restore(cosmosdb-preview)
 - az_cosmosdb_gremlin_database_show
 - az_cosmosdb_gremlin_database_throughput
 - az_cosmosdb_gremlin_database_throughput_migrate
@@ -1332,6 +1367,7 @@ commands:
 - az_cosmosdb_gremlin_graph_exists
 - az_cosmosdb_gremlin_graph_list
 - az_cosmosdb_gremlin_graph_restore
+- az_cosmosdb_gremlin_graph_restore(cosmosdb-preview)
 - az_cosmosdb_gremlin_graph_show
 - az_cosmosdb_gremlin_graph_throughput
 - az_cosmosdb_gremlin_graph_throughput_migrate
@@ -1386,6 +1422,7 @@ commands:
 - az_cosmosdb_mongodb_collection_merge
 - az_cosmosdb_mongodb_collection_redistribute-partition-throughput
 - az_cosmosdb_mongodb_collection_restore
+- az_cosmosdb_mongodb_collection_restore(cosmosdb-preview)
 - az_cosmosdb_mongodb_collection_retrieve-partition-throughput
 - az_cosmosdb_mongodb_collection_show
 - az_cosmosdb_mongodb_collection_throughput
@@ -1400,6 +1437,7 @@ commands:
 - az_cosmosdb_mongodb_database_list
 - az_cosmosdb_mongodb_database_merge
 - az_cosmosdb_mongodb_database_restore
+- az_cosmosdb_mongodb_database_restore(cosmosdb-preview)
 - az_cosmosdb_mongodb_database_show
 - az_cosmosdb_mongodb_database_throughput
 - az_cosmosdb_mongodb_database_throughput_migrate
@@ -1526,6 +1564,7 @@ commands:
 - az_cosmosdb_sql_container_merge
 - az_cosmosdb_sql_container_redistribute-partition-throughput
 - az_cosmosdb_sql_container_restore
+- az_cosmosdb_sql_container_restore(cosmosdb-preview)
 - az_cosmosdb_sql_container_retrieve-partition-throughput
 - az_cosmosdb_sql_container_show
 - az_cosmosdb_sql_container_throughput
@@ -1541,6 +1580,7 @@ commands:
 - az_cosmosdb_sql_database_list
 - az_cosmosdb_sql_database_merge
 - az_cosmosdb_sql_database_restore
+- az_cosmosdb_sql_database_restore(cosmosdb-preview)
 - az_cosmosdb_sql_database_show
 - az_cosmosdb_sql_database_throughput
 - az_cosmosdb_sql_database_throughput_migrate
@@ -1601,6 +1641,7 @@ commands:
 - az_cosmosdb_table_restorable-table_list
 - az_cosmosdb_table_restorable-table_list(cosmosdb-preview)
 - az_cosmosdb_table_restore
+- az_cosmosdb_table_restore(cosmosdb-preview)
 - az_cosmosdb_table_retrieve-latest-backup-time
 - az_cosmosdb_table_retrieve-latest-backup-time(cosmosdb-preview)
 - az_cosmosdb_table_show

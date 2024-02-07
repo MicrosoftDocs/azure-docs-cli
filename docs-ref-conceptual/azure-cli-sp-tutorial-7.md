@@ -62,14 +62,28 @@ To avoid storing credentials in your log file, use the `--query` parameter to st
 
 Reset a service principal credential with a password.
 
+# [Bash](#tab/bash)
+
 ```azurecli-interactive
+# Bash script
 myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
 
 # the echo command writes to the log file
 # only use it when testing
 echo $myNewPassword
 ```
+# [PowerShell](#tab/powershell)
 
+```azurecli
+# PowerShell script
+$myNewPassword = az ad sp credential reset --id myServicePrincipalID --query password --output tsv
+
+# The Write-Host cmdlet can be used for displaying the value when testing.
+# Comment it out or remove it in production if you don't want to display the password.
+Write-Host $myNewPassword
+```
+
+---
 ## Next Steps
 
 Now that you've learned how to reset your service principal credentials, proceed to the next step to see how to clean up tutorial resources.

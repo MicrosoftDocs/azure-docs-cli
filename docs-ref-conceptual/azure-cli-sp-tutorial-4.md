@@ -140,10 +140,11 @@ echo "Using appId $spID in tenant $tenantID for $userConsentDescr"
 
 ```azurecli
 # PowerShell script
-$spID=$(az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
-$tenantID=$(az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
-$userConsentDescr=$(az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv)
-echo "Using appId $spID in tenant $tenantID for $userConsentDescr"
+$spID = (az ad sp list --display-name myServicePrincipalName --query "[].{spID:appId}" --output tsv)
+$tenantID = (az ad sp list --display-name myServicePrincipalName --query "[].{tenant:appOwnerOrganizationId}" --output tsv)
+$userConsentDescr = (az ad sp list --display-name myServicePrincipalName --query "[].{ucs:oauth2PermissionScopes.userConsentDescription[0]}" --output tsv)
+Write-Host "Using appId $spID in tenant $tenantID for $userConsentDescr"
+
 ```
 
 ---

@@ -27,6 +27,8 @@ directCommands:
                                   [--nat-gateway]
                                   [--network-security-group]
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--ple-network-policies {Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled}]
+                                  [--pls-network-policies {Disabled, Enabled}]
                                   [--route-table]
                                   [--service-endpoint-policy]
                                   [--service-endpoints]
@@ -64,11 +66,11 @@ directCommands:
   - name: --disable-private-endpoint-network-policies
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Disable private endpoint network policies on the subnet.
+      Disable private endpoint network policies on the subnet. Please note that it will be replaced by `--private-endpoint-network-policies` soon.
   - name: --disable-private-link-service-network-policies
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Disable private link service network policies on the subnet.
+      Disable private link service network policies on the subnet. Please note that it will be replaced by `--private-link-service-network-policies` soon.
   - name: --nat-gateway
     summary: |-
       Name or ID of a NAT gateway to attach.
@@ -79,6 +81,16 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --ple-network-policies --private-endpoint-network-policies
+    defaultValue: "Disabled"
+    parameterValueGroup: "Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled"
+    summary: |-
+      Manage network policies for private endpoint.
+  - name: --pls-network-policies --private-link-service-network-policies
+    defaultValue: "Enabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Manage network policy for private link service.
   - name: --route-table
     summary: |-
       Name or ID of a route table to associate with the subnet.
@@ -282,6 +294,8 @@ directCommands:
                                   [--nat-gateway]
                                   [--network-security-group]
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--ple-network-policies {Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled}]
+                                  [--pls-network-policies {Disabled, Enabled}]
                                   [--remove]
                                   [--resource-group]
                                   [--route-table]
@@ -298,8 +312,8 @@ directCommands:
       Update subnet with NAT gateway.
     syntax: az network vnet subnet update -n MySubnet --vnet-name MyVnet -g MyResourceGroup --nat-gateway MyNatGateway --address-prefixes "10.0.0.0/21"
   - summary: |-
-      Disable the private endpoint network policies
-    syntax: az network vnet subnet update -n MySubnet --vnet-name MyVnet -g MyResourceGroup --disable-private-endpoint-network-policies
+      Disable the private endpoint network policies.
+    syntax: az network vnet subnet update -n MySubnet --vnet-name MyVnet -g MyResourceGroup --private-endpoint-network-policies Disabled
   - summary: |-
       Detach a network security group in a subnet.
     syntax: az network vnet subnet update -g MyResourceGroup --vnet-name MyVNet -n MySubnet --nsg null
@@ -320,11 +334,11 @@ directCommands:
   - name: --disable-private-endpoint-network-policies
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Disable private endpoint network policies on the subnet.
+      Disable private endpoint network policies on the subnet. Please note that it will be replaced by `--private-endpoint-network-policies` soon.
   - name: --disable-private-link-service-network-policies
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Disable private link service network policies on the subnet.
+      Disable private link service network policies on the subnet. Please note that it will be replaced by `--private-link-service-network-policies` soon.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -345,6 +359,14 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --ple-network-policies --private-endpoint-network-policies
+    parameterValueGroup: "Disabled, Enabled, NetworkSecurityGroupEnabled, RouteTableEnabled"
+    summary: |-
+      Manage network policy for private endpoint.
+  - name: --pls-network-policies --private-link-service-network-policies
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Manage network policy for private link service.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
@@ -470,5 +492,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 06/27/2023
+  ms.date: 10/11/2023
   description: To learn more about subnets visit https://docs.microsoft.com/azure/virtual-network/virtual-network-manage-subnet.

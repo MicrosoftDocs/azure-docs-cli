@@ -18,7 +18,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
   syntax: >-
-    az sql db ltr-policy set [--ids]
+    az sql db ltr-policy set [--access-tier {Archive, Hot}]
+                             [--ids]
+                             [--make-backups-immutable {false, true}]
                              [--monthly-retention]
                              [--name]
                              [--resource-group]
@@ -30,11 +32,19 @@ directCommands:
   examples:
   - summary: |-
       Set long term retention for a database.
-    syntax: az sql db ltr-policy set -g mygroup -s myserver -n mydb --weekly-retention "P1W" --monthly-retention "P6M" --yearly-retention "P1Y" --week-of-year 26
+    syntax: az sql db ltr-policy set -g mygroup -s myserver -n mydb --weekly-retention "P1W" --monthly-retention "P6M" --yearly-retention "P1Y" --week-of-year 26 --access-tier "Archive" --make-backups-immutable true
   optionalParameters:
+  - name: --access-tier --backup-storage-access-tier
+    parameterValueGroup: "Archive, Hot"
+    summary: |-
+      The access tier of a LTR backup.Possible values = [Hot, Archive].
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --make-backups-immutable
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to make the LTR backups immutable.
   - name: --monthly-retention
     summary: |-
       Retention for the monthly backup. If just a number is passed instead of an ISO 8601 string, days will be assumed as the units.There is a minimum of 7 days and a maximum of 10 years.
@@ -122,5 +132,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 06/21/2023
+  ms.date: 01/24/2024
   description: Manage SQL database long term retention policy.

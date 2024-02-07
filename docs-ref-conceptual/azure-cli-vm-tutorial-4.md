@@ -1,7 +1,7 @@
 ---
 title: Get virtual machines information with queries (VM) – Azure CLI | Microsoft Docs
 description: Learn how to get virtual machines (VM) information with Azure CLI queries.
-ms.date: 08/1/2023
+ms.date: 01/08/2024
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -28,12 +28,25 @@ to get more information about the VM's configuration and capabilities.
 In order to extract the object ID, the `--query` argument is used. Queries are written in the [JMESPath query language](http://jmespath.org)Start
 with getting the network interface controller (NIC) object ID.
 
+# [Bash](#tab/bash)
+
 ```azurecli-interactive
 az vm show --name $vmName \
   --resource-group $resourceGroup \
   --query 'networkProfile.networkInterfaces[].id' \
   --output tsv
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+az vm show --name $vmName `
+    --resource-group $resourceGroup `
+    --query 'networkProfile.networkInterfaces[].id' `
+    --output tsv
+```
+
+---
 
 There's a lot going on here, just by adding the query. Each part of it references a key in the output JSON, or is a JMESPath operator.
 
@@ -49,12 +62,26 @@ For more information about querying Azure CLI output, see [How to query Azure CL
 
 Go ahead and assign the NIC object ID to a shell variable now.
 
-```azurecli
+# [Bash](#tab/bash)
+
+```azurecli-interactive
 nicId=$(az vm show \
   -n $vmName \
   -g $resourceGroup \
   --query 'networkProfile.networkInterfaces[].id' \
   -o tsv)
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+$nicId = $(az vm show `
+   -n $vmName `
+   -g $resourceGroup `
+   --query 'networkProfile.networkInterfaces[].id' `
+   -o tsv)
+```
+
+---
 
 This example also demonstrates the use of short arguments. You may use `-g` instead of `--resource-group`, `-n` instead of `--name`, and `-o` instead of `--output`.
