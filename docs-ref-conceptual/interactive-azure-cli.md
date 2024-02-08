@@ -113,7 +113,7 @@ az>> #dir
 ## Examples
 
 Some commands have lots of examples.
-You can scroll to the next page of examples using `CTRL-N` and the previous page using `CTRL-Y`.
+You can scroll to the next page of examples using `CTRL-N`< and the previous page using `CTRL-Y`.
 
 ![Scroll to next page of examples](./media/interactive-azure-cli/examples.png)
 

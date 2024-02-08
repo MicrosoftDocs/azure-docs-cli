@@ -179,6 +179,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-asm]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
@@ -388,6 +389,9 @@ directCommands:
   - summary: |-
       create a kubernetes cluster with a Capacity Reservation Group(CRG) ID.
     syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.9 --node-vm-size VMSize --assign-identity "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID" --enable-managed-identity --crg-id "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
+  - summary: |-
+      Create a kubernetes cluster with Azure Service Mesh enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -538,6 +542,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+  - name: --enable-asm --enable-azure-service-mesh
+    summary: |-
+      Enable Azure Service Mesh addon.
+    isPreview: true
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -4521,9 +4529,12 @@ directCommands:
     az aks upgrade --name
                    --resource-group
                    [--control-plane-only]
+                   [--disable-force-upgrade]
+                   [--enable-force-upgrade]
                    [--kubernetes-version]
                    [--no-wait]
                    [--node-image-only]
+                   [--upgrade-override-until]
                    [--yes]
   examples:
   - summary: |-
@@ -4543,6 +4554,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Upgrade the cluster control plane only. If not specified, both control plane AND all node pools will be upgraded.
+  - name: --disable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Disable forceUpgrade cluster upgrade settings override.
+  - name: --enable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Enable forceUpgrade cluster upgrade settings override.
   - name: --kubernetes-version -k
     summary: |-
       Version of Kubernetes to upgrade the cluster to, such as "1.16.9".
@@ -4555,6 +4574,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Only upgrade node image for agent pools.
+  - name: --upgrade-override-until
+    summary: |-
+      Until when the cluster upgradeSettings overrides are effective.
+    description: |-
+      It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -4922,17 +4946,26 @@ commands:
 - az_aks_maintenanceconfiguration_update(aks-preview)
 - az_aks_mesh
 - az_aks_mesh_disable
+- az_aks_mesh_disable(aks-preview)
 - az_aks_mesh_disable-egress-gateway
 - az_aks_mesh_disable-ingress-gateway
+- az_aks_mesh_disable-ingress-gateway(aks-preview)
 - az_aks_mesh_enable
+- az_aks_mesh_enable(aks-preview)
 - az_aks_mesh_enable-egress-gateway
 - az_aks_mesh_enable-ingress-gateway
+- az_aks_mesh_enable-ingress-gateway(aks-preview)
 - az_aks_mesh_get-revisions
+- az_aks_mesh_get-revisions(aks-preview)
 - az_aks_mesh_get-upgrades
+- az_aks_mesh_get-upgrades(aks-preview)
 - az_aks_mesh_upgrade
 - az_aks_mesh_upgrade_complete
+- az_aks_mesh_upgrade_complete(aks-preview)
 - az_aks_mesh_upgrade_rollback
+- az_aks_mesh_upgrade_rollback(aks-preview)
 - az_aks_mesh_upgrade_start
+- az_aks_mesh_upgrade_start(aks-preview)
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_add(aks-preview)
