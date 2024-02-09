@@ -39,6 +39,11 @@ With the release of Azure CLI version 2.54.0, the size of the Docker image of `a
 
 You can now [install the Azure CLI on Windows](install-azure-cli-windows.md) with a 64-bit MSI. The 32-bit MSI, PowerShell command and Windows Package Manager are still available, but the 64-bit MSI is new! Anytime you install the Azure CLI, previously installed versions are updated automatically. This behavior allows you to try out the 64-bit install but reinstall the 32-bit MSI if you choose.
 
+## ZIP file Windows install
+
+Beginning in [Azure CLI 2.57.0], the Azure CLI can be installed using a ZIP file in Windows environments. See the ZIP tab in [Install Azure CLI on Windows](./install-azure-cli-windows.md?tabs=zip#install-or-update) for more information.
+
+
 ## Tab completion in PowerShell
 
 If you run the Azure CLI in PowerShell, tab completion is now available! Follow the instructions in [enable tab completion on PowerShell](/cli/azure/install-azure-cli-windows#enable-tab-completion-on-powershell). The parameter values needed for PowerShell's `Register-ArgumentCompleter` command are provided in the article.
