@@ -41,7 +41,7 @@ You can now [install the Azure CLI on Windows](install-azure-cli-windows.md) wit
 
 ## ZIP file Windows install
 
-Beginning in [Azure CLI 2.57.0], the Azure CLI can be installed using a ZIP file in Windows environments. See the ZIP tab in [Install Azure CLI on Windows](./install-azure-cli-windows.md?tabs=zip#install-or-update) for more information.
+Beginning in [Azure CLI 2.57.0](./release-notes-azure-cli.md#february-06-2024), the Azure CLI can be installed using a ZIP file in Windows environments. See the ZIP tab in [Install Azure CLI on Windows](./install-azure-cli-windows.md?tabs=zip#install-or-update) for more information.
 
 
 ## Tab completion in PowerShell
