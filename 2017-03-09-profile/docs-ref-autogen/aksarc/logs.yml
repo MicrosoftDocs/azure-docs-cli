@@ -17,29 +17,27 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az aksarc logs hci --credentials-dir
+    az aksarc logs hci [--credentials-dir]
                        [--ip]
                        [--kubeconfig]
                        [--out-dir]
   examples:
   - summary: |-
-      CollectLogsWithIP
-    syntax: az aksarc logs hci --ip 192.168.200.25 192.168.200.26 --credentials-dir ./.ssh --out-dir ./logs
+      Collect logs with IP address and SSH credentials
+    syntax: az aksarc logs hci --ip 192.168.200.31 192.168.200.32 --ssh-key ~/.ssh --out-dir ./logs
   - summary: |-
-      CollectLogsWithKubeConfig
-    syntax: az aksarc logs hci --kubeconfig ./.kube/config --credentials-dir ./.ssh --out-dir ./logs
-  requiredParameters:
-  - isRequired: true
-    name: --credentials-dir
-    summary: |-
-      Directory containing SSH credentials.
+      Collect logs with kubeconfig and SSH credentials, kubeconfig is only used to collect IP addresses, and ssh-key file path is used instead of directory
+    syntax: az aksarc logs hci --kubeconfig ~/.kube/config --ssh-key ~/.ssh/id_rsa --out-dir ./logs
   optionalParameters:
-  - name: --ip
+  - name: --credentials-dir --ssh-key
     summary: |-
-      IP addresses of target cluster control plane VMs. Domain names are currently unsupported.
+      Path to SSH credentials to connect to nodes, either id_rsa file or directory is accepted.
+  - name: --ip --ips
+    summary: |-
+      IP(s) of all the nodes (control plane, etc.) need to collect logs.
   - name: --kubeconfig
     summary: |-
-      Path to kubeconfig file.
+      Path to kubeconfig file to connect to the cluster.
   - name: --out-dir
     summary: |-
       Output directory to store collected logs. If not specified, logs will be stored in the current directory.
