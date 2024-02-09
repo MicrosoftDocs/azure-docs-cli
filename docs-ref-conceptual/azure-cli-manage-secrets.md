@@ -51,3 +51,5 @@ Warnings are **enabled** by default in Azure Cloud Shell. If you run the Azure C
 ## See also
 
 * [Azure CLI configuration](./azure-cli-configuration.md)
+* [Azure CLI output format of "none"](./format-output-azure-cli.md#none-output-format)
+* [Microsoft guidance regarding credentials leaked to GitHub Actions Logs through Azure CLI](https://msrc.microsoft.com/blog/2023/11/microsoft-guidance-regarding-credentials-leaked-to-github-actions-logs-through-azure-cli/)
