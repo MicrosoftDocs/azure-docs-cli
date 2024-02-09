@@ -15,6 +15,10 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 
 This page highlights new features, articles and learning paths for the Azure CLI.
 
+## Protect sensitive information
+
+Beginning in [Azure CLI 2.57](./release-notes-azure-cli.md#february-06-2024), a warning message can be displayed when reference commands result in the output of sensitive information. For more information see [Manage Azure secrets using the Azure CLI](./azure-cli-manage-secrets.md).
+
 ## Azure Copilot for Azure CLI
 
 [Microsoft Copilot for Azure](https://aka.ms/MicrosoftCopilotforAzureDocs) (preview) is published! Copilot is an AI-powered tool to help you do more with Azure. It unifies knowledge and data across hundreds of Azure services to increase productivity, reduce costs, and provide deep insights. Microsoft Copilot for Azure (preview) helps you learn about Azure by answering questions, and it provides information tailored to your own Azure resources and environment. By letting you express your goals in natural language, Copilot simplifies your Azure management experience. This benefits Azure CLI users because the knowledge of Azure CLI is built into Copilot!
