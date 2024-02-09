@@ -23,6 +23,7 @@ directCommands:
                      [--backup-storage-redundancy]
                      [--capacity]
                      [--collation]
+                     [--database-format {AlwaysUpToDate, SQLServer2022}]
                      [--edition]
                      [--enable-ad-only-auth]
                      [--external-admin-name]
@@ -38,6 +39,7 @@ directCommands:
                      [--minimal-tls-version {1.0, 1.1, 1.2, None}]
                      [--no-wait]
                      [--pid]
+                     [--pricing-model {Freemium, Regular}]
                      [--proxy-override {Default, Proxy, Redirect}]
                      [--public-data-endpoint-enabled {false, true}]
                      [--service-principal-type {None, SystemAssigned}]
@@ -85,6 +87,9 @@ directCommands:
   - summary: |-
       Create managed instance with instance pool name
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --instance-pool-name myinstancepool
+  - summary: |-
+      Create managed instance with database format and pricing model
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --database-format Regular --pricing-model AlwaysUpToDate
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -118,6 +123,10 @@ directCommands:
   - name: --collation
     summary: |-
       The collation of the managed instance.
+  - name: --database-format
+    parameterValueGroup: "AlwaysUpToDate, SQLServer2022"
+    summary: |-
+      Managed Instance database format specific to the SQL. Allowed values include: AlwaysUpToDate, SQLServer2022.
   - name: --edition --tier -e
     summary: |-
       The edition component of the sku. Allowed values include: GeneralPurpose, BusinessCritical.
@@ -169,6 +178,10 @@ directCommands:
   - name: --pid --primary-user-assigned-identity-id
     summary: |-
       The ID of the primary user managed identity.
+  - name: --pricing-model
+    parameterValueGroup: "Freemium, Regular"
+    summary: |-
+      Managed Instance pricing model. Allowed values include: Regular, Freemium.
   - name: --proxy-override
     parameterValueGroup: "Default, Proxy, Redirect"
     summary: |-
@@ -309,6 +322,40 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_sql_mi_refresh-external-governance-status
+  name: az sql mi refresh-external-governance-status
+  summary: |-
+    Refresh external governance enablement status.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/sql/_help.py
+  syntax: >-
+    az sql mi refresh-external-governance-status [--ids]
+                                                 [--managed-instance-name]
+                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                 [--resource-group]
+                                                 [--subscription]
+  examples:
+  - summary: |-
+      Update external governance status on specific MI
+    syntax: az sql mi refresh-external-governance-status --managed-instance-name managedInstance -g resourceGroup1 --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --managed-instance-name --mi
+    summary: |-
+      The name of the managed instance.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --resource-group -g
+    summary: |-
+      The name of the resource group.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_sql_mi_show
   name: az sql mi show
   summary: |-
@@ -430,6 +477,7 @@ directCommands:
                      [--assign-identity]
                      [--backup-storage-redundancy]
                      [--capacity]
+                     [--database-format {AlwaysUpToDate, SQLServer2022}]
                      [--edition]
                      [--family]
                      [--force-string]
@@ -443,6 +491,7 @@ directCommands:
                      [--name]
                      [--no-wait]
                      [--pid]
+                     [--pricing-model {Freemium, Regular}]
                      [--proxy-override {Default, Proxy, Redirect}]
                      [--public-data-endpoint-enabled {false, true}]
                      [--remove]
@@ -506,11 +555,14 @@ directCommands:
   - summary: |-
       Move managed instance out of instance pool
     syntax: az sql mi update -g mygroup -n myinstance --remove instancePoolId --capacity vcorecapacity
+  - summary: |-
+      Update mi database format and pricing model
+    syntax: az sql mi update -g mygroup -n myinstance --database-format Regular --pricing-model AlwaysUpToDate
   optionalParameters:
   - name: --add
     defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --admin-password -p
     summary: |-
       The administrator login password (required formanaged instance creation).
@@ -524,6 +576,10 @@ directCommands:
   - name: --capacity -c
     summary: |-
       The capacity of the managed instance in integer number of vcores.
+  - name: --database-format
+    parameterValueGroup: "AlwaysUpToDate, SQLServer2022"
+    summary: |-
+      Managed Instance database format specific to the SQL. Allowed values include: AlwaysUpToDate, SQLServer2022.
   - name: --edition --tier -e
     summary: |-
       The edition component of the sku. Allowed values include: GeneralPurpose, BusinessCritical.
@@ -569,6 +625,10 @@ directCommands:
   - name: --pid --primary-user-assigned-identity-id
     summary: |-
       The ID of the primary user managed identity.
+  - name: --pricing-model
+    parameterValueGroup: "Freemium, Regular"
+    summary: |-
+      Managed Instance pricing model. Allowed values include: Regular, Freemium.
   - name: --proxy-override
     parameterValueGroup: "Default, Proxy, Redirect"
     summary: |-
@@ -580,7 +640,7 @@ directCommands:
   - name: --remove
     defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -591,7 +651,7 @@ directCommands:
   - name: --set
     defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --storage
     summary: |-
       The storage size of the managed instance. Storage size must be specified in increments of 32 GB.
@@ -662,6 +722,7 @@ commands:
 - az_sql_mi_partner-cert_delete
 - az_sql_mi_partner-cert_list
 - az_sql_mi_partner-cert_show
+- az_sql_mi_refresh-external-governance-status
 - az_sql_mi_server-configuration-option
 - az_sql_mi_server-configuration-option_list
 - az_sql_mi_server-configuration-option_set
@@ -705,5 +766,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 11/24/2023
+  ms.date: 01/24/2024
   description: Manage SQL managed instances.
