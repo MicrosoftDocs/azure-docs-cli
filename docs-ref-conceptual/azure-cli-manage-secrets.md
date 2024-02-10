@@ -16,17 +16,9 @@ When you manage Azure resources, the output of an Azure CLI command might expose
 
 It's critical to protect this information! If acquired publicly from environments with lesser permissions, the exposure of secrets can cause serious damage and lead to a loss of trust in your company's products and services. To help you to protect sensitive information, the Azure CLI detects secrets in the output of some reference commands, and displays a warning message when a secret is identified.
 
-## Overview
-
-Beginning in [Azure CLI 2.57](./release-notes-azure-cli.md#february-06-2024), a warning message can be displayed when reference commands result in the output of sensitive information. This version identifies these sensitive information types:
-
-* Access tokens
-* Storage account keys
-* **{need full list}**
-
-This list will be expanded in upcoming releases.
-
 ## Set secrets warning configuration
+
+Beginning in [Azure CLI 2.57](./release-notes-azure-cli.md#february-06-2024), a warning message can be displayed when reference commands result in the output of sensitive information. 
 
 Turn sensitive information warnings on/off by setting the `clients.show_secrets_warning` configuration property to `yes` or `no`.
 
