@@ -25,7 +25,12 @@ To install the Azure CLI, follow these steps:
    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
    ```
 
-2. For RHEL 9 or CentOS Stream 9, add `packages-microsoft-com-prod` repository:
+2. For Amazon Linux 2023, add `packages-microsoft-com-prod` repository (Note: The repo for RHEL 9 is used by purpose. There is a repo for Amazon Linux 2023 available. It is from mid 2023, but it does not include an azure-cli package! The older repo for RHEL 9 includes an azure-cli package. The RHEL 9 azure-cli can at least do an ‘az login’ and ‘az acr login’ on Amazon Linux 2023):
+
+   ```bash
+   sudo dnf install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
+   ```
+   For RHEL 9 or CentOS Stream 9, add `packages-microsoft-com-prod` repository:
 
    ```bash
    sudo dnf install -y https://packages.microsoft.com/config/rhel/9.0/packages-microsoft-prod.rpm
@@ -51,7 +56,7 @@ To install the Azure CLI, follow these steps:
 3. Install with the `dnf install` command.
 
    ```bash
-   sudo dnf install azure-cli
+   sudo dnf install -y azure-cli
    ```
 
 ## Install specific version
