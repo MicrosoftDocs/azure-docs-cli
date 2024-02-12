@@ -21,17 +21,22 @@ directCommands:
                      --name
                      --resource-group
                      [--aad-admin-group-object-ids]
+                     [--ca-profile]
                      [--control-plane-count]
                      [--control-plane-ip]
                      [--control-plane-vm-size]
                      [--disable-nfs-driver]
                      [--disable-smb-driver]
                      [--enable-ahub]
+                     [--enable-azure-rbac]
+                     [--enable-cluster-autoscaler]
                      [--generate-ssh-keys]
                      [--kubernetes-version]
                      [--load-balancer-count]
                      [--location]
+                     [--max-count]
                      [--max-pods]
+                     [--min-count]
                      [--no-wait]
                      [--node-count]
                      [--node-vm-size]
@@ -63,6 +68,9 @@ directCommands:
   - name: --aad-admin-group-object-ids -i
     summary: |-
       Comma-separated list of aad group object IDs that will be set as cluster admin on the provisioned cluster.
+  - name: --ca-profile --cluster-autoscaler-profile
+    summary: |-
+      Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
   - name: --control-plane-count --control-plane-node-count
     summary: |-
       Number of control plane nodes.
@@ -84,6 +92,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --enable-azure-rbac
+    defaultValue: "False"
+    summary: |-
+      Enable Azure RBAC to control authorization checks on cluster.
+  - name: --enable-cluster-autoscaler -e
+    defaultValue: "False"
+    summary: |-
+      Enable cluster auto-scaler for the provisioned cluster.
   - name: --generate-ssh-keys
     defaultValue: "False"
     summary: |-
@@ -97,9 +113,15 @@ directCommands:
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --max-count
+    summary: |-
+      The maximum number of nodes for auto-scaling.
   - name: --max-pods -m
     summary: |-
       Maximum number of pods that can run on a node.
+  - name: --min-count
+    summary: |-
+      The minimum number of nodes for auto-scaling.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -321,14 +343,20 @@ directCommands:
     az aksarc update --name
                      --resource-group
                      [--aad-admin-group-object-ids]
+                     [--ca-profile]
                      [--control-plane-count]
                      [--disable-ahub]
+                     [--disable-cluster-autoscaler]
                      [--disable-nfs-driver]
                      [--disable-smb-driver]
                      [--enable-ahub]
+                     [--enable-cluster-autoscaler]
                      [--enable-nfs-driver]
                      [--enable-smb-driver]
+                     [--max-count]
+                     [--min-count]
                      [--tags]
+                     [--update-cluster-autoscaler]
   examples:
   - summary: |-
       UpdateProvisionedCluster
@@ -355,6 +383,9 @@ directCommands:
   - name: --aad-admin-group-object-ids -i
     summary: |-
       Comma-separated list of aad group object IDs that will be set as cluster admin on the provisioned cluster.
+  - name: --ca-profile --cluster-autoscaler-profile
+    summary: |-
+      Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
   - name: --control-plane-count --control-plane-node-count
     summary: |-
       Number of nodes to scale the Control Plane to.
@@ -362,6 +393,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --disable-cluster-autoscaler -d
+    defaultValue: "False"
+    summary: |-
+      Disable cluster auto-scaler for the provisioned cluster.
   - name: --disable-nfs-driver
     defaultValue: "False"
     summary: |-
@@ -374,6 +409,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for the provisioned cluster.
+  - name: --enable-cluster-autoscaler -e
+    defaultValue: "False"
+    summary: |-
+      Enable cluster auto-scaler for the provisioned cluster.
   - name: --enable-nfs-driver
     defaultValue: "False"
     summary: |-
@@ -382,9 +421,19 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable SMB driver for the provisioned cluster.
+  - name: --max-count
+    summary: |-
+      The maximum number of nodes for auto-scaling.
+  - name: --min-count
+    summary: |-
+      The minimum number of nodes for auto-scaling.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --update-cluster-autoscaler -u
+    defaultValue: "False"
+    summary: |-
+      Update cluster auto-scaler for the provisioned cluster.
 - uid: az_aksarc_upgrade
   name: az aksarc upgrade
   summary: |-
@@ -437,6 +486,7 @@ commands:
 - az_aksarc_nodepool_list
 - az_aksarc_nodepool_scale
 - az_aksarc_nodepool_show
+- az_aksarc_nodepool_update
 - az_aksarc_notice
 - az_aksarc_release
 - az_aksarc_release_download
