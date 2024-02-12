@@ -16,7 +16,7 @@ Keywords: azure cli interactive mode
 
 ## What is the Azure CLI interactive mode?
 
-Azure CLI Interactive Mode (az interactive) provides users an interactive environment to run Azure CLI commands. The interactive mode makes it easier for you to learn the Azure CLI’s capabilities, command syntax, and output formats. It provides autocompletion dropdowns, autocached suggestions combined with runtime documentation, and includes examples about how each command is used. Azure CLI Interactive Mode aims to provide an ideal experience for users learning to use Azure CLI commands. 
+Azure CLI Interactive Mode (az interactive) provides users an interactive environment to run Azure CLI commands. The interactive mode makes it easier for you to learn the Azure CLI’s capabilities, command syntax, and output formats. It provides autocompletion dropdowns, auto-cached suggestions combined with runtime documentation, and includes examples about how each command is used. Azure CLI Interactive Mode aims to provide an ideal experience for users learning to use Azure CLI commands. 
 
 ## Prerequisites
 
@@ -153,10 +153,6 @@ az extension add --name interactive --upgrade
 To use **command recommendation**, run a command and click <kbd>space</kbd> or <kbd>next</kbd>. 
 
 ![Command recommendation](./media/interactive-azure-cli/command_recommendation.png)
-
-To use **scenario identification**, run `::[num]` to complete a recommended scenario step-by-step.
-
-![Scenario identification](./media/interactive-azure-cli/scenario_identification.png)
 
 To use **usable knowledge search**, run `/ [keyword]` to search for commands and scenarios.
 
