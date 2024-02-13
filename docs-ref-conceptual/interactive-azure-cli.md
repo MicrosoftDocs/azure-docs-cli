@@ -139,7 +139,6 @@ The new AI features consist of:
 
 - **Intelligent completion**: The AI-powered recommendation system uses telemetry analysis in order to predict and analyze customer behavior. These results lead to the prioritization of the most used and needed content options.
 - **Command recommendation**: The AI offers subsequent commands based on the most used commands in other similar sessions.
-- **Scenario identification**: The AI can identify the current possible scenarios and recommend a set of related command combinations for your specific end-to-end scenario.
 - **Usable knowledge search**: The AI allows you to input natural language in order to search for commands for specific usage scenarios. 
 
 ### How to use AI functionalities with Azure CLI interactive mode 
