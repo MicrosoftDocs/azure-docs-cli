@@ -22,7 +22,7 @@ Azure CLI Interactive Mode (az interactive) provides users an interactive enviro
 
 Use the Bash or PowerShell environment in [Azure Cloud Shell](/azure/cloud-shell/overview). For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
-[:::image type="icon" source="media/hdi-launch-cloud-shell.png" alt-text="Launch Azure Cloud Shell" :::](https://shell.azure.com).
+[:::image type="icon" source="~/media/hdi-launch-cloud-shell.png" alt-text="Launch Azure Cloud Shell" :::](https://shell.azure.com).
 
 ## Run Azure CLI interactive mode 
 
