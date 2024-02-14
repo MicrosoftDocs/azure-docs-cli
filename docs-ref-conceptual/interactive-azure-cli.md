@@ -20,7 +20,9 @@ Azure CLI Interactive Mode (az interactive) provides users an interactive enviro
 
 ## Prerequisites
 
-[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
+Use the Bash or PowerShell environment in [Azure Cloud Shell](/azure/cloud-shell/overview). For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+
+[:::image type="icon" source="media/hdi-launch-cloud-shell.png" alt-text="Launch Azure Cloud Shell" :::](https://shell.azure.com).
 
 ## Run Azure CLI interactive mode 
 
@@ -109,12 +111,16 @@ az>> resource list -g "?? [?location=='westeurope'].name | [0]" --query "[?type=
 
 To learn more about querying the results of your commands, see [Query command results with the Azure CLI](query-azure-cli.md).
 
-## Run bash commands in interactive mode  
+## Run Bash and PowerShell commands in interactive mode  
 
-You can run shell commands without leaving interactive mode using `#[cmd]`.
+You can run both Bash and PowerShell commands without leaving interactive mode using `#[cmd]`.
 
-```azurecli-interactive
+```bash
 az>> #dir
+```
+
+```powershell
+az>> $PSVersionTable
 ```
 
 ## View examples of your commands in interactive mode 
