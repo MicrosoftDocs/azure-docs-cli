@@ -113,11 +113,15 @@ To learn more about querying the results of your commands, see [Query command re
 
 ## Run Bash and PowerShell commands in interactive mode  
 
-You can run both Bash and PowerShell commands without leaving interactive mode using `#[cmd]`.
+You can run both Bash and PowerShell commands without leaving interactive mode.
+
+For Bash scripts, use the `#[cmd]` syntax:
 
 ```bash
 az>> #dir
 ```
+
+For PowerShell scripts, use the regular PowerShell syntax:
 
 ```powershell
 az>> $PSVersionTable
