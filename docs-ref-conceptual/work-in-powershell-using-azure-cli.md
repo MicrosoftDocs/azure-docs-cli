@@ -6,7 +6,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.topic: quickstart
 ms.service: azure
-ms.date: 02-29-2024
+ms.date: 02-14-2024
 ms.tool: azure-cli, azure-powershell
 ms.custom: devx-track-azurecli
 ---
@@ -38,16 +38,16 @@ To execute the test cases given in this article, you will need to install or ope
 
 In your Internet application of choice, open two tabs using the links provided.
 
-    * An instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with Bash. If Azure Cloud Shell opens in a PowerShell environment, click the **switch to Bash** option in the Cloud Shell menu bar.
-    * A second instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with PowerShell. If Azure Cloud Shell opens in a Bash environment, click the **switch to PowerShell** option in the Cloud Shell menu bar.
+* An instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with Bash. If Azure Cloud Shell opens in a PowerShell environment, click the **switch to Bash** option in the Cloud Shell menu bar.
+* A second instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with PowerShell. If Azure Cloud Shell opens in a Bash environment, click the **switch to PowerShell** option in the Cloud Shell menu bar.
   
 **Microsoft Windows environments**
 
-    * A local installation of the [Azure CLI](./install-azure-cli-windows.md) in a Windows environment. 
-    * A local installation of Windows PowerShell 5.1. This is preinstalled in most Windows operating systems, but if you don't already have this PowerShell version, simply skip these examples.
-    * A local installation of [PowerShell v7.4.1](/powershell/scripting/install/installing-powershell-on-windows) or higher in a Windows environment.
+* A local installation of the [Azure CLI](./install-azure-cli-windows.md) in a Windows environment. 
+* A local installation of Windows PowerShell 5.1. This is preinstalled in most Windows operating systems, but if you don't already have this PowerShell version, simply skip these examples.
+* A local installation of [PowerShell v7.4.1](/powershell/scripting/install/installing-powershell-on-windows) or higher in a Windows environment.
 
-    This article was tested in Windows 11 Enterprise version 23H2.
+This article was tested in Windows 11 Enterprise version 23H2.
 
 Before continuing, test to see what version of the Azure CLI and PowerShell you are using.
 
@@ -57,7 +57,7 @@ az version
 $PSVersionTable
 ```
 
-Output from Azure Cloud Shell which will always be the most recent version of both Azure CLI and PowerShell:
+Here is the output from Azure Cloud Shell, which is the most recent version of both Azure CLI and PowerShell:
 
 ```output
 {               
@@ -84,7 +84,7 @@ SerializationVersion           1.1.0.1
 WSManStackVersion              3.0
 ```
 
-Output from Windows PowerShell which will be the version of Azure CLI and PowerShell installed on the machine.
+Here is the output from Windows PowerShell, which is the version of Azure CLI and PowerShell installed on the machine.
 
 ```output
 {               
@@ -195,7 +195,7 @@ The Azure CLI returns over 100 lines of JSON output when a new storage account i
 
 ## Passing spaces in Azure CLI parameters
 
-When you need to pass a parameter value in Azure CLI, and that value contains spaces, there are quoting differences between operating systems and environments.  In this example, show storage account properties using a label that contains a space.
+In Azure CLI, when you need to pass a parameter value containing a space, there are quoting differences between operating systems and environments.  In this example, show storage account properties using a label that contains a space.
 
 # [Bash in Linux](#tab/Bash1)
 
