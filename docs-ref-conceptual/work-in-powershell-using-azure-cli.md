@@ -6,7 +6,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.topic: quickstart
 ms.service: azure
-ms.date: 02-14-2024
+ms.date: 02/14/2024
 ms.tool: azure-cli, azure-powershell
 ms.custom: devx-track-azurecli
 ---
@@ -239,9 +239,13 @@ In PowerShell 7.4.1 running in Windows, all three of these syntax examples execu
 
 ```azurecli
 az storage account list --query '[].{\"SA Name\":name,\"SA Id\":id,\"Primary endpoint\":primaryEndpoints.blob}' --output table
+```
 
+```azurecli
 az storage account list --query '[].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
+```
 
+```azurecli
 az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
@@ -249,7 +253,9 @@ az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":n
 
 ```azurecli
 az storage account list --query '[].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
+```
 
+```azurecli
 az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
@@ -257,8 +263,19 @@ az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":n
 
 ## Passing JSON in Azure CLI parameters
 
-```azurecli
 
-```
+
+
+## TODO: Consolidate this information
+
+Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell. Review these articles to avoid scripting errors:
+- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+- [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+
+When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion. See these articles for more information:
+- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
+- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
+
 
 ## See also
