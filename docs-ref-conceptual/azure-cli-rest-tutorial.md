@@ -55,7 +55,7 @@ skuName="Standard"
 propertyValue="true"
 
 # Create resource group
-az group create --name $resourceGroup --location $location --output json
+az group create --name $resourceGroup --location $locationName --output json
 
 # Invoke request
 az rest --method put \
@@ -77,7 +77,7 @@ $skuName="Standard"
 $propertyValue="true"
 
 # Create resource group
-az group create --name $resourceGroup --location $location --output json
+az group create --name $resourceGroup --location $locationName --output json
 
 # Invoke request
 az rest --method put `
