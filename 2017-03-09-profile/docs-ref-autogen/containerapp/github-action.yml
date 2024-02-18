@@ -106,6 +106,7 @@ directCommands:
   syntax: >-
     az containerapp github-action add --repo-url
                                       [--branch]
+                                      [--build-env-vars]
                                       [--context-path]
                                       [--ids]
                                       [--image]
@@ -125,6 +126,9 @@ directCommands:
       Add GitHub Actions, using Azure Container Registry and personal access token.
     syntax: az containerapp github-action add -g MyResourceGroup -n my-containerapp --repo-url https://github.com/userid/repo --branch main --registry-url myregistryurl.azurecr.io --service-principal-client-id 00000000-0000-0000-0000-00000000 --service-principal-tenant-id 00000000-0000-0000-0000-00000000 --service-principal-client-secret ClientSecret --token MyAccessToken
   - summary: |-
+      Add GitHub Actions, using Azure Container Registry and personal access token, configure image build via build environment variables.
+    syntax: az containerapp github-action add -g MyResourceGroup -n my-containerapp --repo-url https://github.com/userid/repo --branch main --registry-url myregistryurl.azurecr.io --service-principal-client-id 00000000-0000-0000-0000-00000000 --service-principal-tenant-id 00000000-0000-0000-0000-00000000 --service-principal-client-secret ClientSecret --token MyAccessToken --build-env-vars BP_JVM_VERSION=21 BP_MAVEN_VERSION=4
+  - summary: |-
       Add GitHub Actions, using Azure Container Registry and log in to GitHub flow to retrieve personal access token.
     syntax: az containerapp github-action add -g MyResourceGroup -n my-containerapp --repo-url https://github.com/userid/repo --branch main --registry-url myregistryurl.azurecr.io --service-principal-client-id 00000000-0000-0000-0000-00000000 --service-principal-tenant-id 00000000-0000-0000-0000-00000000 --service-principal-client-secret ClientSecret --login-with-github
   - summary: |-
@@ -139,6 +143,10 @@ directCommands:
   - name: --branch -b
     summary: |-
       The branch of the Github repo. Assumed to be the Github repo's default branch if not specified.
+  - name: --build-env-vars
+    summary: |-
+      A list of environment variable(s) for the build. Space-separated values in 'key=value' format.
+    isPreview: true
   - name: --context-path
     summary: |-
       Path in the repo from which to run the docker build. Defaults to "./".

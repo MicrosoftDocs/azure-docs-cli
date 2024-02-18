@@ -314,6 +314,7 @@ directCommands:
                            [--artifact]
                            [--bind]
                            [--branch]
+                           [--build-env-vars]
                            [--command]
                            [--container-name]
                            [--context-path]
@@ -333,6 +334,7 @@ directCommands:
                            [--exposed-port]
                            [--image]
                            [--ingress {external, internal}]
+                           [--max-inactive-revisions]
                            [--max-replicas]
                            [--memory]
                            [--min-replicas]
@@ -474,6 +476,10 @@ directCommands:
     summary: |-
       Branch in the provided GitHub repository. Assumed to be the GitHub repository's default branch if not specified.
     isPreview: true
+  - name: --build-env-vars
+    summary: |-
+      A list of environment variable(s) for the build. Space-separated values in 'key=value' format.
+    isPreview: true
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
@@ -542,6 +548,10 @@ directCommands:
     parameterValueGroup: "external, internal"
     summary: |-
       The ingress type.
+  - name: --max-inactive-revisions
+    summary: |-
+      Max inactive revisions a Container App can have.
+    isPreview: true
   - name: --max-replicas
     summary: |-
       The maximum number of replicas.
@@ -1062,6 +1072,7 @@ directCommands:
                        [--artifact]
                        [--branch]
                        [--browse]
+                       [--build-env-vars]
                        [--connected-cluster-id]
                        [--context-path]
                        [--custom-location]
@@ -1120,6 +1131,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Open the app in a web browser after creation and deployment, if possible.
+  - name: --build-env-vars
+    summary: |-
+      A list of environment variable(s) for the build. Space-separated values in 'key=value' format.
+    isPreview: true
   - name: --connected-cluster-id
     summary: |-
       Resource ID of connected cluster. List using 'az connectedk8s list'.
@@ -1349,12 +1364,14 @@ directCommands:
     az containerapp update [--args]
                            [--artifact]
                            [--bind]
+                           [--build-env-vars]
                            [--command]
                            [--container-name]
                            [--cpu]
                            [--customized-keys]
                            [--ids]
                            [--image]
+                           [--max-inactive-revisions]
                            [--max-replicas]
                            [--memory]
                            [--min-replicas]
@@ -1420,6 +1437,10 @@ directCommands:
     summary: |-
       Space separated list of services(bindings) to be connected to this app. e.g. SVC_NAME1[:BIND_NAME1] SVC_NAME2[:BIND_NAME2]...
     isPreview: true
+  - name: --build-env-vars
+    summary: |-
+      A list of environment variable(s) for the build. Space-separated values in 'key=value' format.
+    isPreview: true
   - name: --command
     summary: |-
       A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
@@ -1439,6 +1460,10 @@ directCommands:
   - name: --image -i
     summary: |-
       Container image, e.g. publisher/image-name:tag.
+  - name: --max-inactive-revisions
+    summary: |-
+      Max inactive revisions a Container App can have.
+    isPreview: true
   - name: --max-replicas
     summary: |-
       The maximum number of replicas.
@@ -1524,6 +1549,9 @@ commands:
 - az_containerapp_add-on_mariadb
 - az_containerapp_add-on_mariadb_create
 - az_containerapp_add-on_mariadb_delete
+- az_containerapp_add-on_milvus
+- az_containerapp_add-on_milvus_create
+- az_containerapp_add-on_milvus_delete
 - az_containerapp_add-on_postgres
 - az_containerapp_add-on_postgres_create
 - az_containerapp_add-on_postgres_delete
@@ -1533,6 +1561,9 @@ commands:
 - az_containerapp_add-on_redis
 - az_containerapp_add-on_redis_create
 - az_containerapp_add-on_redis_delete
+- az_containerapp_add-on_weaviate
+- az_containerapp_add-on_weaviate_create
+- az_containerapp_add-on_weaviate_delete
 - az_containerapp_auth
 - az_containerapp_auth_apple
 - az_containerapp_auth_apple_show
@@ -1677,6 +1708,10 @@ commands:
 - az_containerapp_env_dapr-component_show
 - az_containerapp_env_delete
 - az_containerapp_env_delete(containerapp)
+- az_containerapp_env_identity
+- az_containerapp_env_identity_assign
+- az_containerapp_env_identity_remove
+- az_containerapp_env_identity_show
 - az_containerapp_env_list
 - az_containerapp_env_list(containerapp)
 - az_containerapp_env_list-usages
@@ -1686,9 +1721,13 @@ commands:
 - az_containerapp_env_show(containerapp)
 - az_containerapp_env_storage
 - az_containerapp_env_storage_list
+- az_containerapp_env_storage_list(containerapp)
 - az_containerapp_env_storage_remove
+- az_containerapp_env_storage_remove(containerapp)
 - az_containerapp_env_storage_set
+- az_containerapp_env_storage_set(containerapp)
 - az_containerapp_env_storage_show
+- az_containerapp_env_storage_show(containerapp)
 - az_containerapp_env_update
 - az_containerapp_env_update(containerapp)
 - az_containerapp_env_workload-profile
