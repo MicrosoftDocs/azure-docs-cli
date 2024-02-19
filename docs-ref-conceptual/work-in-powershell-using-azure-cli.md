@@ -193,36 +193,42 @@ The Azure CLI returns over 100 lines of JSON output when a new storage account i
 
 ```
 
-## Passing spaces in Azure CLI parameters
+## Pass spaces in Azure CLI parameters
 
 In Azure CLI, when you need to pass a parameter value containing a space, there are quoting differences between operating systems and environments.  In this example, show storage account properties using a label that contains a space.
 
 # [Bash in Linux](#tab/Bash1)
 
-The following Azure CLI command syntax is correct:
+The following Azure CLI command examples demonstrate syntax differences between ...
+
+* single quotes with embedded double quotes
+* double quotes with embedded single quotes and escape character `\`.
 
 ```azurecli
-az storage account list --query '[].{"SA Name":name,"SA Id":id,"Primary endpoint":primaryEndpoints.blob}' --output table
+az storage account list --query '[].{"SA Name":name, "Primary endpoint":primaryEndpoints.blob}' --output table
 ```
 
 If you want to add a filter, use this syntax:
 
 ```azurecli
- az storage account list --query "[?creationTime >='2024-02-01'].{\"SA Name\":name,\"SA Id\":id,\"Primary endpoint\":primaryEndpoints.blob}" --output table
+ az storage account list --query "[?creationTime >='2024-02-01'].{\"SA Name\":name,\"Primary endpoint\":primaryEndpoints.blob}" --output table
 ```
 
 ```output
-SA Name             SA Id                    Primary Endpoint
------------         ----------------         -----------------
-msdocssa00000000  /subscriptions/0000...      https://msdocssa000000000.blob.core.windows.net/
+SA Name           Primary Endpoint
+-----------       -----------------
+msdocssa00000000  https://msdocssa000000000.blob.core.windows.net/
 ```
 
 # [PowerShell in Linux](#tab/ps1)
 
-The following Azure CLI command syntax is correct:
+The following Azure CLI command examples demonstrate syntax differences between ...
+
+* Double quotes with embedded double quotes and escape character `` ` ``.
+* Double quotes with embedded single and double quotes and escape character `` ` ``.
 
 ```azurecli
-az storage account list --query "[].{`"SA Name`":name, `"SA id`":id, `"Primary endpoint`":primaryEndpoints.blob}" --output table
+az storage account list --query "[].{`"SA Name`":name, `"Primary endpoint`":primaryEndpoints.blob}" --output table
 ```
 
 If you run this syntax in Windows PowerShell or PowerShell 7.x installed on a Window's machine, you will receive error `argument --query: invalid jmespath_type value: '[].{SA'`.  Notice how the error message is breaking on the space between `SA` and `Name`.
@@ -230,52 +236,234 @@ If you run this syntax in Windows PowerShell or PowerShell 7.x installed on a Wi
 Now add a filter. Unlike the Bash script, adding a date filter does not require reworking the entire `--query` string, but notice that the string is wrapped in double quotes and the PowerShell backtick escape character is already in place.
 
 ```azurecli
-az storage account list --query "[?creationTime >='2024-02-01'].{`"SA Name`":name, `"SA id`":id, `"Primary endpoint`":primaryEndpoints.blob}" --output table
+az storage account list --query "[?creationTime >='2024-02-01'].{`"SA Name`":name, `"Primary endpoint`":primaryEndpoints.blob}" --output table
 ```
 
 # [PowerShell 7.4.1 in Windows](#tab/win2)
 
-In PowerShell 7.4.1 running in Windows, all three of these syntax examples execute without error:
+The following Azure CLI command examples demonstrate syntax differences between ...
+
+* Single quotes with embedded double quotes and escape character `\`.
+* Single quotes with embedded double quote pairs.
+* Single quotes with embedded single quote pair.
 
 ```azurecli
-az storage account list --query '[].{\"SA Name\":name,\"SA Id\":id,\"Primary endpoint\":primaryEndpoints.blob}' --output table
+az storage account list --query '[].{\"SA Name\":name,\"Primary endpoint\":primaryEndpoints.blob}' --output table
 ```
 
 ```azurecli
-az storage account list --query '[].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
+az storage account list --query '[].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
 ```azurecli
-az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
+az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
 # [PowerShell 5.1 in Windows](#tab/win1)
 
+The following Azure CLI command examples demonstrate syntax differences between ...
+
+* Single quotes with embedded double quote pairs.
+* Single quotes with embedded single quote pair.
+
 ```azurecli
-az storage account list --query '[].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
+az storage account list --query '[].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
 ```azurecli
-az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""SA Id"":id,""Primary endpoint"":primaryEndpoints.blob}' --output table
+az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
 ---
 
-## Passing JSON in Azure CLI parameters
+## Pass parameters in a URL with a query string
 
+Question marks in URLs indicate the end of the URL and the beginning of a query string.
+Here is an example that will open step 3 in [Learn to use the Azure CLI](./get-started-tutorial-3-use-variables.md): `https://learn.microsoft.com/en-us/cli/azure/get-started-tutorial-2-environment-syntax?view=azure-cli-latest&tabs=powershell`.  The `?view=azure-cli-latest` will cause the latest version of the article to be instantiated.
 
+When executing Azure CLI commands in a PowerShell environment, PowerShell allows question marks to be part of a variable name. This might create confusion in Azure CLI parameter values.
 
+Here is an example from the [Use the Azure REST API](./azure-cli-rest-tutorial.md?tabs=powershell#use-get-to-retrieve-your-azure-container-registry) article:
 
-## TODO: Consolidate this information
+# [Bash](#tab/Bash2)
 
-Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell. Review these articles to avoid scripting errors:
-- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
-- [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
-- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+Notice how `$containerRegistryName?api-version` concatenates together without error in Bash.
 
-When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion. See these articles for more information:
-- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
-- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
+```azurecli
+# Variable block
+let "randomIdentifier=$RANDOM*$RANDOM"
+subscriptionId="00000000-0000-0000-0000-000000000000"
+resourceGroup="msdocs-app-rg$randomIdentifier"
+containerRegistryName="msdocscr$randomIdentifier"
 
+# prior to this GET example, the resource group and container registry were created in the article.
+
+az rest --method get --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/$containerRegistryName?api-version=2023-01-01-preview
+```
+
+# [PowerShell](#tab/ps2)
+
+Notice the `{}` around `containerRegistryName` in PowerShell. Without the brackets, PowerShell will interpret `?` as being part of the parameter `$containerRegistryName`.
+
+This behavior is the same in PowerShell 5 and PowerShell 7 running in Linux or Windows.
+
+```azurecli
+# Variable block
+$randomIdentifier = (New-Guid).ToString().Substring(0,8)
+$subscriptionId="00000000-0000-0000-0000-000000000000"
+$resourceGroup="msdocs-app-rg$randomIdentifier"
+$containerRegistryName="msdocscr$randomIdentifier"
+
+# prior to this GET example, the resource group and container registry were created in the article.
+
+az rest --method get --url https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.ContainerRegistry/registries/${containerRegistryName}?api-version=2023-01-01-preview
+```
+
+---
+
+## Use hyphen characters in parameters
+
+If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a parameter name. To parse it as value, use `=` to concatenate the parameter name and value: `--password="-VerySecret"`.
+
+## Use quotation marks in parameters
+
+When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, you need to understand how they differ.
+
+- Bash. [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
+- PowerShell. [About Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
+- Windows Command Prompt. [How-to: Escape Characters, Delimiters and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
+
+> [!NOTE]
+> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+
+To avoid unanticipated results, here are a few suggestions:
+
+- If you provide a parameter that contains whitespace, wrap it in quotation marks.
+
+- In Bash or PowerShell, both single and double quotes are interpreted correctly. In Windows Command Prompt, only double quotes are interpreted correctly -- single quotes are treated as part of the value.
+
+- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single quotes are necessary when supplying inline JSON values. For example, this JSON is correct in Bash: `'{"key": "value"}'`.
+
+- If your command runs at a Windows Command Prompt, you must use double quotes. If the value contains double quotes, you must escape it. The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
+
+- In PowerShell, if your value is an empty string, use `'""'`.
+
+- In Bash or PowerShell, if your value is an empty quotes string `''`, use `"''"`.
+
+- Use Azure CLI's `@<file>` convention to load from a file and bypass the shell's interpretation mechanisms.
+
+  ```azurecli
+  az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
+  ```
+
+- Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
+
+- Some Azure CLI commands take a list of space separated values.
+  - If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`.  For example:
+
+    ```azurecli
+    az web app config app settings set --resource-group myResourceGroup --name myWebAppName --settings "client id=id1" "my name=john"
+    ```
+
+  - When a CLI parameter states that it accepts a space-separated list, one of two formats is expected:
+    1. Unquoted, space-separated list
+       `--parameterName firstValue secondValue`
+    1. Quoted space-separated list
+       `--parameterName "firstValue" "secondValue"`
+
+    This example is a string with a space in it. It isn't a space-separated list:
+       `--parameterName "firstValue secondValue"`
+
+- There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. You can also enclose the value in single or double quotes `"`/`"`.
+
+  ```powershell
+  # The following three examples will work in PowerShell
+  --parameterName `@parameters.json
+  --parameterName '@parameters.json'
+  --parameterName "@parameters.json"
+
+  # This example will not work in PowerShell
+  --parameterName @parameters.json
+  ```
+
+- When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
+
+  ### [Bash](#tab/bash)
+
+  These three commands are correct and equivalent in Bash:
+
+  ```azurecli
+  az version --query '"azure-cli"'
+  az version --query \"azure-cli\"
+  az version --query "\"azure-cli\""
+  ```
+
+  Here are two examples of incorrect commands in Bash:
+
+  ```azurecli
+  # Wrong, as the dash needs to be quoted in a JMESPath query
+  az version --query azure-cli
+  az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
+
+  # Wrong, as the dash needs to be quoted in a JMESPath query, but quotes are interpreted by Bash
+  az version --query "azure-cli"
+  az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
+  ```
+
+  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
+
+  ### [PowerShell](#tab/powershell)
+
+  These five commands work correctly in PowerShell:
+
+  ```azurecli
+  az version --query '\"azure-cli\"'
+  az version --query "\`"azure-cli\`""
+  az version --query "\""azure-cli\"""
+  az --% version --query "\"azure-cli\""
+  az --% version --query \"azure-cli\"
+  ```
+
+  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
+
+  ### [Cmd](#tab/cmd)
+
+  These two commands work correctly in Windows Command Prompt:
+
+  ```azurecli
+  az version --query "\"azure-cli\""
+  az version --query \"azure-cli\"
+  ```
+
+  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
+
+  ---
+
+- The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
+
+  ```bash
+  # Correct
+  $ az '{"key":"value"}' --debug
+  Command arguments: ['{"key":"value"}', '--debug']
+
+  # Correct
+  $ az "{\"key\":\"value\"}" --debug
+  Command arguments: ['{"key":"value"}', '--debug']
+
+  # Wrong, as quotes and spaces are interpreted by Bash
+  $ az {"key": "value"} --debug
+  Command arguments: ['{key:', 'value}', '--debug']
+
+  # Wrong, as quotes are interpreted by Bash
+  $ az {"key":"value"} --debug
+  Command arguments: ['{key:value}', '--debug']
+  ```
 
 ## See also
+
+- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+- [Learn syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
+- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
+- [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
+ 
