@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli
 
 # How-to use the Azure CLI in a PowerShell environment
 
-Azure CLI is a tool to manage Azure resources through Azure CLI reference commands that run in both a Bash and PowerShell environment. There are slight syntax differences in parameter formatting between environments which can result in unexpected results. The purpose of this article is to help you resolve Azure CLI execution errors when working in a PowerShell environment.
+Azure CLI is a tool to manage Azure resources through Azure CLI reference commands that run in both a Bash and PowerShell environment. However, there are slight syntax differences in parameter formatting between environments which can result in unexpected results. The purpose of this article is to help you resolve Azure CLI syntax errors when working in a PowerShell environment.
 
 This article compares syntax differences of Azure CLI commands executed in the following environments:
 
@@ -38,10 +38,10 @@ This article is intended for you to read and learn. However, if you want to run 
 
    **Linux environments**
 
-   In your Internet application of choice, open two tabs using the links provided.
+   In your Internet application of choice or in [Windows Terminal](/windows/terminal/), open two tabs using the links provided.
 
-   * An instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with Bash. If Azure     Cloud Shell opens in a PowerShell environment, click the **switch to Bash** option in the Cloud Shell menu bar.
-   * A second instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with PowerShell.     If Azure Cloud Shell opens in a Bash environment, click the **switch to PowerShell** option in the Cloud Shell     menu bar.
+   * An instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with Bash. If Azure   Cloud Shell opens in a PowerShell environment, click the **switch to Bash** option in the Cloud Shell menu bar.
+   * A second instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with PowerShell. If Azure Cloud Shell opens in a Bash environment, click the **switch to PowerShell** option in the Cloud Shell menu bar.
 
    **Microsoft Windows environments**
 
@@ -49,7 +49,7 @@ This article is intended for you to read and learn. However, if you want to run 
    * A local installation of Windows PowerShell 5.1. This is preinstalled in most Windows operating systems, but if you don't already have this PowerShell version, skip these examples.
    * A local installation of [PowerShell v7.4.1](/powershell/scripting/install/installing-powershell-on-windows)     or higher in a Windows environment.
 
-  This article was tested in Windows 11 Enterprise version 23H2.
+   This article was tested in Windows 11 Enterprise version 23H2.
 
 1. Before continuing, test to see what version of the Azure CLI and PowerShell you are using.
 
@@ -100,16 +100,16 @@ This article is intended for you to read and learn. However, if you want to run 
       }
     }
     
-    Name                               Value                                                                                        
-    ----                               -----                                                                                        
-    PSVersion                      5.1.22621.    2506                                                                               
-    PSEdition                          Desktop                                                                                      
-    PSCompatibleVersions           {1.0, 2.0, 3.0, 4.    0...}                                                                      
-    BuildVersion                   10.0.22621.    2506                                                                              
-    CLRVersion                     4.0.30319.    42000                                                                              
-    WSManStackVersion              3.    0                                                                                          
-    PSRemotingProtocolVersion      2.    3                                                                                          
-    SerializationVersion           1.1.0.1  
+    Name                           Value
+    ----                           -----
+    PSVersion                      5.1.22621.2506
+    PSEdition                      Desktop
+    PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+    BuildVersion                   10.0.22621.2506
+    CLRVersion                     4.0.30319.42000
+    WSManStackVersion              3.0
+    PSRemotingProtocolVersion      2.3
+    SerializationVersion           1.1.0.1
     ```
 
 1. If you need an Azure storage account to run these test scripts, create one now.
@@ -191,7 +191,7 @@ This article is intended for you to read and learn. However, if you want to run 
    "type": "Microsoft.Storage/storageAccounts"
    }
 
-```
+   ```
 
 ---
 
