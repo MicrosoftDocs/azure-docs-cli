@@ -29,7 +29,7 @@ The easiest way to install the Azure CLI is through a script maintained by the A
 If you wish to inspect the contents of the script yourself before executing, download the script first using `curl` and inspect it in your favorite text editor.
 
 ```bash
-curl -sSL https://aka.ms/InstallAzureCLIDeb | sudo bash
+curl -fsSL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
 ### Option 2: Step-by-step installation instructions
