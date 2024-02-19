@@ -1,10 +1,14 @@
 ### YamlMime:AzureCLIGroup
 uid: az_containerapp_env_storage
 name: az containerapp env storage
+importantNote: >-
+  > [!NOTE]
+
+  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage storage for the Container Apps environment.
 status: GA
-sourceType: Core
+sourceType: Core and Extension
 directCommands:
 - uid: az_containerapp_env_storage_list
   name: az containerapp env storage list
@@ -29,6 +33,29 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_containerapp_env_storage_list(containerapp)
+  name: az containerapp env storage list
+  extensionSuffix: containerapp
+  summary: |-
+    List the storages for an environment.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp env storage list --name
+                                     --resource-group
+  examples:
+  - summary: |-
+      List the storages for an environment.
+    syntax: az containerapp env storage list -g MyResourceGroup -n MyEnvironment
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Container Apps environment.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_containerapp_env_storage_remove
   name: az containerapp env storage remove
   summary: |-
@@ -36,6 +63,40 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
+  syntax: >-
+    az containerapp env storage remove --name
+                                       --resource-group
+                                       --storage-name
+                                       [--yes]
+  examples:
+  - summary: |-
+      Remove a storage from a Container Apps environment.
+    syntax: az containerapp env storage remove -g MyResourceGroup --storage-name MyStorageName -n MyEnvironment
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Container Apps environment.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --storage-name
+    summary: |-
+      Name of the storage.
+  optionalParameters:
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_containerapp_env_storage_remove(containerapp)
+  name: az containerapp env storage remove
+  extensionSuffix: containerapp
+  summary: |-
+    Remove a storage from an environment.
+  status: GA
+  sourceType: Extension
   syntax: >-
     az containerapp env storage remove --name
                                        --resource-group
@@ -118,6 +179,71 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+- uid: az_containerapp_env_storage_set(containerapp)
+  name: az containerapp env storage set
+  extensionSuffix: containerapp
+  summary: |-
+    Create or update a storage.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp env storage set --name
+                                    --resource-group
+                                    --storage-name
+                                    [--access-mode {ReadOnly, ReadWrite}]
+                                    [--account-name]
+                                    [--azure-file-account-key]
+                                    [--azure-file-share-name]
+                                    [--no-wait]
+                                    [--server]
+                                    [--storage-type {AzureFile, NfsAzureFile}]
+  examples:
+  - summary: |-
+      Create a azure file storage.
+    syntax: az containerapp env storage set -g MyResourceGroup -n MyEnv --storage-name MyStorageName --access-mode ReadOnly --azure-file-account-key MyAccountKey --azure-file-account-name MyAccountName --azure-file-share-name MyShareName
+  - summary: |-
+      Create a nfs azure file storage.
+    syntax: az containerapp env storage set -g MyResourceGroup -n MyEnv --storage-name MyStorageName --storage-type NfsAzureFile --access-mode ReadOnly --server MyNfsServer.file.core.windows.net --file-share /MyNfsServer/MyShareName
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Container Apps environment.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --storage-name
+    summary: |-
+      Name of the storage.
+  optionalParameters:
+  - name: --access-mode
+    parameterValueGroup: "ReadOnly, ReadWrite"
+    summary: |-
+      Access mode for the AzureFile or nfs AzureFile storage.
+  - name: --account-name --azure-file-account-name -a
+    summary: |-
+      Name of the AzureFile storage account.
+  - name: --azure-file-account-key --storage-account-key -k
+    summary: |-
+      Key of the AzureFile storage account.
+  - name: --azure-file-share-name --file-share -f
+    summary: |-
+      Name of the share on the AzureFile or nfs AzureFile storage.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --server -s
+    summary: |-
+      Server of the NfsAzureFile storage account.
+    isPreview: true
+  - name: --storage-type
+    parameterValueGroup: "AzureFile, NfsAzureFile"
+    summary: |-
+      Type of the storage. Assumed to be AzureFile if not specified.
+    isPreview: true
 - uid: az_containerapp_env_storage_show
   name: az containerapp env storage show
   summary: |-
@@ -146,11 +272,43 @@ directCommands:
     name: --storage-name
     summary: |-
       Name of the storage.
+- uid: az_containerapp_env_storage_show(containerapp)
+  name: az containerapp env storage show
+  extensionSuffix: containerapp
+  summary: |-
+    Show the details of a storage.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp env storage show --name
+                                     --resource-group
+                                     --storage-name
+  examples:
+  - summary: |-
+      Show the details of a storage.
+    syntax: az containerapp env storage show -g MyResourceGroup --storage-name MyStorageName -n MyEnvironment
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Container Apps environment.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --storage-name
+    summary: |-
+      Name of the storage.
 commands:
 - az_containerapp_env_storage_list
+- az_containerapp_env_storage_list(containerapp)
 - az_containerapp_env_storage_remove
+- az_containerapp_env_storage_remove(containerapp)
 - az_containerapp_env_storage_set
+- az_containerapp_env_storage_set(containerapp)
 - az_containerapp_env_storage_show
+- az_containerapp_env_storage_show(containerapp)
 globalParameters:
 - name: --debug
   summary: |-
@@ -176,5 +334,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 11/28/2023
   description: Commands to manage storage for the Container Apps environment.
