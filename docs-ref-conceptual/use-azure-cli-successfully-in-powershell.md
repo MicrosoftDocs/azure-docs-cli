@@ -269,7 +269,7 @@ az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":n
 
 ---
 
-## Pass parameters in a URL with a query string
+## Pass parameters in a URL containing a query string
 
 Question marks in URLs indicate the end of the URL and the beginning of a query string.
 Here's an example that opens step 3 in [Learn to use the Azure CLI](./get-started-tutorial-3-use-variables.md): `https://learn.microsoft.com/en-us/cli/azure/get-started-tutorial-2-environment-syntax?view=azure-cli-latest&tabs=powershell`. The `?view=azure-cli-latest` causes the latest version of the article to be instantiated.
