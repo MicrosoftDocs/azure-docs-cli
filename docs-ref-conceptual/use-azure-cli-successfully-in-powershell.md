@@ -377,5 +377,5 @@ For more information about PowerShell error handling, see [Everything you wanted
 
 * [See more examples of syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
 * Compare syntax of CMD, PowerShell, and Bash in [Query command output using JMESPath](./query-azure-cli.md)
-* [Use quotation marks in parameters](./use-azure-cli-effectively.md#use-quotation-marks-in-parameters)
+* [Use quotation marks in parameters](./use-azure-cli-successfully.md#use-quotation-marks-in-parameters)
 * [Learn quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
