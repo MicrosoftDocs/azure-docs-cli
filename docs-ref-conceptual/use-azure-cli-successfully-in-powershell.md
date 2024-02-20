@@ -1,19 +1,19 @@
 ---
-title: Use the Azure CLI in a PowerShell environment | Microsoft Docs
-description: Learn how to format parameters for Azure CLI in a PowerShell environment
+title: Tips to use the Azure CLI successfully in a PowerShell environment | Microsoft Docs
+description: Learn how to format Azure CLI parameters for a PowerShell environment.
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.topic: quickstart
 ms.service: azure
-ms.date: 02/14/2024
-ms.tool: azure-cli, azure-powershell
+ms.date: 02/20/2024
+ms.tool: azure-cli, powershell
 ms.custom: devx-track-azurecli
 ---
 
 # How-to use the Azure CLI in a PowerShell environment
 
-Azure CLI is a tool to manage Azure resources through Azure CLI reference commands that run in both a Bash and PowerShell environment. However, there are slight syntax differences in parameter formatting between environments which can result in unexpected results. The purpose of this article is to help you resolve Azure CLI syntax errors when working in a PowerShell environment.
+Azure CLI is a tool to manage Azure resources through Azure CLI reference commands that run in both a Bash and PowerShell environment. However, there are slight syntax differences in parameter formatting between environments that can result in unexpected results. The purpose of this article is to help you resolve Azure CLI syntax errors when working in a PowerShell environment.
 
 This article compares syntax differences of Azure CLI commands executed in the following environments:
 
@@ -22,36 +22,34 @@ This article compares syntax differences of Azure CLI commands executed in the f
 * [Windows PowerShell](/powershell/scripting/windows-powershell/overview) running in Windows 11 using the PowerShell 5 terminal.
 * PowerShell running in a Windows 11 operating system using the PowerShell 7 terminal.
 
-This article is _not_ about [Azure PowerShell](/powershell/azure/what-is-azure-powershell), which is a set of cmdlets for managing Azure resources directly from PowerShell.
-
-If you are new to CLI, differentiating between a _tool_ and an _environment_ might be confusing. [How-to choose the right command-line tool](./choose-the-right-azure-command-line-tool.md) provides a good comparison.
+If you're new to CLI, differentiating between a _tool_ and an _environment_ might be confusing. [How-to choose the right command-line tool](./choose-the-right-azure-command-line-tool.md) provides a good comparison.
 
 ## Prerequisites
 
 # [Read and learn](#tab/read)
 
-This article is intended for you to read and learn. However, if you want to run the examples, click on the [Prepare your environments](./work-in-powershell-using-azure-cli.md?tabs=install%2CBash1%2CBash2) tab.
+This article is intended for you to read and learn. However, if you want to run the examples, select the `Prepare your environments` tab to install the environments used in this article.
 
 # [Prepare your environments](#tab/install)
 
-1. To execute the test cases given in this article, you will need to install or open the following:
+1. To execute the test cases given in this article, install or open these environments:
 
    **Linux environments**
 
    In your Internet application of choice or in [Windows Terminal](/windows/terminal/), open two tabs using the links provided.
 
-   * An instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with Bash. If Azure   Cloud Shell opens in a PowerShell environment, click the **switch to Bash** option in the Cloud Shell menu bar.
-   * A second instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with PowerShell. If Azure Cloud Shell opens in a Bash environment, click the **switch to PowerShell** option in the Cloud Shell menu bar.
+   * An instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with Bash. If Azure   Cloud Shell opens in a PowerShell environment, select the **switch to Bash** option in the Cloud Shell menu bar.
+   * A second instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with PowerShell. If Azure Cloud Shell opens in a Bash environment, select the **switch to PowerShell** option in the Cloud Shell menu bar.
 
    **Microsoft Windows environments**
 
    * A local installation of the [Azure CLI](./install-azure-cli-windows.md) in a Windows environment. 
-   * A local installation of Windows PowerShell 5.1. This is preinstalled in most Windows operating systems, but if you don't already have this PowerShell version, skip these examples.
-   * A local installation of [PowerShell v7.4.1](/powershell/scripting/install/installing-powershell-on-windows)     or higher in a Windows environment.
+   * A local installation of Windows PowerShell 5.1 that is preinstalled in most Windows operating systems.
+   * A local installation of [PowerShell v7.4.1](/powershell/scripting/install/installing-powershell-on-windows or higher in a Windows environment.
 
    This article was tested in Windows 11 Enterprise version 23H2.
 
-1. Before continuing, test to see what version of the Azure CLI and PowerShell you are using.
+1. Test to see what version of the Azure CLI and PowerShell you're using.
 
    ```powershell
    az version
@@ -59,7 +57,7 @@ This article is intended for you to read and learn. However, if you want to run 
    $PSVersionTable
    ```
 
-   Here is the output from Azure Cloud Shell, which is **the most recent version of both Azure CLI and     PowerShell**:
+   Here's the output from Azure Cloud Shell, which is **the most recent version of both Azure CLI and     PowerShell**:
 
    ```output
    {               
@@ -86,7 +84,7 @@ This article is intended for you to read and learn. However, if you want to run 
     WSManStackVersion              3.0
     ```
 
-    Here is the output from Windows PowerShell, which is **the version of Azure CLI and PowerShell installed on     your machine**. In this output example, Azure CLI version 2.57.0 and Windows PowerShell 5.1.22621 are installed     on the local machine.
+    Here's the output from Windows PowerShell, which is **the version of Azure CLI and PowerShell installed on     your machine**. In this output example, Azure CLI version 2.57.0 and Windows PowerShell 5.1.22621 are installed     on the local machine.
 
     ```output
     {               
@@ -227,9 +225,9 @@ In this example, notice the double quote (`"..."`) wrapper with embedded double 
 az storage account list --query "[].{`"SA Name`":name, `"Primary endpoint`":primaryEndpoints.blob}" --output table
 ```
 
-If you run this syntax in Windows PowerShell or PowerShell 7.x installed on a Window's machine, you will receive error `argument --query: invalid jmespath_type value: '[].{SA'`. Notice how the error message is breaking on the space between `SA` and `Name`.
+If you run this syntax in Windows PowerShell or PowerShell 7.x installed on a Window's machine, you receive error `argument --query: invalid jmespath_type value: '[].{SA'`. Notice how the error message is breaking on the space between `SA` and `Name`.
 
-Now add a filter. Unlike the Bash script, adding a date filter does not require reworking the entire `--query` string.
+Now add a filter. Unlike the Bash script, adding a date filter doesn't require reworking the entire `--query` string.
 
 ```azurecli
 az storage account list --query "[?creationTime >='2024-02-01'].{`"SA Name`":name, `"Primary endpoint`":primaryEndpoints.blob}" --output table
@@ -274,11 +272,11 @@ az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":n
 ## Pass parameters in a URL with a query string
 
 Question marks in URLs indicate the end of the URL and the beginning of a query string.
-Here is an example that will open step 3 in [Learn to use the Azure CLI](./get-started-tutorial-3-use-variables.md): `https://learn.microsoft.com/en-us/cli/azure/get-started-tutorial-2-environment-syntax?view=azure-cli-latest&tabs=powershell`. The `?view=azure-cli-latest` will cause the latest version of the article to be instantiated.
+Here's an example that opens step 3 in [Learn to use the Azure CLI](./get-started-tutorial-3-use-variables.md): `https://learn.microsoft.com/en-us/cli/azure/get-started-tutorial-2-environment-syntax?view=azure-cli-latest&tabs=powershell`. The `?view=azure-cli-latest` causes the latest version of the article to be instantiated.
 
 When executing Azure CLI commands in a PowerShell environment, PowerShell allows question marks to be part of a variable name. This might create confusion in Azure CLI parameter values.
 
-Here is an example from the [Use the Azure REST API](./azure-cli-rest-tutorial.md?tabs=powershell#use-get-to-retrieve-your-azure-container-registry) article:
+Here's an example from the [Use the Azure REST API](./azure-cli-rest-tutorial.md?tabs=powershell#use-get-to-retrieve-your-azure-container-registry) article:
 
 # [Bash](#tab/Bash2)
 
@@ -298,7 +296,7 @@ az rest --method get --url https://management.azure.com/subscriptions/$subscript
 
 # [PowerShell](#tab/ps2)
 
-Notice the brackets `{}` in `${containerRegistryName}?api-version`. Without the brackets, PowerShell will interpret `?` as being part of the parameter `$containerRegistryName`.
+Notice the brackets `{}` in `${containerRegistryName}?api-version`. Without the brackets, PowerShell interprets a question mark (`?`) as being part of the parameter name `$containerRegistryName`.
 
 This behavior is the same in PowerShell 5 and PowerShell 7 running in Linux or Windows.
 
@@ -332,10 +330,10 @@ There are special characters of PowerShell, such as at `@`. To run Azure CLI in 
 
 ## See also
 
-- [Use quotation marks in parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
-- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
-- [Learn syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
-- [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
-- [Error handling for the Azure CLI in PowerShell](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
-- [Enable Tab Completion in PowerShell](./install-azure-cli-windows.md#enable-tab-completion-in-powershell)
+* [Use quotation marks in parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+* Compare syntax of CMD, PowerShell, and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+* [Learn syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
+* [Learn quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+* [Handle Azure CLI errors in a PowerShell environment](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
+* [Enable Tab Completion in PowerShell](./install-azure-cli-windows.md#enable-tab-completion-in-powershell)
  
