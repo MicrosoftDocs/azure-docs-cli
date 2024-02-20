@@ -11,7 +11,7 @@ ms.tool: azure-cli, powershell
 ms.custom: devx-track-azurecli
 ---
 
-# How-to use the Azure CLI in a PowerShell environment
+# Considerations for running the Azure CLI in a PowerShell environment
 
 Azure CLI is a tool to manage Azure resources through Azure CLI reference commands that run in both a Bash and PowerShell environment. However, there are slight syntax differences in parameter formatting between environments that can result in unexpected results. The purpose of this article is to help you resolve Azure CLI syntax errors when working in a PowerShell environment.
 
@@ -328,12 +328,56 @@ There are special characters of PowerShell, such as at `@`. To run Azure CLI in 
 
 * parameterName @parameters.json
 
+## Enable Tab Completion in PowerShell
+
+[!INCLUDE [tab-completion](includes/tab-completion.md)]
+
+## Error handling for Azure CLI in PowerShell
+
+You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md). If you do, be sure you understand Azure CLI error handling in PowerShell. In particular, Azure CLI doesn't create exceptions for PowerShell to catch.
+
+An alternative is to use the `$?` automatic variable. This variable contains the status of the most recent command. If the previous command fails, `$?` has the value of `$False`. For more information, see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/about/about_automatic_variables).
+
+The following example shows how this automatic variable can work for error handling:
+
+```powershell
+az group create --name MyResourceGroup
+if ($? -eq $false) {
+    Write-Error "Error creating resource group."
+}
+```
+
+The `az` command fails because it's missing the required `--location` parameter. The conditional statement finds that `$?` is false and writes an error.
+
+If you want to use the `try` and `catch` keywords, you can use `throw` to create an exception for the `try` block to catch:
+
+```powershell
+$ErrorActionPreference = "Stop"
+try {
+    az group create --name MyResourceGroup
+    if ($? -eq $false) {
+        throw 'Group create failed.'
+    }
+}
+catch {
+    Write-Error "Error creating the resource group."
+}
+$ErrorActionPreference = "Continue"
+```
+
+By default, PowerShell catches only terminating errors. This example sets the `$ErrorActionPreference` global variable to `Stop` so PowerShell can handle the error.
+
+The conditional statement tests the `$?` variable to see if the previous command failed. If so, the `throw` keyword creates an exception to catch. The `catch` block can be used to write an error message or handle the error.
+
+The example restores `$ErrorActionPreference` to its default value.
+
+For more information about PowerShell error handling, see [Everything you wanted to know about exceptions](/powershell/scripting/learn/deep-dives/everything-about-exceptions).
+
 ## See also
 
-* [Use quotation marks in parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+* [See more examples of syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
 * Compare syntax of CMD, PowerShell, and Bash in [Query command output using JMESPath](./query-azure-cli.md)
-* [Learn syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
+* [Use quotation marks in parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
 * [Learn quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 * [Handle Azure CLI errors in a PowerShell environment](./use-cli-effectively.md#error-handling-for-azure-cli-in-powershell)
 * [Enable Tab Completion in PowerShell](./install-azure-cli-windows.md#enable-tab-completion-in-powershell)
- 
