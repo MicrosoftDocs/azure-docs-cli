@@ -61,13 +61,15 @@ directCommands:
                         [--ppg]
                         [--priority {Regular, Spot}]
                         [--scale-down-mode {Deallocate, Delete}]
+                        [--skip-gpu-driver-install]
                         [--snapshot-id]
                         [--spot-max-price]
+                        [--ssh-access {disabled, localuser}]
                         [--tags]
                         [--vm-set-type]
                         [--vnet-subnet-id]
                         [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
-                        [--zones {1, 2, 3}]
+                        [--zones]
   examples:
   - summary: |-
       Create a nodepool in an existing AKS cluster with ephemeral os enabled.
@@ -218,7 +220,7 @@ directCommands:
   - name: --node-osdisk-type
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
-      OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
+      OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation. ('Ephemeral' or 'Managed').
   - name: --node-public-ip-prefix-id
     summary: |-
       Public IP prefix ID used to assign public IPs to VMSS nodes. Must use VMSS agent pool type.
@@ -257,6 +259,11 @@ directCommands:
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
       Describes how VMs are added to or removed from nodepools.
+  - name: --skip-gpu-driver-install
+    defaultValue: "False"
+    summary: |-
+      To skip GPU driver auto installation by AKS on a nodepool using GPU vm size if customers want to manage GPU driver installation by their own. If not specified, the default is false.
+    isPreview: true
   - name: --snapshot-id
     summary: |-
       The source snapshot id used to create this nodepool. Must use VMSS agent pool type.
@@ -264,6 +271,12 @@ directCommands:
     defaultValue: "nan"
     summary: |-
       It can only be set when --priority is Spot. Specify the maximum price you are willing to pay in US Dollars. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. It can only include up to 5 decimal places.
+  - name: --ssh-access
+    defaultValue: "localuser"
+    parameterValueGroup: "disabled, localuser"
+    summary: |-
+      Configure SSH setting for the node pool. Use "disabled" to disable SSH access, "localuser" to enable SSH access using private key.
+    isPreview: true
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -279,7 +292,6 @@ directCommands:
     summary: |-
       Determines the type of workload a node can run. Defaults to OCIContainer.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Space-separated list of availability zones where agent nodes will be placed. Must use VMSS agent pool type.
 - uid: az_aks_nodepool_delete
@@ -316,6 +328,44 @@ directCommands:
     summary: |-
       (PREVIEW) ignore-pod-disruption-budget deletes an existing nodepool without considering Pod Disruption Budget.
     isPreview: true
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+- uid: az_aks_nodepool_delete-machines
+  name: az aks nodepool delete-machines
+  summary: |-
+    Delete specific machines in an agentpool for a managed cluster.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az aks nodepool delete-machines --cluster-name
+                                    --machine-names
+                                    --name
+                                    --resource-group
+                                    [--no-wait]
+  examples:
+  - summary: |-
+      Delete specific machines in an agent pool
+    syntax: az aks nodepool delete-machines -g myResourceGroup --nodepool-name nodepool1 --cluster-name myAKSCluster --machine-names machine1
+  requiredParameters:
+  - isRequired: true
+    name: --cluster-name
+    summary: |-
+      The cluster name.
+  - isRequired: true
+    name: --machine-names
+    summary: |-
+      Space-separated list of machine names from the agent pool to be deleted.
+  - isRequired: true
+    name: --name --nodepool-name -n
+    summary: |-
+      The node pool name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -566,10 +616,12 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
-                           [--os-sku {AzureLinux, CBLMariner, Mariner}]
+                           [--os-sku {AzureLinux, Ubuntu}]
                            [--scale-down-mode {Deallocate, Delete}]
+                           [--ssh-access {disabled, localuser}]
                            [--tags]
                            [--update-cluster-autoscaler]
+                           [--yes]
   examples:
   - summary: |-
       Reconcile the nodepool back to its current state.
@@ -662,13 +714,18 @@ directCommands:
     summary: |-
       The node taints for the node pool.
   - name: --os-sku
-    parameterValueGroup: "AzureLinux, CBLMariner, Mariner"
+    parameterValueGroup: "AzureLinux, Ubuntu"
     summary: |-
       The os-sku of the agent node pool.
   - name: --scale-down-mode
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
       Describes how VMs are added to or removed from nodepools.
+  - name: --ssh-access
+    parameterValueGroup: "disabled, localuser"
+    summary: |-
+      Update SSH setting for the node pool. Use "disabled" to disable SSH access, "localuser" to enable SSH access using private key.
+    isPreview: true
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
@@ -676,6 +733,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Update min-count or max-count for cluster autoscaler.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_aks_nodepool_upgrade
   name: az aks nodepool upgrade
   summary: |-
@@ -742,6 +803,7 @@ directCommands:
 commands:
 - az_aks_nodepool_add
 - az_aks_nodepool_delete
+- az_aks_nodepool_delete-machines
 - az_aks_nodepool_get-upgrades
 - az_aks_nodepool_list
 - az_aks_nodepool_operation-abort

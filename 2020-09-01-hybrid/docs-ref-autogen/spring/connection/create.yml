@@ -6,6 +6,91 @@ summary: |-
 status: GA
 sourceType: Core
 directCommands:
+- uid: az_spring_connection_create_app-insights
+  name: az spring connection create app-insights
+  summary: |-
+    Create a spring app connection to app-insights.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az spring connection create app-insights [--app]
+                                             [--app-insights]
+                                             [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python}]
+                                             [--connection]
+                                             [--customized-keys]
+                                             [--deployment]
+                                             [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--resource-group]
+                                             [--secret]
+                                             [--service]
+                                             [--source-id]
+                                             [--target-id]
+                                             [--target-resource-group]
+                                             [--vault-id]
+  examples:
+  - summary: |-
+      Create a connection between spring app and app-insights interactively
+    syntax: az spring connection create app-insights
+  - summary: |-
+      Create a connection between spring app and app-insights with resource name
+    syntax: az spring connection create app-insights -g SpringCloudRG --service MySpringService --app MyApp --tg AppInsightsRG --app-insights MyAppInsights --secret
+  - summary: |-
+      Create a connection between spring app and app-insights with resource id
+    syntax: az spring connection create app-insights --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/microsoft.insights/components/{appinsights} --secret
+  optionalParameters:
+  - name: --app
+    summary: |-
+      Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --app-insights
+    summary: |-
+      Name of the app insights. Required if '--target-id' is not specified.
+  - name: --client-type
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python"
+    summary: |-
+      The client type used on the spring.
+  - name: --connection
+    summary: |-
+      Name of the spring connection.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --deployment
+    summary: |-
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
+    isDeprecated: true
+    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret.
+  - name: --service
+    summary: |-
+      Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
+  - name: --source-id
+    summary: |-
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--app-insights'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the app insights. Required if '--target-id' is not specified.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
 - uid: az_spring_connection_create_appconfig
   name: az spring connection create appconfig
   summary: |-
@@ -15,11 +100,12 @@ directCommands:
   syntax: >-
     az spring connection create appconfig [--app]
                                           [--app-config]
-                                          [--client-type {dotnet, java, nodejs, none, python}]
+                                          [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                           [--connection]
                                           [--customized-keys]
                                           [--deployment]
                                           [--no-wait]
+                                          [--opt-out {configinfo, publicnetwork}]
                                           [--private-endpoint {false, true}]
                                           [--resource-group]
                                           [--secret]
@@ -37,10 +123,10 @@ directCommands:
     syntax: az spring connection create appconfig
   - summary: |-
       Create a connection between spring app and appconfig with resource name
-    syntax: az spring connection create appconfig -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg AppconfigRG --app-config MyConfigStore --system-identity
+    syntax: az spring connection create appconfig -g SpringCloudRG --service MySpringService --app MyApp --tg AppconfigRG --app-config MyConfigStore --system-identity
   - summary: |-
       Create a connection between spring app and appconfig with resource id
-    syntax: az spring connection create appconfig --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.AppConfiguration/configurationStores/{config_store} --system-identity
+    syntax: az spring connection create appconfig --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.AppConfiguration/configurationStores/{config_store} --system-identity
   optionalParameters:
   - name: --app
     summary: |-
@@ -49,7 +135,7 @@ directCommands:
     summary: |-
       Name of the app configuration. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -59,15 +145,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -94,7 +183,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -131,11 +220,12 @@ directCommands:
                                                 --schema-registry
                                                 --schema-secret
                                                 [--app]
-                                                [--client-type {dotnet, go, java, none, python, springBoot}]
+                                                [--client-type {dotnet, dotnet-internal, go, java, none, python, springBoot}]
                                                 [--connection]
                                                 [--customized-keys]
                                                 [--deployment]
                                                 [--no-wait]
+                                                [--opt-out {configinfo, publicnetwork}]
                                                 [--resource-group]
                                                 [--service]
                                                 [--source-id]
@@ -143,7 +233,7 @@ directCommands:
   examples:
   - summary: |-
       Create a connection between spring app and confluent-cloud
-    syntax: az spring connection create confluent-cloud -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --bootstrap-server xxx.eastus.azure.confluent.cloud:9092 --kafka-key Name --kafka-secret Secret --schema-registry https://xxx.eastus.azure.confluent.cloud --schema-key Name --schema-secret Secret
+    syntax: az spring connection create confluent-cloud -g SpringCloudRG --service MySpringService --app MyApp --bootstrap-server xxx.eastus.azure.confluent.cloud:9092 --kafka-key Name --kafka-secret Secret --schema-registry https://xxx.eastus.azure.confluent.cloud --schema-key Name --schema-secret Secret
   requiredParameters:
   - isRequired: true
     name: --bootstrap-server
@@ -174,7 +264,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -184,15 +274,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -201,7 +294,7 @@ directCommands:
       Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -214,12 +307,13 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-cassandra [--account]
                                                  [--app]
-                                                 [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+                                                 [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--customized-keys]
                                                  [--deployment]
                                                  [--key-space]
                                                  [--no-wait]
+                                                 [--opt-out {configinfo, publicnetwork}]
                                                  [--private-endpoint {false, true}]
                                                  [--resource-group]
                                                  [--secret]
@@ -238,10 +332,10 @@ directCommands:
     syntax: az spring connection create cosmos-cassandra
   - summary: |-
       Create a connection between spring app and cosmos-cassandra with resource name
-    syntax: az spring connection create cosmos-cassandra -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg CosmosRG --account MyAccount --key-space MyKeySpace --system-identity
+    syntax: az spring connection create cosmos-cassandra -g SpringCloudRG --service MySpringService --app MyApp --tg CosmosRG --account MyAccount --key-space MyKeySpace --system-identity
   - summary: |-
       Create a connection between spring app and cosmos-cassandra with resource id
-    syntax: az spring connection create cosmos-cassandra --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/cassandraKeyspaces/{key_space} --system-identity
+    syntax: az spring connection create cosmos-cassandra --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/cassandraKeyspaces/{key_space} --system-identity
   optionalParameters:
   - name: --account
     summary: |-
@@ -250,7 +344,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -260,9 +354,8 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --key-space
@@ -272,6 +365,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -302,7 +399,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -334,13 +431,14 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-gremlin [--account]
                                                [--app]
-                                               [--client-type {dotnet, java, nodejs, none, php, python}]
+                                               [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python}]
                                                [--connection]
                                                [--customized-keys]
                                                [--database]
                                                [--deployment]
                                                [--graph]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -359,10 +457,10 @@ directCommands:
     syntax: az spring connection create cosmos-gremlin
   - summary: |-
       Create a connection between spring app and cosmos-gremlin with resource name
-    syntax: az spring connection create cosmos-gremlin -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg CosmosRG --account MyAccount --database MyDB --graph MyGraph --system-identity
+    syntax: az spring connection create cosmos-gremlin -g SpringCloudRG --service MySpringService --app MyApp --tg CosmosRG --account MyAccount --database MyDB --graph MyGraph --system-identity
   - summary: |-
       Create a connection between spring app and cosmos-gremlin with resource id
-    syntax: az spring connection create cosmos-gremlin --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/gremlinDatabases/{database}/graphs/{graph} --system-identity
+    syntax: az spring connection create cosmos-gremlin --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/gremlinDatabases/{database}/graphs/{graph} --system-identity
   optionalParameters:
   - name: --account
     summary: |-
@@ -371,7 +469,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -384,9 +482,8 @@ directCommands:
     summary: |-
       Name of the database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --graph
@@ -396,6 +493,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -426,7 +527,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -458,12 +559,13 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-mongo [--account]
                                              [--app]
-                                             [--client-type {dotnet, go, java, nodejs, none, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--database]
                                              [--deployment]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -482,10 +584,10 @@ directCommands:
     syntax: az spring connection create cosmos-mongo
   - summary: |-
       Create a connection between spring app and cosmos-mongo with resource name
-    syntax: az spring connection create cosmos-mongo -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg CosmosRG --account MyAccount --database MyDB --system-identity
+    syntax: az spring connection create cosmos-mongo -g SpringCloudRG --service MySpringService --app MyApp --tg CosmosRG --account MyAccount --database MyDB --system-identity
   - summary: |-
       Create a connection between spring app and cosmos-mongo with resource id
-    syntax: az spring connection create cosmos-mongo --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/mongodbDatabases/{database} --system-identity
+    syntax: az spring connection create cosmos-mongo --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/mongodbDatabases/{database} --system-identity
   optionalParameters:
   - name: --account
     summary: |-
@@ -494,7 +596,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -507,15 +609,18 @@ directCommands:
     summary: |-
       Name of the database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -546,7 +651,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -578,12 +683,13 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-sql [--account]
                                            [--app]
-                                           [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                           [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--database]
                                            [--deployment]
                                            [--no-wait]
+                                           [--opt-out {configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -602,10 +708,10 @@ directCommands:
     syntax: az spring connection create cosmos-sql
   - summary: |-
       Create a connection between spring app and cosmos-sql with resource name
-    syntax: az spring connection create cosmos-sql -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg CosmosRG --account MyAccount --database MyDB --system-identity
+    syntax: az spring connection create cosmos-sql -g SpringCloudRG --service MySpringService --app MyApp --tg CosmosRG --account MyAccount --database MyDB --system-identity
   - summary: |-
       Create a connection between spring app and cosmos-sql with resource id
-    syntax: az spring connection create cosmos-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/sqlDatabases/{database} --system-identity
+    syntax: az spring connection create cosmos-sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/sqlDatabases/{database} --system-identity
   optionalParameters:
   - name: --account
     summary: |-
@@ -614,7 +720,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -627,15 +733,18 @@ directCommands:
     summary: |-
       Name of the database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -666,7 +775,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -698,11 +807,12 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-table [--account]
                                              [--app]
-                                             [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--deployment]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -722,10 +832,10 @@ directCommands:
     syntax: az spring connection create cosmos-table
   - summary: |-
       Create a connection between spring app and cosmos-table with resource name
-    syntax: az spring connection create cosmos-table -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg CosmosRG --account MyAccount --table MyTable --system-identity
+    syntax: az spring connection create cosmos-table -g SpringCloudRG --service MySpringService --app MyApp --tg CosmosRG --account MyAccount --table MyTable --system-identity
   - summary: |-
       Create a connection between spring app and cosmos-table with resource id
-    syntax: az spring connection create cosmos-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/tables/{table} --system-identity
+    syntax: az spring connection create cosmos-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DocumentDB/databaseAccounts/{account}/tables/{table} --system-identity
   optionalParameters:
   - name: --account
     summary: |-
@@ -734,7 +844,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -744,15 +854,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -783,7 +896,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -817,12 +930,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create eventhub [--app]
-                                         [--client-type {dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
+                                         [--client-type {dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--deployment]
                                          [--namespace]
                                          [--no-wait]
+                                         [--opt-out {configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
@@ -841,16 +955,16 @@ directCommands:
     syntax: az spring connection create eventhub
   - summary: |-
       Create a connection between spring app and eventhub with resource name
-    syntax: az spring connection create eventhub -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg EventhubRG --namespace MyNamespace --system-identity
+    syntax: az spring connection create eventhub -g SpringCloudRG --service MySpringService --app MyApp --tg EventhubRG --namespace MyNamespace --system-identity
   - summary: |-
       Create a connection between spring app and eventhub with resource id
-    syntax: az spring connection create eventhub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.EventHub/namespaces/{namespace} --system-identity
+    syntax: az spring connection create eventhub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.EventHub/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -860,9 +974,8 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --namespace
@@ -872,6 +985,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -902,7 +1019,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -933,12 +1050,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create keyvault [--app]
-                                         [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                         [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--deployment]
                                          [--new {false, true}]
                                          [--no-wait]
+                                         [--opt-out {configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--service]
@@ -957,22 +1075,22 @@ directCommands:
     syntax: az spring connection create keyvault
   - summary: |-
       Create a connection between spring app and keyvault with resource name
-    syntax: az spring connection create keyvault -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg KeyvaultRG --vault MyVault --system-identity
+    syntax: az spring connection create keyvault -g SpringCloudRG --service MySpringService --app MyApp --tg KeyvaultRG --vault MyVault --system-identity
   - summary: |-
       Create a connection between spring app and keyvault with resource id
-    syntax: az spring connection create keyvault --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.KeyVault/vaults/{vault} --system-identity
+    syntax: az spring connection create keyvault --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.KeyVault/vaults/{vault} --system-identity
   - summary: |-
       Create a new keyvault and connect spring app to it interactively
     syntax: az spring connection create keyvault --new
   - summary: |-
       Create a new keyvault and connect spring app to it
-    syntax: az spring connection create keyvault --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --new
+    syntax: az spring connection create keyvault --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --new
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -982,9 +1100,8 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --new
@@ -996,6 +1113,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1021,7 +1142,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -1057,12 +1178,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create mysql [--app]
-                                      [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                      [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                       [--connection]
                                       [--customized-keys]
                                       [--database]
                                       [--deployment]
                                       [--no-wait]
+                                      [--opt-out {configinfo, publicnetwork}]
                                       [--private-endpoint {false, true}]
                                       [--resource-group]
                                       [--secret]
@@ -1079,16 +1201,16 @@ directCommands:
     syntax: az spring connection create mysql
   - summary: |-
       Create a connection between spring app and mysql with resource name
-    syntax: az spring connection create mysql -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg MysqlRG --server MyServer --database MyDB --secret name=XX secret=XX
+    syntax: az spring connection create mysql -g SpringCloudRG --service MySpringService --app MyApp --tg MysqlRG --server MyServer --database MyDB --secret name=XX secret=XX
   - summary: |-
       Create a connection between spring app and mysql with resource id
-    syntax: az spring connection create mysql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBForMySQL/servers/{server}/databases/{database} --secret name=XX secret=XX
+    syntax: az spring connection create mysql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBForMySQL/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1101,15 +1223,18 @@ directCommands:
     summary: |-
       Name of the mysql database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1141,7 +1266,7 @@ directCommands:
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
@@ -1159,20 +1284,23 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create mysql-flexible [--app]
-                                               [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                               [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                [--connection]
                                                [--customized-keys]
                                                [--database]
                                                [--deployment]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--resource-group]
                                                [--secret]
                                                [--server]
                                                [--service]
+                                               [--service-principal]
                                                [--source-id]
                                                [--system-identity]
                                                [--target-id]
                                                [--target-resource-group]
+                                               [--user-identity]
                                                [--vault-id]
   examples:
   - summary: |-
@@ -1180,16 +1308,16 @@ directCommands:
     syntax: az spring connection create mysql-flexible
   - summary: |-
       Create a connection between spring app and mysql-flexible with resource name
-    syntax: az spring connection create mysql-flexible -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg MysqlRG --server MyServer --database MyDB --secret name=XX secret=XX
+    syntax: az spring connection create mysql-flexible -g SpringCloudRG --service MySpringService --app MyApp --tg MysqlRG --server MyServer --database MyDB --secret name=XX secret=XX
   - summary: |-
       Create a connection between spring app and mysql-flexible with resource id
-    syntax: az spring connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
+    syntax: az spring connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1202,15 +1330,18 @@ directCommands:
     summary: |-
       Name of the mysql flexible database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -1232,9 +1363,18 @@ directCommands:
   - name: --service
     summary: |-
       Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -1248,6 +1388,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1261,23 +1409,26 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create postgres [--app]
-                                         [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                         [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--database]
                                          [--deployment]
                                          [--new {false, true}]
                                          [--no-wait]
+                                         [--opt-out {configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
                                          [--server]
                                          [--service]
                                          [--service-endpoint {false, true}]
+                                         [--service-principal]
                                          [--source-id]
                                          [--system-identity]
                                          [--target-id]
                                          [--target-resource-group]
+                                         [--user-identity]
                                          [--vault-id]
   examples:
   - summary: |-
@@ -1285,22 +1436,22 @@ directCommands:
     syntax: az spring connection create postgres
   - summary: |-
       Create a connection between spring app and postgres with resource name
-    syntax: az spring connection create postgres -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
+    syntax: az spring connection create postgres -g SpringCloudRG --service MySpringService --app MyApp --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
   - summary: |-
       Create a connection between spring app and postgres with resource id
-    syntax: az spring connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/servers/{server}/databases/{database} --secret name=XX secret=XX
+    syntax: az spring connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/servers/{server}/databases/{database} --secret name=XX secret=XX
   - summary: |-
       Create a new postgres and connect spring app to it interactively
     syntax: az spring connection create postgres --new
   - summary: |-
       Create a new postgres and connect spring app to it
-    syntax: az spring connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --new
+    syntax: az spring connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --new
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1313,9 +1464,8 @@ directCommands:
     summary: |-
       Name of postgres database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --new
@@ -1327,6 +1477,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1356,9 +1510,18 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -1370,6 +1533,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1381,20 +1552,23 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create postgres-flexible [--app]
-                                                  [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                                  [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--database]
                                                   [--deployment]
                                                   [--no-wait]
+                                                  [--opt-out {configinfo, publicnetwork}]
                                                   [--resource-group]
                                                   [--secret]
                                                   [--server]
                                                   [--service]
+                                                  [--service-principal]
                                                   [--source-id]
                                                   [--system-identity]
                                                   [--target-id]
                                                   [--target-resource-group]
+                                                  [--user-identity]
                                                   [--vault-id]
   examples:
   - summary: |-
@@ -1402,16 +1576,16 @@ directCommands:
     syntax: az spring connection create postgres-flexible
   - summary: |-
       Create a connection between spring app and postgres-flexible with resource name
-    syntax: az spring connection create postgres-flexible -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
+    syntax: az spring connection create postgres-flexible -g SpringCloudRG --service MySpringService --app MyApp --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
   - summary: |-
       Create a connection between spring app and postgres-flexible with resource id
-    syntax: az spring connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
+    syntax: az spring connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1424,15 +1598,18 @@ directCommands:
     summary: |-
       Name of postgres flexible database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -1454,9 +1631,18 @@ directCommands:
   - name: --service
     summary: |-
       Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -1468,6 +1654,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1479,12 +1673,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create redis [--app]
-                                      [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+                                      [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                       [--connection]
                                       [--customized-keys]
                                       [--database]
                                       [--deployment]
                                       [--no-wait]
+                                      [--opt-out {configinfo, publicnetwork}]
                                       [--private-endpoint {false, true}]
                                       [--resource-group]
                                       [--secret]
@@ -1500,16 +1695,16 @@ directCommands:
     syntax: az spring connection create redis
   - summary: |-
       Create a connection between spring app and redis with resource name
-    syntax: az spring connection create redis -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg RedisRG --server MyServer --database MyDB --secret
+    syntax: az spring connection create redis -g SpringCloudRG --service MySpringService --app MyApp --tg RedisRG --server MyServer --database MyDB --secret
   - summary: |-
       Create a connection between spring app and redis with resource id
-    syntax: az spring connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
+    syntax: az spring connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1522,15 +1717,18 @@ directCommands:
     summary: |-
       Name of the redis database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1551,7 +1749,7 @@ directCommands:
       Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
@@ -1569,12 +1767,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create redis-enterprise [--app]
-                                                 [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+                                                 [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--customized-keys]
                                                  [--database]
                                                  [--deployment]
                                                  [--no-wait]
+                                                 [--opt-out {configinfo, publicnetwork}]
                                                  [--resource-group]
                                                  [--secret]
                                                  [--server]
@@ -1589,16 +1788,16 @@ directCommands:
     syntax: az spring connection create redis-enterprise
   - summary: |-
       Create a connection between spring app and redis-enterprise with resource name
-    syntax: az spring connection create redis-enterprise -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg RedisRG --server MyServer --database MyDB --secret
+    syntax: az spring connection create redis-enterprise -g SpringCloudRG --service MySpringService --app MyApp --tg RedisRG --server MyServer --database MyDB --secret
   - summary: |-
       Create a connection between spring app and redis-enterprise with resource id
-    syntax: az spring connection create redis-enterprise --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redisEnterprise/{server}/databases/{database} --secret
+    syntax: az spring connection create redis-enterprise --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redisEnterprise/{server}/databases/{database} --secret
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1611,15 +1810,18 @@ directCommands:
     summary: |-
       Name of the redis enterprise database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -1636,7 +1838,7 @@ directCommands:
       Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
@@ -1654,12 +1856,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create servicebus [--app]
-                                           [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+                                           [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--deployment]
                                            [--namespace]
                                            [--no-wait]
+                                           [--opt-out {configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -1678,16 +1881,16 @@ directCommands:
     syntax: az spring connection create servicebus
   - summary: |-
       Create a connection between spring app and servicebus with resource name
-    syntax: az spring connection create servicebus -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg ServicebusRG --namespace MyNamespace --system-identity
+    syntax: az spring connection create servicebus -g SpringCloudRG --service MySpringService --app MyApp --tg ServicebusRG --namespace MyNamespace --system-identity
   - summary: |-
       Create a connection between spring app and servicebus with resource id
-    syntax: az spring connection create servicebus --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.ServiceBus/namespaces/{namespace} --system-identity
+    syntax: az spring connection create servicebus --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.ServiceBus/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1697,9 +1900,8 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --namespace
@@ -1709,6 +1911,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1739,7 +1945,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -1770,11 +1976,12 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create signalr [--app]
-                                        [--client-type {dotnet, none}]
+                                        [--client-type {dotnet, dotnet-internal, none}]
                                         [--connection]
                                         [--customized-keys]
                                         [--deployment]
                                         [--no-wait]
+                                        [--opt-out {configinfo, publicnetwork}]
                                         [--private-endpoint {false, true}]
                                         [--resource-group]
                                         [--secret]
@@ -1793,16 +2000,16 @@ directCommands:
     syntax: az spring connection create signalr
   - summary: |-
       Create a connection between spring app and signalr with resource name
-    syntax: az spring connection create signalr -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg SignalrRG --signalr MySignalR --system-identity
+    syntax: az spring connection create signalr -g SpringCloudRG --service MySpringService --app MyApp --tg SignalrRG --signalr MySignalR --system-identity
   - summary: |-
       Create a connection between spring app and signalr with resource id
-    syntax: az spring connection create signalr --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/SignalR/{signalr} --system-identity
+    syntax: az spring connection create signalr --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/SignalR/{signalr} --system-identity
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, none"
+    parameterValueGroup: "dotnet, dotnet-internal, none"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1812,15 +2019,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1850,7 +2060,7 @@ directCommands:
       Name of the signalr service. Required if '--target-id' is not specified.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -1881,22 +2091,25 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create sql [--app]
-                                    [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+                                    [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                     [--connection]
                                     [--customized-keys]
                                     [--database]
                                     [--deployment]
                                     [--no-wait]
+                                    [--opt-out {configinfo, publicnetwork}]
                                     [--private-endpoint {false, true}]
                                     [--resource-group]
                                     [--secret]
                                     [--server]
                                     [--service]
                                     [--service-endpoint {false, true}]
+                                    [--service-principal]
                                     [--source-id]
                                     [--system-identity]
                                     [--target-id]
                                     [--target-resource-group]
+                                    [--user-identity]
                                     [--vault-id]
   examples:
   - summary: |-
@@ -1904,16 +2117,16 @@ directCommands:
     syntax: az spring connection create sql
   - summary: |-
       Create a connection between spring app and sql with resource name
-    syntax: az spring connection create sql -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg SqlRG --server MyServer --database MyDB --secret name=XX secret=XX
+    syntax: az spring connection create sql -g SpringCloudRG --service MySpringService --app MyApp --tg SqlRG --server MyServer --database MyDB --secret name=XX secret=XX
   - summary: |-
       Create a connection between spring app and sql with resource id
-    syntax: az spring connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
+    syntax: az spring connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -1926,15 +2139,18 @@ directCommands:
     summary: |-
       Name of the sql database. Required if '--target-id' is not specified.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1964,9 +2180,18 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -1978,6 +2203,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the sql server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1990,12 +2223,13 @@ directCommands:
   syntax: >-
     az spring connection create storage-blob [--account]
                                              [--app]
-                                             [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--deployment]
                                              [--new {false, true}]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -2014,16 +2248,16 @@ directCommands:
     syntax: az spring connection create storage-blob
   - summary: |-
       Create a connection between spring app and storage-blob with resource name
-    syntax: az spring connection create storage-blob -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg StorageRG --account MyAccount --system-identity
+    syntax: az spring connection create storage-blob -g SpringCloudRG --service MySpringService --app MyApp --tg StorageRG --account MyAccount --system-identity
   - summary: |-
       Create a connection between spring app and storage-blob with resource id
-    syntax: az spring connection create storage-blob --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/blobServices/default --system-identity
+    syntax: az spring connection create storage-blob --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/blobServices/default --system-identity
   - summary: |-
       Create a new storage-blob and connect spring app to it interactively
     syntax: az spring connection create storage-blob --new
   - summary: |-
       Create a new storage-blob and connect spring app to it
-    syntax: az spring connection create storage-blob --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --new
+    syntax: az spring connection create storage-blob --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --new
   optionalParameters:
   - name: --account
     summary: |-
@@ -2032,7 +2266,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -2042,9 +2276,8 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --new
@@ -2056,6 +2289,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2086,7 +2323,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -2118,11 +2355,12 @@ directCommands:
   syntax: >-
     az spring connection create storage-file [--account]
                                              [--app]
-                                             [--client-type {dotnet, java, nodejs, none, php, python, ruby, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--deployment]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -2138,10 +2376,10 @@ directCommands:
     syntax: az spring connection create storage-file
   - summary: |-
       Create a connection between spring app and storage-file with resource name
-    syntax: az spring connection create storage-file -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg StorageRG --account MyAccount --secret
+    syntax: az spring connection create storage-file -g SpringCloudRG --service MySpringService --app MyApp --tg StorageRG --account MyAccount --secret
   - summary: |-
       Create a connection between spring app and storage-file with resource id
-    syntax: az spring connection create storage-file --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/fileServices/default --secret
+    syntax: az spring connection create storage-file --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/fileServices/default --secret
   optionalParameters:
   - name: --account
     summary: |-
@@ -2150,7 +2388,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -2160,15 +2398,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2190,7 +2431,7 @@ directCommands:
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--account'] are not specified.
@@ -2209,11 +2450,12 @@ directCommands:
   syntax: >-
     az spring connection create storage-queue [--account]
                                               [--app]
-                                              [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--deployment]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -2232,10 +2474,10 @@ directCommands:
     syntax: az spring connection create storage-queue
   - summary: |-
       Create a connection between spring app and storage-queue with resource name
-    syntax: az spring connection create storage-queue -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg StorageRG --account MyAccount --system-identity
+    syntax: az spring connection create storage-queue -g SpringCloudRG --service MySpringService --app MyApp --tg StorageRG --account MyAccount --system-identity
   - summary: |-
       Create a connection between spring app and storage-queue with resource id
-    syntax: az spring connection create storage-queue --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/queueServices/default --system-identity
+    syntax: az spring connection create storage-queue --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/queueServices/default --system-identity
   optionalParameters:
   - name: --account
     summary: |-
@@ -2244,7 +2486,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -2254,15 +2496,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2293,7 +2538,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -2325,19 +2570,23 @@ directCommands:
   syntax: >-
     az spring connection create storage-table [--account]
                                               [--app]
-                                              [--client-type {dotnet, java, nodejs, none, python}]
+                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                               [--connection]
                                               [--customized-keys]
                                               [--deployment]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
                                               [--service]
                                               [--service-endpoint {false, true}]
+                                              [--service-principal]
                                               [--source-id]
+                                              [--system-identity]
                                               [--target-id]
                                               [--target-resource-group]
+                                              [--user-identity]
                                               [--vault-id]
   examples:
   - summary: |-
@@ -2345,10 +2594,10 @@ directCommands:
     syntax: az spring connection create storage-table
   - summary: |-
       Create a connection between spring app and storage-table with resource name
-    syntax: az spring connection create storage-table -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg StorageRG --account MyAccount --secret
+    syntax: az spring connection create storage-table -g SpringCloudRG --service MySpringService --app MyApp --tg StorageRG --account MyAccount --system-identity
   - summary: |-
       Create a connection between spring app and storage-table with resource id
-    syntax: az spring connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --secret
+    syntax: az spring connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --system-identity
   optionalParameters:
   - name: --account
     summary: |-
@@ -2357,7 +2606,7 @@ directCommands:
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -2367,15 +2616,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2395,15 +2647,37 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--account'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the storage account. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2415,11 +2689,12 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create webpubsub [--app]
-                                          [--client-type {dotnet, java, nodejs, none, python}]
+                                          [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                           [--connection]
                                           [--customized-keys]
                                           [--deployment]
                                           [--no-wait]
+                                          [--opt-out {configinfo, publicnetwork}]
                                           [--private-endpoint {false, true}]
                                           [--resource-group]
                                           [--secret]
@@ -2438,16 +2713,16 @@ directCommands:
     syntax: az spring connection create webpubsub
   - summary: |-
       Create a connection between spring app and webpubsub with resource name
-    syntax: az spring connection create webpubsub -g SpringCloudRG --service MySpringService --app MyApp --deployment MyDeployment --tg WebpubsubRG --webpubsub MyWebPubSub --system-identity
+    syntax: az spring connection create webpubsub -g SpringCloudRG --service MySpringService --app MyApp --tg WebpubsubRG --webpubsub MyWebPubSub --system-identity
   - summary: |-
       Create a connection between spring app and webpubsub with resource id
-    syntax: az spring connection create webpubsub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app}/deployments/{deployment} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/WebPubSub/{webpubsub} --system-identity
+    syntax: az spring connection create webpubsub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/WebPubSub/{webpubsub} --system-identity
   optionalParameters:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the spring.
   - name: --connection
@@ -2457,15 +2732,18 @@ directCommands:
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
-    defaultValue: "default"
     summary: |-
-      The deployment name of the app. Required if '--source-id' is not specified. Note: The default value of `--deployment` is deprecated and will be removed in a future release. Use `--deployment default` if you want stay in current behavior.
+      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
     isDeprecated: true
     deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2492,7 +2770,7 @@ directCommands:
       secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
-      The resource id of a spring. Required if ['--resource-group', '--service', '--app', '--deployment'] are not specified.
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
   - name: --system-identity
     summary: |-
       The system assigned identity auth info.
@@ -2519,6 +2797,7 @@ directCommands:
     summary: |-
       Name of the webpubsub service. Required if '--target-id' is not specified.
 commands:
+- az_spring_connection_create_app-insights
 - az_spring_connection_create_appconfig
 - az_spring_connection_create_confluent-cloud
 - az_spring_connection_create_cosmos-cassandra

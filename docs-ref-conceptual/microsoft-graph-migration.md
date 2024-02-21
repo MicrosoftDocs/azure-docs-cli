@@ -9,10 +9,10 @@ ms.topic: conceptual
 ms.service: azure-cli
 ms.devlang: azurecli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: microsoft graph, ms graph, active directory graph, ad graph
+keywords: microsoft graph, ms graph, active directory graph, ad graph, azure cli 
 ---
 
-# Microsoft Graph migration
+# Impact of Microsoft Graph migration in Azure CLI 
 
 Because of [the deprecation of Azure Active Directory (Azure AD) Graph](/graph/migrate-azure-ad-graph-overview), the underlying Active Directory Graph API is replaced by [Microsoft Graph API](/graph/api/overview) in Azure CLI 2.37.0.
 

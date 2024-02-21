@@ -18,22 +18,30 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az arcappliance validate hci --config-file
+                                 [--cloudagent]
                                  [--location]
+                                 [--loginconfigfile]
                                  [--name]
                                  [--resource-group]
   examples:
   - summary: |-
       Validate Arc resource bridge configuration and network settings for Azure Stack HCI
-    syntax: az arcappliance validate hci --config-file [REQUIRED]
+    syntax: az arcappliance validate hci --config-file [REQUIRED] --cloudagent [OPTIONAL] --loginconfigfile [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --config-file
     summary: |-
       Path to the Arc resource bridge appliance config file, <resourceName>-appliance.yaml.
   optionalParameters:
+  - name: --cloudagent
+    summary: |-
+      FQDN or IP address of the Azure Stack HCI MOC cloud agent service used by Arc resource bridge. This can be found in the <BridgeName>-infra.yaml configuration file stored locally on the HCI cluster.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --loginconfigfile
+    summary: |-
+      File path for the Azure Stack HCI login configuration file, kvatoken.tok. By default, it is stored locally on the HCI cluster.
   - name: --name -n
     summary: |-
       Name of the Arc resource bridge.
@@ -48,28 +56,44 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az arcappliance validate scvmm --config-file
+                                   [--address]
                                    [--location]
                                    [--name]
+                                   [--password]
+                                   [--port]
                                    [--resource-group]
+                                   [--username]
   examples:
   - summary: |-
       Validate Arc resource bridge configuration files and network settings for Arc-enabled SCVMM
-    syntax: az arcappliance validate scvmm --config-file [REQUIRED]
+    syntax: az arcappliance validate scvmm --config-file [REQUIRED] --address [OPTIONAL] --port [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --config-file
     summary: |-
       Path to the Arc resource bridge appliance config file, <resourceName>-appliance.yaml.
   optionalParameters:
+  - name: --address
+    summary: |-
+      SCVMM Server FQDN(Role name in case of HAVMM) or IP address.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --name -n
     summary: |-
       Name of the Arc resource bridge.
+  - name: --password
+    summary: |-
+      SCVMM Administrator Password.
+  - name: --port
+    summary: |-
+      SCVMM server port (The default is 8100. This is the port number specified for VMM console to server connection e.g. vmmserver.constoso.com:8100).
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --username
+    summary: |-
+      SCVMM Administrator Username (domain\username).
 - uid: az_arcappliance_validate_vmware
   name: az arcappliance validate vmware
   summary: |-
@@ -78,28 +102,40 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az arcappliance validate vmware --config-file
+                                    [--address]
                                     [--location]
                                     [--name]
+                                    [--password]
                                     [--resource-group]
+                                    [--username]
   examples:
   - summary: |-
       Validate Arc resource bridge configuration and network settings for Arc-enabled VMware
-    syntax: az arcappliance validate vmware --config-file [REQUIRED]
+    syntax: az arcappliance validate vmware --config-file [REQUIRED] --address [OPTIONAL] --username [OPTIONAL] --password [OPTIONAL]
   requiredParameters:
   - isRequired: true
     name: --config-file
     summary: |-
       Path to the Arc resource bridge appliance config file, <resourceName>-appliance.yaml.
   optionalParameters:
+  - name: --address
+    summary: |-
+      FQDN or IP address for vCenter Server instance. Ex: 10.160.0.1.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --name -n
     summary: |-
       Name of the Arc resource bridge.
+  - name: --password
+    summary: |-
+      Password for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --username
+    summary: |-
+      Username for vSphere account that Arc resource bridge uses for on-premises infrastructure guest management.
 commands:
 - az_arcappliance_validate_hci
 - az_arcappliance_validate_scvmm

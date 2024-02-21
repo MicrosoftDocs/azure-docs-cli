@@ -1,0 +1,499 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_asset
+name: az iot ops asset
+extensionInformation: >-
+  > [!NOTE]
+
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot ops asset** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage assets.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_asset_create
+  name: az iot ops asset create
+  summary: |-
+    Create an asset.
+  description: |-
+    Either custom location or cluster name must be provided. This command will check
+    for the existance of the associated custom location and cluster and ensure that
+    both are set up correctly with the microsoft.deviceregistry.assets extension.
+
+    At least one data point or event must be defined during asset creation.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset create --endpoint
+                            --name
+                            --resource-group
+                            [--asset-type]
+                            [--cl]
+                            [--clrg]
+                            [--cls]
+                            [--cluster]
+                            [--cluster-resource-group]
+                            [--cluster-subscription]
+                            [--data]
+                            [--data-publish-int]
+                            [--data-queue-size]
+                            [--data-sample-int]
+                            [--description]
+                            [--disable {false, true}]
+                            [--display-name]
+                            [--documentation-uri]
+                            [--eai]
+                            [--epi]
+                            [--eqs]
+                            [--esi]
+                            [--event]
+                            [--hardware-revision]
+                            [--location]
+                            [--manufacturer]
+                            [--manufacturer-uri]
+                            [--model]
+                            [--pc]
+                            [--serial-number]
+                            [--software-revision]
+                            [--tags]
+  examples:
+  - summary: |-
+      Create an asset using the given custom location.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --custom-location {custom_location} --endpoint {endpoint} --data data_source={data_source}
+  - summary: |-
+      Create an asset using the given custom location and resource group for the custom location. The resource group must be included if there are multiple custom locations with the same name within a subscription.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --custom-location {custom_location} --custom-location-resource-group {custom_location_resource_group} --endpoint {endpoint} --data data_source={data_source}
+  - summary: |-
+      Create an asset using the given cluster name. The resource group must be included if there are multiple clusters with the same name within a subscription.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --cluster {cluster} --cluster-resource-group {cluster_resource_group} --endpoint {endpoint} --event event_notifier={event_notifier}
+  - summary: |-
+      Create an asset using the given cluster name and custom location.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --cluster {cluster} --custom-location {custom_location} --endpoint {endpoint} --event event_notifier={event_notifier}
+  - summary: |-
+      Create an asset with custom data point and event defaults.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --custom-location {custom_location} --endpoint {endpoint} --data-publish-int {data_point_publishing_interval} --data-queue-size {data_point_queue_size} --data-sample-int {data_point_sampling_interval} --event-publish-int {event_publishing_interval} --event-queue-size {event_queue_size} --event-sample-int {event_sampling_interval} --event event_notifier={event_notifier}
+  - summary: |-
+      Create an asset with custom asset type, description, documentation uri, external asset id, hardware revision, product code, and software revision.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --custom-location {custom_location} --endpoint {endpoint} --asset-type {asset_type} --description {description} --documentation-uri {documentation_uri} --external-asset-id {external_asset_id} --hardware-revision {hardware_revision} --product-code {product_code} --software-revision {software_revision} --data data_source={data_source}
+  - summary: |-
+      Create an asset with two events, manufacturer, manufacturer uri, model, serial number.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --custom-location {custom_location} --endpoint {endpoint} --event capability_id={capability_id} event_notifier={event_notifier} name={name} observability_mode={observability_mode} sampling_interval={sampling_interval} queue_size={queue_size} --event event_notifier={event_notifier} --manufacturer {manufacturer} --manufacturer-uri {manufacturer_uri} --model {model} --serial-number {serial_number}
+  - summary: |-
+      Create a disabled asset with two data points.
+    syntax: az iot ops asset create --name {asset_name} -g {resource_group} --custom-location {custom_location} --endpoint {endpoint} --disable --data capability_id={capability_id} data_source={data_source} name={name} observability_mode={observability_mode} sampling_interval={sampling_interval} queue_size={queue_size} --data data_source={data_source}
+  - summary: |-
+      Create an asset with the given pre-filled values.
+    syntax: az iot ops asset create --name MyAsset -g MyRg --custom-location MyLocation --endpoint example.com --data capability_id=myTagId data_source=nodeId1 name=myTagName1 observability_mode=counter sampling_interval=10 queue_size=2 --data data_source=nodeId2 --data-publish-int 1000 --data-queue-size 1 --data-sample-int 30 --asset-type customAsset --description 'Description for a test asset.' --documentation-uri www.help.com --external-asset-id 000-000-0000 --hardware-revision 10.0 --product-code XXX100 --software-revision 0.1 --manufacturer Contoso --manufacturer-uri constoso.com --model AssetModel --serial-number 000-000-ABC10
+  requiredParameters:
+  - isRequired: true
+    name: --endpoint
+    summary: |-
+      Asset endpoint name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --asset-type --at
+    summary: |-
+      Asset type.
+  - name: --cl --custom-location
+    summary: |-
+      Custom location used to associate asset with cluster.
+  - name: --clrg --custom-location-resource-group
+    summary: |-
+      Resource group for custom location.
+  - name: --cls --custom-location-subscription
+    summary: |-
+      Subscription Id for custom location. If not provided, asset subscription Id will be used.
+  - name: --cluster -c
+    summary: |-
+      Cluster to associate the asset with.
+  - name: --cluster-resource-group --crg
+    summary: |-
+      Resource group for cluster.
+  - name: --cluster-subscription --cs
+    summary: |-
+      Subscription Id for cluster. If not provided, asset subscription Id will be used.
+  - name: --data
+    summary: |-
+      Space-separated key=value pairs corresponding to properties of the data point to create. The following key values are supported: `capability_id`, `data_source` (required), `name`, `observability_mode` (none, gauge, counter, histogram, or log), `sampling_interval` (int), `queue_size` (int). --data can be used 1 or more times. Review help examples for full parameter usage.
+  - name: --data-publish-int --dpi
+    defaultValue: "1000"
+    summary: |-
+      Default publishing interval for data points.
+  - name: --data-queue-size --dqs
+    defaultValue: "1"
+    summary: |-
+      Default queue size for data points.
+  - name: --data-sample-int --dsi
+    defaultValue: "500"
+    summary: |-
+      Default sampling interval (in milliseconds) for data points.
+  - name: --description -d
+    summary: |-
+      Description.
+  - name: --disable
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable an asset.
+  - name: --display-name --dn
+    summary: |-
+      Display name.
+  - name: --documentation-uri --du
+    summary: |-
+      Documentation URI.
+  - name: --eai --external-asset-id
+    summary: |-
+      External asset Id.
+  - name: --epi --event-publish-int
+    defaultValue: "1000"
+    summary: |-
+      Default publishing interval for events.
+  - name: --eqs --event-queue-size
+    defaultValue: "1"
+    summary: |-
+      Default queue size for events.
+  - name: --esi --event-sample-int
+    defaultValue: "500"
+    summary: |-
+      Default sampling interval (in milliseconds) for events.
+  - name: --event
+    summary: |-
+      Space-separated key=value pairs corresponding to properties of the event to create. The following key values are supported: `capability_id`, `event_notifier` (required), `name`, `observability_mode` (none, gauge, counter, histogram, or log), `sampling_interval` (int), `queue_size` (int). --event can be used 1 or more times. Review help examples for full parameter usage.
+  - name: --hardware-revision --hr
+    summary: |-
+      Hardware revision.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --manufacturer
+    summary: |-
+      Manufacturer.
+  - name: --manufacturer-uri --mu
+    summary: |-
+      Manufacturer URI.
+  - name: --model
+    summary: |-
+      Model.
+  - name: --pc --product-code
+    summary: |-
+      Product code.
+  - name: --serial-number --sn
+    summary: |-
+      Serial number.
+  - name: --software-revision --sr
+    summary: |-
+      Software revision.
+  - name: --tags
+    summary: |-
+      Asset resource tags. Property bag in key-value pairs with the following format: a=b c=d.
+- uid: az_iot_ops_asset_delete
+  name: az iot ops asset delete
+  summary: |-
+    Delete an asset.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset delete --name
+                            --resource-group
+  examples:
+  - summary: |-
+      Delete an asset.
+    syntax: az iot ops asset delete --name {asset_name} -g {resource_group}
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_iot_ops_asset_query
+  name: az iot ops asset query
+  summary: |-
+    Query the Resource Graph for assets.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset query [--asset-type]
+                           [--cl]
+                           [--description]
+                           [--disabled {false, true}]
+                           [--display-name]
+                           [--documentation-uri]
+                           [--eai]
+                           [--endpoint]
+                           [--hardware-revision]
+                           [--location]
+                           [--manufacturer]
+                           [--manufacturer-uri]
+                           [--model]
+                           [--pc]
+                           [--resource-group]
+                           [--serial-number]
+                           [--software-revision]
+  examples:
+  - summary: |-
+      Query for assets that are disabled within a given resource group.
+    syntax: az iot ops asset query -g {resource_group} --disabled
+  - summary: |-
+      Query for assets that have the given model, manufacturer, and serial number.
+    syntax: az iot ops asset query --model {model} --manufacturer {manufacturer} --serial-number {serial_number}
+  optionalParameters:
+  - name: --asset-type --at
+    summary: |-
+      Asset type.
+  - name: --cl --custom-location
+    summary: |-
+      Custom location used to associate asset with cluster.
+  - name: --description -d
+    summary: |-
+      Description.
+  - name: --disabled
+    parameterValueGroup: "false, true"
+    summary: |-
+      State of asset.
+  - name: --display-name --dn
+    summary: |-
+      Display name.
+  - name: --documentation-uri --du
+    summary: |-
+      Documentation URI.
+  - name: --eai --external-asset-id
+    summary: |-
+      External asset Id.
+  - name: --endpoint
+    summary: |-
+      Asset endpoint name.
+  - name: --hardware-revision --hr
+    summary: |-
+      Hardware revision.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --manufacturer
+    summary: |-
+      Manufacturer.
+  - name: --manufacturer-uri --mu
+    summary: |-
+      Manufacturer URI.
+  - name: --model
+    summary: |-
+      Model.
+  - name: --pc --product-code
+    summary: |-
+      Product code.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --serial-number --sn
+    summary: |-
+      Serial number.
+  - name: --software-revision --sr
+    summary: |-
+      Software revision.
+- uid: az_iot_ops_asset_show
+  name: az iot ops asset show
+  summary: |-
+    Show an asset.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset show --name
+                          --resource-group
+  examples:
+  - summary: |-
+      Show the details of an asset.
+    syntax: az iot ops asset show --name {asset_name} -g {resource_group}
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_iot_ops_asset_update
+  name: az iot ops asset update
+  summary: |-
+    Update an asset.
+  description: |-
+    To update data points and events, please use the command groups `az iot ops asset data-point` and `az iot ops asset events` respectively.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset update --name
+                            --resource-group
+                            [--asset-type]
+                            [--data-publish-int]
+                            [--data-queue-size]
+                            [--data-sample-int]
+                            [--description]
+                            [--disable {false, true}]
+                            [--display-name]
+                            [--documentation-uri]
+                            [--eai]
+                            [--epi]
+                            [--eqs]
+                            [--esi]
+                            [--hardware-revision]
+                            [--manufacturer]
+                            [--manufacturer-uri]
+                            [--model]
+                            [--pc]
+                            [--serial-number]
+                            [--software-revision]
+                            [--tags]
+  examples:
+  - summary: |-
+      Update an asset's data point and event defaults.
+    syntax: az iot ops asset update --name {asset_name} -g {resource_group} --data-publish-int {data_point_publishing_interval} --data-queue-size {data_point_queue_size} --data-sample-int {data_point_sampling_interval} --event-publish-int {event_publishing_interval} --event-queue-size {event_queue_size} --event-sample-int {event_sampling_interval}
+  - summary: |-
+      Update an asset's asset type, description, documentation uri, external asset id, hardware revision, product code, and software revision.
+    syntax: az iot ops asset update --name {asset_name} -g {resource_group} --asset-type {asset_type} --description {description} --documentation-uri {documentation_uri} --external-asset-id {external_asset_id} --hardware-revision {hardware_revision} --product-code {product_code} --software-revision {software_revision}
+  - summary: |-
+      Update an asset's manufacturer, manufacturer uri, model, serial number.
+    syntax: az iot ops asset update --name {asset_name} -g {resource_group} --manufacturer {manufacturer} --manufacturer-uri {manufacturer_uri} --model {model} --serial-number {serial_number}
+  - summary: |-
+      Disable an asset.
+    syntax: az iot ops asset update --name {asset_name} -g {resource_group} --disable
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --asset-type --at
+    summary: |-
+      Asset type.
+  - name: --data-publish-int --dpi
+    summary: |-
+      Default publishing interval for data points.
+  - name: --data-queue-size --dqs
+    summary: |-
+      Default queue size for data points.
+  - name: --data-sample-int --dsi
+    summary: |-
+      Default sampling interval (in milliseconds) for data points.
+  - name: --description -d
+    summary: |-
+      Description.
+  - name: --disable
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable an asset.
+  - name: --display-name --dn
+    summary: |-
+      Display name.
+  - name: --documentation-uri --du
+    summary: |-
+      Documentation URI.
+  - name: --eai --external-asset-id
+    summary: |-
+      External asset Id.
+  - name: --epi --event-publish-int
+    summary: |-
+      Default publishing interval for events.
+  - name: --eqs --event-queue-size
+    summary: |-
+      Default queue size for events.
+  - name: --esi --event-sample-int
+    summary: |-
+      Default sampling interval (in milliseconds) for events.
+  - name: --hardware-revision --hr
+    summary: |-
+      Hardware revision.
+  - name: --manufacturer
+    summary: |-
+      Manufacturer.
+  - name: --manufacturer-uri --mu
+    summary: |-
+      Manufacturer URI.
+  - name: --model
+    summary: |-
+      Model.
+  - name: --pc --product-code
+    summary: |-
+      Product code.
+  - name: --serial-number --sn
+    summary: |-
+      Serial number.
+  - name: --software-revision --sr
+    summary: |-
+      Software revision.
+  - name: --tags
+    summary: |-
+      Asset resource tags. Property bag in key-value pairs with the following format: a=b c=d.
+commands:
+- az_iot_ops_asset_create
+- az_iot_ops_asset_data-point
+- az_iot_ops_asset_data-point_add
+- az_iot_ops_asset_data-point_list
+- az_iot_ops_asset_data-point_remove
+- az_iot_ops_asset_delete
+- az_iot_ops_asset_endpoint
+- az_iot_ops_asset_endpoint_certificate
+- az_iot_ops_asset_endpoint_certificate_add
+- az_iot_ops_asset_endpoint_certificate_list
+- az_iot_ops_asset_endpoint_certificate_remove
+- az_iot_ops_asset_endpoint_create
+- az_iot_ops_asset_endpoint_delete
+- az_iot_ops_asset_endpoint_query
+- az_iot_ops_asset_endpoint_show
+- az_iot_ops_asset_endpoint_update
+- az_iot_ops_asset_event
+- az_iot_ops_asset_event_add
+- az_iot_ops_asset_event_list
+- az_iot_ops_asset_event_remove
+- az_iot_ops_asset_query
+- az_iot_ops_asset_show
+- az_iot_ops_asset_update
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage assets.

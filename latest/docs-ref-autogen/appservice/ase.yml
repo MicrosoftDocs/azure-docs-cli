@@ -33,7 +33,7 @@ directCommands:
                              [--zone-redundant {false, true}]
   examples:
   - summary: |-
-      Create Resource Group, vNet and app service environment v2 with default values.
+      Create resource group, Virtual Network and App Service Environment v3 with default values.
     syntax: >-
       az group create -g MyResourceGroup --location westeurope
 
@@ -42,41 +42,22 @@ directCommands:
         --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/24
 
       az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
-        --subnet MyAseSubnet
+        --subnet MyAseSubnet --kind asev3
   - summary: |-
-      Create External app service environments v2 with large front-ends and scale factor of 10 in existing resource group and vNet.
+      Create external App Service Environments v3 in existing resource group and Virtual Network.
     syntax: >-
       az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
-        --subnet MyAseSubnet --front-end-sku I3 --front-end-scale-factor 10 --virtual-ip-type External
+        --subnet MyAseSubnet --virtual-ip-type External --kind asev3
   - summary: |-
-      Create vNet and app service environment v2, but do not create network security group and route table in existing resource group.
-    syntax: >-
-      az network vnet create -g MyResourceGroup -n MyVirtualNetwork \
-        --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/24
-
-      az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
-        --subnet MyAseSubnet --ignore-network-security-group --ignore-route-table
-  - summary: |-
-      Create vNet and app service environment v2 in a smaller than recommended subnet in existing resource group.
+      Create Virtual Network and App Service Environment v3 in a smaller than recommended subnet in existing resource group.
     syntax: >-
       az network vnet create -g MyResourceGroup -n MyVirtualNetwork \
         --address-prefixes 10.0.0.0/16 --subnet-name MyAseSubnet --subnet-prefixes 10.0.0.0/26
 
       az appservice ase create -n MyAseName -g MyResourceGroup --vnet-name MyVirtualNetwork \
-        --subnet MyAseSubnet --ignore-subnet-size-validation
+        --subnet MyAseSubnet --ignore-subnet-size-validation --kind asev3
   - summary: |-
-      Create Resource Group, vNet and app service environment v3 with default values.
-    syntax: >-
-      az group create -g ASEv3ResourceGroup --location westeurope
-
-
-      az network vnet create -g ASEv3ResourceGroup -n MyASEv3VirtualNetwork \
-        --address-prefixes 10.0.0.0/16 --subnet-name MyASEv3Subnet --subnet-prefixes 10.0.0.0/24
-
-      az appservice ase create -n MyASEv3Name -g ASEv3ResourceGroup \
-        --vnet-name MyASEv3VirtualNetwork --subnet MyASEv3Subnet --kind asev3
-  - summary: |-
-      Create External zone redundant app service environment v3 with default values.
+      Create external zone redundant App Service Environment v3 with default values.
     syntax: >-
       az appservice ase create -n MyASEv3Name -g ASEv3ResourceGroup \
         --vnet-name MyASEv3VirtualNetwork --subnet MyASEv3Subnet --kind asev3 \
@@ -130,7 +111,7 @@ directCommands:
     summary: |-
       Do not check if subnet is sized according to recommendations.
   - name: --kind -k
-    defaultValue: "ASEv2"
+    defaultValue: "ASEv3"
     parameterValueGroup: "ASEv2, ASEv3"
     summary: |-
       Specify App Service Environment version.
@@ -482,5 +463,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 04/14/2023
+  ms.date: 01/29/2024
   description: Manage App Service Environments.

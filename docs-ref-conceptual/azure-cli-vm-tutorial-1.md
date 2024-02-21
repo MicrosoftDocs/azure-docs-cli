@@ -1,7 +1,7 @@
 ---
 title: Create virtual machine (VM) on a virtual network (VNet) prerequisites – Azure CLI | Microsoft Docs
 description: Prerequisites for creating a virtual machines (VM) on a virtual network (VNet) with the Azure CLI.
-ms.date: 08/2/2023
+ms.date: 01/08/2024
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -38,13 +38,25 @@ To get a better understanding of required parameters and steps related to `az gr
 # [Azure CLI](#tab/tabid-1)
 
 ```azurecli
-# create shell variables
+# create Bash shell variables
 resourceGroup=VMTutorialResources
 location=eastus
 
 az group create --name $resourceGroup --location $location
- ```
+```
 
-# [Azure CLI in interactive mode](#tab/tabid-2)
+# [PowerShell](#tab/tabid-2)
+
+```azurecli
+# Create PowerShell variables
+$resourceGroup = "VMTutorialResources"
+$location = "eastus"
+
+az group create --name $resourceGroup --location $location
+```
+
+# [Azure CLI in interactive mode](#tab/tabid-3)
 
 ![Azure Interactive Hint](./media/az-interactive-vm-tutorial-hint.png)
+
+***

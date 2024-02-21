@@ -29,9 +29,12 @@ directCommands:
                                    [--custom-routes]
                                    [--edge-zone]
                                    [--edge-zone-vnet-id]
+                                   [--enable-private-ip {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--gateway-default-site]
                                    [--gateway-type {ExpressRoute, LocalGateway, Vpn}]
                                    [--location]
+                                   [--max-scale-unit]
+                                   [--min-scale-unit]
                                    [--nat-rule]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--peer-weight]
@@ -40,7 +43,7 @@ directCommands:
                                    [--radius-server]
                                    [--root-cert-data]
                                    [--root-cert-name]
-                                   [--sku {Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ}]
+                                   [--sku {Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, ErGwScale, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ}]
                                    [--tags]
                                    [--vpn-auth-type]
                                    [--vpn-gateway-generation {Generation1, Generation2, None}]
@@ -102,6 +105,10 @@ directCommands:
   - name: --edge-zone-vnet-id
     summary: |-
       The Extended vnet resource id of the local gateway.
+  - name: --enable-private-ip
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Whether private IP needs to be enabled on this gateway for connections or not.
   - name: --gateway-default-site
     summary: |-
       Name or ID of a local network gateway representing a local network site with default routes.
@@ -113,6 +120,12 @@ directCommands:
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --max-scale-unit
+    summary: |-
+      Maximum scale units for auto-scale configuration.
+  - name: --min-scale-unit
+    summary: |-
+      Minimum scale units for auto-scale configuration.
   - name: --nat-rule --nat-rules
     summary: |-
       VirtualNetworkGatewayNatRule Resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--nat-rule`.
@@ -140,7 +153,7 @@ directCommands:
       Root certificate name.
   - name: --sku
     defaultValue: "Basic"
-    parameterValueGroup: "Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ"
+    parameterValueGroup: "Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, ErGwScale, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ"
     summary: |-
       VNet gateway SKU.
   - name: --tags
@@ -241,7 +254,10 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
-  syntax: az network vnet-gateway list --resource-group
+  syntax: >-
+    az network vnet-gateway list --resource-group
+                                 [--max-items]
+                                 [--next-token]
   examples:
   - summary: |-
       List virtual network gateways in a resource group.
@@ -251,6 +267,13 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_network_vnet-gateway_list-advertised-routes
   name: az network vnet-gateway list-advertised-routes
   summary: |-
@@ -483,10 +506,13 @@ directCommands:
                                    [--client-protocol]
                                    [--custom-routes]
                                    [--enable-bgp {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--enable-private-ip {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--gateway-default-site]
                                    [--gateway-type {ExpressRoute, LocalGateway, Vpn}]
                                    [--ids]
+                                   [--max-scale-unit]
+                                   [--min-scale-unit]
                                    [--name]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--peer-weight]
@@ -498,7 +524,7 @@ directCommands:
                                    [--root-cert-data]
                                    [--root-cert-name]
                                    [--set]
-                                   [--sku {Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ}]
+                                   [--sku {Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, ErGwScale, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ}]
                                    [--subscription]
                                    [--tags]
                                    [--vnet]
@@ -543,6 +569,10 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable BGP (Border Gateway Protocol).
+  - name: --enable-private-ip
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Whether private IP needs to be enabled on this gateway for connections or not.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -557,6 +587,12 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --max-scale-unit
+    summary: |-
+      Maximum scale units for auto-scale configuration.
+  - name: --min-scale-unit
+    summary: |-
+      Minimum scale units for auto-scale configuration.
   - name: --name -n
     summary: |-
       Name of the VNet gateway.
@@ -592,7 +628,7 @@ directCommands:
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --sku
-    parameterValueGroup: "Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ"
+    parameterValueGroup: "Basic, ErGw1AZ, ErGw2AZ, ErGw3AZ, ErGwScale, HighPerformance, Standard, UltraPerformance, VpnGw1, VpnGw1AZ, VpnGw2, VpnGw2AZ, VpnGw3, VpnGw3AZ, VpnGw4, VpnGw4AZ, VpnGw5, VpnGw5AZ"
     summary: |-
       VNet gateway SKU.
   - name: --subscription
@@ -743,5 +779,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 06/27/2023
+  ms.date: 10/11/2023
   description: To learn more about Azure Virtual Network Gateways, visit https://docs.microsoft.com/azure/vpn-gateway/vpn-gateway-howto-site-to-site-resource-manager-cli.
