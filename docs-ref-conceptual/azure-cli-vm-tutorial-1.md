@@ -57,6 +57,8 @@ az group create --name $resourceGroup --location $location
 
 # [Azure CLI in interactive mode](#tab/tabid-3)
 
+The command recommendation feature in interactive mode lists and defines all of the required parameters needed for `az group create`:
+
 ![Azure Interactive Hint](./media/az-interactive-vm-tutorial-hint.png)
 
 ***
