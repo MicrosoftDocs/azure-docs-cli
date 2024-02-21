@@ -171,7 +171,7 @@ The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
 `displayName` is the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modify the example from the
 last section by changing the multiselect list to a hash:
 
-> [NOTE!]
+> [!NOTE]
 > If you choose to use a space in a new column name, like `VM name` instead of `VMName`, the quoting
 > rules change in both Bash and PowerShell. See [Pass spaces in Azure CLI parameters](./use-azure-cli-successfully-in-powershell.md#pass-spaces-in-azure-cli-parameters)
 > for examples.

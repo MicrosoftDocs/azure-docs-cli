@@ -349,9 +349,9 @@ az rest --method get --url https://management.azure.com/subscriptions/$subscript
 
 ## Pass parameters containing a PowerShell special character
 
-There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add
-`` ` `` before the special character to escape it. You can also enclose the value in single or
-double quotes `"`/`"`.
+There are special characters of PowerShell, such as at (`@`). To run Azure CLI in PowerShell, add a
+backtick `` ` `` before the special character to escape it. You can also enclose the value in single
+(`'`) or double (`"`) quotes.
 
 **The following three examples will work in PowerShell:**
 
@@ -362,6 +362,39 @@ double quotes `"`/`"`.
 **This example will not work in PowerShell:**
 
 * parameterName @parameters.json
+
+## Pass parameters containing JSON
+
+For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to load from a file to bypass the shell's interpretation. Note that the At ('@') symbol is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting) in PowerShell, so it should be quoted.
+
+There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that contain both JSON file content and command examples.  Here's a code snippet:
+
+```azurecli
+# Bash script
+az ad app create --display-name myTestAppName \
+    --is-fallback-public-client \
+    --required-resource-accesses @manifest.json
+```
+
+In this example, notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell environment.
+
+```azurecli
+# PowerShell script
+az ad app create --display-name myTestAppName `
+    --is-fallback-public-client `
+    --required-resource-accesses "@manifest.json"
+```
+
+## Pass parameters containing key:value pairs
+
+Some Azure CLI parameter values, such as Azure resource tags, require key:value pairs. If your `key` or `value` contains a space or special character, the Bash and PowerShell syntax are not always the same.
+
+See [Create tags to practice quoting differences](./get-started-tutorial-2-environment-syntax.md#create-tags-to-practice-quoting-differences) in the [Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md) tutorial. This tutorial step gives examples for Bash, PowerShell and Cmd for the following key:value pair scenarios:
+
+* spaces
+* empty values
+* special characters
+* variables
 
 ## Error handling for Azure CLI in PowerShell
 
@@ -419,7 +452,8 @@ For more information about PowerShell error handling, see [Everything you wanted
 
 ## See also
 
-* [See more examples of syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
-* Compare syntax of CMD, PowerShell, and Bash in [Query command output using JMESPath](./query-azure-cli.md)
+* Compare syntax of Bash, PowerShell and Cmd in these articles:
+  * [Syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
+  * [Query command output using JMESPath](./query-azure-cli.md)
 * [Use quotation marks in parameters](./use-azure-cli-successfully.md#use-quotation-marks-in-parameters)
 * [Learn quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
