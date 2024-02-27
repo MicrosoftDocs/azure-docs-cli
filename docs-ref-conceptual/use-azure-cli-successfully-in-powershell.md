@@ -25,7 +25,7 @@ environments:
 * [PowerShell](/powershell/scripting/overview) running in a Linux operating system using Azure Cloud Shell.
 * [Windows PowerShell](/powershell/scripting/windows-powershell/overview) running in Windows 11
   using the PowerShell 5 terminal.
-* PowerShell running in a Windows 11 operating system using the PowerShell 7 terminal.
+* PowerShell running in a Windows 11 using the PowerShell 7 terminal.
 
 If you're new to CLI, differentiating between a _tool_ and an _environment_ might be confusing. [How-to choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
 provides a good comparison.
@@ -59,8 +59,8 @@ the `Prepare your environments` tab to install the environments used in this art
      environment.
    * A local installation of Windows PowerShell 5.1 that is preinstalled in most Windows operating
      systems.
-   * A local installation of [PowerShell v7.4.1](/powershell/scripting/install/installing-powershell-on-windows
-     or higher in a Windows environment.
+   * A local installation of [PowerShell 7](/powershell/scripting/install/installing-powershell-on-windows)
+     in a Windows environment.
 
    This article was tested in Windows 11 Enterprise version 23H2.
 
@@ -100,7 +100,7 @@ the `Prepare your environments` tab to install the environments used in this art
     WSManStackVersion              3.0
     ```
 
-    Here's the output from Windows PowerShell, which is **the version of Azure CLI and PowerShell
+    Here's the output from a Windows PowerShell 5 terminal, which is **the version of Azure CLI and PowerShell
     installed on your machine**. In this output example, Azure CLI version 2.57.0 and Windows
     PowerShell 5.1.22621 are installed on the local machine.
 
@@ -127,6 +127,9 @@ the `Prepare your environments` tab to install the environments used in this art
     PSRemotingProtocolVersion      2.3
     SerializationVersion           1.1.0.1
     ```
+
+    If you run `$PSVersionTable` in a PowerShell 7 terminal, then your PowerShell version will be
+    `PSVersion 7` or higher depending on what is installed on your local machine.
 
 1. If you need an Azure storage account to run these test scripts, create one now.
 
@@ -216,21 +219,24 @@ the `Prepare your environments` tab to install the environments used in this art
 
 In Azure CLI, when you need to pass a parameter value containing a space, there are quoting
 differences between operating systems and environments. In this example, use [az storage account list](/cli/azure/storage/account#az-storage-account-list)
-and rename table columns with a word containing a space.
+and rename output columns with a word containing a space.
 
 # [Bash in Linux](#tab/Bash1)
 
 In this example, notice the single quote (`'...'`) wrapper with embedded double quotes (`"..."`).
+This example also works in `PowerShell in Linux`.
 
 ```azurecli
 az storage account list --query '[].{"SA Name":name, "Primary endpoint":primaryEndpoints.blob}' --output table
 ```
 
-If you want to add a filter, the syntax changes. Notice how this example wraps the `--query` parameter value in double quotes (`"..."`) and uses a backslash (`\`) escape character.
+If you want to add a filter, the syntax changes. Notice how this example wraps the `--query` parameter value in double quotes (`"..."`) and uses a backslash (`\`) escape character. This script will not run in PowerShell.
 
 ```azurecli
  az storage account list --query "[?creationTime >='2024-02-01'].{\"SA Name\":name,\"Primary endpoint\":primaryEndpoints.blob}" --output table
 ```
+
+If you just tried to run the filter syntax in a PowerShell environment, you received error message `argument --query: invalid jmespath_type value: "[?creationTime >=..."`. In Bash in a Linux environment, your output is similar to this:
 
 ```output
 SA Name           Primary Endpoint
@@ -249,7 +255,7 @@ az storage account list --query "[].{`"SA Name`":name, `"Primary endpoint`":prim
 
 If you run this syntax in Windows PowerShell or PowerShell 7 installed on a Window's machine, you
 receive error `argument --query: invalid jmespath_type value: '[].{SA'`. Notice how the error
-message is breaking on the space between `SA` and `Name`.
+message is breaking on the space between `SA` and `Name`. In Bash within a Linux environment, your error message is `argument --query: invalid jmespath_type value: '[].{:name,'`.
 
 Now add a filter. Unlike the Bash script, adding a date filter doesn't require reworking the entire
 `--query` string.
@@ -260,20 +266,23 @@ az storage account list --query "[?creationTime >='2024-02-01'].{`"SA Name`":nam
 
 # [PowerShell 7.4.1 in Windows](#tab/win2)
 
-In this example, notice the single quotes (`'...'`) wrapper with embedded double quotes (`""...""`), and escape character backslash (`\`).
+In this example, notice the single quotes (`'...'`) wrapper with embedded double quotes (`""...""`),
+and escape character backslash (`\`).
 
 ```azurecli
 az storage account list --query '[].{\"SA Name\":name,\"Primary endpoint\":primaryEndpoints.blob}' --output table
 ```
 
-Notice the single quotes (`'...'`) wrapper with embedded double quote pairs (`""...""`).
+Notice the single quotes (`'...'`) wrapper with embedded double quote pairs (`""...""`). This script
+also runs successfully in Windows PowerShell 5.
 
 ```azurecli
 az storage account list --query '[].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
 Apply a `creationTime` filter and notice the single quote (`'...'`) wrapper remains, but an embedded
-single quote pair (`''...''`) is used to surround the date value.
+single quote pair (`''...''`) is used to surround the date value. This script also runs successfully
+in Windows PowerShell 5.
 
 ```azurecli
 az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
@@ -282,26 +291,37 @@ az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":n
 # [PowerShell 5.1 in Windows](#tab/win1)
 
 In this example, notice the single quote (`'...'`) wrapper with embedded double quote pairs
-(`""...""`).
+(`""...""`). This script also runs successfully in PowerShell 7 within a Windows environment.
 
 ```azurecli
 az storage account list --query '[].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
 Apply a `creationTime` filter and notice the single quote (`'...'`) wrapper remains, but an embedded
-single quote pair (`''...''`) is used to surround the date value.
+single quote pair (`''...''`) is used to surround the date value. This script also runs successfully
+in PowerShell 7 within a Windows environment.
 
 ```azurecli
 az storage account list --query '[?creationTime >=''2024-02-01''].{""SA Name"":name,""Primary endpoint"":primaryEndpoints.blob}' --output table
 ```
 
+Did you receive a `argument --query: invalid jmespath_type value:...` error from the scripts on this
+tab? This error is returned when executing these Windows scripts in Bash or PowerShell 7 _within a
+Linux environment_.
+
 ---
+
+What's important to remember from these examples is this: When you have an Azure CLI script that is
+producing an error, consider how the environment you are working in is parsing the Azure CLI command
+syntax.
 
 ## Pass parameters in a URL containing a query string
 
 Question marks in URLs indicate the end of the URL and the beginning of a query string. Here's an
 example that opens step 3 in [Learn to use the Azure CLI](./get-started-tutorial-3-use-variables.md):
+
 `https://learn.microsoft.com/en-us/cli/azure/get-started-tutorial-2-environment-syntax?view=azure-cli-latest&tabs=powershell`.
+
 The `?view=azure-cli-latest` causes the latest version of the article to be instantiated.
 
 When executing Azure CLI commands in a PowerShell environment, PowerShell allows question marks to
@@ -349,7 +369,7 @@ az rest --method get --url https://management.azure.com/subscriptions/$subscript
 
 ## Pass parameters containing a PowerShell special character
 
-There are special characters of PowerShell, such as at (`@`). To run Azure CLI in PowerShell, add a
+There are special characters of PowerShell, such as the _At_ (`@`) symbol. To run Azure CLI in PowerShell, add a
 backtick `` ` `` before the special character to escape it. You can also enclose the value in single
 (`'`) or double (`"`) quotes.
 
@@ -365,7 +385,7 @@ backtick `` ` `` before the special character to escape it. You can also enclose
 
 ## Pass parameters containing JSON
 
-For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to load from a file to bypass the shell's interpretation. Note that the At ('@') symbol is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting) in PowerShell, so it should be quoted.
+For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to load from a file to bypass the shell's interpretation. Note that the _At_ (`@`) symbol is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting) in PowerShell, so it should be quoted.
 
 There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that contain both JSON file content and command examples.  Here's a code snippet:
 
@@ -408,7 +428,8 @@ see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/abo
 
 The following example shows how this automatic variable can work for error handling:
 
-```powershell
+```azurecli
+# PowerShell environment script
 az group create --name MyResourceGroup
 if ($? -eq $false) {
     Write-Error "Error creating resource group."
@@ -421,7 +442,8 @@ statement finds that `$?` is false and writes an error.
 If you want to use the `try` and `catch` keywords, you can use `throw` to create an exception for
 the `try` block to catch:
 
-```powershell
+```azurecli
+# PowerShell environment script
 $ErrorActionPreference = "Stop"
 try {
     az group create --name MyResourceGroup

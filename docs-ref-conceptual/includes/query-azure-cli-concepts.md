@@ -173,7 +173,7 @@ last section by changing the multiselect list to a hash:
 
 > [!NOTE]
 > If you choose to use a space in a new column name, like `VM name` instead of `VMName`, the quoting
-> rules change in both Bash and PowerShell. See [Pass spaces in Azure CLI parameters](./use-azure-cli-successfully-in-powershell.md#pass-spaces-in-azure-cli-parameters)
+> rules change in both Bash and PowerShell. See [Pass spaces in Azure CLI parameters](../use-azure-cli-successfully-in-powershell.md#pass-spaces-in-azure-cli-parameters)
 > for examples.
 
 ### [Bash](#tab/bash)
