@@ -33,9 +33,7 @@ Shell variables store values for future use and can be used to pass values to co
 In Azure, all resources are allocated in a resource management group. Resource groups provide logical groupings of resources
 that make them easier to work with as a collection. Use the [az group create](/cli/azure/group#az_group_create) command to create a resource group named `VMTutorialResources`.
 
-To get a better understanding of required parameters and steps related to `az group create` try out Azure CLI in interactive mode by running the `az interactive` command.
-
-# [Azure CLI](#tab/tabid-1)
+# [Bash](#tab/tabid-1)
 
 ```azurecli
 # create Bash shell variables
@@ -55,10 +53,15 @@ $location = "eastus"
 az group create --name $resourceGroup --location $location
 ```
 
-# [Azure CLI in interactive mode](#tab/tabid-3)
+***
 
-The command recommendation feature in interactive mode lists and defines all of the required parameters needed for `az group create`:
+## Create a resource group in interactive mode
+
+Interactive mode offers new AI functionalities that allow the user to run and search for commands more efficiently. To get a better understanding of required parameters and steps related to `az group create`, try out Azure CLI in interactive mode by running the `az interactive` command. Please note that all commands throughout this tutorial can be run in interactive mode.
+
+> [!NOTE]
+> Interactive mode only works on PowerShell (CloudShell) and Bash for Linux environments, and Powershell 7.4.1 and Powershell 5.4.1 for Windows environments. To learn more about using Azure CLI in interactive mode, see [Learn to use Azure CLI interactive mode](../docs-ref-conceptual/interactive-azure-cli.md).
+ 
+In the following example, the command recommendation feature in interactive mode lists and defines all of the required parameters needed for `az group create`:
 
 ![Azure Interactive Hint](./media/az-interactive-vm-tutorial-hint.png)
-
-***
