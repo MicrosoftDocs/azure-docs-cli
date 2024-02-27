@@ -64,7 +64,7 @@ If the value is used more than once, assign it to a variable. Variables allow yo
   echo $running_vm_ids
   ```
 
-If the value is used only once, consider piping.
+If the value is used only once, consider piping. (Piping passes the output of one command as input to a second command.)
 
   ```azurecli
   az vm list --query "[?powerState=='VM running'].name" --output tsv | grep my_vm

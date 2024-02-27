@@ -215,6 +215,10 @@ the `Prepare your environments` tab to install the environments used in this art
 
 ---
 
+> [!IMPORTANT]
+> When you have an Azure CLI script that is producing an error, **consider how the environment you
+are working in is parsing the Azure CLI command syntax.**
+
 ## Pass spaces in Azure CLI parameters
 
 In Azure CLI, when you need to pass a parameter value containing a space, there are quoting
@@ -236,7 +240,7 @@ If you want to add a filter, the syntax changes. Notice how this example wraps t
  az storage account list --query "[?creationTime >='2024-02-01'].{\"SA Name\":name,\"Primary endpoint\":primaryEndpoints.blob}" --output table
 ```
 
-If you just tried to run the filter syntax in a PowerShell environment, you received error message `argument --query: invalid jmespath_type value: "[?creationTime >=..."`. In Bash in a Linux environment, your output is similar to this:
+If you just tried to run the filter syntax in a PowerShell environment, you received error message `argument --query: invalid jmespath_type value: "[?creationTime >=..."`. However, in Bash within a Linux environment, your output is similar to this:
 
 ```output
 SA Name           Primary Endpoint
@@ -311,10 +315,6 @@ Linux environment_.
 
 ---
 
-What's important to remember from these examples is this: When you have an Azure CLI script that is
-producing an error, consider how the environment you are working in is parsing the Azure CLI command
-syntax.
-
 ## Pass parameters in a URL containing a query string
 
 Question marks in URLs indicate the end of the URL and the beginning of a query string. Here's an
@@ -335,6 +335,8 @@ article:
 Notice how `$containerRegistryName?api-version` concatenates together without error in Bash.
 
 ```azurecli
+# Script for a Bash environment
+
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
 subscriptionId="00000000-0000-0000-0000-000000000000"
@@ -354,6 +356,8 @@ interprets a question mark (`?`) as being part of the parameter name `$container
 This behavior is the same in PowerShell 5 and PowerShell 7 running in Linux or Windows.
 
 ```azurecli
+# Script for a PowerShell environment
+
 # Variable block
 $randomIdentifier = (New-Guid).ToString().Substring(0,8)
 $subscriptionId="00000000-0000-0000-0000-000000000000"
@@ -390,7 +394,7 @@ For complex arguments like a JSON string, the best practice is to use Azure CLI'
 There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that contain both JSON file content and command examples.  Here's a code snippet:
 
 ```azurecli
-# Bash script
+# Script for a Bash environment
 az ad app create --display-name myTestAppName \
     --is-fallback-public-client \
     --required-resource-accesses @manifest.json
@@ -399,7 +403,7 @@ az ad app create --display-name myTestAppName \
 In this example, notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell environment.
 
 ```azurecli
-# PowerShell script
+# Script for a PowerShell environment
 az ad app create --display-name myTestAppName `
     --is-fallback-public-client `
     --required-resource-accesses "@manifest.json"
@@ -429,7 +433,7 @@ see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/abo
 The following example shows how this automatic variable can work for error handling:
 
 ```azurecli
-# PowerShell environment script
+# Script for a PowerShell environment
 az group create --name MyResourceGroup
 if ($? -eq $false) {
     Write-Error "Error creating resource group."
@@ -443,7 +447,7 @@ If you want to use the `try` and `catch` keywords, you can use `throw` to create
 the `try` block to catch:
 
 ```azurecli
-# PowerShell environment script
+# Script for a PowerShell environment
 $ErrorActionPreference = "Stop"
 try {
     az group create --name MyResourceGroup
