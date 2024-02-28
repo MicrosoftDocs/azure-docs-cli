@@ -146,9 +146,6 @@ directCommands:
                   [--gmsa-root-domain-name]
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--grafana-resource-id]
-                  [--guardrails-excluded-ns]
-                  [--guardrails-level {Enforcement, Off, Warning}]
-                  [--guardrails-version]
                   [--host-group-id]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
@@ -206,6 +203,9 @@ directCommands:
                   [--ppg]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
+                  [--safeguards-excluded-ns]
+                  [--safeguards-level {Enforcement, Off, Warning}]
+                  [--safeguards-version]
                   [--service-cidr]
                   [--service-cidrs]
                   [--service-principal]
@@ -325,11 +325,11 @@ directCommands:
       Create a kubernetes cluster with Custom CA Trust enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
   - summary: |-
-      Create a kubernetes cluster with guardrails set to "Warning"
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --enable-addons azure-policy
+      Create a kubernetes cluster with safeguards set to "Warning"
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --enable-addons azure-policy
   - summary: |-
-      Create a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2 --enable-addons azure-policy
+      Create a kubernetes cluster with safeguards set to "Warning" and some namespaces excluded
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --safeguards-excluded-ns ns1,ns2 --enable-addons azure-policy
   - summary: |-
       Create a kubernetes cluster with Azure Service Mesh enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
@@ -499,7 +499,7 @@ directCommands:
       - http_application_routing        : configure ingress with automatic public DNS name creation.
       - monitoring                      :  turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect
       - virtual-node                    : enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use. aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
-      - azure-policy                    : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling Guardrails. Learn more at aka.ms/aks/policy.
+      - azure-policy                    : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling deployment safeguards. Learn more at aka.ms/aks/policy.
       - ingress-appgw                   : enable Application Gateway Ingress Controller addon (PREVIEW).
       - confcom                         : enable confcom addon, this will enable SGX device plugin by default(PREVIEW).
       - open-service-mesh               : enable Open Service Mesh addon (PREVIEW).
@@ -688,19 +688,6 @@ directCommands:
   - name: --grafana-resource-id
     summary: |-
       Resource ID of the Azure Managed Grafana Workspace.
-  - name: --guardrails-excluded-ns
-    summary: |-
-      Comma-separated list of Kubernetes namespaces to exclude from Guardrails.
-    isPreview: true
-  - name: --guardrails-level
-    parameterValueGroup: "Enforcement, Off, Warning"
-    summary: |-
-      The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
-    isPreview: true
-  - name: --guardrails-version
-    summary: |-
-      The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
-    isPreview: true
   - name: --host-group-id
     summary: |-
       (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
@@ -941,6 +928,19 @@ directCommands:
   - name: --rotation-poll-interval
     summary: |-
       Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
+  - name: --safeguards-excluded-ns
+    summary: |-
+      Comma-separated list of Kubernetes namespaces to exclude from deployment safeguards.
+    isPreview: true
+  - name: --safeguards-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: |-
+      The deployment safeguards Level. Accepted Values are [Off, Warning, Enforcement]. Requires azure policy addon to be enabled.
+    isPreview: true
+  - name: --safeguards-version
+    summary: |-
+      The version of deployment safeguards to use. Default "v1.0.0" Use the ListSafeguardsVersions API to discover available versions.
+    isPreview: true
   - name: --service-cidr
     summary: |-
       A CIDR notation IP range from which to assign service cluster IPs.
@@ -1728,9 +1728,6 @@ directCommands:
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--grafana-resource-id]
-                  [--guardrails-excluded-ns]
-                  [--guardrails-level {Enforcement, Off, Warning}]
-                  [--guardrails-version]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
                   [--ip-families]
@@ -1763,6 +1760,9 @@ directCommands:
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
+                  [--safeguards-excluded-ns]
+                  [--safeguards-level {Enforcement, Off, Warning}]
+                  [--safeguards-version]
                   [--ssh-access {disabled, localuser}]
                   [--ssh-key-value]
                   [--storage-pool-name]
@@ -1864,14 +1864,14 @@ directCommands:
       Update a existing managed cluster to a managed cluster snapshot.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
   - summary: |-
-      Update a kubernetes cluster with guardrails set to "Warning". Assumes azure policy addon is already enabled
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning
+      Update a kubernetes cluster with safeguards set to "Warning". Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning
   - summary: |-
-      Update a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded. Assumes azure policy addon is already enabled
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2
+      Update a kubernetes cluster with safeguards set to "Warning" and some namespaces excluded. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --safeguards-excluded-ns ns1,ns2
   - summary: |-
-      Update a kubernetes cluster to clear any namespaces excluded from guardrails. Assumes azure policy addon is already enabled
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-excluded-ns ""
+      Update a kubernetes cluster to clear any namespaces excluded from safeguards. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-excluded-ns ""
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -2232,19 +2232,6 @@ directCommands:
   - name: --grafana-resource-id
     summary: |-
       Resource ID of the Azure Managed Grafana Workspace.
-  - name: --guardrails-excluded-ns
-    summary: |-
-      Comma-separated list of Kubernetes namespaces to exclude from Guardrails. Use "" to clear a previously non-empty list.
-    isPreview: true
-  - name: --guardrails-level
-    parameterValueGroup: "Enforcement, Off, Warning"
-    summary: |-
-      The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
-    isPreview: true
-  - name: --guardrails-version
-    summary: |-
-      The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
-    isPreview: true
   - name: --http-proxy-config
     summary: |-
       HTTP Proxy configuration for this cluster.
@@ -2388,6 +2375,19 @@ directCommands:
   - name: --rotation-poll-interval
     summary: |-
       Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
+  - name: --safeguards-excluded-ns
+    summary: |-
+      Comma-separated list of Kubernetes namespaces to exclude from deployment safeguards. Use "" to clear a previously non-empty list.
+    isPreview: true
+  - name: --safeguards-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: |-
+      The deployment safeguards Level. Accepted Values are [Off, Warning, Enforcement]. Requires azure policy addon to be enabled.
+    isPreview: true
+  - name: --safeguards-version
+    summary: |-
+      The version of deployment safeguards to use. Default "v1.0.0" Use the ListSafeguardsVersions API to discover available versions.
+    isPreview: true
   - name: --ssh-access
     parameterValueGroup: "disabled, localuser"
     summary: |-
