@@ -228,7 +228,7 @@ and rename output columns with a word containing a space.
 # [Bash in Linux](#tab/Bash1)
 
 In this example, notice the single quote (`'...'`) wrapper with embedded double quotes (`"..."`).
-This example also works in `PowerShell in Linux`.
+This example also works in PowerShell in Linux.
 
 ```azurecli
 az storage account list --query '[].{"SA Name":name, "Primary endpoint":primaryEndpoints.blob}' --output table
@@ -393,21 +393,29 @@ For complex arguments like a JSON string, the best practice is to use Azure CLI'
 
 There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that contain both JSON file content and command examples.  Here's a code snippet:
 
+# [Bash](#tab/Bash2)
+
 ```azurecli
 # Script for a Bash environment
+
 az ad app create --display-name myTestAppName \
     --is-fallback-public-client \
     --required-resource-accesses @manifest.json
 ```
 
+# [PowerShell](#tab/ps2)
+
 In this example, notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell environment.
 
 ```azurecli
 # Script for a PowerShell environment
+
 az ad app create --display-name myTestAppName `
     --is-fallback-public-client `
     --required-resource-accesses "@manifest.json"
 ```
+
+---
 
 ## Pass parameters containing key:value pairs
 
@@ -434,6 +442,7 @@ The following example shows how this automatic variable can work for error handl
 
 ```azurecli
 # Script for a PowerShell environment
+
 az group create --name MyResourceGroup
 if ($? -eq $false) {
     Write-Error "Error creating resource group."
@@ -448,6 +457,7 @@ the `try` block to catch:
 
 ```azurecli
 # Script for a PowerShell environment
+
 $ErrorActionPreference = "Stop"
 try {
     az group create --name MyResourceGroup
