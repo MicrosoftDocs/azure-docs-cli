@@ -72,6 +72,10 @@ Version 2.58.0
 * `az containerapp update`: Fix TypeError: Argument of type 'NoneType' is not iterable
 * Fix #28226: `az containerapp job update`: Update existing scale rules if `--scale-rule-name` is passed
 
+### Core
+
+* [BREAKING CHANGE] `az login`: Use WAM as the default authentication method on Windows. If you encounter any issue and want to opt out, run `az config set core.enable_broker_on_windows=false`, `az account clear` and `az login`
+
 ### Cosmos DB
 
 * `az cosmosdb sql database/container restore`: Fix support for restore of deleted database resource in the same SQL account
