@@ -128,7 +128,7 @@ the `Prepare your environments` tab to install the environments used in this art
     SerializationVersion           1.1.0.1
     ```
 
-    If you run `$PSVersionTable` in a PowerShell 7 terminal, then your PowerShell version will be
+    If you run `$PSVersionTable` in a PowerShell 7 terminal, then your PowerShell version is
     `PSVersion 7` or higher depending on what is installed on your local machine.
 
 1. If you need an Azure storage account to run these test scripts, create one now.
@@ -187,7 +187,7 @@ the `Prepare your environments` tab to install the environments used in this art
    "allowBlobPublicAccess": false,
    "creationTime": "yyyy-mm-ddT19:14:26.962501+00:00",
    "enableHttpsTrafficOnly": true,
-   "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ msdocs-test-rg-00000000/providers/   Microsoft.Storage/storageAccounts/msdocssa00000000",
+   "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ msdocs-test-rg-00000000/providers/Microsoft.Storage/storageAccounts/msdocssa00000000",
    "keyCreationTime": {
      "key1": "yyyy-mm-ddT19:14:27.103127+00:00",
      "key2": "yyyy-mm-ddT19:14:27.103127+00:00"
@@ -234,13 +234,17 @@ This example also works in PowerShell in Linux.
 az storage account list --query '[].{"SA Name":name, "Primary endpoint":primaryEndpoints.blob}' --output table
 ```
 
-If you want to add a filter, the syntax changes. Notice how this example wraps the `--query` parameter value in double quotes (`"..."`) and uses a backslash (`\`) escape character. This script will not run in PowerShell.
+If you want to add a filter, the syntax changes. Notice how this example wraps the `--query`
+parameter value in double quotes (`"..."`) and uses a backslash (`\`) escape character. This script
+doesn't run in PowerShell.
 
 ```azurecli
  az storage account list --query "[?creationTime >='2024-02-01'].{\"SA Name\":name,\"Primary endpoint\":primaryEndpoints.blob}" --output table
 ```
 
-If you just tried to run the filter syntax in a PowerShell environment, you received error message `argument --query: invalid jmespath_type value: "[?creationTime >=..."`. However, in Bash within a Linux environment, your output is similar to this:
+If you just tried to run the filter syntax in a PowerShell environment, you received error message
+`argument --query: invalid jmespath_type value: "[?creationTime >=..."`. However, in Bash within a
+Linux environment, your output is similar to this:
 
 ```output
 SA Name           Primary Endpoint
@@ -320,11 +324,11 @@ Linux environment_.
 Question marks in URLs indicate the end of the URL and the beginning of a query string. Here's an
 example that opens step 3 in [Learn to use the Azure CLI](./get-started-tutorial-3-use-variables.md):
 
-`https://learn.microsoft.com/en-us/cli/azure/get-started-tutorial-2-environment-syntax?view=azure-cli-latest&tabs=powershell`.
+`https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-2020-09-01-hybrid`.
 
-The `?view=azure-cli-latest` causes the latest version of the article to be instantiated.
+The `?view=azure-cli-2020-09-01-hybrid` results in the desired version of the Azure CLI reference content.
 
-When executing Azure CLI commands in a PowerShell environment, PowerShell allows question marks to
+When you execute Azure CLI commands in a PowerShell environment, PowerShell allows question marks to
 be part of a variable name. This might create confusion in Azure CLI parameter values.
 
 Here's an example from the [Use the Azure REST API](./azure-cli-rest-tutorial.md?tabs=powershell#use-get-to-retrieve-your-azure-container-registry)
@@ -389,9 +393,13 @@ backtick `` ` `` before the special character to escape it. You can also enclose
 
 ## Pass parameters containing JSON
 
-For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to load from a file to bypass the shell's interpretation. Note that the _At_ (`@`) symbol is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting) in PowerShell, so it should be quoted.
+For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>`
+convention to load from a file to bypass the shell's interpretation. Note that the _At_ (`@`) symbol
+is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting) in
+PowerShell, so it should be quoted.
 
-There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that contain both JSON file content and command examples.  Here's a code snippet:
+There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that
+contain both JSON file content and command examples. Here's a code snippet:
 
 # [Bash](#tab/Bash2)
 
@@ -405,7 +413,8 @@ az ad app create --display-name myTestAppName \
 
 # [PowerShell](#tab/ps2)
 
-In this example, notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell environment.
+In this example, notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell
+environment.
 
 ```azurecli
 # Script for a PowerShell environment
@@ -419,9 +428,14 @@ az ad app create --display-name myTestAppName `
 
 ## Pass parameters containing key:value pairs
 
-Some Azure CLI parameter values, such as Azure resource tags, require key:value pairs. If your `key` or `value` contains a space or special character, the Bash and PowerShell syntax are not always the same.
+Some Azure CLI parameter values, such as Azure resource tags, require key:value pairs. If your `key`
+or `value` contains a space or special character, the Bash and PowerShell syntax aren't always the
+same.
 
-See [Create tags to practice quoting differences](./get-started-tutorial-2-environment-syntax.md#create-tags-to-practice-quoting-differences) in the [Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md) tutorial. This tutorial step gives examples for Bash, PowerShell and Cmd for the following key:value pair scenarios:
+See [Create tags to practice quoting differences](./get-started-tutorial-2-environment-syntax.md#create-tags-to-practice-quoting-differences)
+in the [Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md) tutorial. This
+tutorial step gives examples for Bash, PowerShell, and Cmd for the following key:value pair
+scenarios:
 
 * spaces
 * empty values
@@ -488,7 +502,7 @@ For more information about PowerShell error handling, see [Everything you wanted
 
 ## See also
 
-* Compare syntax of Bash, PowerShell and Cmd in these articles:
+* Compare syntax of Bash, PowerShell, and Cmd in these articles:
   * [Syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
   * [Query command output using JMESPath](./query-azure-cli.md)
 * [Use quotation marks in parameters](./use-azure-cli-successfully.md#use-quotation-marks-in-parameters)
