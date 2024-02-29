@@ -23,42 +23,34 @@ Welcome to the Azure Command-Line Interface (CLI)!  This article introduces the 
 
 ## Install or run in Azure Cloud Shell
 
-The easiest way to learn how to use the Azure CLI is by running it in an Azure Cloud Shell environment through your browser. To learn about Cloud Shell, see  [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+The easiest way to learn how to use the Azure CLI is by running it in an Azure Cloud Shell
+environment through your browser. To learn about Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
 When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
 
-After installing the CLI for the first time, check that it's installed and you've got the correct version by running `az --version`.
+After installing the CLI for the first time, check that it's installed and you've got the correct
+version by running `az --version`.
 
 > [!NOTE]
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
-## How to sign into the Azure CLI
+## Sign into the Azure CLI
 
 Before using any Azure CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az-login).
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-After logging in, you see a list of subscriptions associated with your Azure account. The subscription information with `isDefault: true` is the currently activated subscription after logging in. To select another subscription, use the [az account set](/cli/azure/account#az-account-set) command with the subscription ID to switch to. For more information about subscription selection, see [Use multiple Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
+After logging in, you see a list of subscriptions associated with your Azure account. The
+subscription information with `isDefault: true` is the currently activated subscription after
+logging in. To select another subscription, use the [az account set](/cli/azure/account#az-account-set)
+command with the subscription ID to switch to. For more information about subscription selection,
+see [Manage Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
 
 There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
 
-## Common Azure CLI commands
+## Find commands
 
-This table lists some common commands used in the CLI and links to their reference documentation.
-
-| Resource type | Azure CLI command group |
-|---------------|-------------------------|
-| [Resource group](/azure/azure-resource-manager/resource-group-overview) | [az group](../latest/docs-ref-autogen/group.yml) |
-| [Virtual machines](/azure/virtual-machines) | [az vm](../latest/docs-ref-autogen/vm.yml) |
-| [Storage accounts](/azure/storage/common/storage-introduction) | [az storage account](../latest/docs-ref-autogen/storage/account.yml) |
-| [Key Vault](/azure/key-vault/key-vault-whatis) | [az keyvault](../latest/docs-ref-autogen/keyvault.yml) |
-| [Web applications](/azure/app-service) | [az webapp](../latest/docs-ref-autogen/webapp.yml) |
-| [SQL databases](/azure/sql-database) | [az sql server](../latest/docs-ref-autogen/sql/server.yml) |
-| [CosmosDB](/azure/cosmos-db) | [az cosmosdb](../latest/docs-ref-autogen/cosmosdb.yml) |
-
-## Finding commands
-
-Azure CLI commands are organized as _commands_ of _groups_. Each group represents an Azure service, and commands operate on that service.
+Azure CLI commands are organized as command groups. Each group represents an area of an Azure service.
 
 To search for commands, use [az find](/cli/azure/reference-index#az-find). For example, to search for command names containing `secret`,
 use the following command:
@@ -67,6 +59,8 @@ use the following command:
 az find secret
 ```
 
+You will also find all Azure CLI reference command groups listed in the [A to Z index](/cli/azure/reference-index).
+
 Use the `--help` argument to get a complete list of commands and subgroups of a group. For example, to find the CLI commands for working with
 Network Security Groups (NSGs):
 
@@ -74,9 +68,20 @@ Network Security Groups (NSGs):
 az network nsg --help
 ```
 
-The CLI has full tab completion for commands under the bash shell.
+## Find examples
 
-## Globally available arguments
+If you prefer to learn Azure CLI syntax by seeing tested published examples, there are two indexes of topic content:
+
+* [Samples index A to Z](./samples-index.md). The samples index provides a list of Azure CLI samples sorted by [subject area](./samples-index.md?tabs=service), [reference group](./samples-index.md?tabs=command), and [GitHub repository](./samples-index.md?tabs=github).
+
+* [Topic index A to Z](./reference-docs-index.md). Use your keyboard `find` shortcut keys, like
+  `Ctrl + F`, to drop quickly to the reference command group you are interested in.
+
+## Use tab completion
+
+The CLI has full tab completion for commands in a Bash environment.  To enable tab completion in a PowerShell environment, see [Enable tab completion in PowerShell](./install-azure-cli-windows.md#enable-tab-completion-in-powershell).
+
+## Be aware of globally available arguments
 
 There are some arguments that are available for every command.
 
@@ -89,7 +94,7 @@ There are some arguments that are available for every command.
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you find a bug, provide output generated with the `--debug` flag on when submitting a bug report.
 
-## Interactive mode
+## Use interactive mode
 
 The CLI offers an interactive mode that automatically displays help information and makes it easier to
 select subcommands. You enter interactive mode with the [az interactive](/cli/azure/reference-index#az-interactive) command.
@@ -115,16 +120,6 @@ To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-t
 * [Debug Azure CLI reference commands](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
 * [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable)
 * [Delete multiple resources using a script](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
-
-There are also Quickstarts for other popular services.
-
-* [Create a storage account using the Azure CLI](/azure/storage/common/storage-quickstart-create-storage-account-cli)
-* [Transfer objects to/from Azure Blob storage using the CLI](/azure/storage/blobs/storage-quickstart-blobs-cli)
-* [Create a single Azure SQL database using the Azure CLI](/azure/sql-database/sql-database-get-started-cli)
-* [Create an Azure Database for MySQL server using the Azure CLI](/azure/mysql/quickstart-create-mysql-server-database-using-azure-cli)
-* [Create an Azure Database for PostgreSQL using the Azure CLI](/azure/postgresql/quickstart-create-server-database-azure-cli)
-* [Create a Python web app in Azure](/azure/app-service/app-service-web-get-started-python)
-* [Run a custom Docker Hub image in Azure Web Apps for Containers](/azure/app-service/containers/quickstart-custom-docker-image)
 
 ## Give feedback
 
