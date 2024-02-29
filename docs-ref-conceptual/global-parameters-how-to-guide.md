@@ -3,7 +3,7 @@ title: Configure your new resource group with global parameters using Azure CLI 
 description: Learn how to use various global parameters with Azure CLI to configure a resource group.
 manager: jasongroce
 author: daphnemamsft
-ms.author: daphnenma
+ms.author: daphnenmamsft
 ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
@@ -12,7 +12,9 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 
-When working with the Azure CLI (Command-Line Interface), global parameters allow you to define values that can be reused across multiple commands. The benefits of using global parameters are reusability and consistency, as they allow you to reuse values across different commands or scripts, and maintain consistent values throughout your CLI interactions.
+# Working with global parameters when using Azure CLI (Command-Line Interface)
+
+When working with the Azure CLI, global parameters allow you to define values that can be reused across multiple commands. The benefits of using global parameters are reusability and consistency, as they allow you to reuse values across different commands or scripts, and maintain consistent values throughout your CLI interactions.
 
 ## Prerequisites
 
