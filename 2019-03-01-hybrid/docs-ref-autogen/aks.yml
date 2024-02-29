@@ -199,6 +199,7 @@ directCommands:
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
+                  [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                   [--pod-subnet-id]
                   [--ppg]
                   [--private-dns-zone]
@@ -336,6 +337,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with Azure Monitor Metrics enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azuremonitormetrics
+  - summary: |-
+      Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -914,6 +918,13 @@ directCommands:
       A comma separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
     description: |-
       Each range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+  - name: --pod-ip-allocation-mode
+    parameterValueGroup: "DynamicIndividual, StaticBlock"
+    summary: |-
+      Set the ip allocation mode for how Pod IPs from the Azure Pod Subnet are allocated to the nodes in the AKS cluster. The choice is between dynamic batches of individual IPs or static allocation of a set of CIDR blocks. Accepted Values are "DynamicIndividual" or "StaticBlock".
+    description: |-
+      Used together with the "azure" network plugin.
+      Requires --pod-subnet-id.
   - name: --pod-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).

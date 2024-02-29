@@ -298,6 +298,7 @@ directCommands:
                         [--node-vm-size]
                         [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
                         [--os-type]
+                        [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                         [--pod-subnet-id]
                         [--ppg]
                         [--priority {Regular, Spot}]
@@ -333,6 +334,9 @@ directCommands:
   - summary: |-
       create a nodepool in an existing AKS cluster with host group id
     syntax: az aks nodepool add -g MyResourceGroup -n MyNodePool --cluster-name MyMC --host-group-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/hostGroups/myHostGroup --node-vm-size VMSize
+  - summary: |-
+      Create a nodepool with ip allocation mode set to "StaticBlock" and using a pod subnet ID
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet --pod-ip-allocation-mode StaticBlock
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -484,6 +488,13 @@ directCommands:
   - name: --os-type
     summary: |-
       The OS Type. Linux or Windows. Windows not supported yet for "VirtualMachines" VM set type.
+  - name: --pod-ip-allocation-mode
+    parameterValueGroup: "DynamicIndividual, StaticBlock"
+    summary: |-
+      Set the ip allocation mode for how Pod IPs from the Azure Pod Subnet are allocated to the nodes in the AKS cluster. The choice is between dynamic batches of individual IPs or static allocation of a set of CIDR blocks. Accepted Values are "DynamicIndividual" or "StaticBlock".
+    description: |-
+      Used together with the "azure" network plugin.
+      Requires --pod-subnet-id.
   - name: --pod-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
