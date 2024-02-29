@@ -74,7 +74,7 @@ Version 2.58.0
 
 ### Core
 
-* [BREAKING CHANGE] `az login`: Use WAM as the default authentication method on Windows. If you encounter any issue and want to opt out, run `az config set core.enable_broker_on_windows=false`, `az account clear` and `az login`
+* [BREAKING CHANGE] `az login`: Replace `allow_broker` with `enable_broker_on_windows` (#27726)
 
 ### Cosmos DB
 
