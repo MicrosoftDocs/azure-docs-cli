@@ -33,7 +33,7 @@ Shell variables store values for future use and can be used to pass values to co
 In Azure, all resources are allocated in a resource management group. Resource groups provide logical groupings of resources
 that make them easier to work with as a collection. Use the [az group create](/cli/azure/group#az_group_create) command to create a resource group named `VMTutorialResources`.
 
-# [Bash](#tab/tabid-1)
+# [Bash](#tab/bash)
 
 ```azurecli
 # create Bash shell variables
@@ -43,7 +43,7 @@ location=eastus
 az group create --name $resourceGroup --location $location
 ```
 
-# [PowerShell](#tab/tabid-2)
+# [PowerShell](#tab/powershell)
 
 ```azurecli
 # Create PowerShell variables
