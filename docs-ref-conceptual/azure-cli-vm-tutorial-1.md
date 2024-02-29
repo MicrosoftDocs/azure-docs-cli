@@ -59,6 +59,16 @@ az group create --name $resourceGroup --location $location
 
 Interactive mode offers new AI functionalities that allow the user to run and search for commands more efficiently. To get a better understanding of required parameters and steps related to `az group create`, try out Azure CLI in interactive mode by running the `az interactive` command. Please note that all commands throughout this tutorial can be run in interactive mode.
 
+```azurecli
+# install interactive mode
+az interactive
+```
+
 In the following example, the command recommendation feature in interactive mode lists and defines all of the required parameters needed for `az group create`:
+
+```azurecli
+# get options for az group create
+az>> az group create
+```
 
 ![Azure Interactive Hint](./media/az-interactive-vm-tutorial-hint.png)
