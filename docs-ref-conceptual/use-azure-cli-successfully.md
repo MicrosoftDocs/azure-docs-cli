@@ -64,7 +64,7 @@ If the value is used more than once, assign it to a variable. Variables allow yo
   echo $running_vm_ids
   ```
 
-If the value is used only once, consider piping.
+If the value is used only once, consider piping. (Piping passes the output of one command as input to a second command.)
 
   ```azurecli
   az vm list --query "[?powerState=='VM running'].name" --output tsv | grep my_vm
@@ -107,7 +107,7 @@ For more information on using Bash constructs with the Azure CLI including loops
 
 ## Use quotation marks in parameters
 
-When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, you need to understand how they differ.
+When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, understand how they differ.
 
 - Bash. [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
 - PowerShell. [About Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
@@ -347,9 +347,6 @@ If you only need create or update commands, use the [az deployment group create]
 
 If generic update parameters and [az resource](../latest/docs-ref-autogen/resource.yml) don't meet your needs, you can use the [az rest](/cli/azure/reference-index#az-rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
 
-> [!NOTE]
-> Calling a service REST API directly with `az rest` is a _supplemental_ feature of Azure CLI, and only works if the REST API is invoked correctly. Calling these APIs with `az rest` is subject to change for reasons including, but not limited to, Azure CLI permission changes, Microsoft Graph service limitations, AAD Conditional Access policies, etc. For service REST API questions or issues, please [create a support ticket](https://azure.microsoft.com/support/create-ticket).
-
 This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
 
 ```azurecli
@@ -419,51 +416,6 @@ foreach ($vm_id in $vm_ids) {
 ```
 
 ---
-
-## Enable Tab Completion in PowerShell
-
-[!INCLUDE [tab-completion](includes/tab-completion.md)]
-
-## Error handling for Azure CLI in PowerShell
-
-You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md). If you do, be sure you understand Azure CLI error handling in PowerShell. In particular, Azure CLI doesn't create exceptions for PowerShell to catch.
-
-An alternative is to use the `$?` automatic variable. This variable contains the status of the most recent command. If the previous command fails, `$?` has the value of `$False`. For more information, see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/about/about_automatic_variables).
-
-The following example shows how this automatic variable can work for error handling:
-
-```powershell
-az group create --name MyResourceGroup
-if ($? -eq $false) {
-    Write-Error "Error creating resource group."
-}
-```
-
-The `az` command fails because it's missing the required `--location` parameter. The conditional statement finds that `$?` is false and writes an error.
-
-If you want to use the `try` and `catch` keywords, you can use `throw` to create an exception for the `try` block to catch:
-
-```powershell
-$ErrorActionPreference = "Stop"
-try {
-    az group create --name MyResourceGroup
-    if ($? -eq $false) {
-        throw 'Group create failed.'
-    }
-}
-catch {
-    Write-Error "Error creating the resource group."
-}
-$ErrorActionPreference = "Continue"
-```
-
-By default, PowerShell catches only terminating errors. This example sets the `$ErrorActionPreference` global variable to `Stop` so PowerShell can handle the error.
-
-The conditional statement tests the `$?` variable to see if the previous command failed. If so, the `throw` keyword creates an exception to catch. The `catch` block can be used to write an error message or handle the error.
-
-The example restores `$ErrorActionPreference` to its default value.
-
-For more information about PowerShell error handling, see [Everything you wanted to know about exceptions](/powershell/scripting/learn/deep-dives/everything-about-exceptions).
 
 ## See also
 

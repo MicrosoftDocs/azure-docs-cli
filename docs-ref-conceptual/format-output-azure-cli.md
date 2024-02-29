@@ -291,7 +291,7 @@ echo "New password: $myNewPassword"
 ```
 
 ---
-For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
+For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-azure-cli-successfully.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## Set the default output format
 
@@ -329,4 +329,4 @@ az config set core.output=json
 
 - [Azure CLI configuration](./azure-cli-configuration.md)
 - [How to query Azure CLI command output](./query-azure-cli.md)
-- [Use the Azure CLI successfully](./use-cli-effectively.md)
+- [Use the Azure CLI successfully](./use-azure-cli-successfully.md)

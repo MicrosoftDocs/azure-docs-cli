@@ -48,13 +48,13 @@ az vm show --resource-group QueryDemo --name TestVM
 
 To avoid possible quoting issues with older versions of PowerShell, ensure that you're using the latest version. To install the latest version of PowerShell, see [Install PowerShell on Windows, Linux, and macOS](/powershell/scripting/install/installing-powershell).
 
-```powershell-interactive
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM
 ```
 
@@ -108,13 +108,13 @@ az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConf
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConfiguration.ssh.publicKeys"
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "osProfile.linuxConfiguration.ssh.publicKeys"
 ```
 
@@ -143,13 +143,13 @@ az vm show --resource-group QueryDemo --name TestVM --query "[name, osProfile.ad
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]"
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "[name, osProfile.adminUsername, osProfile.linuxConfiguration.ssh.publicKeys[0].keyData]"
 ```
 ---
@@ -168,8 +168,13 @@ These values are listed in the result array in the order they were given in the 
 
 To get a dictionary instead of an array when querying for multiple values, use the `{ }` (__multiselect hash__) operator.
 The format for a multiselect hash is `{displayName:JMESPathExpression, ...}`.
-`displayName` is the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modifying the example from the
+`displayName` is the string shown in output, and `JMESPathExpression` is the JMESPath expression to evaluate. Modify the example from the
 last section by changing the multiselect list to a hash:
+
+> [!NOTE]
+> If you choose to use a space in a new column name, like `VM name` instead of `VMName`, the quoting
+> rules change in both Bash and PowerShell. See [Pass spaces in Azure CLI parameters](../use-azure-cli-successfully-in-powershell.md#pass-spaces-in-azure-cli-parameters)
+> for examples.
 
 ### [Bash](#tab/bash)
 
@@ -179,13 +184,13 @@ az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }"
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKey:osProfile.linuxConfiguration.ssh.publicKeys[0].keyData }"
 ```
 
@@ -215,13 +220,13 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}" 
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}"
 ```
 
@@ -259,13 +264,13 @@ az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }"
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm show --resource-group QueryDemo --name TestVM --query "{VMName:name, admin:osProfile.adminUsername, sshKeys:osProfile.linuxConfiguration.ssh.publicKeys[].keyData }"
 ```
 ---
@@ -300,7 +305,7 @@ az account list --query "[?isDefault == \`false\`].name"
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 # Boolean values are assumed to be true, so you can directly evaluate the isDefault property to return the default subscription.
 az account list --query "[?isDefault].name"
 
@@ -313,7 +318,7 @@ Notice the extra escape characters (`` ` ``) surrounding the value `false` in th
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 REM Boolean values are assumed to be true, so you can directly evaluate the isDefault property to return the default subscription.
 az account list --query "[?isDefault].name"
 
@@ -338,13 +343,13 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.osType=='
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.osType=='Linux'].{Name:name,  admin:osProfile.adminUsername}" --output table
 ```
 
@@ -367,7 +372,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
@@ -375,7 +380,7 @@ Notice the extra escape characters (`` ` ``) surrounding the 50 in the previous 
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=`50`].{Name:name, admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
@@ -407,13 +412,13 @@ az vm list --resource-group QueryDemo --query "[?contains(storageProfile.osDisk.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[?contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}"
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[?contains(storageProfile.osDisk.managedDisk.storageAccountType,'SSD')].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType}"
 ```
 
@@ -444,13 +449,13 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storagePro
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, Storage:storageProfile.osDisk.managedDisk.storageAccountType} | [? contains(Storage,'SSD')]"
 ```
 
@@ -483,13 +488,13 @@ az vm list --resource-group QueryDemo --query "sort_by([].{Name:name, Size:stora
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "sort_by([].{Name:name, Size:storageProfile.osDisk.diskSizeGb}, &Size)" --output table
 ```
 
@@ -526,14 +531,14 @@ echo $USER
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 $USER=$(az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername")
 echo $USER
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 FOR /f %i IN ('az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername"') DO SET USER=%i
 echo %USER%
 ```
@@ -555,14 +560,14 @@ echo $USER
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 $USER=$(az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername" --output tsv)
 echo $USER
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 FOR /f %i IN ('az vm show --resource-group QueryDemo --name TestVM --query "osProfile.adminUsername" --output tsv') DO SET USER=%i
 echo %USER%
 ```
@@ -595,13 +600,13 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}"
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, admin:osProfile.adminUsername}"
 ```
 
@@ -637,13 +642,13 @@ az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.
 
 ### [PowerShell](#tab/powershell)
 
-```powershell-interactive
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
 
 ### [Cmd](#tab/cmd)
 
-```cmd
+```azurecli-interactive
 az vm list --resource-group QueryDemo --query "[].{Name:name, OS:storageProfile.osDisk.osType, Admin:osProfile.adminUsername}" --output table
 ```
 

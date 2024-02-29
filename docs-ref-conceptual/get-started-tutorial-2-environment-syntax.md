@@ -604,7 +604,7 @@ Do you want more detail on one of the subjects covered in this tutorial step? Us
 | | [PowerShell quoting](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
 | | [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 | | [Windows command-line tips](https://ss64.com/nt/syntax-esc.html)
-|Parameters | [Use quotation marks in Azure CLI parameters](./use-cli-effectively.md#use-quotation-marks-in-parameters)
+|Parameters | [Use quotation marks in Azure CLI parameters](./use-azure-cli-successfully.md#use-quotation-marks-in-parameters)
 | | Find more syntax examples of Bash, PowerShell and Cmd in [Query command output using JMESPath](./query-azure-cli.md)
 
 ## Next Step
