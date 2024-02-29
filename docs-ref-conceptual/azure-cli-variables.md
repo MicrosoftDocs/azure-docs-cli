@@ -26,7 +26,7 @@ This article discusses various ways to specify values in Azure CLI commands.
 
 ## Use shell variables
 
-Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](./use-cli-effectively.md). You can use variables in Bash to pass values for parameters to commands. Using variables with the Azure CLI also allows reuse of commands, either piecemeal or in scripts.
+Azure CLI runs in a shell. This article uses Bash. For information about other shells, see [Use Azure CLI effectively](./use-azure-cli-successfully.md). You can use variables in Bash to pass values for parameters to commands. Using variables with the Azure CLI also allows reuse of commands, either piecemeal or in scripts.
 
 This example creates a new storage disk of the same type as the storage disk on an existing virtual machine.
 
@@ -127,5 +127,5 @@ This command removes the group and all the resources that it contains at once.
 ## See also
 
 * [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
-* [How to use the Azure CLI effectively](./use-cli-effectively.md)
+* [How to use the Azure CLI effectively](./use-azure-cli-successfully.md)
 * [How to query Azure CLI command output](./query-azure-cli.md)
