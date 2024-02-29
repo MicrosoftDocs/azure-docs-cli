@@ -309,7 +309,7 @@ Do you want more detail on one of the subjects covered in this tutorial step? Us
 
 |Subject| Learn more|
 |-|-|
-|Variables| See advanced examples in [Use the Azure CLI successfully - Pass values to another command](./use-cli-effectively.md#pass-values-to-another-command)
+|Variables| See advanced examples in [Use the Azure CLI successfully - Pass values to another command](./use-azure-cli-successfully.md#pass-values-to-another-command)
 || Read a good overview of variables in [How to use variables in Azure CLI commands](./azure-cli-variables.md).
 |Querying| Find a wide range of examples in [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md).
 | | Take a deeper dive in Bash using `--query` in [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).

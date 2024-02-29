@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli
 
 # Use the Azure REST API with Azure CLI
 
-[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources. The `az rest` command should only be used when an existing [Azure CLI command](/cli/azure/use-cli-effectively) isn't available. 
+[Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse) are service endpoints that support different sets of HTTP operations (or methods). These HTTP methods allow you to perform different actions for your service's resources. The `az rest` command should only be used when an existing [Azure CLI command](/cli/azure/use-azure-cli-successfully) isn't available. 
 
 Upon completion of this article, you will know how to use the PUT, PATCH, GET, POST, and DELETE HTTP requests to manage Azure Container Registry resources. The [Azure Container Registry](/azure/container-registry/container-registry-intro) is a managed registry service that allows you to create and maintain Azure container registries that store container images and related artifacts.
 
