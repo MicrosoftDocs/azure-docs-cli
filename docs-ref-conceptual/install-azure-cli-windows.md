@@ -79,7 +79,7 @@ Although most Azure CLI documentation is written and tested in a Bash shell, you
 - Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./query-azure-cli.md)
 
 When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion. See these articles for more information:
-- [Error handling for the Azure CLI in PowerShell](./use-azure-cli-successfully.md#error-handling-for-azure-cli-in-powershell)
+- [Error handling for the Azure CLI in PowerShell](./use-azure-cli-successfully-in-powershell.md#error-handling-for-azure-cli-in-powershell)
 - [Enable Tab Completion in PowerShell](#enable-tab-completion-in-powershell)
 
 # [Windows Package Manager](#tab/winget)

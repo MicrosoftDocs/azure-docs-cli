@@ -331,7 +331,7 @@ The `?view=azure-cli-2020-09-01-hybrid` results in the desired version of the Az
 When you execute Azure CLI commands in a PowerShell environment, PowerShell allows question marks to
 be part of a variable name. This might create confusion in Azure CLI parameter values.
 
-Here's an example from the [Use the Azure REST API](./azure-cli-rest-tutorial.md?tabs=powershell#use-get-to-retrieve-your-azure-container-registry)
+Here's an example from the [Use the Azure REST API](./use-azure-cli-rest-command.md?tabs=powershell#use-get-to-retrieve-your-azure-container-registry)
 article:
 
 # [Bash](#tab/Bash2)
