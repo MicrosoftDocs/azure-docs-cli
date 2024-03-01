@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 02/29/2024
+ms.date: 03/01/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[adp](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp) | 2.40.0 | Microsoft Azure Command-Line Tools Adp Extension. | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/adp/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.49.0 | Provides a preview for upcoming AKS features | Preview | [2.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.49.0 | Provides a preview for upcoming AKS features | Preview | [2.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/aksarc) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.1.0](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/aksarc) |
 |[akshybrid](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.1.2](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.51.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
@@ -72,7 +72,7 @@ You will be prompted to install an extension on first use.
 |[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [0.3.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
 |[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
-|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.6.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
+|[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.6.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.49.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | Preview | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
