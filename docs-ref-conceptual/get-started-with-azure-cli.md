@@ -13,7 +13,7 @@ keywords: azure cli, how to use azure cli, azure command line interface, how to 
 ---
 # Get started with Azure CLI
 
-Welcome to the Azure Command-Line Interface (CLI)!  This article introduces the CLI and helps you complete common tasks.
+Welcome to the Azure Command-Line Interface (CLI)! This article introduces the CLI and helps you complete common tasks.
 
 > [!NOTE]
 >
@@ -28,8 +28,8 @@ environment through your browser. To learn about Cloud Shell, see [Quickstart fo
 
 When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
 
-After installing the CLI for the first time, check that it's installed and you've got the correct
-version by running `az --version`.
+After installing the CLI for the first time, check that the Azure CLI is installed and get your version number by
+running `az --version`.
 
 > [!NOTE]
 > If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
@@ -40,7 +40,7 @@ Before using any Azure CLI commands with a local install, you need to sign in wi
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
-After logging in, you see a list of subscriptions associated with your Azure account. The
+After logging in, you receive a list of subscriptions associated with your Azure account. The
 subscription information with `isDefault: true` is the currently activated subscription after
 logging in. To select another subscription, use the [az account set](/cli/azure/account#az-account-set)
 command with the subscription ID to switch to. For more information about subscription selection,
@@ -59,7 +59,7 @@ use the following command:
 az find secret
 ```
 
-You will also find all Azure CLI reference command groups listed in the [A to Z index](/cli/azure/reference-index).
+Find all Azure CLI reference command groups in the [A to Z index](/cli/azure/reference-index).
 
 Use the `--help` argument to get a complete list of commands and subgroups of a group. For example, to find the CLI commands for working with
 Network Security Groups (NSGs):
@@ -70,16 +70,16 @@ az network nsg --help
 
 ## Find examples
 
-If you prefer to learn Azure CLI syntax by seeing tested published examples, there are two indexes of topic content:
+If you prefer to learn Azure CLI syntax by seeing tested published examples, there are two indexes of article content:
 
 * [Samples index A to Z](./samples-index.md). The samples index provides a list of Azure CLI samples sorted by [subject area](./samples-index.md?tabs=service), [reference group](./samples-index.md?tabs=command), and [GitHub repository](./samples-index.md?tabs=github).
 
-* [Topic index A to Z](./reference-docs-index.md). Use your keyboard `find` shortcut keys, like
-  `Ctrl + F`, to drop quickly to the reference command group you are interested in.
+* [Article index A to Z](./reference-docs-index.md). Use your keyboard `find` shortcut keys, like
+  `Ctrl + F`, to drop quickly to the reference command group in which you're interested.
 
 ## Use tab completion
 
-The CLI has full tab completion for commands in a Bash environment.  To enable tab completion in a PowerShell environment, see [Enable tab completion in PowerShell](./install-azure-cli-windows.md#enable-tab-completion-in-powershell).
+The CLI has full tab completion for commands in a Bash environment. To enable tab completion in a PowerShell environment, see [Enable tab completion in PowerShell](./install-azure-cli-windows.md#enable-tab-completion-in-powershell).
 
 ## Be aware of globally available arguments
 
@@ -110,13 +110,13 @@ offers an interactive experience, including autocomplete and mouse-over document
 
 ## Learn CLI basics with quickstarts and tutorials
 
-To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-tutorial-0-before-you-begin.md) which will teach you the following skills while working with Azure Storage:
+To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-tutorial-0-before-you-begin.md) that teaches you the following skills while working with Azure Storage:
 
 * [Decide what environment you should use](./get-started-tutorial-0-before-you-begin.md#what-shell-environment-should-i-use)
 * [Find and change your default subscription](./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription)
 * [Create an Azure resource containing a random ID in the name](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
 * [Set environment variables](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
-* [Learn syntax differences between Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
+* [Learn syntax differences between Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md)
 * [Debug Azure CLI reference commands](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
 * [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable)
 * [Delete multiple resources using a script](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
@@ -133,5 +133,6 @@ az feedback
 ## See also
 
 * [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
-* [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md)
-* [Full command reference list for the Azure CLI](../latest/docs-ref-autogen/reference-index.yml)
+* [Learn to use the Azure CLI tutorial](./get-started-tutorial-0-before-you-begin.md)
+* [Use the Azure CLI in a Bash environment](./azure-cli-learn-bash.md)
+* [Considerations for using the Azure CLI in a PowerShell environment](./use-azure-cli-successfully-in-powershell.md)
