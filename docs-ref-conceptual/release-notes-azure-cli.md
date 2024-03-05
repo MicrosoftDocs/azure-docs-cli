@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 02/06/2024
+ms.date: 03/05/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,103 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## March 05, 2024
+
+Version 2.58.0
+
+### ACR
+
+* `az acr`: Update registry and webhook example names to be lowercase
+* `az acr create/update`: Add new argument `--allow-metadata-search` to enable the metadata-search feature for the registry
+
+### AKS
+
+* Add monitoring addon to support default workspace in AGC
+* `az aks get-versions`: Show extra column on supportPlan
+* `az aks create/update`: Update region map for default region creation with new Azure Monitor Workspace regions
+* `az aks update`: Zero can be set to outbound-ports,outbound-ip-count in loadbalancer profile and outbound-ip-count in natgateway profile in AKS
+
+### API Management
+
+* `az apim api export`: Add command to export an API Management API
+
+### App Service
+
+* `az webapp up/create/update`: Add new parameter `--basic-auth` to allow users to enable and disable basic auth
+
+### ARM
+
+* Fix #27855: `az bicep generate-params`: Bicep install messages sent to stdout
+
+### Backup
+
+* [BREAKING CHANGE] `az backup item set-policy`: Add warning prompt for migration from Standard to Enhanced Policy
+
+### Batch
+
+* `az batch pool create`: Add new parameter `--resource-tags` to support specifying resource tags for the pool. Any resource created for the pool will then also be tagged by the same resource tags
+* `az batch pool create`: Add new parameters `--security-type`, `--encryption-at-host`, `--secure-boot-enabled`, and `--v-tpm-enabled` to support Trusted Launch Security Type for VMs/VMSS deployments
+* `az batch pool create`: Add new parameters `--caching`, `--disk-size-gb`, `--write-accelerator-enabled`, and `--storage-account-type` to support Batch Node Agent temp disk-less SKUs
+
+### CDN
+
+* Fix #28240: `az afd rule create`: Cannot create without condition
+* Fix #28223: `az afd route create`: Cannot create without `--content-types-to-compress`
+* Fix #27744: `az afd origin-group`: Add parameter `--enable-health-probe`
+
+### Compute
+
+* `az vmss nic`: Update help messages to guild users to specific commands for Flexible VMSS
+* `az vm host redeploy`: Add command to redeploy the dedicated host
+* Fix #28397: `az vm create`: Fix creating VM with `--security-type Standard`
+* `az vmss application set`: Fix updates to the purchase plan are not supported when updating VMSS
+* `az vmss update-domain-walk`: Add new command to support updating vm in a service fabric vmss
+
+### Containerapp
+
+* `az containerapp revision copy`: Fix `--from-revision` bug for inheriting a specific revision contains scale rules
+* `az containerapp update`: Fix TypeError: Argument of type 'NoneType' is not iterable
+* Fix #28226: `az containerapp job update`: Update existing scale rules if `--scale-rule-name` is passed
+
+### Core
+
+* [BREAKING CHANGE] `az login`: Replace `allow_broker` with `enable_broker_on_windows` (#27726)
+
+### Cosmos DB
+
+* `az cosmosdb sql database/container restore`: Fix support for restore of deleted database resource in the same SQL account
+* `az cosmosdb mongodb database/collection restore`: Fix support for restore of deleted database resource in the same MongoDB account
+* `az cosmosdb gremlin database/graph restore`: Fix support for restore of deleted database resource in the same gremlin account
+* `az cosmosdb table restore`: Fix support for restore of deleted table resource in the same account
+
+### MySQL
+
+* `az mysql flexible-server import create`: Change the default progress message from starting to running
+
+### Network
+
+* `az network virtual-appliance connection`: Add show and list commands for NVA connection
+* `az network vnet-gateway`: Add parameters `--allow-remote-vnet-traffic` and `--allow-vwan-traffic`
+* `az network express-route gateway`: Add parameter `--allow-non-vwan-traffic`
+
+### RDBMS
+
+* Fix #27713: `az postgres flexible-server list-skus -o table`: Fix table output from list-skus command
+
+### Security
+
+* `az security api-collection`: Manage Azure API Management API connections to Microsoft Defender for APIs
+* `az security security-connector`: Manage cloud security posture management (CSPM) and cloud workload protection (CWP) across multicloud resources
+
+### SQL VM
+
+* Fix #27300: `az sql vm group create`: `--cluster-subnet-type` should only be passed into `WsfcDomainProfile`
+
+### Storage
+
+* Fix #28356: `az storage account or-policy update`: Fix `-p @policy.json` to allow passing in json files
+* `az storage blob upload-batch`: Support `--tags`, make `--overwrite` non-preview
 
 ## February 06, 2024
 
