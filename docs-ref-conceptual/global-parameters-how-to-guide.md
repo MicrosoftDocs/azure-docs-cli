@@ -3,7 +3,7 @@ title: Configure your new resource group with global parameters using Azure CLI 
 description: Learn how to use various global parameters with Azure CLI to configure a resource group.
 manager: jasongroce
 author: daphnemamsft
-ms.author: daphnemamsft
+ms.author: daphnema
 ms.date: 08/2/2023
 ms.topic: conceptual
 ms.service: azure-cli
