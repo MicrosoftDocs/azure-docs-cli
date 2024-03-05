@@ -28,18 +28,28 @@ directCommands:
                          [--certificate-references]
                          [--disk-encryption-targets]
                          [--enable-inter-node-communication]
+                         [--enable-secure-boot {false, true}]
+                         [--enable-vtpm {false, true}]
+                         [--enable-write-accel {false, true}]
+                         [--encryption-at-host {false, true}]
                          [--id]
                          [--image]
                          [--json-file]
                          [--metadata]
                          [--node-agent-sku-id]
+                         [--os-disk-caching {none, readonly, readwrite}]
+                         [--os-disk-size]
                          [--os-family {2, 3, 4, 5, 6}]
                          [--os-version]
+                         [--placement {cachedisk}]
                          [--policy {regional, zonal}]
                          [--resize-timeout]
+                         [--resource-tags]
+                         [--security-type]
                          [--start-task-command-line]
                          [--start-task-resource-files]
                          [--start-task-wait-for-success]
+                         [--storage-account-type {premium_lrs, standard_lrs, standardssd_lrs}]
                          [--target-communication {classic, default, simplified}]
                          [--target-dedicated-nodes]
                          [--target-low-priority-nodes]
@@ -78,6 +88,22 @@ directCommands:
   - name: --enable-inter-node-communication
     summary: |-
       Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false. True if flag present.
+  - name: --enable-secure-boot
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable secure boot.
+  - name: --enable-vtpm
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable vTPM.
+  - name: --enable-write-accel
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether writeAccelerator should be enabled or disabled on the disk.
+  - name: --encryption-at-host
+    parameterValueGroup: "false, true"
+    summary: |-
+      This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource.
   - name: --id
     summary: |-
       Required. The ID can contain any combination of alphanumeric characters including hyphens and underscores, and cannot contain more than 64 characters. The ID is case-preserving and case-insensitive (that is, you may not have two Pool IDs within an Account that differ only by case).
@@ -93,6 +119,13 @@ directCommands:
   - name: --node-agent-sku-id
     summary: |-
       Required. The Batch Compute Node agent is a program that runs on each Compute Node in the Pool, and provides the command-and-control interface between the Compute Node and the Batch service. There are different implementations of the Compute Node agent, known as SKUs, for different operating systems. You must specify a Compute Node agent SKU which matches the selected Image reference. To get the list of supported Compute Node agent SKUs along with their list of verified Image references, see the 'List supported Compute Node agent SKUs' operation.
+  - name: --os-disk-caching
+    parameterValueGroup: "none, readonly, readwrite"
+    summary: |-
+      Specify the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage.
+  - name: --os-disk-size
+    summary: |-
+      The initial disk size in GB when creating new OS disk.
   - name: --os-family
     parameterValueGroup: "2, 3, 4, 5, 6"
     summary: |-
@@ -100,6 +133,10 @@ directCommands:
   - name: --os-version
     summary: |-
       The default value is * which specifies the latest operating system version for the specified OS family.
+  - name: --placement
+    parameterValueGroup: "cachedisk"
+    summary: |-
+      Specifies the ephemeral disk placement for operating system disk for all VMs in the pool. This property can be used by user in the request to choose the location e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements.
   - name: --policy
     parameterValueGroup: "regional, zonal"
     summary: |-
@@ -107,6 +144,12 @@ directCommands:
   - name: --resize-timeout
     summary: |-
       This timeout applies only to manual scaling; it has no effect when enableAutoScale is set to true. The default value is 15 minutes. The minimum value is 5 minutes. If you specify a value less than 5 minutes, the Batch service returns an error; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). Expected format is an ISO-8601 duration.
+  - name: --resource-tags
+    summary: |-
+      User is able to specify resource tags for the pool. Any resource created for the pool will then also be tagged by the same resource tags.
+  - name: --security-type
+    summary: |-
+      Specify the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set.
   - name: --start-task-command-line
     summary: |-
       Required. The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the command line refers to file paths, it should use a relative path (relative to the Task working directory), or use the Batch provided environment variable (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
@@ -116,6 +159,10 @@ directCommands:
   - name: --start-task-wait-for-success
     summary: |-
       Whether the Batch service should wait for the StartTask to complete successfully (that is, to exit with exit code 0) before scheduling any Tasks on the Compute Node. If true and the StartTask fails on a Node, the Batch service retries the StartTask up to its maximum retry count (maxTaskRetryCount). If the Task has still not completed successfully after all retries, then the Batch service marks the Node unusable, and will not schedule Tasks to it. This condition can be detected via the Compute Node state and failure info details. If false, the Batch service will not wait for the StartTask to complete. In this case, other Tasks can start executing on the Compute Node while the StartTask is still running; and even if the StartTask fails, new Tasks will continue to be scheduled on the Compute Node. The default is true. True if flag present.
+  - name: --storage-account-type
+    parameterValueGroup: "premium_lrs, standard_lrs, standardssd_lrs"
+    summary: |-
+      The storage account type for managed disk.
   - name: --target-communication
     parameterValueGroup: "classic, default, simplified"
     summary: |-
