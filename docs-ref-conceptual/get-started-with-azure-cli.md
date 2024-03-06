@@ -15,21 +15,14 @@ keywords: azure cli, how to use azure cli, azure command line interface, how to 
 
 Welcome to the Azure Command-Line Interface (CLI)! This article introduces the CLI and helps you complete common tasks.
 
-> [!NOTE]
->
-> In scripts and on the Microsoft documentation site, Azure CLI examples are written for the `bash` shell. One-line examples will
-> run on any platform. Longer examples which include line continuations (`\`) or variable assignment need to be modified to work
-> on other shells, including PowerShell.
-
 ## Install or run in Azure Cloud Shell
 
-The easiest way to learn how to use the Azure CLI is by running it in an Azure Cloud Shell
-environment through your browser. To learn about Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+The easiest way to learn how to use the Azure CLI is by running it in an [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) environment through your browser. To learn about Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
 When you're ready to install the Azure CLI, see the [installation instructions](install-azure-cli.md)
-for Windows, Linux, macOS and Docker container options. If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
+for Windows, Linux, macOS, and Docker container options. If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
-Check your version by running `az --version`. Azure Cloud Shell always has the latest version of the Azure CLI pre-installed.
+Check your version by running `az --version`. Azure Cloud Shell always has the latest version of the Azure CLI preinstalled.
 
 ```azurecli-interactive
 az version
@@ -53,25 +46,25 @@ There are ways to sign in non-interactively, which are covered in detail in [Sig
 
 Azure CLI commands are organized as command groups. Each group represents an area of an Azure service. There are two options to find command groups:
 
-* use the [az find](/cli/azure/reference-index#az-find) command. For example, to search for command names containing `vm`, use the following command:
+* Use the [az find](/cli/azure/reference-index#az-find) command. For example, to search for command names containing `vm`, use the following command:
 
-```azurecli-interactive
-az find vm
-```
+  ```azurecli-interactive
+  az find vm
+  ```
 
-* A second option to locate reference groups is to use the [A to Z reference index](/cli/azure/reference-index) that lists all command groups alphabetically.
+* Locate reference groups is to use the [A to Z reference index](/cli/azure/reference-index) that lists all command groups alphabetically.
 
-To find reference _commands_, like `az vm _create_` use the `--help` argument to get a complete list of commands and subgroups of a group. For example, find all the commands for working with virtual machines:
+  To find reference _commands_, like `az vm _create_` use the `--help` argument to get a complete list of commands and subgroups of a group. For example, find all the commands for working with virtual machines:
 
-```azurecli-interactive
-az vm --help
-```
+  ```azurecli-interactive
+  az vm --help
+  ```
 
-Find the Azure CLI commands for working with Network Security Groups (NSGs), a subset of `az network`:
+  Here's another example that finds the Azure CLI commands for working with Network Security Groups (NSGs), a subset of `az network`:
 
-```azurecli-interactive
-az network nsg --help
-```
+  ```azurecli-interactive
+  az network nsg --help
+  ```
 
 ## Find examples
 
@@ -99,7 +92,7 @@ There are some arguments that are available for most commands.
 * `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you find a bug, provide output generated with the `--debug` flag on when submitting a bug report.
-* `--subscription` is the name or ID of a subscription. See [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md) for more information on setting your default subscription.
+* `--subscription` is the name or ID of a subscription. For more information about setting your default subscription, see [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 * `--only-show-errors` suppresses warnings in command output and only shows errors.
 
 ## Use interactive mode
@@ -120,14 +113,22 @@ offers an interactive experience, including autocomplete and mouse-over document
 
 To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-tutorial-0-before-you-begin.md) that teaches you the following skills while working with Azure Storage:
 
-* [Decide what environment you should use](./get-started-tutorial-0-before-you-begin.md#what-shell-environment-should-i-use)
-* [Find and change your default subscription](./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription)
-* [Create an Azure resource containing a random ID in the name](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
-* [Set environment variables](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
-* [Learn syntax differences between Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md)
-* [Debug Azure CLI reference commands](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
-* [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable). This example shows how to get configuration values for development, stage and production. 
-* [Delete multiple resources using a script](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
+* [Decide what environment you should use.](./get-started-tutorial-0-before-you-begin.md#what-shell-environment-should-i-use)
+* [Find and change your default subscription.](./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription)
+* [Create an Azure resource containing a random ID in the name.](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
+* [Set environment variables.](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
+* [Learn syntax differences between Bash, PowerShell, and Cmd.](./get-started-tutorial-2-environment-syntax.md)
+* [Debug Azure CLI reference commands.](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
+* [Get properties from a local JSON file.](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable). This example shows how to get configuration values for development, stage, and production. 
+* [Delete multiple resources using a script.](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
+
+> [!NOTE]
+> 
+> In scripts and on the Microsoft documentation site, Azure CLI examples are written for the
+> Bash shell. Most one-line examples will run on any platform. Longer examples which include line
+> continuations (`\`), variable assignment, _or quotes_ need to be modified to work in other shells,
+> including PowerShell. For more information on syntax differences between environments,
+> see [Learn syntax differences between Bash, PowerShell, and Cmd.](./get-started-tutorial-2-environment-syntax.md)
 
 ## Give feedback
 
