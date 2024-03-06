@@ -30,7 +30,7 @@ az version
 
 ## Sign into the Azure CLI
 
-Before using any Azure CLI commands with a local install, you need to sign in with [az login](./reference-index#az-login).
+Before using any Azure CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az-login).
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
