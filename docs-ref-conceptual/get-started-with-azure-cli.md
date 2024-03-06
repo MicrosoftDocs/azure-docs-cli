@@ -4,7 +4,7 @@ description: Learn how to start using the Azure CLI by completing common command
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 12/04/2023
+ms.date: 03/07/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
@@ -17,10 +17,10 @@ Welcome to the Azure Command-Line Interface (CLI)! This article introduces the C
 
 ## Install or run in Azure Cloud Shell
 
-The easiest way to learn how to use the Azure CLI is by running it in an [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) environment through your browser. To learn about Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+The easiest way to learn how to use the Azure CLI is by running a Bash environment in [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) through your browser. To learn about Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
 When you're ready to install the Azure CLI, see the [installation instructions](install-azure-cli.md)
-for Windows, Linux, macOS, and Docker container options. If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
+for Windows, Linux, macOS, and Docker container. If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
 Check your version by running `az --version`. Azure Cloud Shell always has the latest version of the Azure CLI preinstalled.
 
@@ -30,14 +30,14 @@ az version
 
 ## Sign into the Azure CLI
 
-Before using any Azure CLI commands with a local install, you need to sign in with [az login](/cli/azure/reference-index#az-login).
+Before using any Azure CLI commands with a local install, you need to sign in with [az login](./reference-index#az-login).
 
 [!INCLUDE [interactive-login](includes/interactive-login.md)]
 
 After logging in, you receive a list of subscriptions associated with your Azure account. The
 subscription information with `isDefault: true` is the currently activated subscription after
 logging in. To select another subscription, use the [az account set](/cli/azure/account#az-account-set)
-command with the subscription ID to switch to. For more information about subscription selection,
+command with the subscription ID of the desired account. For more information about subscription selection,
 see [Manage Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
 
 There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
@@ -60,10 +60,10 @@ Azure CLI commands are organized as command groups. Each group represents an are
   az vm --help
   ```
 
-  Here's another example that finds the Azure CLI commands for working with Network Security Groups (NSGs), a subset of `az network`:
+  Here's another example that finds the Azure CLI commands for working with VM extensions, a subset of `az vm`:
 
   ```azurecli-interactive
-  az network nsg --help
+  az vm extension --help
   ```
 
 ## Find examples
@@ -104,16 +104,15 @@ select subcommands. You enter interactive mode with the [az interactive](/cli/az
 az interactive
 ```
 
-For more information on interactive mode, see [Azure CLI Interactive Mode](interactive-azure-cli.md).
+For more information on interactive mode, see [Run the Azure CLI in Interactive Mode](interactive-azure-cli.md).
 
 There's also a [Visual Studio Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azurecli) that
 offers an interactive experience, including autocomplete and mouse-over documentation.
 
-## Learn CLI basics with quickstarts and tutorials
+## Learn Azure CLI basics with quickstarts and tutorials
 
 To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-tutorial-0-before-you-begin.md) that teaches you the following skills while working with Azure Storage:
 
-* [Decide what environment you should use.](./get-started-tutorial-0-before-you-begin.md#what-shell-environment-should-i-use)
 * [Find and change your default subscription.](./get-started-tutorial-1-prepare-environment.md#find-and-change-your-active-subscription)
 * [Create an Azure resource containing a random ID in the name.](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
 * [Set environment variables.](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)

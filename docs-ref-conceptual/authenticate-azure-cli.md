@@ -12,11 +12,11 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in 
 ---
 
-# Sign in with Azure CLI
+# Authentication methods
 
 The Azure CLI supports several authentication methods. Restrict sign-in permissions for your use case to keep your Azure resources secure.
 
-## Authentication methods
+## Sign into Azure with Azure CLI
 
 There are five authentication options when working with the Azure CLI:
 
