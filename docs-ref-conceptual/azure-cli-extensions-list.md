@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/05/2024
+ms.date: 03/06/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -133,14 +133,14 @@ You will be prompted to install an extension on first use.
 |[k8s-runtime](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime) | 2.55.0 | Microsoft Azure Command-Line Tools K8sRuntime Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime/HISTORY.rst) |
 |[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
-|[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.41.0 | Microsoft Azure Command-Line Tools Load Testing Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
+|[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.41.0 | Microsoft Azure Command-Line Tools Load Testing Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
 |[log-analytics](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics) | 2.0.0 | Support for Azure Log Analytics query capabilities. | Preview | [0.2.2](https://github.com/Azure/azure-cli-extensions/tree/master/src/log-analytics/HISTORY.rst) |
 |[log-analytics-solution](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics-solution) | 2.50.0 | Support for Azure Log Analytics Solution | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/log-analytics-solution/HISTORY.rst) |
 |[logic](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic) | 2.55.0 | Microsoft Azure Command-Line Tools Logic Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/logic/HISTORY.rst) |
 |[logz](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz) | 2.15.0 | Microsoft Azure Command-Line Tools MicrosoftLogz Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/logz/HISTORY.rst) |
 |[maintenance](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance) | 2.51.0 | Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension | Experimental | [1.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/maintenance/HISTORY.rst) |
 |[managedccfs](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs) | 2.45.0 | Microsoft Azure Command-Line Tools Managedccfs Extension. | Preview | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managedccfs/HISTORY.rst) |
-|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.49.0 | Support for managednetworkfabric commands based on 2023-06-15 API version. | GA | [5.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
+|[managednetworkfabric](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric) | 2.49.0 | Support for managednetworkfabric commands based on 2023-06-15 API version. | GA | [5.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/managednetworkfabric/HISTORY.rst) |
 |[managementpartner](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Support for Management Partner preview | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions) |
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh) | 2.50.0 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [1.0.0a1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh/HISTORY.rst) |
 |[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality) | 2.49.0 | Mixed Reality Azure CLI Extension. | Preview | [0.0.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality/HISTORY.rst) |
@@ -164,7 +164,7 @@ You will be prompted to install an extension on first use.
 |[powerbidedicated](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated) | 2.56.0 | Microsoft Azure Command-Line Tools PowerBIDedicated Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/powerbidedicated/HISTORY.rst) |
 |[providerhub](https://github.com/Azure/azure-cli-extensions/tree/master/src/providerhub) | 2.15.0 | Microsoft Azure Command-Line Tools ProviderHub Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/providerhub/HISTORY.rst) |
 |[purview](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview) | 2.15.0 | Microsoft Azure Command-Line Tools PurviewManagementClient Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/purview/HISTORY.rst) |
-|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.41.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
+|[quantum](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum) | 2.41.0 | Microsoft Azure Command-Line Tools Quantum Extension | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/quantum/HISTORY.rst) |
 |[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.48.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.54.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.4](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
