@@ -14,291 +14,19 @@ keywords: azure cli, how to use azure cli, azure command line interface, how to 
 
 # Working with global parameters when using Azure CLI (Command-Line Interface)
 
-When working with the Azure CLI, global parameters allow you to define values that can be reused across multiple commands. The benefits of using global parameters are reusability and consistency, as they allow you to reuse values across different commands or scripts, and maintain consistent values throughout your CLI interactions.
+When working with the Azure CLI, global parameters allow you to define values that can be used across multiple commands. Global parameters are helpful when you have multiple commands with identical parameter names and values. They can be referenced in a command and have many applications. 
 
-## Prerequisites
+## `--help` global parameter
 
-[!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
+If you find that you need some help with required and global parameters, you can use the `--help` global parameter in order to generate a list of definition for each required and global parameter. You can also view a basic example for the command you are trying to run:
 
-## Create a new resource group with global parameters
-
-Create a new resource group by running: 
-
-> [!IMPORTANT]
-> Please note that the `--location` and the `--name` are required parameters and will therefore be included in every step of this tutorial.
-
-# [Bash](#tab/bash)
 
 ```azurecli-interactive
-# Variable block
-let "randomIdentifier=$RANDOM*$RANDOM"
-location="eastus"
-resourceGroup="msdocs-rg$randomIdentifier"
-
-az group create --name $resourceGroup --location $location 
+az group create --name myResourceGroup --location eastus --help
 ```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-# Variable block
-$randomIdentifier = (New-Guid).ToString().Substring(0,8)
-$location="eastus"
-$resourceGroup="msdocs-rg$randomIdentifier"
-
-az group create --name $resourceGroup --location $location 
-```
-
-***
 
 Output console:
-
-```output
-{
-  "id": "/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>",
-  "location": "<location>",
-  "managedBy": null,
-  "name": "<resourceGroup>",
-  "properties": {
-    "provisioningState": "Succeeded"
-  },
-  "tags": null,
-  "type": "Microsoft.Resources/resourceGroups"
-}
-```
-
-## Create a resource group in a specific Azure subscription 
-
-You can also create a new resource group in a specific Azure subscription by specifying the `--subscriptions` global parameter:
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-# Variable block
-let "randomIdentifier=$RANDOM*$RANDOM"
-location="eastus"
-resourceGroup="msdocs-rg$randomIdentifier"
-subscriptionId="00000000-0000-0000-0000-000000000000"
-
-az group create --name $resourceGroup --location $location --subscriptionId $subscriptionId
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-# Variable block
-$randomIdentifier = (New-Guid).ToString().Substring(0,8)
-$location="eastus"
-resourceGroup="msdocs-rg$randomIdentifier"
-$subscriptionId="00000000-0000-0000-0000-000000000000"
-
-az group create --name $resourceGroup --location $location 
-```
-
-***
-
-Output console:
-
-```output
-{
-  "id": "/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>",
-  "location": "<location>",
-  "managedBy": null,
-  "name": "<resourceGroup>",
-  "properties": {
-    "provisioningState": "Succeeded"
-  },
-  "tags": null,
-  "type": "Microsoft.Resources/resourceGroups"
-}
-```
-
-## Configure the output of your resource group 
-
-Suppose you want to show the output of the resource group you created in a specific format, you can do so by specifying the `--output` global parameters. In this example, the output is shown as a table:
-
-> [!NOTE]
-> The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default output value is set to json. 
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --output table
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --output table
-```
-
-***
-
-Output console:
-
-```output
-Location    Name
-----------  --------
-eastus      globalrg
-```
-
-## Show additional details of your command with verbose
-
-You can learn more in-depth details about the logging verbosity when running your `az group create` command. This could be helpful when trying to understand if certain commands take longer than others to execute. For this step in the tutorial, we will reuse the very first example and add the `--verbose` global parameters:
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --verbose 
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --verbose
-```
-
-***
-
-Output console:
-
-> [!NOTE]
-> The output content has been shortened since the content is repeated from the first step. This is to highlight the specific output the `--verbose` parameter provides.
-
-```output
-{...}
-Command ran in 1.413 seconds (init: 0.487, invoke: 0.926)
-```
-
-## Debug your command
-
-If the additional details from the `--verbose` parameter aren't enough and you wish to view the *whole* debug log, you can use the `--debug` global parameter. For this step in the tutorial, we will reuse the very first example and add the `--debug` global parameter:
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --debug
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --debug
-```
-
-***
-
-Output console:
-
-> [!NOTE]
-> The output content has been shortened due to readability and repeated content from the first step.
-
-```output
-
-cli.knack.cli: Command arguments: ['group', 'create', '--name', 'globalrg', '--location', 'eastus', '--debug']
-cli.knack.cli: __init__ debug log:
-[...]
-cli.knack.cli: Event: CommandInvoker.OnTransformResult [<function _resource_group_transform at 0x000001D9B72123B0>, <function _x509_from_base64_to_hex_transform at 0x000001D9B7212440>]
-cli.knack.cli: Event: CommandInvoker.OnFilterResult []
-{...}
-[...]
-telemetry.process: Return from creating process
-telemetry.main: Finish creating telemetry upload process.
-
-```
-
-## Filter out errors for your command
-
-During the process of debugging, you may want to only highlight the actual errors and filter out the warnings. To do so, you can use the `--only-show-errors` global parameter to only show errors and suppress any warnings. For this step in the tutorial, we will reuse the very first example and add the `--only-show-errors` global parameter:
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --only-show-errors
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location  --only-show-errors
-```
-
-***
-
-Output console:
-
-> [!NOTE]
-> Since there are no existing errors for the command we just ran, no errors are highlighted. You can see that the command was successful by looking at `"provisioningState": "Succeeded"`.
-
-```output
-{
-  "id": "/subscriptions/<subscriptionId>/resourceGroups/resourceGroup",
-  "location": "eastus",
-  "managedBy": null,
-  "name": "<resourceGroup>",
-  "properties": {
-    "provisioningState": "Succeeded"
-  },
-  "tags": null,
-  "type": "Microsoft.Resources/resourceGroups"
-}
-```
-
-## Use JMESPath queries to select data from your output
-
-There are times the output console may display extensive amounts of information that you may want to filter through. To do so, you can use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, which gives you the ability to select and modify data from the CLI output.
-
-> [!NOTE]
-> All commands in Azure CLI support the `--query` parameter. For more information about how to use JMESP
-
-This example returns the tenant ID and subscription ID of the Azure account and subscription you're using:
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location -query "{tenantId:tenantId,subscriptionid:id}"
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --query "{tenantId:tenantId,subscriptionid:id}"
-```
-
-***
-
-Output console:
-
-```output
-{
-  "subscriptionid": "/subscriptions/<subscriptionId>/resourceGroups/<resourceGroup>",
-  "tenantId": <tenantId>
-}
-```
-
-## Generate suggestions and hints with help
-
-If you find that you need some help with required arguments and global parameters, you can use the `--help` global parameter in order to generate a list of definition for each required argument and global parameter. You can also view a basic example for the command you are trying to run:
-
-
-# [Bash](#tab/bash)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --help
-```
-
-# [PowerShell](#tab/powershell)
-
-```azurecli-interactive
-az group create --name $resourceGroup --location $location --help
-```
-
-***
-
-Output console:
-
-> [!NOTE]
-> The output content has been shortened due to readability.
+The output content has been shortened due to readability.
 
 ```output
 Command
@@ -324,20 +52,148 @@ Examples
         az group create -l westus -n MyResourceGroup
 ```
 
-## Clean up your resources 
+## `--verbose` global parameter
 
-Now that you you have created your resource and used various global parameters to configure the output, it is important to remember to remove all resources used in this tutorial by using [az group delete](/cli/azure/group#az-group-delete). 
-
-
-# [Bash](#tab/bash)
+You can learn more in-depth details about the logging verbosity when running your command. This could be helpful when trying to understand if certain commands take longer than others to execute. For the following example, 
 
 ```azurecli-interactive
-az group delete --name $resourceGroup
+az group create --name myResourceGroup --location eastus --verbose 
 ```
 
-# [PowerShell](#tab/powershell)
+Output console:
+
+The output content has been shortened since the content is repeated from the first step. This is to highlight the specific output the `--verbose` parameter provides.
+
+```output
+{...}
+Command ran in 1.413 seconds (init: 0.487, invoke: 0.926)
+```
+
+## `--debug` global parameter
+
+If the additional details from the `--verbose` parameter aren't enough and you wish to view the *whole* debug log, you can use the `--debug` global parameter. For this step in the tutorial, we will reuse the very first example and add the `--debug` global parameter:
 
 ```azurecli-interactive
-az group delete --name $resourceGroup
+az group create --name myrResourceGroup --location eastus --debug
+```
+
+Output console:
+
+The output content has been shortened due to readability and repeated content from the first step.
+
+```output
+
+cli.knack.cli: Command arguments: ['group', 'create', '--name', 'myResourceGroup', '--location', 'eastus', '--debug']
+cli.knack.cli: __init__ debug log:
+[...]
+cli.knack.cli: Event: CommandInvoker.OnTransformResult [<function _resource_group_transform at 0x000001D9B72123B0>, <function _x509_from_base64_to_hex_transform at 0x000001D9B7212440>]
+cli.knack.cli: Event: CommandInvoker.OnFilterResult []
+{...}
+[...]
+telemetry.process: Return from creating process
+telemetry.main: Finish creating telemetry upload process.
+
+```
+
+## `--only-show-errors` global parameter
+
+During the process of debugging, you may want to only highlight the actual errors and filter out the warnings. To do so, you can use the `--only-show-errors` global parameter to only show errors and suppress any warnings. For the following example, see the difference of the first line of the output when including the `--only-show-errors` global parameter:
+
+# [Without `--only-show-errors`](#tab/tabid-1)
+
+```azurecli-interactive
+az interactive 
+```
+
+Output console:
+
+```output
+**This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus**
+
+Any comments or concerns? You can use the 'feedback' command! We would greatly appreciate it.
+
+
+A new Recommender is added which can make the completion ability more intelligent and provide the scenario completion!
+If you want to disable this feature, you can use 'az config set interactive.enable_recommender=False' to disable it.
+
+A command preload mechanism was added to prevent lagging and command run errors.
+You can skip preloading in a single pass by CTRL+C or turn it off by setting 'az config set interactive.enable_preloading=False'
+
+Loading command table... Expected time around 1 minute.
+```
+
+# [With `--only-show-errors`](#tab/tabid-2)
+
+```azurecli-interactive
+az interactive --only-show-errors
+```
+
+Output console:
+
+```output
+Any comments or concerns? You can use the 'feedback' command! We would greatly appreciate it.
+
+
+A new Recommender is added which can make the completion ability more intelligent and provide the scenario completion!
+If you want to disable this feature, you can use 'az config set interactive.enable_recommender=False' to disable it.
+
+A command preload mechanism was added to prevent lagging and command run errors.
+You can skip preloading in a single pass by CTRL+C or turn it off by setting 'az config set interactive.enable_preloading=False'
+
+Loading command table... Expected time around 1 minute.
+```
+
+## `--subscription` global parameter
+
+You can use the `--subscription` global parameter to set a specific subscription for a command:
+
+The following example changes the active subscription using the subscription ID:
+
+```azurecli-interactive
+az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```
+
+## `--output` global parameter
+
+Suppose you want to show the output of a command in a specific format, you can do so by specifying the `--output` global parameters. To learn more about configuring your output, see [Output formats for Azure CLI commands](../docs-ref-conceptual/format-output-azure-cli.md) In this example, the output is shown as a table:
+
+> [!NOTE]
+> The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default output value is set to json. 
+
+
+```azurecli-interactive
+az vm list --resource-group globalrg --output table
+```
+
+Output console:
+
+```output
+Name    ResourceGroup    Location    Zones
+------  ---------------  ----------  -------
+myVm    myResourceGroup        eastus
+```
+
+## `--query` global parameter
+
+There are times the output console may display extensive amounts of information that you may want to filter through. To do so, you can use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, which gives you the ability to select and modify data from the CLI output.
+
+Most commands in Azure CLI support the `--query` parameter. To learn more about querying your command output, see [How to query Azure CLI command output using a JMESPath query](../docs-ref-conceptual/query-azure-cli.md)
+
+This example returns the SSH public keys authorized to connect to the VM by adding a query:
+
+```azurecli-interactive
+ az vm show --resource-group myResourceGroup --name myVm --query "osProfile.linuxConfigurat
+ion.ssh.publicKeys"
+```
+
+Output console:
+
+```output
+[
+  {
+    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7WbiMEsB0iwdGPjeGXs3UWFtzbCkUwtIxzkIOpEtlqkLGa0XQdvwhzok6szq6Ycx/f4cfid/yrmBPtzmxdQnGeCy2FOcVIzp+SkjIUg/Ez2YyDcMb60u66QUmHPRyhipJ/PDZROt6O0092qfTkTjB+7hLRiZzV2raLjiQ95eV0AXUP+Gsvdo/7ytqWNIm3iQTWbQ/GwSg+p0v+kmZELIbrxo845dambSpgBL8g0wCUZaptru3ZHo9m0UWbFPASVJKauhfPCSVPQCaOCaAdB01Ih8QDVRCazT+jyV6GgTwUIXVQthVBbt56ibhuSUdf0cWF8IVncjH+WXexVAhQw0j",
+    "path": "/home/daphnema/.ssh/authorized_keys"
+  }
+]
 ```
 
