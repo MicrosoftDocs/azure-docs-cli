@@ -60,7 +60,7 @@ Azure CLI commands are organized as command groups. Each group represents an are
   az vm --help
   ```
 
-  Here's another example that finds the Azure CLI commands for working with VM extensions, a subset of `az vm`:
+  Here's another example that finds the Azure CLI commands for working with virtual machine extensions, a subset of `az vm`:
 
   ```azurecli-interactive
   az vm extension --help
