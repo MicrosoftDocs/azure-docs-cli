@@ -26,13 +26,14 @@ Welcome to the Azure Command-Line Interface (CLI)! This article introduces the C
 The easiest way to learn how to use the Azure CLI is by running it in an Azure Cloud Shell
 environment through your browser. To learn about Cloud Shell, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
 
-When you're ready to install the CLI, see the [installation instructions](install-azure-cli.md).
+When you're ready to install the Azure CLI, see the [installation instructions](install-azure-cli.md)
+for Windows, Linux, macOS and Docker container options. If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
 
-After installing the CLI for the first time, check that the Azure CLI is installed and get your version number by
-running `az --version`.
+Check your version by running `az --version`. Azure Cloud Shell always has the latest version of the Azure CLI pre-installed.
 
-> [!NOTE]
-> If you're using the Azure classic deployment model, [install the Azure classic CLI](install-classic-cli.md).
+```azurecli-interactive
+az version
+```
 
 ## Sign into the Azure CLI
 
@@ -50,19 +51,23 @@ There are ways to sign in non-interactively, which are covered in detail in [Sig
 
 ## Find commands
 
-Azure CLI commands are organized as command groups. Each group represents an area of an Azure service.
+Azure CLI commands are organized as command groups. Each group represents an area of an Azure service. There are two options to find command groups:
 
-To search for commands, use [az find](/cli/azure/reference-index#az-find). For example, to search for command names containing `secret`,
-use the following command:
+* use the [az find](/cli/azure/reference-index#az-find) command. For example, to search for command names containing `vm`, use the following command:
 
 ```azurecli-interactive
-az find secret
+az find vm
 ```
 
-Find all Azure CLI reference command groups in the [A to Z index](/cli/azure/reference-index).
+* A second option to locate reference groups is to use the [A to Z reference index](/cli/azure/reference-index) that lists all command groups alphabetically.
 
-Use the `--help` argument to get a complete list of commands and subgroups of a group. For example, to find the CLI commands for working with
-Network Security Groups (NSGs):
+To find reference _commands_, like `az vm _create_` use the `--help` argument to get a complete list of commands and subgroups of a group. For example, find all the commands for working with virtual machines:
+
+```azurecli-interactive
+az vm --help
+```
+
+Find the Azure CLI commands for working with Network Security Groups (NSGs), a subset of `az network`:
 
 ```azurecli-interactive
 az network nsg --help
@@ -83,16 +88,19 @@ The CLI has full tab completion for commands in a Bash environment. To enable ta
 
 ## Be aware of globally available arguments
 
-There are some arguments that are available for every command.
+There are some arguments that are available for most commands.
 
 * `--help` prints CLI reference information about commands and their arguments and lists available subgroups and
   commands.
+
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
   Values), `table` (human-readable ASCII tables), and `yaml`. By default the CLI outputs `json`. To learn more about the available
   output formats, see [Output formats for Azure CLI](format-output-azure-cli.md).
 * `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you find a bug, provide output generated with the `--debug` flag on when submitting a bug report.
+* `--subscription` is the name or ID of a subscription. See [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md) for more information on setting your default subscription.
+* `--only-show-errors` suppresses warnings in command output and only shows errors.
 
 ## Use interactive mode
 
@@ -118,7 +126,7 @@ To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-t
 * [Set environment variables](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
 * [Learn syntax differences between Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md)
 * [Debug Azure CLI reference commands](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
-* [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable)
+* [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable). This example shows how to get configuration values for development, stage and production. 
 * [Delete multiple resources using a script](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
 
 ## Give feedback
