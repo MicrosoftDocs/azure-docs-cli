@@ -8,7 +8,7 @@ ms.date: 08/1/2023
 ms.topic: overview
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli, linux-related-content
+ms.custom: devx-track-azurecli
 keywords: command line interface, azure cli, azure command line, azure command line interface, what is cli, azure cli examples
 ---
 # What is the Azure CLI?
