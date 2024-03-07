@@ -114,10 +114,10 @@ If you prefer to learn Azure CLI syntax by seeing tested published examples, the
   | [az vm](/cli/azure/vm) | [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli)
   |  | [How to use variables in Azure CLI commands](/cli/azure/azure-cli-variables)
   |  | [Get VM information with queries](/cli/azure/azure-cli-vm-tutorial-4)
-  |  | <More articles listed here.>
+  |  | {More articles listed here.}
   | [az vm aem](/cli/azure/vm/aem) | [New Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-new)
   |  | [Standard Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-standard)
-  | [az vm application](/cli/azure/vm/application) | <...>
+  | [az vm application](/cli/azure/vm/application) | {...}
 
 ## Use tab completion
 
