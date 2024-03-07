@@ -107,7 +107,17 @@ If you prefer to learn Azure CLI syntax by seeing tested published examples, the
 * [Samples index A to Z](./samples-index.md). The samples index provides a list of Azure CLI samples sorted by [subject area](./samples-index.md?tabs=service), [reference group](./samples-index.md?tabs=command), and [GitHub repository](./samples-index.md?tabs=github).
 
 * [Article index A to Z](./reference-docs-index.md). Use your keyboard `find` shortcut keys, like
-  `Ctrl + F`, to drop quickly to the reference command group in which you're interested.
+  `Ctrl + F`, to drop quickly to the reference command group in which you're interested. For example, the article index looks something like this for `az vm`:
+
+  |Reference subgroup|Azure CLI article showing reference use
+  |---|---|
+  | [az vm](/cli/azure/vm) | [Output formats for Azure CLI commands](/cli/azure/format-output-azure-cli)
+  |  | [How to use variables in Azure CLI commands](/cli/azure/azure-cli-variables)
+  |  | [Get VM information with queries](/cli/azure/azure-cli-vm-tutorial-4)
+  |  | <More articles listed here.>
+  | [az vm aem](/cli/azure/vm/aem) | [New Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-new)
+  |  | [Standard Version of Azure VM extension for SAP solutions](/azure/sap/workloads/vm-extension-for-sap-standard)
+  | [az vm application](/cli/azure/vm/application) | <...>
 
 ## Use tab completion
 
