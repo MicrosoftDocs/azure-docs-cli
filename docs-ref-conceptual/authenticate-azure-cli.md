@@ -30,7 +30,13 @@ There are five authentication options when working with the Azure CLI:
 
 ## Find or change your current subscription
 
-After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`. To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
+After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`. 
+
+```azurecli-interactive
+az account set --subscription "<subscription ID or name>"
+```
+
+To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 ## Refresh tokens
 

@@ -40,7 +40,7 @@ logging in. To select another subscription, use the [az account set](/cli/azure/
 command with the subscription ID of the desired account. For more information about subscription selection,
 see [Manage Azure subscriptions](manage-azure-subscriptions-azure-cli.md).
 
-There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md).
+There are ways to sign in non-interactively, which are covered in detail in [Sign in with Azure CLI](authenticate-azure-cli.md#sign-into-azure-with-azure-cli).
 
 ## Find commands
 
