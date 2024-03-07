@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/27/2023
+ms.date: 03/06/2024
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -144,7 +144,7 @@ ms.custom: devx-track-azurecli
 |  | [add-managed-instance-to-failover-group-az-cli.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/failover-groups/add-managed-instance-to-failover-group-az-cli.sh) | az network nsg create * az network nsg rule create * az network public-ip create * az network route-table create * az network route-table route create * az network vnet create * az network vnet subnet create * az network vnet subnet update * az network vnet-gateway create * az network vpn-connection create * az sql instance-failover-group create * az sql instance-failover-group set-primary * az sql instance-failover-group show * az sql mi create |
 |  | [add-single-db-to-failover-group-az-cli.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/failover-groups/add-single-db-to-failover-group-az-cli.sh) | az sql db create * az sql failover-group create * az sql failover-group set-primary * az sql failover-group show * az sql server create |
 |  | [import-from-bacpac.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/import-from-bacpac/import-from-bacpac.sh) | az rest * az sql db create * az sql db import * az sql server create * az sql server firewall-rule create * az storage account create * az storage account keys list * az storage blob upload * az storage container create |
-|  | [create-managed-instance.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/managed-instance/create-managed-instance.sh) | az network nsg create * az network nsg rule create * az network route-table create * az network route-table route create * az network vnet create * az network vnet subnet create * az network vnet subnet update * az sql mi create |
+|  | [create-managed-instance.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/managed-instance/create-managed-instance.sh) | az network nsg create * az network nsg rule create * az network route-table create * az network route-table route create * az network vnet create * az network vnet subnet create * az network vnet subnet update * az sql mi create * az sql midb create |
 |  | [monitor-and-scale-database.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/monitor-and-scale-database/monitor-and-scale-database.sh) | az sql db create * az sql db list-usages * az sql server create |
 |  | [move-database-between-pools.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/move-database-between-pools/move-database-between-pools.sh) | az sql db create * az sql elastic-pool create * az sql server create |
 |  | [restore-database.sh](https://github.com/azure-samples/azure-cli-samples/blob/master/sql-database/restore-database/restore-database.sh) | az sql db create * az sql db restore * az sql server create |

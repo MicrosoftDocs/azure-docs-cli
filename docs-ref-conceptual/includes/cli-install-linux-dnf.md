@@ -4,7 +4,7 @@ ms.author: chasecrum
 manager: mamccrea
 ms.date: 08/1/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, linux-related-content
 ---
 
 ## Before you begin

@@ -13,6 +13,7 @@ Use the [az account get-access-token](/cli/azure/account#az-account-get-access-t
 ```azurecli
 # get access token for the active subscription
 az account get-access-token
+
 # get access token for a specific subscription
 az account get-access-token --subscription "<subscription ID or name>"
 ```
