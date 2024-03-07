@@ -52,21 +52,55 @@ Azure CLI commands are organized as command groups. Each group represents an are
   az find vm
   ```
 
-* Locate reference groups is to use the [A to Z reference index](/cli/azure/reference-index) that lists all command groups alphabetically.
-
-  To find reference _commands_, like `az vm _create_` use the `--help` argument to get a complete list of commands and subgroups of a group. For example, find all the commands for working with virtual machines:
+* Use the `--help` argument to get a complete list of subgroups within a reference group. This example returns all the subgroups for virtual machines:
 
   ```azurecli-interactive
   az vm --help
   ```
+  
+  Here is example output with lines omitted for brevity:
 
-  Here's another example that finds the Azure CLI commands for working with virtual machine extensions, a subset of `az vm`:
-
-  ```azurecli-interactive
-  az vm extension --help
+  ```output
+  Subgroups:
+    application            : Manage applications for VM.
+    availability-set       : Group resources into availability sets.
+    boot-diagnostics       : Troubleshoot the startup of an Azure Virtual Machine.
+    ...
   ```
 
-## Find examples
+  Here's another example that finds the Azure CLI commands for grouping virtual machines into availability sets, a _subgroup_ of `az vm`:
+
+  ```azurecli-interactive
+  az vm availability-set --help
+  ```
+
+  Also use `--help` to get parameter lists and command examples for a reference _command_.
+
+  ```azurecli-interactive
+  az vm create --help
+  ```
+
+  Here is example output with lines omitted for brevity:
+
+  ```output
+  Arguments
+      --name  [Required] : Name of the virtual machine.
+      ...
+  Authentication Arguments
+      --admin-password   : Password for the VM if authentication type is 'Password'.
+      --admin-username   : Username for the VM...
+      ...
+  Managed Service Identity Arguments
+      ...
+  Examples
+      Create a VM from a custom managed image.
+        az vm create -g MyResourceGroup -n MyVm --image MyImage
+      ...
+  ```
+
+* Use the [A to Z reference index](/cli/azure/reference-index) that lists all command groups alphabetically.
+
+## Find published samples and articles
 
 If you prefer to learn Azure CLI syntax by seeing tested published examples, there are two indexes of article content:
 
@@ -122,7 +156,7 @@ To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-t
 * [Delete multiple resources using a script.](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
 
 > [!NOTE]
-> 
+>
 > In scripts and on the Microsoft documentation site, Azure CLI examples are written for the
 > Bash shell. Most one-line examples will run on any platform. Longer examples which include line
 > continuations (`\`), variable assignment, _or quotes_ need to be modified to work in other shells,
