@@ -166,7 +166,7 @@ To use **command recommendation**, run a command and click <kbd>space</kbd> or <
 
 To use **scenario recommendation**, make sure you run a command first. Then after the command runs successfully, enter a <kbd>space</kbd>. Various command sets are listed, and you will see that whichever command set you select, a`::[num]` is added after the <kbd>space</kbd> you entered.
 
-![Scenario identification](./media/interactive-azure-cli/scenario_recommendation.png)
+![Scenario identification](./media/interactive-azure-cli/scenario_identification.png)
 
 To use **usable knowledge search**, run `/ [keyword]` to search for commands and scenarios.
 
