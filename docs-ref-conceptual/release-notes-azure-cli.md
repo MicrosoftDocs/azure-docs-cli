@@ -8,7 +8,7 @@ ms.date: 03/05/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 

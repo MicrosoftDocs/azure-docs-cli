@@ -8,7 +8,7 @@ ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli, seo-azure-cli, linux-related-content
 ---
 
 # Tips for using the Azure CLI successfully
