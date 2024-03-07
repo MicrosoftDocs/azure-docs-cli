@@ -8,7 +8,7 @@ ms.date: 09/28/2023
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli, seo-azure-cli, linux-related-content
 keywords: azure cli, install azure cli, azure cli download, download azure cli
 ---
 
