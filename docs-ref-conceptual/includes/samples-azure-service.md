@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/27/2023
+ms.date: 03/06/2024
 ms.topic: include
 ms.custom: devx-track-azurecli
 ---
@@ -9,6 +9,7 @@ ms.custom: devx-track-azurecli
 
 | Subject area | Sample name
 |---|---|
+| **ai-services** | [Deploy the Sample Labeling tool](/azure/ai-services/document-intelligence/deploy-label-tool) |
 | **application-gateway** | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
 |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | **app-service** | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
@@ -30,12 +31,12 @@ ms.custom: devx-track-azurecli
 |  | [Create a serverless Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-create-serverless-python) |
 |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
 |  | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
-| **azure-monitor** | [Create metric alert monitors in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
+| **azure-monitor** | [Create metric alert in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 |  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
+| **azure-resource-manager** | [Azure Resource Graph sample queries for Azure Resource Manager](/azure/azure-resource-manager/management/resource-graph-samples) |
 | **azure-signalr** | [Create a SignalR Service](/azure/azure-signalr/scripts/signalr-cli-create-service) |
 |  | [Create a SignalR Service with an App Service](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service) |
 |  | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
-| **azure-sql-edge** | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | **batch** | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
 |  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
 |  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
@@ -43,7 +44,7 @@ ms.custom: devx-track-azurecli
 |  | [CLI example: Create and manage a Windows pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-windows-pool) |
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | **cdn** | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| **chaos-studio** | [Use the Chaos Studio REST APIs to run and manage chaos experiments](/azure/chaos-studio/chaos-studio-samples-rest-api) |
+| **chaos-studio** | [Use REST APIs to interact with Chaos Studio](/azure/chaos-studio/chaos-studio-samples-rest-api) |
 | **cosmos-db** | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
 |  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
 |  | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) |
@@ -63,8 +64,6 @@ ms.custom: devx-track-azurecli
 |  | [Create an Azure Cosmos DB Table API account and table using Azure CLI](/azure/cosmos-db/scripts/cli/table/create) |
 |  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/lock) |
 |  | [Find an existing Azure Cosmos DB free-tier account in a subscription using Azure CLI](/azure/cosmos-db/scripts/cli/common/free-tier) |
-|  | [How to use the Azure SDK for Go with Azure Table](/azure/cosmos-db/table/how-to-use-go) |
-|  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
 |  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
 |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
 |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
@@ -97,30 +96,30 @@ ms.custom: devx-track-azurecli
 |  | [List and update configurations of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-change-server-configuration) |
 |  | [Monitor and scale an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-scale-server) |
 |  | [Restore an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-point-in-time-restore) |
-| **mysql** | [Configure audit logs on an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-audit-logs) |
-|  | [Configure same-zone high availability in an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-same-zone-ha) |
-|  | [Configure slow query logs on an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-slow-query-logs) |
-|  | [Configure zone-redundant high availability in an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-zone-redundant-ha) |
+| **mysql** | [Configure audit logs on Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-audit-logs) |
+|  | [Configure same-zone high availability in Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-same-zone-ha) |
+|  | [Configure slow query logs on an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-slow-query-logs) |
+|  | [Configure zone-redundant high availability in an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-zone-redundant-ha) |
 |  | [Create a MySQL server and configure a firewall rule using the Azure CLI](/azure/mysql/scripts/sample-create-server-and-firewall-rule) |
-|  | [Create an Azure Database for MySQL - Flexible Server and enable public access connectivity using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-public-access) |
-|  | [Create an Azure Database for MySQL - Flexible Server in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
-|  | [Create and manage read replicas in an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-read-replicas) |
+|  | [Create an Azure Database for MySQL - Flexible Server database in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
+|  | [Create an Azure Database for MySQL - Flexible Server instance and enable public access connectivity using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-public-access) |
+|  | [Create and manage read replicas in Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-read-replicas) |
 |  | [Enable and download server slow query logs of an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-server-logs) |
-|  | [List and change server parameters of an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-change-server-parameters) |
+|  | [List and change server parameters of Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-change-server-parameters) |
 |  | [List and update configurations of an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-change-server-configuration) |
-|  | [Monitor and scale an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-monitor-and-scale) |
+|  | [Monitor and scale an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-monitor-and-scale) |
 |  | [Monitor and scale an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-scale-server) |
-|  | [Restart/stop/start an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-restart-stop-start) |
-|  | [Restore an Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-restore-server) |
+|  | [Restart/stop/start an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-restart-stop-start) |
+|  | [Restore an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-restore-server) |
 |  | [Restore an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-point-in-time-restore) |
 | **networking** | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 |  | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| **postgresql** | [Create a PostgreSQL server and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
-|  | [Create an Azure Database for PostgreSQL server and configure a firewall rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-and-firewall-rule) |
-|  | [Enable and download server slow query logs of an Azure Database for PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-server-logs) |
-|  | [List and update configurations of an Azure Database for PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-change-server-configuration) |
-|  | [Monitor and scale a single PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-scale-server-up-or-down) |
-|  | [Restore an Azure Database for PostgreSQL server using Azure CLI](/azure/postgresql/scripts/sample-point-in-time-restore) |
+| **postgresql** | [Create an Azure Database for PostgreSQL - Flexible Server instance and configure a firewall rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-and-firewall-rule) |
+|  | [Create an Azure Database for PostgreSQL - Flexible Server instance and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
+|  | [Enable and download server slow query logs of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-server-logs) |
+|  | [List and update configurations of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-change-server-configuration) |
+|  | [Monitor and scale a single Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-scale-server-up-or-down) |
+|  | [Restore an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-point-in-time-restore) |
 | **service-fabric** | [Create a secure Service Fabric Linux cluster via the Azure CLI](/azure/service-fabric/scripts/cli-create-cluster) |
 | **service-health** | [Azure Resource Graph sample queries for Azure Service Health](/azure/service-health/resource-graph-samples) |
 | **sql-server** | [Add a database to a failover group using the Azure CLI](/azure/azure-sql/database/scripts/add-database-to-failover-group-cli) |
