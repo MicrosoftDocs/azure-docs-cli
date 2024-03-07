@@ -164,7 +164,7 @@ To use **command recommendation**, run a command and click <kbd>space</kbd> or <
 
 ![Command recommendation](./media/interactive-azure-cli/command_recommendation.png)
 
-To use **scenario recommendation**, make sure you run a command first. Then after the command runs successfully, enter a <kbd>space</kbd>. Various command sets are listed, and you will see that whichever command set you select, a`::[num]` is added after the <kbd>space</kbd> you entered.
+To use **scenario recommendation**, make sure you run a command first. Then after the command runs successfully, enter a <kbd>space</kbd>. Various command sets are listed, and you will see that whichever command set you select, a `::[num]` is added after the <kbd>space</kbd> you entered.
 
 ![Scenario identification](./media/interactive-azure-cli/scenario_identification.png)
 
