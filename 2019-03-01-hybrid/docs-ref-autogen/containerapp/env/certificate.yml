@@ -326,7 +326,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az containerapp env certificate upload --certificate-file
+    az containerapp env certificate upload [--akv-url]
+                                           [--certificate-file]
+                                           [--certificate-identity]
                                            [--certificate-name]
                                            [--ids]
                                            [--location]
@@ -342,12 +344,21 @@ directCommands:
   - summary: |-
       Add or update a certificate with a user-provided certificate name.
     syntax: az containerapp env certificate upload -g MyResourceGroup --name MyEnvironment --certificate-file MyFilepath --certificate-name MyCertificateName
-  requiredParameters:
-  - isRequired: true
-    name: --certificate-file -f
+  - summary: |-
+      Add or update a certificate from azure key vault using managed identity.
+    syntax: az containerapp env certificate upload -g MyResourceGroup --name MyEnvironment --akv-url akvSecretUrl --identity system
+  optionalParameters:
+  - name: --akv-url --certificate-akv-url
+    summary: |-
+      The URL pointing to the Azure Key Vault secret that holds the certificate.
+    isPreview: true
+  - name: --certificate-file -f
     summary: |-
       The filepath of the .pfx or .pem file.
-  optionalParameters:
+  - name: --certificate-identity --identity
+    summary: |-
+      Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity.
+    isPreview: true
   - name: --certificate-name -c
     summary: |-
       Name of the certificate which should be unique within the Container Apps environment.
