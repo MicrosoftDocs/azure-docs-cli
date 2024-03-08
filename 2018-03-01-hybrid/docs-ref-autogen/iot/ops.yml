@@ -29,11 +29,12 @@ directCommands:
     More detail can be requested via `--detail-level`.
 
     {Supported service APIs}
-    - mq.iotoperations.azure.com/[v1beta1]
+    - akri.sh/[v0]
     - dataprocessor.iotoperations.azure.com/[v1]
+    - deviceregistry.microsoft.com/[v1beta1]
     - layerednetworkmgmt.iotoperations.azure.com/[v1beta1]
-    - opcuabroker.iotoperations.azure.com/[v1beta1]
-    - akri.sh/[v0].
+    - mq.iotoperations.azure.com/[v1beta1]
+    - opcuabroker.iotoperations.azure.com/[v1beta1].
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -42,10 +43,11 @@ directCommands:
     az iot ops check [--as-object {false, true}]
                      [--context]
                      [--detail-level {0, 1, 2}]
-                     [--ops-service {akri, dataprocessor, lnm, mq, opcua}]
+                     [--ops-service {akri, dataprocessor, deviceregistry, lnm, mq, opcua}]
                      [--post {false, true}]
                      [--pre {false, true}]
-                     [--resources {assettype, broker, brokerlistener, configuration, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline}]
+                     [--resource-name]
+                     [--resources {asset, assetendpointprofile, assettype, broker, brokerlistener, configuration, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline}]
   examples:
   - summary: |-
       Basic usage. Checks `mq` health with summary output.
@@ -59,6 +61,15 @@ directCommands:
   - summary: |-
       Same as prior example, except constraining results to the `pipeline` resource.
     syntax: az iot ops check --svc dataprocessor --detail-level 1 --resources pipeline
+  - summary: |-
+      Use resource name to constrain results to `pipeline` resource exactly matching name `pipeline`.
+    syntax: az iot ops check --svc dataprocessor  --resources pipeline --resource-name pipeline
+  - summary: |-
+      Use resource name to constrain results to resource names that start with `pipeline-name`.
+    syntax: az iot ops check --svc dataprocessor --detail-level 1 --resource-name pipeline-name*
+  - summary: |-
+      Use '?' glob pattern to constrain results to resource names that contain `pipeline` and end with a single character.
+    syntax: az iot ops check --svc dataprocessor --detail-level 1 --resource-name pipeline?
   optionalParameters:
   - name: --as-object
     parameterValueGroup: "false, true"
@@ -74,7 +85,7 @@ directCommands:
       Controls the level of detail displayed in the check output. Choose 0 for a summary view (minimal output), 1 for a detailed view (more comprehensive information), or 2 for a verbose view (all available information).
   - name: --ops-service --svc
     defaultValue: "mq"
-    parameterValueGroup: "akri, dataprocessor, lnm, mq, opcua"
+    parameterValueGroup: "akri, dataprocessor, deviceregistry, lnm, mq, opcua"
     summary: |-
       The IoT Operations service deployment that will be evaluated.
   - name: --post
@@ -85,8 +96,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Run pre-requisite checks to determine if the minimum requirements of a service deployment are fulfilled.
+  - name: --resource-name --rn
+    summary: |-
+      Only run checks for the specific resource name. The name is case insensitive. Glob patterns '*' and '?' are supported. Note: Only alphanumeric characters, hyphens, '?' and '*' are allowed.
   - name: --resources
-    parameterValueGroup: "assettype, broker, brokerlistener, configuration, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline"
+    parameterValueGroup: "asset, assetendpointprofile, assettype, broker, brokerlistener, configuration, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline"
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
 - uid: az_iot_ops_init
@@ -112,10 +126,8 @@ directCommands:
                     [--disable-rotation {false, true}]
                     [--disable-rsync-rules {false, true}]
                     [--dp-instance]
-                    [--dp-message-stores]
-                    [--dp-reader-workers]
-                    [--dp-runner-workers]
                     [--ensure-latest {false, true}]
+                    [--kubernetes-distro {k3s, k8s, microk8s}]
                     [--kv-id]
                     [--kv-sat-secret-name]
                     [--location]
@@ -140,6 +152,7 @@ directCommands:
                     [--no-tls {false, true}]
                     [--opcua-discovery-url]
                     [--rotation-int]
+                    [--runtime-socket]
                     [--show-template {false, true}]
                     [--simulate-plc {false, true}]
                     [--sp-app-id]
@@ -210,22 +223,15 @@ directCommands:
   - name: --dp-instance
     summary: |-
       Instance name for data processor. The default is in the form '{cluster_name}-ops-init-processor'.
-  - name: --dp-message-stores
-    defaultValue: "1"
-    summary: |-
-      Number of message store replicas.
-  - name: --dp-reader-workers
-    defaultValue: "1"
-    summary: |-
-      Number of reader worker replicas.
-  - name: --dp-runner-workers
-    defaultValue: "1"
-    summary: |-
-      Number of runner worker replicas.
   - name: --ensure-latest
     parameterValueGroup: "false, true"
     summary: |-
       Ensure the latest IoT Ops CLI is installed, raising an error if an upgrade is available.
+  - name: --kubernetes-distro
+    defaultValue: "k8s"
+    parameterValueGroup: "k3s, k8s, microk8s"
+    summary: |-
+      The Kubernetes distro to use for Akri configuration. The selected distro implies the default container runtime socket path when no --runtime-socket value is provided.
   - name: --kv-id
     summary: |-
       Key Vault ARM resource Id. Providing this resource Id will enable the client to setup all necessary resources and cluster side configuration to enable the Key Vault CSI driver for IoT Operations.
@@ -317,6 +323,9 @@ directCommands:
     defaultValue: "1h"
     summary: |-
       Rotation poll interval.
+  - name: --runtime-socket
+    summary: |-
+      The default node path of the container runtime socket. If not provided (default), the socket path is determined by --kubernetes-distro.
   - name: --show-template
     parameterValueGroup: "false, true"
     summary: |-
@@ -352,18 +361,12 @@ directCommands:
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
-  syntax: >-
-    az iot ops verify-host [--no-progress {false, true}]
-                           [--yes {false, true}]
+  syntax: az iot ops verify-host [--no-progress {false, true}]
   optionalParameters:
   - name: --no-progress
     parameterValueGroup: "false, true"
     summary: |-
       Disable visual representation of work.
-  - name: --yes -y
-    parameterValueGroup: "false, true"
-    summary: |-
-      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
 commands:
 - az_iot_ops_asset
 - az_iot_ops_asset_create
