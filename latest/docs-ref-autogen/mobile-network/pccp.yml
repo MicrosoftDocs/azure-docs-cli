@@ -4,7 +4,7 @@ name: az mobile-network pccp
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **mobile-network** extension for the Azure CLI (version 2.49.0 or higher). The extension will automatically install the first time you run an **az mobile-network pccp** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **mobile-network** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az mobile-network pccp** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage packet core control plane.
 status: GA
@@ -62,8 +62,8 @@ directCommands:
                                   --platform
                                   --resource-group
                                   --sites
-                                  --sku {G0, G1, G10, G2, G3, G4, G5}
-                                  [--core-network-tec {5GC, EPC}]
+                                  --sku {G0, G1, G10, G2, G5}
+                                  [--core-network-tec {5GC, EPC, EPC + 5GC}]
                                   [--identity]
                                   [--location]
                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -101,13 +101,13 @@ directCommands:
       Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - isRequired: true
     name: --sku
-    parameterValueGroup: "G0, G1, G10, G2, G3, G4, G5"
+    parameterValueGroup: "G0, G1, G10, G2, G5"
     summary: |-
       The SKU defining the throughput and SIM allowances for this packet core control plane deployment.
   optionalParameters:
   - name: --core-network-tec
     defaultValue: "5GC"
-    parameterValueGroup: "5GC, EPC"
+    parameterValueGroup: "5GC, EPC, EPC + 5GC"
     summary: |-
       The core network technology generation (5G core or EPC / 4G core).
   - name: --identity
@@ -174,12 +174,21 @@ directCommands:
     List all the packet core control planes in a subscription.
   status: GA
   sourceType: Extension
-  syntax: az mobile-network pccp list [--resource-group]
+  syntax: >-
+    az mobile-network pccp list [--max-items]
+                                [--next-token]
+                                [--resource-group]
   examples:
   - summary: |-
       List Packet Core Control Plane by resource group
     syntax: az mobile-network pccp list -g rg
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -286,7 +295,7 @@ directCommands:
   syntax: >-
     az mobile-network pccp update [--access-interface]
                                   [--add]
-                                  [--core-network-tec {5GC, EPC}]
+                                  [--core-network-tec {5GC, EPC, EPC + 5GC}]
                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--identity]
                                   [--ids]
@@ -298,7 +307,7 @@ directCommands:
                                   [--resource-group]
                                   [--set]
                                   [--sites]
-                                  [--sku {G0, G1, G10, G2, G3, G4, G5}]
+                                  [--sku {G0, G1, G10, G2, G5}]
                                   [--subscription]
                                   [--tags]
                                   [--ue-mtu]
@@ -315,7 +324,7 @@ directCommands:
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --core-network-tec
-    parameterValueGroup: "5GC, EPC"
+    parameterValueGroup: "5GC, EPC, EPC + 5GC"
     summary: |-
       The core network technology generation (5G core or EPC / 4G core).
   - name: --force-string
@@ -354,7 +363,7 @@ directCommands:
     summary: |-
       Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --sku
-    parameterValueGroup: "G0, G1, G10, G2, G3, G4, G5"
+    parameterValueGroup: "G0, G1, G10, G2, G5"
     summary: |-
       The SKU defining the throughput and SIM allowances for this packet core control plane deployment.
   - name: --subscription
