@@ -54,7 +54,7 @@ Examples
 
 ## `--verbose` global parameter
 
-You can learn more in-depth details about the logging verbosity when running your command. This could be helpful when trying to understand if certain commands take longer than others to execute. For the following example, 
+Learn more in-depth details about logging by adding the `--verbose` global parameter to your reference command. This is helpful when trying to understand why certain commands take longer than others to execute.
 
 ```azurecli-interactive
 az group create --name myResourceGroup --location eastus --verbose 
