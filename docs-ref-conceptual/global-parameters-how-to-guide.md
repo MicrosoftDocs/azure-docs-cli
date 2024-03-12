@@ -18,7 +18,7 @@ When working with the Azure CLI, there are arguments that are available for most
 
 ## `--help` global parameter
 
-If you find that you need some help with required and global parameters, you can use the `--help` global parameter in order to generate a list of definition for each required and global parameter. You can also view a basic example for the command you are trying to run:
+To get information about a reference group or command, use the `--help` global parameter. The `--help` parameter displays Azure CLI reference information in your console including available subgroup and parameter lists.
 
 
 ```azurecli-interactive
@@ -54,7 +54,7 @@ Examples
 
 ## `--verbose` global parameter
 
-You can learn more in-depth details about the logging verbosity when running your command. This could be helpful when trying to understand if certain commands take longer than others to execute. For the following example, 
+Learn more in-depth details about logging by adding the `--verbose` global parameter to your reference command. This is helpful when trying to understand why certain commands take longer than others to execute.
 
 ```azurecli-interactive
 az group create --name myResourceGroup --location eastus --verbose 
@@ -71,7 +71,7 @@ Command ran in 1.413 seconds (init: 0.487, invoke: 0.926)
 
 ## `--debug` global parameter
 
-If the additional details from the `--verbose` parameter aren't enough and you wish to view the *whole* debug log, you can use the `--debug` global parameter. For this step in the tutorial, we will reuse the very first example and add the `--debug` global parameter:
+If the additional details from the `--verbose` parameter aren't enough and you wish to view the entire log, you can use the `--debug` global parameter. Provide output generated with `--debug` when submitting a bug report.
 
 ```azurecli-interactive
 az group create --name myrResourceGroup --location eastus --debug
@@ -97,7 +97,7 @@ telemetry.main: Finish creating telemetry upload process.
 
 ## `--only-show-errors` global parameter
 
-During the process of debugging, you may want to only highlight the actual errors and filter out the warnings. To do so, you can use the `--only-show-errors` global parameter to only show errors and suppress any warnings. For the following example, see the difference of the first line of the output when including the `--only-show-errors` global parameter:
+During the process of debugging, you may want to only highlight the actual errors and filter out the warnings. To do so, use the `--only-show-errors` global parameter to only show errors and suppress any warnings. For the following example, see the difference of the first line of the output when including the `--only-show-errors` global parameter:
 
 # [Without `--only-show-errors`](#tab/tabid-1)
 
@@ -132,7 +132,6 @@ Output console:
 
 ```output
 Any comments or concerns? You can use the 'feedback' command! We would greatly appreciate it.
-
 
 A new Recommender is added which can make the completion ability more intelligent and provide the scenario completion!
 If you want to disable this feature, you can use 'az config set interactive.enable_recommender=False' to disable it.
