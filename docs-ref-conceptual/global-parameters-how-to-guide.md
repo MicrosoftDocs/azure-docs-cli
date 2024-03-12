@@ -175,7 +175,7 @@ myVm    myResourceGroup        eastus
 
 ## `--query` global parameter
 
-There are times the output console may display extensive amounts of information that you may want to filter through. To do so, you can use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, which gives you the ability to select and modify data from the CLI output.
+There are times the output console may display extensive amounts of information that you may want to filter through. To do so, you can use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, which gives you the ability to select and modify data from the Azure CLI output.
 
 Most commands in Azure CLI support the `--query` parameter. To learn more about querying your command output, see [How to query Azure CLI command output using a JMESPath query](../docs-ref-conceptual/query-azure-cli.md)
 
