@@ -133,7 +133,6 @@ Output console:
 ```output
 Any comments or concerns? You can use the 'feedback' command! We would greatly appreciate it.
 
-
 A new Recommender is added which can make the completion ability more intelligent and provide the scenario completion!
 If you want to disable this feature, you can use 'az config set interactive.enable_recommender=False' to disable it.
 
