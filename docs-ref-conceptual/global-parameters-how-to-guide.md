@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 
-# Working with global parameters when using Azure CLI (Command-Line Interface)
+# Working with global parameters when using Azure CLI
 
 Global parameters are constants across a data factory that can be used by a pipeline in any expression. They're helpful when you have multiple pipelines with identical parameter names and values. They can be referenced in a command and have many applications. 
 
@@ -155,7 +155,7 @@ az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 ## `--output` global parameter
 
-Suppose you want to show the output of a command in a specific format, you can do so by specifying the `--output` global parameters. To learn more about configuring your output, see [Output formats for Azure CLI commands](../docs-ref-conceptual/format-output-azure-cli.md). In this example, the output is shown as a table:
+To show the output of a command in a specific format, specifying the `--output` global parameter. To learn more about configuring output, see [Output formats for Azure CLI commands](../docs-ref-conceptual/format-output-azure-cli.md). In this example, the output is shown as a table:
 
 > [!NOTE]
 > The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default output value is set to json. 
@@ -175,7 +175,7 @@ myVm    myResourceGroup        eastus
 
 ## `--query` global parameter
 
-There are times the output console may display extensive amounts of information that you may want to filter through. To do so, you can use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, which gives you the ability to select and modify data from the CLI output.
+There are times the output console may display extensive amounts of information that you may want to filter through. To do so, you can use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, which gives you the ability to select and modify data from the Azure CLI output.
 
 Most commands in Azure CLI support the `--query` parameter. To learn more about querying your command output, see [How to query Azure CLI command output using a JMESPath query](../docs-ref-conceptual/query-azure-cli.md)
 
