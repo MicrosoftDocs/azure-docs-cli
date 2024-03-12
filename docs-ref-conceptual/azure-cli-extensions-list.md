@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/09/2024
+ms.date: 03/12/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -145,7 +145,7 @@ You will be prompted to install an extension on first use.
 |[mesh](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh) | 2.50.0 | Support for Microsoft Azure Service Fabric Mesh - Public Preview | Preview | [1.0.0a1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mesh/HISTORY.rst) |
 |[mixed-reality](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality) | 2.49.0 | Mixed Reality Azure CLI Extension. | Preview | [0.0.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/mixed-reality/HISTORY.rst) |
 |[ml](https://github.com/Azure/azureml-examples) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension | GA | [2.23.0](https://github.com/Azure/azureml-examples) |
-|[mobile-network](https://github.com/Azure/azure-cli-extensions/tree/main/src/mobile-network) | 2.49.0 | Microsoft Azure Command-Line Tools MobileNetwork Extension. | Preview | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/mobile-network/HISTORY.rst) |
+|[mobile-network](https://github.com/Azure/azure-cli-extensions/tree/main/src/mobile-network) | 2.55.0 | Microsoft Azure Command-Line Tools MobileNetwork Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/mobile-network/HISTORY.rst) |
 |[monitor-control-service](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service) | 2.55.0 | Microsoft Azure Command-Line Tools MonitorClient Extension | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview) | 2.51.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview/HISTORY.rst) |
 |[network-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics) | 2.51.0 | Microsoft Azure Command-Line Tools NetworkAnalytics Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics/HISTORY.rst) |
