@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 
-# Working with global parameters when using Azure CLI (Command-Line Interface)
+# Working with global parameters when using Azure CLI
 
 When working with the Azure CLI, global parameters allow you to define values that can be used across multiple commands. Global parameters are helpful when you have multiple commands with identical parameter names and values. They can be referenced in a command and have many applications. 
 
