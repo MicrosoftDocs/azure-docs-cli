@@ -97,7 +97,7 @@ telemetry.main: Finish creating telemetry upload process.
 
 ## `--only-show-errors` global parameter
 
-During the process of debugging, you may want to only highlight the actual errors and filter out the warnings. To do so, you can use the `--only-show-errors` global parameter to only show errors and suppress any warnings. For the following example, see the difference of the first line of the output when including the `--only-show-errors` global parameter:
+During the process of debugging, you may want to only highlight the actual errors and filter out the warnings. To do so, use the `--only-show-errors` global parameter to only show errors and suppress any warnings. For the following example, see the difference of the first line of the output when including the `--only-show-errors` global parameter:
 
 # [Without `--only-show-errors`](#tab/tabid-1)
 
