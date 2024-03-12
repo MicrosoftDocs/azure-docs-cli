@@ -14,7 +14,7 @@ keywords: azure cli, how to use azure cli, azure command line interface, how to 
 
 # Working with global parameters when using Azure CLI (Command-Line Interface)
 
-When working with the Azure CLI, global parameters allow you to define values that can be used across multiple commands. Global parameters are helpful when you have multiple commands with identical parameter names and values. They can be referenced in a command and have many applications. 
+Global parameters are constants across a data factory that can be used by a pipeline in any expression. They're helpful when you have multiple pipelines with identical parameter names and values. They can be referenced in a command and have many applications. 
 
 ## `--help` global parameter
 
@@ -162,7 +162,7 @@ Suppose you want to show the output of a command in a specific format, you can d
 
 
 ```azurecli-interactive
-az vm list --resource-group globalrg --output table
+az vm list --resource-group myResourceGroup --output table
 ```
 
 Output console:
