@@ -155,7 +155,7 @@ az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 ## `--output` global parameter
 
-Suppose you want to show the output of a command in a specific format, you can do so by specifying the `--output` global parameters. To learn more about configuring your output, see [Output formats for Azure CLI commands](../docs-ref-conceptual/format-output-azure-cli.md). In this example, the output is shown as a table:
+To show the output of a command in a specific format, specifying the `--output` global parameter. To learn more about configuring output, see [Output formats for Azure CLI commands](../docs-ref-conceptual/format-output-azure-cli.md). In this example, the output is shown as a table:
 
 > [!NOTE]
 > The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default output value is set to json. 
