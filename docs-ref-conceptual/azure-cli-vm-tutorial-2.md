@@ -1,7 +1,7 @@
 ---
 title: Create virtual network (VNet) – Azure CLI | Microsoft Docs
 description: Learn how to create a virtual network (VNet) and subnet with the Azure CLI.
-ms.date: 08/1/2023
+ms.date: 01/08/2024
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -20,17 +20,43 @@ Subnets allow you to segment the VNet address space into subnetworks for organiz
 
 Use the [az network vnet create](/cli/azure/network/vnet#az_network_vnet_create) command to create a virtual network named `TutorialVNet1` with address prefix of 10.0.0.0/16 and a subnet named `TutorialSubnet1` with address prefix of 10.0.0.0/24.
 
+# [Bash](#tab/bash)
+
 ```azurecli-interactive
-# create shell variables
+# create Bash shell variables
 vnetName=TutorialVNet1
 subnetName=TutorialSubnet1
 vnetAddressPrefix=10.0.0.0/16
 subnetAddressPrefix=10.0.0.0/24
+
+# Use the existing resource group
+resourceGroup=VMTutorialResources
 
 az network vnet create \
   --name $vnetName \
   --resource-group $resourceGroup \
   --address-prefixes $vnetAddressPrefix \
   --subnet-name $subnetName \
+  --subnet-prefixes $subnetAddressPrefix
+```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli-interactive
+# create PowerShell variables
+$vnetName = "TutorialVNet1"
+$subnetName = "TutorialSubnet1"
+$vnetAddressPrefix = "10.0.0.0/16"
+$subnetAddressPrefix = "10.0.0.0/24"
+
+# Use the existing resource group
+$resourceGroup = "VMTutorialResources"
+
+# Create a virtual network and subnet
+az network vnet create `
+  --name $vnetName `
+  --resource-group $resourceGroup `
+  --address-prefixes $vnetAddressPrefix `
+  --subnet-name $subnetName `
   --subnet-prefixes $subnetAddressPrefix
 ```

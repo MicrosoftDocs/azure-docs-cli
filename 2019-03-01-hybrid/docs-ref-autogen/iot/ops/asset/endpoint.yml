@@ -1,0 +1,310 @@
+### YamlMime:AzureCLIGroup
+uid: az_iot_ops_asset_endpoint
+name: az iot ops asset endpoint
+extensionInformation: >-
+  > [!NOTE]
+
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot ops asset endpoint** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+summary: |-
+  Manage asset endpoint profiles.
+status: Preview
+isPreview: true
+previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+sourceType: Extension
+directCommands:
+- uid: az_iot_ops_asset_endpoint_create
+  name: az iot ops asset endpoint create
+  summary: |-
+    Create an asset endpoint.
+  description: |-
+    Either custom location or cluster name must be provided. This command will check
+    for the existance of the associated custom location and cluster and ensure that
+    both are set up correctly with the microsoft.deviceregistry.assets extension.
+
+    Azure IoT OPC UA Broker (preview) uses the same client certificate for all secure
+    channels between itself and the OPC UA servers that it connects to.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset endpoint create --name
+                                     --resource-group
+                                     --ta
+                                     [--ac]
+                                     [--cert]
+                                     [--cert-ref]
+                                     [--cl]
+                                     [--clrg]
+                                     [--cls]
+                                     [--cluster]
+                                     [--cluster-resource-group]
+                                     [--cluster-subscription]
+                                     [--location]
+                                     [--password-ref]
+                                     [--tags]
+                                     [--ur]
+  examples:
+  - summary: |-
+      Create an asset endpoint with anonymous user authentication using the given custom location.
+    syntax: az iot ops asset endpoint create --name {asset_endpoint} -g {resource_group} --custom-location {custom_location} --target-address {target_address}
+  - summary: |-
+      Create an asset endpoint with anonymous user authentication using the given custom location and resource group for the custom location. The resource group must be included if there are multiple custom locations with the same name within a subscription.
+    syntax: az iot ops asset endpoint create --name {asset_endpoint} -g {resource_group} --custom-location {custom_location} --custom-location-resource-group {custom_location_resource_group} --target-address {target_address}
+  - summary: |-
+      Create an asset endpoint with username-password user authentication and preconfigurated owned certificates with prefilled values.The username and password references are set via the Azure Keyvault Container Storage Interface driver.
+    syntax: az iot ops asset endpoint create --name myAssetEndpoint -g myRG --cluster myCluster --target-address "opc.tcp://opcplc-000000:50000" --username-ref "aio-opc-ua-broker-user-authentication/opc-plc-username" --password-ref "aio-opc-ua-broker-user-authentication/opc-plc-password" --cert secret=aio-opc-ua-broker-client-certificate thumbprint=000000000000000000 password=aio-opc-ua-broker-client-certificate-password
+  - summary: |-
+      Create an asset endpoint with username-password user authentication and additional configuration with prefilled values (powershell syntax example).
+    syntax: "az iot ops asset endpoint create --name myAssetEndpoint -g myRG --cluster myCluster --target-address \"opc.tcp://opcplc-000000:50000\" --username-ref \"aio-opc-ua-broker-user-authentication/opc-plc-username\" --password-ref \"aio-opc-ua-broker-user-authentication/opc-plc-password\" --additional-config '{\\\"applicationName\\\": \\\"opcua-connector\\\", \\\"defaults\\\": { \\\"publishingIntervalMilliseconds\\\": 100,  \\\"samplingIntervalMilliseconds\\\": 500,  \\\"queueSize\\\": 15,}, \\\"session\\\": {\\\"timeout\\\": 60000}, \\\"subscription\\\": {\\\"maxItems\\\": 1000}, \\\"security\\\": { \\\"autoAcceptUntrustedServerCertificates\\\": true}}'"
+  - summary: |-
+      Create an asset endpoint with username-password user authentication and additional configuration with prefilled values (cmd syntax example).
+    syntax: 'az iot ops asset endpoint create --name myAssetEndpoint -g myRG --cluster myCluster --target-address "opc.tcp://opcplc-000000:50000" --username-ref "aio-opc-ua-broker-user-authentication/opc-plc-username" --password-ref "aio-opc-ua-broker-user-authentication/opc-plc-password" --additional-config "{\"applicationName\": \"opcua-connector\", \"defaults\": { \"publishingIntervalMilliseconds\": 100,  \"samplingIntervalMilliseconds\": 500,  \"queueSize\": 15,}, \"session\": {\"timeout\": 60000}, \"subscription\": {\"maxItems\": 1000}, \"security\": { \"autoAcceptUntrustedServerCertificates\": true}}"'
+  - summary: |-
+      Create an asset endpoint with username-password user authentication and additional configuration with prefilled values (bash syntax example).
+    syntax: "az iot ops asset endpoint create --name myAssetEndpoint -g myRG --cluster myCluster --target-address \"opc.tcp://opcplc-000000:50000\" --username-ref \"aio-opc-ua-broker-user-authentication/opc-plc-username\" --password-ref \"aio-opc-ua-broker-user-authentication/opc-plc-password\" --additional-config '{\"applicationName\": \"opcua-connector\", \"defaults\": { \"publishingIntervalMilliseconds\": 100,  \"samplingIntervalMilliseconds\": 500,  \"queueSize\": 15,}, \"session\": {\"timeout\": 60000}, \"subscription\": {\"maxItems\": 1000}, \"security\": { \"autoAcceptUntrustedServerCertificates\": true}}'"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset Endpoint name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --ta --target-address
+    summary: |-
+      Target Address. Must be a valid local address.
+  optionalParameters:
+  - name: --ac --additional-config
+    summary: |-
+      Additional Configuration for the connectivity type (ex: OPC UA, Modbus, ONVIF).
+  - name: --cert
+    summary: |-
+      Space-separated key=value pairs corresponding to certificates associated with the endpoint. The following key values are supported: `secret` (required), `thumbprint` (required), `password`.--cert can be used 1 or more times. Review help examples for full parameter usage.
+  - name: --cert-ref --certificate-ref --cr
+    summary: |-
+      Reference for the certificate used in authentication. This method of user authentication is not supported yet.
+  - name: --cl --custom-location
+    summary: |-
+      Custom location used to associate asset endpoint with cluster.
+  - name: --clrg --custom-location-resource-group
+    summary: |-
+      Resource group for custom location.
+  - name: --cls --custom-location-subscription
+    summary: |-
+      Subscription Id for custom location.
+  - name: --cluster -c
+    summary: |-
+      Cluster to associate the asset with.
+  - name: --cluster-resource-group --crg
+    summary: |-
+      Resource group for cluster.
+  - name: --cluster-subscription --cs
+    summary: |-
+      Subscription Id for cluster.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --password-ref --pr
+    summary: |-
+      Reference for the password used in authentication.
+  - name: --tags
+    summary: |-
+      Asset Endpoint resource tags. Property bag in key-value pairs with the following format: a=b c=d.
+  - name: --ur --username-reference
+    summary: |-
+      Reference for the username used in authentication.
+- uid: az_iot_ops_asset_endpoint_delete
+  name: az iot ops asset endpoint delete
+  summary: |-
+    Delete an asset endpoint.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset endpoint delete --name
+                                     --resource-group
+  examples:
+  - summary: |-
+      Delete an asset endpoint.
+    syntax: az iot ops asset endpoint delete --name {asset_endpoint} -g {resource_group}
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset Endpoint name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_iot_ops_asset_endpoint_query
+  name: az iot ops asset endpoint query
+  summary: |-
+    Query the Resource Graph for asset endpoints.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset endpoint query [--ac]
+                                    [--am]
+                                    [--cl]
+                                    [--location]
+                                    [--resource-group]
+                                    [--ta]
+  examples:
+  - summary: |-
+      Query for asset endpoints that hae anonymous authentication.
+    syntax: az iot ops asset endpoint query --authentication-mode Anonymous
+  - summary: |-
+      Query for asset endpoints that have the given target address and custom location.
+    syntax: az iot ops asset endpoint query --target-address {target_address} --custom-location {custom_location}
+  optionalParameters:
+  - name: --ac --additional-config
+    summary: |-
+      Additional Configuration for the connectivity type (ex: OPC UA, Modbus, ONVIF).
+  - name: --am --authentication-mode
+    summary: |-
+      Authentication Mode.
+  - name: --cl --custom-location
+    summary: |-
+      Custom location used to associate asset endpoint with cluster.
+  - name: --location -l
+    summary: |-
+      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --ta --target-address
+    summary: |-
+      Target Address. Must be a valid local address.
+- uid: az_iot_ops_asset_endpoint_show
+  name: az iot ops asset endpoint show
+  summary: |-
+    Show an asset endpoint.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset endpoint show --name
+                                   --resource-group
+  examples:
+  - summary: |-
+      Show the details of an asset endpoint.
+    syntax: az iot ops asset endpoint show --name {asset_endpoint} -g {resource_group}
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset Endpoint name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_iot_ops_asset_endpoint_update
+  name: az iot ops asset endpoint update
+  summary: |-
+    Update an asset endpoint.
+  description: |-
+    To update owned certificates, please use the command group `az iot ops asset endpoint certificate`.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops asset endpoint update --name
+                                     --resource-group
+                                     [--ac]
+                                     [--am]
+                                     [--cert-ref]
+                                     [--password-ref]
+                                     [--ta]
+                                     [--tags]
+                                     [--ur]
+  examples:
+  - summary: |-
+      Update an asset endpoint's authentication mode to use anonymous user authentication.
+    syntax: az iot ops asset endpoint update --name {asset_endpoint} -g {resource_group} --authentication-mode Anonymous
+  - summary: |-
+      Update an asset endpoint's username and password reference with prefilled values. This will transform the authentication mode to username-password if it is not so already.
+    syntax: az iot ops asset endpoint update --name myAssetEndpoint -g myRG --username-ref "aio-opc-ua-broker-user-authentication/opc-plc-username" --password-ref "aio-opc-ua-broker-user-authentication/opc-plc-password"
+  - summary: |-
+      Update an asset endpoint's target address and additional configuration with prefilled values (powershell syntax example).
+    syntax: "az iot ops asset endpoint update --name myAssetEndpoint -g myRG --target-address \"opc.tcp://opcplc-000000:50000\" --additional-config '{\\\"applicationName\\\": \\\"opcua-connector\\\", \\\"defaults\\\": { \\\"publishingIntervalMilliseconds\\\": 100,  \\\"samplingIntervalMilliseconds\\\": 500,  \\\"queueSize\\\": 15,}, \\\"session\\\": {\\\"timeout\\\": 60000}, \\\"subscription\\\": {\\\"maxItems\\\": 1000}, \\\"security\\\": { \\\"autoAcceptUntrustedServerCertificates\\\": true}}'"
+  - summary: |-
+      Update an asset endpoint's target address and additional configuration with prefilled values (cmd syntax example).
+    syntax: 'az iot ops asset endpoint update --name myAssetEndpoint -g myRG --target-address "opc.tcp://opcplc-000000:50000" --additional-config "{\"applicationName\": \"opcua-connector\", \"defaults\": { \"publishingIntervalMilliseconds\": 100,  \"samplingIntervalMilliseconds\": 500,  \"queueSize\": 15,}, \"session\": {\"timeout\": 60000}, \"subscription\": {\"maxItems\": 1000}, \"security\": { \"autoAcceptUntrustedServerCertificates\": true}}"'
+  - summary: |-
+      Update an asset endpoint's target address and additional configuration with prefilled values (bash syntax example).
+    syntax: "az iot ops asset endpoint update --name myAssetEndpoint -g myRG --target-address \"opc.tcp://opcplc-000000:50000\" --additional-config '{\"applicationName\": \"opcua-connector\", \"defaults\": { \"publishingIntervalMilliseconds\": 100,  \"samplingIntervalMilliseconds\": 500,  \"queueSize\": 15,}, \"session\": {\"timeout\": 60000}, \"subscription\": {\"maxItems\": 1000}, \"security\": { \"autoAcceptUntrustedServerCertificates\": true}}'"
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Asset Endpoint name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --ac --additional-config
+    summary: |-
+      Additional Configuration for the connectivity type (ex: OPC UA, Modbus, ONVIF).
+  - name: --am --authentication-mode
+    summary: |-
+      Authentication Mode.
+  - name: --cert-ref --certificate-ref --cr
+    summary: |-
+      Reference for the certificate used in authentication. This method of user authentication is not supported yet.
+  - name: --password-ref --pr
+    summary: |-
+      Reference for the password used in authentication.
+  - name: --ta --target-address
+    summary: |-
+      Target Address. Must be a valid local address.
+  - name: --tags
+    summary: |-
+      Asset Endpoint resource tags. Property bag in key-value pairs with the following format: a=b c=d.
+  - name: --ur --username-reference
+    summary: |-
+      Reference for the username used in authentication.
+commands:
+- az_iot_ops_asset_endpoint_certificate
+- az_iot_ops_asset_endpoint_certificate_add
+- az_iot_ops_asset_endpoint_certificate_list
+- az_iot_ops_asset_endpoint_certificate_remove
+- az_iot_ops_asset_endpoint_create
+- az_iot_ops_asset_endpoint_delete
+- az_iot_ops_asset_endpoint_query
+- az_iot_ops_asset_endpoint_show
+- az_iot_ops_asset_endpoint_update
+globalParameters:
+- name: --debug
+  summary: |-
+    Increase logging verbosity to show all debug logs.
+- name: --help -h
+  summary: |-
+    Show this help message and exit.
+- name: --only-show-errors
+  summary: |-
+    Only show errors, suppressing warnings.
+- name: --output -o
+  defaultValue: "json"
+  parameterValueGroup: "json, jsonc, none, table, tsv, yaml, yamlc"
+  summary: |-
+    Output format.
+- name: --query
+  summary: |-
+    JMESPath query string. See <a href="http://jmespath.org/">http://jmespath.org/</a> for more information and examples.
+- name: --subscription
+  summary: |-
+    Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- name: --verbose
+  summary: |-
+    Increase logging verbosity. Use --debug for full debug logs.
+metadata:
+  description: Manage asset endpoint profiles.

@@ -7,7 +7,7 @@ ms.author: dbradish
 ms.prod: non-product-specific
 ms.topic: sample
 ms.custom: devx-track-azurecli
-ms.date: 08/1/2023
+ms.date: 12/04/2023
 ms.tool: azure-cli
 ---
 # Learn to use Bash with the Azure CLI
@@ -217,7 +217,7 @@ else
 fi
 ```
 
-The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this article, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](./use-cli-effectively.md#asynchronous-operations). We demonstrate the use of the `--no-wait` argument at the end of this article.
+The following script deletes an existing new resource group if one with the specified name already exists. You could use the `--no-wait` argument to return control without waiting for the command to complete. However, for this article, we want to wait for the resource group to be deleted before continuing. For more information on asynchronous operations, see [Asynchronous operations](./use-azure-cli-successfully.md#asynchronous-operations). We demonstrate the use of the `--no-wait` argument at the end of this article.
 
 ```azurecli
 if [ $(az group exists --name $resourceGroup) = true ]; then 
@@ -429,6 +429,7 @@ fi
 
 ## See also
 
-- [How to use the Azure CLI successfully](use-cli-effectively.md)
+- [Tutorial: Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md)
+- [How to use the Azure CLI successfully](use-azure-cli-successfully.md)
 - [How to query Azure CLI command output](query-azure-cli.md)
-- [Find Azure CLI samples](./samples-index.md)
+- Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)

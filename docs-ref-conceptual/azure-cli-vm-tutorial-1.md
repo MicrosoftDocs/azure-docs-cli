@@ -1,7 +1,7 @@
 ---
 title: Create virtual machine (VM) on a virtual network (VNet) prerequisites – Azure CLI | Microsoft Docs
 description: Prerequisites for creating a virtual machines (VM) on a virtual network (VNet) with the Azure CLI.
-ms.date: 08/2/2023
+ms.date: 01/08/2024
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
@@ -33,10 +33,42 @@ Shell variables store values for future use and can be used to pass values to co
 In Azure, all resources are allocated in a resource management group. Resource groups provide logical groupings of resources
 that make them easier to work with as a collection. Use the [az group create](/cli/azure/group#az_group_create) command to create a resource group named `VMTutorialResources`.
 
+# [Bash](#tab/bash)
+
 ```azurecli
-# create shell variables
+# create Bash shell variables
 resourceGroup=VMTutorialResources
 location=eastus
 
 az group create --name $resourceGroup --location $location
- ```
+```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli
+# Create PowerShell variables
+$resourceGroup = "VMTutorialResources"
+$location = "eastus"
+
+az group create --name $resourceGroup --location $location
+```
+
+***
+
+## Create a resource group in interactive mode
+
+Interactive mode offers new AI functionalities that allow the user to run and search for commands more efficiently. To get a better understanding of required parameters and steps related to `az group create`, try out Azure CLI in interactive mode by running the `az interactive` command. Please note that all commands throughout this tutorial can be run in interactive mode.
+
+```azurecli
+# install interactive mode
+az interactive
+```
+
+In the following example, the command recommendation feature in interactive mode lists and defines all of the required parameters needed for `az group create`:
+
+```azurecli
+# get options for az group create
+az>> az group create
+```
+
+![Azure Interactive Hint](./media/az-interactive-vm-tutorial-hint.png)

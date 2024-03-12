@@ -147,6 +147,45 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+- uid: az_apim_api_export
+  name: az apim api export
+  summary: |-
+    Export an API Management API.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/apim/_help.py
+  syntax: >-
+    az apim api export --api-id
+                       --ef {OpenApiJsonFile, OpenApiJsonUrl, OpenApiYamlFile, OpenApiYamlUrl, SwaggerFile, SwaggerUrl, WadlFile, WadlUrl, WsdlFile, WsdlUrl}
+                       --resource-group
+                       --service-name
+                       [--file-path]
+  examples:
+  - summary: |-
+      Export an API Management API to a file or returns a response containing a link of the export.
+    syntax: az apim api export -g MyResourceGroup --service-name MyApim --api-id MyApi --export-format OpenApiJson --file-path path
+  requiredParameters:
+  - isRequired: true
+    name: --api-id
+    summary: |-
+      API identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. Regex pattern: ^[^*#&+:<>?]+$.
+  - isRequired: true
+    name: --ef --export-format
+    parameterValueGroup: "OpenApiJsonFile, OpenApiJsonUrl, OpenApiYamlFile, OpenApiYamlUrl, SwaggerFile, SwaggerUrl, WadlFile, WadlUrl, WsdlFile, WsdlUrl"
+    summary: |-
+      Specify the format of the exporting API.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      The name of the resource group. The name is case insensitive.
+  - isRequired: true
+    name: --service-name -n
+    summary: |-
+      The name of the api management service instance.
+  optionalParameters:
+  - name: --file-path -f
+    summary: |-
+      File path specified to export the API.
 - uid: az_apim_api_import
   name: az apim api import
   summary: |-
@@ -364,7 +403,7 @@ directCommands:
   - name: --add
     defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --api-type
     parameterValueGroup: "graphql, http, soap, websocket"
     summary: |-
@@ -396,14 +435,14 @@ directCommands:
   - name: --remove
     defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --service-url
     summary: |-
       Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long.
   - name: --set
     defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --subscription-key-header-name
     summary: |-
       Specifies the subscription key header name.
@@ -483,6 +522,7 @@ directCommands:
 commands:
 - az_apim_api_create
 - az_apim_api_delete
+- az_apim_api_export
 - az_apim_api_import
 - az_apim_api_list
 - az_apim_api_operation
@@ -541,5 +581,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 05/29/2023
+  ms.date: 02/19/2024
   description: Manage Azure API Management API's.

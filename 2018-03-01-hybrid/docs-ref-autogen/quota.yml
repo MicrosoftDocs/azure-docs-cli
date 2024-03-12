@@ -4,239 +4,166 @@ name: az quota
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **quota** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az quota** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **quota** extension for the Azure CLI (version 2.54.0 or higher). The extension will automatically install the first time you run an **az quota** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Azure Quota Extension API.
-status: Experimental
-isExperimental: true
-previewOrExperimentalInfo: 'This command group is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  Manag quota for Azure resource providers.
+status: GA
 sourceType: Extension
 directCommands:
 - uid: az_quota_create
   name: az quota create
   summary: |-
-    Create the quota limit for the specified resource with the requested value.
-  status: Experimental
-  isExperimental: true
-  previewOrExperimentalInfo: "Command group 'quota' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Create the quota limit for the specified resource.
+  status: GA
   sourceType: Extension
   syntax: >-
     az quota create --resource-name
                     --scope
                     [--limit-object]
-                    [--no-wait]
+                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                     [--properties]
                     [--resource-type]
   examples:
   - summary: |-
-      Quotas_PutRequest_ForNetwork
-    syntax: az quota create --resource-name "MinPublicIpInterNetworkPrefixLength" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus" --limit-object value=10 limit-object-type=LimitValue --resource-type MinPublicIpInterNetworkPrefixLength
+      Create quota for network
+    syntax: az quota create --resource-name MinPublicIpInterNetworkPrefixLength --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus --limit-object value=10 --resource-type MinPublicIpInterNetworkPrefixLength
   - summary: |-
-      Quotas_PutRequest_ForNetwork_StandardSkuPublicIpAddressesResource
-    syntax: az quota create --resource-name "StandardSkuPublicIpAddresses" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus" --limit-object value=10 limit-object-type=LimitValue --resource-type PublicIpAddresses
+      Create quota for network standardSkuPublicIpAddressesResource
+    syntax: az quota create --resource-name StandardSkuPublicIpAddresses --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus --limit-object value=10 --resource-type PublicIpAddresses
   - summary: |-
-      Quotas_Put_Request_ForCompute
-    syntax: az quota create --resource-name "standardFSv2Family" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus" --limit-object value=10 limit-object-type=LimitValue --resource-type dedicated
+      Create quota for compute
+    syntax: az quota create --resource-name standardFSv2Family --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus --limit-object value=10 --resource-type dedicated
   - summary: |-
-      Quotas_Request_ForMachineLearningServices_LowPriorityResource
-    syntax: az quota create  --resource-name "TotalLowPriorityCores" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.MachineLearning/Services/locations/eastus" --limit-object value=10 limit-object-type=LimitValue --resource-type lowPriority
+      Create quota for MachineLearningServices LowPriorityResource
+    syntax: az quota create  --resource-name TotalLowPriorityCores --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.MachineLearning/Services/locations/eastus --limit-object value=10 --resource-type lowPriority
   requiredParameters:
   - isRequired: true
     name: --resource-name
     summary: |-
-      The resource name for a given resource provider.
+      Resource name for a given resource provider.
   - isRequired: true
     name: --scope
     summary: |-
-      The target Azure resource URI.
+      The target azure resource URI.
   optionalParameters:
   - name: --limit-object
     summary: |-
-      The resource quota limit value.
-    description: |-
-      Usage: --limit-object value=XX limit-type=XX limit-object-type=XX
-      value: Required. The quota/limit value
-      limit-type: The quota or usages limit types.
-      limit-object-type: Required. The limit object type.
+      The resource quota limit value.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --properties
     summary: |-
-      The additional properties for the specific resource provider.
+      Additional properties for the specific resource provider.  Support json-file and yaml-file.
   - name: --resource-type
     summary: |-
-      The resource type name.
+      The name of the resource type. Optional field.
 - uid: az_quota_list
   name: az quota list
   summary: |-
-    Get a list of current quota limits of all resources for the specified scope. The response from this GET operation can be leveraged to submit requests to update a quota.
-  status: Experimental
-  isExperimental: true
-  previewOrExperimentalInfo: "Command group 'quota' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    List current quota limits of all resources for the specified scope.
+  status: GA
   sourceType: Extension
-  syntax: az quota list --scope
+  syntax: >-
+    az quota list --scope
+                  [--max-items]
+                  [--next-token]
   examples:
   - summary: |-
-      Quotas_listQuotaLimitsForCompute
-    syntax: az quota list --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus"
+      List quota limit for compute
+    syntax: az quota list --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus
   - summary: |-
-      Quotas_listQuotaLimitsForNetwork
-    syntax: az quota list --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus"
+      List quota limit for network
+    syntax: az quota list --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus
   - summary: |-
-      Quotas_listQuotaLimitsMachineLearningServices
-    syntax: az quota list --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.MachineLearningServices/locations/eastus"
+      List quota limit machine learning service
+    syntax: az quota list --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.MachineLearningServices/locations/eastus
   requiredParameters:
   - isRequired: true
     name: --scope
     summary: |-
-      The target Azure resource URI.
+      The target azure resource URI.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_quota_show
   name: az quota show
   summary: |-
-    Get the quota limit of a resource. The response can be used to determine the remaining quota to calculate a new quota limit that can be submitted with a PUT request.
-  status: Experimental
-  isExperimental: true
-  previewOrExperimentalInfo: "Command group 'quota' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Show the quota limit of a resource.
+  status: GA
   sourceType: Extension
   syntax: >-
     az quota show --resource-name
                   --scope
   examples:
   - summary: |-
-      Quotas_Get_Request_ForCompute
-    syntax: az quota show --resource-name "standardNDSFamily" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus"
-  - summary: |-
-      Quotas_UsagesRequest_ForNetwork
-    syntax: az quota show --resource-name "MinPublicIpInterNetworkPrefixLength" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus"
+      Show quota for compute
+    syntax: az quota show --resource-name standardNDSFamily --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus
   requiredParameters:
   - isRequired: true
     name: --resource-name
     summary: |-
-      The resource name for a given resource provider.
+      Resource name for a given resource provider.
   - isRequired: true
     name: --scope
     summary: |-
-      The target Azure resource URI.
+      The target azure resource URI.
 - uid: az_quota_update
   name: az quota update
   summary: |-
-    Update the quota limit for a specific resource to the specified value.
-  status: Experimental
-  isExperimental: true
-  previewOrExperimentalInfo: "Command group 'quota' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Update the quota limit for a specific resource.
+  status: GA
   sourceType: Extension
   syntax: >-
     az quota update --resource-name
                     --scope
                     [--limit-object]
-                    [--no-wait]
+                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                     [--properties]
                     [--resource-type]
   examples:
   - summary: |-
-      Quotas_Request_PatchForCompute
-    syntax: az quota update --resource-name "standardFSv2Family" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus" --limit-object value=10 limit-object-type=LimitValue --resource-type dedicated
+      Update quota for compute
+    syntax: "az quota update --resource-name standardFSv2Family --scope /subscriptions/00000000-0000-0000-0000-0000\000000/providers/Microsoft.Compute/locations/eastus --limit-object value=10 --resource-type dedicated"
   - summary: |-
-      Quotas_Request_PatchForNetwork
-    syntax: az quota update --resource-name "MinPublicIpInterNetworkPrefixLength" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus" --limit-object value=10 limit-object-type=LimitValue --resource-type MinPublicIpInterNetworkPrefixLength
+      Update quota for network
+    syntax: az quota update --resource-name MinPublicIpInterNetworkPrefixLength --scope /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus --limit-object value=10 --resource-type MinPublicIpInterNetworkPrefixLength
   requiredParameters:
   - isRequired: true
     name: --resource-name
     summary: |-
-      The resource name for a given resource provider.
+      Resource name for a given resource provider.
   - isRequired: true
     name: --scope
     summary: |-
-      The target Azure resource URI.
+      The target azure resource URI.
   optionalParameters:
   - name: --limit-object
     summary: |-
-      The resource quota limit value.
-    description: |-
-      Usage: --limit-object value=XX limit-type=XX limit-object-type=XX
-      value: Required. The quota/limit value
-      limit-type: The quota or usages limit types.
-      limit-object-type: Required. The limit object type.
+      The resource quota limit value.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --properties
     summary: |-
-      The additional properties for the specific resource provider.
+      Additional properties for the specific resource provider.  Support json-file and yaml-file.
   - name: --resource-type
     summary: |-
-      Resource type name.
-- uid: az_quota_wait
-  name: az quota wait
-  summary: |-
-    Place the CLI in a waiting state until a condition of the quota is met.
-  status: Experimental
-  isExperimental: true
-  previewOrExperimentalInfo: "Command group 'quota' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az quota wait --resource-name
-                  --scope
-                  [--created]
-                  [--custom]
-                  [--deleted]
-                  [--exists]
-                  [--interval]
-                  [--timeout]
-                  [--updated]
-  examples:
-  - summary: |-
-      Pause executing next line of CLI script until the quota is successfully created.
-    syntax: az quota wait --resource-name "MinPublicIpInterNetworkPrefixLength" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus" --created
-  - summary: |-
-      Pause executing next line of CLI script until the quota is successfully updated.
-    syntax: az quota wait --resource-name "MinPublicIpInterNetworkPrefixLength" --scope "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus" --updated
-  requiredParameters:
-  - isRequired: true
-    name: --resource-name
-    summary: |-
-      The resource name for a given resource provider.
-  - isRequired: true
-    name: --scope
-    summary: |-
-      The target Azure resource URI.
-  optionalParameters:
-  - name: --created
-    defaultValue: "False"
-    summary: |-
-      Wait until created with 'provisioningState' at 'Succeeded'.
-  - name: --custom
-    summary: |-
-      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
-  - name: --deleted
-    defaultValue: "False"
-    summary: |-
-      Wait until deleted.
-  - name: --exists
-    defaultValue: "False"
-    summary: |-
-      Wait until the resource exists.
-  - name: --interval
-    defaultValue: "30"
-    summary: |-
-      Polling interval in seconds.
-  - name: --timeout
-    defaultValue: "3600"
-    summary: |-
-      Maximum wait in seconds.
-  - name: --updated
-    defaultValue: "False"
-    summary: |-
-      Wait until updated with provisioningState at 'Succeeded'.
+      The name of the resource type. Optional field.
 commands:
 - az_quota_create
 - az_quota_list
 - az_quota_operation
 - az_quota_operation_list
 - az_quota_request
+- az_quota_request_list
+- az_quota_request_show
 - az_quota_request_status
 - az_quota_request_status_list
 - az_quota_request_status_show
@@ -245,7 +172,6 @@ commands:
 - az_quota_usage
 - az_quota_usage_list
 - az_quota_usage_show
-- az_quota_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -271,4 +197,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage Azure Quota Extension API.
+  description: Manag quota for Azure resource providers.

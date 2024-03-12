@@ -103,6 +103,7 @@ When you provide a default value, that argument is no longer required by any com
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI MIT license](https://github.com/Azure/azure-cli/blob/dev/LICENSE). |
 | | only\_show\_errors | boolean | Only show errors during command invocation. In other words, only errors are written to `stderr`. It suppresses warnings from preview, deprecated and experimental commands. It's also available for individual commands with the `--only-show-errors` parameter. |
 | | no\_color | boolean | Disable color. Originally colored messages are prefixed with `DEBUG`, `INFO`, `WARNING` and `ERROR`. This boolean bypasses the issue of a third-party library where the terminal's color can't revert back after a `stdout` redirection. |
+| __clients__ | show_secrets_warning | boolean | Turn the warning for sensitive information output on/off. |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
 | | log\_dir | string | The directory to write logs to. By default this value is `${AZURE_CONFIG_DIR}/logs*`. |
 | __defaults__ | group | string | The default resource group to use for all commands. |

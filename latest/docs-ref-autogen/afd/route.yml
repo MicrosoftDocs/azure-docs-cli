@@ -3,8 +3,6 @@ uid: az_afd_route
 name: az afd route
 summary: |-
   Manage routes under an AFD endpoint.
-description: |-
-  A route maps your domains and matching URL path patterns to a specific origin group.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -13,31 +11,32 @@ directCommands:
 - uid: az_afd_route_create
   name: az afd route create
   summary: |-
-    Creates a new route within the specified endpoint.
+    Create a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
     az afd route create --endpoint-name
-                        --forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}
-                        --https-redirect {Disabled, Enabled}
-                        --origin-group
+                        --name
                         --profile-name
                         --resource-group
-                        --route-name
-                        --supported-protocols {Http, Https}
                         [--content-types-to-compress]
                         [--custom-domains]
-                        [--enable-caching {false, true}]
-                        [--enable-compression {false, true}]
+                        [--enable-caching {0, 1, f, false, n, no, t, true, y, yes}]
+                        [--enable-compression {0, 1, f, false, n, no, t, true, y, yes}]
                         [--enabled-state {Disabled, Enabled}]
+                        [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
+                        [--https-redirect {Disabled, Enabled}]
                         [--link-to-default-domain {Disabled, Enabled}]
+                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                        [--origin-group]
                         [--origin-path]
                         [--patterns-to-match]
                         [--query-parameters]
-                        [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
+                        [--query-string-caching-behavior]
                         [--rule-sets]
+                        [--supported-protocols]
   examples:
   - summary: |-
       Creates a route to associate the endpoint's default domain with an origin group for all HTTPS requests.
@@ -52,85 +51,83 @@ directCommands:
   - isRequired: true
     name: --endpoint-name
     summary: |-
-      Name of the endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - isRequired: true
-    name: --forwarding-protocol
-    parameterValueGroup: "HttpOnly, HttpsOnly, MatchRequest"
+    name: --name --route-name -n
     summary: |-
-      Protocol this rule will use when forwarding traffic to backends.
-  - isRequired: true
-    name: --https-redirect
-    parameterValueGroup: "Disabled, Enabled"
-    summary: |-
-      Whether to automatically redirect HTTP traffic to HTTPS traffic.
-  - isRequired: true
-    name: --origin-group
-    summary: |-
-      Name or ID of the origin group to be associated with.
+      Name of the routing rule.
   - isRequired: true
     name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --route-name
-    summary: |-
-      Name of the route.
-  - isRequired: true
-    name: --supported-protocols
-    parameterValueGroup: "Http, Https"
-    summary: |-
-      List of supported protocols for this route.
   optionalParameters:
   - name: --content-types-to-compress
     summary: |-
-      List of content types on which compression applies. The value should be a valid MIME type.
+      List of content types on which compression applies.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --custom-domains
     summary: |-
-      Custom domains referenced by this endpoint.
+      Custom domains referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --enable-caching
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Indicates whether caching is enanbled on that route.
   - name: --enable-compression
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+      Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled,content will be served as compressed if user requests for a compressed version.Content won't be compressed on AzureFrontDoorwhen requested content is smaller than 1 byte or larger than 1 MB.
   - name: --enabled-state
-    defaultValue: "Enabled"
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Whether to enable this route.
+      Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'.
+  - name: --forwarding-protocol
+    defaultValue: "MatchRequest"
+    parameterValueGroup: "HttpOnly, HttpsOnly, MatchRequest"
+    summary: |-
+      Protocol this rule will use when forwarding traffic to backends.
+  - name: --https-redirect
+    defaultValue: "Disabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
   - name: --link-to-default-domain
     defaultValue: "Disabled"
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Whether this route will be linked to the default endpoint domain.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --origin-group
+    summary: |-
+      Name or ID of the origin group to be associated with.
   - name: --origin-path
     summary: |-
-      A directory path on the origin that Azure Front Door can use to retrieve content from.
+      A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
   - name: --patterns-to-match
     summary: |-
-      The route patterns of the rule.
+      The route patterns of the rule.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --query-parameters
     summary: |-
-      Query parameters to include or exclude.
+      Query parameters to include or exclude.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --query-string-caching-behavior
-    parameterValueGroup: "IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString"
     summary: |-
-      Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+      Defines how Frontdoor caches requests that include query strings.You can ignore any query strings when caching, ignore specific query strings,cache every request with a unique URL, or cache specific query strings.
   - name: --rule-sets
     summary: |-
-      Collection of ID or name of rule set referenced by the route.
+      Collection of ID or name of rule set referenced by the route.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --supported-protocols
+    defaultValue: "['Http', 'Https']"
+    summary: |-
+      List of supported protocols for this route.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_afd_route_delete
   name: az afd route delete
   summary: |-
-    Delete an existing route within the specified endpoint.
+    Delete an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -138,31 +135,36 @@ directCommands:
   syntax: >-
     az afd route delete [--endpoint-name]
                         [--ids]
+                        [--name]
+                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                         [--profile-name]
                         [--resource-group]
-                        [--route-name]
                         [--subscription]
                         [--yes]
   examples:
   - summary: |-
-      Delete a route named route1.
+      Delete an route named route1.
     syntax: az afd route delete -g group --profile-name profile --endpoint-name endpoint1 --route-name route1
   optionalParameters:
   - name: --endpoint-name
     summary: |-
-      Name of the endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --route-name -n
+    summary: |-
+      Name of the routing rule.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --route-name
-    summary: |-
-      Name of the route.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -173,7 +175,7 @@ directCommands:
 - uid: az_afd_route_list
   name: az afd route list
   summary: |-
-    List all the routes within the specified endpoint.
+    List all of the existing origins within a profile.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -182,27 +184,32 @@ directCommands:
     az afd route list --endpoint-name
                       --profile-name
                       --resource-group
-  examples:
-  - summary: |-
-      List all the routes within the specified endpoint.
-    syntax: az afd route list -g group --profile-name profile --endpoint-name endpoint1
+                      [--max-items]
+                      [--next-token]
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
     summary: |-
-      Name of the endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - isRequired: true
     name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_afd_route_show
   name: az afd route show
   summary: |-
-    Show route details.
+    Get an existing route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -210,63 +217,64 @@ directCommands:
   syntax: >-
     az afd route show [--endpoint-name]
                       [--ids]
+                      [--name]
                       [--profile-name]
                       [--resource-group]
-                      [--route-name]
                       [--subscription]
-  examples:
-  - summary: |-
-      show details of the route named route1.
-    syntax: az afd route show -g group --profile-name profile  --endpoint-name endpoint1 --route-name route1
   optionalParameters:
   - name: --endpoint-name
     summary: |-
-      Name of the endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --route-name -n
+    summary: |-
+      Name of the routing rule.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --route-name
-    summary: |-
-      Name of the route.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_afd_route_update
   name: az afd route update
   summary: |-
-    Update an existing route within the specified endpoint.
+    Update a new route with the specified route name under the specified subscription, resource group, profile, and AzureFrontDoor endpoint.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
-    az afd route update [--content-types-to-compress]
+    az afd route update [--add]
+                        [--content-types-to-compress]
                         [--custom-domains]
-                        [--enable-caching {false, true}]
-                        [--enable-compression {false, true}]
+                        [--enable-caching {0, 1, f, false, n, no, t, true, y, yes}]
+                        [--enable-compression {0, 1, f, false, n, no, t, true, y, yes}]
                         [--enabled-state {Disabled, Enabled}]
                         [--endpoint-name]
+                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                         [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
                         [--https-redirect {Disabled, Enabled}]
                         [--ids]
                         [--link-to-default-domain {Disabled, Enabled}]
+                        [--name]
+                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                         [--origin-group]
                         [--origin-path]
                         [--patterns-to-match]
                         [--profile-name]
                         [--query-parameters]
-                        [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
+                        [--query-string-caching-behavior]
+                        [--remove]
                         [--resource-group]
-                        [--route-name]
                         [--rule-sets]
+                        [--set]
                         [--subscription]
-                        [--supported-protocols {Http, Https}]
+                        [--supported-protocols]
   examples:
   - summary: |-
       Update a route to accept both Http and Https requests and redirect all trafic to use Https.
@@ -278,27 +286,34 @@ directCommands:
       Update a route's compression settings to enable compression for the specified content types.
     syntax: az afd route update -g group --endpoint-name endpoint1 --profile-name profile --route-name route1 --query-string-caching-behavior IgnoreQueryString --enable-compression true --content-types-to-compress text/javascript text/plain
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --content-types-to-compress
     summary: |-
-      List of content types on which compression applies. The value should be a valid MIME type.
+      List of content types on which compression applies.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --custom-domains
     summary: |-
-      Custom domains referenced by this endpoint.
+      Custom domains referenced by this endpoint.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --enable-caching
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Indicates whether caching is enanbled on that route.
   - name: --enable-compression
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+      Indicates whether content compression is enabled on AzureFrontDoor. Default value is false.If compression is enabled, content will be served as compressed if user requests for a compressed version.Content won't be compressed on AzureFrontDoorwhen requested content is smaller than 1 byte or larger than 1 MB.
   - name: --enabled-state
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Whether to enable this route.
+      Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'.
   - name: --endpoint-name
     summary: |-
-      Name of the endpoint.
+      Name of the endpoint under the profile which is unique globally.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --forwarding-protocol
     parameterValueGroup: "HttpOnly, HttpsOnly, MatchRequest"
     summary: |-
@@ -306,7 +321,7 @@ directCommands:
   - name: --https-redirect
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Whether to automatically redirect HTTP traffic to HTTPS traffic.
+      Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -314,47 +329,124 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Whether this route will be linked to the default endpoint domain.
+  - name: --name --route-name -n
+    summary: |-
+      Name of the routing rule.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origin-group
     summary: |-
       Name or ID of the origin group to be associated with.
   - name: --origin-path
     summary: |-
-      A directory path on the origin that Azure Front Door can use to retrieve content from.
+      A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
   - name: --patterns-to-match
     summary: |-
-      The route patterns of the rule.
+      The route patterns of the rule.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
   - name: --query-parameters
     summary: |-
-      Query parameters to include or exclude.
+      Query parameters to include or exclude.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --query-string-caching-behavior
-    parameterValueGroup: "IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString"
     summary: |-
-      Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
+      Defines how Frontdoor caches requests that include query strings.You can ignore any query strings when caching, ignore specific query strings,cache every request with a unique URL, or cache specific query strings.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --route-name
-    summary: |-
-      Name of the route.
   - name: --rule-sets
     summary: |-
-      Collection of ID or name of rule set referenced by the route.
+      Collection of ID or name of rule set referenced by the route.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --supported-protocols
-    parameterValueGroup: "Http, Https"
     summary: |-
-      List of supported protocols for this route.
+      List of supported protocols for this route.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+- uid: az_afd_route_wait
+  name: az afd route wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Core
+  syntax: >-
+    az afd route wait [--created]
+                      [--custom]
+                      [--deleted]
+                      [--endpoint-name]
+                      [--exists]
+                      [--ids]
+                      [--interval]
+                      [--name]
+                      [--profile-name]
+                      [--resource-group]
+                      [--subscription]
+                      [--timeout]
+                      [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --endpoint-name
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --route-name -n
+    summary: |-
+      Name of the routing rule.
+  - name: --profile-name
+    summary: |-
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_afd_route_create
 - az_afd_route_delete
 - az_afd_route_list
 - az_afd_route_show
 - az_afd_route_update
+- az_afd_route_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -380,4 +472,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: A route maps your domains and matching URL path patterns to a specific origin group.
+  description: Manage routes under an AFD endpoint.

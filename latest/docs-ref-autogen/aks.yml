@@ -164,6 +164,7 @@ directCommands:
                   [--azure-monitor-workspace-resource-id]
                   [--ca-profile]
                   [--client-secret]
+                  [--crg-id]
                   [--data-collection-settings]
                   [--defender-config]
                   [--disable-disk-driver]
@@ -178,6 +179,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-asm]
                   [--enable-azure-keyvault-kms]
                   [--enable-azure-monitor-metrics]
                   [--enable-azure-rbac]
@@ -217,6 +219,7 @@ directCommands:
                   [--kubelet-config]
                   [--kubernetes-version]
                   [--linux-os-config]
+                  [--load-balancer-backend-pool-type {nodeIP, nodeIPConfiguration}]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-managed-outbound-ipv6-count]
@@ -242,8 +245,11 @@ directCommands:
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
                   [--node-public-ip-prefix-id]
+                  [--node-public-ip-tags]
                   [--node-resource-group]
                   [--node-vm-size]
+                  [--nodepool-allowed-host-ports]
+                  [--nodepool-asg-ids]
                   [--nodepool-labels]
                   [--nodepool-name]
                   [--nodepool-tags]
@@ -270,7 +276,7 @@ directCommands:
                   [--windows-admin-username]
                   [--workspace-resource-id]
                   [--yes]
-                  [--zones {1, 2, 3}]
+                  [--zones]
   examples:
   - summary: |-
       Create a Kubernetes cluster with an existing SSH public key.
@@ -380,6 +386,12 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with vertical pod autoscaler enaled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-vpa
+  - summary: |-
+      create a kubernetes cluster with a Capacity Reservation Group(CRG) ID.
+    syntax: az aks create -g MyResourceGroup -n MyMC --kubernetes-version 1.20.9 --node-vm-size VMSize --assign-identity "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myID" --enable-managed-identity --crg-id "subscriptions/SubID/resourceGroups/RGName/providers/Microsoft.ContainerService/CapacityReservationGroups/MyCRGID"
+  - summary: |-
+      Create a kubernetes cluster with Azure Service Mesh enabled.
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -458,6 +470,9 @@ directCommands:
   - name: --client-secret
     summary: |-
       Secret associated with the service principal. This argument is required if `--service-principal` is specified.
+  - name: --crg-id
+    summary: |-
+      The crg id used to associate the new cluster with the existed Capacity Reservation Group resource.
   - name: --data-collection-settings
     summary: |-
       Path to JSON file containing data collection settings for Monitoring addon.
@@ -527,6 +542,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+  - name: --enable-asm --enable-azure-service-mesh
+    summary: |-
+      Enable Azure Service Mesh addon.
+    isPreview: true
   - name: --enable-azure-keyvault-kms
     defaultValue: "False"
     summary: |-
@@ -684,6 +703,12 @@ directCommands:
   - name: --linux-os-config
     summary: |-
       Path to JSON file containing OS configurations for Linux agent nodes. https://aka.ms/aks/custom-node-config.
+  - name: --load-balancer-backend-pool-type
+    parameterValueGroup: "nodeIP, nodeIPConfiguration"
+    summary: |-
+      Load balancer backend pool type.
+    description: |-
+      Define the LoadBalancer backend pool type of managed inbound backend pool. The nodeIP means the VMs will be attached to the LoadBalancer by adding its private IP address to the backend pool. The nodeIPConfiguration means the VMs will be attached to the LoadBalancer by referencing the backend pool ID in the VM's NIC.
   - name: --load-balancer-idle-timeout
     summary: |-
       Load balancer idle timeout in minutes.
@@ -698,7 +723,7 @@ directCommands:
     summary: |-
       Load balancer managed outbound IPv6 IP count.
     description: |-
-      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only.
   - name: --load-balancer-outbound-ip-prefixes
     summary: |-
       Load balancer outbound IP prefix resource IDs.
@@ -769,7 +794,7 @@ directCommands:
       The Kubernetes network policy to use.
     description: |-
       Using together with "azure" network plugin.
-      Specify "azure" for Azure network policy manager and "calico" for calico network policy controller.
+      Specify "azure" for Azure network policy manager, "calico" for calico network policy controller, "cilium" for Azure CNI powered by Cilium.
       Defaults to "" (network policy disabled).
   - name: --no-ssh-key -x
     defaultValue: "False"
@@ -794,7 +819,7 @@ directCommands:
       ResourceId of the disk encryption set to use for enabling encryption at rest on agent node os disk.
   - name: --node-osdisk-size
     summary: |-
-      Size in GB of the OS disk for each node in the node pool. Minimum 30 GB.
+      Size in GiB of the OS disk for each node in the node pool. Minimum 30 GiB.
   - name: --node-osdisk-type
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
@@ -802,12 +827,21 @@ directCommands:
   - name: --node-public-ip-prefix-id
     summary: |-
       Public IP prefix ID used to assign public IPs to VMSS nodes.
+  - name: --node-public-ip-tags
+    summary: |-
+      The ipTags of the node public IPs.
   - name: --node-resource-group
     summary: |-
       The node resource group is the resource group where all customer's resources will be created in, such as virtual machines.
   - name: --node-vm-size -s
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes.
+  - name: --nodepool-allowed-host-ports
+    summary: |-
+      Expose host ports on the node pool. When specified, format should be a space-separated list of ranges with protocol, eg. `80/TCP 443/TCP 4000-5000/TCP`.
+  - name: --nodepool-asg-ids
+    summary: |-
+      The IDs of the application security groups to which the node pool's network interface should belong. When specified, format should be a space-separated list of IDs.
   - name: --nodepool-labels
     summary: |-
       The node labels for all node pool. See https://aka.ms/node-labels for syntax of labels.
@@ -928,7 +962,6 @@ directCommands:
     summary: |-
       Do not prompt for confirmation.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Availability zones where agent nodes will be placed. Also, to install agent nodes to more than one zones you need to pass zone numbers (1,2 or 3) separated by blanks.  For example -  To have all 3 zones, you are expected to enter `--zones 1 2 3`.
 - uid: az_aks_create(aks-preview)
@@ -980,8 +1013,10 @@ directCommands:
                   [--dns-zone-resource-ids]
                   [--edge-zone]
                   [--enable-aad]
+                  [--enable-addon-autoscaling]
                   [--enable-addons]
                   [--enable-ahub]
+                  [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-app-routing]
                   [--enable-asm]
@@ -1022,9 +1057,6 @@ directCommands:
                   [--gmsa-root-domain-name]
                   [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                   [--grafana-resource-id]
-                  [--guardrails-excluded-ns]
-                  [--guardrails-level {Enforcement, Off, Warning}]
-                  [--guardrails-version]
                   [--host-group-id]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
@@ -1078,15 +1110,21 @@ directCommands:
                   [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
+                  [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                   [--pod-subnet-id]
                   [--ppg]
                   [--private-dns-zone]
+                  [--revision]
                   [--rotation-poll-interval]
+                  [--safeguards-excluded-ns]
+                  [--safeguards-level {Enforcement, Off, Warning}]
+                  [--safeguards-version]
                   [--service-cidr]
                   [--service-cidrs]
                   [--service-principal]
                   [--skip-subnet-role-assignment]
                   [--snapshot-id]
+                  [--ssh-access {disabled, localuser}]
                   [--ssh-key-value]
                   [--storage-pool-name]
                   [--storage-pool-option {NVMe, SSD}]
@@ -1101,7 +1139,7 @@ directCommands:
                   [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                   [--workspace-resource-id]
                   [--yes]
-                  [--zones {1, 2, 3}]
+                  [--zones]
   examples:
   - summary: |-
       Create a Kubernetes cluster with an existing SSH public key.
@@ -1200,17 +1238,20 @@ directCommands:
       Create a kubernetes cluster with Custom CA Trust enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-custom-ca-trust
   - summary: |-
-      Create a kubernetes cluster with guardrails set to "Warning"
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --enable-addons azure-policy
+      Create a kubernetes cluster with safeguards set to "Warning"
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --enable-addons azure-policy
   - summary: |-
-      Create a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded
-    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2 --enable-addons azure-policy
+      Create a kubernetes cluster with safeguards set to "Warning" and some namespaces excluded
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --safeguards-excluded-ns ns1,ns2 --enable-addons azure-policy
   - summary: |-
       Create a kubernetes cluster with Azure Service Mesh enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azure-service-mesh
   - summary: |-
       Create a kubernetes cluster with Azure Monitor Metrics enabled.
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --enable-azuremonitormetrics
+  - summary: |-
+      Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1361,6 +1402,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable managed AAD feature for cluster.
+  - name: --enable-addon-autoscaling
+    defaultValue: "False"
+    summary: |-
+      Enable addon autoscaling for cluster.
+    isPreview: true
   - name: --enable-addons -a
     summary: |-
       Enable the Kubernetes addons in a comma-separated list.
@@ -1369,7 +1415,7 @@ directCommands:
       - http_application_routing        : configure ingress with automatic public DNS name creation.
       - monitoring                      :  turn on Log Analytics monitoring. Uses the Log Analytics Default Workspace if it exists, else creates one. Specify "--workspace-resource-id" to use an existing workspace. If monitoring addon is enabled --no-wait argument will have no effect
       - virtual-node                    : enable AKS Virtual Node. Requires --aci-subnet-name to provide the name of an existing subnet for the Virtual Node to use. aci-subnet-name must be in the same vnet which is specified by --vnet-subnet-id (required as well).
-      - azure-policy                    : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling Guardrails. Learn more at aka.ms/aks/policy.
+      - azure-policy                    : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner. Required if enabling deployment safeguards. Learn more at aka.ms/aks/policy.
       - ingress-appgw                   : enable Application Gateway Ingress Controller addon (PREVIEW).
       - confcom                         : enable confcom addon, this will enable SGX device plugin by default(PREVIEW).
       - open-service-mesh               : enable Open Service Mesh addon (PREVIEW).
@@ -1380,6 +1426,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) for Windows VMs.
+  - name: --enable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Enable AI toolchain operator to the cluster.
+    isPreview: true
   - name: --enable-apiserver-vnet-integration
     defaultValue: "False"
     summary: |-
@@ -1527,7 +1578,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Enable workload identity addon.
-    isPreview: true
   - name: --fqdn-subdomain
     summary: |-
       Prefix for FQDN that is created for private cluster with custom private dns zone scenario.
@@ -1554,19 +1604,6 @@ directCommands:
   - name: --grafana-resource-id
     summary: |-
       Resource ID of the Azure Managed Grafana Workspace.
-  - name: --guardrails-excluded-ns
-    summary: |-
-      Comma-separated list of Kubernetes namespaces to exclude from Guardrails.
-    isPreview: true
-  - name: --guardrails-level
-    parameterValueGroup: "Enforcement, Off, Warning"
-    summary: |-
-      The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
-    isPreview: true
-  - name: --guardrails-version
-    summary: |-
-      The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
-    isPreview: true
   - name: --host-group-id
     summary: |-
       (PREVIEW) The fully qualified dedicated host group id used to provision agent node pool.
@@ -1728,7 +1765,7 @@ directCommands:
   - name: --node-osdisk-type
     parameterValueGroup: "Ephemeral, Managed"
     summary: |-
-      OS disk type to be used for machines in a given agent pool. Defaults to 'Managed'. May not be changed for this pool after creation.
+      OS disk type to be used for machines in a given agent pool. Defaults to 'Ephemeral' when possible in conjunction with VM size and OS disk size. May not be changed for this pool after creation. ('Ephemeral' or 'Managed').
   - name: --node-provisioning-mode
     parameterValueGroup: "Auto, Manual"
     summary: |-
@@ -1793,6 +1830,13 @@ directCommands:
       A comma separated list of CIDR notation IP ranges from which to assign pod IPs when kubenet is used.
     description: |-
       Each range must not overlap with any Subnet IP ranges. For example, 172.244.0.0/16.
+  - name: --pod-ip-allocation-mode
+    parameterValueGroup: "DynamicIndividual, StaticBlock"
+    summary: |-
+      Set the ip allocation mode for how Pod IPs from the Azure Pod Subnet are allocated to the nodes in the AKS cluster. The choice is between dynamic batches of individual IPs or static allocation of a set of CIDR blocks. Accepted Values are "DynamicIndividual" or "StaticBlock".
+    description: |-
+      Used together with the "azure" network plugin.
+      Requires --pod-subnet-id.
   - name: --pod-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to assign pods in the cluster (requires azure network-plugin).
@@ -1804,9 +1848,25 @@ directCommands:
       Private dns zone mode for private cluster. "none" mode is in preview.
     description: |-
       Allowed values are "system", "none" (Preview) or your custom private dns zone resource id. If not set, defaults to type system. Requires --enable-private-cluster to be used.
+  - name: --revision
+    summary: |-
+      Azure Service Mesh revision to install.
   - name: --rotation-poll-interval
     summary: |-
       Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
+  - name: --safeguards-excluded-ns
+    summary: |-
+      Comma-separated list of Kubernetes namespaces to exclude from deployment safeguards.
+    isPreview: true
+  - name: --safeguards-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: |-
+      The deployment safeguards Level. Accepted Values are [Off, Warning, Enforcement]. Requires azure policy addon to be enabled.
+    isPreview: true
+  - name: --safeguards-version
+    summary: |-
+      The version of deployment safeguards to use. Default "v1.0.0" Use the ListSafeguardsVersions API to discover available versions.
+    isPreview: true
   - name: --service-cidr
     summary: |-
       A CIDR notation IP range from which to assign service cluster IPs.
@@ -1831,6 +1891,12 @@ directCommands:
   - name: --snapshot-id
     summary: |-
       The source nodepool snapshot id used to create this cluster.
+  - name: --ssh-access
+    defaultValue: "localuser"
+    parameterValueGroup: "disabled, localuser"
+    summary: |-
+      Configure SSH setting for all node pools in this cluster. Use "disabled" to disable SSH access, "localuser" to enable SSH access using private key.
+    isPreview: true
   - name: --ssh-key-value
     defaultValue: "~\\.ssh\\id_rsa.pub"
     summary: |-
@@ -1899,7 +1965,6 @@ directCommands:
     summary: |-
       Do not prompt for confirmation.
   - name: --zones -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Space-separated list of availability zones where agent nodes will be placed.
 - uid: az_aks_delete
@@ -2992,7 +3057,7 @@ directCommands:
 - uid: az_aks_stop
   name: az aks stop
   summary: |-
-    Stops a Managed Cluster.
+    Stop a managed cluster.
   description: |-
     This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See `stopping a cluster <https://docs.microsoft.com/azure/aks/start-stop-cluster>`_ for more details about stopping a cluster.
   status: GA
@@ -3020,7 +3085,7 @@ directCommands:
   name: az aks stop
   extensionSuffix: aks-preview
   summary: |-
-    Stops a Managed Cluster.
+    Stop a managed cluster.
   description: |-
     This can only be performed on Azure Virtual Machine Scale set backed clusters. Stopping a cluster stops the control plane and agent nodes entirely, while maintaining all object and cluster state. A cluster does not accrue charges while it is stopped. See `stopping a cluster <https://docs.microsoft.com/azure/aks/start-stop-cluster>`_ for more details about stopping a cluster.
   status: GA
@@ -3118,6 +3183,7 @@ directCommands:
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
+                  [--load-balancer-backend-pool-type {nodeIP, nodeIPConfiguration}]
                   [--load-balancer-idle-timeout]
                   [--load-balancer-managed-outbound-ip-count]
                   [--load-balancer-managed-outbound-ipv6-count]
@@ -3129,7 +3195,9 @@ directCommands:
                   [--nat-gateway-idle-timeout]
                   [--nat-gateway-managed-outbound-ip-count]
                   [--network-dataplane {azure, cilium}]
+                  [--network-plugin {azure, kubenet, none}]
                   [--network-plugin-mode]
+                  [--network-policy]
                   [--no-wait]
                   [--node-os-upgrade-channel]
                   [--nodepool-labels]
@@ -3488,6 +3556,12 @@ directCommands:
   - name: --ksm-metric-labels-allow-list
     summary: |-
       Comma-separated list of additional Kubernetes label keys that will be used in the resource' labels metric. By default the metric contains only name and namespace labels. To include additional labels provide a list of resource names in their plural form and Kubernetes label keys you would like to allow for them (e.g. '=namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...)'. A single '*' can be provided per resource instead to allow any labels, but that has severe performance implications (e.g. '=pods=[*]').
+  - name: --load-balancer-backend-pool-type
+    parameterValueGroup: "nodeIP, nodeIPConfiguration"
+    summary: |-
+      Load balancer backend pool type.
+    description: |-
+      Define the LoadBalancer backend pool type of managed inbound backend pool. The nodeIP means the VMs will be attached to the LoadBalancer by adding its private IP address to the backend pool. The nodeIPConfiguration means the VMs will be attached to the LoadBalancer by referencing the backend pool ID in the VM's NIC.
   - name: --load-balancer-idle-timeout
     summary: |-
       Load balancer idle timeout in minutes.
@@ -3497,22 +3571,22 @@ directCommands:
     summary: |-
       Load balancer managed outbound IP count.
     description: |-
-      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs. If the new value is greater than the original value, new additional outbound IPs will be created. If the value is less than the original value, existing outbound IPs will be deleted and outbound connections may fail due to configuration update.
+      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If the new value is greater than the original value, new additional outbound IPs will be created. If the value is less than the original value, existing outbound IPs will be deleted and outbound connections may fail due to configuration update.
   - name: --load-balancer-managed-outbound-ipv6-count
     summary: |-
       Load balancer managed outbound IPv6 IP count.
     description: |-
-      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only.
   - name: --load-balancer-outbound-ip-prefixes
     summary: |-
       Load balancer outbound IP prefix resource IDs.
     description: |-
-      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count and Load balancer outbound IP resource IDs.
+      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ips
     summary: |-
       Load balancer outbound IP resource IDs.
     description: |-
-      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. --load-balancer-managed-outbound-ip-count, --load-balancer-outbound-ips and --load-balancer-outbound-ip-prefixes are mutually exclusive. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ports
     summary: |-
       Load balancer outbound allocated ports.
@@ -3541,9 +3615,21 @@ directCommands:
     description: |-
       Network dataplane used in the Kubernetes cluster.
       Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
+  - name: --network-plugin
+    parameterValueGroup: "azure, kubenet, none"
+    summary: |-
+      The Kubernetes network plugin to use.
+    description: |-
+      Specify "azure" along with --network-plugin-mode=overlay to update a cluster to use Azure CNI Overlay. For more information see https://aka.ms/aks/azure-cni-overlay.
   - name: --network-plugin-mode
     summary: |-
       Update the mode of a network plugin to migrate to a different pod networking setup.
+  - name: --network-policy
+    summary: |-
+      Update the mode of a network policy.
+    description: |-
+      Specify "azure" for Azure network policy manager, "cilium" for Azure CNI powered by Cilium.
+      Defaults to "" (network policy disabled).
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -3637,7 +3723,9 @@ directCommands:
                   [--cluster-snapshot-id]
                   [--defender-config]
                   [--detach-acr]
+                  [--disable-addon-autoscaling]
                   [--disable-ahub]
+                  [--disable-ai-toolchain-operator]
                   [--disable-azure-container-storage]
                   [--disable-azure-keyvault-kms]
                   [--disable-azure-monitor-metrics]
@@ -3665,7 +3753,9 @@ directCommands:
                   [--disable-workload-identity]
                   [--disk-driver-version {v1, v2}]
                   [--enable-aad]
+                  [--enable-addon-autoscaling]
                   [--enable-ahub]
+                  [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
                   [--enable-azure-container-storage {azureDisk, elasticSan, ephemeralDisk}]
                   [--enable-azure-keyvault-kms]
@@ -3699,11 +3789,9 @@ directCommands:
                   [--gmsa-dns-server]
                   [--gmsa-root-domain-name]
                   [--grafana-resource-id]
-                  [--guardrails-excluded-ns]
-                  [--guardrails-level {Enforcement, Off, Warning}]
-                  [--guardrails-version]
                   [--http-proxy-config]
                   [--image-cleaner-interval-hours]
+                  [--ip-families]
                   [--k8s-support-plan {AKSLongTermSupport, KubernetesOfficial}]
                   [--ksm-metric-annotations-allow-list]
                   [--ksm-metric-labels-allow-list]
@@ -3733,6 +3821,10 @@ directCommands:
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
+                  [--safeguards-excluded-ns]
+                  [--safeguards-level {Enforcement, Off, Warning}]
+                  [--safeguards-version]
+                  [--ssh-access {disabled, localuser}]
                   [--ssh-key-value]
                   [--storage-pool-name]
                   [--storage-pool-option {NVMe, SSD}]
@@ -3833,14 +3925,14 @@ directCommands:
       Update a existing managed cluster to a managed cluster snapshot.
     syntax: az aks update -g MyResourceGroup -n MyManagedCluster --cluster-snapshot-id "/subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.ContainerService/managedclustersnapshots/mysnapshot1"
   - summary: |-
-      Update a kubernetes cluster with guardrails set to "Warning". Assumes azure policy addon is already enabled
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning
+      Update a kubernetes cluster with safeguards set to "Warning". Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning
   - summary: |-
-      Update a kubernetes cluster with guardrails set to "Warning" and some namespaces excluded. Assumes azure policy addon is already enabled
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-level Warning --guardrails-excluded-ns ns1,ns2
+      Update a kubernetes cluster with safeguards set to "Warning" and some namespaces excluded. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-level Warning --safeguards-excluded-ns ns1,ns2
   - summary: |-
-      Update a kubernetes cluster to clear any namespaces excluded from guardrails. Assumes azure policy addon is already enabled
-    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --guardrails-excluded-ns ""
+      Update a kubernetes cluster to clear any namespaces excluded from safeguards. Assumes azure policy addon is already enabled
+    syntax: az aks update -g MyResourceGroup -n MyManagedCluster --safeguards-excluded-ns ""
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -3917,10 +4009,20 @@ directCommands:
   - name: --detach-acr
     summary: |-
       Disable the 'acrpull' role assignment to the ACR specified by name or resource ID.
+  - name: --disable-addon-autoscaling
+    defaultValue: "False"
+    summary: |-
+      Disable addon autoscaling for cluster.
+    isPreview: true
   - name: --disable-ahub
     defaultValue: "False"
     summary: |-
       Disable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --disable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Disable AI toolchain operator.
+    isPreview: true
   - name: --disable-azure-container-storage
     defaultValue: "False"
     summary: |-
@@ -4029,7 +4131,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Disable Workload Identity addon for cluster.
-    isPreview: true
   - name: --disk-driver-version
     parameterValueGroup: "v1, v2"
     summary: |-
@@ -4038,10 +4139,20 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable managed AAD feature for cluster.
+  - name: --enable-addon-autoscaling
+    defaultValue: "False"
+    summary: |-
+      Enable addon autoscaling for cluster.
+    isPreview: true
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
       Enable Azure Hybrid User Benefits (AHUB) feature for cluster.
+  - name: --enable-ai-toolchain-operator
+    defaultValue: "False"
+    summary: |-
+      Enable AI toolchain operator to the cluster.
+    isPreview: true
   - name: --enable-apiserver-vnet-integration
     defaultValue: "False"
     summary: |-
@@ -4167,7 +4278,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (PREVIEW) Enable Workload Identity addon for cluster.
-    isPreview: true
   - name: --gmsa-dns-server
     summary: |-
       Specify DNS server for Windows gmsa on cluster.
@@ -4183,25 +4293,17 @@ directCommands:
   - name: --grafana-resource-id
     summary: |-
       Resource ID of the Azure Managed Grafana Workspace.
-  - name: --guardrails-excluded-ns
-    summary: |-
-      Comma-separated list of Kubernetes namespaces to exclude from Guardrails. Use "" to clear a previously non-empty list.
-    isPreview: true
-  - name: --guardrails-level
-    parameterValueGroup: "Enforcement, Off, Warning"
-    summary: |-
-      The Guardrails Level. Accepted Values are [Off, Warning]. Requires azure policy addon to be enabled.
-    isPreview: true
-  - name: --guardrails-version
-    summary: |-
-      The version of Guardrails to use. Default "v1.0.0" Use the ListGuardrailsVersions API to discover available versions.
-    isPreview: true
   - name: --http-proxy-config
     summary: |-
       HTTP Proxy configuration for this cluster.
   - name: --image-cleaner-interval-hours
     summary: |-
       ImageCleaner scanning interval.
+  - name: --ip-families
+    summary: |-
+      A comma separated list of IP versions to use for cluster networking.
+    description: |-
+      Each IP version should be in the format IPvN. For example, IPv4.
   - name: --k8s-support-plan
     parameterValueGroup: "AKSLongTermSupport, KubernetesOfficial"
     summary: |-
@@ -4229,22 +4331,22 @@ directCommands:
     summary: |-
       Load balancer managed outbound IP count.
     description: |-
-      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-managed-outbound-ipv6-count
     summary: |-
       Load balancer managed outbound IPv6 IP count.
     description: |-
-      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only. If updated, it will wipe off the existing setting on Load balancer managed outbound IPv6 count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Desired number of managed outbound IPv6 IPs for load balancer outbound connection. Valid for dual-stack (--ip-families IPv4,IPv6) only.
   - name: --load-balancer-outbound-ip-prefixes
     summary: |-
       Load balancer outbound IP prefix resource IDs.
     description: |-
-      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP prefix resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ips
     summary: |-
       Load balancer outbound IP resource IDs.
     description: |-
-      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only. If updated, it will wipe off the existing setting on Load balancer managed outbound IP count; Load balancer outbound IP resource IDs and Load balancer outbound IP prefix resource IDs.
+      Comma-separated public IP resource IDs for load balancer outbound connection. Valid for Standard SKU load balancer cluster only.
   - name: --load-balancer-outbound-ports
     summary: |-
       Load balancer outbound allocated ports.
@@ -4334,6 +4436,24 @@ directCommands:
   - name: --rotation-poll-interval
     summary: |-
       Set interval of rotation poll. Use with azure-keyvault-secrets-provider addon.
+  - name: --safeguards-excluded-ns
+    summary: |-
+      Comma-separated list of Kubernetes namespaces to exclude from deployment safeguards. Use "" to clear a previously non-empty list.
+    isPreview: true
+  - name: --safeguards-level
+    parameterValueGroup: "Enforcement, Off, Warning"
+    summary: |-
+      The deployment safeguards Level. Accepted Values are [Off, Warning, Enforcement]. Requires azure policy addon to be enabled.
+    isPreview: true
+  - name: --safeguards-version
+    summary: |-
+      The version of deployment safeguards to use. Default "v1.0.0" Use the ListSafeguardsVersions API to discover available versions.
+    isPreview: true
+  - name: --ssh-access
+    parameterValueGroup: "disabled, localuser"
+    summary: |-
+      Update SSH setting for all node pools in this cluster. Use "disabled" to disable SSH access, "localuser" to enable SSH access using private key.
+    isPreview: true
   - name: --ssh-key-value
     summary: |-
       Public key path or key contents to install on node VMs for SSH access. For example, 'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm'.
@@ -4439,9 +4559,12 @@ directCommands:
     az aks upgrade --name
                    --resource-group
                    [--control-plane-only]
+                   [--disable-force-upgrade]
+                   [--enable-force-upgrade]
                    [--kubernetes-version]
                    [--no-wait]
                    [--node-image-only]
+                   [--upgrade-override-until]
                    [--yes]
   examples:
   - summary: |-
@@ -4461,6 +4584,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Upgrade the cluster control plane only. If not specified, both control plane AND all node pools will be upgraded.
+  - name: --disable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Disable forceUpgrade cluster upgrade settings override.
+  - name: --enable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Enable forceUpgrade cluster upgrade settings override.
   - name: --kubernetes-version -k
     summary: |-
       Version of Kubernetes to upgrade the cluster to, such as "1.16.9".
@@ -4473,6 +4604,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Only upgrade node image for agent pools.
+  - name: --upgrade-override-until
+    summary: |-
+      Until when the cluster upgradeSettings overrides are effective.
+    description: |-
+      It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -4840,22 +4976,32 @@ commands:
 - az_aks_maintenanceconfiguration_update(aks-preview)
 - az_aks_mesh
 - az_aks_mesh_disable
+- az_aks_mesh_disable(aks-preview)
 - az_aks_mesh_disable-egress-gateway
 - az_aks_mesh_disable-ingress-gateway
+- az_aks_mesh_disable-ingress-gateway(aks-preview)
 - az_aks_mesh_enable
+- az_aks_mesh_enable(aks-preview)
 - az_aks_mesh_enable-egress-gateway
 - az_aks_mesh_enable-ingress-gateway
+- az_aks_mesh_enable-ingress-gateway(aks-preview)
 - az_aks_mesh_get-revisions
+- az_aks_mesh_get-revisions(aks-preview)
 - az_aks_mesh_get-upgrades
+- az_aks_mesh_get-upgrades(aks-preview)
 - az_aks_mesh_upgrade
 - az_aks_mesh_upgrade_complete
+- az_aks_mesh_upgrade_complete(aks-preview)
 - az_aks_mesh_upgrade_rollback
+- az_aks_mesh_upgrade_rollback(aks-preview)
 - az_aks_mesh_upgrade_start
+- az_aks_mesh_upgrade_start(aks-preview)
 - az_aks_nodepool
 - az_aks_nodepool_add
 - az_aks_nodepool_add(aks-preview)
 - az_aks_nodepool_delete
 - az_aks_nodepool_delete(aks-preview)
+- az_aks_nodepool_delete-machines
 - az_aks_nodepool_get-upgrades
 - az_aks_nodepool_get-upgrades(aks-preview)
 - az_aks_nodepool_list
@@ -4924,12 +5070,18 @@ commands:
 - az_aks_trustedaccess
 - az_aks_trustedaccess_role
 - az_aks_trustedaccess_role_list
+- az_aks_trustedaccess_role_list(aks-preview)
 - az_aks_trustedaccess_rolebinding
 - az_aks_trustedaccess_rolebinding_create
+- az_aks_trustedaccess_rolebinding_create(aks-preview)
 - az_aks_trustedaccess_rolebinding_delete
+- az_aks_trustedaccess_rolebinding_delete(aks-preview)
 - az_aks_trustedaccess_rolebinding_list
+- az_aks_trustedaccess_rolebinding_list(aks-preview)
 - az_aks_trustedaccess_rolebinding_show
+- az_aks_trustedaccess_rolebinding_show(aks-preview)
 - az_aks_trustedaccess_rolebinding_update
+- az_aks_trustedaccess_rolebinding_update(aks-preview)
 - az_aks_update
 - az_aks_update(aks-preview)
 - az_aks_update-credentials

@@ -10,6 +10,88 @@ summary: |-
 status: GA
 sourceType: Core and Extension
 directCommands:
+- uid: az_webapp_connection_create_app-insights
+  name: az webapp connection create app-insights
+  summary: |-
+    Create a webapp connection to app-insights.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az webapp connection create app-insights [--app-insights]
+                                             [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python}]
+                                             [--connection]
+                                             [--customized-keys]
+                                             [--name]
+                                             [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--resource-group]
+                                             [--secret]
+                                             [--slot]
+                                             [--source-id]
+                                             [--target-id]
+                                             [--target-resource-group]
+                                             [--vault-id]
+  examples:
+  - summary: |-
+      Create a connection between webapp and app-insights interactively
+    syntax: az webapp connection create app-insights
+  - summary: |-
+      Create a connection between webapp and app-insights with resource name
+    syntax: az webapp connection create app-insights -g WebAppRG -n MyWebApp --tg AppInsightsRG --app-insights MyAppInsights --secret
+  - summary: |-
+      Create a connection between webapp slot and app-insights with resource name
+    syntax: az webapp connection create app-insights -g WebAppRG -n MyWebApp --slot MySlot --tg AppInsightsRG --app-insights MyAppInsights --secret
+  - summary: |-
+      Create a connection between webapp and app-insights with resource id
+    syntax: az webapp connection create app-insights --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/microsoft.insights/components/{appinsights} --secret
+  optionalParameters:
+  - name: --app-insights
+    summary: |-
+      Name of the app insights. Required if '--target-id' is not specified.
+  - name: --client-type
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python"
+    summary: |-
+      The client type used on the webapp.
+  - name: --connection
+    summary: |-
+      Name of the webapp connection.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --name -n
+    summary: |-
+      Name of the webapp. Required if '--source-id' is not specified.None.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the webapp. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret.
+  - name: --slot
+    summary: |-
+      The name of the slot. Default to the production slot if not specified.
+  - name: --source-id
+    summary: |-
+      The resource id of a webapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--app-insights'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the app insights. Required if '--target-id' is not specified.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
 - uid: az_webapp_connection_create_appconfig
   name: az webapp connection create appconfig
   summary: |-
@@ -18,11 +100,12 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create appconfig [--app-config]
-                                          [--client-type {dotnet, java, nodejs, none, python}]
+                                          [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                           [--connection]
                                           [--customized-keys]
                                           [--name]
                                           [--no-wait]
+                                          [--opt-out {configinfo, publicnetwork}]
                                           [--private-endpoint {false, true}]
                                           [--resource-group]
                                           [--secret]
@@ -52,7 +135,7 @@ directCommands:
     summary: |-
       Name of the app configuration. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -68,6 +151,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -130,11 +217,12 @@ directCommands:
                                                 --schema-key
                                                 --schema-registry
                                                 --schema-secret
-                                                [--client-type {dotnet, go, java, none, python, springBoot}]
+                                                [--client-type {dotnet, dotnet-internal, go, java, none, python, springBoot}]
                                                 [--connection]
                                                 [--customized-keys]
                                                 [--name]
                                                 [--no-wait]
+                                                [--opt-out {configinfo, publicnetwork}]
                                                 [--resource-group]
                                                 [--slot]
                                                 [--source-id]
@@ -170,7 +258,7 @@ directCommands:
       Schema registry API-Key (secret).
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -186,6 +274,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the webapp. Required if '--source-id' is not specified.None.
@@ -206,12 +298,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create cosmos-cassandra [--account]
-                                                 [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+                                                 [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--customized-keys]
                                                  [--key-space]
                                                  [--name]
                                                  [--no-wait]
+                                                 [--opt-out {configinfo, publicnetwork}]
                                                  [--private-endpoint {false, true}]
                                                  [--resource-group]
                                                  [--secret]
@@ -242,7 +335,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -261,6 +354,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -322,13 +419,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create cosmos-gremlin [--account]
-                                               [--client-type {dotnet, java, nodejs, none, php, python}]
+                                               [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python}]
                                                [--connection]
                                                [--customized-keys]
                                                [--database]
                                                [--graph]
                                                [--name]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -359,7 +457,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -381,6 +479,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -442,12 +544,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create cosmos-mongo [--account]
-                                             [--client-type {dotnet, go, java, nodejs, none, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--database]
                                              [--name]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -478,7 +581,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -497,6 +600,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -558,12 +665,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create cosmos-sql [--account]
-                                           [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                           [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--database]
                                            [--name]
                                            [--no-wait]
+                                           [--opt-out {configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -594,7 +702,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -613,6 +721,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -674,11 +786,12 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create cosmos-table [--account]
-                                             [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--name]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -710,7 +823,7 @@ directCommands:
     summary: |-
       Name of the cosmos database account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -726,6 +839,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -789,12 +906,13 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create eventhub [--client-type {dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
+    az webapp connection create eventhub [--client-type {dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--name]
                                          [--namespace]
                                          [--no-wait]
+                                         [--opt-out {configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
@@ -822,7 +940,7 @@ directCommands:
     syntax: az webapp connection create eventhub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.EventHub/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, kafka-springBoot, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -841,6 +959,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -901,12 +1023,13 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create keyvault [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+    az webapp connection create keyvault [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--name]
                                          [--new {false, true}]
                                          [--no-wait]
+                                         [--opt-out {configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--service-endpoint {false, true}]
@@ -940,7 +1063,7 @@ directCommands:
     syntax: az webapp connection create keyvault --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -961,6 +1084,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1021,13 +1148,14 @@ directCommands:
   deprecateInfo: This command has been deprecated and will be removed in a future release.
   sourceType: Core
   syntax: >-
-    az webapp connection create mysql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create mysql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                       [--config-connstr {false, true}]
                                       [--connection]
                                       [--customized-keys]
                                       [--database]
                                       [--name]
                                       [--no-wait]
+                                      [--opt-out {configinfo, publicnetwork}]
                                       [--private-endpoint {false, true}]
                                       [--resource-group]
                                       [--secret]
@@ -1053,7 +1181,7 @@ directCommands:
     syntax: az webapp connection create mysql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBForMySQL/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -1078,6 +1206,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1126,21 +1258,24 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create mysql-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create mysql-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                [--config-connstr {false, true}]
                                                [--connection]
                                                [--customized-keys]
                                                [--database]
                                                [--name]
                                                [--no-wait]
+                                               [--opt-out {configinfo, publicnetwork}]
                                                [--resource-group]
                                                [--secret]
                                                [--server]
+                                               [--service-principal]
                                                [--slot]
                                                [--source-id]
                                                [--system-identity]
                                                [--target-id]
                                                [--target-resource-group]
+                                               [--user-identity]
                                                [--vault-id]
   examples:
   - summary: |-
@@ -1157,7 +1292,7 @@ directCommands:
     syntax: az webapp connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -1182,6 +1317,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the webapp. Required if '--source-id' is not specified.None.
@@ -1200,6 +1339,15 @@ directCommands:
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
@@ -1219,6 +1367,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1230,7 +1386,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az webapp connection create mysql-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create mysql-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                [--config-connstr {false, true}]
                                                [--connection]
                                                [--customized-keys]
@@ -1261,7 +1417,7 @@ directCommands:
     syntax: az webapp connection create mysql-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforMySQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -1313,7 +1469,7 @@ directCommands:
       client-id            : Required. Client id of the service principal.
       object-id            : Optional. Object id of the service principal (Enterprise Application).
       secret               : Required. Secret of the service principal.
-      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server AAD Authentication. Ignore it if you are the server AAD administrator.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
@@ -1326,7 +1482,7 @@ directCommands:
     description: |-
       Usage: --system-identity mysql-identity-id=xx
 
-      mysql-identity-id      : Optional. ID of identity used for MySQL flexible server AAD Authentication. Ignore it if you are the server AAD administrator.
+      mysql-identity-id      : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
@@ -1341,7 +1497,7 @@ directCommands:
 
       client-id            : Required. Client id of the user assigned identity.
       subs-id              : Required. Subscription id of the user assigned identity.
-      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server AAD Authentication. Ignore it if you are the server AAD administrator.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1358,7 +1514,7 @@ directCommands:
   deprecateInfo: This command has been deprecated and will be removed in a future release.
   sourceType: Core
   syntax: >-
-    az webapp connection create postgres [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create postgres [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                          [--config-connstr {false, true}]
                                          [--connection]
                                          [--customized-keys]
@@ -1366,16 +1522,19 @@ directCommands:
                                          [--name]
                                          [--new {false, true}]
                                          [--no-wait]
+                                         [--opt-out {configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
                                          [--server]
                                          [--service-endpoint {false, true}]
+                                         [--service-principal]
                                          [--slot]
                                          [--source-id]
                                          [--system-identity]
                                          [--target-id]
                                          [--target-resource-group]
+                                         [--user-identity]
                                          [--vault-id]
   examples:
   - summary: |-
@@ -1398,7 +1557,7 @@ directCommands:
     syntax: az webapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -1428,6 +1587,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1454,6 +1617,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
@@ -1471,6 +1643,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1482,7 +1662,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az webapp connection create postgres [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create postgres [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                          [--config-connstr {false, true}]
                                          [--connection]
                                          [--customized-keys]
@@ -1522,7 +1702,7 @@ directCommands:
     syntax: az webapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --new
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -1626,21 +1806,24 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create postgres-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create postgres-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                   [--config-connstr {false, true}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--database]
                                                   [--name]
                                                   [--no-wait]
+                                                  [--opt-out {configinfo, publicnetwork}]
                                                   [--resource-group]
                                                   [--secret]
                                                   [--server]
+                                                  [--service-principal]
                                                   [--slot]
                                                   [--source-id]
                                                   [--system-identity]
                                                   [--target-id]
                                                   [--target-resource-group]
+                                                  [--user-identity]
                                                   [--vault-id]
   examples:
   - summary: |-
@@ -1657,7 +1840,7 @@ directCommands:
     syntax: az webapp connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -1682,6 +1865,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the webapp. Required if '--source-id' is not specified.None.
@@ -1700,6 +1887,15 @@ directCommands:
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
@@ -1717,6 +1913,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -1728,7 +1932,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az webapp connection create postgres-flexible [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create postgres-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                   [--config-connstr {false, true}]
                                                   [--connection]
                                                   [--customized-keys]
@@ -1759,7 +1963,7 @@ directCommands:
     syntax: az webapp connection create postgres-flexible --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -1850,12 +2054,13 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create redis [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az webapp connection create redis [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                       [--connection]
                                       [--customized-keys]
                                       [--database]
                                       [--name]
                                       [--no-wait]
+                                      [--opt-out {configinfo, publicnetwork}]
                                       [--private-endpoint {false, true}]
                                       [--resource-group]
                                       [--secret]
@@ -1880,7 +2085,7 @@ directCommands:
     syntax: az webapp connection create redis --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redis/{server}/databases/{database} --secret
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -1899,6 +2104,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1936,12 +2145,13 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create redis-enterprise [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az webapp connection create redis-enterprise [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--customized-keys]
                                                  [--database]
                                                  [--name]
                                                  [--no-wait]
+                                                 [--opt-out {configinfo, publicnetwork}]
                                                  [--resource-group]
                                                  [--secret]
                                                  [--server]
@@ -1965,7 +2175,7 @@ directCommands:
     syntax: az webapp connection create redis-enterprise --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Cache/redisEnterprise/{server}/databases/{database} --secret
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -1984,6 +2194,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the webapp. Required if '--source-id' is not specified.None.
@@ -2017,12 +2231,13 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create servicebus [--client-type {dotnet, go, java, nodejs, none, python, springBoot}]
+    az webapp connection create servicebus [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--name]
                                            [--namespace]
                                            [--no-wait]
+                                           [--opt-out {configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -2050,7 +2265,7 @@ directCommands:
     syntax: az webapp connection create servicebus --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.ServiceBus/namespaces/{namespace} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, go, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -2069,6 +2284,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2129,11 +2348,12 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create signalr [--client-type {dotnet, none}]
+    az webapp connection create signalr [--client-type {dotnet, dotnet-internal, none}]
                                         [--connection]
                                         [--customized-keys]
                                         [--name]
                                         [--no-wait]
+                                        [--opt-out {configinfo, publicnetwork}]
                                         [--private-endpoint {false, true}]
                                         [--resource-group]
                                         [--secret]
@@ -2161,7 +2381,7 @@ directCommands:
     syntax: az webapp connection create signalr --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/SignalR/{signalr} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, none"
+    parameterValueGroup: "dotnet, dotnet-internal, none"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -2177,6 +2397,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2236,23 +2460,26 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create sql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create sql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                     [--config-connstr {false, true}]
                                     [--connection]
                                     [--customized-keys]
                                     [--database]
                                     [--name]
                                     [--no-wait]
+                                    [--opt-out {configinfo, publicnetwork}]
                                     [--private-endpoint {false, true}]
                                     [--resource-group]
                                     [--secret]
                                     [--server]
                                     [--service-endpoint {false, true}]
+                                    [--service-principal]
                                     [--slot]
                                     [--source-id]
                                     [--system-identity]
                                     [--target-id]
                                     [--target-resource-group]
+                                    [--user-identity]
                                     [--vault-id]
   examples:
   - summary: |-
@@ -2269,7 +2496,7 @@ directCommands:
     syntax: az webapp connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -2294,6 +2521,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2320,6 +2551,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
@@ -2337,6 +2577,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the sql server. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2348,7 +2596,7 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az webapp connection create sql [--client-type {django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az webapp connection create sql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                     [--config-connstr {false, true}]
                                     [--connection]
                                     [--customized-keys]
@@ -2381,7 +2629,7 @@ directCommands:
     syntax: az webapp connection create sql --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Sql/servers/{server}/databases/{database} --secret name=XX secret=XX
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "django, dotnet, go, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --config-connstr
@@ -2481,12 +2729,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create storage-blob [--account]
-                                             [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--name]
                                              [--new {false, true}]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -2523,7 +2772,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -2544,6 +2793,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2605,11 +2858,12 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create storage-file [--account]
-                                             [--client-type {dotnet, java, nodejs, none, php, python, ruby, springBoot}]
+                                             [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--name]
                                              [--no-wait]
+                                             [--opt-out {configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -2637,7 +2891,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, php, python, ruby, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -2653,6 +2907,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2692,11 +2950,12 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create storage-queue [--account]
-                                              [--client-type {dotnet, java, nodejs, none, python, springBoot}]
+                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--name]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -2727,7 +2986,7 @@ directCommands:
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python, springBoot"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -2743,6 +3002,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2804,19 +3067,23 @@ directCommands:
   sourceType: Core
   syntax: >-
     az webapp connection create storage-table [--account]
-                                              [--client-type {dotnet, java, nodejs, none, python}]
+                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                               [--connection]
                                               [--customized-keys]
                                               [--name]
                                               [--no-wait]
+                                              [--opt-out {configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
                                               [--service-endpoint {false, true}]
+                                              [--service-principal]
                                               [--slot]
                                               [--source-id]
+                                              [--system-identity]
                                               [--target-id]
                                               [--target-resource-group]
+                                              [--user-identity]
                                               [--vault-id]
   examples:
   - summary: |-
@@ -2824,19 +3091,19 @@ directCommands:
     syntax: az webapp connection create storage-table
   - summary: |-
       Create a connection between webapp and storage-table with resource name
-    syntax: az webapp connection create storage-table -g WebAppRG -n MyWebApp --tg StorageRG --account MyAccount --secret
+    syntax: az webapp connection create storage-table -g WebAppRG -n MyWebApp --tg StorageRG --account MyAccount --system-identity
   - summary: |-
       Create a connection between webapp slot and storage-table with resource name
-    syntax: az webapp connection create storage-table -g WebAppRG -n MyWebApp --slot MySlot --tg StorageRG --account MyAccount --secret
+    syntax: az webapp connection create storage-table -g WebAppRG -n MyWebApp --slot MySlot --tg StorageRG --account MyAccount --system-identity
   - summary: |-
       Create a connection between webapp and storage-table with resource id
-    syntax: az webapp connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --secret
+    syntax: az webapp connection create storage-table --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.Storage/storageAccounts/{account}/tableServices/default --system-identity
   optionalParameters:
   - name: --account
     summary: |-
       Name of the storage account. Required if '--target-id' is not specified.
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -2852,6 +3119,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2868,18 +3139,40 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --slot
     summary: |-
       The name of the slot. Default to the production slot if not specified.
   - name: --source-id
     summary: |-
       The resource id of a webapp. Required if ['--resource-group', '--name'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
   - name: --target-id
     summary: |-
       The resource id of target service. Required if ['--target-resource-group', '--account'] are not specified.
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the storage account. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
@@ -2890,11 +3183,12 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az webapp connection create webpubsub [--client-type {dotnet, java, nodejs, none, python}]
+    az webapp connection create webpubsub [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                           [--connection]
                                           [--customized-keys]
                                           [--name]
                                           [--no-wait]
+                                          [--opt-out {configinfo, publicnetwork}]
                                           [--private-endpoint {false, true}]
                                           [--resource-group]
                                           [--secret]
@@ -2922,7 +3216,7 @@ directCommands:
     syntax: az webapp connection create webpubsub --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.SignalRService/WebPubSub/{webpubsub} --system-identity
   optionalParameters:
   - name: --client-type
-    parameterValueGroup: "dotnet, java, nodejs, none, python"
+    parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
       The client type used on the webapp.
   - name: --connection
@@ -2938,6 +3232,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2991,6 +3289,7 @@ directCommands:
     summary: |-
       Name of the webpubsub service. Required if '--target-id' is not specified.
 commands:
+- az_webapp_connection_create_app-insights
 - az_webapp_connection_create_appconfig
 - az_webapp_connection_create_confluent-cloud
 - az_webapp_connection_create_cosmos-cassandra

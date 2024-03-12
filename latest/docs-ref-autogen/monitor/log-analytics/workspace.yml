@@ -17,6 +17,7 @@ directCommands:
     az monitor log-analytics workspace create --name
                                               --resource-group
                                               [--capacity-reservation-level {100, 1000, 200, 2000, 300, 400, 500, 5000}]
+                                              [--identity-type {None, SystemAssigned, UserAssigned}]
                                               [--ingestion-access {Disabled, Enabled}]
                                               [--location]
                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
@@ -25,6 +26,7 @@ directCommands:
                                               [--retention-time]
                                               [--sku {CapacityReservation, Free, LACluster, PerGB2018, PerNode, Premium, Standalone, Standard}]
                                               [--tags]
+                                              [--user-assigned]
   examples:
   - summary: |-
       Create a workspace instance
@@ -43,7 +45,12 @@ directCommands:
     parameterValueGroup: "100, 1000, 200, 2000, 300, 400, 500, 5000"
     summary: |-
       The capacity reservation level for this workspace, when CapacityReservation sku is selected. The maximum value is 1000 and must be in multiples of 100. If you want to increase the limit, please contact LAIngestionRate@microsoft.com.
+  - name: --identity-type
+    parameterValueGroup: "None, SystemAssigned, UserAssigned"
+    summary: |-
+      Type of managed service identity.
   - name: --ingestion-access
+    defaultValue: "Enabled"
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       The public network access type to access workspace ingestion.
@@ -55,6 +62,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --query-access
+    defaultValue: "Enabled"
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       The public network access type to access workspace query.
@@ -73,6 +81,9 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --user-assigned
+    summary: |-
+      The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_monitor_log-analytics_workspace_delete
   name: az monitor log-analytics workspace delete
   summary: |-
@@ -183,6 +194,31 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_monitor_log-analytics_workspace_list-available-service-tier
+  name: az monitor log-analytics workspace list-available-service-tier
+  summary: |-
+    List the available service tiers for the workspace.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  syntax: >-
+    az monitor log-analytics workspace list-available-service-tier [--ids]
+                                                                   [--resource-group]
+                                                                   [--subscription]
+                                                                   [--workspace-name]
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --workspace-name -n
+    summary: |-
+      The name of the workspace.
 - uid: az_monitor_log-analytics_workspace_list-deleted-workspaces
   name: az monitor log-analytics workspace list-deleted-workspaces
   summary: |-
@@ -199,6 +235,14 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_monitor_log-analytics_workspace_list-link-target
+  name: az monitor log-analytics workspace list-link-target
+  summary: |-
+    List a list of workspaces which the current user has administrator privileges and are not associated with an Azure Subscription.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/monitor/_help.py
+  syntax: az monitor log-analytics workspace list-link-target
 - uid: az_monitor_log-analytics_workspace_list-management-groups
   name: az monitor log-analytics workspace list-management-groups
   summary: |-
@@ -314,6 +358,7 @@ directCommands:
                                               [--capacity-reservation-level {100, 1000, 200, 2000, 300, 400, 500, 5000}]
                                               [--data-collection-rule]
                                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                              [--identity-type {None, SystemAssigned, UserAssigned}]
                                               [--ids]
                                               [--ingestion-access {Disabled, Enabled}]
                                               [--name]
@@ -326,6 +371,7 @@ directCommands:
                                               [--set]
                                               [--subscription]
                                               [--tags]
+                                              [--user-assigned]
   examples:
   - summary: |-
       Update a workspace instance.
@@ -348,6 +394,10 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --identity-type
+    parameterValueGroup: "None, SystemAssigned, UserAssigned"
+    summary: |-
+      Type of managed service identity.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -387,6 +437,9 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --user-assigned
+    summary: |-
+      The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_monitor_log-analytics_workspace_wait
   name: az monitor log-analytics workspace wait
   summary: |-
@@ -472,7 +525,9 @@ commands:
 - az_monitor_log-analytics_workspace_linked-storage_remove
 - az_monitor_log-analytics_workspace_linked-storage_show
 - az_monitor_log-analytics_workspace_list
+- az_monitor_log-analytics_workspace_list-available-service-tier
 - az_monitor_log-analytics_workspace_list-deleted-workspaces
+- az_monitor_log-analytics_workspace_list-link-target
 - az_monitor_log-analytics_workspace_list-management-groups
 - az_monitor_log-analytics_workspace_list-usages
 - az_monitor_log-analytics_workspace_pack
@@ -495,6 +550,7 @@ commands:
 - az_monitor_log-analytics_workspace_table_restore
 - az_monitor_log-analytics_workspace_table_restore_create
 - az_monitor_log-analytics_workspace_table_search-job
+- az_monitor_log-analytics_workspace_table_search-job_cancel
 - az_monitor_log-analytics_workspace_table_search-job_create
 - az_monitor_log-analytics_workspace_table_show
 - az_monitor_log-analytics_workspace_table_update
@@ -526,5 +582,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/19/2023
+  ms.date: 10/11/2023
   description: Manage Azure log analytics workspace.

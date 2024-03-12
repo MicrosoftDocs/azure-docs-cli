@@ -4,7 +4,7 @@ name: az nginx deployment certificate
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **nginx** extension for the Azure CLI (version 2.40.0 or higher). The extension will automatically install the first time you run an **az nginx deployment certificate** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **nginx** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az nginx deployment certificate** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage NGINX certificate resources.
 status: GA
@@ -25,8 +25,6 @@ directCommands:
                                            [--key-vault-secret-id]
                                            [--location]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--provisioning-state {Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating}]
-                                           [--tags]
   examples:
   - summary: |-
       Certificate Create
@@ -47,13 +45,13 @@ directCommands:
   optionalParameters:
   - name: --certificate-path
     summary: |-
-      This path must match one or more ssl_certificate directive file argument in your Nginx configuration. This path must be unique between certificates within the same deployment.
+      Certificate path in Nginx configuration structure.
   - name: --key-path
     summary: |-
-      This path must match one or more ssl_certificate_key directive file argument in your Nginx configuration. This path must be unique between certificates within the same deployment.
+      Key path in Nginx configuration structure.
   - name: --key-vault-secret-id
     summary: |-
-      The secret id to the certificate in KeyVault.
+      The secret ID for your certificate from Azure Key Vault.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -61,17 +59,10 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --provisioning-state
-    parameterValueGroup: "Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating"
-    summary: |-
-      State of the certificate deployment.
-  - name: --tags
-    summary: |-
-      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_nginx_deployment_certificate_delete
   name: az nginx deployment certificate delete
   summary: |-
-    Delete an Nginx deployment certificate.
+    Delete an NGINX deployment certificate.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -119,6 +110,8 @@ directCommands:
   syntax: >-
     az nginx deployment certificate list --deployment-name
                                          --resource-group
+                                         [--max-items]
+                                         [--next-token]
   examples:
   - summary: |-
       Certificate ListByDeployment
@@ -132,10 +125,17 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_nginx_deployment_certificate_show
   name: az nginx deployment certificate show
   summary: |-
-    Get the properties of a specific Nginx certificate.
+    Get the properties of a specific NGINX certificate.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -167,7 +167,7 @@ directCommands:
 - uid: az_nginx_deployment_certificate_update
   name: az nginx deployment certificate update
   summary: |-
-    Update an Nginx deployment certificate.
+    Update an NGINX deployment certificate.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -181,12 +181,10 @@ directCommands:
                                            [--key-vault-secret-id]
                                            [--location]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--provisioning-state {Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating}]
                                            [--remove]
                                            [--resource-group]
                                            [--set]
                                            [--subscription]
-                                           [--tags]
   examples:
   - summary: |-
       Update the certificate virtual path, key virtual path and certificate
@@ -200,7 +198,7 @@ directCommands:
       The name of certificate.
   - name: --certificate-path
     summary: |-
-      This path must match one or more ssl_certificate directive file argument in your Nginx configuration. This path must be unique between certificates within the same deployment.
+      Certificate path in Nginx configuration structure.
   - name: --deployment-name
     summary: |-
       The name of targeted Nginx deployment.
@@ -213,10 +211,10 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --key-path
     summary: |-
-      This path must match one or more ssl_certificate_key directive file argument in your Nginx configuration. This path must be unique between certificates within the same deployment.
+      Key path in Nginx configuration structure.
   - name: --key-vault-secret-id
     summary: |-
-      The secret id to the certificate in KeyVault.
+      The secret ID for your certificate from Azure Key Vault.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
@@ -224,10 +222,6 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --provisioning-state
-    parameterValueGroup: "Accepted, Canceled, Creating, Deleted, Deleting, Failed, NotSpecified, Succeeded, Updating"
-    summary: |-
-      State of the certificate deployment.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
@@ -240,9 +234,6 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --tags
-    summary: |-
-      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_nginx_deployment_certificate_wait
   name: az nginx deployment certificate wait
   summary: |-

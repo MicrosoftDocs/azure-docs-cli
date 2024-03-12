@@ -4,7 +4,7 @@ description: The Azure CLI offers various output formats such as JSON and YAML. 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 10/18/2023
+ms.date: 01/29/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -195,10 +195,23 @@ KBDemo020
 
 The `tsv` output format is often used when assigning values to variables. This example gets the active subscription ID and stores it into a variable for use in a script.
 
-```azurecli-interactive
+# [Bash](#tab/bash)
+
+```azurecli
+# Bash Script
 subscriptionID=$(az account show --query id --output tsv)
 echo "Using subscription ID $subscriptionID"
 ```
+
+# [PowerShell](#tab/powershell)
+
+```azurecli
+# PowerShell script
+$subscriptionID = az account show --query id --output tsv
+echo "Using subscription ID $subscriptionID"
+```
+
+---
 
 For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
 
@@ -255,12 +268,30 @@ Console output showing the new password in the console.
 
 A better solution is to return sensitive information to a variable.
 
-```azurecli-interactive
+# [Bash](#tab/bash)
+
+```azurecli
+# Bash Script
 # reset service principal credentials returning results to a variable
 myNewPassword=$(az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
+
+# Display the new password (remove this line in production for security)
+echo "New password: $myNewPassword"
 ```
 
-For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-cli-effectively.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
+# [PowerShell](#tab/powershell)
+
+```azurecli
+# PowerShell script
+# Reset service principal credentials and capture the new password
+$myNewPassword = (az ad sp credential reset --id myServicePrincipalID --query password --output tsv)
+
+# Display the new password (remove this line in production for security)
+echo "New password: $myNewPassword"
+```
+
+---
+For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-azure-cli-successfully.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
 
 ## Set the default output format
 
@@ -298,4 +329,4 @@ az config set core.output=json
 
 - [Azure CLI configuration](./azure-cli-configuration.md)
 - [How to query Azure CLI command output](./query-azure-cli.md)
-- [Use the Azure CLI successfully](./use-cli-effectively.md)
+- [Use the Azure CLI successfully](./use-azure-cli-successfully.md)

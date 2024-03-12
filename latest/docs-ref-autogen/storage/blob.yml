@@ -230,16 +230,16 @@ directCommands:
     syntax: >-
       date=`date -d "10 days ago" '+%Y-%m-%dT%H:%MZ'`
 
-      az storage blob delete-batch -s mycontainer --account-name mystorageaccount --pattern *.py --if-unmodified-since $date --auth-mode login
+      az storage blob delete-batch -s mycontainer --account-name mystorageaccount --pattern "*.py" --if-unmodified-since $date --auth-mode login
   - summary: |-
       Delete all the blobs in a directory named "dir" in a container named "mycontainer".
-    syntax: az storage blob delete-batch -s mycontainer --pattern dir/*
+    syntax: az storage blob delete-batch -s mycontainer --pattern "dir/*"
   - summary: |-
       Delete the blobs with the format 'cli-2018-xx-xx.txt' or 'cli-2019-xx-xx.txt' in a container.
-    syntax: az storage blob delete-batch -s mycontainer --pattern cli-201[89]-??-??.txt
+    syntax: az storage blob delete-batch -s mycontainer --pattern "cli-201[89]-??-??.txt"
   - summary: |-
       Delete all blobs with the format 'cli-201x-xx-xx.txt' except cli-2018-xx-xx.txt' and 'cli-2019-xx-xx.txt' in a container.
-    syntax: az storage blob delete-batch -s mycontainer --pattern cli-201[!89]-??-??.txt
+    syntax: az storage blob delete-batch -s mycontainer --pattern "cli-201[!89]-??-??.txt"
   requiredParameters:
   - isRequired: true
     name: --source -s
@@ -453,16 +453,16 @@ directCommands:
   examples:
   - summary: |-
       Download all blobs that end with .py
-    syntax: az storage blob download-batch -d . --pattern *.py -s mycontainer --account-name mystorageaccount --account-key 00000000
+    syntax: az storage blob download-batch -d . --pattern "*.py" -s mycontainer --account-name mystorageaccount --account-key 00000000
   - summary: |-
       Download all blobs in a directory named "dir" from container named "mycontainer".
-    syntax: az storage blob download-batch -d . -s mycontainer --pattern dir/*
+    syntax: az storage blob download-batch -d . -s mycontainer --pattern "dir/*"
   - summary: |-
       Download all blobs with the format 'cli-2018-xx-xx.txt' or 'cli-2019-xx-xx.txt' in container to current path.
-    syntax: az storage blob download-batch -d . -s mycontainer --pattern cli-201[89]-??-??.txt
+    syntax: az storage blob download-batch -d . -s mycontainer --pattern "cli-201[89]-??-??.txt"
   - summary: |-
       Download all blobs with the format 'cli-201x-xx-xx.txt' except cli-2018-xx-xx.txt' and 'cli-2019-xx-xx.txt' in container to current path.
-    syntax: az storage blob download-batch -d . -s mycontainer --pattern cli-201[!89]-??-??.txt
+    syntax: az storage blob download-batch -d . -s mycontainer --pattern "cli-201[!89]-??-??.txt"
   requiredParameters:
   - isRequired: true
     name: --destination -d
@@ -2189,7 +2189,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Whether the blob to be uploaded should overwrite the current data. If True, blob upload operation will overwrite the existing data. If set to False, the operation will fail with ResourceExistsError. The exception to the above is with Append blob types: if set to False and the data already exists, an error will not be raised and the data will be appended to the existing blob. If set overwrite=True, then the existing append blob will be deleted, and a new one created. Defaults to False.
-    isPreview: true
   - name: --sas-token
     summary: |-
       A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.
@@ -2251,6 +2250,7 @@ directCommands:
                                  [--overwrite {false, true}]
                                  [--pattern]
                                  [--sas-token]
+                                 [--tags]
                                  [--tags-condition]
                                  [--tier]
                                  [--timeout]
@@ -2259,16 +2259,16 @@ directCommands:
   examples:
   - summary: |-
       Upload all files that end with .py unless blob exists and has been modified since given date.
-    syntax: az storage blob upload-batch -d mycontainer --account-name mystorageaccount --account-key 00000000 -s <path-to-directory> --pattern *.py --if-unmodified-since 2018-08-27T20:51Z
+    syntax: az storage blob upload-batch -d mycontainer --account-name mystorageaccount --account-key 00000000 -s <path-to-directory> --pattern "*.py" --if-unmodified-since 2018-08-27T20:51Z
   - summary: |-
       Upload all files from local path directory to a container named "mycontainer".
     syntax: az storage blob upload-batch -d mycontainer -s <path-to-directory>
   - summary: |-
       Upload all files with the format 'cli-2018-xx-xx.txt' or 'cli-2019-xx-xx.txt' in local path directory.
-    syntax: az storage blob upload-batch -d mycontainer -s <path-to-directory> --pattern cli-201[89]-??-??.txt
+    syntax: az storage blob upload-batch -d mycontainer -s <path-to-directory> --pattern "cli-201[89]-??-??.txt"
   - summary: |-
       Upload all files with the format 'cli-201x-xx-xx.txt' except cli-2018-xx-xx.txt' and 'cli-2019-xx-xx.txt' in a container.
-    syntax: az storage blob upload-batch -d mycontainer -s <path-to-directory> --pattern cli-201[!89]-??-??.txt
+    syntax: az storage blob upload-batch -d mycontainer -s <path-to-directory> --pattern "cli-201[!89]-??-??.txt"
   requiredParameters:
   - isRequired: true
     name: --destination -d
@@ -2365,6 +2365,9 @@ directCommands:
   - name: --sas-token
     summary: |-
       A Shared Access Signature (SAS). Must be used in conjunction with storage account name or service endpoint. Environment variable: AZURE_STORAGE_SAS_TOKEN.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
   - name: --tags-condition
     summary: |-
       Specify a SQL where clause on blob tags to operate only on blobs with a matching value.

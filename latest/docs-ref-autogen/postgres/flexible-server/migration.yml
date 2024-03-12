@@ -53,14 +53,73 @@ directCommands:
                                                  [--location]
                                                  [--migration-mode {offline, online}]
                                                  [--migration-name]
+                                                 [--migration-option {Migrate, Validate, ValidateAndMigrate}]
                                                  [--tags]
   examples:
   - summary: |-
-      Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file. Use --migration-mode online for Online(with CDC) migration
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration --properties "migrationConfig.json" --migration-mode online
+      Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file.       Use --migration-mode offline for Offline migration. Sample migrationConfig.json will look like this: {
+        "properties": {
+          "SourceDBServerResourceId": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-single-rg/providers/Microsoft.DBforPostgreSQL/servers/pg-single-1",
+          "SecretParameters": {
+            "AdminCredentials": {
+              "SourceServerPassword": "password",
+              "TargetServerPassword": "password"
+            },
+            "SourceServerUserName": "testuser@pg-single-1",
+            "TargetServerUserName": "fspguser"
+          }
+          "dBsToMigrate": [
+            "postgres"
+          ],
+          "OverwriteDbsInTarget": "true",
+          "SourceType": "PostgreSQLSingleServer",
+          "SslMode": "VerifyFull"
+        }
+      }
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver         --migration-name testmigration --properties "migrationConfig.json" --migration-mode offline
   - summary: |-
-      Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file. Use --migration-mode offline or no --migration-mode flag for Offline Migration.
-    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration --properties "migrationConfig.json"
+      Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file.       Use --migration-mode online for Online(with CDC) migration, with this sample migrationConfig.json. Use migration-option Validate for validate only request {
+        "properties": {
+          "SourceDBServerResourceId": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-single-rg/providers/Microsoft.DBforPostgreSQL/servers/pg-single-1",
+          "SecretParameters": {
+            "AdminCredentials": {
+              "SourceServerPassword": "password",
+              "TargetServerPassword": "password"
+            },
+            "SourceServerUserName": "testuser@pg-single-1",
+            "TargetServerUserName": "fspguser"
+          }
+          "dBsToMigrate": [
+            "postgres"
+          ],
+          "OverwriteDbsInTarget": "true"
+        }
+      } The sourceType and sslmode parameters are automatically set to 'PostgreSQL Single server' and 'VerifyFull' respectively, if the source resource id         follows the /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/{rg-name}/providers/Microsoft.DBforPostgreSQL/servers/{single-server-name} server pattern. Any values passed in the CLI/SDK for these parameters will be ignored.
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver        --migration-name testmigration --properties "migrationConfig.json" --migration-mode online --migration-option Validate
+  - summary: |-
+      Start a migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file.       Use --migration-option Migrate for Migrate Only request.
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver         --migration-name testmigration --properties "migrationConfig.json" --migration-option Migrate
+  - summary: |-
+      Default migration-option is ValidateAndMigrate. SoureType and SslMode must be passed for migrations other than PostgreSQLSingleServer.       Migration parameters in json file should look like below: {
+        "properties": {
+          "SourceDBServerResourceId": "20.66.25.58:5432@postgres",
+          "SecretParameters": {
+            "AdminCredentials": {
+              "SourceServerPassword": "password",
+              "TargetServerPassword": "password"
+            },
+            "SourceServerUserName": "postgres",
+            "TargetServerUserName": "fspguser"
+          }
+          "dBsToMigrate": [
+            "ticketdb","timedb","inventorydb"
+          ],
+          "OverwriteDbsInTarget": "true",
+          "SourceType": "OnPremises",
+          "SslMode": "Prefer"
+        }
+      }
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver         --migration-name testmigration --properties "migrationConfig.json"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -86,6 +145,11 @@ directCommands:
   - name: --migration-name
     summary: |-
       Name of the migration.
+  - name: --migration-option
+    defaultValue: "ValidateAndMigrate"
+    parameterValueGroup: "Migrate, Validate, ValidateAndMigrate"
+    summary: |-
+      Supported Migration Option. Default is ValidateAndMigrate.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.

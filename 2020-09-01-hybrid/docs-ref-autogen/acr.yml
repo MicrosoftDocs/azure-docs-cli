@@ -38,25 +38,25 @@ directCommands:
   examples:
   - summary: |-
       Queue a local context as a Linux build, tag it, and push it to the registry.
-    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry .
+    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r myregistry .
   - summary: |-
       Queue a local context as a Linux build, tag it, and push it to the registry without streaming logs.
-    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry --no-logs .
+    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r myregistry --no-logs .
   - summary: |-
       Queue a local context as a Linux build without pushing it to the registry.
-    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry --no-push .
+    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r myregistry --no-push .
   - summary: |-
       Queue a local context as a Linux build without pushing it to the registry.
-    syntax: az acr build -r MyRegistry .
+    syntax: az acr build -r myregistry .
   - summary: |-
       Queue a remote GitHub context as a Windows build, tag it, and push it to the registry.
-    syntax: az acr build -r MyRegistry https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --platform windows
+    syntax: az acr build -r myregistry https://github.com/Azure/acr-builder.git -f Windows.Dockerfile --platform windows
   - summary: |-
       Queue a remote OCI Artifact context build.
-    syntax: az acr build -r MyRegistry oci://myregistry.azurecr.io/myartifact:mytag
+    syntax: az acr build -r myregistry oci://myregistry.azurecr.io/myartifact:mytag
   - summary: |-
       Queue a local context as a Linux build on arm/v7 architecture, tag it, and push it to the registry.
-    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r MyRegistry . --platform linux/arm/v7
+    syntax: az acr build -t sample/hello-world:{{.Run.ID}} -r myregistry . --platform linux/arm/v7
   requiredParameters:
   - isRequired: true
     name: --registry -r
@@ -131,8 +131,8 @@ directCommands:
                         [--yes]
   examples:
   - summary: |-
-      Gets health state with target registry 'MyRegistry', skipping confirmation for pulling image.
-    syntax: az acr check-health -n MyRegistry -y
+      Gets health state with target registry 'myregistry', skipping confirmation for pulling image.
+    syntax: az acr check-health -n myregistry -y
   - summary: |-
       Gets health state of the environment, without stopping on first error.
     syntax: az acr check-health --ignore-errors
@@ -181,6 +181,7 @@ directCommands:
                   --sku {Basic, Premium, Standard}
                   [--admin-enabled {false, true}]
                   [--allow-exports {false, true}]
+                  [--allow-metadata-search {false, true}]
                   [--allow-trusted-services {false, true}]
                   [--default-action {Allow, Deny}]
                   [--identity]
@@ -193,7 +194,7 @@ directCommands:
   examples:
   - summary: |-
       Create a managed container registry with the Standard SKU.
-    syntax: az acr create -n MyRegistry -g MyResourceGroup --sku Standard
+    syntax: az acr create -n myregistry -g MyResourceGroup --sku Standard
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -218,6 +219,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Configure exportPolicy to allow/disallow artifacts from being exported from this registry. Artifacts can be exported via import or transfer operations. For more information, please visit https://aka.ms/acr/export-policy.
+    isPreview: true
+  - name: --allow-metadata-search
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable or disable the metadata-search feature for the registry. If not specified, this is set to disabled by default.
     isPreview: true
   - name: --allow-trusted-services
     parameterValueGroup: "false, true"
@@ -266,7 +272,7 @@ directCommands:
   examples:
   - summary: |-
       Delete an Azure Container Registry.
-    syntax: az acr delete -n MyRegistry
+    syntax: az acr delete -n myregistry
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -300,22 +306,22 @@ directCommands:
                   [--username]
   examples:
   - summary: |-
-      Import an image from 'sourceregistry' to 'MyRegistry'. The image inherits its source repository and tag names.
-    syntax: az acr import -n MyRegistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag
+      Import an image from 'sourceregistry' to 'myregistry'. The image inherits its source repository and tag names.
+    syntax: az acr import -n myregistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag
   - summary: |-
       Import an image from a public repository on Docker Hub. The image uses the specified repository and tag names.
-    syntax: az acr import -n MyRegistry --source docker.io/library/hello-world:latest -t targetrepository:targettag
+    syntax: az acr import -n myregistry --source docker.io/library/hello-world:latest -t targetrepository:targettag
   - summary: |-
       Import an image from a private repository using its username and password. This also applies to registries outside Azure.
-    syntax: az acr import -n MyRegistry --source myprivateregistry.azurecr.io/hello-world:latest -u username -p password
+    syntax: az acr import -n myregistry --source myprivateregistry.azurecr.io/hello-world:latest -u username -p password
   - summary: |-
       Import an image from an Azure container registry in a different subscription.
     syntax: >-
-      az acr import -n MyRegistry --source sourcerepository:sourcetag -t targetrepository:targettag \
+      az acr import -n myregistry --source sourcerepository:sourcetag -t targetrepository:targettag \
           -r /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sourceResourceGroup/providers/Microsoft.ContainerRegistry/registries/sourceRegistry
   - summary: |-
       Import an image without waiting for successful completion. Failures during import will not be reflected. Run `az acr repository show-tags` to confirm that import succeeded.
-    syntax: az acr import -n MyRegistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag --no-wait
+    syntax: az acr import -n myregistry --source sourceregistry.azurecr.io/sourcerepository:sourcetag --no-wait
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -389,10 +395,10 @@ directCommands:
   examples:
   - summary: |-
       Log in to an Azure Container Registry
-    syntax: az acr login -n MyRegistry
+    syntax: az acr login -n myregistry
   - summary: |-
       Get an Azure Container Registry access token
-    syntax: az acr login -n MyRegistry --expose-token
+    syntax: az acr login -n myregistry --expose-token
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -492,25 +498,25 @@ directCommands:
   examples:
   - summary: |-
       Queue a run to execute a container command.
-    syntax: az acr run -r MyRegistry --cmd '$Registry/myimage' /dev/null
+    syntax: az acr run -r myregistry --cmd '$Registry/myimage' /dev/null
   - summary: |-
       Queue a run with the task definition from the standard input. Either 'Ctrl + Z'(Windows) or 'Ctrl + D'(Linux) terminates the input stream.
-    syntax: az acr run -r MyRegistry -f - /dev/null
+    syntax: az acr run -r myregistry -f - /dev/null
   - summary: |-
       Queue a run to execute the tasks passed through the pipe.
-    syntax: cat task.yaml | az acr run -r MyRegistry -f - /dev/null
+    syntax: cat task.yaml | az acr run -r myregistry -f - /dev/null
   - summary: |-
       Queue a local context, pushed to ACR with streaming logs.
-    syntax: az acr run -r MyRegistry -f bash-echo.yaml ./workspace
+    syntax: az acr run -r myregistry -f bash-echo.yaml ./workspace
   - summary: |-
       Queue a remote git context with streaming logs.
-    syntax: az acr run -r MyRegistry https://github.com/Azure-Samples/acr-tasks.git -f hello-world.yaml
+    syntax: az acr run -r myregistry https://github.com/Azure-Samples/acr-tasks.git -f hello-world.yaml
   - summary: |-
       Queue a remote git context with streaming logs and runs the task on Linux platform.
-    syntax: az acr run -r MyRegistry https://github.com/Azure-Samples/acr-tasks.git -f build-hello-world.yaml --platform linux
+    syntax: az acr run -r myregistry https://github.com/Azure-Samples/acr-tasks.git -f build-hello-world.yaml --platform linux
   - summary: |-
       Queue a remote OCI Artifact context and runs the task.
-    syntax: az acr run -r MyRegistry oci://myregistry.azurecr.io/myartifact:mytag -f hello-world.yaml
+    syntax: az acr run -r myregistry oci://myregistry.azurecr.io/myartifact:mytag -f hello-world.yaml
   requiredParameters:
   - isRequired: true
     name: --registry -r
@@ -580,10 +586,10 @@ directCommands:
   examples:
   - summary: |-
       Get the login server for an Azure Container Registry.
-    syntax: az acr show -n MyRegistry --query loginServer
+    syntax: az acr show -n myregistry --query loginServer
   - summary: |-
       Get the details of an Azure Container Registry
-    syntax: az acr show --name MyRegistry --resource-group MyResourceGroup
+    syntax: az acr show --name myregistry --resource-group MyResourceGroup
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -625,7 +631,7 @@ directCommands:
   examples:
   - summary: |-
       Get the storage usage for an Azure Container Registry.
-    syntax: az acr show-usage -n MyRegistry
+    syntax: az acr show-usage -n myregistry
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -647,6 +653,7 @@ directCommands:
                   [--add]
                   [--admin-enabled {false, true}]
                   [--allow-exports {false, true}]
+                  [--allow-metadata-search {false, true}]
                   [--allow-trusted-services {false, true}]
                   [--anonymous-pull-enabled {false, true}]
                   [--data-endpoint-enabled {false, true}]
@@ -661,10 +668,10 @@ directCommands:
   examples:
   - summary: |-
       Update tags for an Azure Container Registry.
-    syntax: az acr update -n MyRegistry --tags key1=value1 key2=value2
+    syntax: az acr update -n myregistry --tags key1=value1 key2=value2
   - summary: |-
       Enable the administrator user account for an Azure Container Registry.
-    syntax: az acr update -n MyRegistry --admin-enabled true
+    syntax: az acr update -n myregistry --admin-enabled true
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -674,7 +681,7 @@ directCommands:
   - name: --add
     defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --admin-enabled
     parameterValueGroup: "false, true"
     summary: |-
@@ -683,6 +690,11 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Configure exportPolicy to allow/disallow artifacts from being exported from this registry. Artifacts can be exported via import or transfer operations. For more information, please visit https://aka.ms/acr/export-policy.
+    isPreview: true
+  - name: --allow-metadata-search
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable or disable the metadata-search feature for the registry.
     isPreview: true
   - name: --allow-trusted-services
     parameterValueGroup: "false, true"
@@ -712,14 +724,14 @@ directCommands:
   - name: --remove
     defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
     defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --sku
     parameterValueGroup: "Basic, Premium, Standard"
     summary: |-
@@ -734,6 +746,13 @@ commands:
 - az_acr_agentpool_list
 - az_acr_agentpool_show
 - az_acr_agentpool_update
+- az_acr_artifact-streaming
+- az_acr_artifact-streaming_create
+- az_acr_artifact-streaming_operation
+- az_acr_artifact-streaming_operation_cancel
+- az_acr_artifact-streaming_operation_show
+- az_acr_artifact-streaming_show
+- az_acr_artifact-streaming_update
 - az_acr_build
 - az_acr_cache
 - az_acr_cache_create

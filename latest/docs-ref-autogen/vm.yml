@@ -226,7 +226,6 @@ directCommands:
                  [--data-disk-delete-option]
                  [--data-disk-encryption-sets]
                  [--data-disk-sizes-gb]
-                 [--disable-integrity-monitoring]
                  [--disable-integrity-monitoring-autoupgrade]
                  [--disk-controller-type {NVMe, SCSI}]
                  [--edge-zone]
@@ -234,6 +233,8 @@ directCommands:
                  [--enable-auto-update {false, true}]
                  [--enable-hibernation {false, true}]
                  [--enable-hotpatching {false, true}]
+                 [--enable-integrity-monitoring]
+                 [--enable-proxy-agent {false, true}]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
                  [--encryption-at-host {false, true}]
@@ -257,7 +258,7 @@ directCommands:
                  [--os-disk-encryption-set]
                  [--os-disk-name]
                  [--os-disk-secure-vm-disk-encryption-set]
-                 [--os-disk-security-encryption-type {DiskWithVMGuestState, VMGuestStateOnly}]
+                 [--os-disk-security-encryption-type {DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly}]
                  [--os-disk-size-gb]
                  [--os-type {linux, windows}]
                  [--patch-mode {AutomaticByOS, AutomaticByPlatform, ImageDefault, Manual}]
@@ -269,6 +270,7 @@ directCommands:
                  [--ppg]
                  [--priority {Low, Regular, Spot}]
                  [--private-ip-address]
+                 [--proxy-agent-mode {Audit, Enforce}]
                  [--public-ip-address]
                  [--public-ip-address-allocation {dynamic, static}]
                  [--public-ip-address-dns-name]
@@ -298,7 +300,7 @@ directCommands:
                  [--vnet-address-prefix]
                  [--vnet-name]
                  [--workspace]
-                 [--zone {1, 2, 3}]
+                 [--zone]
   examples:
   - summary: |-
       Create a default Ubuntu2204 VM with automatic SSH authentication.
@@ -337,7 +339,7 @@ directCommands:
           --availability-set MyAvailabilitySet --public-ip-address-dns-name MyUniqueDnsName \
           --ssh-key-values @key-file
   - summary: |-
-      Create a simple Ubuntu Linux VM with a public IP address, DNS entry, two data disks (10GB and 20GB), and then generate ssh key pairs.
+      Create a simple Ubuntu Linux VM with a public IP address, DNS entry, two data disks (10GB and 20GB), and then generate RSA ssh key pairs.
     syntax: >-
       az vm create -n MyVm -g MyResourceGroup --public-ip-address-dns-name MyUniqueDnsName \
           --image Ubuntu2204 --data-disk-sizes-gb 10 20 --size Standard_DS2_v2 \
@@ -448,10 +450,6 @@ directCommands:
   - name: --data-disk-sizes-gb
     summary: |-
       Space-separated empty managed data disk sizes in GB to create.
-  - name: --disable-integrity-monitoring
-    defaultValue: "False"
-    summary: |-
-      Disable the default behavior of installing guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
   - name: --disable-integrity-monitoring-autoupgrade
     defaultValue: "False"
     summary: |-
@@ -480,6 +478,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Patch VMs without requiring a reboot. --enable-agent must be set and --patch-mode must be set to AutomaticByPlatform.
+  - name: --enable-integrity-monitoring
+    defaultValue: "False"
+    summary: |-
+      Enable installing Microsoft propietary and not security supported guest attestation extension and enabling System Assigned Identity for Trusted Launch enabled VMs and VMSS.
+  - name: --enable-proxy-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -507,7 +513,7 @@ directCommands:
   - name: --generate-ssh-keys
     defaultValue: "False"
     summary: |-
-      Generate SSH public and private key files if missing. The keys will be stored in the ~/.ssh directory.
+      Generate SSH public and private RSA key files if missing. The keys will be stored in the ~/.ssh directory.
   - name: --host
     summary: |-
       Resource ID of the dedicated host that the VM will reside in. --host and --host-group can't be used together.
@@ -566,7 +572,7 @@ directCommands:
     summary: |-
       Specify the customer managed disk encryption set resource ID or name for the managed disk that is used for customer managed key encrypted Confidential VM OS disk and VM guest blob.
   - name: --os-disk-security-encryption-type
-    parameterValueGroup: "DiskWithVMGuestState, VMGuestStateOnly"
+    parameterValueGroup: "DiskWithVMGuestState, NonPersistedTPM, VMGuestStateOnly"
     summary: |-
       Specify the encryption type of the OS managed disk.
   - name: --os-disk-size-gb
@@ -605,6 +611,10 @@ directCommands:
   - name: --private-ip-address
     summary: |-
       Static private IP address (e.g. 10.0.0.5).
+  - name: --proxy-agent-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --public-ip-address
     summary: |-
       Name of the public IP address when creating one (default) or referencing an existing one. Can also reference an existing public IP by ID or specify "" for None ('""' in Azure CLI using PowerShell or --% operator). For Azure CLI using powershell core edition 7.3.4, specify  or "" (--public-ip-address  or --public-ip-address "").
@@ -614,9 +624,10 @@ directCommands:
     summary: |-
       Globally unique DNS name for a newly created public IP.
   - name: --public-ip-sku
+    defaultValue: "Standard"
     parameterValueGroup: "Basic, Standard"
     summary: |-
-      Public IP SKU. It is set to Basic by default. The public IP is supported to be created on edge zone only when it is 'Standard'.
+      Public IP SKU. The public IP is supported to be created on edge zone only when it is 'Standard'.
   - name: --role
     summary: |-
       Role name or id the system assigned identity will have.
@@ -703,7 +714,6 @@ directCommands:
       Name or ID of Log Analytics Workspace. If you specify the workspace through its name, the workspace should be in the same resource group with the vm, otherwise a new workspace will be created.
     isPreview: true
   - name: --zone -z
-    parameterValueGroup: "1, 2, 3"
     summary: |-
       Availability zone into which to provision the resource.
 - uid: az_vm_deallocate
@@ -1627,6 +1637,7 @@ directCommands:
                  [--disk-caching]
                  [--disk-controller-type {NVMe, SCSI}]
                  [--enable-hibernation {false, true}]
+                 [--enable-proxy-agent {false, true}]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
                  [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
@@ -1641,6 +1652,7 @@ directCommands:
                  [--os-disk]
                  [--ppg]
                  [--priority {Low, Regular, Spot}]
+                 [--proxy-agent-mode {Audit, Enforce}]
                  [--remove]
                  [--resource-group]
                  [--security-type {TrustedLaunch}]
@@ -1689,7 +1701,7 @@ directCommands:
   - name: --add
     defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
   - name: --capacity-reservation-group --crg
     summary: |-
       The ID or name of the capacity reservation group that is used to allocate. Pass in "None" to disassociate the capacity reservation group. Please note that if you want to delete a VM/VMSS that has been associated with capacity reservation group, you need to disassociate the capacity reservation group first.
@@ -1706,6 +1718,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       The flag that enable or disable hibernation capability on the VM.
+  - name: --enable-proxy-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -1758,10 +1774,14 @@ directCommands:
     parameterValueGroup: "Low, Regular, Spot"
     summary: |-
       Priority. Use 'Spot' to run short-lived workloads in a cost-effective way. 'Low' enum will be deprecated in the future. Please use 'Spot' to deploy Azure spot VM and/or VMSS. Default to Regular.
+  - name: --proxy-agent-mode
+    parameterValueGroup: "Audit, Enforce"
+    summary: |-
+      Specify the mode that proxy agent will execute on if the feature is enabled.
   - name: --remove
     defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -1772,7 +1792,7 @@ directCommands:
   - name: --set
     defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --size
     summary: |-
       The new size of the virtual machine. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
@@ -1930,6 +1950,7 @@ commands:
 - az_vm_host_group_update
 - az_vm_host_list
 - az_vm_host_list-resize-options
+- az_vm_host_redeploy
 - az_vm_host_resize
 - az_vm_host_restart
 - az_vm_host_show
