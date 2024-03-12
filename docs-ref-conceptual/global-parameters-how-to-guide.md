@@ -71,7 +71,7 @@ Command ran in 1.413 seconds (init: 0.487, invoke: 0.926)
 
 ## `--debug` global parameter
 
-If the additional details from the `--verbose` parameter aren't enough and you wish to view the *whole* debug log, you can use the `--debug` global parameter. For this step in the tutorial, we will reuse the very first example and add the `--debug` global parameter:
+If the additional details from the `--verbose` parameter aren't enough and you wish to view the entire log, you can use the `--debug` global parameter. Provide output generated with `--debug` when submitting a bug report.
 
 ```azurecli-interactive
 az group create --name myrResourceGroup --location eastus --debug
