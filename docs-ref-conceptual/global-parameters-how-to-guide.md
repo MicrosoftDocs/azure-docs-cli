@@ -1,5 +1,5 @@
 ---
-title: Configure your new resource group with global parameters using Azure CLI  | Microsoft Docs
+title: Use global parameters using Azure CLI  | Microsoft Docs
 description: Learn how to use various global parameters with Azure CLI to configure a resource group.
 manager: jasongroce
 author: daphnemamsft
@@ -14,7 +14,7 @@ keywords: azure cli, how to use azure cli, azure command line interface, how to 
 
 # Working with global parameters when using Azure CLI
 
-Global parameters are constants across a data factory that can be used by a pipeline in any expression. They're helpful when you have multiple pipelines with identical parameter names and values. They can be referenced in a command and have many applications. 
+When working with the Azure CLI, there are arguments that are available for most commands. These arguments are called "global parameters," as they are common to almost all Azure CLI reference commands.
 
 ## `--help` global parameter
 
