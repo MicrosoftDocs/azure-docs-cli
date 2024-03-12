@@ -1,5 +1,5 @@
 ---
-title: Use global parameters using Azure CLI  | Microsoft Docs
+title: Use global parameters with Azure CLI  | Microsoft Docs
 description: Learn how to use various global parameters with Azure CLI to configure a resource group.
 manager: jasongroce
 author: daphnemamsft
