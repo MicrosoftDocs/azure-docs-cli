@@ -18,7 +18,7 @@ When working with the Azure CLI, there are arguments that are available for most
 
 ## `--help` global parameter
 
-If you find that you need some help with required and global parameters, you can use the `--help` global parameter in order to generate a list of definition for each required and global parameter. You can also view a basic example for the command you are trying to run:
+To get information about a reference group or command, use the `--help` global parameter. The `--help` parameter displays Azure CLI reference information in your console including available subgroup and parameter lists.
 
 
 ```azurecli-interactive
