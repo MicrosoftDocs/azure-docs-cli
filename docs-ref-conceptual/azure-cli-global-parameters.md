@@ -14,19 +14,22 @@ keywords: azure cli, how to use azure cli, azure command line interface, how to 
 
 # Working with global parameters when using Azure CLI
 
-When working with the Azure CLI, there are arguments that are available for most commands. These arguments are called "global parameters," as they are common to almost all Azure CLI reference commands.
+When you work with the Azure CLI reference commands, there are arguments that are available for most
+commands. These arguments are called "global parameters," as they're common to almost all Azure CLI
+reference commands.
 
 ## `--help` global parameter
 
-To get information about a reference group or command, use the `--help` global parameter. The `--help` parameter displays Azure CLI reference information in your console including available subgroup and parameter lists.
+To get information about a reference group or command, use the `--help` global parameter. The
+`--help` parameter displays Azure CLI reference information in your console including available
+subgroup and parameter lists.
 
 
 ```azurecli-interactive
 az group create --name myResourceGroup --location eastus --help
 ```
 
-Output console:
-The output content has been shortened due to readability.
+The following console output shown here has fields omitted for brevity:
 
 ```output
 Command
@@ -54,15 +57,16 @@ Examples
 
 ## `--verbose` global parameter
 
-Learn more in-depth details about logging by adding the `--verbose` global parameter to your reference command. This is helpful when trying to understand why certain commands take longer than others to execute.
+Learn more in-depth details about logging by adding the `--verbose` global parameter to your
+reference command. Verbose output is helpful when trying to understand why certain commands take
+longer than others to execute.
 
 ```azurecli-interactive
 az group create --name myResourceGroup --location eastus --verbose 
 ```
 
-Output console:
-
-The output content has been shortened since the content is repeated from the first step. This is to highlight the specific output the `--verbose` parameter provides.
+The following console output shown here has fields omitted for brevity, but note the additional
+information on the execution time.
 
 ```output
 {...}
@@ -71,15 +75,15 @@ Command ran in 1.413 seconds (init: 0.487, invoke: 0.926)
 
 ## `--debug` global parameter
 
-If the additional details from the `--verbose` parameter aren't enough and you wish to view the entire log, use the `--debug` global parameter. Also provide the output generated with `--debug` when submitting a bug report.
+If the extra details from the `--verbose` parameter aren't enough and you wish to view the entire
+log, use the `--debug` global parameter. Also provide the output generated with `--debug` when
+submitting a bug report.
 
 ```azurecli-interactive
 az group create --name myrResourceGroup --location eastus --debug
 ```
 
-Output console:
-
-The output content has been shortened due to readability and repeated content from the first step.
+The following console output shown here has fields omitted for brevity:
 
 ```output
 
@@ -97,7 +101,8 @@ telemetry.main: Finish creating telemetry upload process.
 
 ## `--only-show-errors` global parameter
 
-During the process of debugging, remove the warnings returned by a reference command by using the `--only-show-errors` global parameter. In the following example, note the difference of the first line of the output when including the `--only-show-errors` parameter:
+During the process of debugging, remove the warnings returned by a reference command by using the
+`--only-show-errors` global parameter.
 
 # [Without `--only-show-errors`](#tab/tabid-1)
 
@@ -127,7 +132,7 @@ Loading command table... Expected time around 1 minute.
 az interactive --only-show-errors
 ```
 
-In this output, the warning of "This command is in preview..." has not been returned.
+In this output, the warning of "This command is in preview..." hasn't been returned.
 
 ```output
 Any comments or concerns? You can use the 'feedback' command! We would greatly appreciate it.
@@ -143,9 +148,8 @@ Loading command table... Expected time around 1 minute.
 
 ## `--subscription` global parameter
 
-You can use the `--subscription` global parameter to set a specific subscription for a command:
-
-The following example changes the active subscription using the subscription ID:
+You can use the `--subscription` global parameter to set a specific subscription for a command. The
+following example changes the active subscription using the subscription ID:
 
 ```azurecli-interactive
 az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
@@ -153,10 +157,11 @@ az account set --subscription "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 ## `--output` global parameter
 
-To show the output of a command in a specific format, specify the `--output` global parameter. In this example, the output is shown as a table:
+To show the output of a command in a specific format, specify the `--output` global parameter. In
+this example, the output is shown as a table:
 
 > [!NOTE]
-> The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default output value is set to json. 
+> The accepted values for output are: json, jsonc, none, table, tsv, yaml, and yamlc. The default output value is json.
 
 
 ```azurecli-interactive
@@ -175,9 +180,12 @@ To learn more about the different output formats, see [Output formats for Azure 
 
 ## `--query` global parameter
 
-There are times the output console may display extensive amounts of information that you may want to filter through. To do so, use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org) on the results of commands. JMESPath is a query language for JSON, which gives you the ability to select and modify data from Azure CLI output.
+There are times the output console might display extensive amounts of information that you need to
+filter through. To do so, use the `--query` global parameter to execute a [JMESPath query](http://jmespath.org)
+on the results of commands. JMESPath is a query language for JSON, which gives you the ability to
+select and modify data from Azure CLI output.
 
-This example returns the SSH public keys authorized to connect to the VM by adding a query:
+This example returns the SSH public keys authorized to connect to the virtual machine by adding `--query`:
 
 ```azurecli-interactive
  az vm show --resource-group myResourceGroup --name myVm --query "osProfile.linuxConfigurat
@@ -201,4 +209,3 @@ To learn more about querying command output, see [How to query Azure CLI command
 
 - [Azure CLI configuration](./azure-cli-configuration.md)
 - [Use the Azure CLI successfully](./use-cli-effectively.md)
-
