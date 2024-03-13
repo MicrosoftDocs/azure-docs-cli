@@ -220,27 +220,36 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'az dataprotection' is experimental and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az dataprotection backup-instance restore trigger --restore-request-object
-                                                      [--backup-instance-name]
+    az dataprotection backup-instance restore trigger --backup-instance-name
+                                                      --restore-request-object
                                                       [--ids]
-                                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                      [--no-wait]
                                                       [--resource-group]
                                                       [--subscription]
+                                                      [--use-secondary-region {false, true}]
                                                       [--vault-name]
+  examples:
+  - summary: |-
+      Trigger a restore operation
+    syntax: az dataprotection backup-instance restore trigger -g sample_rg --vault-name sample_backupvault --backup-instance-name sample_biname-fd53a211-3f3e-4c7e-ba45-81050e27c0be  --restore-request-object restorerequestobject.json
+  - summary: |-
+      Trigger a cross-region-restore operation
+    syntax: az dataprotection backup-instance restore trigger -g sample_rg --vault-name sample_backupvault --backup-instance-name sample_biname-fd53a211-3f3e-4c7e-ba45-81050e27c0be  --restore-request-object restorerequestobject.json --use-secondary-region
   requiredParameters:
+  - isRequired: true
+    name: --backup-instance-name --name -n
+    summary: |-
+      Backup instance name.
   - isRequired: true
     name: --restore-request-object
     summary: |-
-      Gets or sets the restore request object. Expected value: json-string/@json-file.  Support json-file and yaml-file.
+      Request body for operation. Expected value: json-string/@json-file.
   optionalParameters:
-  - name: --backup-instance-name --name -n
-    summary: |-
-      The name of the backup instance.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
@@ -249,9 +258,13 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --use-secondary-region
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use this flag to restore from a recoverypoint in secondary region.
   - name: --vault-name -v
     summary: |-
-      The name of the backup vault.
+      Name of the backup vault.
 commands:
 - az_dataprotection_backup-instance_restore_initialize-for-data-recovery
 - az_dataprotection_backup-instance_restore_initialize-for-data-recovery-as-files
