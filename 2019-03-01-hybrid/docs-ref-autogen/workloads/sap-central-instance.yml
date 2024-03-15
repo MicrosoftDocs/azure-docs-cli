@@ -4,7 +4,7 @@ name: az workloads sap-central-instance
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **workloads** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az workloads sap-central-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **workloads** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az workloads sap-central-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage central instance.
 status: Preview
@@ -23,10 +23,12 @@ directCommands:
   syntax: >-
     az workloads sap-central-instance list --resource-group
                                            --sap-virtual-instance-name
+                                           [--max-items]
+                                           [--next-token]
   examples:
   - summary: |-
       Get an overview of the Central service Instance in a Virtual instance for SAP solutions (VIS)
-    syntax: az workloads sap-central-instance list -g <Resource-group-name> --sap-virtual-instance-name <VIS name>
+    syntax: az workloads sap-central-instance list -g <resource-group-name> --sap-virtual-instance-name <vis-name>
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -36,6 +38,13 @@ directCommands:
     name: --sap-virtual-instance-name --vis-name
     summary: |-
       The name of the Virtual Instances for SAP solutions resource.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_workloads_sap-central-instance_show
   name: az workloads sap-central-instance show
   summary: |-
@@ -53,7 +62,7 @@ directCommands:
   examples:
   - summary: |-
       Get an overview of a Central service Instance using the Azure resource ID of the instance
-    syntax: az workloads sap-central-instance show --id <ResourceID>
+    syntax: az workloads sap-central-instance show --id <resource-id>
   optionalParameters:
   - name: --central-instance-name --name -n
     summary: |-
@@ -84,14 +93,18 @@ directCommands:
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--resource-group]
                                             [--sap-virtual-instance-name]
+                                            [--start-vm {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--subscription]
   examples:
   - summary: |-
       Start Central services instance of the SAP system
-    syntax: az workloads sap-central-instance start --sap-virtual-instance-name <VIS Name> -g <Resource-group-name> -n <ResourceName>
+    syntax: az workloads sap-central-instance start --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <cs-instance-name>
   - summary: |-
       Start Central services instance of the SAP system using the Azure resource ID of the instance
-    syntax: az workloads sap-central-instance start --id <ResourceID>
+    syntax: az workloads sap-central-instance start --id <resource-id>
+  - summary: |-
+      Start Central services instance of the SAP system and its underlying Virtual Machine
+    syntax: az workloads sap-central-instance start --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <cs-instance-name> --start-vm
   optionalParameters:
   - name: --central-instance-name --name -n
     summary: |-
@@ -109,6 +122,11 @@ directCommands:
   - name: --sap-virtual-instance-name --vis-name
     summary: |-
       The name of the Virtual Instances for SAP solutions resource.
+  - name: --start-vm
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The boolean value indicates whether to start the virtual machines before starting the SAP instances.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -122,23 +140,31 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az workloads sap-central-instance stop [--central-instance-name]
+                                           [--deallocate-vm {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--ids]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--resource-group]
                                            [--sap-virtual-instance-name]
-                                           [--soft-stop-timeout-seconds]
                                            [--subscription]
   examples:
   - summary: |-
       Stop Central services instance of the SAP system
-    syntax: az workloads sap-central-instance stop --sap-virtual-instance-name <VIS Name> -g <Resource-group-name> -n <ResourceName>
+    syntax: az workloads sap-central-instance stop --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <cs-instance-name>
   - summary: |-
       Stop Central services instance of the SAP system using the Azure resource ID of the instance
-    syntax: az workloads sap-central-instance stop --id <ResourceID>
+    syntax: az workloads sap-central-instance stop --id <resource-id>
+  - summary: |-
+      Stop Central services instance of the SAP system and its underlying Virtual Machine
+    syntax: az workloads sap-central-instance stop --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <cs-instance-name> --deallocate-vm
   optionalParameters:
   - name: --central-instance-name --name -n
     summary: |-
       Central Services Instance resource name string modeled as parameter for auto generation to work correctly.
+  - name: --deallocate-vm
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The boolean value indicates whether to Stop and deallocate the virtual machines along with the SAP instances.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -152,10 +178,6 @@ directCommands:
   - name: --sap-virtual-instance-name --vis-name
     summary: |-
       The name of the Virtual Instances for SAP solutions resource.
-  - name: --soft-stop-timeout-seconds
-    defaultValue: "0"
-    summary: |-
-      This parameter defines how long (in seconds) the soft shutdown waits until the RFC/HTTP clients no longer consider the server for calls with load balancing. Value 0 means that the kernel does not wait, but goes directly into the next shutdown state, i.e. hard stop.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
