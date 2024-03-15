@@ -4,7 +4,7 @@ name: az workloads sap-application-server-instance
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **workloads** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az workloads sap-application-server-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **workloads** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az workloads sap-application-server-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage application instance.
 status: Preview
@@ -23,10 +23,12 @@ directCommands:
   syntax: >-
     az workloads sap-application-server-instance list --resource-group
                                                       --sap-virtual-instance-name
+                                                      [--max-items]
+                                                      [--next-token]
   examples:
   - summary: |-
       Get an overview of The App Server Instances in a Virtual instance for SAP solutions (VIS)
-    syntax: az workloads sap-application-server-instance list -g <Resource-group-name> --sap-virtual-instance-name <VIS name>
+    syntax: az workloads sap-application-server-instance list -g <resource-group-name> --sap-virtual-instance-name <vis-name>
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -36,6 +38,13 @@ directCommands:
     name: --sap-virtual-instance-name --vis-name
     summary: |-
       The name of the Virtual Instances for SAP solutions resource.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_workloads_sap-application-server-instance_show
   name: az workloads sap-application-server-instance show
   summary: |-
@@ -53,10 +62,10 @@ directCommands:
   examples:
   - summary: |-
       Get an overview of an App Server Instance
-    syntax: az workloads sap-application-server-instance show -g <Resource-group-name> --sap-virtual-instance-name <VIS name> -n <ResourceName>
+    syntax: az workloads sap-application-server-instance show -g <resource-group-name> --sap-virtual-instance-name <vis-name> -n <app-instance-name>
   - summary: |-
       Get an overview of an App Server Instance using the Azure resource ID of the instance
-    syntax: az workloads sap-application-server-instance show --id <ResourceID>
+    syntax: az workloads sap-application-server-instance show --id <resource-id>
   optionalParameters:
   - name: --application-instance-name --name -n
     summary: |-
@@ -87,14 +96,18 @@ directCommands:
                                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                        [--resource-group]
                                                        [--sap-virtual-instance-name]
+                                                       [--start-vm {0, 1, f, false, n, no, t, true, y, yes}]
                                                        [--subscription]
   examples:
   - summary: |-
       Start an Application server instance of the SAP system
-    syntax: az workloads sap-application-server-instance start --sap-virtual-instance-name <VIS Name> -g <Resource-group-name> -n <ResourceName>
+    syntax: az workloads sap-application-server-instance start --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <app-instance-name>
   - summary: |-
       Start an Application server instance of the SAP system using the Azure resource ID of the instance
-    syntax: az workloads sap-application-server-instance start --id <ResourceID>
+    syntax: az workloads sap-application-server-instance start --id <resource-id>
+  - summary: |-
+      Start an Application server instance of the SAP system and its underlying Virtual Machine
+    syntax: az workloads sap-application-server-instance start --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <app-instance-name> --start-vm
   optionalParameters:
   - name: --application-instance-name --name -n
     summary: |-
@@ -112,6 +125,11 @@ directCommands:
   - name: --sap-virtual-instance-name --vis-name
     summary: |-
       The name of the Virtual Instances for SAP solutions resource.
+  - name: --start-vm
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The boolean value indicates whether to start the virtual machines before starting the SAP instances.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -125,6 +143,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az workloads sap-application-server-instance stop [--application-instance-name]
+                                                      [--deallocate-vm {0, 1, f, false, n, no, t, true, y, yes}]
                                                       [--ids]
                                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                       [--resource-group]
@@ -134,14 +153,25 @@ directCommands:
   examples:
   - summary: |-
       Stop Application server instance of the SAP system
-    syntax: az workloads sap-application-server-instance stop --sap-virtual-instance-name <VIS Name> -g <Resource-group-name> -n <ResourceName>
+    syntax: az workloads sap-application-server-instance stop --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <app-instance-name>
   - summary: |-
       Stop Application server instance of the SAP system using the Azure resource ID of the instance
-    syntax: az workloads sap-application-server-instance stop --id <ResourceID>
+    syntax: az workloads sap-application-server-instance stop --id <resource-id>
+  - summary: |-
+      Stop Application server instance of the SAP system and its underlying Virtual Machine
+    syntax: az workloads sap-application-server-instance stop --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <app-instance-name> --deallocate-vm
+  - summary: |-
+      Soft Stop Application server instance of the SAP system
+    syntax: az workloads sap-application-server-instance stop --sap-virtual-instance-name <vis-name> -g <resource-group-name> -n <app-instance-name> --soft-stop-timeout-seconds <timeout-in-seconds>
   optionalParameters:
   - name: --application-instance-name --name -n
     summary: |-
       The name of SAP Application Server instance resource.
+  - name: --deallocate-vm
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The boolean value indicates whether to Stop and deallocate the virtual machines along with the SAP instances.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.

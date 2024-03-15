@@ -4,7 +4,7 @@ name: az workloads sap-virtual-instance
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **workloads** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az workloads sap-virtual-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **workloads** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az workloads sap-virtual-instance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage virtual instance.
 status: Preview
@@ -28,26 +28,34 @@ directCommands:
                                              [--environment {NonProd, Prod}]
                                              [--identity]
                                              [--location]
+                                             [--managed-resources-network-access-type {Private, Public}]
                                              [--managed-rg-name]
+                                             [--managed-rg-sa-name]
                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--sap-product {ECC, Other, S4HANA}]
                                              [--tags]
   examples:
   - summary: |-
       Deploy infrastructure for a three-tier distributed SAP system. See sample json payload here: https://go.microsoft.com/fwlink/?linkid=2230236
-    syntax: az workloads sap-virtual-instance create -g <Resource Group Name> -n <VIS Name> --environment NonProd --sap-product s4hana --configuration <Payload file path> --identity "{type:UserAssigned,userAssignedIdentities:{<Managed_Identity_ResourceID>:{}}}"
+    syntax: az workloads sap-virtual-instance create -g <resource-group-name> -n <vis-name> --environment NonProd --sap-product s4hana --configuration <payload-file-path> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-identity-resource-id>:{}}}"
   - summary: |-
       Install SAP software on the infrastructure deployed for the three-tier distributed SAP system. See sample json payload here: https://go.microsoft.com/fwlink/?linkid=2230167
-    syntax: az workloads sap-virtual-instance create -g <Resource Group Name> -n <VIS Name> --environment NonProd --sap-product s4hana --configuration <Payload file path> --identity "{type:UserAssigned,userAssignedIdentities:{<Managed_Identity_ResourceID>:{}}}"
+    syntax: az workloads sap-virtual-instance create -g <resource-group-name> -n <vis-name> --environment NonProd --sap-product s4hana --configuration <payload-file-path> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-Identity-resource-id>:{}}}"
   - summary: |-
       Deploy infrastructure for a three-tier distributed Highly Available (HA) SAP system with customized resource naming. See sample json payload here: https://go.microsoft.com/fwlink/?linkid=2230402
-    syntax: az workloads sap-virtual-instance create -g <Resource Group Name> -n <VIS Name> --environment NonProd --sap-product s4hana --configuration <Payload file path> --identity "{type:UserAssigned,userAssignedIdentities:{<Managed_Identity_ResourceID>:{}}}"
+    syntax: az workloads sap-virtual-instance create -g <resource-group-name> -n <vis-name> --environment NonProd --sap-product s4hana --configuration <payload-file-path> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-identity-resource-id>:{}}}"
   - summary: |-
       Install SAP software on the infrastructure deployed for the three-tier distributed Highly Available (HA) SAP system with customized resource naming. See sample json payload here: https://go.microsoft.com/fwlink/?linkid=2230340
-    syntax: az workloads sap-virtual-instance create -g <Resource Group Name> -n <VIS Name> --environment NonProd --sap-product s4hana --configuration <Payload file path> --identity "{type:UserAssigned,userAssignedIdentities:{<Managed_Identity_ResourceID>:{}}}"
+    syntax: az workloads sap-virtual-instance create -g <resource-group-name> -n <vis-name> --environment NonProd --sap-product s4hana --configuration <payload-file-path> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-identity-resource-id>:{}}}"
   - summary: |-
       Register an existing SAP system as a Virtual Instance for SAP solutions resource (VIS)
-    syntax: az workloads sap-virtual-instance create -g CLI-TESTING -n C36 --environment NonProd --sap-product s4hana --central-server-vm <Virtual Machine ID> --identity "{type:UserAssigned,userAssignedIdentities:{<Managed Identity resource ID>:{}}}"
+    syntax: az workloads sap-virtual-instance create -g <resource-group-name> -n <vis-name> --environment NonProd --sap-product s4hana --central-server-vm <virtual-machine-id> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-identity-resource-id>:{}}}"
+  - summary: |-
+      Register an existing SAP system as a Virtual Instance for SAP solutions resource (VIS) with a custom Managed Resource Group and Managed Storage Account Name, and specify the Managed Storage Account Network Access Type setting as per your security requirements. Learn More: https://go.microsoft.com/fwlink/?linkid=2256933
+    syntax: az workloads sap-virtual-instance create -g <resource-group-name> -n <vis-name> --environment NonProd --sap-product s4hana --central-server-vm <virtual-machine-id> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-identity-resource-id>:{}}}" --managed-rg-name <managed-rg-name> --managed-rg-sa-name <managed-rg-storage-account-name> --managed-resources-network-access-type <public/private>
+  - summary: |-
+      Deploy infrastructure for a three-tier distributed Highly Available (HA) SAP system with Azure Compute Gallary Image. See sample json payload here: https://go.microsoft.com/fwlink/?linkid=2263420
+    syntax: az workloads sap-virtual-instance create -g <resource-group-name> -n <vis-name> --environment NonProd --sap-product s4hana --configuration <payload-file-path> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-identity-resource-id>:{}}}"
   requiredParameters:
   - isRequired: true
     name: --name --sap-virtual-instance-name -n
@@ -74,9 +82,17 @@ directCommands:
   - name: --location -l
     summary: |-
       The geo-location where the resource lives.
+  - name: --managed-resources-network-access-type --mrg-network-access-typ
+    defaultValue: "Public"
+    parameterValueGroup: "Private, Public"
+    summary: |-
+      Specifies the network access configuration for the resources that will be deployed in the Managed Resource Group. The options to choose from are Public and Private. If 'Private' is chosen, the Storage Account service tag should be enabled on the subnets in which the SAP VMs exist. This is required for establishing connectivity between VM extensions and the managed resource group storage account. This setting is currently applicable only to Storage Account. Learn more here https://go.microsoft.com/fwlink/?linkid=2247228.
   - name: --managed-rg-name
     summary: |-
       Managed resource group name.
+  - name: --managed-rg-sa-name
+    summary: |-
+      The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -106,10 +122,10 @@ directCommands:
   examples:
   - summary: |-
       Delete a Virtual Instance for SAP solutions (VIS)
-    syntax: az workloads sap-virtual-instance delete -g <Resource_Group_Name> -n <VIS Name>
+    syntax: az workloads sap-virtual-instance delete -g <resource-group-name> -n <vis-name>
   - summary: |-
       Remove a Virtual Instance for SAP solutions (VIS) using the Azure resource ID of the VIS
-    syntax: az workloads sap-virtual-instance delete --id <ResourceID>
+    syntax: az workloads sap-virtual-instance delete --id <resource-id>
   optionalParameters:
   - name: --ids
     summary: |-
@@ -139,15 +155,26 @@ directCommands:
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az workloads' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
-  syntax: az workloads sap-virtual-instance list [--resource-group]
+  syntax: >-
+    az workloads sap-virtual-instance list --resource-group
+                                           [--max-items]
+                                           [--next-token]
   examples:
   - summary: |-
       Get a list of the Virtual Instance(s) for SAP solutions (VIS)
-    syntax: az workloads sap-virtual-instance list -g <Resource-group-name>
-  optionalParameters:
-  - name: --resource-group -g
+    syntax: az workloads sap-virtual-instance list -g <resource-group-name>
+  requiredParameters:
+  - isRequired: true
+    name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_workloads_sap-virtual-instance_show
   name: az workloads sap-virtual-instance show
   summary: |-
@@ -164,10 +191,10 @@ directCommands:
   examples:
   - summary: |-
       Get an overview of any Virtual Instance(s) for SAP solutions (VIS)
-    syntax: az workloads sap-virtual-instance show -g <Resource-group-name> -n <ResourceName>
+    syntax: az workloads sap-virtual-instance show -g <resource-group-name> -n <vis-name>
   - summary: |-
       Get an overview of the Virtual Instance(s) for SAP solutions (VIS) using the Azure resource ID of the VIS
-    syntax: az workloads sap-virtual-instance show --id <ResourceID>
+    syntax: az workloads sap-virtual-instance show --id <resource-id>
   optionalParameters:
   - name: --ids
     summary: |-
@@ -194,14 +221,18 @@ directCommands:
                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--resource-group]
                                             [--sap-virtual-instance-name]
+                                            [--start-vm {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--subscription]
   examples:
   - summary: |-
       Start an SAP system: This command starts the SAP application tier, that is ASCS instance and App servers of the system.
-    syntax: az workloads sap-virtual-instance start -g <Resource-group-name> -n <ResourceName>
+    syntax: az workloads sap-virtual-instance start -g <resource-group-name> -n <vis-name>
   - summary: |-
       Start an SAP system using the Azure resource ID of the Virtual instance for SAP solutions (VIS): This command starts the SAP application tier, that is ASCS instance and App servers of the system.
-    syntax: az workloads sap-virtual-instance start --id <ResourceID>
+    syntax: az workloads sap-virtual-instance start --id <resource-id>
+  - summary: |-
+      Start an SAP system with Virtual Machines: This command starts the SAP application tier, that is ASCS instance and App servers of the system with Virtual Machines.
+    syntax: az workloads sap-virtual-instance start -g <resource-group-name> -n <vis-name> --start-vm
   optionalParameters:
   - name: --ids
     summary: |-
@@ -216,6 +247,11 @@ directCommands:
   - name: --sap-virtual-instance-name --vis-name
     summary: |-
       The name of the Virtual Instances for SAP solutions resource.
+  - name: --start-vm
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The boolean value indicates whether to start the virtual machines before starting the SAP instances.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -228,7 +264,8 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'az workloads' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az workloads sap-virtual-instance stop [--ids]
+    az workloads sap-virtual-instance stop [--deallocate-vm {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--ids]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--resource-group]
                                            [--sap-virtual-instance-name]
@@ -237,11 +274,22 @@ directCommands:
   examples:
   - summary: |-
       Stop an SAP system: This command stops the SAP application tier, that is ASCS instance and App servers of the system.
-    syntax: az workloads sap-virtual-instance stop -g <Resource-group-name> -n <ResourceName>
+    syntax: az workloads sap-virtual-instance stop -g <resource-group-name> -n <vis-name>
   - summary: |-
       Stop an SAP system using the Azure resource ID of the Virtual instance for SAP solutions (VIS): This command stops the SAP application tier, that is ASCS instance and App servers of the system.
-    syntax: az workloads sap-virtual-instance stop --id <ResourceID>
+    syntax: az workloads sap-virtual-instance stop --id <resource-id>
+  - summary: |-
+      Stop an SAP system with Virtual Machines: This command stops the SAP application tier, that is ASCS instance and App servers of the system with Virtual Machines.
+    syntax: az workloads sap-virtual-instance stop -g <resource-group-name> -n <vis-name> --deallocate-vm
+  - summary: |-
+      Soft Stop an SAP system: This command soft stops the SAP application tier, that is ASCS instance and App servers of the system.
+    syntax: az workloads sap-virtual-instance stop -g <resource-group-name> -n <vis-name> --soft-stop-timeout-seconds <timeout-in-seconds>
   optionalParameters:
+  - name: --deallocate-vm
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The boolean value indicates whether to Stop and deallocate the virtual machines along with the SAP instances.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -271,38 +319,76 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'az workloads' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az workloads sap-virtual-instance update [--identity]
+    az workloads sap-virtual-instance update [--add]
+                                             [--configuration]
+                                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--identity]
                                              [--ids]
+                                             [--managed-resource-group-configuration]
+                                             [--managed-resources-network-access-type {Private, Public}]
                                              [--name]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                             [--remove]
                                              [--resource-group]
+                                             [--set]
                                              [--subscription]
                                              [--tags]
   examples:
   - summary: |-
       Add tags for an existing Virtual Instance for SAP solutions (VIS) resource
-    syntax: az workloads sap-virtual-instance update -g <Resource-group-name> -n <ResourceName> --tags tag=test tag2=test2
+    syntax: az workloads sap-virtual-instance update -g <resource-group-name> -n <vis-name> --tags tag1=test1 tag2=test2
   - summary: |-
       Add tags for an existing Virtual Instance for SAP solutions (VIS) resource using the Azure resource ID of the VIS
-    syntax: az workloads sap-virtual-instance update --id <ResourceID> --tags tag=test1
+    syntax: az workloads sap-virtual-instance update --id <resource-id> --tags tag1=test1
+  - summary: |-
+      Add/Change Identity and Managed Resource Network Access for an existing Virtual Instance for SAP Solutions (VIS) resource
+    syntax: az workloads sap-virtual-instance update -g <resource-group-name> -n <vis-name> --identity "{type:UserAssigned,userAssignedIdentities:{<managed-identity-resource-id>:{}}}" --managed-resources-network-access-type <public/private>
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --configuration
+    summary: |-
+      Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --identity
     summary: |-
-      A pre-created user assigned identity with appropriate roles assigned. To learn more on identity and roles required, visit the ACSS how-to-guide.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Managed service identity (user assigned identities)  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --managed-resource-group-configuration --mrg-config
+    summary: |-
+      Managed resource group configuration  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --managed-resources-network-access-type --mrg-network-access-typ
+    parameterValueGroup: "Private, Public"
+    summary: |-
+      Specifies the network access configuration for the resources that will be deployed in the Managed Resource Group. The options to choose from are Public and Private. If 'Private' is chosen, the Storage Account service tag should be enabled on the subnets in which the SAP VMs exist. This is required for establishing connectivity between VM extensions and the managed resource group storage account. This setting is currently applicable only to Storage Account. Learn more here https://go.microsoft.com/fwlink/?linkid=2247228.
   - name: --name --sap-virtual-instance-name -n
     summary: |-
       The name of the Virtual Instances for SAP solutions resource.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Gets or sets the Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_workloads_sap-virtual-instance_wait
   name: az workloads sap-virtual-instance wait
   summary: |-

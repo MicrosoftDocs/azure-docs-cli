@@ -50,7 +50,7 @@ directCommands:
       Version of the data asset. Mutually exclusive with label.
   - name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_data_create
   name: az ml data create
   summary: |-
@@ -135,7 +135,7 @@ directCommands:
       Version of the data asset. Required if --registry-name is provided.
   - name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_data_import
   name: az ml data import
   summary: |-
@@ -172,7 +172,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
   optionalParameters:
   - name: --datastore
     summary: |-
@@ -256,7 +256,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_data_list-materialization-status
   name: az ml data list-materialization-status
   summary: |-
@@ -285,7 +285,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
   optionalParameters:
   - name: --all-results
     defaultValue: "False"
@@ -307,6 +307,67 @@ directCommands:
   - name: --name -p
     summary: |-
       Name of the asset. Will list all materialization jobs that create versions of the asset matching the given name.
+- uid: az_ml_data_mount
+  name: az ml data mount
+  summary: |-
+    Mount a specific data asset to a local path. For now only Linux is supported.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az ml data mount --path
+                     [--mode]
+                     [--mount-point]
+                     [--persistent]
+                     [--resource-group]
+                     [--workspace-name]
+  examples:
+  - summary: |-
+      Mount a data asset version with Named Asset URI
+    syntax: az ml data mount --mount-point /mnt/my-data --mode ro_mount --path azureml:my_urifolder:1
+  - summary: |-
+      Mount a data asset version with AzureML full URI
+    syntax: az ml data mount --mount-point /mnt/my-data --mode ro_mount --path azureml://subscriptions/my-sub-id/resourcegroups/my-rg/workspaces/myworkspace/data/some_data/versions/5
+  - summary: |-
+      Mount all versions of a data asset with Named Asset URI
+    syntax: az ml data mount --mount-point /mnt/my-data --mode ro_mount --path azureml:my_urifolder
+  - summary: |-
+      Mount all versions of a data asset with AzureML full URI
+    syntax: az ml data mount --mount-point /mnt/my-data --mode ro_mount --path azureml://subscriptions/my-sub-id/resourcegroups/my-rg/workspaces/myworkspace/data/some_data
+  - summary: |-
+      Mount data on public HTTP(s) server by URL
+    syntax: az ml data mount --mount-point /mnt/my-data --mode ro_mount --path https://raw.githubusercontent.com/pandas-dev/pandas/main/doc/data/titanic.csv
+  - summary: |-
+      Mount data on Azure by Azure Blob Storage URL
+    syntax: az ml data mount --mount-point /mnt/my-data --mode ro_mount --path https://<account_name>.blob.core.windows.net/<container_name>/<path>
+  - summary: |-
+      Mount data on Azure by Azure Data Lake Storage Gen 2 URL
+    syntax: az ml data mount --mount-point /mnt/my-data --mode ro_mount --path abfss://<file_system>@<account_name>.dfs.core.windows.net/<path>
+  requiredParameters:
+  - isRequired: true
+    name: --path
+    summary: |-
+      The data asset path to mount, in the form of `azureml:<name>` or `azureml:<name>:<version>`.
+  optionalParameters:
+  - name: --mode
+    defaultValue: "ro_mount"
+    summary: |-
+      Mount mode. Only `ro_mount` (read-only) is supported for data asset mount.
+  - name: --mount-point
+    defaultValue: "/home/azureuser/mount/data"
+    summary: |-
+      A local path used as mount point.
+  - name: --persistent
+    defaultValue: "False"
+    summary: |-
+      Make mount persist across reboots. Supported only on Compute Instance.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --workspace-name -w
+    summary: |-
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_data_restore
   name: az ml data restore
   summary: |-
@@ -345,7 +406,7 @@ directCommands:
       Version of the data asset. Mutually exclusive with label.
   - name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_data_share
   name: az ml data share
   summary: |-
@@ -384,11 +445,11 @@ directCommands:
   - isRequired: true
     name: --share-with-name
     summary: |-
-      Name  of the data asset to be created with.
+      Name of the data asset to be created with.
   - isRequired: true
     name: --share-with-version
     summary: |-
-      Version  of the data asset to be created with.
+      Version of the data asset to be created with.
   - isRequired: true
     name: --version -v
     summary: |-
@@ -396,7 +457,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_data_show
   name: az ml data show
   summary: |-
@@ -440,7 +501,7 @@ directCommands:
       Version of the data asset. Must be provided, if label is not provided. Mutually exclusive with label.
   - name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_data_update
   name: az ml data update
   summary: |-
@@ -472,7 +533,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -505,6 +566,7 @@ commands:
 - az_ml_data_import
 - az_ml_data_list
 - az_ml_data_list-materialization-status
+- az_ml_data_mount
 - az_ml_data_restore
 - az_ml_data_share
 - az_ml_data_show

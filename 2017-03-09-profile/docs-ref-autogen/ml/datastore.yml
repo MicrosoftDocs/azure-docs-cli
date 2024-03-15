@@ -44,7 +44,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
   optionalParameters:
   - name: --name -n
     summary: |-
@@ -76,7 +76,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_datastore_list
   name: az ml datastore list
   summary: |-
@@ -99,11 +99,60 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
   optionalParameters:
   - name: --max-results -r
     summary: |-
       Max number of results to return.
+- uid: az_ml_datastore_mount
+  name: az ml datastore mount
+  summary: |-
+    Mount a specific datastore to a local path. For now only Linux is supported.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az ml datastore mount --path
+                          [--mode]
+                          [--mount-point]
+                          [--persistent]
+                          [--resource-group]
+                          [--workspace-name]
+  examples:
+  - summary: |-
+      Mount a datastore by name
+    syntax: az ml datastore mount --mount-point /mnt/my-datastore --mode ro_mount --path my-datastore
+  - summary: |-
+      Mount a datastore by datastore short-form URL
+    syntax: az ml datastore mount --mount-point /mnt/my-datastore --mode ro_mount --path azureml://datastores/my-datastore
+  - summary: |-
+      Mount a datastore by datastore long-form URL
+    syntax: az ml datastore mount --mount-point /mnt/my-datastore --mode ro_mount --path azureml://subscriptions/my-sub-id/resourcegroups/my-rg/providers/Microsoft.MachineLearningServices/workspaces/myworkspace/datastores/my-datastore
+  requiredParameters:
+  - isRequired: true
+    name: --path
+    summary: |-
+      The datastore path to mount, in the form of `<datastore_name>` or `azureml://datastores/<datastore_name>`.
+  optionalParameters:
+  - name: --mode
+    defaultValue: "ro_mount"
+    summary: |-
+      Mount mode, either `ro_mount` (read-only) or `rw_mount` (read-write).
+  - name: --mount-point
+    defaultValue: "/home/azureuser/mount/data"
+    summary: |-
+      A local path used as mount point.
+  - name: --persistent
+    defaultValue: "False"
+    summary: |-
+      Make mount persist across reboots. Supported only on Compute Instance.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --workspace-name -w
+    summary: |-
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_datastore_show
   name: az ml datastore show
   summary: |-
@@ -126,7 +175,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
 - uid: az_ml_datastore_update
   name: az ml datastore update
   summary: |-
@@ -152,7 +201,7 @@ directCommands:
   - isRequired: true
     name: --workspace-name -w
     summary: |-
-      Name of the Azure ML workspace. You can configure the default group using `az configure --defaults workspace=<name>`.
+      Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -180,6 +229,7 @@ commands:
 - az_ml_datastore_create
 - az_ml_datastore_delete
 - az_ml_datastore_list
+- az_ml_datastore_mount
 - az_ml_datastore_show
 - az_ml_datastore_update
 globalParameters:
