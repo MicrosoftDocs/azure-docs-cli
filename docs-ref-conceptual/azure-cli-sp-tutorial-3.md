@@ -105,7 +105,9 @@ az keyvault secret download --file /path/to/cert.pfx \
                             --vault-name VaultName \
                             --name CertName \
                             --encoding base64
-openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
+openssl pkcs12 -in cert.pfx -passin pass: -passout pass: -out cert.pem -nodes
+
+az login --service-principal -u "$AppClientId" -p cert.pem --tenant "$TenantId"
 ```
 
 ## Convert an existing PKCS12 file
@@ -113,7 +115,7 @@ openssl pkcs12 -in cert.pfx -passin pass: -out cert.pem -nodes
 If you already have a PKCS#12 file, you can convert it to PEM format using OpenSSL. If you have a password, change the `passin` argument.
 
 ```console
-openssl pkcs12 -in fileName.p12 -clcerts -nodes -out fileName.pem -passin pass:
+openssl pkcs12 -in fileName.p12 -clcerts -nodes -out fileName.pem -passin pass: -passout pass:
 ```
 
 ## Append a certificate to a service principal
