@@ -24,18 +24,18 @@ We're glad you're here! You chose a tool that allows you to create, update, and 
 > * 2 - [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
 >   * Compare Bash and PowerShell _environments_.
 >   * Set environment variables.
->   * Add a random ID to resource names.
-> 
+>   * Add a random ID to an Azure resource name.
+>
 > * 3 - [Compare Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
->   * Understand differences in line continuation and variable usage
+>   * Understand differences in line continuation and variable usage.
 >   * Compare quoting differences and escape characters between environments.
 >   * Work with dates.
-> 
+>
 > * 4 - [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
 >   * Get (query) Azure resource properties.
->   * Store the results of a command in a variable.
->   * Store the contents of a JSON file in a variable.
-> 
+>   * Store the results of a command in a variable, such as a password or secret.
+>   * Store the contents of a JSON file in a variable, such as development or production settings.
+>
 > * 5 - [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)
 >   * Delete Azure resources using a FOR..EACH loop.
 
