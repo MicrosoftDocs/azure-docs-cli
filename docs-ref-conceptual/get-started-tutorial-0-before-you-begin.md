@@ -52,8 +52,8 @@ Azure CLI and [Azure PowerShell](/powershell/azure/) are both command-line tools
 |-|-|-|
 |What is it?|Cross-platform **_command-line interface_** | Cross-platform **_PowerShell module_**
 |Built on | Python | PowerShell
-|Install on| Windows, macOS, Linux | Windows PowerShell, PowerShell
-|Run in|Windows PowerShell, Cmd, Bash, Azure Cloud Shell, Docker container, and other Unix shells.| Windows PowerShell, PowerShell, Azure Cloud Shell, Docker container
+|Install on| Windows, macOS, Linux | Windows, macOS, Linux
+|Run in|Bash shell, PowerShell 5 or 7, Windows Cmd.exe, Azure Cloud Shell, Docker container, and other Unix shells.| Windows PowerShell, PowerShell, Azure Cloud Shell, Docker container
 |Terms| Reference groups, reference subgroups and reference commands | Modules, cmdlets and aliases
 |Syntax example | [az storage account create](/cli/azure/storage/account#az-storage-account-create) | [New-AzStorageAccount](/powershell/module/az.storage/new-azstorageaccount) |
 |Learn more | [What is Azure CLI?](./what-is-azure-cli.md) | [What is Azure PowerShell?](/powershell/azure/what-is-azure-powershell)
