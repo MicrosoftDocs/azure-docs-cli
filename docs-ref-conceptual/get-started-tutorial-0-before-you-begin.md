@@ -18,7 +18,12 @@ We're glad you're here! You chose a tool that allows you to create, update, and 
 > [!div class="checklist"]
 >
 > * 1 - Get to know the Azure CLI (in this tutorial step)
+>   * Compare Azure CLI and PowerShell tools
+>   * Review Azure CLI command components
 > * 2 - [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
+>   * Compare Bash and PowerShell environments
+>   * Set environment variables
+>   * Name new Azure objects with a random ID suffix
 > * 3 - [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
 > * 4 - [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
 > * 5 - [Delete multiple Azure resources using a script](./get-started-tutorial-4-delete-resources.md)
