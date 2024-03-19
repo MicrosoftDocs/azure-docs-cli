@@ -11,9 +11,9 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli, devx-track-azurepowershell
 keywords: azure, az account, az group, az config, az init, configuration
 ---
-# Welcome to Azure CLI
+# Begin your Azure CLI journey
 
-We're glad you're here! You chose a tool that allows you to create, update, and delete Azure resources from a command-line. In this tutorial, you'll onboard with the Azure CLI and learn the following skills that help you to be successful in your Azure CLI journey:
+Welcome to the Azure CLI. We're glad you're here! You chose a tool that allows you to create, update, and delete Azure resources from a command-line. In this tutorial, you'll onboard with the Azure CLI and learn the following skills that help you to be successful in your Azure CLI journey:
 
 > [!div class="checklist"]
 >
