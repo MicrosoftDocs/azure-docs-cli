@@ -40,8 +40,9 @@ directCommands:
                        [--enable-free-tier {false, true}]
                        [--enable-materialized-views {false, true}]
                        [--enable-multiple-write-locations {false, true}]
+                       [--enable-partition-merge {false, true}]
                        [--enable-pbe {false, true}]
-                       [--enable-public-network {false, true}]
+                       [--enable-prpp-autoscale {false, true}]
                        [--enable-virtual-network {false, true}]
                        [--gremlin-databases-to-restore]
                        [--ip-range-filter]
@@ -53,6 +54,7 @@ directCommands:
                        [--max-staleness-prefix]
                        [--network-acl-bypass {AzureServices, None}]
                        [--network-acl-bypass-resource-ids]
+                       [--public-network-access {DISABLED, ENABLED, SECUREDBYPERIMETER}]
                        [--restore-source]
                        [--restore-timestamp]
                        [--server-version {3.2, 3.6, 4.0, 4.2}]
@@ -159,15 +161,20 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable Multiple Write Locations.
+  - name: --enable-partition-merge
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag to enable partition merge on the account.
   - name: --enable-pbe --enable-priority-based-execution
     parameterValueGroup: "false, true"
     summary: |-
       Flag to enable priority based execution on the account.
     isPreview: true
-  - name: --enable-public-network -e
+  - name: --enable-prpp-autoscale
     parameterValueGroup: "false, true"
     summary: |-
-      Enable or disable public network access to server.
+      Enable or disable PerRegionPerPartitionAutoscale.
+    isPreview: true
   - name: --enable-virtual-network
     parameterValueGroup: "false, true"
     summary: |-
@@ -219,6 +226,10 @@ directCommands:
   - name: --network-acl-bypass-resource-ids -i
     summary: |-
       List of Resource Ids to allow Network Acl Bypass.
+  - name: --public-network-access -p
+    parameterValueGroup: "DISABLED, ENABLED, SECUREDBYPERIMETER"
+    summary: |-
+      Sets public network access in server to either Enabled, Disabled, or SecuredByPerimeter.
   - name: --restore-source
     summary: |-
       The restorable-database-account Id of the source account from which the account has to be restored. Required if --is-restore-request is set to true.
@@ -271,8 +282,9 @@ directCommands:
                         [--assign-identity]
                         [--databases-to-restore]
                         [--default-identity]
-                        [--enable-public-network {false, true}]
+                        [--disable-ttl {false, true}]
                         [--gremlin-databases-to-restore]
+                        [--public-network-access {DISABLED, ENABLED}]
                         [--source-backup-location]
                         [--tables-to-restore]
   examples:
@@ -322,10 +334,10 @@ directCommands:
   - name: --default-identity
     summary: |-
       The primary identity to access key vault in CMK related features. e.g. 'FirstPartyIdentity', 'SystemAssignedIdentity' and more.
-  - name: --enable-public-network -e
+  - name: --disable-ttl
     parameterValueGroup: "false, true"
     summary: |-
-      Enable or disable public network access to server.
+      Enable or disable restoring with ttl disabled.
     isPreview: true
   - name: --gremlin-databases-to-restore
     summary: |-
@@ -333,6 +345,10 @@ directCommands:
     description: |-
       Usage:          --gremlin-databases-to-restore name=DatabaseName graphs=graph1 [graph2 ...].
     isPreview: true
+  - name: --public-network-access -p
+    parameterValueGroup: "DISABLED, ENABLED"
+    summary: |-
+      Sets public network access in server to either Enabled or Disabled.
   - name: --source-backup-location
     summary: |-
       This is the location of the source account where backups are located. Provide this value if the source and target are in different locations.
@@ -394,8 +410,9 @@ directCommands:
                        [--enable-burst-capacity {false, true}]
                        [--enable-materialized-views {false, true}]
                        [--enable-multiple-write-locations {false, true}]
+                       [--enable-partition-merge {false, true}]
                        [--enable-pbe {false, true}]
-                       [--enable-public-network {false, true}]
+                       [--enable-prpp-autoscale {false, true}]
                        [--enable-virtual-network {false, true}]
                        [--ids]
                        [--ip-range-filter]
@@ -405,6 +422,7 @@ directCommands:
                        [--name]
                        [--network-acl-bypass {AzureServices, None}]
                        [--network-acl-bypass-resource-ids]
+                       [--public-network-access {DISABLED, ENABLED, SECUREDBYPERIMETER}]
                        [--resource-group]
                        [--server-version {3.2, 3.6, 4.0, 4.2}]
                        [--subscription]
@@ -481,15 +499,20 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable Multiple Write Locations.
+  - name: --enable-partition-merge
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag to enable partition merge on the account.
   - name: --enable-pbe --enable-priority-based-execution
     parameterValueGroup: "false, true"
     summary: |-
       Flag to enable priority based execution on the account.
     isPreview: true
-  - name: --enable-public-network -e
+  - name: --enable-prpp-autoscale
     parameterValueGroup: "false, true"
     summary: |-
-      Enable or disable public network access to server.
+      Enable or disable PerRegionPerPartitionAutoscale.
+    isPreview: true
   - name: --enable-virtual-network
     parameterValueGroup: "false, true"
     summary: |-
@@ -526,6 +549,10 @@ directCommands:
   - name: --network-acl-bypass-resource-ids -i
     summary: |-
       List of Resource Ids to allow Network Acl Bypass.
+  - name: --public-network-access -p
+    parameterValueGroup: "DISABLED, ENABLED, SECUREDBYPERIMETER"
+    summary: |-
+      Sets public network access in server to either Enabled, Disabled, or SecuredByPerimeter.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -545,6 +572,7 @@ directCommands:
 commands:
 - az_cosmosdb_copy
 - az_cosmosdb_copy_cancel
+- az_cosmosdb_copy_complete
 - az_cosmosdb_copy_create
 - az_cosmosdb_copy_list
 - az_cosmosdb_copy_pause

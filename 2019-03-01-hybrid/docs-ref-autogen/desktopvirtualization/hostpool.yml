@@ -4,9 +4,9 @@ name: az desktopvirtualization hostpool
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **desktopvirtualization** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az desktopvirtualization hostpool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **desktopvirtualization** extension for the Azure CLI (version 2.55.0 or higher). The extension will automatically install the first time you run an **az desktopvirtualization hostpool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Desktopvirtualization hostpool.
+  Manage desktop virtualization host pool.
 status: GA
 sourceType: Extension
 directCommands:
@@ -34,24 +34,20 @@ directCommands:
                                              [--sso-client-secret-key-vault-path]
                                              [--sso-secret-type {Certificate, CertificateInKeyVault, SharedKey, SharedKeyInKeyVault}]
                                              [--ssoadfs-authority]
-                                             [--start-vm-on-connect {false, true}]
+                                             [--start-vm-on-connect {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--tags]
-                                             [--validation-environment {false, true}]
+                                             [--validation-environment {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--vm-template]
   examples:
   - summary: |-
-      HostPool_Create
-    syntax: az desktopvirtualization hostpool create --location "centralus" --description "des1" --friendly-name "friendly" --host-pool-type "Pooled" --load-balancer-type "BreadthFirst" --max-session-limit 999999 --personal-desktop-assignment-type "Automatic" --preferred-app-group-type "Desktop" --registration-info expiration-time="2020-10-01T14:01:54.9571247Z" registration-token-operation="Update" --sso-client-id "client" --sso-client-secret-key-vault-path "https://keyvault/secret" --sso-secret-type "SharedKey" --ssoadfs-authority "https://adfs" --start-vm-on-connect false --vm-template "{json:json}" --tags tag1="value1" tag2="value2" --name "MyHostPool" --resource-group "MyResourceGroup"
+      Create host pool
+    syntax: az desktopvirtualization hostpool create -g rg -n hostpool-name --friendly-name friendly --host-pool-type Pooled --load-balancer-type BreadthFirst --max-session-limit 999999 --personal-desktop-assignment-type Automatic --preferred-app-group-type Desktop --registration-info expiration-time="yyyy-mm-ddT08:38:08.189Z" registration-token-operation=Update --sso-client-id client --sso-client-secret-key-vault-path https://keyvault/secret --sso-secret-type SharedKey --start-vm-on-connect false
   requiredParameters:
   - isRequired: true
     name: --host-pool-type
     parameterValueGroup: "BYODesktop, Personal, Pooled"
     summary: |-
-      HostPool type for desktop.
-    description: |-
-      Personal: Users will be assigned a SessionHost either by administrators (PersonalDesktopAssignmentType = Direct) or upon connecting to the pool (PersonalDesktopAssignmentType = Automatic). They will always be redirected to their assigned SessionHost.
-      Pooled: Users get a new (random) SessionHost every time it connects to the HostPool.
-      BYODesktop: Users assign their own machines, load balancing logic remains the same as Personal. --personal-desktop-ssignment-type must be Direct.
+      Host pool type for desktop.
   - isRequired: true
     name: --load-balancer-type
     parameterValueGroup: "BreadthFirst, DepthFirst, Persistent"
@@ -65,7 +61,7 @@ directCommands:
     name: --preferred-app-group-type -t
     parameterValueGroup: "Desktop, None, RailApplications"
     summary: |-
-      The type of preferred application group type, default to Desktop Application Group.
+      The type of preferred application group type, default to desktop application group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -73,7 +69,7 @@ directCommands:
   optionalParameters:
   - name: --custom-rdp-property
     summary: |-
-      Custom rdp property of HostPool.
+      Custom rdp property of host pool.
   - name: --description
     summary: |-
       Description of HostPool.
@@ -82,7 +78,7 @@ directCommands:
       Friendly name of HostPool.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      The geo-location where the resource lives.
   - name: --max-session-limit
     summary: |-
       The max session limit of HostPool.
@@ -92,13 +88,7 @@ directCommands:
       PersonalDesktopAssignment type for HostPool.
   - name: --registration-info
     summary: |-
-      The registration info of HostPool.
-    description: |-
-      Usage: --registration-info expiration-time=XX token=XX registration-token-operation=XX
-
-      expiration-time: Expiration time of registration token.
-      token: The registration token base64 encoded string.
-      registration-token-operation: The type of resetting the token.
+      The registration info of HostPool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ring
     summary: |-
       The ring number of HostPool.
@@ -116,14 +106,14 @@ directCommands:
     summary: |-
       URL to customer ADFS server for signing WVD SSO certificates.
   - name: --start-vm-on-connect
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       The flag to turn on/off StartVMOnConnect feature.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --validation-environment
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Is validation environment.
   - name: --vm-template
@@ -132,22 +122,23 @@ directCommands:
 - uid: az_desktopvirtualization_hostpool_delete
   name: az desktopvirtualization hostpool delete
   summary: |-
-    Remove a host pool.
+    Delete a host pool.
   status: GA
   sourceType: Extension
   syntax: >-
-    az desktopvirtualization hostpool delete [--force {false, true}]
+    az desktopvirtualization hostpool delete [--force {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--ids]
                                              [--name]
                                              [--resource-group]
                                              [--subscription]
+                                             [--yes]
   examples:
   - summary: |-
-      HostPool_Delete
-    syntax: az desktopvirtualization hostpool delete --force true --name "MyHostPool" --resource-group "MyResourceGroup"
+      Delete host pool
+    syntax: az desktopvirtualization hostpool delete -g rg -n hostpool-name
   optionalParameters:
   - name: --force
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Force flag to delete sessionHost.
   - name: --ids
@@ -162,18 +153,31 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_desktopvirtualization_hostpool_list
   name: az desktopvirtualization hostpool list
   summary: |-
-    List hostPools in subscription.
+    List host pools.
   status: GA
   sourceType: Extension
-  syntax: az desktopvirtualization hostpool list [--resource-group]
+  syntax: >-
+    az desktopvirtualization hostpool list [--max-items]
+                                           [--next-token]
+                                           [--resource-group]
   examples:
   - summary: |-
-      HostPool_ListByResourceGroup
-    syntax: az desktopvirtualization hostpool list --resource-group "MyResourceGroup"
+      List host pool
+    syntax: az desktopvirtualization hostpool list -g rg
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -190,8 +194,8 @@ directCommands:
                                                                   [--subscription]
   examples:
   - summary: |-
-      HostPools_RetrieveRegistrationToken_Post
-    syntax: az desktopvirtualization hostpool retrieve-registration-token --name "MyHostPool" --resource-group "MyResourceGroup"
+      Registration token of the host pool.
+    syntax: az desktopvirtualization hostpool retrieve-registration-token -n hostpool-name -g rg
   optionalParameters:
   - name: --ids
     summary: |-
@@ -208,7 +212,7 @@ directCommands:
 - uid: az_desktopvirtualization_hostpool_show
   name: az desktopvirtualization hostpool show
   summary: |-
-    Get a host pool.
+    Show a host pool.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -218,8 +222,8 @@ directCommands:
                                            [--subscription]
   examples:
   - summary: |-
-      HostPool_Get
-    syntax: az desktopvirtualization hostpool show --name "MyHostPool" --resource-group "MyResourceGroup"
+      Show host pool
+    syntax: az desktopvirtualization hostpool show -g rg -n hostpool-name
   optionalParameters:
   - name: --ids
     summary: |-
@@ -240,8 +244,10 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az desktopvirtualization hostpool update [--custom-rdp-property]
+    az desktopvirtualization hostpool update [--add]
+                                             [--custom-rdp-property]
                                              [--description]
+                                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--friendly-name]
                                              [--ids]
                                              [--load-balancer-type {BreadthFirst, DepthFirst, Persistent}]
@@ -250,28 +256,37 @@ directCommands:
                                              [--personal-desktop-assignment-type {Automatic, Direct}]
                                              [--preferred-app-group-type {Desktop, None, RailApplications}]
                                              [--registration-info]
+                                             [--remove]
                                              [--resource-group]
                                              [--ring]
+                                             [--set]
                                              [--sso-client-id]
                                              [--sso-client-secret-key-vault-path]
                                              [--sso-secret-type {Certificate, CertificateInKeyVault, SharedKey, SharedKeyInKeyVault}]
                                              [--ssoadfs-authority]
-                                             [--start-vm-on-connect {false, true}]
+                                             [--start-vm-on-connect {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--subscription]
                                              [--tags]
-                                             [--validation-environment {false, true}]
+                                             [--validation-environment {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--vm-template]
   examples:
   - summary: |-
-      HostPool_Update
-    syntax: az desktopvirtualization hostpool update --description "des1" --friendly-name "friendly" --load-balancer-type "BreadthFirst" --max-session-limit 999999 --personal-desktop-assignment-type "Automatic" --registration-info expiration-time="2020-10-01T15:01:54.9571247Z" registration-token-operation="Update" --sso-client-id "client" --sso-client-secret-key-vault-path "https://keyvault/secret" --sso-secret-type "SharedKey" --ssoadfs-authority "https://adfs" --start-vm-on-connect false --vm-template "{json:json}" --tags tag1="value1" tag2="value2" --name "MyHostPool" --resource-group "MyResourceGroup"
+      Update host pool
+    syntax: az desktopvirtualization hostpool update -g rg -n hostpool-name --tags tag=test
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --custom-rdp-property
     summary: |-
-      Custom rdp property of HostPool.
+      Custom rdp property of host pool.
   - name: --description
     summary: |-
       Description of HostPool.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --friendly-name
     summary: |-
       Friendly name of HostPool.
@@ -295,21 +310,22 @@ directCommands:
   - name: --preferred-app-group-type -t
     parameterValueGroup: "Desktop, None, RailApplications"
     summary: |-
-      The type of preferred application group type, default to Desktop Application Group.
+      The type of preferred application group type, default to desktop application group.
   - name: --registration-info
     summary: |-
-      The registration info of HostPool.
-    description: |-
-      Usage: --registration-info expiration-time=XX registration-token-operation=XX
-
-      expiration-time: Expiration time of registration token.
-      registration-token-operation: The type of resetting the token.
+      The registration info of HostPool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --ring
     summary: |-
       The ring number of HostPool.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --sso-client-id
     summary: |-
       ClientId for the registered Relying Party used to issue WVD SSO certificates.
@@ -324,7 +340,7 @@ directCommands:
     summary: |-
       URL to customer ADFS server for signing WVD SSO certificates.
   - name: --start-vm-on-connect
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       The flag to turn on/off StartVMOnConnect feature.
   - name: --subscription
@@ -332,9 +348,9 @@ directCommands:
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --validation-environment
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Is validation environment.
   - name: --vm-template
@@ -372,4 +388,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Desktopvirtualization hostpool.
+  description: Manage desktop virtualization host pool.

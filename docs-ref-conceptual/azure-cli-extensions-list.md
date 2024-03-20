@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/19/2024
+ms.date: 03/20/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -91,7 +91,7 @@ You will be prompted to install an extension on first use.
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up/HISTORY.rst) |
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
-|[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.15.0 | Microsoft Azure Command-Line Tools DesktopVirtualizationAPIClient Extension | GA | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
+|[desktopvirtualization](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization) | 2.55.0 | Microsoft Azure Command-Line Tools Desktopvirtualization Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/desktopvirtualization/HISTORY.rst) |
 |[dev-spaces](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces) | 2.1.0 | Dev Spaces provides a rapid, iterative Kubernetes development experience for teams. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/master/src/dev-spaces/HISTORY.rst) |
 |[devcenter](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter) | 2.51.0 | Microsoft Azure Command-Line Tools DevCenter Extension | GA | [5.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/devcenter/HISTORY.rst) |
 |[diskpool](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool) | 2.15.0 | Microsoft Azure Command-Line Tools StoragePoolManagement Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/diskpool/HISTORY.rst) |
