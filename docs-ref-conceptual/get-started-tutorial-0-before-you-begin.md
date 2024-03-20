@@ -11,17 +11,33 @@ ms.tool: azure-cli
 ms.custom: devx-track-azurecli, devx-track-azurepowershell
 keywords: azure, az account, az group, az config, az init, configuration
 ---
-# Welcome to Azure CLI
+# Begin your Azure CLI journey
 
-We're glad you're here! You chose a tool that allows you to create, update, and delete Azure resources from a command-line. In this tutorial, you'll onboard with the Azure CLI and learn the following skills that help you to be successful in your Azure CLI journey:
+Welcome to the Azure CLI. We're glad you're here! You chose a tool that allows you to create, update, and delete Azure resources from a command-line. In this tutorial, you'll onboard with the Azure CLI and learn the following skills that help you to be successful in your Azure CLI journey:
 
 > [!div class="checklist"]
 >
 > * 1 - Get to know the Azure CLI (in this tutorial step)
+>   * Compare Azure CLI and PowerShell _tools_.
+>   * Review Azure CLI command components.
+>
 > * 2 - [Prepare your environment for the Azure CLI](./get-started-tutorial-1-prepare-environment.md)
-> * 3 - [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
+>   * Compare Bash and PowerShell _environments_.
+>   * Set environment variables.
+>   * Add a random ID to an Azure resource name.
+>
+> * 3 - [Compare Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
+>   * Understand differences in line continuation and variable usage.
+>   * Compare quoting differences and escape characters between environments.
+>   * Work with dates.
+>
 > * 4 - [Populate variables for use in scripts](./get-started-tutorial-3-use-variables.md)
-> * 5 - [Delete multiple Azure resources using a script](./get-started-tutorial-4-delete-resources.md)
+>   * Get (query) Azure resource properties.
+>   * Store the results of a command in a variable, such as a password or secret.
+>   * Store the contents of a JSON file in a variable, such as development or production settings.
+>
+> * 5 - [Delete Azure resources at scale using a script](./get-started-tutorial-4-delete-resources.md)
+>   * Delete Azure resources using a FOR..EACH loop.
 
 ## What is the Azure CLI?
 
@@ -52,8 +68,8 @@ Azure CLI and [Azure PowerShell](/powershell/azure/) are both command-line tools
 |-|-|-|
 |What is it?|Cross-platform **_command-line interface_** | Cross-platform **_PowerShell module_**
 |Built on | Python | PowerShell
-|Install on| Windows, macOS, Linux | Windows PowerShell, PowerShell
-|Run in|Windows PowerShell, Cmd, Bash, Azure Cloud Shell, Docker container, and other Unix shells.| Windows PowerShell, PowerShell, Azure Cloud Shell, Docker container
+|Install on| Windows, macOS, Linux | Windows, macOS, Linux
+|Run in|Bash shell, PowerShell 5 or 7, Windows Cmd.exe, Azure Cloud Shell, Docker container, and other Unix shells.| Windows PowerShell, PowerShell, Azure Cloud Shell, Docker container
 |Terms| Reference groups, reference subgroups and reference commands | Modules, cmdlets and aliases
 |Syntax example | [az storage account create](/cli/azure/storage/account#az-storage-account-create) | [New-AzStorageAccount](/powershell/module/az.storage/new-azstorageaccount) |
 |Learn more | [What is Azure CLI?](./what-is-azure-cli.md) | [What is Azure PowerShell?](/powershell/azure/what-is-azure-powershell)
