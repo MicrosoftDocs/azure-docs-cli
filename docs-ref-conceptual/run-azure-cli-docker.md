@@ -42,6 +42,9 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
+> [!NOTE]
+> With the release of version 2.54.0., the image size has been reduced from 1.1GB to 700MB (trimmed 36.3% of the original package). To achieve this, several development tools packages (such as gcc) and unused packages from the docker image were removed. If you rely on these packages, don’t forget to install them manually. This change will also result in faster execution time when running docker pull commands.  
+
 To run a specific version of the Azure CLI in the Docker container, use this command:
 
 ```bash
