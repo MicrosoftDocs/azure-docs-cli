@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/20/2024
+ms.date: 03/21/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -71,13 +71,13 @@ You will be prompted to install an extension on first use.
 |[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.55.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | Preview | [1.8.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [0.3.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
-|[confluent](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent) | 2.25.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | Experimental | [0.4.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/confluent/HISTORY.rst) |
+|[confluent](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent) | 2.56.0 | Microsoft Azure Command-Line Tools ConfluentManagementClient Extension | GA | [0.6.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confluent/HISTORY.rst) |
 |[connectedk8s](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s) | 2.38.0 | Microsoft Azure Command-Line Tools Connectedk8s Extension | GA | [1.6.7](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedk8s/HISTORY.rst) |
 |[connectedmachine](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine) | 2.49.0 | Microsoft Azure Command-Line Tools ConnectedMachine Extension | Preview | [0.7.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedmachine/HISTORY.rst) |
 |[connectedvmware](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware) | 2.0.67 | Microsoft Azure Command-Line Tools Connectedvmware Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/connectedvmware/HISTORY.rst) |
 |[connection-monitor-preview](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview) | 2.0.80 | Microsoft Azure Command-Line Connection Monitor V2 Extension | Preview | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/connection-monitor-preview/HISTORY.rst) |
 |[containerapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp) | 2.53.0 | Microsoft Azure Command-Line Tools Containerapp Extension | Preview | [0.3.49](https://github.com/Azure/azure-cli-extensions/tree/main/src/containerapp/HISTORY.rst) |
-|[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [0.26.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
+|[cosmosdb-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview) | 2.17.1 | Microsoft Azure Command-Line Tools Cosmosdb-preview Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cosmosdb-preview/HISTORY.rst) |
 |[costmanagement](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement) | 2.55.0 | Microsoft Azure Command-Line Tools CostManagementClient Extension | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/costmanagement/HISTORY.rst) |
 |[csvmware](https://github.com/Azure/az-vmware-cli) | 2.0.67 | Manage Azure VMware Solution by CloudSimple. | Preview | [0.3.0](https://github.com/Azure/az-vmware-cli) |
 |[custom-providers](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers) | 2.3.1 | Microsoft Azure Command-Line Tools Custom Providers Extension | Experimental | [0.2.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/custom-providers/HISTORY.rst) |
