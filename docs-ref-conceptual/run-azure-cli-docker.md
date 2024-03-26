@@ -16,6 +16,8 @@ keywords: azure cli docker, docker azure cli
 
 You can use Docker to run a standalone Linux container with the Azure CLI preinstalled. Docker gets you started quickly with an isolated environment to run the CLI in. The image can also be used as a base for your own deployments.
 
+With the release of Azure CLI [version 2.54.0](./release-notes-azure-cli.md#november-14-2023), the size of the Docker image of `azure-cli` is reduced from 1.1 GB to 700 MB! This reduction is a 36.3% decrease resulting in improved download speed and faster startup.
+
 ## Start the Docker container with Azure CLI preinstalled
 
 > [!NOTE]
@@ -41,9 +43,6 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 ## Run the Docker container with a specific version of the Azure CLI
 
 Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
-
-> [!NOTE]
-> With the release of version 2.54.0., the image size has been reduced from 1.1GB to 700MB (trimmed 36.3% of the original package). To achieve this, several development tools packages (such as gcc) and unused packages from the docker image were removed. If you rely on these packages, don’t forget to install them manually. This change will also result in faster execution time when running docker pull commands.  
 
 To run a specific version of the Azure CLI in the Docker container, use this command:
 
@@ -71,6 +70,24 @@ After halting any containers running the CLI image, remove it.
 ```bash
 docker rmi mcr.microsoft.com/azure-cli
 ```
+
+## Microsoft Copilot for Azure CLI
+
+[Microsoft Copilot for Azure](https://techcommunity.microsoft.com/t5/azure-infrastructure-blog/simplify-it-management-with-microsoft-copilot-for-azure-save/ba-p/3981106) is an AI companion that helps you design, operate, optimize, and troubleshoot your cloud infrastructure and services. Its goal is to address the issues that CLI usage knowledge in regards to end-to-end scenarios are difficult to find, and related questions cannot always receive timely and professional support.
+
+Therefore, the benefit of using Microsoft Copilot for Azure CLI is as follows:
+- **Design**: Users can create and configure the services needed while aligning with organizational policies
+- **Operate**: Users can answer questions, author complex commands, and manage resources
+- **Troubleshoot**: Users can orchestrate across Azure services for insights to summarize issues, identify causes, and suggest solutions
+- **Optimize**: There are improved costs, scalability, and reliability through recommendations for the user's environment
+
+### How to use Microsoft Copilot for Azure CLI 
+
+To use this AI tool, go to the Azure Portal and select the **Copilot** icon on the top taskbar. The copilot window will open with a chat assistant where you can ask it a question:
+
+![Copilot on Azure Portal](./media/interactive-azure-cli/copilot-cli-1.png)
+
+When you tell Microsoft Copilot for Azure (preview) about a task you want to perform by using Azure CLI, it provides a script with the necessary commands. You'll see which placeholder values that you need to update with the actual values based on your environment:
 
 ## Next Steps
 
