@@ -9,23 +9,23 @@ directCommands:
 - uid: az_netappfiles_snapshot_policy_create
   name: az netappfiles snapshot policy create
   summary: |-
-    Create a new Azure NetApp Files (ANF) snapshot policy.
+    Create a snapshot policy.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles snapshot policy create --account-name
+                                          --name
                                           --resource-group
-                                          --snapshot-policy-name
                                           [--daily-hour]
                                           [--daily-minute]
                                           [--daily-snapshots]
-                                          [--enabled {false, true}]
+                                          [--days-of-month]
+                                          [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--hour]
                                           [--hourly-minute]
                                           [--hourly-snapshots]
                                           [--location]
-                                          [--monthly-days]
-                                          [--monthly-hour]
                                           [--monthly-minute]
                                           [--monthly-snapshots]
                                           [--tags]
@@ -41,79 +41,79 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
+  - isRequired: true
+    name: --name --snapshot-policy-name -n
+    summary: |-
+      The name of the snapshot policy.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --snapshot-policy-name
-    summary: |-
-      The name of the ANF snapshot policy.
   optionalParameters:
   - name: --daily-hour
     summary: |-
-      Which hour in UTC timezone the daily snapshot should be taken.
+      Indicates which hour in UTC timezone a snapshot should be taken.
   - name: --daily-minute
     summary: |-
-      Which minute the daily snapshot should be taken.
-  - name: --daily-snapshots -d
+      Indicates which minute snapshot should be taken.
+  - name: --daily-snapshots --snapshots-to-keep -d
     summary: |-
-      Daily snapshots count to keep.
+      Daily snapshot count to keep.
+  - name: --days-of-month --monthly-days
+    summary: |-
+      Indicates which days of the month snapshot should be taken. A comma delimited string.
   - name: --enabled -e
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
+    defaultValue: "True"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       The property to decide policy is enabled or not.
-  - name: --hourly-minute
+  - name: --hour --monthly-hour
     summary: |-
-      Which minute the hourly snapshot should be taken.
+      Indicates which hour in UTC timezone a snapshot should be taken.
+  - name: --hourly-minute --minute
+    summary: |-
+      Indicates which minute snapshot should be taken.
   - name: --hourly-snapshots -u
     summary: |-
-      Hourly snapshots count to keep.
+      Hourly snapshot count to keep.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - name: --monthly-days
-    summary: |-
-      Which days of the month the weekly snapshot should be taken, accepts a comma separated list of days.
-  - name: --monthly-hour
-    summary: |-
-      Which hour in UTC timezone the monthly snapshot should be taken.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
   - name: --monthly-minute
     summary: |-
-      Which minute the monthly snapshot should be taken.
+      Indicates which minute snapshot should be taken.
   - name: --monthly-snapshots -m
     summary: |-
-      Monthly snapshots count to keep.
+      Monthly snapshot count to keep.
   - name: --tags
     summary: |-
-      Space-separated tags in `key[=value]` format.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --weekly-day
     summary: |-
-      Which weekday the weekly snapshot should be taken, accepts a comma separated list of week day names in english.
+      Indicates which weekdays snapshot should be taken, accepts a comma separated list of week day names in english.
   - name: --weekly-hour
     summary: |-
-      Which hour in UTC timezone the weekly snapshot should be taken.
+      Indicates which hour in UTC timezone a snapshot should be taken.
   - name: --weekly-minute
     summary: |-
-      Which minute the weekly snapshot should be taken.
+      Indicates which minute snapshot should be taken.
   - name: --weekly-snapshots -w
     summary: |-
-      Weekly snapshots count to keep.
+      Weekly snapshot count to keep.
 - uid: az_netappfiles_snapshot_policy_delete
   name: az netappfiles snapshot policy delete
   summary: |-
-    Delete the specified ANF snapshot policy.
+    Delete snapshot policy.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles snapshot policy delete [--account-name]
                                           [--ids]
-                                          [--no-wait]
+                                          [--name]
+                                          [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                           [--resource-group]
-                                          [--snapshot-policy-name]
                                           [--subscription]
   examples:
   - summary: |-
@@ -122,27 +122,27 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --snapshot-policy-name -n
+    summary: |-
+      The name of the snapshot policy.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --snapshot-policy-name
-    summary: |-
-      The name of the ANF snapshot policy.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_netappfiles_snapshot_policy_list
   name: az netappfiles snapshot policy list
   summary: |-
-    List the ANF snapshot policies for the specified account.
+    List snapshot policy.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -151,13 +151,13 @@ directCommands:
                                         --resource-group
   examples:
   - summary: |-
-      List the snapshot policy for the ANF account
+      List the snapshot policies for the ANF account
     syntax: az netappfiles snapshot policy list -g mygroup --account-name myname
   requiredParameters:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -165,15 +165,15 @@ directCommands:
 - uid: az_netappfiles_snapshot_policy_show
   name: az netappfiles snapshot policy show
   summary: |-
-    Get the specified ANF snapshot policy.
+    Get a snapshot Policy.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles snapshot policy show [--account-name]
                                         [--ids]
+                                        [--name]
                                         [--resource-group]
-                                        [--snapshot-policy-name]
                                         [--subscription]
   examples:
   - summary: |-
@@ -182,42 +182,45 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --snapshot-policy-name -n
+    summary: |-
+      The name of the snapshot policy.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --snapshot-policy-name
-    summary: |-
-      The name of the ANF snapshot policy.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_netappfiles_snapshot_policy_update
   name: az netappfiles snapshot policy update
   summary: |-
-    Update the specified ANF snapshot policy.
+    Update a snapshot policy.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles snapshot policy update [--account-name]
+                                          [--add]
                                           [--daily-hour]
                                           [--daily-minute]
                                           [--daily-snapshots]
-                                          [--enabled {false, true}]
+                                          [--days-of-month]
+                                          [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--hour]
                                           [--hourly-minute]
                                           [--hourly-snapshots]
                                           [--ids]
-                                          [--monthly-days]
-                                          [--monthly-hour]
                                           [--monthly-minute]
                                           [--monthly-snapshots]
-                                          [--no-wait]
+                                          [--name]
+                                          [--remove]
                                           [--resource-group]
-                                          [--snapshot-policy-name]
+                                          [--set]
                                           [--subscription]
                                           [--tags]
                                           [--weekly-day]
@@ -231,73 +234,83 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --daily-hour
     summary: |-
-      Which hour in UTC timezone the daily snapshot should be taken.
+      Indicates which hour in UTC timezone a snapshot should be taken.
   - name: --daily-minute
     summary: |-
-      Which minute the daily snapshot should be taken.
-  - name: --daily-snapshots -d
+      Indicates which minute snapshot should be taken.
+  - name: --daily-snapshots --snapshots-to-keep -d
     summary: |-
-      Daily snapshots count to keep.
+      Daily snapshot count to keep.
+  - name: --days-of-month --monthly-days
+    summary: |-
+      Indicates which days of the month snapshot should be taken. A comma delimited string.
   - name: --enabled -e
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       The property to decide policy is enabled or not.
-  - name: --hourly-minute
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Which minute the hourly snapshot should be taken.
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --hour --monthly-hour
+    summary: |-
+      Indicates which hour in UTC timezone a snapshot should be taken.
+  - name: --hourly-minute --minute
+    summary: |-
+      Indicates which minute snapshot should be taken.
   - name: --hourly-snapshots -u
     summary: |-
-      Hourly snapshots count to keep.
+      Hourly snapshot count to keep.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --monthly-days
-    summary: |-
-      Which days of the month the weekly snapshot should be taken, accepts a comma separated list of days.
-  - name: --monthly-hour
-    summary: |-
-      Which hour in UTC timezone the monthly snapshot should be taken.
   - name: --monthly-minute
     summary: |-
-      Which minute the monthly snapshot should be taken.
+      Indicates which minute snapshot should be taken.
   - name: --monthly-snapshots -m
     summary: |-
-      Monthly snapshots count to keep.
-  - name: --no-wait
-    defaultValue: "False"
+      Monthly snapshot count to keep.
+  - name: --name --snapshot-policy-name -n
     summary: |-
-      Do not wait for the long-running operation to finish.
+      The name of the snapshot policy.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --snapshot-policy-name
+  - name: --set
     summary: |-
-      The name of the ANF snapshot policy.
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --weekly-day
     summary: |-
-      Which weekday the weekly snapshot should be taken, accepts a comma separated list of week day names in english.
+      Indicates which weekdays snapshot should be taken, accepts a comma separated list of week day names in english.
   - name: --weekly-hour
     summary: |-
-      Which hour in UTC timezone the weekly snapshot should be taken.
+      Indicates which hour in UTC timezone a snapshot should be taken.
   - name: --weekly-minute
     summary: |-
-      Which minute the weekly snapshot should be taken.
+      Indicates which minute snapshot should be taken.
   - name: --weekly-snapshots -w
     summary: |-
-      Weekly snapshots count to keep.
+      Weekly snapshot count to keep.
 - uid: az_netappfiles_snapshot_policy_volumes
   name: az netappfiles snapshot policy volumes
   summary: |-
+    List volumes associated with snapshot policy.
+  description: |-
     Get the all ANF volumes associated with snapshot policy.
   status: GA
   sourceType: Core
@@ -310,12 +323,12 @@ directCommands:
                                            [--subscription]
   examples:
   - summary: |-
-      Get ANF volumes associated with snapshot policy
+      Get ANF volumes associated with the specified snapshot policy
     syntax: az netappfiles snapshot policy volumes -g mygroup --account-name myaccname --snapshot-policy-name mysnapshotpolicyname
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -324,14 +337,14 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --snapshot-policy-name
     summary: |-
-      The name of the ANF snapshot policy.
+      The name of the snapshot policy.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_netappfiles_snapshot_policy_wait
   name: az netappfiles snapshot policy wait
   summary: |-
-    Wait for a snapshot policy operation.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -343,15 +356,15 @@ directCommands:
                                         [--exists]
                                         [--ids]
                                         [--interval]
+                                        [--name]
                                         [--resource-group]
-                                        [--snapshot-policy-name]
                                         [--subscription]
                                         [--timeout]
                                         [--updated]
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      Name of the ANF account.
+      The name of the NetApp account.
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -374,12 +387,12 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+  - name: --name --snapshot-policy-name -n
+    summary: |-
+      The name of the snapshot policy.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --snapshot-policy-name
-    summary: |-
-      The name of the snapshot policy.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -424,5 +437,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/07/2023
+  ms.date: 03/07/2024
   description: Manage Azure NetApp Files (ANF) Snapshot Policy Resources.

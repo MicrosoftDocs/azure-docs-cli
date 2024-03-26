@@ -16,6 +16,7 @@ directCommands:
     az stack group create --deny-settings-mode {denyDelete, denyWriteAndDelete, none}
                           --name
                           --resource-group
+                          [--action-on-unmanage {deleteAll, deleteResources, detachAll}]
                           [--cs]
                           [--delete-all {false, true}]
                           [--delete-resource-groups {false, true}]
@@ -32,29 +33,29 @@ directCommands:
                           [--yes]
   examples:
   - summary: |-
-      Create a deployment stack using template file and delete resources.
-    syntax: az stack group create --name StackName --resource-group ResourceGroup --delete-resources --template-file simpleTemplate.json --description description --deny-settings-mode None
+      Create a deployment stack using template file and delete resources on unmanage.
+    syntax: az stack group create --name StackName --resource-group ResourceGroup --action-on-unmanage deleteResources --template-file simpleTemplate.json --description description --deny-settings-mode None
   - summary: |-
-      Create a deployment stack with parameter file and delete resource groups.
-    syntax: az stack group create --name StackName --resource-group ResourceGroup --delete-resource-groups --template-file simpleTemplate.json --parameters simpleTemplateParams.json --description description --deny-settings-mode None
+      Create a deployment stack with parameter file.
+    syntax: az stack group create --name StackName --resource-group ResourceGroup --template-file simpleTemplate.json --parameters simpleTemplateParams.json --description description --deny-settings-mode None
   - summary: |-
-      Create a deployment stack with template spec and delete all resources
-    syntax: az stack group create --name StackName --resource-group ResourceGroup --delete-all --template-spec TemplateSpecResourceIDWithVersion --description description --deny-settings-mode None
+      Create a deployment stack with template spec and delete all resources on unmanage.
+    syntax: az stack group create --name StackName --resource-group ResourceGroup --action-on-unmanage deleteAll --template-spec TemplateSpecResourceIDWithVersion --description description --deny-settings-mode None
   - summary: |-
       Create a deployment stack using bicep file.
     syntax: az stack group create --name StackName --resource-group ResourceGroup --template-file simple.bicep --description description --deny-settings-mode None
   - summary: |-
-      Create a deployment stack at a different subscription
+      Create a deployment stack at a different subscription.
     syntax: az stack group create --name StackName --resource-group ResourceGroup --template-file simpleTemplate.json --description description --subscription subscriptionId --deny-settings-mode None
   - summary: |-
-      Create a deployment stack using parameters from key/value pairs
+      Create a deployment stack using parameters from key/value pairs.
     syntax: az stack group create --name StackName --template-file simpleTemplate.json --resource-group ResourceGroup --description description --parameters simpleTemplateParams.json value1=foo value2=bar --deny-settings-mode None
   - summary: |-
       Create a deployment stack from a local template, using a parameter file, a remote parameter file, and selectively overriding key/value pairs.
     syntax: az stack group create --name StackName --template-file azuredeploy.json --parameters @params.json --parameters https://mysite/params.json --parameters MyValue=This MyArray=@array.json --resource-group ResourceGroup --deny-settings-mode None
   - summary: |-
       Create a deployment stack from a local template, using deny settings.
-    syntax: az stack group create --name StackName --resource-group ResourceGroup --template-file azuredeploy.json --deny-settings-mode denyDelete --deny-settings-excluded-actions Microsoft.Compute/virtualMachines/write --deny-settings-excluded-principals "test1 test2" --deny-settings-mode None
+    syntax: az stack group create --name StackName --resource-group ResourceGroup --template-file azuredeploy.json --deny-settings-mode denyDelete --deny-settings-excluded-actions Microsoft.Compute/virtualMachines/write --deny-settings-excluded-principals "test1 test2"
   - summary: |-
       Create a deployment stack from a local template, apply deny setting to child scopes.
     syntax: az stack group create --name StackName --resource-group ResourceGroup --template-file azuredeploy.json --deny-settings-mode denyDelete --deny-settings-excluded-actions Microsoft.Compute/virtualMachines/write --deny-settings-apply-to-child-scopes
@@ -73,6 +74,10 @@ directCommands:
     summary: |-
       The resource group where the deployment stack will be created.
   optionalParameters:
+  - name: --action-on-unmanage --aou
+    parameterValueGroup: "deleteAll, deleteResources, detachAll"
+    summary: |-
+      Defines what happens to resources that are no longer managed after the stack is updated or deleted.
   - name: --cs --deny-settings-apply-to-child-scopes
     defaultValue: "False"
     summary: |-
@@ -82,16 +87,22 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Flag to indicate delete rather than detach for the resources and resource groups.
+    isDeprecated: true
+    deprecateInfo: Option '--delete-all' has been deprecated and will be removed in a future release. Use '--action-on-unmanage deleteAll' instead.
   - name: --delete-resource-groups
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
       Flag to indicate delete rather than detach for the resource groups.
+    isDeprecated: true
+    deprecateInfo: Option '--delete-resource-groups' has been deprecated and will be removed in a future release. Use '--action-on-unmanage deleteAll' instead.
   - name: --delete-resources
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
       Flag to indicate delete rather than detach for the resources.
+    isDeprecated: true
+    deprecateInfo: Option '--delete-resources' has been deprecated and will be removed in a future release. Use '--action-on-unmanage deleteResources' instead.
   - name: --deny-settings-excluded-actions --ea
     summary: |-
       List of role-based management operations that are excluded from the denySettings. Up to 200 actions are permitted.
@@ -131,7 +142,8 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az stack group delete [--delete-all {false, true}]
+    az stack group delete [--action-on-unmanage {deleteAll, deleteResources, detachAll}]
+                          [--delete-all {false, true}]
                           [--delete-resource-groups {false, true}]
                           [--delete-resources {false, true}]
                           [--id]
@@ -146,21 +158,31 @@ directCommands:
       Delete stack by stack resource id.
     syntax: az stack group delete --id /subscriptions/111111111111/resourceGroups/ResourceGroup/providers/Microsoft.Resources/deploymentStacks/StackName
   optionalParameters:
+  - name: --action-on-unmanage --aou
+    parameterValueGroup: "deleteAll, deleteResources, detachAll"
+    summary: |-
+      Defines what happens to resources that are no longer managed after the stack is updated or deleted.
   - name: --delete-all
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
       Flag to indicate delete rather than detach for the resources and resource groups.
+    isDeprecated: true
+    deprecateInfo: Option '--delete-all' has been deprecated and will be removed in a future release. Use '--action-on-unmanage deleteAll' instead.
   - name: --delete-resource-groups
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
       Flag to indicate delete rather than detach for the resource groups.
+    isDeprecated: true
+    deprecateInfo: Option '--delete-resource-groups' has been deprecated and will be removed in a future release. Use '--action-on-unmanage deleteAll' instead.
   - name: --delete-resources
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
       Flag to indicate delete rather than detach for the resources.
+    isDeprecated: true
+    deprecateInfo: Option '--delete-resources' has been deprecated and will be removed in a future release. Use '--action-on-unmanage deleteResources' instead.
   - name: --id
     summary: |-
       The deployment stack resource id.

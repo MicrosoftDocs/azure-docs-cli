@@ -3,18 +3,14 @@ uid: az_cdn_origin-group
 name: az cdn origin-group
 summary: |-
   Manage origin groups of an endpoint.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+status: GA
 sourceType: Core
 directCommands:
 - uid: az_cdn_origin-group_create
   name: az cdn origin-group create
   summary: |-
-    Create an origin group.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'cdn origin-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Create a new origin group within the specified endpoint.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
@@ -22,11 +18,19 @@ directCommands:
                                --name
                                --profile-name
                                --resource-group
+                               [--formatted-origins]
+                               [--health-probe-settings]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--origins]
                                [--probe-interval]
-                               [--probe-method {GET, HEAD}]
+                               [--probe-method]
                                [--probe-path]
-                               [--probe-protocol {HTTP, HTTPS}]
+                               [--probe-protocol]
+                               [--response-based-origin-error-detection-settings]
+                               [--response-error-detection-error-types]
+                               [--response-error-detection-failover-threshold]
+                               [--response-error-detection-status-code-ranges]
+                               [--traffic-restoration-time-to-healed-or-new-endpoints-in-minutes]
   examples:
   - summary: |-
       Create an origin group
@@ -38,11 +42,11 @@ directCommands:
   - isRequired: true
     name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - isRequired: true
-    name: --name -n
+    name: --name --origin-group-name -n
     summary: |-
-      Name of the origin group.
+      Name of the origin group which is unique within the endpoint.
   - isRequired: true
     name: --profile-name
     summary: |-
@@ -52,39 +56,58 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --formatted-origins
+    summary: |-
+      The source of the content being delivered via CDN within given origin group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --health-probe-settings
+    summary: |-
+      Health probe settings to the origin that is used to determine the health of the origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origins
     summary: |-
       The origins load balanced by this origin group, as a comma-separated list of origin names or origin resource IDs.
   - name: --probe-interval
-    defaultValue: "240"
     summary: |-
       The frequency to perform health probes in seconds.
   - name: --probe-method
-    defaultValue: "HEAD"
-    parameterValueGroup: "GET, HEAD"
     summary: |-
       The request method to use for health probes.
   - name: --probe-path
     summary: |-
       The path relative to the origin that is used to determine the health of the origin.
   - name: --probe-protocol
-    defaultValue: "HTTP"
-    parameterValueGroup: "HTTP, HTTPS"
     summary: |-
       The protocol to use for health probes.
+  - name: --response-based-origin-error-detection-settings
+    summary: |-
+      The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --response-error-detection-error-types
+    summary: |-
+      The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy.
+  - name: --response-error-detection-failover-threshold
+    summary: |-
+      The percentage of failed requests in the sample where failover should trigger.
+  - name: --response-error-detection-status-code-ranges
+    summary: |-
+      Type of response errors for real user requests for which origin will be deemed unhealthy.
+  - name: --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes
+    summary: |-
+      Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
 - uid: az_cdn_origin-group_delete
   name: az cdn origin-group delete
   summary: |-
-    Deletes an existing origin group within an endpoint.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'cdn origin-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Delete an existing origin group within an endpoint.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
     az cdn origin-group delete [--endpoint-name]
                                [--ids]
                                [--name]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--profile-name]
                                [--resource-group]
                                [--subscription]
@@ -92,13 +115,17 @@ directCommands:
   optionalParameters:
   - name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --name --origin-group-name -n
     summary: |-
-      Name of the origin group.
+      Name of the origin group which is unique within the endpoint.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
@@ -115,21 +142,21 @@ directCommands:
 - uid: az_cdn_origin-group_list
   name: az cdn origin-group list
   summary: |-
-    Lists all of the existing origin groups within an endpoint.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'cdn origin-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    List all of the existing origin groups within an endpoint.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
     az cdn origin-group list --endpoint-name
                              --profile-name
                              --resource-group
+                             [--max-items]
+                             [--next-token]
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - isRequired: true
     name: --profile-name
     summary: |-
@@ -138,13 +165,18 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_cdn_origin-group_show
   name: az cdn origin-group show
   summary: |-
-    Gets an existing origin group within an endpoint.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'cdn origin-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Get an existing origin group within an endpoint.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
@@ -157,13 +189,13 @@ directCommands:
   optionalParameters:
   - name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --name --origin-group-name -n
     summary: |-
-      Name of the origin group.
+      Name of the origin group which is unique within the endpoint.
   - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
@@ -176,24 +208,34 @@ directCommands:
 - uid: az_cdn_origin-group_update
   name: az cdn origin-group update
   summary: |-
-    Update an origin group.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'cdn origin-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+    Update a new origin group within the specified endpoint.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
-    az cdn origin-group update [--endpoint-name]
+    az cdn origin-group update [--add]
+                               [--endpoint-name]
+                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--formatted-origins]
+                               [--health-probe-settings]
                                [--ids]
                                [--name]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--origins]
                                [--probe-interval]
-                               [--probe-method {GET, HEAD}]
+                               [--probe-method]
                                [--probe-path]
-                               [--probe-protocol {HTTP, HTTPS}]
+                               [--probe-protocol]
                                [--profile-name]
+                               [--remove]
                                [--resource-group]
+                               [--response-based-origin-error-detection-settings]
+                               [--response-error-detection-error-types]
+                               [--response-error-detection-failover-threshold]
+                               [--response-error-detection-status-code-ranges]
+                               [--set]
                                [--subscription]
+                               [--traffic-restoration-time-to-healed-or-new-endpoints-in-minutes]
   examples:
   - summary: |-
       Update which origins are included in an origin group.
@@ -202,32 +244,127 @@ directCommands:
       Update an origin group with a custom health probe
     syntax: az cdn origin-group update -g group --profile-name profile --endpoint-name endpoint -n origin-group --origins origin-0,origin-1 --probe-path /healthz --probe-interval 90 --probe-protocol HTTPS --probe-method GET
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --formatted-origins
+    summary: |-
+      The source of the content being delivered via CDN within given origin group.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --health-probe-settings
+    summary: |-
+      Health probe settings to the origin that is used to determine the health of the origin.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --name --origin-group-name -n
     summary: |-
-      Name of the origin group.
+      Name of the origin group which is unique within the endpoint.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origins
     summary: |-
-      The origins load balanced by this origin group, as a comma-separated list of origin names from the parent endpoint origin IDs.
+      The origins load balanced by this origin group, as a comma-separated list of origin names or origin resource IDs.
   - name: --probe-interval
     summary: |-
       The frequency to perform health probes in seconds.
   - name: --probe-method
-    parameterValueGroup: "GET, HEAD"
     summary: |-
       The request method to use for health probes.
   - name: --probe-path
     summary: |-
       The path relative to the origin that is used to determine the health of the origin.
   - name: --probe-protocol
-    parameterValueGroup: "HTTP, HTTPS"
     summary: |-
       The protocol to use for health probes.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --response-based-origin-error-detection-settings
+    summary: |-
+      The JSON object that contains the properties to determine origin health using real requests/responses. This property is currently not supported.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --response-error-detection-error-types
+    summary: |-
+      The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy.
+  - name: --response-error-detection-failover-threshold
+    summary: |-
+      The percentage of failed requests in the sample where failover should trigger.
+  - name: --response-error-detection-status-code-ranges
+    summary: |-
+      Type of response errors for real user requests for which origin will be deemed unhealthy.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --traffic-restoration-time-to-healed-or-new-endpoints-in-minutes
+    summary: |-
+      Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+- uid: az_cdn_origin-group_wait
+  name: az cdn origin-group wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn origin-group wait [--created]
+                             [--custom]
+                             [--deleted]
+                             [--endpoint-name]
+                             [--exists]
+                             [--ids]
+                             [--interval]
+                             [--name]
+                             [--profile-name]
+                             [--resource-group]
+                             [--subscription]
+                             [--timeout]
+                             [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --endpoint-name
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --origin-group-name -n
+    summary: |-
+      Name of the origin group which is unique within the endpoint.
   - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
@@ -237,12 +374,21 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_cdn_origin-group_create
 - az_cdn_origin-group_delete
 - az_cdn_origin-group_list
 - az_cdn_origin-group_show
 - az_cdn_origin-group_update
+- az_cdn_origin-group_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -268,5 +414,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/11/2023
+  ms.date: 03/20/2024
   description: Manage origin groups of an endpoint.

@@ -2,14 +2,16 @@
 uid: az_netappfiles_pool
 name: az netappfiles pool
 summary: |-
-  Manage Azure NetApp Files (ANF) Pool Resources.
+  Manage Azure NetApp Files (ANF) Capacity Pool Resources.
 status: GA
 sourceType: Core
 directCommands:
 - uid: az_netappfiles_pool_create
   name: az netappfiles pool create
   summary: |-
-    Create a new Azure NetApp Files (ANF) pool.
+    Create a capacity pool.
+  description: |-
+    Create a new Azure NetApp Files (ANF) capacity pool.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -17,13 +19,13 @@ directCommands:
     az netappfiles pool create --account-name
                                --name
                                --resource-group
-                               --service-level {Premium, Standard, Ultra}
-                               --size
-                               [--cool-access {false, true}]
-                               [--encryption-type]
+                               [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--encryption-type {Double, Single}]
                                [--location]
-                               [--no-wait]
-                               [--qos-type]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--qos-type {Auto, Manual}]
+                               [--service-level {Premium, Standard, StandardZRS, Ultra}]
+                               [--size]
                                [--tags]
   examples:
   - summary: |-
@@ -33,49 +35,56 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - isRequired: true
     name: --name --pool-name -n -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - isRequired: true
-    name: --service-level
-    parameterValueGroup: "Premium, Standard, Ultra"
-    summary: |-
-      The service level for the ANF pool.
-  - isRequired: true
-    name: --size
-    summary: |-
-      The size for the ANF pool. Must be an integer number of tebibytes in multiples of 4.
   optionalParameters:
   - name: --cool-access
-    parameterValueGroup: "false, true"
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled (true) the pool can contain cool Access enabled volumes.
   - name: --encryption-type
+    defaultValue: "Single"
+    parameterValueGroup: "Double, Single"
     summary: |-
-      Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. Possible values are Single or Double. Default value is Single.
+      Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --qos-type
+    defaultValue: "Auto"
+    parameterValueGroup: "Auto, Manual"
     summary: |-
-      The qos type of the ANF pool.
+      The qos type of the pool.
+  - name: --service-level
+    defaultValue: "Premium"
+    parameterValueGroup: "Premium, Standard, StandardZRS, Ultra"
+    summary: |-
+      ServiceLevel.
+  - name: --size
+    defaultValue: "4398046511104"
+    summary: |-
+      Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiply of 4398046511104).
   - name: --tags
     summary: |-
-      Space-separated tags in `key[=value]` format.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_netappfiles_pool_delete
   name: az netappfiles pool delete
   summary: |-
-    Delete the specified ANF pool.
+    Delete the specified capacity pool.
+  description: |-
+    Delete the specified ANF capacity pool.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -83,7 +92,7 @@ directCommands:
     az netappfiles pool delete [--account-name]
                                [--ids]
                                [--name]
-                               [--no-wait]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--resource-group]
                                [--subscription]
   examples:
@@ -93,15 +102,15 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --pool-name -n -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
@@ -113,13 +122,17 @@ directCommands:
 - uid: az_netappfiles_pool_list
   name: az netappfiles pool list
   summary: |-
-    L:ist the ANF pools for the specified account.
+    List all capacity pools in the NetApp Account.
+  description: |-
+    List the ANF capacity pools for the specified account.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles pool list --account-name
                              --resource-group
+                             [--max-items]
+                             [--next-token]
   examples:
   - summary: |-
       List the pools for the ANF account
@@ -128,15 +141,24 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_netappfiles_pool_show
   name: az netappfiles pool show
   summary: |-
-    Get the specified ANF pool.
+    Get details of the specified capacity pool.
+  description: |-
+    Get the specified ANF capacity pool.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -153,13 +175,13 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --pool-name -n -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -169,18 +191,25 @@ directCommands:
 - uid: az_netappfiles_pool_update
   name: az netappfiles pool update
   summary: |-
-    Update the tags of the specified ANF pool.
+    Update a capacity pool.
+  description: |-
+    Update the specified ANF capacity pool.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles pool update [--account-name]
-                               [--cool-access {false, true}]
+                               [--add]
+                               [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                [--ids]
                                [--name]
-                               [--no-wait]
-                               [--qos-type]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                               [--qos-type {Auto, Manual}]
+                               [--remove]
                                [--resource-group]
+                               [--service-level {Premium, Standard, StandardZRS, Ultra}]
+                               [--set]
                                [--size]
                                [--subscription]
                                [--tags]
@@ -191,40 +220,58 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --cool-access
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled (true) the pool can contain cool Access enabled volumes.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --pool-name -n -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --qos-type
+    parameterValueGroup: "Auto, Manual"
     summary: |-
-      The qos type of the ANF pool.
+      The qos type of the pool.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --service-level
+    parameterValueGroup: "Premium, Standard, StandardZRS, Ultra"
+    summary: |-
+      ServiceLevel.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --size
     summary: |-
-      The size for the ANF pool. Must be an integer number of tebibytes in multiples of 4.
+      Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiply of 4398046511104).
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags in `key[=value]` format.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_netappfiles_pool_wait
   name: az netappfiles pool wait
   summary: |-
-    Wait for a pool operation.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -244,7 +291,7 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      Name of the ANF account.
+      The name of the NetApp account.
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -269,7 +316,7 @@ directCommands:
       Polling interval in seconds.
   - name: --name --pool-name -n -p
     summary: |-
-      Name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -316,5 +363,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/07/2023
-  description: Manage Azure NetApp Files (ANF) Pool Resources.
+  ms.date: 03/07/2024
+  description: Manage Azure NetApp Files (ANF) Capacity Pool Resources.

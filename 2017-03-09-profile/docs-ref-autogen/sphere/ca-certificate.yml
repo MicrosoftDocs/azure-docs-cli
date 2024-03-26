@@ -6,28 +6,28 @@ extensionInformation: >-
 
   > This reference is part of the **azure-sphere** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az sphere ca-certificate** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage certificates in your Azure Sphere Catalog.
+  Manage certificates in your resource group and catalog.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_sphere_ca-certificate_download
   name: az sphere ca-certificate download
   summary: |-
-    Download the certificate for your Azure Sphere Catalog.
+    Download the certificate for your catalog.
   status: GA
   sourceType: Extension
   syntax: >-
     az sphere ca-certificate download --catalog
                                       --output-file
                                       --resource-group
-                                      [--serial-number]
+                                      [--name]
   examples:
   - summary: |-
-      Download an active certificate using resource group and Azure Sphere Catalog.
+      Download an active certificate using resource group and catalog name.
     syntax: az sphere ca-certificate download --resource-group MyResourceGroup --catalog MyCatalog --output-file myCert.cer
   - summary: |-
-      Download certificate using resource group and Azure Sphere Catalog.
-    syntax: az sphere ca-certificate download --resource-group MyResourceGroup --catalog MyCatalog --serial-number 2E7A0AF370ABC439901BBB37AF38B97 --output-file myCert.cer
+      Download certificate using resource group, catalog name and certificate name.
+    syntax: az sphere ca-certificate download --resource-group MyResourceGroup --catalog MyCatalog --name 2E7A0AF370ABC439901BBB37AF38B97 --output-file myCert.cer
   requiredParameters:
   - isRequired: true
     name: --catalog -c
@@ -42,27 +42,28 @@ directCommands:
     summary: |-
       Name of the Azure resource group. You can configure the default group using `az config set defaults.group=<name>`.  Values from: az group list.
   optionalParameters:
-  - name: --serial-number -sn
+  - name: --name -n
     defaultValue: "active"
     summary: |-
-      The certificate to download. Specify serial number.
+      The certificate to download. Specify name. If no name is supplied, the active certificate is downloaded.
+    valueFrom: az sphere ca-certificate list
 - uid: az_sphere_ca-certificate_download-chain
   name: az sphere ca-certificate download-chain
   summary: |-
-    Download the certificate chain for your Azure Sphere Catalog as a PKCS#7 '.p7b' file.
+    Download the certificate chain for your catalog as a PKCS#7 ".p7b" file.
   status: GA
   sourceType: Extension
   syntax: >-
     az sphere ca-certificate download-chain --catalog
                                             --output-file
                                             --resource-group
-                                            [--serial-number]
+                                            [--name]
   examples:
   - summary: |-
-      Download a certificate chain using resource group and Azure Sphere Catalog.
-    syntax: az sphere ca-certificate download-chain --resource-group MyResourceGroup --catalog MyCatalog --serial-number 2E7A0AF370ABC439901BBB37AF38B97 --output-file myCertChain.p7b
+      Download a certificate chain using resource group and catalog name.
+    syntax: az sphere ca-certificate download-chain --resource-group MyResourceGroup --catalog MyCatalog --name 2E7A0AF370ABC439901BBB37AF38B97 --output-file myCertChain.p7b
   - summary: |-
-      Download an active certificate chain using resource group and Azure Sphere Catalog.
+      Download an active certificate chain using resource group, catalog name and certificate name.
     syntax: az sphere ca-certificate download-chain --resource-group MyResourceGroup --catalog MyCatalog --output-file myCertChain.p7b
   requiredParameters:
   - isRequired: true
@@ -72,20 +73,21 @@ directCommands:
   - isRequired: true
     name: --output-file -of
     summary: |-
-      Path and file name in which to save the certificate chain. Specify a relative or absolute path using a '.p7b' extension.
+      Path and file name in which to save the certificate chain. Specify a relative or absolute path using a ".p7b" extension.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of the Azure resource group. You can configure the default group using `az config set defaults.group=<name>`.  Values from: az group list.
   optionalParameters:
-  - name: --serial-number -sn
+  - name: --name -n
     defaultValue: "active"
     summary: |-
-      The certificate to download. Specify serial number.
+      The certificate to download. Specify name. If no name is supplied, the active certificate is downloaded.
+    valueFrom: az sphere ca-certificate list
 - uid: az_sphere_ca-certificate_download-proof
   name: az sphere ca-certificate download-proof
   summary: |-
-    Download a proof-of-possession certificate for your Azure Sphere Catalog for use with a provided code.
+    Download a proof-of-possession certificate for your catalog for use with a provided code.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -93,13 +95,13 @@ directCommands:
                                             --output-file
                                             --resource-group
                                             --verification-code
-                                            [--serial-number]
+                                            [--name]
   examples:
   - summary: |-
-      Download a proof-of-possession certificate using resource group and Azure Sphere Catalog.
-    syntax: az sphere ca-certificate download-proof --resource-group MyResourceGroup --catalog MyCatalog --serial-number 2E7A0AF370ABC439901BBB37AF38B97 --verification-code 3304517c557a3375e --output-file myCert.cer
+      Download a proof-of-possession certificate using resource group and catalog name.
+    syntax: az sphere ca-certificate download-proof --resource-group MyResourceGroup --catalog MyCatalog --name 2E7A0AF370ABC439901BBB37AF38B97 --verification-code 3304517c557a3375e --output-file myCert.cer
   - summary: |-
-      Download an active proof-of-possessionan certificate using resource group and Azure Sphere Catalog.
+      Download an active proof-of-possession certificate using resource group, catalog name and certificate name.
     syntax: az sphere ca-certificate download-proof --resource-group MyResourceGroup --catalog MyCatalog --verification-code 3304517c557a3375e --output-file myCert.cer
   requiredParameters:
   - isRequired: true
@@ -119,14 +121,15 @@ directCommands:
     summary: |-
       The verification code for the Azure Sphere Security Service to use when generating the certificate.
   optionalParameters:
-  - name: --serial-number -sn
+  - name: --name -n
     defaultValue: "active"
     summary: |-
-      The certificate to download. Specify serial number.
+      The certificate to download. Specify name. If no name is supplied, the active certificate is downloaded.
+    valueFrom: az sphere ca-certificate list
 - uid: az_sphere_ca-certificate_list
   name: az sphere ca-certificate list
   summary: |-
-    List all certificates in your Azure Sphere Catalog.
+    List all certificates in your resource group and catalog.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -134,7 +137,7 @@ directCommands:
                                   --resource-group
   examples:
   - summary: |-
-      List all certificates in a resource group and Azure Sphere Catalog.
+      List all certificates in a resource group and catalog.
     syntax: az sphere ca-certificate list --resource-group MyResourceGroup --catalog MyCatalog
   requiredParameters:
   - isRequired: true
@@ -175,4 +178,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage certificates in your Azure Sphere Catalog.
+  description: Manage certificates in your resource group and catalog.

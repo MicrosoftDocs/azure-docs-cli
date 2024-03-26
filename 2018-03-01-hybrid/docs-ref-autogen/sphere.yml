@@ -6,23 +6,23 @@ extensionInformation: >-
 
   > This reference is part of the **azure-sphere** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az sphere** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Azure Sphere.
+  Manage Azure Sphere resources.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_sphere_get-support-data
   name: az sphere get-support-data
   summary: |-
-    Gather diagnostic data about your system, cloud and device configurations.
+    Gather diagnostic data about your local system, cloud and device configurations.
   status: GA
   sourceType: Extension
   syntax: >-
     az sphere get-support-data --catalog
-                               --output-file
                                --resource-group
+                               [--output-file]
   examples:
   - summary: |-
-      Gather diagnostic data using resource group and Azure Sphere Catalog name.
+      Gather diagnostic data about your local system, cloud and device configurations for devices in a resource group and catalog.
     syntax: az sphere get-support-data --resource-group MyResourceGroup --catalog MyCatalog --output-file archive.zip
   requiredParameters:
   - isRequired: true
@@ -30,13 +30,24 @@ directCommands:
     summary: |-
       The Azure Sphere Catalog in which to perform this operation. Specify Azure Sphere Catalog name. You can configure the default Azure Sphere Catalog using `az config set defaults.sphere.catalog=<name>`.  Values from: az sphere catalog list.
   - isRequired: true
-    name: --output-file -of
-    summary: |-
-      The path and filename of the .zip file to save the support data in. You can provide a relative or absolute path.
-  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of the Azure resource group. You can configure the default group using `az config set defaults.group=<name>`.  Values from: az group list.
+  optionalParameters:
+  - name: --output-file -of
+    summary: |-
+      The path and filename of the .zip file to save the support data in. It must have the .zip extension. You can provide a relative or absolute path. If you do not specify a filename, the support data will be saved in a file called support_data.zip in the current working directory. (Path).
+- uid: az_sphere_show-sdk-version
+  name: az sphere show-sdk-version
+  summary: |-
+    Show the version of the Azure Sphere SDK installed.
+  status: GA
+  sourceType: Extension
+  syntax: az sphere show-sdk-version
+  examples:
+  - summary: |-
+      Show the version of the Azure Sphere SDK installed.
+    syntax: az sphere show-sdk-version
 commands:
 - az_sphere_ca-certificate
 - az_sphere_ca-certificate_download
@@ -69,8 +80,8 @@ commands:
 - az_sphere_device_app_stop
 - az_sphere_device_assign
 - az_sphere_device_capability
+- az_sphere_device_capability_apply
 - az_sphere_device_capability_download
-- az_sphere_device_capability_select
 - az_sphere_device_capability_show-attached
 - az_sphere_device_capability_update
 - az_sphere_device_certificate
@@ -84,6 +95,7 @@ commands:
 - az_sphere_device_enable-development
 - az_sphere_device_image
 - az_sphere_device_image_list-installed
+- az_sphere_device_image_list-targeted
 - az_sphere_device_list
 - az_sphere_device_list-attached
 - az_sphere_device_manufacturing-state
@@ -97,6 +109,8 @@ commands:
 - az_sphere_device_network_proxy
 - az_sphere_device_network_proxy_apply
 - az_sphere_device_network_proxy_delete
+- az_sphere_device_network_proxy_disable
+- az_sphere_device_network_proxy_enable
 - az_sphere_device_network_proxy_show
 - az_sphere_device_network_show-diagnostics
 - az_sphere_device_network_show-status
@@ -126,12 +140,14 @@ commands:
 - az_sphere_device_wifi_show
 - az_sphere_device_wifi_show-status
 - az_sphere_get-support-data
+- az_sphere_hardware-definition
+- az_sphere_hardware-definition_generate-header
+- az_sphere_hardware-definition_test-header
 - az_sphere_image
 - az_sphere_image-package
 - az_sphere_image-package_show
 - az_sphere_image_add
 - az_sphere_image_list
-- az_sphere_image_list-targeted
 - az_sphere_image_show
 - az_sphere_product
 - az_sphere_product_create
@@ -139,6 +155,7 @@ commands:
 - az_sphere_product_list
 - az_sphere_product_show
 - az_sphere_product_update
+- az_sphere_show-sdk-version
 globalParameters:
 - name: --debug
   summary: |-
@@ -164,4 +181,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage Azure Sphere.
+  description: Manage Azure Sphere resources.

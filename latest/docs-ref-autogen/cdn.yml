@@ -14,33 +14,40 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
-    az cdn name-exists [--ids]
-                       [--name]
-                       [--subscription]
+    az cdn name-exists --name
+                       [--type {Microsoft.Cdn/Profiles/AfdEndpoints, Microsoft.Cdn/Profiles/Endpoints}]
   examples:
   - summary: |-
       Check whether the resource name contoso is available or not.
     syntax: az cdn name-exists --name contoso
-  optionalParameters:
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  requiredParameters:
+  - isRequired: true
+    name: --name
     summary: |-
       The resource name to validate.
-  - name: --subscription
+  optionalParameters:
+  - name: --type
+    defaultValue: "Microsoft.Cdn/Profiles/Endpoints"
+    parameterValueGroup: "Microsoft.Cdn/Profiles/AfdEndpoints, Microsoft.Cdn/Profiles/Endpoints"
     summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+      The type of the resource whose name is to be validated.
 - uid: az_cdn_usage
   name: az cdn usage
   summary: |-
     Check the quota and actual usage of the CDN profiles under the given subscription.
-  description: |-
-    :keyword callable cls: A custom type or function that will be passed the direct response :return: An iterator like instance of either ResourceUsageListResult or the result of  cls(response) :rtype: ~azure.core.paging.ItemPaged[~azure.mgmt.cdn.models.ResourceUsageListResult] :raises: ~azure.core.exceptions.HttpResponseError.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
-  syntax: az cdn usage
+  syntax: >-
+    az cdn usage [--max-items]
+                 [--next-token]
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 commands:
 - az_cdn_custom-domain
 - az_cdn_custom-domain_create
@@ -49,6 +56,8 @@ commands:
 - az_cdn_custom-domain_enable-https
 - az_cdn_custom-domain_list
 - az_cdn_custom-domain_show
+- az_cdn_custom-domain_update
+- az_cdn_custom-domain_wait
 - az_cdn_edge-node
 - az_cdn_edge-node_list
 - az_cdn_endpoint
@@ -56,6 +65,7 @@ commands:
 - az_cdn_endpoint_delete
 - az_cdn_endpoint_list
 - az_cdn_endpoint_load
+- az_cdn_endpoint_name-exists
 - az_cdn_endpoint_purge
 - az_cdn_endpoint_rule
 - az_cdn_endpoint_rule_action
@@ -74,11 +84,7 @@ commands:
 - az_cdn_endpoint_stop
 - az_cdn_endpoint_update
 - az_cdn_endpoint_validate-custom-domain
-- az_cdn_endpoint_waf
-- az_cdn_endpoint_waf_policy
-- az_cdn_endpoint_waf_policy_remove
-- az_cdn_endpoint_waf_policy_set
-- az_cdn_endpoint_waf_policy_show
+- az_cdn_endpoint_wait
 - az_cdn_name-exists
 - az_cdn_origin
 - az_cdn_origin-group
@@ -87,47 +93,20 @@ commands:
 - az_cdn_origin-group_list
 - az_cdn_origin-group_show
 - az_cdn_origin-group_update
+- az_cdn_origin-group_wait
 - az_cdn_origin_create
 - az_cdn_origin_delete
 - az_cdn_origin_list
 - az_cdn_origin_show
 - az_cdn_origin_update
+- az_cdn_origin_wait
 - az_cdn_profile
 - az_cdn_profile_create
 - az_cdn_profile_delete
 - az_cdn_profile_list
 - az_cdn_profile_show
 - az_cdn_profile_update
-- az_cdn_profile_usage
 - az_cdn_usage
-- az_cdn_waf
-- az_cdn_waf_policy
-- az_cdn_waf_policy_custom-rule
-- az_cdn_waf_policy_custom-rule_delete
-- az_cdn_waf_policy_custom-rule_list
-- az_cdn_waf_policy_custom-rule_set
-- az_cdn_waf_policy_custom-rule_show
-- az_cdn_waf_policy_delete
-- az_cdn_waf_policy_list
-- az_cdn_waf_policy_managed-rule-set
-- az_cdn_waf_policy_managed-rule-set_add
-- az_cdn_waf_policy_managed-rule-set_list
-- az_cdn_waf_policy_managed-rule-set_list-available
-- az_cdn_waf_policy_managed-rule-set_remove
-- az_cdn_waf_policy_managed-rule-set_rule-group-override
-- az_cdn_waf_policy_managed-rule-set_rule-group-override_delete
-- az_cdn_waf_policy_managed-rule-set_rule-group-override_list
-- az_cdn_waf_policy_managed-rule-set_rule-group-override_list-available
-- az_cdn_waf_policy_managed-rule-set_rule-group-override_set
-- az_cdn_waf_policy_managed-rule-set_rule-group-override_show
-- az_cdn_waf_policy_managed-rule-set_show
-- az_cdn_waf_policy_rate-limit-rule
-- az_cdn_waf_policy_rate-limit-rule_delete
-- az_cdn_waf_policy_rate-limit-rule_list
-- az_cdn_waf_policy_rate-limit-rule_set
-- az_cdn_waf_policy_rate-limit-rule_show
-- az_cdn_waf_policy_set
-- az_cdn_waf_policy_show
 globalParameters:
 - name: --debug
   summary: |-
@@ -153,5 +132,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/11/2023
+  ms.date: 03/20/2024
   description: Manage Azure Content Delivery Networks (CDNs).

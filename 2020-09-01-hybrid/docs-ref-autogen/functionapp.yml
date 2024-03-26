@@ -23,6 +23,7 @@ directCommands:
     az functionapp create --name
                           --resource-group
                           --storage-account
+                          [--always-ready-instances]
                           [--app-insights]
                           [--app-insights-key]
                           [--assign-identity]
@@ -38,15 +39,22 @@ directCommands:
                           [--deployment-local-git]
                           [--deployment-source-branch]
                           [--deployment-source-url]
+                          [--deployment-storage-auth-type {StorageAccountConnectionString, SystemAssignedIdentity, UserAssignedIdentity}]
+                          [--deployment-storage-auth-value]
+                          [--deployment-storage-container-name]
+                          [--deployment-storage-name]
                           [--disable-app-insights {false, true}]
                           [--docker-registry-server-password]
                           [--docker-registry-server-user]
                           [--enable-dapr {false, true}]
                           [--environment]
+                          [--flexconsumption-location]
                           [--functions-version {4}]
                           [--https-only {false, true}]
                           [--image]
+                          [--instance-memory]
                           [--max-replicas]
+                          [--maximum-instance-count]
                           [--memory]
                           [--min-replicas]
                           [--os-type {Linux, Windows}]
@@ -73,6 +81,9 @@ directCommands:
   - summary: |-
       Create a function app using a private ACR image.
     syntax: az functionapp create -g MyResourceGroup -p MyPlan -n MyUniqueAppName --runtime node --storage-account MyStorageAccount --deployment-container-image-name myacr.azurecr.io/myimage:tag --docker-registry-server-password passw0rd --docker-registry-server-user MyUser
+  - summary: |-
+      Create a flex consumption function app. See https://aka.ms/flex-http-concurrency for more information on default http concurrency values.
+    syntax: az functionapp create -g MyResourceGroup --name MyUniqueAppName -s MyStorageAccount --flexconsumption-location northeurope --runtime java --instance-memory 2048
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -87,6 +98,10 @@ directCommands:
     summary: |-
       Provide a string value of a Storage Account in the provided Resource Group. Or Resource ID of a Storage Account in a different Resource Group.
   optionalParameters:
+  - name: --always-ready-instances
+    summary: |-
+      Space-separated configuration for the number of pre-allocated instances in the format `<name>=<value>`.
+    isPreview: true
   - name: --app-insights
     summary: |-
       Name of the existing App Insights project to be added to the function app. Must be in the same resource group.
@@ -133,12 +148,28 @@ directCommands:
     summary: |-
       Enable local git.
   - name: --deployment-source-branch -b
-    defaultValue: "master"
     summary: |-
       The branch to deploy.
   - name: --deployment-source-url -u
     summary: |-
       Git repository URL to link with manual integration.
+  - name: --deployment-storage-auth-type --dsat
+    parameterValueGroup: "StorageAccountConnectionString, SystemAssignedIdentity, UserAssignedIdentity"
+    summary: |-
+      The deployment storage account authentication type.
+    isPreview: true
+  - name: --deployment-storage-auth-value --dsav
+    summary: |-
+      The deployment storage account authentication value. For the user-assigned managed identity authentication type, this should be the user assigned identity resource id. For the storage account connection string authentication type, this should be the name of the app setting that will contain the storage account connection string. For the system assigned managed-identity authentication type, this parameter is not applicable and should be left empty.
+    isPreview: true
+  - name: --deployment-storage-container-name --dscn
+    summary: |-
+      The deployment storage account container name.
+    isPreview: true
+  - name: --deployment-storage-name --dsn
+    summary: |-
+      The deployment storage account name.
+    isPreview: true
   - name: --disable-app-insights
     parameterValueGroup: "false, true"
     summary: |-
@@ -162,6 +193,10 @@ directCommands:
     summary: |-
       Name of the container app environment.
     isPreview: true
+  - name: --flexconsumption-location -f
+    summary: |-
+      Geographic location where function app will be hosted. Use `az functionapp list-flexconsumption-locations` to view available locations.
+    isPreview: true
   - name: --functions-version
     parameterValueGroup: "4"
     summary: |-
@@ -174,9 +209,17 @@ directCommands:
   - name: --image -i
     summary: |-
       Container image, e.g. publisher/image-name:tag.
+  - name: --instance-memory
+    summary: |-
+      The instance memory size in MB. See https://aka.ms/flex-instance-sizes for more information on the supported values.
+    isPreview: true
   - name: --max-replicas
     summary: |-
       The maximum number of replicas when create function app on container app.
+    isPreview: true
+  - name: --maximum-instance-count
+    summary: |-
+      The maximum number of instances.
     isPreview: true
   - name: --memory
     summary: |-
@@ -515,6 +558,22 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: az functionapp list-consumption-locations
+- uid: az_functionapp_list-flexconsumption-locations
+  name: az functionapp list-flexconsumption-locations
+  summary: |-
+    List available locations for running function apps on the Flex Consumption plan.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+  syntax: az functionapp list-flexconsumption-locations
+- uid: az_functionapp_list-flexconsumption-runtimes
+  name: az functionapp list-flexconsumption-runtimes
+  summary: |-
+    List available built-in stacks which can be used for function apps on the Flex Consumption plan.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+  syntax: az functionapp list-flexconsumption-runtimes
 - uid: az_functionapp_list-runtimes
   name: az functionapp list-runtimes
   summary: |-
@@ -894,6 +953,9 @@ commands:
 - az_functionapp_delete
 - az_functionapp_deploy
 - az_functionapp_deployment
+- az_functionapp_deployment_config
+- az_functionapp_deployment_config_set
+- az_functionapp_deployment_config_show
 - az_functionapp_deployment_container
 - az_functionapp_deployment_container_config
 - az_functionapp_deployment_container_show-cd-url
@@ -944,6 +1006,8 @@ commands:
 - az_functionapp_keys_set
 - az_functionapp_list
 - az_functionapp_list-consumption-locations
+- az_functionapp_list-flexconsumption-locations
+- az_functionapp_list-flexconsumption-runtimes
 - az_functionapp_list-runtimes
 - az_functionapp_log
 - az_functionapp_log_deployment
@@ -957,6 +1021,17 @@ commands:
 - az_functionapp_plan_update
 - az_functionapp_restart
 - az_functionapp_restart(appservice-kube)
+- az_functionapp_runtime
+- az_functionapp_runtime_config
+- az_functionapp_runtime_config_set
+- az_functionapp_runtime_config_show
+- az_functionapp_scale
+- az_functionapp_scale_config
+- az_functionapp_scale_config_always-ready
+- az_functionapp_scale_config_always-ready_delete
+- az_functionapp_scale_config_always-ready_set
+- az_functionapp_scale_config_set
+- az_functionapp_scale_config_show
 - az_functionapp_show
 - az_functionapp_show(appservice-kube)
 - az_functionapp_start

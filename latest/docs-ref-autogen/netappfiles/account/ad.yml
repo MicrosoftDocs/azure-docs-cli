@@ -14,130 +14,117 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
-    az netappfiles account ad add --dns
-                                  --domain
-                                  --password
-                                  --smb-server-name
-                                  --username
-                                  [--account-name]
+    az netappfiles account ad add --account-name
+                                  --resource-group
+                                  [--active-directory-id]
                                   [--ad-name]
                                   [--administrators]
-                                  [--aes-encryption {false, true}]
-                                  [--allow-local-ldap-users {false, true}]
+                                  [--aes-encryption {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--allow-local-ldap-users {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--backup-operators]
-                                  [--encrypt-dc-conn {false, true}]
-                                  [--group-dn]
-                                  [--group-filter]
-                                  [--ids]
+                                  [--dns]
+                                  [--domain]
+                                  [--encrypt-dc-conn {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--kdc-ip]
-                                  [--ldap-over-tls]
-                                  [--ldap-signing {false, true}]
-                                  [--no-wait]
+                                  [--ldap-over-tls {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--ldap-search-scope]
+                                  [--ldap-signing {0, 1, f, false, n, no, t, true, y, yes}]
+                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--organizational-unit]
+                                  [--password]
                                   [--preferred-servers-for-ldap-client]
-                                  [--resource-group]
                                   [--security-operators]
                                   [--server-root-ca-cert]
                                   [--site]
-                                  [--subscription]
-                                  [--user-dn]
+                                  [--smb-server-name]
+                                  [--username]
   examples:
   - summary: |-
       Add an active directory to the account
-    syntax: az netappfiles account ad add -g mygroup --name myname --username aduser --password aduser --smb-server-name SMBSERVER --dns 1.2.3.4 --domain westcentralus
+    syntax: az netappfiles account ad add -g mygroup -a myname --username aduser --password aduser --smb-server-name SMBSERVER --dns 1.2.3.4 --domain westcentralus
   requiredParameters:
   - isRequired: true
-    name: --dns
+    name: --account-name --name -a -n
     summary: |-
-      Comma separated list of DNS server IP addresses for the Active Directory domain.
+      The name of the NetApp account.
   - isRequired: true
-    name: --domain
+    name: --resource-group -g
     summary: |-
-      Name of the Active Directory domain.
-  - isRequired: true
-    name: --password
-    summary: |-
-      Plain text password of Active Directory domain administrator.
-  - isRequired: true
-    name: --smb-server-name
-    summary: |-
-      NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. Must be 10 characters or less.
-  - isRequired: true
-    name: --username
-    summary: |-
-      Username of Active Directory domain administrator.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --account-name --name -a -n
+  - name: --active-directory-id
     summary: |-
-      The name of the ANF account.
+      Id of the Active Directory.
   - name: --ad-name
     summary: |-
       Name of the active directory machine. This optional parameter is used only while creating kerberos volume.
   - name: --administrators
     summary: |-
-      Users to be added to the Built-in Administrators active directory group. A space separated string of unique usernames without domain specifier.
+      Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --aes-encryption
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled, AES encryption will be enabled for SMB communication.
-  - name: --allow-local-ldap-users
-    parameterValueGroup: "false, true"
+  - name: --allow-local-ldap-users --allow-local-nfs-users-with-ldap
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes.
   - name: --backup-operators
     summary: |-
-      Users to be added to the Built-in Backup Operator active directory group. A space separated string of unique usernames without domain specifier.
-  - name: --encrypt-dc-conn
-    parameterValueGroup: "false, true"
+      Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --dns
+    summary: |-
+      Comma separated list of DNS server IP addresses (IPv4 only) for the Active Directory domain.
+  - name: --domain
+    summary: |-
+      Name of the Active Directory domain.
+  - name: --encrypt-dc-conn --encrypt-dc-connections
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted.
-  - name: --group-dn
-    summary: |-
-      This specifies the group DN, which overrides the base DN for group lookups.
-  - name: --group-filter
-    summary: |-
-      This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --kdc-ip
     summary: |-
       Kdc server IP addresses for the active directory machine. This optional parameter is used only while creating kerberos volume.
   - name: --ldap-over-tls
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Specifies whether or not the LDAP traffic needs to be secured via TLS.
+  - name: --ldap-search-scope
+    summary: |-
+      LDAP Search scope options  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ldap-signing
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Specifies whether or not the LDAP traffic needs to be signed.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --organizational-unit
+    defaultValue: "CN=Computers"
     summary: |-
       The Organizational Unit (OU) within the Windows Active Directory.
+  - name: --password
+    summary: |-
+      Plain text password of Active Directory domain administrator, value is masked in the response.
   - name: --preferred-servers-for-ldap-client -p
     summary: |-
       Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --security-operators
     summary: |-
-      Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A space separated list of unique usernames without domain specifier.
-  - name: --server-root-ca-cert
+      Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --server-root-ca-cert --server-root-ca-certificate
     summary: |-
       When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes.
   - name: --site
     summary: |-
       The Active Directory site the service will limit Domain Controller discovery to.
-  - name: --subscription
+  - name: --smb-server-name
     summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --user-dn
+      NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes.
+  - name: --username
     summary: |-
-      This specifies the user DN, which overrides the base DN for user lookups.
+      A domain user account with permission to create machine accounts.
 - uid: az_netappfiles_account_ad_list
   name: az netappfiles account ad list
   summary: |-
@@ -150,13 +137,13 @@ directCommands:
                                    --resource-group
   examples:
   - summary: |-
-      Add an active directory to the account
-    syntax: az netappfiles account ad list -g mygroup --name myname
+      List the active directories of an account.
+    syntax: az netappfiles account ad list -g mygroup -a myname
   requiredParameters:
   - isRequired: true
     name: --account-name --name -a -n
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -169,38 +156,65 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
-    az netappfiles account ad remove --active-directory
-                                     [--account-name]
-                                     [--ids]
-                                     [--no-wait]
-                                     [--resource-group]
-                                     [--subscription]
+    az netappfiles account ad remove --account-name
+                                     --active-directory
+                                     --resource-group
+                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--yes]
   examples:
   - summary: |-
       Remove an active directory from the account
-    syntax: az netappfiles account ad remove -g mygroup --name myname --active-directory 13641da9-c0e9-4b97-84fc-4f8014a93848
+    syntax: az netappfiles account ad remove -g mygroup --name myname --active-directory-id 13641da9-c0e9-4b97-84fc-4f8014a93848
   requiredParameters:
   - isRequired: true
-    name: --active-directory
+    name: --account-name --name -a -n
     summary: |-
-      The id of the active directory.
-  optionalParameters:
-  - name: --account-name --name -a -n
+      The name of the NetApp account.
+  - isRequired: true
+    name: --active-directory --active-directory-id
     summary: |-
-      The name of the ANF account.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --resource-group -g
+      Id of the Active Directory.
+  - isRequired: true
+    name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --subscription
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+      Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_netappfiles_account_ad_show
+  name: az netappfiles account ad show
+  summary: |-
+    Get the specified ANF active directory.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles account ad show --account-name
+                                   --active-directory-id
+                                   --resource-group
+  examples:
+  - summary: |-
+      Get an active directory on the account
+    syntax: az netappfiles account ad show -g mygroup --name myname --active-directory-id 13641da9-c0e9-4b97-84fc-4f8014a93848
+  requiredParameters:
+  - isRequired: true
+    name: --account-name --name -a -n
+    summary: |-
+      The name of the NetApp account.
+  - isRequired: true
+    name: --active-directory-id
+    summary: |-
+      Id of the Active Directory.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_netappfiles_account_ad_update
   name: az netappfiles account ad update
   summary: |-
@@ -209,135 +223,138 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
-    az netappfiles account ad update --active-directory-id
-                                     --dns
-                                     --domain
-                                     --password
-                                     --smb-server-name
-                                     --username
-                                     [--account-name]
+    az netappfiles account ad update --account-name
+                                     --active-directory-id
+                                     --resource-group
                                      [--ad-name]
+                                     [--add]
                                      [--administrators]
-                                     [--aes-encryption {false, true}]
-                                     [--allow-local-ldap-users {false, true}]
+                                     [--aes-encryption {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--allow-local-ldap-users {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--backup-operators]
-                                     [--encrypt-dc-conn {false, true}]
-                                     [--group-dn]
-                                     [--group-filter]
-                                     [--ids]
+                                     [--dns]
+                                     [--domain]
+                                     [--encrypt-dc-connections {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--kdc-ip]
-                                     [--ldap-over-tls]
-                                     [--ldap-signing {false, true}]
-                                     [--no-wait]
+                                     [--ldap-over-tls {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--ldap-search-scope]
+                                     [--ldap-signing {0, 1, f, false, n, no, t, true, y, yes}]
+                                     [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--organizational-unit]
-                                     [--resource-group]
+                                     [--password]
+                                     [--preferred-servers-for-ldap-client]
+                                     [--remove]
                                      [--security-operators]
                                      [--server-root-ca-cert]
+                                     [--set]
                                      [--site]
-                                     [--subscription]
-                                     [--user-dn]
+                                     [--smb-server-name]
+                                     [--username]
   examples:
   - summary: |-
       Update an active directory on the account
-    syntax: az netappfiles account ad update -g mygroup --name myname --active-directory-id 123 --username aduser --password aduser --smb-server-name SMBSERVER --dns 1.2.3.4 --domain westcentralus
+    syntax: az netappfiles account ad update -g mygroup --name myname --active-directory-id 13641da9-c0e9-4b97-84fc-4f8014a93848 --username ad_username --password ad_password --domain northeurope --dns 1.2.3.4 --smb-server-name SMBSERVER
   requiredParameters:
+  - isRequired: true
+    name: --account-name --name -a -n
+    summary: |-
+      The name of the NetApp account.
   - isRequired: true
     name: --active-directory-id
     summary: |-
-      The id of the Active Directory.
+      Id of the Active Directory.
   - isRequired: true
-    name: --dns
+    name: --resource-group -g
     summary: |-
-      Comma separated list of DNS server IP addresses for the Active Directory domain.
-  - isRequired: true
-    name: --domain
-    summary: |-
-      Name of the Active Directory domain.
-  - isRequired: true
-    name: --password
-    summary: |-
-      Plain text password of Active Directory domain administrator.
-  - isRequired: true
-    name: --smb-server-name
-    summary: |-
-      NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. Must be 10 characters or less.
-  - isRequired: true
-    name: --username
-    summary: |-
-      Username of Active Directory domain administrator.
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --account-name --name -a -n
-    summary: |-
-      The name of the ANF account.
   - name: --ad-name
     summary: |-
       Name of the active directory machine. This optional parameter is used only while creating kerberos volume.
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --administrators
     summary: |-
-      Users to be added to the Built-in Administrators active directory group. A space separated list of unique usernames without domain specifier.
+      Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --aes-encryption
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled, AES encryption will be enabled for SMB communication.
-  - name: --allow-local-ldap-users
-    parameterValueGroup: "false, true"
+  - name: --allow-local-ldap-users --allow-local-nfs-users-with-ldap
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes.
   - name: --backup-operators
     summary: |-
-      Users to be added to the Built-in Backup Operator active directory group. A space separated list of unique usernames without domain specifier.
-  - name: --encrypt-dc-conn
-    parameterValueGroup: "false, true"
+      Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --dns
+    summary: |-
+      Comma separated list of DNS server IP addresses (IPv4 only) for the Active Directory domain.
+  - name: --domain
+    summary: |-
+      Name of the Active Directory domain.
+  - name: --encrypt-dc-connections
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted.
-  - name: --group-dn
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      This specifies the group DN, which overrides the base DN for group lookups.
-  - name: --group-filter
-    summary: |-
-      This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --kdc-ip
     summary: |-
       Kdc server IP addresses for the active directory machine. This optional parameter is used only while creating kerberos volume.
   - name: --ldap-over-tls
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Specifies whether or not the LDAP traffic needs to be secured via TLS.
+  - name: --ldap-search-scope
+    summary: |-
+      LDAP Search scope options  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ldap-signing
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Specifies whether or not the LDAP traffic needs to be signed.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --organizational-unit
     summary: |-
       The Organizational Unit (OU) within the Windows Active Directory.
-  - name: --resource-group -g
+  - name: --password
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Plain text password of Active Directory domain administrator, value is masked in the response.
+  - name: --preferred-servers-for-ldap-client -p
+    summary: |-
+      Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --security-operators
     summary: |-
-      Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A space separated list of unique usernames without domain specifier.
-  - name: --server-root-ca-cert
+      Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --server-root-ca-cert --server-root-ca-certificate
     summary: |-
       When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --site
     summary: |-
       The Active Directory site the service will limit Domain Controller discovery to.
-  - name: --subscription
+  - name: --smb-server-name
     summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --user-dn
+      NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes.
+  - name: --username
     summary: |-
-      This specifies the user DN, which overrides the base DN for user lookups.
+      A domain user account with permission to create machine accounts.
 - uid: az_netappfiles_account_ad_wait
   name: az netappfiles account ad wait
   summary: |-
-    Wait for a account ad operation.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -356,7 +373,7 @@ directCommands:
   optionalParameters:
   - name: --account-name --name -a -n
     summary: |-
-      Name of the ANF account.
+      The name of the NetApp account.
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -397,6 +414,7 @@ commands:
 - az_netappfiles_account_ad_add
 - az_netappfiles_account_ad_list
 - az_netappfiles_account_ad_remove
+- az_netappfiles_account_ad_show
 - az_netappfiles_account_ad_update
 - az_netappfiles_account_ad_wait
 globalParameters:
@@ -424,5 +442,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/07/2023
+  ms.date: 03/07/2024
   description: Manage Azure NetApp Files (ANF) Account active directories.
