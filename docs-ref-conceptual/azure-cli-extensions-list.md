@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 03/23/2024
+ms.date: 03/26/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -45,7 +45,7 @@ You will be prompted to install an extension on first use.
 |[application-insights](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights) | 2.55.0 | Support for managing Application Insights components and querying metrics, events, and logs from such components. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/application-insights/HISTORY.rst) |
 |[appservice-kube](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube) | 2.34.1 | Microsoft Azure Command-Line Tools App Service on Kubernetes Extension | Preview | [0.1.10](https://github.com/Azure/azure-cli-extensions/tree/main/src/appservice-kube/HISTORY.rst) |
 |[arcappliance](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) | 2.51.0 | Microsoft Azure Command-Line Tools Arcappliance Extension | GA | [1.0.3](https://msazure.visualstudio.com/AzureArcPlatform/_git/arcappliance-cli-extensions) |
-|[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.11](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
+|[arcdata](https://docs.microsoft.com/en-us/azure/azure-arc/data/) | 2.3.1 | Tools for managing ArcData. | GA | [1.5.12](https://docs.microsoft.com/en-us/azure/azure-arc/data/) |
 |[astronomer](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer) | 2.57.0 | Microsoft Azure Command-Line Tools Astronomer Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/astronomer/HISTORY.rst) |
 |[attestation](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation) | 2.55.0 | Microsoft Azure Command-Line Tools AttestationManagementClient Extension | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/attestation/HISTORY.rst) |
 |[authV2](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2) | 2.23.0 | Microsoft Azure Command-Line Tools Authv2 Extension | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/authV2/HISTORY.rst) |
@@ -56,8 +56,8 @@ You will be prompted to install an extension on first use.
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.0](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.55.0 | Manage Azure Firewall resources. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.37.0 | The Azure IoT extension for Azure CLI. | GA | [0.23.1](https://github.com/azure/azure-iot-cli-extension) |
-|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.46.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.4.0b2](https://github.com/azure/azure-iot-ops-cli-extension) |
-|[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | Microsoft Azure Command-Line Tools Azure Sphere Extension | Preview | [0.1.4](https://docs.microsoft.com/azure-sphere) |
+|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.46.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.4.0b3](https://github.com/azure/azure-iot-ops-cli-extension) |
+|[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.0](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.51.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
 |[baremetal-infrastructure](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) | 2.56.0 | Additional commands for working with BareMetal instances. | GA | [2.0.1](https://github.com/Azure/azure-baremetalinfrastructure-cli-extension) |
