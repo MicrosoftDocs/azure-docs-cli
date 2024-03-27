@@ -10,6 +10,31 @@ summary: |-
 status: GA
 sourceType: Extension
 directCommands:
+- uid: az_sphere_device_capability_apply
+  name: az sphere device capability apply
+  summary: |-
+    Temporarily apply a capability session on the attached device.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az sphere device capability apply [--capability-file]
+                                      [--none {false, true}]
+  examples:
+  - summary: |-
+      Apply temporarily the device capability session.
+    syntax: az sphere device capability apply --capability-file myCapabilities.cap
+  - summary: |-
+      End the temporarily applied device capability session.
+    syntax: az sphere device capability apply --none
+  optionalParameters:
+  - name: --capability-file
+    summary: |-
+      The path and filename of the capability file. You can provide a relative or absolute path.
+  - name: --none -n
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      End the temporary capability session on the attached device.
 - uid: az_sphere_device_capability_download
   name: az sphere device capability download
   summary: |-
@@ -20,16 +45,14 @@ directCommands:
     az sphere device capability download --catalog
                                          --resource-group
                                          [--device]
-                                         [--device-group]
                                          [--output-file]
-                                         [--product]
                                          [--type {ApplicationDevelopment, FieldServicing}]
   examples:
   - summary: |-
-      Download capability 'ApplicationDevelopment' for a device using resource group, Azure Sphere Catalog name, device ID, and capability.
+      Download the "ApplicationDevelopment" capability for a device using resource group, catalog name, device ID, and capability.
     syntax: az sphere device capability download --resource-group MyResourceGroup --catalog MyCatalog --device <DeviceIdValue> --type ApplicationDevelopment --output-file myCapabilities.cap
   - summary: |-
-      Download no capability for a device using resource group, Azure Sphere Catalog name, device ID, and capability.
+      Download the "None" capability for a device using resource group, catalog name, and device ID.
     syntax: az sphere device capability download --resource-group MyResourceGroup --catalog MyCatalog --device <DeviceIdValue> --output-file myCapabilities.cap
   requiredParameters:
   - isRequired: true
@@ -43,50 +66,15 @@ directCommands:
   optionalParameters:
   - name: --device -d
     summary: |-
-      The device to target for this command. This is required when no device or multiple devices are attached, to disambiguate which device to target. If the device is attached, you may provide either Device ID, IP address, or Local Connection ID. Values from: az sphere device list-attached. Otherwise you must provide the Device ID only.
+      The device to target for this command. This is required when no device or multiple devices are attached, to disambiguate which device to target. If the device is attached, you may provide either device ID, IP address, or Local Connection ID. Otherwise you must provide the device ID only.
     valueFrom: az sphere device list
-  - name: --device-group -dg
-    defaultValue: ".default"
-    summary: |-
-      The device group name.
-    valueFrom: az sphere device-group list
   - name: --output-file -of
     summary: |-
       Path and file name in which to download capabilities. If this parameter is not set, the file will be saved in the current folder with a default name (capability-device.cap).
-  - name: --product -p
-    defaultValue: ".default"
-    summary: |-
-      The product name.
-    valueFrom: az sphere product list
   - name: --type -t
     parameterValueGroup: "ApplicationDevelopment, FieldServicing"
     summary: |-
-      Space-separated list of capabilities to download. If this parameter is not set, the capability `None` will be applied.
-- uid: az_sphere_device_capability_select
-  name: az sphere device capability select
-  summary: |-
-    Temporarily select the device capability session for the attached device.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az sphere device capability select [--capability-file]
-                                       [--none {false, true}]
-  examples:
-  - summary: |-
-      Select temporarily the device capability session.
-    syntax: az sphere device capability select --capability-file myCapabilities.cap
-  - summary: |-
-      End the temporarily selected device capability session.
-    syntax: az sphere device capability select --none
-  optionalParameters:
-  - name: --capability-file
-    summary: |-
-      The path and filename to the device capability configuration file to select. You can provide a relative or absolute path.
-  - name: --none -n
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: |-
-      End the temporarily selected device capability session.
+      Space-separated list of capabilities to download. If this parameter is not set, the capability "None" will be downloaded.
 - uid: az_sphere_device_capability_show-attached
   name: az sphere device capability show-attached
   summary: |-
@@ -104,7 +92,7 @@ directCommands:
   optionalParameters:
   - name: --device -d
     summary: |-
-      The device to run the command on when multiple devices are attached. Specify the ID, IP address, or Local Connection ID of the device.
+      The device to run the command on when multiple devices are attached. Specify the ID, IP address, or Local Connection ID of an attached device.
     valueFrom: az sphere device list-attached
 - uid: az_sphere_device_capability_update
   name: az sphere device capability update
@@ -130,11 +118,11 @@ directCommands:
   optionalParameters:
   - name: --device -d
     summary: |-
-      The device to run the command on when multiple devices are attached. Specify the ID, IP address, or Local Connection ID of the device.
+      The device to run the command on when multiple devices are attached. Specify the ID, IP address, or Local Connection ID of an attached device.
     valueFrom: az sphere device list-attached
 commands:
+- az_sphere_device_capability_apply
 - az_sphere_device_capability_download
-- az_sphere_device_capability_select
 - az_sphere_device_capability_show-attached
 - az_sphere_device_capability_update
 globalParameters:
