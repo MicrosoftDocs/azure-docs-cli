@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in 
 ---
 
-# Authentication methods
+# Authenticate to Azure using Azure CLI
 
 The Azure CLI supports several authentication methods. Restrict sign-in permissions for your use case to keep your Azure resources secure.
 
@@ -30,7 +30,7 @@ There are five authentication options when working with the Azure CLI:
 
 ## Find or change your current subscription
 
-After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`. 
+After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, you can change your default subscription using `az account set --subscription`. Another option is to upgrade to Azure CLI [preview x.xx.xx]() that provides a subscription list as login and prompts you to accept or select a new default subscription.
 
 ```azurecli-interactive
 az account set --subscription "<subscription ID or name>"
