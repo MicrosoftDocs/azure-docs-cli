@@ -101,4 +101,4 @@ Replace the variables with actual values (or define the values in a variable blo
 
 ## See also
 
-* [Apply for Microsoft Copilot for Azure](https://azure.microsoft.com/en-us/products/copilot#Usecases)
+* [Apply for Microsoft Copilot for Azure](https://azure.microsoft.com/products/copilot#Usecases)
