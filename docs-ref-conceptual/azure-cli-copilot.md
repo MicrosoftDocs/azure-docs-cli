@@ -19,7 +19,7 @@ keywords: azure cli microsoft copilot, copilot for azure, azure command line
 
 [Microsoft Copilot for Azure](https://techcommunity.microsoft.com/t5/azure-infrastructure-blog/simplify-it-management-with-microsoft-copilot-for-azure-save/ba-p/3981106) is an AI companion that helps you design, operate, optimize, and troubleshoot your cloud infrastructure and services. Its goal is to address the issues that CLI usage knowledge in regards to end-to-end scenarios are difficult to find, and related questions cannot always receive timely and professional support.
 
-Currently, users must [apply for access](https://azure.microsoft.com/en-us/products/copilot#Usecases) in order to use Microsoft Copilot.
+Currently, users must [apply for access](https://azure.microsoft.com/products/copilot#Usecases) in order to use Microsoft Copilot.
 
 The benefits of using Microsoft Copilot for Azure CLI is as follows:
 - **Design**: Users can create and configure the services needed and align with organizational policies.
