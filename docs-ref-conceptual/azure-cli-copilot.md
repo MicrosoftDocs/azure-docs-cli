@@ -31,7 +31,7 @@ The benefits of using Microsoft Copilot for Azure CLI is as follows:
 
 To use this AI tool, go to the Azure Portal and select the **Copilot** icon on the top taskbar. The copilot window will open with a chat assistant where you can ask it a question:
 
-![Copilot on Azure Portal](./media/interactive-azure-cli/copilot-cli-1.png)
+![Copilot on Azure Portal](./media/copilot-cli-1.png)
 
 When you tell Microsoft Copilot for Azure about a task you want to perform with Azure CLI, it provides a script with the necessary commands. You'll see which placeholder values (marked in blue font) that you need to update with the actual values based on your environment. 
 
@@ -39,7 +39,7 @@ When you tell Microsoft Copilot for Azure about a task you want to perform with 
 
 For this specific example, use Microsoft Copilot to assist with using the reference command `az group`:
 
-![Reference command](./media/interactive-azure-cli/copilot-cli-2.png)
+![Reference command](./media/copilot-cli-2.png)
 
 Make sure to replace the variables (marked in blue) with actual values, or define the variables in your variable block before running the command:
 
@@ -59,12 +59,13 @@ locationName="eastus"
 # Create a resource group
 az group create --name resourceGroup --location $location
 ```
+***
 
 ## Look up an Azure CLI script
 
 Suppose you encounter an Azure CLI script that includes references and parameters that you are not knowledgeable of. Use Microsoft Copilot to look up the command by entering the command as if you were in the terminal: 
 
-![Looking up a script](./media/interactive-azure-cli/copilot-cli-3.png)
+![Looking up a script](./media/copilot-cli-3.png)
 
 Microsoft Copilot references and links other Microsoft Learn documents related to your specific CLI topic and automatically generates follow-up questions as well. 
 
@@ -72,7 +73,7 @@ Microsoft Copilot references and links other Microsoft Learn documents related t
 
 Use Azure CLI with Microsoft Copilot to create an end-to-end scenario where you create an Azure SQL database:
 
-![Use an Azure service](./media/interactive-azure-cli/copilot-cli-4.png)
+![Use an Azure service](./media/copilot-cli-4.png)
 
 Follow the steps provided by first creating an Azure SQL server:
 
