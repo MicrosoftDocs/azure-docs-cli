@@ -11,137 +11,73 @@ directCommands:
 - uid: az_afd_rule_action_add
   name: az afd rule action add
   summary: |-
-    Add an action to a delivery rule.
+    Update a new delivery rule within the specified rule set.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
-    az afd rule action add --action-name {ModifyRequestHeader, ModifyResponseHeader, RouteConfigurationOverride, UrlRedirect, UrlRewrite}
-                           [--cache-behavior {HonorOrigin, OverrideAlways, OverrideIfOriginMissing}]
-                           [--cache-duration]
-                           [--custom-fragment]
-                           [--custom-hostname]
-                           [--custom-path]
-                           [--custom-querystring]
-                           [--destination]
-                           [--enable-caching {false, true}]
-                           [--enable-compression {false, true}]
-                           [--forwarding-protocol {HttpOnly, HttpsOnly, MatchRequest}]
-                           [--header-action {Append, Delete, Overwrite}]
-                           [--header-name]
-                           [--header-value]
+    az afd rule action add [--actions]
+                           [--add]
+                           [--conditions]
+                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                            [--ids]
-                           [--origin-group]
-                           [--preserve-unmatched-path {false, true}]
+                           [--match-processing-behavior {Continue, Stop}]
+                           [--name]
+                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--order]
                            [--profile-name]
-                           [--query-parameters]
-                           [--query-string-caching-behavior {IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString}]
-                           [--redirect-protocol {Http, Https, MatchRequest}]
-                           [--redirect-type {Found, Moved, PermanentRedirect, TemporaryRedirect}]
+                           [--remove]
                            [--resource-group]
-                           [--rule-name]
                            [--rule-set-name]
-                           [--source-pattern]
+                           [--set]
                            [--subscription]
-  examples:
-  - summary: |-
-      Add a redirect action.
-    syntax: az afd rule action add --rule-set-name ruleSetName --profile-name profile --rule-name name --action-name "UrlRedirect" --redirect-protocol HTTPS --redirect-type Moved
-  - summary: |-
-      Add a cache expiration action
-    syntax: az afd rule action add --rule-set-name ruleSetName --profile-name profile --rule-name name --action-name "CacheExpiration" --cache-behavior BypassCache
-  requiredParameters:
-  - isRequired: true
-    name: --action-name
-    parameterValueGroup: "ModifyRequestHeader, ModifyResponseHeader, RouteConfigurationOverride, UrlRedirect, UrlRewrite"
-    summary: |-
-      The name of the action for the delivery rule: https://docs.microsoft.com/en-us/azure/frontdoor/front-door-rules-engine-actions.
   optionalParameters:
-  - name: --cache-behavior
-    parameterValueGroup: "HonorOrigin, OverrideAlways, OverrideIfOriginMissing"
+  - name: --actions
     summary: |-
-      Caching behavior for the requests.
-  - name: --cache-duration
+      A list of actions that are executed when all the conditions of a rule are satisfied.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --add
     summary: |-
-      The duration for which the content needs to be cached.                Allowed format is [d.]hh:mm:ss.
-  - name: --custom-fragment
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --conditions
     summary: |-
-      Fragment to add to the redirect URL.
-  - name: --custom-hostname
+      A list of conditions that must be matched for the actions to be executed  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Host to redirect.                Leave empty to use the incoming host as the destination host.
-  - name: --custom-path
-    summary: |-
-      The full path to redirect. Path cannot be empty and must start with /.                Leave empty to use the incoming path as destination path.
-  - name: --custom-querystring
-    summary: |-
-      The set of query strings to be placed in the redirect URL.                leave empty to preserve the incoming query string.
-  - name: --destination
-    summary: |-
-      The destination path to be used in the rewrite.
-  - name: --enable-caching
-    parameterValueGroup: "false, true"
-    summary: |-
-      Indicates whether to enable caching on the route.
-  - name: --enable-compression
-    parameterValueGroup: "false, true"
-    summary: |-
-      Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
-  - name: --forwarding-protocol
-    parameterValueGroup: "HttpOnly, HttpsOnly, MatchRequest"
-    summary: |-
-      Protocol this rule will use when forwarding traffic to backends.
-  - name: --header-action
-    parameterValueGroup: "Append, Delete, Overwrite"
-    summary: |-
-      Header action for the requests.
-  - name: --header-name
-    summary: |-
-      Name of the header to modify.
-  - name: --header-value
-    summary: |-
-      Value of the header.
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --origin-group
+  - name: --match-processing-behavior
+    parameterValueGroup: "Continue, Stop"
     summary: |-
-      Name or ID of the OriginGroup that would override the default OriginGroup.
-  - name: --preserve-unmatched-path
-    parameterValueGroup: "false, true"
+      If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue.
+  - name: --name --rule-name -n
     summary: |-
-      If True, the remaining path after the source                pattern will be appended to the new destination path.
+      Name of the delivery rule which is unique within the endpoint.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --order
+    summary: |-
+      The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
-  - name: --query-parameters
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --remove
     summary: |-
-      Query parameters to include or exclude.
-  - name: --query-string-caching-behavior
-    parameterValueGroup: "IgnoreQueryString, IgnoreSpecifiedQueryStrings, IncludeSpecifiedQueryStrings, UseQueryString"
-    summary: |-
-      Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL.
-  - name: --redirect-protocol
-    parameterValueGroup: "Http, Https, MatchRequest"
-    summary: |-
-      Protocol to use for the redirect.
-  - name: --redirect-type
-    parameterValueGroup: "Found, Moved, PermanentRedirect, TemporaryRedirect"
-    summary: |-
-      The redirect type the rule will use when redirecting traffic.
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --rule-name
-    summary: |-
-      Name of the rule.
   - name: --rule-set-name
     summary: |-
-      Name of the rule set.
-  - name: --source-pattern
+      Name of the rule set under the profile.
+  - name: --set
     summary: |-
-      A request URI pattern that identifies the type of requests that may be rewritten.
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -182,44 +118,73 @@ directCommands:
 - uid: az_afd_rule_action_remove
   name: az afd rule action remove
   summary: |-
-    Remove an action from a delivery rule.
+    Update a new delivery rule within the specified rule set.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'afd' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Core
   syntax: >-
-    az afd rule action remove --index
+    az afd rule action remove [--actions]
+                              [--add]
+                              [--conditions]
+                              [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                               [--ids]
+                              [--match-processing-behavior {Continue, Stop}]
+                              [--name]
+                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--order]
                               [--profile-name]
+                              [--remove]
                               [--resource-group]
-                              [--rule-name]
                               [--rule-set-name]
+                              [--set]
                               [--subscription]
-  examples:
-  - summary: |-
-      Remove the first action.
-    syntax: az afd rule action remove -g group --rule-set-name ruleSetName --profile-name profile --rule-name name --index 0
-  requiredParameters:
-  - isRequired: true
-    name: --index
-    summary: |-
-      The index of the condition/action.
   optionalParameters:
+  - name: --actions
+    summary: |-
+      A list of actions that are executed when all the conditions of a rule are satisfied.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --conditions
+    summary: |-
+      A list of conditions that must be matched for the actions to be executed  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --match-processing-behavior
+    parameterValueGroup: "Continue, Stop"
+    summary: |-
+      If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue.
+  - name: --name --rule-name -n
+    summary: |-
+      Name of the delivery rule which is unique within the endpoint.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --order
+    summary: |-
+      The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¦}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
   - name: --profile-name
     summary: |-
-      Name of the CDN profile which is unique within the resource group.
+      Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --rule-name
-    summary: |-
-      Name of the rule.
   - name: --rule-set-name
     summary: |-
-      Name of the rule set.
+      Name of the rule set under the profile.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
