@@ -65,19 +65,19 @@ az group create --name resourceGroup --location $location
 
 Suppose you encounter an Azure CLI script that includes references and parameters of which you are not aware. Use Microsoft Copilot to look up the command by entering the command as if you were in the terminal: 
 
-![Looking up a script](./media/copilot-cli-3.png)
+:::image type="content" source="./media/copilot-cli-3.png" alt-text="<Looking up a script>":::
 
 Microsoft Copilot references and links other Microsoft Learn documents related to your specific CLI topic and automatically generates follow-up questions as well. 
 
 ## Use an Azure service
 
-Use Azure CLI with Microsoft Copilot to create an end-to-end scenario where you create an Azure SQL database:
+Use Azure CLI with Microsoft Copilot to create an end-to-end scenario where you create an Azure SQL database.
 
-![Use an Azure service](./media/copilot-cli-4.png)
+:::image type="content" source="./media/copilot-cli-4.png" alt-text="<Use Azure service>":::
 
-Follow the steps provided:
+Follow the steps provided to create an Azure SQL database :
 
-1. First creating an Azure SQL server:
+1. First create an Azure SQL server:
 
 ```azurecli-interactive
 az sql server create --name $serverName --resource-group $resourceGroup --location $location --admin-user $adminUser --admin-password $adminPassword
