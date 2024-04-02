@@ -48,6 +48,7 @@ directCommands:
                    [--dns-servers]
                    [--edge-zone]
                    [--enable-agent {false, true}]
+                   [--enable-auto-os-upgrade {false, true}]
                    [--enable-auto-update {false, true}]
                    [--enable-cross-zone-upgrade {false, true}]
                    [--enable-hibernation {false, true}]
@@ -61,6 +62,7 @@ directCommands:
                    [--ephemeral-os-disk {false, true}]
                    [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
+                   [--exclude-extensions]
                    [--generate-ssh-keys]
                    [--health-probe]
                    [--host-group]
@@ -109,6 +111,7 @@ directCommands:
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
                    [--scope]
                    [--secrets]
+                   [--security-posture-id]
                    [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                    [--single-placement-group {false, true}]
                    [--specialized {false, true}]
@@ -201,6 +204,11 @@ directCommands:
   - summary: |-
       Create a Windows VMSS with patch mode 'Manual' (Currently patch mode 'AutomaticByPlatform' is not supported during VMSS creation as health extension which is required for 'AutomaticByPlatform' mode cannot be set during VMSS creation).
     syntax: az vmss create -n MyVmss -g MyResourceGroup --image Win2019Datacenter --enable-agent --enable-auto-update false --patch-mode Manual --orchestration-mode Flexible
+  - summary: |-
+      Create a VMSS with specifying the security posture to be used for all virtual machines in the scale set.
+    syntax: >-
+      az vmss create -n MyVmss -g MyResourceGroup --image /CommunityGalleries/{gallery_unique_name}/Images/{image}/Versions/{version} --security-posture-reference-id /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{version} \
+          --security-posture-reference-exclude-extensions "c:\tmp\exclude_extensions.json"
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -312,6 +320,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Indicate whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later.
+  - name: --enable-auto-os-upgrade
+    parameterValueGroup: "false, true"
+    summary: |-
+      Indicate whether OS upgrades should automatically be applied to scale set instances in a rolling fashion when a newer version of the OS image becomes available.
   - name: --enable-auto-update
     parameterValueGroup: "false, true"
     summary: |-
@@ -364,6 +376,9 @@ directCommands:
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
       The eviction policy for virtual machines in a Spot priority scale set. Default eviction policy is Deallocate for a Spot priority scale set.
+  - name: --exclude-extensions --security-posture-reference-exclude-extensions
+    summary: |-
+      List of virtual machine extensions to exclude when applying the Security Posture. Either a Json string or a file path is acceptable. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachinescalesets/get#virtualmachineextension for the data format.
   - name: --generate-ssh-keys
     defaultValue: "False"
     summary: |-
@@ -531,6 +546,9 @@ directCommands:
   - name: --secrets
     summary: |-
       One or many Key Vault secrets as JSON strings or files via `@{path}` containing `[{ "sourceVault": { "id": "value" }, "vaultCertificates": [{ "certificateUrl": "value", "certificateStore": "cert store name (only on windows)"}] }]`.
+  - name: --security-posture-id --security-posture-reference-id
+    summary: |-
+      The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest.
   - name: --security-type
     parameterValueGroup: "ConfidentialVM, Standard, TrustedLaunch"
     summary: |-
@@ -1296,6 +1314,7 @@ directCommands:
                    [--enable-terminate-notification {false, true}]
                    [--enable-vtpm {false, true}]
                    [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
+                   [--exclude-extensions]
                    [--force-deletion]
                    [--force-string]
                    [--ids]
@@ -1319,6 +1338,7 @@ directCommands:
                    [--remove]
                    [--resource-group]
                    [--scale-in-policy {Default, NewestVM, OldestVM}]
+                   [--security-posture-id]
                    [--security-type {TrustedLaunch}]
                    [--set]
                    [--spot-restore-timeout]
@@ -1351,6 +1371,11 @@ directCommands:
   - summary: |-
       Update a Linux VMSS to patch mode 'AutomaticByPlatform'.
     syntax: az vmss update -n MyVmss -g MyResourceGroup --set virtualMachineProfile.osProfile.linuxConfiguration.patchSettings.patchMode=AutomaticByPlatform
+  - summary: |-
+      Update a VMSS with specifying the security posture to be used for all virtual machines in the scale set.
+    syntax: >-
+      az vmss update -n MyVmss -g MyResourceGroup --security-posture-reference-id /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{version} \
+          --security-posture-reference-exclude-extensions "c:\tmp\exclude_extensions.json"
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -1415,6 +1440,9 @@ directCommands:
     parameterValueGroup: "CacheDisk, ResourceDisk"
     summary: |-
       Only applicable when used with `--vm-sku`. Allows you to choose the Ephemeral OS disk provisioning location.
+  - name: --exclude-extensions --security-posture-reference-exclude-extensions
+    summary: |-
+      List of virtual machine extensions to exclude when applying the Security Posture. Either a Json string or a file path is acceptable. Please refer to https://docs.microsoft.com/rest/api/compute/virtualmachinescalesets/get#virtualmachineextension for the data format.
   - name: --force-deletion
     summary: |-
       This property allow you to specify if virtual machines chosen for removal have to be force deleted when a virtual machine scale set is being scaled-in.
@@ -1498,6 +1526,9 @@ directCommands:
     parameterValueGroup: "Default, NewestVM, OldestVM"
     summary: |-
       Specify the scale-in policy (space delimited) that decides which virtual machines are chosen for removal when a Virtual Machine Scale Set is scaled-in.
+  - name: --security-posture-id --security-posture-reference-id
+    summary: |-
+      The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest.
   - name: --security-type
     parameterValueGroup: "TrustedLaunch"
     summary: |-
@@ -1775,5 +1806,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 01/15/2024
+  ms.date: 03/26/2024
   description: Manage groupings of virtual machines in an Azure Virtual Machine Scale Set (VMSS).

@@ -9,37 +9,30 @@ directCommands:
 - uid: az_cdn_custom-domain_create
   name: az cdn custom-domain create
   summary: |-
-    Create a new custom domain to provide a hostname for a CDN endpoint.
-  description: |-
-    Creates a new custom domain which must point to the hostname of the endpoint. For example, the custom domain hostname cdn.contoso.com would need to have a CNAME record pointing to the hostname of the endpoint related to this custom domain.
+    Create a new custom domain within an endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
-    az cdn custom-domain create --endpoint-name
-                                --hostname
-                                --name
+    az cdn custom-domain create --custom-domain-name
+                                --endpoint-name
                                 --profile-name
                                 --resource-group
-                                [--location]
-                                [--tags]
+                                [--hostname]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
       Create a custom domain with resource name customdomain1 within an endpoint and profile.
     syntax: az cdn custom-domain create -g group --endpoint-name endpoint --profile-name profile -n customdomain1 --hostname www.example.com
   requiredParameters:
   - isRequired: true
+    name: --custom-domain-name --name -n
+    summary: |-
+      Name of the custom domain within an endpoint.
+  - isRequired: true
     name: --endpoint-name
     summary: |-
       Name of the endpoint under the profile which is unique globally.
-  - isRequired: true
-    name: --hostname
-    summary: |-
-      The host name of the custom domain. Must be a domain name.
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Resource name of the custom domain.
   - isRequired: true
     name: --profile-name
     summary: |-
@@ -49,45 +42,55 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --location -l
+  - name: --hostname
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
-  - name: --tags
+      The host name of the custom domain. Must be a domain name.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      Do not wait for the long-running operation to finish.
 - uid: az_cdn_custom-domain_delete
   name: az cdn custom-domain delete
   summary: |-
-    Delete the custom domain of a CDN.
+    Delete an existing custom domain within an endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
-    az cdn custom-domain delete --endpoint-name
-                                --name
-                                --profile-name
-                                --resource-group
+    az cdn custom-domain delete [--custom-domain-name]
+                                [--endpoint-name]
+                                [--ids]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--profile-name]
+                                [--resource-group]
+                                [--subscription]
   examples:
   - summary: |-
-      Delete a custom domain with resource name customdomain1.
+      Delete the custom domain of a CDN.
     syntax: az cdn custom-domain delete -g group --endpoint-name endpoint --profile-name profile -n customdomain1
-  requiredParameters:
-  - isRequired: true
-    name: --endpoint-name
+  optionalParameters:
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the custom domain within an endpoint.
+  - name: --endpoint-name
     summary: |-
       Name of the endpoint under the profile which is unique globally.
-  - isRequired: true
-    name: --name -n
+  - name: --ids
     summary: |-
-      Resource name of the custom domain.
-  - isRequired: true
-    name: --profile-name
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_cdn_custom-domain_disable-https
   name: az cdn custom-domain disable-https
   summary: |-
@@ -187,7 +190,7 @@ directCommands:
 - uid: az_cdn_custom-domain_list
   name: az cdn custom-domain list
   summary: |-
-    Lists all of the existing custom domains within an endpoint.
+    List all of the existing custom domains within an endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
@@ -195,6 +198,8 @@ directCommands:
     az cdn custom-domain list --endpoint-name
                               --profile-name
                               --resource-group
+                              [--max-items]
+                              [--next-token]
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
@@ -208,39 +213,176 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_cdn_custom-domain_show
   name: az cdn custom-domain show
   summary: |-
-    Show details for the custom domain of a CDN.
+    Get an existing custom domain within an endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
-    az cdn custom-domain show --endpoint-name
-                              --name
-                              --profile-name
-                              --resource-group
+    az cdn custom-domain show [--custom-domain-name]
+                              [--endpoint-name]
+                              [--ids]
+                              [--profile-name]
+                              [--resource-group]
+                              [--subscription]
   examples:
   - summary: |-
       Get the details of a custom domain with resource name customdomain1.
     syntax: az cdn custom-domain show -g group --endpoint-name endpoint --profile-name profile -n customdomain1
-  requiredParameters:
-  - isRequired: true
-    name: --endpoint-name
+  optionalParameters:
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the custom domain within an endpoint.
+  - name: --endpoint-name
     summary: |-
       Name of the endpoint under the profile which is unique globally.
-  - isRequired: true
-    name: --name -n
+  - name: --ids
     summary: |-
-      Resource name of the custom domain.
-  - isRequired: true
-    name: --profile-name
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
-  - isRequired: true
-    name: --resource-group -g
+  - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_custom-domain_update
+  name: az cdn custom-domain update
+  summary: |-
+    Update a new custom domain within an endpoint.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn custom-domain update [--add]
+                                [--custom-domain-name]
+                                [--endpoint-name]
+                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--hostname]
+                                [--ids]
+                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                [--profile-name]
+                                [--remove]
+                                [--resource-group]
+                                [--set]
+                                [--subscription]
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the custom domain within an endpoint.
+  - name: --endpoint-name
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --hostname
+    summary: |-
+      The host name of the custom domain. Must be a domain name.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_cdn_custom-domain_wait
+  name: az cdn custom-domain wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn custom-domain wait [--created]
+                              [--custom]
+                              [--custom-domain-name]
+                              [--deleted]
+                              [--endpoint-name]
+                              [--exists]
+                              [--ids]
+                              [--interval]
+                              [--profile-name]
+                              [--resource-group]
+                              [--subscription]
+                              [--timeout]
+                              [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --custom-domain-name --name -n
+    summary: |-
+      Name of the custom domain within an endpoint.
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --endpoint-name
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_cdn_custom-domain_create
 - az_cdn_custom-domain_delete
@@ -248,6 +390,8 @@ commands:
 - az_cdn_custom-domain_enable-https
 - az_cdn_custom-domain_list
 - az_cdn_custom-domain_show
+- az_cdn_custom-domain_update
+- az_cdn_custom-domain_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -273,5 +417,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/11/2023
+  ms.date: 03/20/2024
   description: Manage Azure CDN Custom Domains to provide custom host names for endpoints.

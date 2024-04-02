@@ -9,23 +9,24 @@ directCommands:
 - uid: az_cdn_origin_create
   name: az cdn origin create
   summary: |-
-    Create an origin.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Create a new origin within the specified endpoint.
+  status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
     az cdn origin create --endpoint-name
-                         --host-name
                          --name
                          --profile-name
                          --resource-group
-                         [--disabled {false, true}]
+                         [--disabled {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--host-name]
                          [--http-port]
                          [--https-port]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--origin-host-header]
                          [--priority]
+                         [--private-link-alias]
                          [--private-link-approval-message]
                          [--private-link-location]
                          [--private-link-resource-id]
@@ -41,15 +42,11 @@ directCommands:
   - isRequired: true
     name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - isRequired: true
-    name: --host-name
+    name: --name --origin-name -n
     summary: |-
-      The host name where requests to the origin will be sent.
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the origin.
+      Name of the origin that is unique within the endpoint.
   - isRequired: true
     name: --profile-name
     summary: |-
@@ -60,42 +57,51 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --disabled
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Don't use the origin for load balancing.
+  - name: --enabled
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Origin is enabled for load balancing or not.
+  - name: --host-name
+    summary: |-
+      The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
   - name: --http-port
-    defaultValue: "80"
     summary: |-
-      The port used for http requests to the origin.
+      The value of the HTTP port. Must be between 1 and 65535.
   - name: --https-port
-    defaultValue: "443"
     summary: |-
-      The port used for https requests to the origin.
+      The value of the HTTPS port. Must be between 1 and 65535.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origin-host-header
     summary: |-
-      The Host header to send for requests to this origin.
+      The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint.
   - name: --priority
-    defaultValue: "1"
     summary: |-
-      The load balancing priority. Higher priorities will not be used for load balancing if any lower priority origin is healthy. Must be between 1 and 5.
+      Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
+  - name: --private-link-alias
+    summary: |-
+      The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'.
   - name: --private-link-approval-message -m
     summary: |-
-      The message that is shown to the approver of the private link request.
+      A custom message to be included in the approval request to connect to the Private Link.
   - name: --private-link-location -l
     summary: |-
-      The location of the private link that the origin will be connected to.
+      The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated.
   - name: --private-link-resource-id -p
     summary: |-
-      The resource id of the private link that the origin will be connected to.
+      The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'.
   - name: --weight
-    defaultValue: "1000"
     summary: |-
-      The weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
+      Weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
 - uid: az_cdn_origin_delete
   name: az cdn origin delete
   summary: |-
-    Deletes an existing origin within an endpoint.
+    Delete an existing origin within an endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
@@ -103,6 +109,7 @@ directCommands:
     az cdn origin delete [--endpoint-name]
                          [--ids]
                          [--name]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--profile-name]
                          [--resource-group]
                          [--subscription]
@@ -110,13 +117,17 @@ directCommands:
   optionalParameters:
   - name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --name --origin-name -n
     summary: |-
-      Name of the origin.
+      Name of the origin which is unique within the endpoint.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
@@ -133,7 +144,7 @@ directCommands:
 - uid: az_cdn_origin_list
   name: az cdn origin list
   summary: |-
-    Lists all of the existing origins within an endpoint.
+    List all of the existing origins within an endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
@@ -141,11 +152,13 @@ directCommands:
     az cdn origin list --endpoint-name
                        --profile-name
                        --resource-group
+                       [--max-items]
+                       [--next-token]
   requiredParameters:
   - isRequired: true
     name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - isRequired: true
     name: --profile-name
     summary: |-
@@ -154,10 +167,17 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_cdn_origin_show
   name: az cdn origin show
   summary: |-
-    Gets an existing origin within an endpoint.
+    Get an existing origin within an endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
@@ -171,13 +191,13 @@ directCommands:
   optionalParameters:
   - name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --name --origin-name -n
     summary: |-
-      Name of the origin.
+      Name of the origin which is unique within the endpoint.
   - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
@@ -190,25 +210,32 @@ directCommands:
 - uid: az_cdn_origin_update
   name: az cdn origin update
   summary: |-
-    Update an origin.
+    Update a new origin within the specified endpoint.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
   syntax: >-
-    az cdn origin update [--disabled {false, true}]
+    az cdn origin update [--add]
+                         [--disabled {0, 1, f, false, n, no, t, true, y, yes}]
+                         [--enabled {0, 1, f, false, n, no, t, true, y, yes}]
                          [--endpoint-name]
+                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                          [--host-name]
                          [--http-port]
                          [--https-port]
                          [--ids]
                          [--name]
+                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                          [--origin-host-header]
                          [--priority]
+                         [--private-link-alias]
                          [--private-link-approval-message]
                          [--private-link-location]
                          [--private-link-resource-id]
                          [--profile-name]
+                         [--remove]
                          [--resource-group]
+                         [--set]
                          [--subscription]
                          [--weight]
   examples:
@@ -222,43 +249,129 @@ directCommands:
       Connect an origin to a private link service
     syntax: az cdn origin update -g group --profile-name profile --endpoint-name endpoint -n origin --http-port 80 --https-port 443 --private-link-resource-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group/providers/Microsoft.Network/privateLinkServices/pls --private-link-location EastUS --private-link-approval-message 'Please approve this request'
   optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --disabled
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Don't use the origin for load balancing.
+  - name: --enabled
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Origin is enabled for load balancing or not.
   - name: --endpoint-name
     summary: |-
-      Name of the CDN endpoint.
+      Name of the endpoint under the profile which is unique globally.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --host-name
     summary: |-
-      The host name where requests to the origin will be sent.
+      The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
   - name: --http-port
     summary: |-
-      The port used for http requests to the origin.
+      The value of the HTTP port. Must be between 1 and 65535.
   - name: --https-port
     summary: |-
-      The port used for https requests to the origin.
+      The value of the HTTPS port. Must be between 1 and 65535.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --name --origin-name -n
     summary: |-
-      Name of the origin.
+      Name of the origin which is unique within the endpoint.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --origin-host-header
     summary: |-
-      The Host header to send for requests to this origin.
+      The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint.
   - name: --priority
     summary: |-
-      The load balancing priority. Higher priorities will not be used for load balancing if any lower priority origin is healthy. Must be between 1 and 5.
+      Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5.
+  - name: --private-link-alias
+    summary: |-
+      The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'.
   - name: --private-link-approval-message -m
     summary: |-
-      The message that is shown to the approver of the private link request.
+      A custom message to be included in the approval request to connect to the Private Link.
   - name: --private-link-location -l
     summary: |-
-      The location of the private link that the origin will be connected to.
+      The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated.
   - name: --private-link-resource-id -p
     summary: |-
-      The resource id of the private link that the origin will be connected to.
+      The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'.
+  - name: --profile-name
+    summary: |-
+      Name of the CDN profile which is unique within the resource group.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --weight
+    summary: |-
+      Weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
+- uid: az_cdn_origin_wait
+  name: az cdn origin wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/cdn/_help.py
+  syntax: >-
+    az cdn origin wait [--created]
+                       [--custom]
+                       [--deleted]
+                       [--endpoint-name]
+                       [--exists]
+                       [--ids]
+                       [--interval]
+                       [--name]
+                       [--profile-name]
+                       [--resource-group]
+                       [--subscription]
+                       [--timeout]
+                       [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --endpoint-name
+    summary: |-
+      Name of the endpoint under the profile which is unique globally.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --origin-name -n
+    summary: |-
+      Name of the origin which is unique within the endpoint.
   - name: --profile-name
     summary: |-
       Name of the CDN profile which is unique within the resource group.
@@ -268,15 +381,21 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --weight
+  - name: --timeout
+    defaultValue: "3600"
     summary: |-
-      The weight of the origin in given origin group for load balancing. Must be between 1 and 1000.
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_cdn_origin_create
 - az_cdn_origin_delete
 - az_cdn_origin_list
 - az_cdn_origin_show
 - az_cdn_origin_update
+- az_cdn_origin_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -302,5 +421,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/11/2023
+  ms.date: 03/20/2024
   description: List or show existing origins related to CDN endpoints.

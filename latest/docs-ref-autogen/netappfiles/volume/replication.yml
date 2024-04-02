@@ -2,57 +2,62 @@
 uid: az_netappfiles_volume_replication
 name: az netappfiles volume replication
 summary: |-
-  Manage Azure NetApp Files (ANF) Volume replication operations.
+  Manage Azure NetApp Files (ANF) Volume replication.
 status: GA
 sourceType: Core
 directCommands:
 - uid: az_netappfiles_volume_replication_approve
   name: az netappfiles volume replication approve
   summary: |-
-    Authorize a volume as a replication destination for a specified source.
+    Authorize source volume replication.
+  description: |-
+    Authorize the replication connection on the source volume.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
-    az netappfiles volume replication approve --account-name
-                                              --name
-                                              --pool-name
-                                              --resource-group
-                                              [--no-wait]
+    az netappfiles volume replication approve [--account-name]
+                                              [--ids]
+                                              [--name]
+                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                              [--pool-name]
                                               [--remote-volume-resource-id]
+                                              [--resource-group]
+                                              [--subscription]
   examples:
   - summary: |-
       Authorize the volume as the replication destination for the source
     syntax: az netappfiles volume replication approve -g mygroup --account-name myaccname --pool-name mypoolname --name mysourcevolname --remote-volume-resource-id /subscriptions/69a75bda-882e-44d5-8431-63421204131c/resourceGroups/mygroup1/providers/Microsoft.NetApp/netAppAccounts/myaccount1/capacityPools/mypool1/volumes/mydestinationvolume
-  requiredParameters:
-  - isRequired: true
-    name: --account-name -a
-    summary: |-
-      The name of the ANF account.
-  - isRequired: true
-    name: --name --volume-name -n -v
-    summary: |-
-      The name of the replication source volume.
-  - isRequired: true
-    name: --pool-name -p
-    summary: |-
-      The name of the ANF pool.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --volume-name -n -v
+    summary: |-
+      The name of the volume.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
   - name: --remote-volume-resource-id -d
     summary: |-
-      The resource id of the destination replication volume.
+      Resource id of the remote volume.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_netappfiles_volume_replication_list
   name: az netappfiles volume replication list
   summary: |-
-    List replication for ANF volume.
+    List all replications for a specified volume.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -69,15 +74,15 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      Name of the ANF account.
+      The name of the NetApp account.
   - isRequired: true
     name: --name --volume-name -n -v
     summary: |-
-      Name of the ANF volume.
+      The name of the volume.
   - isRequired: true
     name: --pool-name -p
     summary: |-
-      Name of the ANF pool.
+      The name of the capacity pool.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -85,7 +90,10 @@ directCommands:
 - uid: az_netappfiles_volume_replication_re-initialize
   name: az netappfiles volume replication re-initialize
   summary: |-
-    Re-initialise a volume replication for the specified destination volume. The replication process is resumed from source to destination.
+    Re-Initializes the replication connection on the destination volume.
+  description: |-
+    Re-initialise a volume replication for the specified destination volume.
+    The replication process is resumed from source to destination.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -93,7 +101,7 @@ directCommands:
     az netappfiles volume replication re-initialize [--account-name]
                                                     [--ids]
                                                     [--name]
-                                                    [--no-wait]
+                                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                     [--pool-name]
                                                     [--resource-group]
                                                     [--subscription]
@@ -104,30 +112,76 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --volume-name -n -v
     summary: |-
-      The name of the replication destination volume.
+      The name of the volume.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_netappfiles_volume_replication_reestablish
+  name: az netappfiles volume replication reestablish
+  summary: |-
+    Re-establish a previously deleted replication between 2 volumes that have a common ad-hoc or policy-based snapshots.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume replication reestablish [--account-name]
+                                                  [--ids]
+                                                  [--name]
+                                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                  [--pool-name]
+                                                  [--resource-group]
+                                                  [--source-volume-id]
+                                                  [--subscription]
+  examples:
+  - summary: |-
+      Re-establish a previously deleted replication between 2 volumes that have a common ad-hoc or policy-based snapshots
+    syntax: az netappfiles volume replication reestablish -g mygroup --account-name myaccname --pool-name mypoolname --name mydestinationvolname --source-volume-id mysourcevolumeid
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --volume-name -n -v
+    summary: |-
+      The name of the volume.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --source-volume-id
+    summary: |-
+      Resource id of the source volume for the replication.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_netappfiles_volume_replication_remove
   name: az netappfiles volume replication remove
   summary: |-
-    Delete a volume replication for the specified destination volume. The data replication objects of source and destination volumes will be removed.
+    Delete the replication connection on the destination volume, and send release to the source replication.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -135,7 +189,7 @@ directCommands:
     az netappfiles volume replication remove [--account-name]
                                              [--ids]
                                              [--name]
-                                             [--no-wait]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--pool-name]
                                              [--resource-group]
                                              [--subscription]
@@ -146,20 +200,20 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --volume-name -n -v
     summary: |-
-      The name of the replication destination volume.
+      The name of the volume.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -169,7 +223,10 @@ directCommands:
 - uid: az_netappfiles_volume_replication_resume
   name: az netappfiles volume replication resume
   summary: |-
-    Resync a volume replication for the specified destination volume. The replication process is resumed from source to destination. If any quota rules exists on destination volume  they will be overwritten with source volume's quota rules.
+    Resync the connection on the destination volume. If the operation is ran on the source volume it will reverse-resync the connection and sync from destination to source.
+  description: |-
+    Resync a volume replication for the specified destination volume. The replication process is resumed from source to destination.
+    If any quota rules exists on destination volume they will be overwritten with source volume's quota rules.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -177,7 +234,7 @@ directCommands:
     az netappfiles volume replication resume [--account-name]
                                              [--ids]
                                              [--name]
-                                             [--no-wait]
+                                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                              [--pool-name]
                                              [--resource-group]
                                              [--subscription]
@@ -188,20 +245,20 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --volume-name -n -v
     summary: |-
-      The name of the replication destination volume.
+      The name of the volume.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -211,6 +268,8 @@ directCommands:
 - uid: az_netappfiles_volume_replication_status
   name: az netappfiles volume replication status
   summary: |-
+    Get the status of the replication.
+  description: |-
     Get the replication status for the specified replication volume.
   status: GA
   sourceType: Core
@@ -229,16 +288,16 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --volume-name -n -v
     summary: |-
-      The name of the replication destination volume.
+      The name of the volume.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -248,16 +307,19 @@ directCommands:
 - uid: az_netappfiles_volume_replication_suspend
   name: az netappfiles volume replication suspend
   summary: |-
-    Suspend/break a volume replication for the specified destination volume. The replication process is suspended until resumed or deleted.
+    Suspend/Break the replication connection on the destination volume.
+  description: |-
+    Suspend/break a volume replication for the specified destination volume.
+    The replication process is suspended until resumed or deleted.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles volume replication suspend [--account-name]
-                                              [--force {false, true}]
+                                              [--force {0, 1, f, false, n, no, t, true, y, yes}]
                                               [--ids]
                                               [--name]
-                                              [--no-wait]
+                                              [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                               [--pool-name]
                                               [--resource-group]
                                               [--subscription]
@@ -268,106 +330,39 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --force --force-break-replication -f
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Force break the replication.
+      If replication is in status transferring and you want to force break the replication, set to true.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --volume-name -n -v
     summary: |-
-      The name of the replication destination volume.
+      The name of the volume.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_netappfiles_volume_replication_wait
-  name: az netappfiles volume replication wait
-  summary: |-
-    Wait for a volume replication operation.
-  status: GA
-  sourceType: Core
-  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
-  syntax: >-
-    az netappfiles volume replication wait [--account-name]
-                                           [--created]
-                                           [--custom]
-                                           [--deleted]
-                                           [--exists]
-                                           [--ids]
-                                           [--interval]
-                                           [--name]
-                                           [--pool-name]
-                                           [--resource-group]
-                                           [--subscription]
-                                           [--timeout]
-                                           [--updated]
-  optionalParameters:
-  - name: --account-name -a
-    summary: |-
-      Name of the ANF account.
-  - name: --created
-    defaultValue: "False"
-    summary: |-
-      Wait until created with 'provisioningState' at 'Succeeded'.
-  - name: --custom
-    summary: |-
-      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
-  - name: --deleted
-    defaultValue: "False"
-    summary: |-
-      Wait until deleted.
-  - name: --exists
-    defaultValue: "False"
-    summary: |-
-      Wait until the resource exists.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --interval
-    defaultValue: "30"
-    summary: |-
-      Polling interval in seconds.
-  - name: --name --volume-name -n -v
-    summary: |-
-      Name of the ANF volume.
-  - name: --pool-name -p
-    summary: |-
-      Name of the ANF pool.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --timeout
-    defaultValue: "3600"
-    summary: |-
-      Maximum wait in seconds.
-  - name: --updated
-    defaultValue: "False"
-    summary: |-
-      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_netappfiles_volume_replication_approve
 - az_netappfiles_volume_replication_list
 - az_netappfiles_volume_replication_re-initialize
+- az_netappfiles_volume_replication_reestablish
 - az_netappfiles_volume_replication_remove
 - az_netappfiles_volume_replication_resume
 - az_netappfiles_volume_replication_status
 - az_netappfiles_volume_replication_suspend
-- az_netappfiles_volume_replication_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -393,5 +388,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/07/2023
-  description: Manage Azure NetApp Files (ANF) Volume replication operations.
+  ms.date: 03/07/2024
+  description: Manage Azure NetApp Files (ANF) Volume replication.

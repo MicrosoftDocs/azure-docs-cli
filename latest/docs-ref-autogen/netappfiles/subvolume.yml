@@ -9,17 +9,17 @@ directCommands:
 - uid: az_netappfiles_subvolume_create
   name: az netappfiles subvolume create
   summary: |-
-    Create a subvolume in the specified path or clones the subvolume specified in the parentPath.
+    Create a subvolume in the path or clones the subvolume mentioned in the parentPath.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles subvolume create --account-name
+                                    --name
                                     --pool-name
                                     --resource-group
-                                    --subvolume-name
                                     --volume-name
-                                    [--no-wait]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--parent-path]
                                     [--path]
                                     [--size]
@@ -31,52 +31,52 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
+  - isRequired: true
+    name: --name --subvolume-name -n
+    summary: |-
+      The name of the subvolume.
   - isRequired: true
     name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --subvolume-name
-    summary: |-
-      The name of the ANF subvolume.
-  - isRequired: true
     name: --volume-name -v
     summary: |-
-      The name of the ANF volume.
+      The name of the volume.
   optionalParameters:
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --parent-path
     summary: |-
-      Path to the parent subvolume.
+      Parent path to the subvolume.
   - name: --path
     summary: |-
       Path to the subvolume.
   - name: --size
     summary: |-
-      Size of the subvolume.
+      Truncate subvolume to the provided size in bytes.
 - uid: az_netappfiles_subvolume_delete
   name: az netappfiles subvolume delete
   summary: |-
-    Delete a specified ANF subvolume.
+    Delete subvolume.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles subvolume delete [--account-name]
                                     [--ids]
-                                    [--no-wait]
+                                    [--name]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--pool-name]
                                     [--resource-group]
                                     [--subscription]
-                                    [--subvolume-name]
                                     [--volume-name]
                                     [--yes]
   examples:
@@ -86,29 +86,29 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --subvolume-name -n
+    summary: |-
+      The name of the subvolume.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --subvolume-name
-    summary: |-
-      The name of the ANF subvolume.
   - name: --volume-name -v
     summary: |-
-      The name of the ANF volume.
+      The name of the volume.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -116,7 +116,7 @@ directCommands:
 - uid: az_netappfiles_subvolume_list
   name: az netappfiles subvolume list
   summary: |-
-    List all ANF subvolumes in the specified NetApp volume.
+    List a list of the subvolumes in the volume.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -125,6 +125,8 @@ directCommands:
                                   --pool-name
                                   --resource-group
                                   --volume-name
+                                  [--max-items]
+                                  [--next-token]
   examples:
   - summary: |-
       List all subvolumes of a ANF volume
@@ -133,11 +135,11 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - isRequired: true
     name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -145,21 +147,28 @@ directCommands:
   - isRequired: true
     name: --volume-name -v
     summary: |-
-      The name of the ANF volume.
+      The name of the volume.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_netappfiles_subvolume_show
   name: az netappfiles subvolume show
   summary: |-
-    Get the path associated with a subvolumeName.
+    Get the path associated with the subvolumeName provided.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles subvolume show [--account-name]
                                   [--ids]
+                                  [--name]
                                   [--pool-name]
                                   [--resource-group]
                                   [--subscription]
-                                  [--subvolume-name]
                                   [--volume-name]
   examples:
   - summary: |-
@@ -168,38 +177,40 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --subvolume-name -n
+    summary: |-
+      The name of the subvolume.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --subvolume-name
-    summary: |-
-      The name of the ANF subvolume.
   - name: --volume-name -v
     summary: |-
-      The name of the ANF volume.
+      The name of the volume.
 - uid: az_netappfiles_subvolume_update
   name: az netappfiles subvolume update
   summary: |-
-    Update a specified ANF subvolume.
+    Update a subvolume in the path or clones the subvolume mentioned in the parentPath.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
     az netappfiles subvolume update [--account-name]
                                     [--add]
-                                    [--force-string]
+                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                     [--ids]
-                                    [--no-wait]
+                                    [--name]
+                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--parent-path]
                                     [--path]
                                     [--pool-name]
                                     [--remove]
@@ -207,7 +218,6 @@ directCommands:
                                     [--set]
                                     [--size]
                                     [--subscription]
-                                    [--subvolume-name]
                                     [--volume-name]
   examples:
   - summary: |-
@@ -216,55 +226,55 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - name: --add
-    defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --subvolume-name -n
+    summary: |-
+      The name of the subvolume.
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --parent-path
+    summary: |-
+      Parent path to the subvolume.
   - name: --path
     summary: |-
       Path to the subvolume.
   - name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - name: --remove
-    defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
-    defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --size
     summary: |-
-      Size of the subvolume.
+      Truncate subvolume to the provided size in bytes.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --subvolume-name
-    summary: |-
-      The name of the ANF subvolume.
   - name: --volume-name -v
     summary: |-
-      The name of the ANF volume.
+      The name of the volume.
 - uid: az_netappfiles_subvolume_wait
   name: az netappfiles subvolume wait
   summary: |-
-    Wait for a subvolume operation.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -276,17 +286,17 @@ directCommands:
                                   [--exists]
                                   [--ids]
                                   [--interval]
+                                  [--name]
                                   [--pool-name]
                                   [--resource-group]
                                   [--subscription]
-                                  [--subvolume-name]
                                   [--timeout]
                                   [--updated]
                                   [--volume-name]
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      Name of the ANF account.
+      The name of the NetApp account.
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -309,18 +319,18 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
+  - name: --name --subvolume-name -n
+    summary: |-
+      The name of the subvolume.
   - name: --pool-name -p
     summary: |-
-      Name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --subvolume-name
-    summary: |-
-      The name of the subvolume. Required.
   - name: --timeout
     defaultValue: "3600"
     summary: |-
@@ -331,7 +341,7 @@ directCommands:
       Wait until updated with provisioningState at 'Succeeded'.
   - name: --volume-name -v
     summary: |-
-      Name of the ANF volume.
+      The name of the volume.
 commands:
 - az_netappfiles_subvolume_create
 - az_netappfiles_subvolume_delete
@@ -366,5 +376,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/07/2023
+  ms.date: 03/07/2024
   description: Manage Azure NetApp Files (ANF) Subvolume Resources.

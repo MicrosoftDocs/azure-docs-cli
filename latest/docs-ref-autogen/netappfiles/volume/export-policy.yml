@@ -14,113 +14,118 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
-    az netappfiles volume export-policy add --allowed-clients
-                                            --cifs {false, true}
-                                            --nfsv3 {false, true}
-                                            --nfsv41 {false, true}
-                                            --unix-read-only {false, true}
-                                            --unix-read-write {false, true}
-                                            [--account-name]
-                                            [--chown-mode]
-                                            [--has-root-access {false, true}]
-                                            [--ids]
-                                            [--kerberos5-r]
-                                            [--kerberos5-rw]
-                                            [--kerberos5i-r]
-                                            [--kerberos5i-rw]
-                                            [--kerberos5p-r]
-                                            [--kerberos5p-rw]
-                                            [--name]
-                                            [--no-wait]
-                                            [--pool-name]
-                                            [--resource-group]
+    az netappfiles volume export-policy add --account-name
+                                            --name
+                                            --pool-name
+                                            --resource-group
+                                            [--allowed-clients]
+                                            [--chown-mode {Restricted, Unrestricted}]
+                                            [--cifs {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--kerberos5-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--kerberos5-read-write {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--kerberos5i-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--kerberos5i-read-write {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--kerberos5p-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--kerberos5p-read-write {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--nfsv3 {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--nfsv41 {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                             [--rule-index]
-                                            [--subscription]
+                                            [--unix-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                            [--unix-read-write {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
       Add an export policy rule for the ANF volume
     syntax: az netappfiles volume export-policy add -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --allowed-clients "1.2.3.0/24" --rule-index 2 --unix-read-only true --unix-read-write false --cifs false --nfsv3 true --nfsv41 false
   requiredParameters:
   - isRequired: true
-    name: --allowed-clients
+    name: --account-name -a
     summary: |-
-      Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names).
+      The name of the NetApp account.
   - isRequired: true
-    name: --cifs
-    parameterValueGroup: "false, true"
+    name: --name --volume-name -n -v
     summary: |-
-      Indication that CIFS protocol is allowed.
+      The name of the volume.
   - isRequired: true
-    name: --nfsv3
-    parameterValueGroup: "false, true"
+    name: --pool-name -p
     summary: |-
-      Indication that NFSv3 protocol is allowed.
+      The name of the capacity pool.
   - isRequired: true
-    name: --nfsv41
-    parameterValueGroup: "false, true"
-    summary: |-
-      Indication that NFSv4.1 protocol is allowed.
-  - isRequired: true
-    name: --unix-read-only
-    parameterValueGroup: "false, true"
-    summary: |-
-      Indication of read only access.
-  - isRequired: true
-    name: --unix-read-write
-    parameterValueGroup: "false, true"
-    summary: |-
-      Indication of read and write access.
-  optionalParameters:
-  - name: --account-name -a
-    summary: |-
-      The name of the ANF account.
-  - name: --chown-mode
-    summary: |-
-      This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. Possible values include- Restricted, Unrestricted. Default value- Restricted.
-  - name: --has-root-access
-    parameterValueGroup: "false, true"
-    summary: |-
-      Vol Has root access to volume.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --kerberos5-r
-    summary: |-
-      Kerberos5 Read only access.
-  - name: --kerberos5-rw
-    summary: |-
-      Kerberos5 Read and write access.
-  - name: --kerberos5i-r
-    summary: |-
-      Kerberos5i Read only access.
-  - name: --kerberos5i-rw
-    summary: |-
-      Kerberos5i Read and write access.
-  - name: --kerberos5p-r
-    summary: |-
-      Kerberos5p Read only access.
-  - name: --kerberos5p-rw
-    summary: |-
-      Kerberos5p Read and write access.
-  - name: --name --volume-name -n -v
-    summary: |-
-      The name of the ANF volume.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --pool-name -p
-    summary: |-
-      The name of the ANF pool.
-  - name: --resource-group -g
+    name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --allowed-clients
+    summary: |-
+      Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names.
+  - name: --chown-mode
+    defaultValue: "Restricted"
+    parameterValueGroup: "Restricted, Unrestricted"
+    summary: |-
+      This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own.
+  - name: --cifs
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows CIFS protocol.
+  - name: --has-root-access
+    defaultValue: "True"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Has root access to volume.
+  - name: --kerberos5-read-only
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5 Read only access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5-read-write
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5 Read and write access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5i-read-only
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5i Read only access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5i-read-write
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5i Read and write access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5p-read-only
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5p Read only access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5p-read-write
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5p Read and write access. To be use with swagger version 2020-05-01 or later.
+  - name: --nfsv3
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows NFSv3 protocol. Enable only for NFSv3 type volumes.
+  - name: --nfsv41
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows NFSv4.1 protocol. Enable only for NFSv4.1 type volumes.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --rule-index
     summary: |-
-      Order index. No number can be repeated. Max 6 rules.
-  - name: --subscription
+      Order index.
+  - name: --unix-read-only
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+      Read only access.
+  - name: --unix-read-write
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Read and write access.
 - uid: az_netappfiles_volume_export-policy_list
   name: az netappfiles volume export-policy list
   summary: |-
@@ -141,15 +146,15 @@ directCommands:
   - isRequired: true
     name: --account-name -a
     summary: |-
-      The name of the ANF account.
+      The name of the NetApp account.
   - isRequired: true
     name: --name --volume-name -n -v
     summary: |-
-      The name of the ANF volume.
+      The name of the volume.
   - isRequired: true
     name: --pool-name -p
     summary: |-
-      The name of the ANF pool.
+      The name of the capacity pool.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -162,70 +167,219 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
   syntax: >-
-    az netappfiles volume export-policy remove --rule-index
-                                               [--account-name]
-                                               [--add]
-                                               [--force-string]
-                                               [--ids]
-                                               [--name]
-                                               [--no-wait]
-                                               [--pool-name]
-                                               [--remove]
-                                               [--resource-group]
-                                               [--set]
-                                               [--subscription]
+    az netappfiles volume export-policy remove --account-name
+                                               --name
+                                               --pool-name
+                                               --resource-group
+                                               --rule-index
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--yes]
   examples:
   - summary: |-
-      Remove an export policy rule for an ANF volume
+      Remove an export policy rule from an ANF volume
     syntax: az netappfiles volume export-policy remove -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --rule-index 4
   requiredParameters:
   - isRequired: true
-    name: --rule-index
+    name: --account-name -a
     summary: |-
-      Order index. Range 1 to 6.
-  optionalParameters:
-  - name: --account-name -a
+      The name of the NetApp account.
+  - isRequired: true
+    name: --name --volume-name -n -v
     summary: |-
-      The name of the ANF account.
-  - name: --add
-    defaultValue: "[]"
+      The name of the volume.
+  - isRequired: true
+    name: --pool-name -p
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
-  - name: --force-string
-    defaultValue: "False"
-    summary: |-
-      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --volume-name -n -v
-    summary: |-
-      The name of the ANF volume.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --pool-name -p
-    summary: |-
-      The name of the ANF pool.
-  - name: --remove
-    defaultValue: "[]"
-    summary: |-
-      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
-  - name: --resource-group -g
+      The name of the capacity pool.
+  - isRequired: true
+    name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --rule-index
+    summary: |-
+      Order index.
+  optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_netappfiles_volume_export-policy_show
+  name: az netappfiles volume export-policy show
+  summary: |-
+    Show the export policy rule for a volume.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume export-policy show --account-name
+                                             --name
+                                             --pool-name
+                                             --resource-group
+                                             --rule-index
+  examples:
+  - summary: |-
+      Get an export policy rule for an ANF volume
+    syntax: az netappfiles volume export-policy show -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --rule-index 4
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - isRequired: true
+    name: --name --volume-name -n -v
+    summary: |-
+      The name of the volume.
+  - isRequired: true
+    name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --rule-index
+    summary: |-
+      Order index.
+- uid: az_netappfiles_volume_export-policy_update
+  name: az netappfiles volume export-policy update
+  summary: |-
+    Update the export policy rule for a volume.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume export-policy update --account-name
+                                               --name
+                                               --pool-name
+                                               --resource-group
+                                               --rule-index
+                                               [--add]
+                                               [--allowed-clients]
+                                               [--chown-mode {Restricted, Unrestricted}]
+                                               [--cifs {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--kerberos5-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--kerberos5-read-write {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--kerberos5i-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--kerberos5i-read-write {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--kerberos5p-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--kerberos5p-read-write {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--nfsv3 {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--nfsv41 {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--remove]
+                                               [--set]
+                                               [--unix-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                               [--unix-read-write {0, 1, f, false, n, no, t, true, y, yes}]
+  examples:
+  - summary: |-
+      Update the export policy rule for a volume
+    syntax: az netappfiles volume export-policy update -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --rule-index 1 --allowed-clients '1.1.3.0/24'
+  requiredParameters:
+  - isRequired: true
+    name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - isRequired: true
+    name: --name --volume-name -n -v
+    summary: |-
+      The name of the volume.
+  - isRequired: true
+    name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --rule-index
+    summary: |-
+      Order index.
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --allowed-clients
+    summary: |-
+      Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names.
+  - name: --chown-mode
+    parameterValueGroup: "Restricted, Unrestricted"
+    summary: |-
+      This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own.
+  - name: --cifs
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows CIFS protocol.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --has-root-access
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Has root access to volume.
+  - name: --kerberos5-read-only
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5 Read only access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5-read-write
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5 Read and write access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5i-read-only
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5i Read only access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5i-read-write
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5i Read and write access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5p-read-only
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5p Read only access. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5p-read-write
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5p Read and write access. To be use with swagger version 2020-05-01 or later.
+  - name: --nfsv3
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows NFSv3 protocol. Enable only for NFSv3 type volumes.
+  - name: --nfsv41
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows NFSv4.1 protocol. Enable only for NFSv4.1 type volumes.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --set
-    defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
-  - name: --subscription
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --unix-read-only
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+      Read only access.
+  - name: --unix-read-write
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Read and write access.
 - uid: az_netappfiles_volume_export-policy_wait
   name: az netappfiles volume export-policy wait
   summary: |-
-    Wait for a volume export-policy operation.
+    Place the CLI in a waiting state until a condition is met.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
@@ -246,7 +400,7 @@ directCommands:
   optionalParameters:
   - name: --account-name -a
     summary: |-
-      Name of the ANF account.
+      The name of the NetApp account.
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -271,10 +425,10 @@ directCommands:
       Polling interval in seconds.
   - name: --name --volume-name -n -v
     summary: |-
-      Name of the ANF volume.
+      The name of the volume.
   - name: --pool-name -p
     summary: |-
-      Name of the ANF pool.
+      The name of the capacity pool.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -293,6 +447,8 @@ commands:
 - az_netappfiles_volume_export-policy_add
 - az_netappfiles_volume_export-policy_list
 - az_netappfiles_volume_export-policy_remove
+- az_netappfiles_volume_export-policy_show
+- az_netappfiles_volume_export-policy_update
 - az_netappfiles_volume_export-policy_wait
 globalParameters:
 - name: --debug
@@ -319,5 +475,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/07/2023
+  ms.date: 03/07/2024
   description: Manage Azure NetApp Files (ANF) Volume export policies.
