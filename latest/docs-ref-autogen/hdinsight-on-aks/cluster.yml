@@ -4,7 +4,7 @@ name: az hdinsight-on-aks cluster
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **hdinsightonaks** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az hdinsight-on-aks cluster** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **hdinsightonaks** extension for the Azure CLI (version 2.56.0 or higher). The extension will automatically install the first time you run an **az hdinsight-on-aks cluster** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Cluster operations.
 status: Preview
@@ -40,11 +40,14 @@ directCommands:
                                        [--coord-debug-suspend {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--coordinator-debug-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--coordinator-high-availability-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--db-connection-authentication-mode {IdentityAuth, SqlAuth}]
+                                       [--deployment-mode {Application, Session}]
                                        [--enable-autoscale {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-la-metrics {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-log-analytics {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-prometheu {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-worker-debug {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--flink-db-auth-mode {IdentityAuth, SqlAuth}]
                                        [--flink-hive-catalog-db-connection-password-secret]
                                        [--flink-hive-catalog-db-connection-url]
                                        [--flink-hive-catalog-db-connection-user-name]
@@ -52,8 +55,10 @@ directCommands:
                                        [--flink-storage-uri]
                                        [--history-server-cpu]
                                        [--history-server-memory]
+                                       [--internal-ingress {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--job-manager-cpu]
                                        [--job-manager-memory]
+                                       [--job-spec]
                                        [--kafka-profile]
                                        [--key-vault-id]
                                        [--llap-profile]
@@ -66,6 +71,8 @@ directCommands:
                                        [--nodes]
                                        [--num-replicas]
                                        [--oss-version]
+                                       [--ranger-plugin-profile]
+                                       [--ranger-profile]
                                        [--schedule-based-config-default-count]
                                        [--schedule-based-config-schedule]
                                        [--schedule-based-config-time-zone]
@@ -96,18 +103,18 @@ directCommands:
     syntax: >-
       az hdinsight-on-aks cluster node-profile create --count 5 --node-type Worker --vm-size Standard_D8d_v5
 
-      az hdinsightonaks cluster create -n clustername --cluster-pool-name clusterpoolname -g resourcesGroup -l westus3 --assigned-identity-object-id 00000000-0000-0000-0000-000000000000 --assigned-identity-client-id 00000000-0000-0000-0000-000000000000 --authorization-user-id 00000000-0000-0000-0000-000000000000 --assigned-identity-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi --cluster-type Trino --cluster-version 1.0.6 --oss-version 0.410.0 --nodes $node-profile
+      az hdinsightonaks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location} --assigned-identity-object-id {00000000-0000-0000-0000-000000000000} --assigned-identity-client-id {00000000-0000-0000-0000-000000000000} --authorization-user-id {00000000-0000-0000-0000-000000000000} --assigned-identity-id {/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi} --cluster-type Trino --cluster-version {1.0.6} --oss-version {0.410.0} --nodes $node-profile
   - summary: |-
       Create a Flink cluster.
-    syntax: az hdinsight-on-aks cluster create  -n clustername --cluster-pool-name clusterpoolname -g RG -l westus3 --assigned-identity-object-id 00000000-0000-0000-0000-000000000000 --assigned-identity-client-id 00000000-0000-0000-0000-000000000000 --authorization-user-id 00000000-0000-0000-0000-000000000000 --assigned-identity-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi --cluster-type Flink --cluster-version flinkversion --oss-version flinkossversion --nodes nodes --flink-storage-uri storageUri --job-manager-cpu 1 --job-manager-memory 2000 --task-manager-cpu 6 --task-manager-memory 49016
+    syntax: az hdinsight-on-aks cluster create  -n {clustername} --cluster-pool-name {clusterpoolname} -g {RG} -l {westus3} --assigned-identity-object-id {00000000-0000-0000-0000-000000000000} --assigned-identity-client-id {00000000-0000-0000-0000-000000000000} --authorization-user-id {00000000-0000-0000-0000-000000000000} --assigned-identity-id {/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi} --cluster-type Flink --cluster-version {flinkversion} --oss-version {flinkossversion} --nodes {nodes} --flink-storage-uri {storageUri} --job-manager-cpu {1} --job-manager-memory {2000} --task-manager-cpu {6} --task-manager-memory {49016}
   - summary: |-
       Create Trino cluster with hive catalog.
     syntax: >-
-      az hdinsight-on-aks cluster trino-hive-catalog create --catalog-name catalogName --metastore-db-connection-url metastoreDbConnectionURL --metastore-db-connection-user-name metastoreDbUserName  --metastore-db-connection-password-secret metastoreDbPasswordSecret --metastore-warehouse-dir metastoreWarehouseDir
+      az hdinsight-on-aks cluster trino-hive-catalog create --catalog-name {catalogName} --metastore-db-connection-url {metastoreDbConnectionURL} --metastore-db-connection-user-name {metastoreDbUserName}  --metastore-db-connection-password-secret {metastoreDbPasswordSecret} --metastore-warehouse-dir {metastoreWarehouseDir}
 
-      az hdinsight-on-aks cluster secret create --secret-name secretName  --reference-name secretName
+      az hdinsight-on-aks cluster secret create --secret-name {secretName}  --reference-name {secretName}
 
-      az hdinsight-on-aks cluster create -n clustername --cluster-pool-name clusterpoolname -g resourcesGroup -l westus3 --assigned-identity-object-id 00000000-0000-0000-0000-000000000000 --assigned-identity-client-id 00000000-0000-0000-0000-000000000000 --authorization-user-id 00000000-0000-0000-0000-000000000000 --assigned-identity-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi --cluster-type Trino --cluster-version 1.0.6 --oss-version 0.410.0 --nodes $node-profile --secret-reference secretReference --key-vault-id yourkeyVaultResourceId --trino-hive-catalog trinoHiveCatalogOption
+      az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {westus3} --assigned-identity-object-id {00000000-0000-0000-0000-000000000000} --assigned-identity-client-id {00000000-0000-0000-0000-000000000000} --authorization-user-id {00000000-0000-0000-0000-000000000000} --assigned-identity-id {/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi} --cluster-type Trino --cluster-version {1.0.6} --oss-version {0.410.0} --nodes {node-profile} --secret-reference {secretReference} --key-vault-id {keyVaultResourceId} --trino-hive-catalog {trinoHiveCatalogOption}
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -162,24 +169,28 @@ directCommands:
     summary: |-
       This is a cool down period, this is a time period in seconds, which determines the amount of time that must elapse between a scaling activity started by a rule and the start of the next scaling activity, regardless of the rule that triggers it. The default value is 300 seconds.
   - name: --coord-debug-port --coordinator-debug-port
-    defaultValue: "8008"
     summary: |-
-      The flag that if enable debug or not.
+      The flag that if enable debug or not. Default: 8008.
   - name: --coord-debug-suspend --coordinator-debug-suspend
-    defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if suspend debug or not.
+      The flag that if suspend debug or not. Default: false.
   - name: --coordinator-debug-enabled --enable-coord-debug
-    defaultValue: "True"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true.
+      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: false.
   - name: --coordinator-high-availability-enabled --enable-coord-ha
-    defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true.
+      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: false.
+  - name: --db-connection-authentication-mode --spark-db-auth-mode
+    parameterValueGroup: "IdentityAuth, SqlAuth"
+    summary: |-
+      The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization.
+  - name: --deployment-mode
+    parameterValueGroup: "Application, Session"
+    summary: |-
+      A string property that indicates the deployment mode of Flink cluster. It can have one of the following enum values => Application, Session. Default value is Session.
   - name: --enable-autoscale
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -193,15 +204,17 @@ directCommands:
     summary: |-
       True if log analytics is enabled for the cluster, otherwise false.
   - name: --enable-prometheu
-    defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable Prometheus for cluster or not.
   - name: --enable-worker-debug
-    defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if trino cluster enable debug or not.
+      The flag that if trino cluster enable debug or not. Default: false.
+  - name: --flink-db-auth-mode --metastore-db-connection-authentication-mode
+    parameterValueGroup: "IdentityAuth, SqlAuth"
+    summary: |-
+      The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization.
   - name: --flink-hive-catalog-db-connection-password-secret --flink-hive-db-secret
     summary: |-
       Secret reference name from secretsProfile.secrets containing password for database connection.
@@ -223,15 +236,22 @@ directCommands:
   - name: --history-server-memory
     summary: |-
       History server memory size.
+  - name: --internal-ingress --internal-ingress-enabled
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Whether to create cluster using private IP instead of public IP. This property must be set at create time.
   - name: --job-manager-cpu
     summary: |-
       Job manager CPU count.
   - name: --job-manager-memory
     summary: |-
       Job manager memory size.
+  - name: --job-spec
+    summary: |-
+      Job specifications for flink clusters in application deployment mode. The specification is immutable even if job properties are changed by calling the RunJob API, please use the ListJob API to get the latest job information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --kafka-profile
     summary: |-
-      Kafka cluster profile.  Support json-file and yaml-file.
+      Kafka cluster profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --key-vault-id
     summary: |-
       Name of the user Key Vault where all the cluster specific user secrets are stored.
@@ -266,6 +286,12 @@ directCommands:
   - name: --oss-version
     summary: |-
       Version with three part.
+  - name: --ranger-plugin-profile
+    summary: |-
+      Cluster Ranger plugin profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --ranger-profile
+    summary: |-
+      The ranger cluster profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --schedule-based-config-default-count --schedule-default-count
     summary: |-
       Setting default node count of current schedule configuration. Default node count specifies the number of nodes which are default when an specified scaling operation is executed (scale up/scale down).
@@ -333,14 +359,12 @@ directCommands:
     summary: |-
       Spark user plugins spec  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --worker-debug-port
-    defaultValue: "8008"
     summary: |-
-      The debug port.
+      The debug port. Default: 8008.
   - name: --worker-debug-suspend
-    defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if trino cluster suspend debug or not.
+      The flag that if trino cluster suspend debug or not. Default: false.
 - uid: az_hdinsight-on-aks_cluster_delete
   name: az hdinsight-on-aks cluster delete
   summary: |-
@@ -360,7 +384,7 @@ directCommands:
   examples:
   - summary: |-
       Delete a cluster.
-    syntax: az hdinsight-on-aks cluster delete  -n testcluster --cluster-pool-name testpool -g RG
+    syntax: az hdinsight-on-aks cluster delete  -n {clusterName} --cluster-pool-name {poolName} -g {RG}
   optionalParameters:
   - name: --cluster-name --name -n
     summary: |-
@@ -401,7 +425,7 @@ directCommands:
   examples:
   - summary: |-
       List all cluster in a cluster pool.
-    syntax: az hdinsight-on-aks cluster list --cluster-pool-name testpool -g RG
+    syntax: az hdinsight-on-aks cluster list --cluster-pool-name {poolName}-g {RG}
   requiredParameters:
   - isRequired: true
     name: --cluster-pool-name
@@ -435,7 +459,7 @@ directCommands:
   examples:
   - summary: |-
       Lists the config dump of all services running in cluster.
-    syntax: az hdinsight-on-aks cluster list-service-config  --cluster-name testcluster --cluster-pool-name testpool -g RG
+    syntax: az hdinsight-on-aks cluster list-service-config  --cluster-name {clusterName} --cluster-pool-name {poolName}-g {RG}
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -477,7 +501,7 @@ directCommands:
   examples:
   - summary: |-
       Resize a cluster.
-    syntax: az hdinsight-on-aks cluster resize --cluster-name testcluster --cluster-pool-name testpool -g RG -l westus3 --target-worker-node-count 6
+    syntax: az hdinsight-on-aks cluster resize --cluster-name {clusterName} --cluster-pool-name {poolName}-g {RG} -l {westus3} --target-worker-node-count {6}
   optionalParameters:
   - name: --cluster-name
     summary: |-
@@ -524,43 +548,9 @@ directCommands:
   examples:
   - summary: |-
       Get a cluster with cluster name.
-    syntax: az hdinsight-on-aks cluster show  -n testcluster --cluster-pool-name testpool -g RG
+    syntax: az hdinsight-on-aks cluster show  -n {clusterName} --cluster-pool-name {poolName} -g {RG}
   optionalParameters:
   - name: --cluster-name --name -n
-    summary: |-
-      The name of the HDInsight cluster.
-  - name: --cluster-pool-name
-    summary: |-
-      The name of the cluster pool.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_hdinsight-on-aks_cluster_show-instance-view
-  name: az hdinsight-on-aks cluster show-instance-view
-  summary: |-
-    Get the status of a cluster instance.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az hdinsight-on-aks cluster' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az hdinsight-on-aks cluster show-instance-view [--cluster-name]
-                                                   [--cluster-pool-name]
-                                                   [--ids]
-                                                   [--resource-group]
-                                                   [--subscription]
-  examples:
-  - summary: |-
-      Get cluster instance view.
-    syntax: az hdinsight-on-aks cluster show-instance-view  --cluster-name testcluster --cluster-pool-name testpool -g RG
-  optionalParameters:
-  - name: --cluster-name
     summary: |-
       The name of the HDInsight cluster.
   - name: --cluster-pool-name
@@ -602,11 +592,14 @@ directCommands:
                                        [--coord-debug-suspend {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--coordinator-debug-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--coordinator-high-availability-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--db-connection-authentication-mode {IdentityAuth, SqlAuth}]
+                                       [--deployment-mode {Application, Session}]
                                        [--enable-autoscale {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-la-metrics {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-log-analytics {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-prometheu {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--enable-worker-debug {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--flink-db-auth-mode {IdentityAuth, SqlAuth}]
                                        [--flink-hive-catalog-db-connection-password-secret]
                                        [--flink-hive-catalog-db-connection-url]
                                        [--flink-hive-catalog-db-connection-user-name]
@@ -618,6 +611,7 @@ directCommands:
                                        [--ids]
                                        [--job-manager-cpu]
                                        [--job-manager-memory]
+                                       [--job-spec]
                                        [--kafka-profile]
                                        [--key-vault-id]
                                        [--llap-profile]
@@ -629,6 +623,8 @@ directCommands:
                                        [--nodes]
                                        [--num-replicas]
                                        [--oss-version]
+                                       [--ranger-plugin-profile]
+                                       [--ranger-profile]
                                        [--remove]
                                        [--resource-group]
                                        [--schedule-based-config-default-count]
@@ -660,7 +656,7 @@ directCommands:
   examples:
   - summary: |-
       Update a cluster service-config.
-    syntax: az hdinsight-on-aks cluster update -n testpsspark --cluster-pool-name ps-test-pool -g yuchenPSGroup --service-configs-profiles @config.json
+    syntax: az hdinsight-on-aks cluster update -n {clusterName} --cluster-pool-name {poolName} -g {RG} -service-configs {"[{service-name:yarn-service,configs:[{component:hadoop-config-client,files:[{file-name:yarn-site.xml,values:{yarn.nodemanager.resource.memory-mb:33333}}]}]}]"}
   optionalParameters:
   - name: --add
     summary: |-
@@ -709,19 +705,27 @@ directCommands:
       This is a cool down period, this is a time period in seconds, which determines the amount of time that must elapse between a scaling activity started by a rule and the start of the next scaling activity, regardless of the rule that triggers it. The default value is 300 seconds.
   - name: --coord-debug-port --coordinator-debug-port
     summary: |-
-      The flag that if enable debug or not.
+      The flag that if enable debug or not. Default: 8008.
   - name: --coord-debug-suspend --coordinator-debug-suspend
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if suspend debug or not.
+      The flag that if suspend debug or not. Default: false.
   - name: --coordinator-debug-enabled --enable-coord-debug
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true.
+      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: false.
   - name: --coordinator-high-availability-enabled --enable-coord-ha
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true.
+      The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: false.
+  - name: --db-connection-authentication-mode --spark-db-auth-mode
+    parameterValueGroup: "IdentityAuth, SqlAuth"
+    summary: |-
+      The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization.
+  - name: --deployment-mode
+    parameterValueGroup: "Application, Session"
+    summary: |-
+      A string property that indicates the deployment mode of Flink cluster. It can have one of the following enum values => Application, Session. Default value is Session.
   - name: --enable-autoscale
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -741,7 +745,11 @@ directCommands:
   - name: --enable-worker-debug
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if trino cluster enable debug or not.
+      The flag that if trino cluster enable debug or not. Default: false.
+  - name: --flink-db-auth-mode --metastore-db-connection-authentication-mode
+    parameterValueGroup: "IdentityAuth, SqlAuth"
+    summary: |-
+      The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization.
   - name: --flink-hive-catalog-db-connection-password-secret --flink-hive-db-secret
     summary: |-
       Secret reference name from secretsProfile.secrets containing password for database connection.
@@ -776,9 +784,12 @@ directCommands:
   - name: --job-manager-memory
     summary: |-
       Job manager memory size.
+  - name: --job-spec
+    summary: |-
+      Job specifications for flink clusters in application deployment mode. The specification is immutable even if job properties are changed by calling the RunJob API, please use the ListJob API to get the latest job information.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --kafka-profile
     summary: |-
-      Kafka cluster profile.  Support json-file and yaml-file.
+      Kafka cluster profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --key-vault-id
     summary: |-
       Name of the user Key Vault where all the cluster specific user secrets are stored.
@@ -810,6 +821,12 @@ directCommands:
   - name: --oss-version
     summary: |-
       Version with three part.
+  - name: --ranger-plugin-profile
+    summary: |-
+      Cluster Ranger plugin profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --ranger-profile
+    summary: |-
+      The ranger cluster profile.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
@@ -890,11 +907,11 @@ directCommands:
       Spark user plugins spec  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --worker-debug-port
     summary: |-
-      The debug port.
+      The debug port. Default: 8008.
   - name: --worker-debug-suspend
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      The flag that if trino cluster suspend debug or not.
+      The flag that if trino cluster suspend debug or not. Default: false.
 - uid: az_hdinsight-on-aks_cluster_wait
   name: az hdinsight-on-aks cluster wait
   summary: |-
@@ -962,6 +979,9 @@ directCommands:
 commands:
 - az_hdinsight-on-aks_cluster_create
 - az_hdinsight-on-aks_cluster_delete
+- az_hdinsight-on-aks_cluster_instance-view
+- az_hdinsight-on-aks_cluster_instance-view_list
+- az_hdinsight-on-aks_cluster_instance-view_show
 - az_hdinsight-on-aks_cluster_job
 - az_hdinsight-on-aks_cluster_job_list
 - az_hdinsight-on-aks_cluster_job_run
@@ -973,10 +993,12 @@ commands:
 - az_hdinsight-on-aks_cluster_secret
 - az_hdinsight-on-aks_cluster_secret_create
 - az_hdinsight-on-aks_cluster_show
-- az_hdinsight-on-aks_cluster_show-instance-view
 - az_hdinsight-on-aks_cluster_trino-hive-catalog
 - az_hdinsight-on-aks_cluster_trino-hive-catalog_create
 - az_hdinsight-on-aks_cluster_update
+- az_hdinsight-on-aks_cluster_upgrade
+- az_hdinsight-on-aks_cluster_upgrade_list
+- az_hdinsight-on-aks_cluster_upgrade_run
 - az_hdinsight-on-aks_cluster_wait
 globalParameters:
 - name: --debug
