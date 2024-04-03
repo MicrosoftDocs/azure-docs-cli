@@ -4,7 +4,7 @@ name: az hdinsight-on-aks clusterpool
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **hdinsightonaks** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az hdinsight-on-aks clusterpool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **hdinsightonaks** extension for the Azure CLI (version 2.56.0 or higher). The extension will automatically install the first time you run an **az hdinsight-on-aks clusterpool** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Clusterpool operations.
 status: Preview
@@ -23,19 +23,22 @@ directCommands:
   syntax: >-
     az hdinsight-on-aks clusterpool create --cluster-pool-name
                                            --resource-group
+                                           [--api-server-authorized-ip-ranges]
                                            [--cluster-pool-version]
                                            [--enable-log-analytics {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--la-workspace-id]
                                            [--location]
                                            [--managed-rg-name]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--outbound-type {loadBalancer, userDefinedRouting}]
+                                           [--private-server-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--subnet-id]
                                            [--tags]
                                            [--workernode-size]
   examples:
   - summary: |-
       Create a cluster pool.
-    syntax: az hdinsight-on-aks clusterpool create -g RG -n poolName -l westus3 --workernode-size Standard_E4s_v3
+    syntax: az hdinsight-on-aks clusterpool create -g {RG} -n {poolName} -l {westus3} --workernode-size {Standard_E4s_v3} --version {1.1}
   requiredParameters:
   - isRequired: true
     name: --cluster-pool-name --name -n
@@ -46,7 +49,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --cluster-pool-version
+  - name: --api-server-authorized-ip-ranges --api-server-ip-ranges
+    summary: |-
+      IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with private AKS clusters. So you cannot set enablePrivateApiServer to true and apiServerAuthorizedIpRanges at the same time.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --cluster-pool-version --version
     summary: |-
       Cluster pool version is a 2-part version.
   - name: --enable-log-analytics
@@ -66,6 +72,14 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --outbound-type
+    parameterValueGroup: "loadBalancer, userDefinedRouting"
+    summary: |-
+      This can only be set at cluster pool creation time and cannot be changed later.
+  - name: --private-server-enabled
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      ClusterPool is based on AKS cluster. AKS cluster exposes the API server to public internet by default. If you set this property to true, a private AKS cluster will be created, and it will use private apiserver, which is not exposed to public internet.
   - name: --subnet-id
     summary: |-
       Cluster pool subnet resource id.
@@ -93,7 +107,7 @@ directCommands:
   examples:
   - summary: |-
       Deletes a Cluster Pool.
-    syntax: az hdinsight-on-aks clusterpool delete -g RG -n testcluster
+    syntax: az hdinsight-on-aks clusterpool delete -g {RG} -n {poolName}
   optionalParameters:
   - name: --cluster-pool-name --name -n
     summary: |-
@@ -130,7 +144,7 @@ directCommands:
   examples:
   - summary: |-
       Lists the list of clusterpool in a resource group.
-    syntax: az hdinsight-on-aks clusterpool list -g RG
+    syntax: az hdinsight-on-aks clusterpool list -g {RG}
   - summary: |-
       List the list of Cluster Pools within a Subscription.
     syntax: az hdinsightonaks clusterpool list
@@ -160,7 +174,7 @@ directCommands:
   examples:
   - summary: |-
       Gets a cluster pool.
-    syntax: az hdinsight-on-aks clusterpool show -g RG -n testpool
+    syntax: az hdinsight-on-aks clusterpool show -g {RG} -n {poolName}
   optionalParameters:
   - name: --cluster-pool-name --name -n
     summary: |-
@@ -184,6 +198,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az hdinsight-on-aks clusterpool update [--add]
+                                           [--api-server-authorized-ip-ranges]
                                            [--cluster-pool-name]
                                            [--cluster-pool-version]
                                            [--compute-profile]
@@ -193,6 +208,7 @@ directCommands:
                                            [--la-workspace-id]
                                            [--managed-rg-name]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--outbound-type {loadBalancer, userDefinedRouting}]
                                            [--remove]
                                            [--resource-group]
                                            [--set]
@@ -202,15 +218,18 @@ directCommands:
   examples:
   - summary: |-
       Updates an existing Cluster enable log analytic.
-    syntax: az hdinsight-on-aks clusterpool update -g RG -n testpool --enable-log-analytics --log-analytic-workspace-id "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/RG/providers/microsoft.operationalinsights/workspaces/yourworkspace"
+    syntax: az hdinsight-on-aksclusterpool update -g {RG} -n {poolName} --enable-log-analytics --log-analytic-workspace-id {"/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/RG/providers/microsoft.operationalinsights/workspaces/yourworkspace"}
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --api-server-authorized-ip-ranges --api-server-ip-ranges
+    summary: |-
+      IP ranges are specified in CIDR format, e.g. 137.117.106.88/29. This feature is not compatible with private AKS clusters. So you cannot set enablePrivateApiServer to true and apiServerAuthorizedIpRanges at the same time.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --cluster-pool-name --name -n
     summary: |-
       The name of the cluster pool.
-  - name: --cluster-pool-version
+  - name: --cluster-pool-version --version
     summary: |-
       Cluster pool version is a 2-part version.
   - name: --compute-profile
@@ -237,6 +256,10 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --outbound-type
+    parameterValueGroup: "loadBalancer, userDefinedRouting"
+    summary: |-
+      This can only be set at cluster pool creation time and cannot be changed later.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
@@ -321,6 +344,9 @@ commands:
 - az_hdinsight-on-aks_clusterpool_list
 - az_hdinsight-on-aks_clusterpool_show
 - az_hdinsight-on-aks_clusterpool_update
+- az_hdinsight-on-aks_clusterpool_upgrade
+- az_hdinsight-on-aks_clusterpool_upgrade_list
+- az_hdinsight-on-aks_clusterpool_upgrade_run
 - az_hdinsight-on-aks_clusterpool_wait
 globalParameters:
 - name: --debug
