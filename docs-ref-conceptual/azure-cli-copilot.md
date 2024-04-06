@@ -21,8 +21,6 @@ keywords: azure cli microsoft copilot, copilot for azure, azure command line
 > [!IMPORTANT]
 > To enable access to Microsoft Copilot for Azure (preview) for your organization, [complete the registration form](https://aka.ms/MSCopilotforAzurePreviewRequest). The application process only needs to be completed once per tenant. Check with your administrator if you have questions about joining the preview.
 
-Currently, users must [apply for access](https://azure.microsoft.com/products/copilot#Usecases) in order to use Microsoft Copilot.
-
 Here are some of the benefits of using Microsoft Copilot for Azure CLI:
 - **Design**: Create and configure the services needed and align with organizational policies.
 - **Operate**: Answer questions, author complex commands, and manage resources.
