@@ -35,7 +35,7 @@ To use Microsoft Copilot, go to the Azure Portal and select the **Copilot** icon
 
 When you tell Microsoft Copilot about a task you want to perform with Azure CLI, it provides a script with the necessary commands. Note the placeholder values (marked in blue font) you need to update with actual values. 
 
-### Use a reference command
+## Search for reference command using Microsoft Copilot
 
 Ask Microsoft Copilot to assist with using the reference command `az group`:
 
@@ -61,7 +61,7 @@ az group create --name resourceGroup --location $location
 ```
 ***
 
-### Look up an Azure CLI script
+## Look up an Azure CLI script using Microsoft Copilot
 
 Suppose you encounter an Azure CLI script that includes references and parameters that are new to you. Use Microsoft Copilot to look up the reference command by entering the command as if you were in the terminal: 
 
@@ -69,7 +69,7 @@ Suppose you encounter an Azure CLI script that includes references and parameter
 
 Microsoft Copilot references and links other Microsoft Learn documents related to your specific CLI topic and automatically generates follow-up questions. 
 
-### Use an Azure service
+## Search for an E2E (end to end) scenarios using Microsoft Copilot
 
 Use Azure CLI with Microsoft Copilot to create an end-to-end scenario where you create an Azure SQL database.
 
