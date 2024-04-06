@@ -27,7 +27,7 @@ Here are some of the benefits of using Microsoft Copilot for Azure CLI:
 - **Troubleshoot**: Orchestrate across Azure services for insights to summarize issues, identify causes, and suggest solutions.
 - **Optimize**: Receive recommendations to improved costs, scalability, and reliability..
 
-### How to use Azure CLI successfully with Microsoft Copilot
+## How to use Azure CLI successfully with Microsoft Copilot
 
 To use Microsoft Copilot, go to the Azure Portal and select the **Copilot** icon on the top taskbar. The copilot window will open with a chat assistant where you can ask questions:
 
@@ -35,7 +35,7 @@ To use Microsoft Copilot, go to the Azure Portal and select the **Copilot** icon
 
 When you tell Microsoft Copilot about a task you want to perform with Azure CLI, it provides a script with the necessary commands. Note the placeholder values (marked in blue font) you need to update with actual values. 
 
-## Use a reference command
+### Use a reference command
 
 Ask Microsoft Copilot to assist with using the reference command `az group`:
 
@@ -61,7 +61,7 @@ az group create --name resourceGroup --location $location
 ```
 ***
 
-## Look up an Azure CLI script
+### Look up an Azure CLI script
 
 Suppose you encounter an Azure CLI script that includes references and parameters that are new to you. Use Microsoft Copilot to look up the reference command by entering the command as if you were in the terminal: 
 
@@ -69,7 +69,7 @@ Suppose you encounter an Azure CLI script that includes references and parameter
 
 Microsoft Copilot references and links other Microsoft Learn documents related to your specific CLI topic and automatically generates follow-up questions. 
 
-## Use an Azure service
+### Use an Azure service
 
 Use Azure CLI with Microsoft Copilot to create an end-to-end scenario where you create an Azure SQL database.
 
