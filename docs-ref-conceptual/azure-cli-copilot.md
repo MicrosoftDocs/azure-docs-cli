@@ -14,18 +14,17 @@ keywords: azure cli microsoft copilot, copilot for azure, azure command line
 
 # Use Azure CLI with Microsoft Copilot
 
-## Microsoft Copilot overview
-
 [Microsoft Copilot for Azure](https://aka.ms/MicrosoftCopilotforAzureDocs) (preview) is an AI-powered tool to help you do more with Azure. It unifies knowledge and data across hundreds of Azure services to increase productivity, reduce costs, and provide deep insights. Microsoft Copilot for Azure (preview) helps you learn about Azure by answering questions, and it provides information tailored to your own Azure resources and environment. By letting you express your goals in natural language, Copilot simplifies your Azure management experience. This benefits Azure CLI users because the knowledge of Azure CLI is built into Copilot!
 
 > [!IMPORTANT]
 > To enable access to Microsoft Copilot for Azure (preview) for your organization, [complete the registration form](https://aka.ms/MSCopilotforAzurePreviewRequest). The application process only needs to be completed once per tenant. Check with your administrator if you have questions about joining the preview.
 
 Here are some of the benefits of using Microsoft Copilot for Azure CLI:
+
 - **Design**: Create and configure the services needed and align with organizational policies.
 - **Operate**: Answer questions, author complex commands, and manage resources.
 - **Troubleshoot**: Orchestrate across Azure services for insights to summarize issues, identify causes, and suggest solutions.
-- **Optimize**: Receive recommendations to improved costs, scalability, and reliability..
+- **Optimize**: Receive recommendations to improve costs, scalability, and reliability.
 
 ## How to use Azure CLI successfully with Microsoft Copilot
 
@@ -35,7 +34,7 @@ To use Microsoft Copilot, go to the Azure Portal and select the **Copilot** icon
 
 When you tell Microsoft Copilot about a task you want to perform with Azure CLI, it provides a script with the necessary commands. 
 
-## Search for reference command using Microsoft Copilot
+## Search for reference commands using Microsoft Copilot
 
 Ask Microsoft Copilot to assist with using the reference command `az group`. Note the placeholder values (marked in blue font) you need to update with actual values.
 
@@ -44,12 +43,14 @@ Ask Microsoft Copilot to assist with using the reference command `az group`. Not
 Make sure to replace the variables (marked in blue) with actual values, or define the variables in your variable block before running the command:
 
 # [Replace variables](#tab/define)
+
 ```azurecli-interactive
 # Create a resource group
 az group create --name myResourceGroup --location eastus
 ```
 
 # [Use a variable block](#tab/variableblock)
+
 ```azurecli-interactive
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
@@ -59,6 +60,7 @@ locationName="eastus"
 # Create a resource group
 az group create --name resourceGroup --location $location
 ```
+
 ***
 
 For more information on managing resource groups, see [How to manage Azure resource groups with the Azure CLI](./manage-azure-groups-azure-cli.md).
@@ -104,7 +106,11 @@ serviceObjective="basic"
  az sql db create --name $databaseName --resource-group $resourceGroup --server $serverName --service-objective $serviceObjective
 ```
 
-For more information on creating SQL Databases see [Quickstart: Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-cli).
+For more information on creating SQL Databases see [Quickstart: Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart#tabs=azure-cli).
+
+## Provide feedback
+
+Microsoft Copilot for Azure values your feedback. At the bottom of the Copilot response, give us a thumbs-up if the Copilot response was helpful to you.  Give us a thumbs-down when we need to make improvements. 
 
 ## See also
 
