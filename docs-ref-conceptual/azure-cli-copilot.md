@@ -1,12 +1,12 @@
 ---
-title: Use Azure CLI with Micrsoft Copilot| Microsoft Docs
-description: How to use Azure CLI with the new AI functionalities of Microsoft Copilot.
-ms.date: 03/26/2024
+title: Use Azure CLI with Microsoft Copilot| Microsoft Docs
+description: How to learn Azure CLI with the new AI functionalities of Microsoft Copilot.
+ms.date: 04/05/2024
 manager: jasongroce
 author: daphnemamsft
 ms.author: daphnema
 ms.tool: azure-cli
-ms.topic: tutorial
+ms.topic: conceptual
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli microsoft copilot, copilot for azure, azure command line
@@ -23,7 +23,7 @@ Here are some of the benefits of using Microsoft Copilot for Azure CLI:
 - **Troubleshoot**: Orchestrate across Azure services for insights to summarize issues, identify causes, and suggest solutions.
 - **Optimize**: Receive recommendations to improve costs, scalability, and reliability.
 
-## Enaable Microsoft Copilot for Azure
+## Enable Microsoft Copilot for Azure
 
 To enable access to Microsoft Copilot for Azure (preview) for your organization, [complete the registration form](https://aka.ms/MSCopilotforAzurePreviewRequest). The application process only needs to be completed once per tenant. Check with your administrator if you have questions about joining the preview.
 
@@ -64,8 +64,6 @@ az group create --name resourceGroup --location $location
 
 ***
 
-For more information on managing resource groups, see [How to manage Azure resource groups with the Azure CLI](./manage-azure-groups-azure-cli.md).
-
 ## Look up an Azure CLI script using Microsoft Copilot
 
 Suppose you encounter an Azure CLI script that includes references and parameters that are new to you. Use Microsoft Copilot to look up the reference command by entering the command as if you were in a terminal: 
@@ -87,7 +85,7 @@ Follow the steps provided:
    ```azurecli-interactive
    # Variable block
    serverName="myServerName"
-   resourceGroup="myResourceGroup
+   resourceGroup="myResourceGroup"
    locationName="eastus2"
    adminUser="myAdminUser"
    adminPassword="myPassword"
@@ -107,12 +105,12 @@ Follow the steps provided:
    az sql db create --name $databaseName --resource-group $resourceGroup --server $serverName --service-objective $serviceObjective
    ```
 
-For more information on creating SQL Databases see [Quickstart: Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart#tabs=azure-cli).
-
-## Provide feedback
+## Let us know how we did
 
 Microsoft Copilot for Azure values your feedback. At the bottom of the Copilot response, give us a **thumbs up** if the Copilot response was helpful to you.  Give us a **thumbs down** when we need to make improvements. 
 
 ## See also
 
-* [Apply for Microsoft Copilot for Azure](https://azure.microsoft.com/products/copilot#Usecases)
+* [Apply for access to Microsoft Copilot for Azure](https://azure.microsoft.com/products/copilot#Usecases)
+* [How to manage Azure resource groups with the Azure CLI](./manage-azure-groups-azure-cli.md)
+* [Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart#tabs=azure-cli)
