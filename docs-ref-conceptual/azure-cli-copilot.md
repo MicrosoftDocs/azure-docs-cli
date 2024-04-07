@@ -1,6 +1,6 @@
 ---
-title: Use Azure CLI with Microsoft Copilot| Microsoft Docs
-description: How to learn Azure CLI with the new AI functionalities of Microsoft Copilot.
+title: Use Microsoft Copilot to learn Azure CLI | Microsoft Docs
+description: How to use the new AI functionalities of Microsoft Copilot to learn Azure CLI.
 ms.date: 04/05/2024
 manager: jasongroce
 author: daphnemamsft
@@ -12,11 +12,11 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli microsoft copilot, copilot for azure, azure command line
 ---
 
-# Use Microsoft Copilot for Azure to find Azure CLI content
+# Use Microsoft Copilot for Azure to learn how to use the Azure CLI
 
 [Microsoft Copilot for Azure](https://aka.ms/MicrosoftCopilotforAzureDocs) (preview) is an AI-powered tool to help you do more with Azure. It unifies knowledge and data across hundreds of Azure services to increase productivity, reduce costs, and provide deep insights. Microsoft Copilot for Azure (preview) helps you learn about Azure by answering questions, and it provides information tailored to your own Azure resources and environment. By letting you express your goals in natural language, Copilot simplifies your Azure management experience. This benefits Azure CLI users because the knowledge of Azure CLI is built into Copilot!
 
-Here are some of the benefits of using Microsoft Copilot for Azure CLI:
+Here are some of the benefits of using Microsoft Copilot for Azure:
 
 - **Design**: Create and configure the services needed and align with organizational policies.
 - **Operate**: Answer questions, author complex commands, and manage resources.
@@ -35,7 +35,7 @@ To use Microsoft Copilot, go to the Azure Portal and select the **Copilot** icon
 
 When you tell Microsoft Copilot about a task you want to perform with Azure CLI, it provides a script with the necessary commands. 
 
-## Search for reference commands using Microsoft Copilot
+## Search for reference commands
 
 Ask Microsoft Copilot to assist with using the reference command `az group`. Note the placeholder values (marked in blue font) you need to update with actual values.
 
@@ -64,7 +64,7 @@ az group create --name resourceGroup --location $location
 
 ***
 
-## Look up an Azure CLI script using Microsoft Copilot
+## Look up an Azure CLI script
 
 Suppose you encounter an Azure CLI script that includes references and parameters that are new to you. Use Microsoft Copilot to look up the reference command by entering the command as if you were in a terminal: 
 
@@ -72,7 +72,7 @@ Suppose you encounter an Azure CLI script that includes references and parameter
 
 Microsoft Copilot references and links other Microsoft Learn documents related to your specific CLI topic and automatically generates follow-up questions. 
 
-## Search for a task or job to be done using Microsoft Copilot
+## Search for a task or job to be done
 
 Use Azure CLI with Microsoft Copilot to help you create an Azure SQL database.
 
