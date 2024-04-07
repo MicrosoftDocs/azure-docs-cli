@@ -33,11 +33,11 @@ To use Microsoft Copilot, go to the Azure Portal and select the **Copilot** icon
 
 :::image type="content" source="./media/copilot-cli-1.png" alt-text="<Copilot on Azure portal>":::
 
-When you tell Microsoft Copilot about a task you want to perform with Azure CLI, it provides a script with the necessary commands. Note the placeholder values (marked in blue font) you need to update with actual values. 
+When you tell Microsoft Copilot about a task you want to perform with Azure CLI, it provides a script with the necessary commands. 
 
 ## Search for reference command using Microsoft Copilot
 
-Ask Microsoft Copilot to assist with using the reference command `az group`:
+Ask Microsoft Copilot to assist with using the reference command `az group`. Note the placeholder values (marked in blue font) you need to update with actual values.
 
 :::image type="content" source="./media/copilot-cli-2.png" alt-text="<Reference command>":::
 
@@ -61,6 +61,8 @@ az group create --name resourceGroup --location $location
 ```
 ***
 
+For more information on managing resource groups, see [How to manage Azure resource groups with the Azure CLI](./manage-azure-groups-azure-cli.md).
+
 ## Look up an Azure CLI script using Microsoft Copilot
 
 Suppose you encounter an Azure CLI script that includes references and parameters that are new to you. Use Microsoft Copilot to look up the reference command by entering the command as if you were in the terminal: 
@@ -69,37 +71,40 @@ Suppose you encounter an Azure CLI script that includes references and parameter
 
 Microsoft Copilot references and links other Microsoft Learn documents related to your specific CLI topic and automatically generates follow-up questions. 
 
-## Search for an E2E (end to end) scenarios using Microsoft Copilot
+## Search for a task or job to be done using Microsoft Copilot
 
-Use Azure CLI with Microsoft Copilot to create an end-to-end scenario where you create an Azure SQL database.
+Use Azure CLI with Microsoft Copilot to help you create an Azure SQL database.
 
 :::image type="content" source="./media/copilot-cli-4.png" alt-text="<Use Azure service>":::
 
-Follow the steps provided to create an Azure SQL database :
+Follow the steps provided:
 
-1. First create an Azure SQL server:
+1. Create an Azure SQL server:
 
 ```azurecli-interactive
+# Variable block
+serverName="myServerName"
+resourceGroup="myResourceGroup
+locationName="eastus2"
+adminUser="myAdminUser"
+adminPassword="myPassword"
+
 az sql server create --name $serverName --resource-group $resourceGroup --location $location --admin-user $adminUser --admin-password $adminPassword
 ```
 
-2. Replace the variables with actual values (or define the values in a variable block):
+1. Create your Azure SQL database:
 
 ```azurecli-interactive
-az sql server create --name myServer --resource-group myResourceGroup --location eastus --admin-user myAdminUser --admin-password myAdminPassword
-```
+# Variable block
+databaseName="myDatabaseName"
+resourceroup= "myResourceGroup"
+serverName="myServerName"
+serviceObjective="basic"
 
-3. Next, create your Azure SQL database:
-
-```azurecli-interactive
  az sql db create --name $databaseName --resource-group $resourceGroup --server $serverName --service-objective $serviceObjective
 ```
 
-4. Replace the variables with actual values (or define the values in a variable block):
-
-```azurecli-interactive
- az sql db create --name myDatabaseName --resource-group myResourceGroup --server myServerName --service-objective myServiceObjective
-```
+For more information on creating SQL Databases see [Quickstart: Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-cli).
 
 ## See also
 
