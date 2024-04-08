@@ -21,19 +21,29 @@ With the release of Azure CLI [x.xx.xx](), there is a new login feature that pro
 * Installing the preview will over-write your current Azure CLI installation.
 * You will not be prompted to select a subscription when logging in with a service principal, managed identity or Web Account Manager (WAM).
 
-## Prerequisites
+## Prerequisite for macOS
 
-There are Linux prerequisites for a Windows or macOS install of the preview? The ZIP file doesn't contain all needed components?
+If you are installing the preview in a macOS environment, Python runtime must be installed.
+
+```bash
+mkdir azure-cli-edge-build 
+cd azure-cli-edge-build 
+git clone https://github.com/jiasli/azure-cli --branch login --depth 1 
+python3 -m venv env 
+. env/bin/activate 
+pip install azdev 
+azdev setup -c 
+az login 
+```
 
 ## Install
 
 To install Azure CLI x.xx.x, follow these instructions:
 
 1. Download [Microsoft Azure CLI.zip](https://artprodwus21.artifacts.visualstudio.com/A7b238909-6802-4b65-b90d-184bca47f458/5147fa83-336e-44ef-bbe0-c86b8ae86cbb/_apis/artifact/cGlwZWxpbmVhcnRpZmFjdDovL2F6Y2xpdG9vbHMvcHJvamVjdElkLzUxNDdmYTgzLTMzNmUtNDRlZi1iYmUwLWM4NmI4YWU4NmNiYi9idWlsZElkLzE0NTY3MC9hcnRpZmFjdE5hbWUvemlwLXg2NA2/content?format=file&subPath=%2FMicrosoft%20Azure%20CLI.zip ).
-   
-2. Unzip the package to a folder.
-3. Using Cmd.exe or PowerShell, call the Azure CLI by running <unzipped folder path>\bin\az.cmd.
-4. **Close and reopen any active terminal window to use the newly installed preview.**
+1. Unzip the package to a folder.
+1. Using Cmd.exe or PowerShell, call the Azure CLI by running <unzipped folder path>\bin\az.cmd.
+1. **Close and reopen any active terminal window to use the newly installed preview.**
 
 ### Log into Azure
 
