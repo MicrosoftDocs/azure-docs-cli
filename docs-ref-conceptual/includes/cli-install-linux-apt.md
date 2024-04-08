@@ -29,7 +29,7 @@ The easiest way to install the Azure CLI is through a script maintained by the A
 If you wish to inspect the contents of the script yourself before executing, download the script first using `curl` and inspect it in your favorite text editor.
 
 ```bash
-curl -fsSL https://aka.ms/InstallAzureCLIDeb | sudo bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
 ### Option 2: Step-by-step installation instructions
@@ -40,15 +40,16 @@ If you prefer a step-by-step installation process, complete the following steps 
 
     ```bash
     sudo apt-get update
-    sudo apt-get install apt-transport-https ca-certificates curl gnupg2 lsb-release
+    sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
     ```
 
 2. Download and install the Microsoft signing key:
 
     ```bash
     sudo mkdir -p /etc/apt/keyrings
-    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc |\
-      gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg
+    curl -sL https://packages.microsoft.com/keys/microsoft.asc |\
+      sudo gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg
+    sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
     ```
 
 3. <div id="set-release"/>Add the Azure CLI software repository:
