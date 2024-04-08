@@ -195,7 +195,7 @@ az account lock create --name "Cannot delete subscription" --lock-type CanNotDel
 ```
 
 > [!NOTE]
-> You need to have appropriate permissions to create or change locks.
+> You need to have `contributor` permissions on a subscription to create or change locks.
 
 To see the current locks on your subscription, use the [az account lock list](/cli/azure/account/lock#az-account-lock-list) command:
 

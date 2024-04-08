@@ -108,9 +108,28 @@ The default value is for you only. It doesn't affect other users or changes you 
 
 If you're using persisted parameter values, as described in this article, those values take precedence over defaults set in the *config* file.
 
+## Set a resource group lock
+
+As an administrator, you may need to lock a resource group to prevent users from deleting or modifying it. For more information, see [Lock resources to prevent unexpected changes](/azure/azure-resource-manager/management/lock-resources).
+
+In Azure CLI, use the [az group lock](../latest/docs-ref-autogen/group/lock.yml) commands. For instance, the [az account lock create](/cli/azure/account/lock#az-account-lock-create) command can prevent users from deleting a resource group:
+
+```azurecli-interactive
+az group lock create --name "Cannot delete resource group" --lock-type CanNotDelete
+```
+
+> [!NOTE]
+> You need to have `contributor` permissions on a resource group to create or change locks.
+
+To see the current locks on your resource group, use the [az group lock list](/cli/azure/group/lock#az-group-lock-list) command:
+
+```azurecli-interactive
+az group lock list --output table
+```
+
 ## Clean up resources
 
-If you tried any of the commands in this article, you can remove any resources you created by using the [az group delete](/cli/azure/group#az_group_delete) command:
+If you tried any of the commands in this article, you can remove any resources you created by using the [az group delete](/cli/azure/group#az-group-delete) command:
 
 ```azurecli
 az group delete --name MyResourceGroup
