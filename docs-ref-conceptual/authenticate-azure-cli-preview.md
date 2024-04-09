@@ -72,6 +72,8 @@ C:\myPath\Azure CLI preview\bin> ./az.cmd login
 1. Tap `Enter` to bypass the subscription selector and accept the default subscription.
 1. Type a line number from the numbered list to change the default subscription.
 
+Here's a screen print of what you can expect from the authentication preview:
+
 :::image type="content" source="./media/authenticate-azure-cli-preview/subscription-selector.png" alt-text="Subscription selector":::
 
 ## Verify results
