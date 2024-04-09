@@ -42,14 +42,24 @@ Install Azure CLI authentication preview by following these steps:
 
 1. Download [Microsoft Azure CLI.zip](https://aka.ms/AApydwn).
 1. Unzip the package to a folder.
-1. Using Cmd.exe or PowerShell, call the Azure CLI by running {unzipped folder path}\bin\az.cmd.
+1. Using Cmd.exe or PowerShell, call the Azure CLI by running `<unzipped folder path\>\bin\az.cmd`.
 1. **Close and reopen any active terminal window to use the newly installed preview.**
 
 ## Log into Azure
 
-The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
+To use the new subscription selector, first change your directory to where you have installed the authentication preview, then use `./az.cmd login`.
 
-[!INCLUDE [interactive_login](includes/interactive-login.md)]
+```azurecli
+cd <unzipped folder path>
+./az.cmd login
+```
+
+If you unzipped the authentication preview ZIP file to `C:\myPath\Azure CLI preview`, your syntax would look like this:
+
+```azurecli
+cd C:\myPath\Azure CLI preview\bin
+C:\myPath\Azure CLI preview\bin> ./az.cmd login
+```
 
 ## Choose your subscription
 
@@ -58,20 +68,20 @@ The Azure CLI's default authentication method for logins uses a web browser and 
 1. Tap `Enter` to bypass the subscription selector and accept the default subscription.
 1. Type a line number from the numbered list to change the default subscription.
 
-## Check your version
+## Verify results
 
-Check the Azure CLI version of the authentication preview with this syntax:
+To verify your selected default subscription, use `./az.cmd account show`. If you unzipped the authentication preview ZIP file to `C:\myPath\Azure CLI preview`, your syntax would look like this:
 
 ```azurecli
-cd <unzipped folder path>
-./az.cmd --version
+C:\myPath\Azure CLI preview\bin> ./az.cmd account show
 ```
 
-If you unzipped the authentication preview ZIP file to `C:\Users\yourName\Downloads\Azure CLI preview`, your syntax would look like this:
+## Check your version
+
+Check the Azure CLI version of the authentication preview using `./az.cmd --version`.
 
 ```azurecli
-cd C:\Users\yourName\Downloads\Azure CLI preview\bin
-C:\Users\yourName\Downloads\Azure CLI preview\bin> ./az.cmd --version
+C:\myPath\Azure CLI preview\bin> ./az.cmd --version
 ```
 
 ## See also
