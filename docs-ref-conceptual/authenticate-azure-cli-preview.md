@@ -18,8 +18,8 @@ With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli.md#apri
 * The subscription selector is available in a preview version of Azure CLI 64-bit Windows, Linux, or macOS.
 * The subscription selector is only available when using the `az login` command [interactively](./authenticate-azure-cli-interactively.md).
 * The authentication preview must be installed to use the subscription selector.
-* The preview is installed in the directory you specify, and will co-exist with your current Azure CLI installation.
-* The authentication preview doesn't prompt you to select a subscription when you are logging in with a service principal, managed identity, or Web Account Manager (WAM).
+* The preview is installed in the directory you specify, and coexists with your current Azure CLI installation.
+* The authentication preview doesn't prompt you to select a subscription when you're logging in with a service principal, managed identity, or Web Account Manager (WAM).
 
 ## Prerequisite for macOS
 
@@ -45,9 +45,12 @@ Install Azure CLI authentication preview by following these steps:
 1. Using Cmd.exe or PowerShell, call the Azure CLI by running `<unzipped folder path\>\bin\az.cmd`.
 1. **Close and reopen any active terminal window to use the newly installed preview.**
 
+> [!NOTE]
+> You must execute Azure CLI commands from the location where you installed the preview, or update your PATH environment variable to include the location. This article takes the approach of changing the working directory.
+
 ## Log into Azure
 
-To use the new subscription selector, first change your directory to where you have installed the authentication preview, then use `./az.cmd login`.
+To use the new subscription selector, first change your directory to where you installed the authentication preview, then use `./az.cmd login`.
 
 ```azurecli
 cd <unzipped folder path>
@@ -63,7 +66,7 @@ C:\myPath\Azure CLI preview\bin> ./az.cmd login
 
 ## Choose your subscription
 
-1. Note your default subscription that is indicated by an asterisk (`*`).
+1. Note your default subscription indicated with an asterisk (`*`).
 1. Tap `Enter` to bypass the subscription selector and accept the default subscription.
 1. Type a line number from the numbered list to change the default subscription.
 
