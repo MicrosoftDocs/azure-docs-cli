@@ -62,7 +62,7 @@ cd <unzipped folder path>
 If you installed the authentication preview in `C:\myPath\Azure CLI preview`, your syntax would look like this:
 
 ```azurecli
-cd C:\myPath\Azure CLI preview\bin
+cd "C:\myPath\Azure CLI preview\bin"
 C:\myPath\Azure CLI preview\bin> ./az.cmd login
 ```
 
