@@ -3,7 +3,7 @@ title: Use the subscription selector when logging into Azure.
 description: Learn how to select a subscription from the new subscription selector available with the `az login` command.
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 04-09-2025
+ms.date: 04/09/2025
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -15,10 +15,10 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli#april-02-2024), there's a new login feature that provides a list of available tenant and subscriptions. Choose to keep the subscription and tenant that is selected by default, or type the line number of the subscription you want to use. Here are the details:
 
-* The subscription selector is a preview feature available in 64-bit Windows and macOS.
+* The subscription selector is available in a preview version of Azure CLI 64-bit Windows, Linux, or macOS.
 * The subscription selector is only available when using the `az login` command interactively.
-* Azure CLI [2.59.0](./release-notes-azure-cli#april-02-2024) must be installed to use the subscription selector. For information on installing the Azure CLI, see [How to install the Azure CLI](./install-azure-cli.md).
-* Installing the preview over-writes your current Azure CLI installation.
+* The authentication preview must be installed to use the subscription selector.
+* The preview is installed in the directory you specify, and will co-exist with your current Azure CLI installation.
 * You aren't prompted to select a subscription when logging in with a service principal, managed identity, or Web Account Manager (WAM).
 
 ## Prerequisite for macOS
@@ -42,7 +42,7 @@ Install Azure CLI authentication preview by following these steps:
 
 1. Download [Microsoft Azure CLI.zip](https://aka.ms/AApydwn).
 1. Unzip the package to a folder.
-1. Using Cmd.exe or PowerShell, call the Azure CLI by running <unzipped folder path>\bin\az.cmd.
+1. Using Cmd.exe or PowerShell, call the Azure CLI by running {unzipped folder path}\bin\az.cmd.
 1. **Close and reopen any active terminal window to use the newly installed preview.**
 
 ## Log into Azure
