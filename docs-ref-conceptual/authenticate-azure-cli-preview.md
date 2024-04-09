@@ -3,7 +3,7 @@ title: Use the subscription selector when logging into Azure.
 description: Learn how to select a subscription from the new subscription selector available with the `az login` command.
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 04/09/2025
+ms.date: 04/09/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -64,7 +64,6 @@ C:\myPath\Azure CLI preview\bin> ./az.cmd login
 ## Choose your subscription
 
 1. Note your default subscription indicated by an asterisk (`*`).
-
 1. Tap `Enter` to bypass the subscription selector and accept the default subscription.
 1. Type a line number from the numbered list to change the default subscription.
 
