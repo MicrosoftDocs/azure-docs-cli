@@ -13,13 +13,13 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 # Choose your subscription when logging into Azure using Azure CLI
 
-With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli.md#april-02-2024), there's a new login feature that provides a list of available tenant and subscriptions. Choose to keep the subscription and tenant that is selected by default, or type the line number of the subscription you want to use. Here are the details:
+With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli.md#april-02-2024), there's a new login feature that provides a list of available tenants and subscriptions. Choose to keep the subscription and tenant that is selected by default, or type the line number of the subscription you want to use. Here are the details:
 
 * The subscription selector is available in a preview version of Azure CLI 64-bit Windows, Linux, or macOS.
-* The subscription selector is only available when using the `az login` command interactively.
+* The subscription selector is only available when using the `az login` command [interactively](./authenticate-azure-cli-interactively.md).
 * The authentication preview must be installed to use the subscription selector.
 * The preview is installed in the directory you specify, and will co-exist with your current Azure CLI installation.
-* You aren't prompted to select a subscription when logging in with a service principal, managed identity, or Web Account Manager (WAM).
+* The authentication preview doesn't prompt you to select a subscription when you are logging in with a service principal, managed identity, or Web Account Manager (WAM).
 
 ## Prerequisite for macOS
 
@@ -54,7 +54,7 @@ cd <unzipped folder path>
 ./az.cmd login
 ```
 
-If you unzipped the authentication preview ZIP file to `C:\myPath\Azure CLI preview`, your syntax would look like this:
+If you installed the authentication preview in `C:\myPath\Azure CLI preview`, your syntax would look like this:
 
 ```azurecli
 cd C:\myPath\Azure CLI preview\bin
@@ -63,13 +63,13 @@ C:\myPath\Azure CLI preview\bin> ./az.cmd login
 
 ## Choose your subscription
 
-1. Note your default subscription indicated by an asterisk (`*`).
+1. Note your default subscription that is indicated by an asterisk (`*`).
 1. Tap `Enter` to bypass the subscription selector and accept the default subscription.
 1. Type a line number from the numbered list to change the default subscription.
 
 ## Verify results
 
-To verify your selected default subscription, use `./az.cmd account show`. If you unzipped the authentication preview ZIP file to `C:\myPath\Azure CLI preview`, your syntax would look like this:
+To verify your selected default subscription, use `./az.cmd account show`. If you installed the authentication preview in `C:\myPath\Azure CLI preview`, your syntax would look like this:
 
 ```azurecli
 C:\myPath\Azure CLI preview\bin> ./az.cmd account show
