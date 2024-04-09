@@ -37,7 +37,7 @@ After you sign in, CLI commands are run against your default subscription. If yo
 az account set --subscription "<subscription ID or name>"
 ```
 
-Another option is to use the [authentication preview](./authenticate-azure-cli-preview.md) of Azure CLI [2.59.0](./release-notes-azure-cli#april-02-2024). The authentication preview provides a tenant and subscription list at time of login, and you're prompted to select a default subscription.
+Another option is to use the [authentication preview](./authenticate-azure-cli-preview.md) of Azure CLI [2.59.0](./release-notes-azure-cli.md#april-02-2024). The authentication preview provides a tenant and subscription list at time of login, and you're prompted to select a default subscription.
 
 To learn more about managing Azure subscriptions, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 

@@ -13,7 +13,7 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 # Choose your subscription when logging into Azure using Azure CLI
 
-With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli#april-02-2024), there's a new login feature that provides a list of available tenant and subscriptions. Choose to keep the subscription and tenant that is selected by default, or type the line number of the subscription you want to use. Here are the details:
+With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli.md#april-02-2024), there's a new login feature that provides a list of available tenant and subscriptions. Choose to keep the subscription and tenant that is selected by default, or type the line number of the subscription you want to use. Here are the details:
 
 * The subscription selector is available in a preview version of Azure CLI 64-bit Windows, Linux, or macOS.
 * The subscription selector is only available when using the `az login` command interactively.
