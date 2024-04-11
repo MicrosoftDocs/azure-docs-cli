@@ -47,7 +47,7 @@ If you prefer a step-by-step installation process, complete the following steps 
 
     ```bash
     sudo mkdir -p /etc/apt/keyrings
-    curl -sL https://packages.microsoft.com/keys/microsoft.asc |\
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc |
       sudo gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg
     sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
     ```
