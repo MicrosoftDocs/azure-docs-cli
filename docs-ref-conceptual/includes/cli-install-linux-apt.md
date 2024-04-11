@@ -40,7 +40,7 @@ If you prefer a step-by-step installation process, complete the following steps 
 
     ```bash
     sudo apt-get update
-    sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+    sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
     ```
 
 2. Download and install the Microsoft signing key:
@@ -48,8 +48,7 @@ If you prefer a step-by-step installation process, complete the following steps 
     ```bash
     sudo mkdir -p /etc/apt/keyrings
     curl -sLS https://packages.microsoft.com/keys/microsoft.asc |
-        gpg --dearmor |
-        sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
+      sudo gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg
     sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
     ```
 
@@ -57,8 +56,12 @@ If you prefer a step-by-step installation process, complete the following steps 
 
     ```bash
     AZ_DIST=$(lsb_release -cs)
-    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $AZ_DIST main" |
-        sudo tee /etc/apt/sources.list.d/azure-cli.list
+    echo "Types: deb
+    URIs: https://packages.microsoft.com/repos/azure-cli/
+    Suites: ${AZ_DIST}
+    Components: main
+    Architectures: $(dpkg --print-architecture)
+    Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
     ```
 
 4. Update repository information and install the `azure-cli` package:
@@ -88,7 +91,7 @@ Configure the `azure-cli` repository information as shown previously. Available 
     AZ_VER=2.51.0
 
     # Install a specific version
-    sudo apt-get install azure-cli=$AZ_VER-1~$AZ_DIST
+    sudo apt-get install azure-cli=${AZ_VER}-1~${AZ_DIST}
     ```
 
     To install a specific version without variables, replace the Azure CLI version and Linux distribution name shown:
@@ -130,13 +133,13 @@ You can also use `apt-get upgrade` to update the CLI package. This command upgra
 2. If you don't plan to reinstall the CLI, remove the Azure CLI repository information:
 
    ```bash
-   sudo rm /etc/apt/sources.list.d/azure-cli.list
+   sudo rm /etc/apt/sources.list.d/azure-cli.sources
    ```
 
 3. If you aren't using other packages from Microsoft, remove the signing key:
 
     ```bash
-    sudo rm /etc/apt/trusted.gpg.d/microsoft.gpg
+    sudo rm /etc/apt/keyrings/microsoft.gpg
     ```
 
 4. Remove any unneeded packages:
@@ -187,18 +190,28 @@ AZ_REPO="bookworm"
 
 ### Elementary OS (EOS) fails to install the Azure CLI
 
-EOS fails to install the Azure CLI because `lsb_release` returns `HERA`, which is the EOS release name.  The solution is to fix the file `/etc/apt/sources.list.d/azure-cli.list` and change `hera main` to `bionic main`.
+EOS fails to install the Azure CLI because `lsb_release` returns `HERA`, which is the EOS release name.  The solution is to fix the file `/etc/apt/sources.list.d/azure-cli.sources` and change `Suites: hera` to `Suites: bionic`.
 
 Original file contents:
 
 ```
-deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ hera main
+Types: deb
+URIs: https://packages.microsoft.com/repos/azure-cli/
+Suites: hera
+Components: main
+Architectures: amd64
+Signed-by: /etc/apt/keyrings/microsoft.gpg
 ```
 
 Modified file contents
 
 ```
-deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main
+Types: deb
+URIs: https://packages.microsoft.com/repos/azure-cli/
+Suites: bionic
+Components: main
+Architectures: amd64
+Signed-by: /etc/apt/keyrings/microsoft.gpg
 ```
 
 ### Proxy blocks connection
