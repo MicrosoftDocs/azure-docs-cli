@@ -1025,9 +1025,12 @@ directCommands:
                   [--azure-keyvault-kms-key-vault-network-access {Private, Public}]
                   [--azure-keyvault-kms-key-vault-resource-id]
                   [--azure-monitor-workspace-resource-id]
+                  [--bootstrap-artifact-source {Cache, Direct}]
+                  [--bootstrap-container-registry-resource-id]
                   [--ca-certs]
                   [--ca-profile]
                   [--client-secret]
+                  [--cluster-service-load-balancer-health-probe-mode {Servicenodeport, Shared}]
                   [--cluster-snapshot-id]
                   [--crg-id]
                   [--data-collection-settings]
@@ -1123,6 +1126,7 @@ directCommands:
                   [--no-ssh-key]
                   [--no-wait]
                   [--node-count]
+                  [--node-init-taints]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
@@ -1156,6 +1160,7 @@ directCommands:
                   [--service-cidrs]
                   [--service-principal]
                   [--skip-subnet-role-assignment]
+                  [--sku {automatic, base}]
                   [--snapshot-id]
                   [--ssh-access {disabled, localuser}]
                   [--ssh-key-value]
@@ -1362,6 +1367,18 @@ directCommands:
   - name: --azure-monitor-workspace-resource-id
     summary: |-
       Resource ID of the Azure Monitor Workspace.
+  - name: --bootstrap-artifact-source
+    defaultValue: "Direct"
+    parameterValueGroup: "Cache, Direct"
+    summary: |-
+      Configure artifact source when bootstraping the cluster.
+    description: |-
+      The artifacts include the addon image. Use "Direct" to download artifacts from MCR, "Cache" to downalod artifacts from Azure Container Registry.
+    isPreview: true
+  - name: --bootstrap-container-registry-resource-id
+    summary: |-
+      Configure container registry resource ID. Must use "Cache" as bootstrap artifact source.
+    isPreview: true
   - name: --ca-certs --custom-ca-trust-certificates
     summary: |-
       Path to a file containing up to 10 blank line separated certificates. Only valid for linux nodes.
@@ -1374,6 +1391,13 @@ directCommands:
   - name: --client-secret
     summary: |-
       Secret associated with the service principal. This argument is required if `--service-principal` is specified.
+  - name: --cluster-service-load-balancer-health-probe-mode
+    parameterValueGroup: "Servicenodeport, Shared"
+    summary: |-
+      Set the cluster service health probe mode.
+    description: |-
+      Set the cluster service health probe mode. Default is "Servicenodeport".
+    isPreview: true
   - name: --cluster-snapshot-id
     summary: |-
       The source cluster snapshot id is used to create new cluster.
@@ -1794,6 +1818,10 @@ directCommands:
     defaultValue: "3"
     summary: |-
       Number of nodes in the Kubernetes node pool. It is required when --enable-cluster-autoscaler specified. After creating a cluster, you can change the size of its node pool with `az aks scale`.
+  - name: --node-init-taints --nodepool-initialization-taints
+    summary: |-
+      The node initialization taints for node pools created with aks create operation.
+    isPreview: true
   - name: --node-os-upgrade-channel
     parameterValueGroup: "NodeImage, None, SecurityPatch, Unmanaged"
     summary: |-
@@ -1931,6 +1959,11 @@ directCommands:
       Skip role assignment for subnet (advanced networking).
     description: |-
       If specified, please make sure your service principal has the access to your subnet.
+  - name: --sku
+    parameterValueGroup: "automatic, base"
+    summary: |-
+      Specify SKU name for managed clusters. '--sku base' enables a base managed cluster. '--sku automatic' enables an automatic managed cluster.
+    isPreview: true
   - name: --snapshot-id
     summary: |-
       The source nodepool snapshot id used to create this cluster.
@@ -3794,6 +3827,7 @@ directCommands:
                   [--azure-monitor-workspace-resource-id]
                   [--ca-certs]
                   [--ca-profile]
+                  [--cluster-service-load-balancer-health-probe-mode {Servicenodeport, Shared}]
                   [--cluster-snapshot-id]
                   [--defender-config]
                   [--detach-acr]
@@ -3886,6 +3920,7 @@ directCommands:
                   [--network-plugin-mode]
                   [--network-policy]
                   [--no-wait]
+                  [--node-init-taints]
                   [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--node-provisioning-mode {Auto, Manual}]
                   [--nodepool-labels]
@@ -3898,6 +3933,7 @@ directCommands:
                   [--safeguards-excluded-ns]
                   [--safeguards-level {Enforcement, Off, Warning}]
                   [--safeguards-version]
+                  [--sku {automatic, base}]
                   [--ssh-access {disabled, localuser}]
                   [--ssh-key-value]
                   [--storage-pool-name]
@@ -4073,6 +4109,13 @@ directCommands:
   - name: --ca-profile --cluster-autoscaler-profile
     summary: |-
       Space-separated list of key=value pairs for configuring cluster autoscaler. Pass an empty string to clear the profile.
+  - name: --cluster-service-load-balancer-health-probe-mode
+    parameterValueGroup: "Servicenodeport, Shared"
+    summary: |-
+      Set the cluster service health probe mode.
+    description: |-
+      Set the cluster service health probe mode. Default is "Servicenodeport".
+    isPreview: true
   - name: --cluster-snapshot-id
     summary: |-
       The source cluster snapshot id is used to update existing cluster.
@@ -4471,6 +4514,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --node-init-taints --nodepool-initialization-taints
+    summary: |-
+      The node initialization taints for all node pools in cluster.
+    isPreview: true
   - name: --node-os-upgrade-channel
     parameterValueGroup: "NodeImage, None, SecurityPatch, Unmanaged"
     summary: |-
@@ -4522,6 +4569,11 @@ directCommands:
   - name: --safeguards-version
     summary: |-
       The version of deployment safeguards to use. Default "v1.0.0" Use the ListSafeguardsVersions API to discover available versions.
+    isPreview: true
+  - name: --sku
+    parameterValueGroup: "automatic, base"
+    summary: |-
+      Specify SKU name for managed clusters. '--sku base' enables a base managed cluster. '--sku automatic' enables an automatic managed cluster.
     isPreview: true
   - name: --ssh-access
     parameterValueGroup: "disabled, localuser"
