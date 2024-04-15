@@ -21,11 +21,11 @@ With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli.md#apri
 * The preview is installed in the directory you specify, and coexists with your current Azure CLI installation.
 * The authentication preview doesn't prompt you to select a subscription when you're logging in with a service principal, managed identity, or Web Account Manager (WAM).
 
-With the current practice, the [az account set](/cli/azure/account#az-account-set) command is required to change your subscription. With the subscription selector at time of interactive login, you skip having to [list](/cli/azure/account#az-account-list), [set](/cli/azure/account#az-account-set) and [show](/cli/azure/account#az-account-show) your default subscription.
+With the current practice, the [az account set](/cli/azure/account#az-account-set) command is required to change your subscription. With the subscription selector at time of interactive login, you skip having to [list](/cli/azure/account#az-account-list), [set](/cli/azure/account#az-account-set), and [show](/cli/azure/account#az-account-show) your default subscription.
 
-## Prerequisite for macOS
+## Install for Linux and macOS
 
-If you're installing the preview in a macOS environment, Python runtime must be installed.
+If you're installing the preview in a macOS environment, [Python](https://www.python.org/downloads/) runtime must be installed.
 
 ```bash
 mkdir azure-cli-edge-build 
@@ -38,14 +38,13 @@ azdev setup -c
 az login 
 ```
 
-## Install
+## Install for Windows
 
 Install Azure CLI authentication preview by following these steps:
 
 1. Download [Microsoft Azure CLI.zip](https://aka.ms/AApydwn).
 1. Unzip the package to a folder.
-1. Using Cmd.exe or PowerShell, call the Azure CLI by running `<unzipped folder path\>\bin\az.cmd`.
-1. **Close and reopen any active terminal window to use the newly installed preview.**
+1. Change your working directory to `<unzipped folder path\bin\>`
 
 > [!NOTE]
 > You must execute Azure CLI commands from the location where you installed the preview, or update your PATH environment variable to include the location. This article takes the approach of changing the working directory.
@@ -68,7 +67,7 @@ C:\myPath\Azure CLI preview\bin> ./az.cmd login
 
 ## Choose your subscription
 
-1. Note your default subscription indicated with an asterisk (`*`).
+1. Note the subscription and tenant currently selected are indicated with an asterisk (`*`).
 1. Tap `Enter` to bypass the subscription selector and accept the default subscription.
 1. Type a line number from the numbered list to change the default subscription.
 
@@ -82,14 +81,6 @@ To verify your selected default subscription, use `./az.cmd account show`. If yo
 
 ```azurecli
 C:\myPath\Azure CLI preview\bin> ./az.cmd account show
-```
-
-## Check your version
-
-Check the Azure CLI version of the authentication preview using `./az.cmd --version`.
-
-```azurecli
-C:\myPath\Azure CLI preview\bin> ./az.cmd --version
 ```
 
 ## See also
