@@ -20,6 +20,7 @@ directCommands:
     az aksarc create --custom-location
                      --name
                      --resource-group
+                     --vnet-id
                      [--aad-admin-group-object-ids]
                      [--ca-profile]
                      [--control-plane-count]
@@ -46,7 +47,6 @@ directCommands:
                      [--ssh-auth-ips]
                      [--ssh-key-value]
                      [--tags]
-                     [--vnet-ids]
   examples:
   - summary: |-
       PutProvisionedCluster
@@ -64,6 +64,10 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --vnet-id --vnet-ids
+    summary: |-
+      ARM resource ID of aksarc virtual network or Azure Stack HCI logical network.
   optionalParameters:
   - name: --aad-admin-group-object-ids -i
     summary: |-
@@ -76,7 +80,9 @@ directCommands:
       Number of control plane nodes.
   - name: --control-plane-ip
     summary: |-
-      API server IP Address for the control plane.
+      \Kubernetes APIServer IPAddress. The IPAddress should be routable from Azure Resource Bridge Appliance VM. 
+                  It should be part of the Network subnet being referenced. Exclude it from the IPPools to avoid duplicates.
+                  The cluster creation may fail or timeout if a non-routable IPAddress is passed.
   - name: --control-plane-vm-size
     summary: |-
       VM Size of control plane.
@@ -152,9 +158,6 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
-  - name: --vnet-ids
-    summary: |-
-      ARM resource ID(s) of the VNets.
 - uid: az_aksarc_delete
   name: az aksarc delete
   summary: |-

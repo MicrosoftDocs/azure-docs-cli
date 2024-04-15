@@ -4,7 +4,7 @@ description: Learn what's new in the Azure CLI
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 09/29/2023
+ms.date: 04/09/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 
@@ -15,9 +15,13 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 
 This page highlights new features, articles and learning paths for the Azure CLI.
 
+## Select your subscription at time of login
+
+We've listened to your feedback and improved the Azure CLI interactive login experience to include a subscription selector. To use the new feature, see [Choose your subscription when logging into Azure](./authenticate-azure-cli-preview.md).
+
 ## Protect sensitive information
 
-Beginning in [Azure CLI 2.57](./release-notes-azure-cli.md#february-06-2024), a warning message can be displayed when reference commands result in the output of sensitive information. For more information see [Manage Azure secrets using the Azure CLI](./azure-cli-manage-secrets.md).
+Beginning in [Azure CLI 2.57](./release-notes-azure-cli.md#february-06-2024), a warning message can be displayed when reference commands result in the output of sensitive information. For more information, see [Manage Azure secrets using the Azure CLI](./azure-cli-manage-secrets.md).
 
 ## Azure Copilot for Azure CLI
 
@@ -37,7 +41,7 @@ With the release of Azure CLI version 2.54.0, the size of the Docker image of `a
 
 ## 64-bit Windows install
 
-You can now [install the Azure CLI on Windows](install-azure-cli-windows.md) with a 64-bit MSI. The 32-bit MSI, PowerShell command and Windows Package Manager are still available, but the 64-bit MSI is new! Anytime you install the Azure CLI, previously installed versions are updated automatically. This behavior allows you to try out the 64-bit install but reinstall the 32-bit MSI if you choose.
+You can now [install the Azure CLI on Windows](install-azure-cli-windows.md) with a 64-bit MSI. The 32-bit MSI, PowerShell command, and Windows Package Manager are still available, but the 64-bit MSI is new! Anytime you install the Azure CLI, previously installed versions are updated automatically. This behavior allows you to try out the 64-bit install but reinstall the 32-bit MSI if you choose.
 
 ## ZIP file Windows install
 
@@ -52,7 +56,7 @@ Tab completion is also available in [Azure Cloud Shell](/azure/cloud-shell/quick
 
 ## Sign in with Web Account Manager (WAM)
 
-The Azure CLI now offers preview support for sign in with Web Account Manager (WAM). Read about the benefits of WAM and how to enable the feature in [Sign in with Web Account Manager](/cli/azure/authenticate-azure-cli#sign-in-with-web-account-manager-wam)
+The Azure CLI now offers preview support for sign in with Web Account Manager (WAM). Read about the benefits of WAM and how to enable the feature in [Sign in with Web Account Manager](/cli/azure/authenticate-azure-cli#sign-in-with-web-account-manager-wam).
 
 ## Reference type and status
 

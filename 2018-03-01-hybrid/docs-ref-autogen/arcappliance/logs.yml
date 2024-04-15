@@ -13,7 +13,7 @@ directCommands:
 - uid: az_arcappliance_logs_hci
   name: az arcappliance logs hci
   summary: |-
-    Command to collect logs for an Arc resource bridge's on-premises appliance VM on Azure Stack HCI.
+    Command to collect logs for an Appliance on Azure Stack HCI.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -25,11 +25,14 @@ directCommands:
                              [--out-dir]
   examples:
   - summary: |-
-      Collect Arc resource bridge logs for Azure Stack HCI using IP and HCI credentials
-    syntax: az arcappliance logs hci --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --cloudagent [REQUIRED] --loginconfigfile [REQUIRED]
+      Collect Appliance logs on HCI using IP
+    syntax: az arcappliance logs hci --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --credentials-dir [OPTIONAL]
   - summary: |-
-      Collect Arc resource bridge logs on Azure Stack HCI using kubeconfig and HCI credentials
-    syntax: az arcappliance logs hci --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --cloudagent [REQUIRED] --loginconfigfile [REQUIRED]
+      Collect Appliance logs on HCI using kubeconfig
+    syntax: az arcappliance logs hci --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --credentials-dir [OPTIONAL]
+  - summary: |-
+      Collect Appliance logs using noninteractive feature on HCI using HCI credentials as parameters
+    syntax: az arcappliance logs hci --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --cloudagent [REQUIRED] --loginconfigfile [REQUIRED] --credentials-dir [OPTIONAL]
   optionalParameters:
   - name: --cloudagent
     summary: |-
@@ -56,10 +59,14 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az arcappliance logs scvmm [--credentials-dir]
+    az arcappliance logs scvmm [--address]
+                               [--credentials-dir]
                                [--ip]
                                [--kubeconfig]
                                [--out-dir]
+                               [--password]
+                               [--port]
+                               [--username]
   examples:
   - summary: |-
       Collect Arc resource bridge logs on SCVMM using IP
@@ -67,7 +74,13 @@ directCommands:
   - summary: |-
       Collect Arc resource bridge logs on SCVMM using kubeconfig
     syntax: az arcappliance logs scvmm --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --credentials-dir [OPTIONAL]
+  - summary: |-
+      Collect Arc resource bridge logs using noninteractive feature on SCVMM using SCVMM credentials as parameters
+    syntax: az arcappliance logs scvmm --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --credentials-dir [OPTIONAL] --address [REQUIRED] --port [REQUIRED] --username [REQUIRED] --password [REQUIRED]
   optionalParameters:
+  - name: --address
+    summary: |-
+      SCVMM Server FQDN (e.g. vmmuser001.contoso.lab) or IPv4 address. If you have a Highly Available VMM setup, enter the role name.
   - name: --credentials-dir
     summary: |-
       Folder to read logging key and certificate from. If no value specified, defaults to .kva/.ssh for Darwin and Linux and C:\ProgramData\kva\.ssh for Windows.
@@ -80,10 +93,19 @@ directCommands:
   - name: --out-dir
     summary: |-
       Output directory for on-premises appliance VM log files, defaults to ./ (current directory).
+  - name: --password
+    summary: |-
+      SCVMM Administrator Password.
+  - name: --port
+    summary: |-
+      SCVMM server port number (Default: 8100).
+  - name: --username
+    summary: |-
+      SCVMM Administrator Username in the format domain\username where 'domain' should be the NetBIOS name of the domain (e.g. contoso\administrator).
 - uid: az_arcappliance_logs_vmware
   name: az arcappliance logs vmware
   summary: |-
-    Command to collect logs for Arc resource bridge on VMware (Arc-enabled VMware).
+    Command to collect logs for Appliance on VMware.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -96,11 +118,14 @@ directCommands:
                                 [--username]
   examples:
   - summary: |-
-      Collect Arc resource bridge logs on VMware using IP and VMware credentials
-    syntax: az arcappliance logs vmware --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --address [REQUIRED] --username [REQUIRED] --password [REQUIRED]
+      Collect Appliance logs on VMware using IP
+    syntax: az arcappliance logs vmware --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --credentials-dir [OPTIONAL]
   - summary: |-
-      Collect Arc resource bridge logs on VMware using kubeconfig and VMware credentials
-    syntax: az arcappliance logs vmware --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --address [REQUIRED] --username [REQUIRED] --password [REQUIRED]
+      Collect Appliance logs on VMware using kubeconfig
+    syntax: az arcappliance logs vmware --ip [OPTIONAL] --kubeconfig [REQUIRED] --out-dir [OPTIONAL] --credentials-dir [OPTIONAL]
+  - summary: |-
+      Collect Appliance logs using noninteractive feature on VMware using vmware credentials parameters
+    syntax: az arcappliance logs vmware --ip [REQUIRED] --kubeconfig [OPTIONAL] --out-dir [OPTIONAL] --credentials-dir [OPTIONAL] --address [REQUIRED] --username [REQUIRED] --password [REQUIRED]
   optionalParameters:
   - name: --address
     summary: |-
