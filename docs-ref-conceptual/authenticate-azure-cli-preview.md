@@ -21,7 +21,7 @@ With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli.md#apri
 * The preview is installed in the directory you specify, and coexists with your current Azure CLI installation.
 * The authentication preview doesn't prompt you to select a subscription when you're logging in with a service principal, managed identity, or Web Account Manager (WAM).
 
-With the current practice, the [az account set](/cli/azure/account#az-account-set) command is required to change your subscription. With the subscription selector at time of interactive login, you skip having to [list](/cli/azure/account#az-account-list), [set](/cli/azure/account#az-account-set), and [show](/cli/azure/account#az-account-show) your default subscription.
+With the current practice, the [az account set](/cli/azure/account#az-account-set) command is required to change your subscription. With the subscription selector at time of interactive login, you skip having to [list](/cli/azure/account#az-account-list) and [set](/cli/azure/account#az-account-set) your default subscription.
 
 ## Install for Windows
 
