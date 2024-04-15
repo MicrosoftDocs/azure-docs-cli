@@ -23,6 +23,17 @@ With the preview release of Azure CLI [2.59.0](./release-notes-azure-cli.md#apri
 
 With the current practice, the [az account set](/cli/azure/account#az-account-set) command is required to change your subscription. With the subscription selector at time of interactive login, you skip having to [list](/cli/azure/account#az-account-list), [set](/cli/azure/account#az-account-set), and [show](/cli/azure/account#az-account-show) your default subscription.
 
+## Install for Windows
+
+Install Azure CLI authentication preview by following these steps:
+
+1. Download [Microsoft Azure CLI.zip](https://aka.ms/AApydwn).
+1. Unzip the package to a folder.
+1. Change your working directory to `<unzipped folder path\bin\>`
+
+> [!NOTE]
+> You must execute Azure CLI commands from the location where you installed the preview, or update your PATH environment variable to include the location. This article takes the approach of changing the working directory.
+
 ## Install for Linux and macOS
 
 If you're installing the preview in a macOS environment, [Python](https://www.python.org/downloads/) runtime must be installed.
@@ -37,17 +48,6 @@ pip install azdev
 azdev setup -c 
 az login 
 ```
-
-## Install for Windows
-
-Install Azure CLI authentication preview by following these steps:
-
-1. Download [Microsoft Azure CLI.zip](https://aka.ms/AApydwn).
-1. Unzip the package to a folder.
-1. Change your working directory to `<unzipped folder path\bin\>`
-
-> [!NOTE]
-> You must execute Azure CLI commands from the location where you installed the preview, or update your PATH environment variable to include the location. This article takes the approach of changing the working directory.
 
 ## Log into Azure
 
