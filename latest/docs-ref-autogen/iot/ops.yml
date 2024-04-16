@@ -129,7 +129,7 @@ directCommands:
                     [--ensure-latest {false, true}]
                     [--kubernetes-distro {k3s, k8s, microk8s}]
                     [--kv-id]
-                    [--kv-sat-secret-name]
+                    [--kv-spc-secret-name]
                     [--location]
                     [--mq-authn]
                     [--mq-backend-part]
@@ -147,7 +147,6 @@ directCommands:
                     [--mq-service-type {clusterIp, loadBalancer, nodePort}]
                     [--no-block {false, true}]
                     [--no-deploy {false, true}]
-                    [--no-preflight {false, true}]
                     [--no-progress {false, true}]
                     [--no-tls {false, true}]
                     [--opcua-discovery-url]
@@ -191,7 +190,7 @@ directCommands:
   optionalParameters:
   - name: --ca-dir
     summary: |-
-      The local directory the generated test CA and private key will be placed in. If no directory is provided the current directory is used. Applicable when no --ca-file and --ca-key-file are provided.
+      The local directory the generated test CA and private key will be placed in. If no directory is provided no files will be written to disk. Applicable when no --ca-file and --ca-key-file are provided.
   - name: --ca-file
     summary: |-
       The path to the desired CA file in PEM format.
@@ -235,10 +234,10 @@ directCommands:
   - name: --kv-id
     summary: |-
       Key Vault ARM resource Id. Providing this resource Id will enable the client to setup all necessary resources and cluster side configuration to enable the Key Vault CSI driver for IoT Operations.
-  - name: --kv-sat-secret-name
+  - name: --kv-spc-secret-name
     defaultValue: "azure-iot-operations"
     summary: |-
-      The Key Vault secret *name* to use for the IoT Operations service account (SAT). If the secret does not exist, it will be created with a cryptographically secure placeholder value.
+      The Key Vault secret **name** to use as the default SPC secret. If the secret does not exist, it will be created with a cryptographically secure placeholder value.
   - name: --location
     summary: |-
       The ARM location that will be used for provisioned RPSaaS collateral. If not provided the connected cluster location will be used.
@@ -304,10 +303,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       The IoT Operations deployment workflow will be skipped.
-  - name: --no-preflight
-    parameterValueGroup: "false, true"
-    summary: |-
-      The pre-flight workflow will be skipped.
   - name: --no-progress
     parameterValueGroup: "false, true"
     summary: |-
@@ -336,13 +331,13 @@ directCommands:
       Flag when set, will configure the OPC-UA broker installer to spin-up a PLC server.
   - name: --sp-app-id
     summary: |-
-      Service principal app Id. If provided it will be used for CSI driver setup. Otherwise an app registration will be created. !Required! if the logged in principal does not have permissions to query graph.
+      Service principal app Id. If provided will be used for CSI driver setup. Otherwise an app registration will be created. **Required** if the logged in principal does not have permissions to query graph.
   - name: --sp-object-id
     summary: |-
-      Service principal object Id. If provided it will be used for CSI driver setup. Otherwise a service principal will be queried and in necessary will be created. !Required! if the logged in principal does not have permissions to query graph.
+      Service principal (sp) object Id. If provided will be used for CSI driver setup. Otherwise the object Id will be queried from the app Id - creating the sp if one does not exist. **Required** if the logged in principal does not have permissions to query graph. Use `az ad sp show --id <app Id> --query id -o tsv` to produce the proper object Id. Alternatively using Portal you can navigate to Enterprise Applications in your Entra Id tenant.
   - name: --sp-secret
     summary: |-
-      The secret corresponding to the provided service principal app Id. If provided it will be used for CSI driver setup. Otherwise a new secret will be requested from MS graph. !Required! if the logged in principal does not have permissions to query graph.
+      The secret corresponding to the provided service principal app Id. If provided will be used for CSI driver setup. Otherwise a new secret will be created. **Required** if the logged in principal does not have permissions to query graph.
   - name: --sp-secret-valid-days
     defaultValue: "365"
     summary: |-
