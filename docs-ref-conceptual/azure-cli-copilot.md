@@ -111,6 +111,5 @@ Microsoft Copilot for Azure values your feedback. At the bottom of the Copilot r
 
 ## See also
 
+* [Generate Azure CLI scripts using Microsoft Copilot for Azure (preview)](/azure/copilot/generate-cli-scripts)
 * [Apply for access to Microsoft Copilot for Azure](https://azure.microsoft.com/products/copilot#Usecases)
-* [How to manage Azure resource groups with the Azure CLI](./manage-azure-groups-azure-cli.md)
-* [Create a single database - Azure SQL Database](/azure/azure-sql/database/single-database-create-quickstart#tabs=azure-cli)
