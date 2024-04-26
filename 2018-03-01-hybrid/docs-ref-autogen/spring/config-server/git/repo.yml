@@ -4,7 +4,7 @@ name: az spring config-server git repo
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **spring** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az spring config-server git repo** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **spring** extension for the Azure CLI (version 2.56.0 or higher). The extension will automatically install the first time you run an **az spring config-server git repo** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage Config Server git repository in Azure Spring Apps.
 status: GA
@@ -17,9 +17,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az spring config-server git repo add --name
-                                         --repo-name
+    az spring config-server git repo add --repo-name
                                          --resource-group
+                                         --service
                                          --uri
                                          [--defer]
                                          [--host-key]
@@ -31,11 +31,11 @@ directCommands:
                                          [--private-key]
                                          [--search-paths]
                                          [--username]
+  examples:
+  - summary: |-
+      Add a new public git repository without credential for the default Config Server in service instance MyService.
+    syntax: az spring config-server git repo add -s MyService -g MyResourceGroup --uri UrlOfGitRepository --repo-name GitRepoName
   requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      The name of Azure Spring Apps instance.
   - isRequired: true
     name: --repo-name
     summary: |-
@@ -44,6 +44,10 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --service -s
+    summary: |-
+      The name of Azure Spring Apps instance.
   - isRequired: true
     name: --uri
     summary: |-
@@ -86,18 +90,22 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az spring config-server git repo list --name
-                                          --resource-group
+    az spring config-server git repo list --resource-group
+                                          --service
                                           [--defer]
+  examples:
+  - summary: |-
+      List all repositories for the default Config Server in service instance MyService.
+    syntax: az spring config-server git repo list -s MyService -g MyResourceGroup
   requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      The name of Azure Spring Apps instance.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --service -s
+    summary: |-
+      The name of Azure Spring Apps instance.
   optionalParameters:
   - name: --defer
     summary: |-
@@ -109,15 +117,16 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az spring config-server git repo remove --name
-                                            --repo-name
+    az spring config-server git repo remove --repo-name
                                             --resource-group
+                                            --service
                                             [--defer]
+                                            [--yes]
+  examples:
+  - summary: |-
+      Remove an existing repository for the default Config Server in service instance MyService.
+    syntax: az spring config-server git repo remove -s MyService -g MyResourceGroup --repo-name GitRepoName
   requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      The name of Azure Spring Apps instance.
   - isRequired: true
     name: --repo-name
     summary: |-
@@ -126,10 +135,18 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --service -s
+    summary: |-
+      The name of Azure Spring Apps instance.
   optionalParameters:
   - name: --defer
     summary: |-
       Temporarily store the object in the local cache instead of sending to Azure. Use `az cache` commands to view/clear.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_spring_config-server_git_repo_update
   name: az spring config-server git repo update
   summary: |-
@@ -137,9 +154,9 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az spring config-server git repo update --name
-                                            --repo-name
+    az spring config-server git repo update --repo-name
                                             --resource-group
+                                            --service
                                             [--defer]
                                             [--host-key]
                                             [--host-key-algorithm]
@@ -151,11 +168,11 @@ directCommands:
                                             [--search-paths]
                                             [--uri]
                                             [--username]
+  examples:
+  - summary: |-
+      Update one of the additional repositories for the default Config Server in service instance MyService.
+    syntax: az spring config-server git repo update -s MyService -g MyResourceGroup --uri UrlOfGitRepository --repo-name GitRepoName --label LabelOfGitRepository
   requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      The name of Azure Spring Apps instance.
   - isRequired: true
     name: --repo-name
     summary: |-
@@ -164,6 +181,10 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --service -s
+    summary: |-
+      The name of Azure Spring Apps instance.
   optionalParameters:
   - name: --defer
     summary: |-
