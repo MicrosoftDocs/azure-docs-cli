@@ -44,7 +44,7 @@ This sample script has been tested in [Azure Cloud Shell](https://learn.microsof
 
 Select your preferred environment to run the script. _Both scripts use Azure CLI commands._ It is the environment, or terminal, that is different.  For example, Bash uses `do...done` and `if...then...fi`.  In a PowerShell environment, you use the equivalent `foreach` and `if (something is true)...{do this}`.
 
-If you prefer, get the script files for this article at [Azure-samples/azure-cli-samples]().
+If you prefer, go directly to the script files used by this article at [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples/tree/master/azure-cli/create-azure-resources-at-scale).
 
 # [Bash](#tab/bash)
 
