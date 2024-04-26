@@ -24,7 +24,7 @@ In this Azure CLI sample you will learn the following:
 > * Use IF..THEN statements to create dependent objects
 > * Log script progress to a local TXT file
 
-This sample script has been tested in [Azure Cloud Shell](https://learn.microsoft.com/en-us/azure/cloud-shell/overview) in both Bash and PowerShell environments. This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with an Ubunto2204 image using [Windows Terminal](/windows/terminal/).
+This sample script has been tested in [Azure Cloud Shell](https://learn.microsoft.com/azure/cloud-shell/overview) in both Bash and PowerShell environments. This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with an Ubunto2204 image using [Windows Terminal](/windows/terminal/).
 
 ## Prepare your environment
 * Download and save to a local directory the following CSV file:
@@ -48,13 +48,13 @@ If you prefer, go directly to the script files used by this article at [Azure-sa
 
 # [Bash](#tab/bash)
 
-:::code language="azurecli" source="~/azure_cli_scripts/_azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
 
 Did you just receive a "jq command not found" error? This is because this script depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command. [Install jq](https://jqlang.github.io/jq/download/) in your environment, or run this script in Azure Cloud Shell.
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/_azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
 
 ---
 
