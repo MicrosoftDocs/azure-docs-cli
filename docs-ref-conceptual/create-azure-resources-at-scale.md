@@ -29,13 +29,12 @@ This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/ove
 ## Prepare your environment
 
 * Download and save to a local directory the following CSV file:
-  
+
   ```
-  resourceNo, createRG, createVnet, createVM, location, user, subnet, vmImage, publicIpSku 
-  1, true, true, true, southcentralus, john-smith, 10.0.1.0, Ubuntu2204, standard
-  2, true, false, , westus2, alex-smith, 10.0.2.0, Ubunto2004, standard
-  3, false, true, false, eastus, jan-smith, 10.0.3.0, Ubuntu2104, standard
-  0
+  resourceNo,location,createRG,exstingRgName,createVnet,vmImage,publicIpSku,Adminuser,vnetAddressPrefix,subnetAddressPrefix
+  1,eastus,TRUE,,TRUE,Ubuntu2204,standard,john-smith,10.0.0.0/16,10.0.0.0/24
+  2,westus,TRUE,,FALSE,Ubunto2004,standard,alex-smith,10.0.0.0/16,10.0.0.0/24
+  3,southcentralus,FALSE,myResourceGroup,FALSE,Ubuntu2104,standard,jan-smith,10.0.0.0/16,10.0.0.0/24
   ```
 
 * [Install the Azure CLI](/cli/azure/install-azure-cli).
@@ -49,15 +48,51 @@ If you prefer, go directly to the script files used by this article at [Azure-sa
 
 # [Bash](#tab/bash)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
+### Setup variables
+
+Get started by instantiating the variable needed for this script. The following two variables need actual values for your environment:
+* subscriptionID
+* setupFileLocation
+
+Variables with a **msdocs-rg-** prefix can be replaced with the prefix of your choice. All empty (**""**) variable values use input from the CSV setup file.
+
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="VariableBlock":::
+
+### Validate setup file values
+
+Before you start to test the create script, make sure your CSV file is formatted correctly and variables will be assigned correct values. This script uses an IF..THEN statement so you can look at one scenario/CSV line at a time.
+
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateFileValues":::
+
+### Validate script logic
+
+If you are confident in your Bash scripting abilities, you can skip this step. However, because this script is designed to create Azure resources at scale, looping through the script with `echo` statements can save you time and unexpected billable Azure resources.
+
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateScriptLogic":::
 
 Did you just receive a "jq command not found" error? This is because this script depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command. [Install jq](https://jqlang.github.io/jq/download/) in your environment, or run this script in Azure Cloud Shell.
+
+### Create Azure resources
+
+You have instantiated your variable block, validated CSV values, and completed a test run. Execute this script to create Azure resources as indicated in your CSV setup file.
+
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
 
 # [PowerShell](#tab/powershell)
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
 
 ---
+
+## Troubleshooting
+
+### Bash script ignores IF statement
+
+Bash is case sensitive. The word `true` does not equal `TRUE`. Also `greater than` is `-gt`, not `>`, and `equals` is `==`, not `=`. Make sure you do not have a typographical error.
+
+### Variable values are not changing with each loop
+
+This is often caused by extra spaces in the CSV file. A line in a CSV file will look something like this: `column1,column2,column3`, but by habit it is easy to create a test file that contains `column1, column2, column3`.
 
 ## See also
 
