@@ -4,7 +4,7 @@ name: az apic api deployment
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az apic api deployment** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az apic api deployment** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage API deployments in API Center.
 status: GA
@@ -13,12 +13,12 @@ directCommands:
 - uid: az_apic_api_deployment_create
   name: az apic api deployment create
   summary: |-
-    Create new or updates existing API deployment.
+    Create a new API deployment or update an existing API deployment.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api deployment create --api
-                                  --deployment
+    az apic api deployment create --api-id
+                                  --deployment-id
                                   --resource-group
                                   --service
                                   [--custom-properties]
@@ -28,20 +28,19 @@ directCommands:
                                   [--server]
                                   [--state {active, inactive}]
                                   [--title]
-                                  [--workspace]
   examples:
   - summary: |-
       Create deployment
-    syntax: az apic api deployment create -g api-center-test -s contoso --name production --title "Production deployment" --description "Public cloud production deployment." --api echo-api --environmentId "/workspaces/default/environments/production" --definitionId "/workspaces/default/apis/echo-api/versions/2023-01-01/definitions/openapi"
+    syntax: az apic api deployment create -g api-center-test -s contoso --deployment-id production --title "Production deployment" --description "Public cloud production deployment." --api-id echo-api --environment-id "/workspaces/default/environments/production" --definition-id "/workspaces/default/apis/echo-api/versions/2023-01-01/definitions/openapi" --server '{"runtimeUri":["https://example.com"]}'
   requiredParameters:
   - isRequired: true
-    name: --api --api-name
+    name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - isRequired: true
-    name: --deployment --deployment-name --name
+    name: --deployment-id
     summary: |-
-      The name of the API deployment.
+      The id of the API deployment.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -53,7 +52,7 @@ directCommands:
   optionalParameters:
   - name: --custom-properties
     summary: |-
-      The custom metadata defined for API catalog entities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The custom metadata defined for API catalog entities.  Support json-file and yaml-file.
   - name: --definition-id
     summary: |-
       API center-scoped definition resource ID.
@@ -73,10 +72,6 @@ directCommands:
   - name: --title
     summary: |-
       Deployment title.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_deployment_delete
   name: az apic api deployment delete
   summary: |-
@@ -84,25 +79,24 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api deployment delete [--api]
-                                  [--deployment]
+    az apic api deployment delete [--api-id]
+                                  [--deployment-id]
                                   [--ids]
                                   [--resource-group]
                                   [--service]
                                   [--subscription]
-                                  [--workspace]
                                   [--yes]
   examples:
   - summary: |-
       Delete API deployment
-    syntax: az apic api deployment delete -g api-center-test -s contoso --name production --api-name echo-api
+    syntax: az apic api deployment delete -g api-center-test -s contoso --deployment-id production --api-id echo-api
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
-  - name: --deployment --deployment-name --name
+      The id of the API.
+  - name: --deployment-id
     summary: |-
-      The name of the API deployment.
+      The id of the API deployment.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -115,51 +109,10 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
-- uid: az_apic_api_deployment_head
-  name: az apic api deployment head
-  summary: |-
-    Checks if specified API deployment exists.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az apic api deployment head [--api]
-                                [--deployment]
-                                [--ids]
-                                [--resource-group]
-                                [--service]
-                                [--subscription]
-                                [--workspace]
-  optionalParameters:
-  - name: --api --api-name
-    summary: |-
-      The name of the API.
-  - name: --deployment --deployment-name --name
-    summary: |-
-      The name of the API deployment.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
-    summary: |-
-      The name of the API Center service.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_deployment_list
   name: az apic api deployment list
   summary: |-
@@ -167,22 +120,21 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api deployment list --api
+    az apic api deployment list --api-id
                                 --resource-group
                                 --service
                                 [--filter]
                                 [--max-items]
                                 [--next-token]
-                                [--workspace]
   examples:
   - summary: |-
       List API deployments
-    syntax: az apic api deployment list -g api-center-test -s contoso --api-name echo-api
+    syntax: az apic api deployment list -g api-center-test -s contoso --api-id echo-api
   requiredParameters:
   - isRequired: true
-    name: --api --api-name
+    name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -201,10 +153,6 @@ directCommands:
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_deployment_show
   name: az apic api deployment show
   summary: |-
@@ -212,24 +160,23 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api deployment show [--api]
-                                [--deployment]
+    az apic api deployment show [--api-id]
+                                [--deployment-id]
                                 [--ids]
                                 [--resource-group]
                                 [--service]
                                 [--subscription]
-                                [--workspace]
   examples:
   - summary: |-
       Show API deployment details
-    syntax: az apic api deployment show -g api-center-test -s contoso --name production --api-name echo-api
+    syntax: az apic api deployment show -g api-center-test -s contoso --deployment-id production --api-id echo-api
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
-  - name: --deployment --deployment-name --name
+      The id of the API.
+  - name: --deployment-id
     summary: |-
-      The name of the API deployment.
+      The id of the API deployment.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -242,22 +189,18 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_deployment_update
   name: az apic api deployment update
   summary: |-
-    Update new or updates existing API deployment.
+    Update existing API deployment.
   status: GA
   sourceType: Extension
   syntax: >-
     az apic api deployment update [--add]
-                                  [--api]
+                                  [--api-id]
                                   [--custom-properties]
                                   [--definition-id]
-                                  [--deployment]
+                                  [--deployment-id]
                                   [--description]
                                   [--environment-id]
                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -270,27 +213,26 @@ directCommands:
                                   [--state {active, inactive}]
                                   [--subscription]
                                   [--title]
-                                  [--workspace]
   examples:
   - summary: |-
       Update API deployment
-    syntax: az apic api deployment update -g api-center-test -s contoso --name production --title "Production deployment" --api echo-api
+    syntax: az apic api deployment update -g api-center-test -s contoso --deployment-id production --title "Production deployment" --api-id echo-api
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - name: --custom-properties
     summary: |-
-      The custom metadata defined for API catalog entities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The custom metadata defined for API catalog entities.  Support json-file and yaml-file.
   - name: --definition-id
     summary: |-
       Service-scoped definition resource ID.
-  - name: --deployment --deployment-name --name
+  - name: --deployment-id
     summary: |-
-      The name of the API deployment.
+      The id of the API deployment.
   - name: --description
     summary: |-
       Description of the deployment.
@@ -329,13 +271,9 @@ directCommands:
   - name: --title
     summary: |-
       Title.
-  - name: --workspace --workspace-name -w
-    summary: |-
-      The name of the workspace.
 commands:
 - az_apic_api_deployment_create
 - az_apic_api_deployment_delete
-- az_apic_api_deployment_head
 - az_apic_api_deployment_list
 - az_apic_api_deployment_show
 - az_apic_api_deployment_update

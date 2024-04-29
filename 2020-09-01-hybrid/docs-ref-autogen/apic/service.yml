@@ -4,16 +4,16 @@ name: az apic service
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az apic service** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az apic service** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  API Center.
+  Manage an Azure API Center service instance.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_apic_service_create
   name: az apic service create
   summary: |-
-    Create an instance of Azure API Center service.
+    Creates an instance or update an existing instance of an Azure API Center service.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -25,10 +25,10 @@ directCommands:
   examples:
   - summary: |-
       Create service Example 1
-    syntax: az apic create -g contoso-resources -s contoso -l centraluseuap
+    syntax: az apic service create -g contoso-resources -s contoso -l eastus
   - summary: |-
       Create Service Example 2
-    syntax: az apic create --resource-group contoso-resources --name contoso --locationcentraluseuap
+    syntax: az apic service create --resource-group contoso-resources --name contoso --location eastus
   requiredParameters:
   - isRequired: true
     name: --name --service --service-name -s
@@ -41,17 +41,17 @@ directCommands:
   optionalParameters:
   - name: --identity
     summary: |-
-      Managed service identity (system assigned and/or user assigned identities)  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The managed service identities assigned to this resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
-      The geo-location where the resource lives.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_apic_service_delete
   name: az apic service delete
   summary: |-
-    Delete service.
+    Deletes an instance of an Azure API Center service.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -84,20 +84,25 @@ directCommands:
 - uid: az_apic_service_import-from-apim
   name: az apic service import-from-apim
   summary: |-
-    Imports from APIM instance.
+    Imports APIs from an Azure API Management service instance.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic service import-from-apim [--ids]
+    az apic service import-from-apim --source-resource-ids
+                                     [--ids]
                                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                      [--resource-group]
                                      [--service]
-                                     [--source-resource-ids]
                                      [--subscription]
   examples:
   - summary: |-
       Import From APIM
-    syntax: az apic service import-from-apim -g api-center-test --service-name contosoeuap --source-resource-ids '/subscriptions/a200340d-6b82-494d-9dbf-687ba6e33f9e/resourceGroups/servicegroup/providers/Microsoft.ApiManagement/service/contoso/apis/contosoapi
+    syntax: az apic service import-from-apim -g api-center-test --service-name contosoeuap --source-resource-ids '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/servicegroup/providers/Microsoft.ApiManagement/service/contoso/apis/contosoapi'
+  requiredParameters:
+  - isRequired: true
+    name: --source-resource-ids
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   optionalParameters:
   - name: --ids
     summary: |-
@@ -112,16 +117,13 @@ directCommands:
   - name: --service --service-name -s
     summary: |-
       The name of Azure API Center service.
-  - name: --source-resource-ids
-    summary: |-
-      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_apic_service_list
   name: az apic service list
   summary: |-
-    List services within an Azure subscription.
+    Lists Azure API Center services within an Azure subscription.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -131,7 +133,7 @@ directCommands:
   examples:
   - summary: |-
       List services in resource group
-    syntax: az apic list -g contoso-resources
+    syntax: az apic service list -g contoso-resources
   optionalParameters:
   - name: --max-items
     summary: |-
@@ -145,7 +147,7 @@ directCommands:
 - uid: az_apic_service_show
   name: az apic service show
   summary: |-
-    Show service details.
+    Show details of an Azure API Center service instance.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -173,50 +175,33 @@ directCommands:
 - uid: az_apic_service_update
   name: az apic service update
   summary: |-
-    Update service.
+    Update an instance of an Azure API Center service.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic service update [--add]
-                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                           [--identity]
+    az apic service update [--identity]
                            [--ids]
                            [--name]
-                           [--remove]
                            [--resource-group]
-                           [--set]
                            [--subscription]
                            [--tags]
   examples:
   - summary: |-
       Update service details
-    syntax: az apic update -g contoso-resources -s contoso
+    syntax: az apic service update -g contoso-resources -s contoso
   optionalParameters:
-  - name: --add
-    summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --force-string
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --identity
     summary: |-
-      Managed service identity (system assigned and/or user assigned identities)  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The managed service identities assigned to this resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name --service --service-name -s
     summary: |-
-      The name of the API Center service.
-  - name: --remove
-    summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      The name of Azure API Center service.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --set
-    summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -228,12 +213,6 @@ commands:
 - az_apic_service_delete
 - az_apic_service_import-from-apim
 - az_apic_service_list
-- az_apic_service_portal
-- az_apic_service_portal_default
-- az_apic_service_portal_default_create
-- az_apic_service_portal_default_delete
-- az_apic_service_portal_default_show
-- az_apic_service_portal_default_update
 - az_apic_service_show
 - az_apic_service_update
 globalParameters:
@@ -261,4 +240,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: API Center.
+  description: Manage an Azure API Center service instance.

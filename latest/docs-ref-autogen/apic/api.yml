@@ -4,7 +4,7 @@ name: az apic api
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az apic api** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az apic api** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage APIs in API Center.
 status: GA
@@ -13,32 +13,33 @@ directCommands:
 - uid: az_apic_api_create
   name: az apic api create
   summary: |-
-    Create new or updates existing API.
+    Register a new API or update an existing API.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api create --api
+    az apic api create --api-id
                        --resource-group
                        --service
+                       --title
+                       --type {graphql, grpc, rest, soap, webhook, websocket}
                        [--contacts]
                        [--custom-properties]
                        [--description]
                        [--external-documentation]
-                       [--kind {graphql, grpc, rest, soap, webhook, websocket}]
                        [--license]
                        [--summary]
-                       [--terms-of-service]
-                       [--title]
-                       [--workspace]
   examples:
   - summary: |-
       Create API
-    syntax: az apic api create -g contoso-resources -s contoso --name echo-api --title "Echo API"
+    syntax: az apic api create -g contoso-resources -s contoso --api-id echo-api --title "Echo API" --type REST
+  - summary: |-
+      Create API with custom properties
+    syntax: az apic api create -g contoso-resources -s contoso --api-id echo-api --title "Echo API" --type REST --custom-properties '{"public-facing":true}'
   requiredParameters:
   - isRequired: true
-    name: --api --api-name --name
+    name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -47,39 +48,34 @@ directCommands:
     name: --service --service-name -s
     summary: |-
       The name of the API Center service.
+  - isRequired: true
+    name: --title
+    summary: |-
+      API title.
+  - isRequired: true
+    name: --type
+    parameterValueGroup: "graphql, grpc, rest, soap, webhook, websocket"
+    summary: |-
+      Type of API.
   optionalParameters:
   - name: --contacts
     summary: |-
       The contact information for the API.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --custom-properties
     summary: |-
-      The custom metadata defined for API catalog entities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The custom metadata defined for API catalog entities.  Support json-file and yaml-file.
   - name: --description
     summary: |-
       Description of the API.
   - name: --external-documentation
     summary: |-
       Additional, external documentation for the API.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --kind
-    parameterValueGroup: "graphql, grpc, rest, soap, webhook, websocket"
-    summary: |-
-      Kind of API. For example, REST or GraphQL.
   - name: --license
     summary: |-
       The license information for the API.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --summary
     summary: |-
       Short description of the API.
-  - name: --terms-of-service
-    summary: |-
-      Terms of service for the API.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --title
-    summary: |-
-      API title.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_delete
   name: az apic api delete
   summary: |-
@@ -87,21 +83,20 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api delete [--api]
+    az apic api delete [--api-id]
                        [--ids]
                        [--resource-group]
                        [--service]
                        [--subscription]
-                       [--workspace]
                        [--yes]
   examples:
   - summary: |-
       Delete API
-    syntax: az apic api delete -g contoso-resources -s contoso --name echo-api
+    syntax: az apic api delete -g contoso-resources -s contoso --api-id echo-api
   optionalParameters:
-  - name: --api --api-name --name
+  - name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -114,47 +109,10 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
-- uid: az_apic_api_head
-  name: az apic api head
-  summary: |-
-    Checks if specified API exists.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az apic api head [--api]
-                     [--ids]
-                     [--resource-group]
-                     [--service]
-                     [--subscription]
-                     [--workspace]
-  optionalParameters:
-  - name: --api --api-name --name
-    summary: |-
-      The name of the API.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
-    summary: |-
-      The name of the API Center service.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_list
   name: az apic api list
   summary: |-
@@ -167,7 +125,6 @@ directCommands:
                      [--filter]
                      [--max-items]
                      [--next-token]
-                     [--workspace]
   examples:
   - summary: |-
       List APIs
@@ -191,15 +148,13 @@ directCommands:
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_register
   name: az apic api register
   summary: |-
-    Single Command for registering api, api version, api definition, import spec, create deployment provided a spec file.
-  status: GA
+    Registers a new API with version, definition, and associated deployments using the specification file as the source of truth.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az apic api register --api-location
@@ -209,12 +164,15 @@ directCommands:
   examples:
   - summary: |-
       Register api by providing spec file.
-    syntax: az apic api register -g api-center-test -s contosoeuap --api-location "examples/cli-examples/spec-examples/openai.json" --environment-name public
+    syntax: >-
+      az apic api register -g api-center-test -s contosoeuap --api-location "examples/cli-examples/spec-examples/openai.json" --environment-name public
+
+      az apic api register -g api-center-test -s contosoeuap --api-location "examples/cli-examples/spec-examples/openai.yml" --environment-name public
   requiredParameters:
   - isRequired: true
     name: --api-location -l
     summary: |-
-      Location of spec file  .
+      Location of spec file.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -234,20 +192,19 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api show [--api]
+    az apic api show [--api-id]
                      [--ids]
                      [--resource-group]
                      [--service]
                      [--subscription]
-                     [--workspace]
   examples:
   - summary: |-
       Show API details
-    syntax: az apic api show -g contoso-resources -s contoso --name echo-api
+    syntax: az apic api show -g contoso-resources -s contoso --api-id echo-api
   optionalParameters:
-  - name: --api --api-name --name
+  - name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -260,26 +217,21 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_update
   name: az apic api update
   summary: |-
-    Update new or updates existing API.
+    Update existing API.
   status: GA
   sourceType: Extension
   syntax: >-
     az apic api update [--add]
-                       [--api]
+                       [--api-id]
                        [--contacts]
                        [--custom-properties]
                        [--description]
                        [--external-documentation]
                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                        [--ids]
-                       [--kind {graphql, grpc, rest, soap, webhook, websocket}]
                        [--license]
                        [--remove]
                        [--resource-group]
@@ -287,26 +239,28 @@ directCommands:
                        [--set]
                        [--subscription]
                        [--summary]
-                       [--terms-of-service]
                        [--title]
-                       [--workspace]
+                       [--type {graphql, grpc, rest, soap, webhook, websocket}]
   examples:
   - summary: |-
       Update API
-    syntax: az apic api update -g contoso-resources -s contoso --name echo-api --summary "Basic REST API service"
+    syntax: az apic api update -g contoso-resources -s contoso --api-id echo-api --summary "Basic REST API service"
+  - summary: |-
+      Update custom properties
+    syntax: az apic api update -g contoso-resources -s contoso --api-id echo-api --custom-properties '{"public-facing":true}'
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --api --api-name --name
+  - name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - name: --contacts
     summary: |-
       The contact information for the API.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --custom-properties
     summary: |-
-      The custom metadata defined for API catalog entities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The custom metadata defined for API catalog entities.  Support json-file and yaml-file.
   - name: --description
     summary: |-
       Description of the API.
@@ -320,10 +274,6 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --kind
-    parameterValueGroup: "graphql, grpc, rest, soap, webhook, websocket"
-    summary: |-
-      Kind of API. For example, REST or GraphQL.
   - name: --license
     summary: |-
       The license information for the API.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -345,22 +295,19 @@ directCommands:
   - name: --summary
     summary: |-
       Short description of the API.
-  - name: --terms-of-service
-    summary: |-
-      Terms of service for the API.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --title
     summary: |-
       API title.
-  - name: --workspace --workspace-name -w
+  - name: --type
+    parameterValueGroup: "graphql, grpc, rest, soap, webhook, websocket"
     summary: |-
-      The name of the workspace.
+      Type of API.
 commands:
 - az_apic_api_create
 - az_apic_api_definition
 - az_apic_api_definition_create
 - az_apic_api_definition_delete
 - az_apic_api_definition_export-specification
-- az_apic_api_definition_head
 - az_apic_api_definition_import-specification
 - az_apic_api_definition_list
 - az_apic_api_definition_show
@@ -369,11 +316,9 @@ commands:
 - az_apic_api_deployment
 - az_apic_api_deployment_create
 - az_apic_api_deployment_delete
-- az_apic_api_deployment_head
 - az_apic_api_deployment_list
 - az_apic_api_deployment_show
 - az_apic_api_deployment_update
-- az_apic_api_head
 - az_apic_api_list
 - az_apic_api_register
 - az_apic_api_show
@@ -381,7 +326,6 @@ commands:
 - az_apic_api_version
 - az_apic_api_version_create
 - az_apic_api_version_delete
-- az_apic_api_version_head
 - az_apic_api_version_list
 - az_apic_api_version_show
 - az_apic_api_version_update

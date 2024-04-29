@@ -1,33 +1,40 @@
 ### YamlMime:AzureCLIGroup
-uid: az_apic_metadata-schema
-name: az apic metadata-schema
+uid: az_apic_metadata
+name: az apic metadata
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az apic metadata-schema** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az apic metadata** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage Metadata Schemas in API Center.
+  Commands to manage metadata schemas in API Center.
 status: GA
 sourceType: Extension
 directCommands:
-- uid: az_apic_metadata-schema_create
-  name: az apic metadata-schema create
+- uid: az_apic_metadata_create
+  name: az apic metadata create
   summary: |-
-    Create new or updates existing metadata schema.
+    Create a new metadata schema or update an existing metadata schema.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic metadata-schema create --metadata-schema
-                                   --resource-group
-                                   --service
-                                   [--assigned-to]
-                                   [--file-name]
-                                   [--schema]
+    az apic metadata create --assignments
+                            --metadata-schema
+                            --resource-group
+                            --schema
+                            --service
+                            [--file-name]
   examples:
   - summary: |-
-      Create schema
-    syntax: "az az apic metadata-schema create --resource-group api-center-test --service-name contoso --name \"test1\" --schema '{\"type\":\"string\", \"title\":\"First name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}'"
+      Create metadata example 1
+    syntax: "az apic metadata create --resource-group api-center-test --service-name contoso --name \"test1\" --schema '{\"type\":\"string\", \"title\":\"First name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}' --assignments '[{entity:api,required:true,deprecated:false}]'"
+  - summary: |-
+      Create metadata example 2
+    syntax: az apic metadata create --resource-group api-center-test --service-name contoso  --name testregion --schema '{"type":"string","title":"testregion","oneOf":[{"const":"Region1","description":""},{"const":"Region2","description":""},{"const":"Region3","description":""}]}' --assignments '[{entity:api,required:true,deprecated:false},{entity:environment,required:true,deprecated:false}]'
   requiredParameters:
+  - isRequired: true
+    name: --assignments
+    summary: |-
+      Defines the assignment scope for the custom metadata, e.g. "[{entity:api,required:true,deprecated:false}]". The available entity values are: api, deployment, environment.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - isRequired: true
     name: --metadata-schema --metadata-schema-name --name
     summary: |-
@@ -37,39 +44,37 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
+    name: --schema
+    summary: |-
+      JSON schema defining the type.
+  - isRequired: true
     name: --service --service-name -s
     summary: |-
       The name of the API Center service.
   optionalParameters:
-  - name: --assigned-to
-    summary: |-
-      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --file-name
     summary: |-
       Name of the file from that contains the metadata schema.
-  - name: --schema
-    summary: |-
-      JSON schema defining the type.
-- uid: az_apic_metadata-schema_delete
-  name: az apic metadata-schema delete
+- uid: az_apic_metadata_delete
+  name: az apic metadata delete
   summary: |-
     Delete specified metadata schema.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic metadata-schema delete [--ids]
-                                   [--metadata-schema]
-                                   [--resource-group]
-                                   [--service]
-                                   [--subscription]
-                                   [--yes]
+    az apic metadata delete [--ids]
+                            [--metadata-schema]
+                            [--resource-group]
+                            [--service]
+                            [--subscription]
+                            [--yes]
   examples:
   - summary: |-
       Delete Metadata Schema
-    syntax: az az apic metadata-schema delete --resource-group api-center-test --service-name contoso --name "test1"
+    syntax: az apic metadata delete --resource-group api-center-test --service-name contoso --name "test1"
   - summary: |-
       Delete schema
-    syntax: az apic metadata-schema delete -g api-center-test -s contosoeuap --name "approver"
+    syntax: az apic metadata delete -g api-center-test -s contosoeuap --name "approver"
   optionalParameters:
   - name: --ids
     summary: |-
@@ -90,40 +95,41 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
-- uid: az_apic_metadata-schema_export-metadata-schema
-  name: az apic metadata-schema export-metadata-schema
+- uid: az_apic_metadata_export
+  name: az apic metadata export
   summary: |-
-    Exports the effective metadata schema.
+    Exports the metadata schema.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic metadata-schema export-metadata-schema --file-name
-                                                   [--assigned-to {api, deployment, environment}]
-                                                   [--ids]
-                                                   [--name]
-                                                   [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                                   [--resource-group]
-                                                   [--subscription]
+    az apic metadata export --assignments {api, deployment, environment}
+                            --file-name
+                            [--ids]
+                            [--name]
+                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                            [--resource-group]
+                            [--subscription]
   examples:
   - summary: |-
       Export Metadata Schema assigned to api
-    syntax: az apic metadata-schema export-metadata-schema -g api-center-test -s contosoeuap --assigned-to api --file-name filepath
+    syntax: az apic metadata export -g api-center-test -s contosoeuap --assignments api --file-name filename.json
   - summary: |-
       Export Metadata Schema assigned to deployment
-    syntax: az apic metadata-schema export-metadata-schema -g api-center-test -s contosoeuap --assigned-to deployment --file-name filepath
+    syntax: az apic metadata export -g api-center-test -s contosoeuap --assignments deployment --file-name filename.json
   - summary: |-
       Export Metadata Schema assigned to environment
-    syntax: az apic metadata-schema export-metadata-schema -g api-center-test -s contosoeuap --assigned-to environment --file-name filepath
+    syntax: az apic metadata export -g api-center-test -s contosoeuap --assignments environment --file-name filename.json
   requiredParameters:
+  - isRequired: true
+    name: --assignments
+    parameterValueGroup: "api, deployment, environment"
+    summary: |-
+      An entity the metadata schema is requested for.
   - isRequired: true
     name: --file-name
     summary: |-
       Name of the file where to export the metadata schema to.
   optionalParameters:
-  - name: --assigned-to
-    parameterValueGroup: "api, deployment, environment"
-    summary: |-
-      An entity the metadata schema is requested for.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -140,50 +146,22 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_apic_metadata-schema_head
-  name: az apic metadata-schema head
-  summary: |-
-    Checks if specified metadata schema exists.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az apic metadata-schema head [--ids]
-                                 [--metadata-schema]
-                                 [--resource-group]
-                                 [--service]
-                                 [--subscription]
-  optionalParameters:
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --metadata-schema --metadata-schema-name --name
-    summary: |-
-      The name of the metadata schema.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
-    summary: |-
-      The name of the API Center service.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_apic_metadata-schema_list
-  name: az apic metadata-schema list
+- uid: az_apic_metadata_list
+  name: az apic metadata list
   summary: |-
     List a collection of metadata schemas.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic metadata-schema list --resource-group
-                                 --service
-                                 [--filter]
-                                 [--max-items]
-                                 [--next-token]
+    az apic metadata list --resource-group
+                          --service
+                          [--filter]
+                          [--max-items]
+                          [--next-token]
   examples:
   - summary: |-
       List schemas
-    syntax: az apic metadata-schema list -g api-center-test -s contosoeuap
+    syntax: az apic metadata list -g api-center-test -s contosoeuap
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -203,25 +181,25 @@ directCommands:
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
-- uid: az_apic_metadata-schema_show
-  name: az apic metadata-schema show
+- uid: az_apic_metadata_show
+  name: az apic metadata show
   summary: |-
     Get details of the metadata schema.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic metadata-schema show [--ids]
-                                 [--metadata-schema]
-                                 [--resource-group]
-                                 [--service]
-                                 [--subscription]
+    az apic metadata show [--ids]
+                          [--metadata-schema]
+                          [--resource-group]
+                          [--service]
+                          [--subscription]
   examples:
   - summary: |-
       Show schema details 1
-    syntax: az apic metadata-schema show -g api-center-test -s contosoeuap --name approver
+    syntax: az apic metadata show -g api-center-test -s contosoeuap --name approver
   - summary: |-
       Show schema details 2
-    syntax: az az apic metadata-schema show --resource-group api-center-test --service-name contoso --name "testchoices"
+    syntax: az apic metadata show --resource-group api-center-test --service-name contoso --name "testchoices"
   optionalParameters:
   - name: --ids
     summary: |-
@@ -238,36 +216,36 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-- uid: az_apic_metadata-schema_update
-  name: az apic metadata-schema update
+- uid: az_apic_metadata_update
+  name: az apic metadata update
   summary: |-
-    Update new or updates existing metadata schema.
+    Update existing metadata schema.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic metadata-schema update [--add]
-                                   [--assigned-to]
-                                   [--file-name]
-                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
-                                   [--ids]
-                                   [--metadata-schema]
-                                   [--remove]
-                                   [--resource-group]
-                                   [--schema]
-                                   [--service]
-                                   [--set]
-                                   [--subscription]
+    az apic metadata update [--add]
+                            [--assignments]
+                            [--file-name]
+                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                            [--ids]
+                            [--metadata-schema]
+                            [--remove]
+                            [--resource-group]
+                            [--schema]
+                            [--service]
+                            [--set]
+                            [--subscription]
   examples:
   - summary: |-
       Update schema
-    syntax: "az az apic metadata-schema update --resource-group api-center-test --service-name contoso --name \"test1\" --schema '{\"type\":\"string\", \"title\":\"Last name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}'"
+    syntax: "az apic metadata update --resource-group api-center-test --service-name contoso --name \"test1\" --schema '{\"type\":\"string\", \"title\":\"Last name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}'"
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --assigned-to
+  - name: --assignments
     summary: |-
-      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Defines the assignment scope for the custom metadata, e.g. "[{entity:api,required:true,deprecated:false}]". The available entity values are: api, deployment, environment.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --file-name
     summary: |-
       Name of the file from that contains the metadata schema.
@@ -300,13 +278,12 @@ directCommands:
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 commands:
-- az_apic_metadata-schema_create
-- az_apic_metadata-schema_delete
-- az_apic_metadata-schema_export-metadata-schema
-- az_apic_metadata-schema_head
-- az_apic_metadata-schema_list
-- az_apic_metadata-schema_show
-- az_apic_metadata-schema_update
+- az_apic_metadata_create
+- az_apic_metadata_delete
+- az_apic_metadata_export
+- az_apic_metadata_list
+- az_apic_metadata_show
+- az_apic_metadata_update
 globalParameters:
 - name: --debug
   summary: |-
@@ -332,4 +309,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage Metadata Schemas in API Center.
+  description: Commands to manage metadata schemas in API Center.

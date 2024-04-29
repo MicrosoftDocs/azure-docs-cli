@@ -4,39 +4,39 @@ name: az apic api version
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az apic api version** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az apic api version** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage API Versions in API Center.
+  Commands to manage API versions in API Center.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_apic_api_version_create
   name: az apic api version create
   summary: |-
-    Create new or update existing API version.
+    Create a new API version or update an existing API version.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api version create --api
-                               --name
+    az apic api version create --api-id
+                               --lifecycle-stage {deprecated, design, development, preview, production, retired, testing}
                                --resource-group
                                --service
-                               [--lifecycle-stage {deprecated, design, development, preview, production, retired, testing}]
-                               [--title]
-                               [--workspace]
+                               --title
+                               --version-id
   examples:
   - summary: |-
       Create API version
-    syntax: az apic api version create -g api-center-test -s contosoeuap --api-name echo-api --name 2023-01-01 --title "2023-01-01"
+    syntax: az apic api version create -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --title "2023-01-01"
   requiredParameters:
   - isRequired: true
-    name: --api --api-name
+    name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - isRequired: true
-    name: --name --version --version-name
+    name: --lifecycle-stage
+    parameterValueGroup: "deprecated, design, development, preview, production, retired, testing"
     summary: |-
-      The name of the API version.
+      Current lifecycle stage of the API.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -45,18 +45,14 @@ directCommands:
     name: --service --service-name -s
     summary: |-
       The name of the API Center service.
-  optionalParameters:
-  - name: --lifecycle-stage
-    parameterValueGroup: "deprecated, design, development, preview, production, retired, testing"
-    summary: |-
-      Current lifecycle stage of the API.
-  - name: --title
+  - isRequired: true
+    name: --title
     summary: |-
       API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
+  - isRequired: true
+    name: --version-id
     summary: |-
-      The name of the workspace.
+      The id of the API version.
 - uid: az_apic_api_version_delete
   name: az apic api version delete
   summary: |-
@@ -64,28 +60,24 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api version delete [--api]
+    az apic api version delete [--api-id]
                                [--ids]
-                               [--name]
                                [--resource-group]
                                [--service]
                                [--subscription]
-                               [--workspace]
+                               [--version-id]
                                [--yes]
   examples:
   - summary: |-
       Delete API version
-    syntax: az apic api version delete -g api-center-test -s contosoeuap --api-name echo-api --name 2023-01-01
+    syntax: az apic api version delete -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --version --version-name
-    summary: |-
-      The name of the API version.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -95,51 +87,13 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
+  - name: --version-id
     summary: |-
-      The name of the workspace.
+      The id of the API version.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
-- uid: az_apic_api_version_head
-  name: az apic api version head
-  summary: |-
-    Checks if specified API version exists.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az apic api version head [--api]
-                             [--ids]
-                             [--resource-group]
-                             [--service]
-                             [--subscription]
-                             [--version]
-                             [--workspace]
-  optionalParameters:
-  - name: --api --api-name
-    summary: |-
-      The name of the API.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
-    summary: |-
-      The name of the API Center service.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --version --version-name
-    summary: |-
-      The name of the API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_version_list
   name: az apic api version list
   summary: |-
@@ -147,22 +101,21 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api version list --api
+    az apic api version list --api-id
                              --resource-group
                              --service
                              [--filter]
                              [--max-items]
                              [--next-token]
-                             [--workspace]
   examples:
   - summary: |-
       List API versions
-    syntax: az apic api version list -g api-center-test -s contosoeuap --api-name echo-api
+    syntax: az apic api version list -g api-center-test -s contosoeuap --api-id echo-api
   requiredParameters:
   - isRequired: true
-    name: --api --api-name
+    name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -181,10 +134,6 @@ directCommands:
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_version_show
   name: az apic api version show
   summary: |-
@@ -192,27 +141,23 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api version show [--api]
+    az apic api version show [--api-id]
                              [--ids]
-                             [--name]
                              [--resource-group]
                              [--service]
                              [--subscription]
-                             [--workspace]
+                             [--version-id]
   examples:
   - summary: |-
       Show API version details
-    syntax: az apic api version show -g api-center-test -s contoso --api-name echo-api --name 2023-01-01
+    syntax: az apic api version show -g api-center-test -s contoso --api-id echo-api --version-id 2023-01-01
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --version --version-name
-    summary: |-
-      The name of the API version.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -222,41 +167,39 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
+  - name: --version-id
     summary: |-
-      The name of the workspace.
+      The id of the API version.
 - uid: az_apic_api_version_update
   name: az apic api version update
   summary: |-
-    Update new or updates existing API version.
+    Update existing API version.
   status: GA
   sourceType: Extension
   syntax: >-
     az apic api version update [--add]
-                               [--api]
+                               [--api-id]
                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                [--ids]
                                [--lifecycle-stage {deprecated, design, development, preview, production, retired, testing}]
-                               [--name]
                                [--remove]
                                [--resource-group]
                                [--service]
                                [--set]
                                [--subscription]
                                [--title]
-                               [--workspace]
+                               [--version-id]
   examples:
   - summary: |-
       Update API version
-    syntax: az apic api version update -g api-center-test -s contosoeuap --api-name echo-api --name 2023-01-01 --title "2023-01-01"
+    syntax: az apic api version update -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --title "2023-01-01"
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -268,9 +211,6 @@ directCommands:
     parameterValueGroup: "deprecated, design, development, preview, production, retired, testing"
     summary: |-
       Current lifecycle stage of the API.
-  - name: --name --version --version-name
-    summary: |-
-      The name of the API version.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
@@ -289,13 +229,12 @@ directCommands:
   - name: --title
     summary: |-
       API version.
-  - name: --workspace --workspace-name -w
+  - name: --version-id
     summary: |-
-      The name of the workspace.
+      The id of the API version.
 commands:
 - az_apic_api_version_create
 - az_apic_api_version_delete
-- az_apic_api_version_head
 - az_apic_api_version_list
 - az_apic_api_version_show
 - az_apic_api_version_update
@@ -324,4 +263,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage API Versions in API Center.
+  description: Commands to manage API versions in API Center.
