@@ -4,40 +4,39 @@ name: az apic api definition
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az apic api definition** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az apic api definition** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage API Definitions in API Center.
+  Commands to manage API definitions in API Center.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_apic_api_definition_create
   name: az apic api definition create
   summary: |-
-    Create new or updates existing API definition.
+    Create a new API definition or update an existing API definition.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api definition create --api
-                                  --definition
+    az apic api definition create --api-id
+                                  --definition-id
                                   --resource-group
                                   --service
-                                  --version
+                                  --title
+                                  --version-id
                                   [--description]
-                                  [--title]
-                                  [--workspace]
   examples:
   - summary: |-
       Create API definition
-    syntax: az apic api definition create -g api-center-test -s contosoeuap --api-name echo-api --version 2023-01-01 --name "openapi" --title "OpenAPI"
+    syntax: az apic api definition create -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi" --title "OpenAPI"
   requiredParameters:
   - isRequired: true
-    name: --api --api-name
+    name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - isRequired: true
-    name: --definition --definition-name --name
+    name: --definition-id
     summary: |-
-      The name of the API definition.
+      The id of the API definition.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -47,20 +46,17 @@ directCommands:
     summary: |-
       The name of the API Center service.
   - isRequired: true
-    name: --version --version-name
+    name: --title
     summary: |-
-      The name of the API version.
+      API version.
+  - isRequired: true
+    name: --version-id
+    summary: |-
+      The id of the API version.
   optionalParameters:
   - name: --description
     summary: |-
       API definition description.
-  - name: --title
-    summary: |-
-      API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_definition_delete
   name: az apic api definition delete
   summary: |-
@@ -68,26 +64,25 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api definition delete [--api]
-                                  [--definition]
+    az apic api definition delete [--api-id]
+                                  [--definition-id]
                                   [--ids]
                                   [--resource-group]
                                   [--service]
                                   [--subscription]
-                                  [--version]
-                                  [--workspace]
+                                  [--version-id]
                                   [--yes]
   examples:
   - summary: |-
       Delete API definition
-    syntax: az apic api definition delete -g api-center-test -s contosoeuap --api-name echo-api --version 2023-01-01 --name "openapi"
+    syntax: az apic api definition delete -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi"
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
-  - name: --definition --definition-name --name
+      The id of the API.
+  - name: --definition-id
     summary: |-
-      The name of the API definition.
+      The id of the API definition.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -100,13 +95,9 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --version --version-name
+  - name: --version-id
     summary: |-
-      The name of the API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
+      The id of the API version.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -119,31 +110,30 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az apic api definition export-specification --file-name
-                                                [--api]
-                                                [--definition]
+                                                [--api-id]
+                                                [--definition-id]
                                                 [--ids]
                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--resource-group]
                                                 [--service]
                                                 [--subscription]
-                                                [--version]
-                                                [--workspace]
+                                                [--version-id]
   examples:
   - summary: |-
       Export Specification
-    syntax: az apic api version definition export-specification -g api-center-test -s contosoeuap --api-name echo-api --version-name 2023-01-01 --definition-name default
+    syntax: az apic api version definition export-specification -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id default
   requiredParameters:
   - isRequired: true
     name: --file-name
     summary: |-
       Name of the file where to export the spec to.
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
-  - name: --definition --definition-name --name
+      The id of the API.
+  - name: --definition-id
     summary: |-
-      The name of the API definition.
+      The id of the API definition.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -160,54 +150,9 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --version --version-name
+  - name: --version-id
     summary: |-
-      The name of the API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
-- uid: az_apic_api_definition_head
-  name: az apic api definition head
-  summary: |-
-    Checks if specified API definition exists.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az apic api definition head [--api]
-                                [--definition]
-                                [--ids]
-                                [--resource-group]
-                                [--service]
-                                [--subscription]
-                                [--version]
-                                [--workspace]
-  optionalParameters:
-  - name: --api --api-name
-    summary: |-
-      The name of the API.
-  - name: --definition --definition-name --name
-    summary: |-
-      The name of the API definition.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
-    summary: |-
-      The name of the API Center service.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --version --version-name
-    summary: |-
-      The name of the API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
+      The id of the API version.
 - uid: az_apic_api_definition_import-specification
   name: az apic api definition import-specification
   summary: |-
@@ -215,8 +160,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api definition import-specification [--api]
-                                                [--definition]
+    az apic api definition import-specification [--api-id]
+                                                [--definition-id]
                                                 [--file-name]
                                                 [--format {inline, link}]
                                                 [--ids]
@@ -226,22 +171,21 @@ directCommands:
                                                 [--specification]
                                                 [--subscription]
                                                 [--value]
-                                                [--version]
-                                                [--workspace]
+                                                [--version-id]
   examples:
   - summary: |-
-      Import Sepecification
-    syntax: az apic api definition import-specification -g api-center-test -s contosoeuap --api-name echo-api-2 --version-name 2023-08-01 --definition-name openapi3 --format "inline" --value '{"openapi":"3.0.1","info":{"title":"httpbin.org","description":"API Management facade for a very handy and free online HTTP tool.","version":"1.0"}}' --specification '{"name":"openapi","version":"3.0.0"}'
+      Import specification example 1
+    syntax: az apic api definition import-specification -g api-center-test -s contosoeuap --api-id echo-api-2 --version-id 2023-08-01 --definition-id openapi3 --format "inline" --value '{"openapi":"3.0.1","info":{"title":"httpbin.org","description":"API Management facade for a very handy and free online HTTP tool.","version":"1.0"}}' --specification '{"name":"openapi","version":"3.0.0"}'
   - summary: |-
-      Import Specification from a file
-    syntax: az apic api definition import-specification -g api-center-test -s contosoeuap --api-name echo-api-2 --version-name 2023-11-01 --definition-name openapi8 --format "link" --value 'https://alzaslonaztest.blob.core.windows.net/arpitestblobs/importspec4.txt' --specification '{"name":"openapi","version":"3.0.0"}'
+      Import specification example 2
+    syntax: az apic api definition import-specification -g api-center-test -s contoso --api-id echo-api --version-id 2023-11-01 --definition-id openapi --format "link" --value 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json' --specification '{"name":"openapi","version":"3.0.0"}'
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
-  - name: --definition --definition-name --name
+      The id of the API.
+  - name: --definition-id
     summary: |-
-      The name of the API definition.
+      The id of the API definition.
   - name: --file-name
     summary: |-
       Name of the file from where to import the spec from.
@@ -271,13 +215,9 @@ directCommands:
   - name: --value
     summary: |-
       Value of the API specification source.
-  - name: --version --version-name
+  - name: --version-id
     summary: |-
-      The name of the API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
+      The id of the API version.
 - uid: az_apic_api_definition_list
   name: az apic api definition list
   summary: |-
@@ -285,23 +225,22 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api definition list --api
+    az apic api definition list --api-id
                                 --resource-group
                                 --service
-                                --version
+                                --version-id
                                 [--filter]
                                 [--max-items]
                                 [--next-token]
-                                [--workspace]
   examples:
   - summary: |-
       List API definitions
-    syntax: az apic api definition list -g api-center-test -s contosoeuap --api-name echo-api --version 2023-01-01
+    syntax: az apic api definition list -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01
   requiredParameters:
   - isRequired: true
-    name: --api --api-name
+    name: --api-id
     summary: |-
-      The name of the API.
+      The id of the API.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -311,9 +250,9 @@ directCommands:
     summary: |-
       The name of the API Center service.
   - isRequired: true
-    name: --version --version-name
+    name: --version-id
     summary: |-
-      The name of the API version.
+      The id of the API version.
   optionalParameters:
   - name: --filter
     summary: |-
@@ -324,10 +263,6 @@ directCommands:
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_api_definition_show
   name: az apic api definition show
   summary: |-
@@ -335,25 +270,24 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api definition show [--api]
-                                [--definition]
+    az apic api definition show [--api-id]
+                                [--definition-id]
                                 [--ids]
                                 [--resource-group]
                                 [--service]
                                 [--subscription]
-                                [--version]
-                                [--workspace]
+                                [--version-id]
   examples:
   - summary: |-
       Show API definition details
-    syntax: az apic api definition show -g api-center-test -s contosoeuap --api-name echo-api --version 2023-01-01 --name "openapi"
+    syntax: az apic api definition show -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi"
   optionalParameters:
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
-  - name: --definition --definition-name --name
+      The id of the API.
+  - name: --definition-id
     summary: |-
-      The name of the API definition.
+      The id of the API definition.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -366,23 +300,19 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --version --version-name
+  - name: --version-id
     summary: |-
-      The name of the API version.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
+      The id of the API version.
 - uid: az_apic_api_definition_update
   name: az apic api definition update
   summary: |-
-    Update new or updates existing API definition.
+    Update existing API definition.
   status: GA
   sourceType: Extension
   syntax: >-
     az apic api definition update [--add]
-                                  [--api]
-                                  [--definition]
+                                  [--api-id]
+                                  [--definition-id]
                                   [--description]
                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--ids]
@@ -392,22 +322,21 @@ directCommands:
                                   [--set]
                                   [--subscription]
                                   [--title]
-                                  [--version]
-                                  [--workspace]
+                                  [--version-id]
   examples:
   - summary: |-
       Update API definition
-    syntax: az apic api definition update -g api-center-test -s contosoeuap --api-name echo-api --version 2023-01-01 --name "openapi" --title "OpenAPI"
+    syntax: az apic api definition update -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi" --title "OpenAPI"
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --api --api-name
+  - name: --api-id
     summary: |-
-      The name of the API.
-  - name: --definition --definition-name --name
+      The id of the API.
+  - name: --definition-id
     summary: |-
-      The name of the API definition.
+      The id of the API definition.
   - name: --description
     summary: |-
       API definition description.
@@ -436,17 +365,13 @@ directCommands:
   - name: --title
     summary: |-
       API version title.
-  - name: --version --version-name
+  - name: --version-id
     summary: |-
-      The name of the API version.
-  - name: --workspace --workspace-name -w
-    summary: |-
-      The name of the workspace.
+      The id of the API version.
 commands:
 - az_apic_api_definition_create
 - az_apic_api_definition_delete
 - az_apic_api_definition_export-specification
-- az_apic_api_definition_head
 - az_apic_api_definition_import-specification
 - az_apic_api_definition_list
 - az_apic_api_definition_show
@@ -476,4 +401,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage API Definitions in API Center.
+  description: Commands to manage API definitions in API Center.

@@ -4,38 +4,37 @@ name: az apic environment
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az apic environment** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **apic-extension** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az apic environment** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage Environments in API Center.
+  Commands to manage environments in API Center.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_apic_environment_create
   name: az apic environment create
   summary: |-
-    Create new or updates existing environment.
+    Create a new environment or update an existing environment.
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic environment create --environment
+    az apic environment create --environment-id
                                --resource-group
                                --service
+                               --title
+                               --type {development, production, staging, testing}
                                [--custom-properties]
                                [--description]
-                               [--kind {development, production, staging, testing}]
                                [--onboarding]
                                [--server]
-                               [--title]
-                               [--workspace]
   examples:
   - summary: |-
       Create environment
-    syntax: az apic environment create -g api-center-test -s contosoeuap --name public --title "Public cloud" --kind "development"
+    syntax: az apic environment create -g api-center-test -s contosoeuap --environment-id public --title "Public cloud" --type "development"
   requiredParameters:
   - isRequired: true
-    name: --environment --environment-name --name
+    name: --environment-id
     summary: |-
-      The name of the environment.
+      The id of the environment.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -44,30 +43,28 @@ directCommands:
     name: --service --service-name -s
     summary: |-
       The name of the API Center service.
+  - isRequired: true
+    name: --title
+    summary: |-
+      Environment title.
+  - isRequired: true
+    name: --type
+    parameterValueGroup: "development, production, staging, testing"
+    summary: |-
+      Environment type.
   optionalParameters:
   - name: --custom-properties
     summary: |-
-      The custom metadata defined for API catalog entities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The custom metadata defined for API catalog entities.  Support json-file and yaml-file.
   - name: --description
     summary: |-
-      Description.
-  - name: --kind
-    parameterValueGroup: "development, production, staging, testing"
-    summary: |-
-      Environment kind.
+      Environment description.
   - name: --onboarding
     summary: |-
-      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Provide onboarding documentation related to your environment, e.g. {developerPortalUri:['https://developer.contoso.com'],instructions:'instructions markdown'}  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --server
     summary: |-
       Server information of the environment.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --title
-    summary: |-
-      Environment title.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_environment_delete
   name: az apic environment delete
   summary: |-
@@ -75,21 +72,20 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic environment delete [--environment]
+    az apic environment delete [--environment-id]
                                [--ids]
                                [--resource-group]
                                [--service]
                                [--subscription]
-                               [--workspace]
                                [--yes]
   examples:
   - summary: |-
       Delete environment
-    syntax: az apic environment delete -g api-center-test -s contosoeuap --name public
+    syntax: az apic environment delete -g api-center-test -s contosoeuap --environment-id public
   optionalParameters:
-  - name: --environment --environment-name --name
+  - name: --environment-id
     summary: |-
-      The name of the environment.
+      The id of the environment.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -102,47 +98,10 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
-- uid: az_apic_environment_head
-  name: az apic environment head
-  summary: |-
-    Checks if specified environment exists.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az apic environment head [--environment]
-                             [--ids]
-                             [--resource-group]
-                             [--service]
-                             [--subscription]
-                             [--workspace]
-  optionalParameters:
-  - name: --environment --environment-name --name
-    summary: |-
-      The name of the environment.
-  - name: --ids
-    summary: |-
-      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
-    summary: |-
-      The name of the API Center service.
-  - name: --subscription
-    summary: |-
-      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_environment_list
   name: az apic environment list
   summary: |-
@@ -155,7 +114,6 @@ directCommands:
                              [--filter]
                              [--max-items]
                              [--next-token]
-                             [--workspace]
   examples:
   - summary: |-
       List environments
@@ -179,10 +137,6 @@ directCommands:
   - name: --next-token
     summary: |-
       Token to specify where to start paginating. This is the token value from a previously truncated response.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_environment_show
   name: az apic environment show
   summary: |-
@@ -190,20 +144,19 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic environment show [--environment]
+    az apic environment show [--environment-id]
                              [--ids]
                              [--resource-group]
                              [--service]
                              [--subscription]
-                             [--workspace]
   examples:
   - summary: |-
       Show environment details
-    syntax: az apic environment show -g api-center-test -s contosoeuap --name public
+    syntax: az apic environment show -g api-center-test -s contosoeuap --environment-id public
   optionalParameters:
-  - name: --environment --environment-name --name
+  - name: --environment-id
     summary: |-
-      The name of the environment.
+      The id of the environment.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -216,24 +169,19 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --workspace --workspace-name -w
-    defaultValue: "default"
-    summary: |-
-      The name of the workspace.
 - uid: az_apic_environment_update
   name: az apic environment update
   summary: |-
-    Update new or updates existing environment.
+    Update existing environment.
   status: GA
   sourceType: Extension
   syntax: >-
     az apic environment update [--add]
                                [--custom-properties]
                                [--description]
-                               [--environment]
+                               [--environment-id]
                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                [--ids]
-                               [--kind {development, production, staging, testing}]
                                [--onboarding]
                                [--remove]
                                [--resource-group]
@@ -242,24 +190,24 @@ directCommands:
                                [--set]
                                [--subscription]
                                [--title]
-                               [--workspace]
+                               [--type {development, production, staging, testing}]
   examples:
   - summary: |-
       Update environment
-    syntax: az apic environment update -g api-center-test -s contosoeuap --name public --title "Public cloud"
+    syntax: az apic environment update -g api-center-test -s contosoeuap --environment-id public --title "Public cloud"
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --custom-properties
     summary: |-
-      The custom metadata defined for API catalog entities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The custom metadata defined for API catalog entities.  Support json-file and yaml-file.
   - name: --description
     summary: |-
       Description.
-  - name: --environment --environment-name --name
+  - name: --environment-id
     summary: |-
-      The name of the environment.
+      The id of the environment.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -267,13 +215,9 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --kind
-    parameterValueGroup: "development, production, staging, testing"
-    summary: |-
-      Environment kind.
   - name: --onboarding
     summary: |-
-      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      {developerPortalUri:['https://developer.contoso.com'],instructions:'instructions markdown'}  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
@@ -295,13 +239,13 @@ directCommands:
   - name: --title
     summary: |-
       Environment title.
-  - name: --workspace --workspace-name -w
+  - name: --type
+    parameterValueGroup: "development, production, staging, testing"
     summary: |-
-      The name of the workspace.
+      Environment type.
 commands:
 - az_apic_environment_create
 - az_apic_environment_delete
-- az_apic_environment_head
 - az_apic_environment_list
 - az_apic_environment_show
 - az_apic_environment_update
@@ -330,4 +274,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands to manage Environments in API Center.
+  description: Commands to manage environments in API Center.
