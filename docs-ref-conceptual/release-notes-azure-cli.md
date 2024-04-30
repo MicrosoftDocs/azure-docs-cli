@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 04/02/2024
+ms.date: 04/30/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,112 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## April 30, 2024
+
+Version 2.60.0
+
+### ACR
+
+* [BREAKING CHANGE] `az acr connected-registry create`: Mode default value change from ReadWrite to ReadOnly
+* `az acr connected-registry create`: If data-endpoint disabled ask for confirmation to enable it instead of throwing an error
+
+### AKS
+
+* `az aks create/update`: Prompt warning during disablement about CR deletion
+* `az aks create/update`: Udpate RP registration code to work on azure monitor subscription
+* `az aks create/update`: Update to add default region for workspace creation in air gapped cloud
+* `az aks nodepool add`: Add parameter `--disable-windows-outbound-nat` to add a Windows agent pool which the Windows OutboundNAT is disabled
+
+### App Service
+
+* `az webapp config container set`: Remove docker prefix and rename container related parameters
+* `az webapp create` and `az webapp deployment slot create`: Rename `--docker-registry-server-user` and `--docker-registry-server-password` to `--container-registry-user` and `--container-registry-password`
+* `az webapp create` and `az webapp deployment slot create`: Add parameters `--container-image-name` and `container-registry-url` to deprecate `--deployment-container-image-name`
+* `az webapp create` and `az logicapp create`: Update help message
+* `az webapp config set`: Add new parameter `--runtime` to allow users to update their stack by using single parameter
+* `az functionapp create`: Remove unnecessary app settings for flex function apps
+* Fix #28588: `az webapp config access-restriction add`: Check for null before getting values
+* `az webapp config access-restriction set`: Add new parameter `--default-action` to configure default action for main site
+* `az webapp config access-restriction set`: Add new parameter `--scm-default-action` to configure default action for scm site
+* `az webapp list`: Add parameter `--show-details` to include detailed site configuration of listed webapps in output
+* `az functionapp create`: Will validate that the provided runtime is supported by flex when creating a flex function app
+* `az functionapp list-flexconsumption-runtimes`: Add support for this new command so that it provides the list of supported flex runtimes when provided the `--location` and `--runtime`
+
+### ARM
+
+* `az bicep install`: Support additional process architectures with Bicep CLI
+* `az deployment`: Return better message on incorrect bicepparam file path
+* `az bicep format`: Replace `--newline` with `--newline-kind`
+* `az bicep publish`: Replace `--documentationUri` with `--documentation-uri`
+
+### Backup
+
+* `az backup vault update`: Take `--tenant-id` as input for resolving cross-tenant resource guard scenarios. Vault Immutability feature also has resource guard protection now, and support for the same has been added.
+* `az backup protection disable`: Take `--tenant-id` as input for resolving cross-tenant resource guard scenarios. Stop protection feature also has resource guard protection now, and support for the same has been added.
+
+### Batch
+
+* `az batch pool create`: Add `--upgrade-policy-mode` argument to support automatic OS upgrade
+* `az batch pool create`: Add `--enable-auto-os-upgrade` argument to enable automatic OS upgrade
+* `az batch pool create`: Add `--disable-auto-rollback` argument to disable OS image rollback feature
+* `az batch pool create`: Add `--defer-os-rolling-upgrade` argument to defer OS upgrades on the TVMs if they are running tasks
+* `az batch pool create`: Add `--use-rolling-upgrade-policy` argument to support OS rolling upgrade policy
+* `az batch pool create`: Add `--enable-cross-zone-upgrade` argument to support cross zone OS upgrade
+* `az batch pool create`: Add `--max-batch-instance-percent` argument to set the maximum percent of total VMs that will be upgraded in one batch
+* `az batch pool create`: Add `--max-unhealthy-instance-percent` argument to set the maximum percentage of the total VMs can be simultaneously unhealthy
+* `az batch pool create`: Add `--max-unhealthy-upgraded-instance-percent` argument to set the maximum percentage of upgraded VMs that can be found to be in an unhealthy state
+* `az batch pool create`: Add `--pause-time-between-batches` argument to set the wait time between batches in rolling OS upgrade
+* `az batch pool create`: Add `--prioritize-unhealthy-instances` argument to support upgrade all unhealthy VMs first
+* `az batch pool create`: Add `--rollback-failed-instances-on-policy-breach` argument to enable rollback failed instances to previous model if the Rolling Upgrade policy is violated
+
+### Compute
+
+* `az vmss create`: Add support of configure the rolling mode upgrade policy during VMSS creation
+* `az vmss update`: Add new parameter `--max-surge` to support updating rolling upgrade policy max surge
+* `az capacity reservation group list`: Add new parameter `--resource-ids-only` to support retrieving the capacity reservation group resource ids
+* `az capacity reservation group create`: Change `--sharing profile` to support unsharing subscriptions by passing nothing
+
+### Containerapp
+
+* `az containerapp env create`: Support `--dapr-connection-string` to set application insights connection string used by Dapr to export service to service communication telemetry
+* Fix #28553: `az containerapp exec`: Fix the error of `inappropriate ioctl for device`
+
+### Core
+
+* Fix #28737: Fix token cache for service principal authentication
+* Resolve CVE-2023-3651
+
+### Monitor
+
+* `az monitor log-analytics workspace update`: Add parameter `--sku-name`
+
+### NetAppFiles
+
+* `az netappfiles volume-group create`: Add `--zones` argument to set Availability Zone for volume group volumes
+* `az netappfiles volume create/update`: Update maximum value for `--usage-threshold` to support large volumes
+
+### Network
+
+* `az network virtual-appliance inbound-security-rule`: Support for Permanent Inbound Security Rule
+
+### RDBMS
+
+* `az postgres flexible-server upgrade`: Add capability to perform major version upgrade to PG16
+
+### Service Connector
+
+* `az aks connection`: AKS support for Service Connector
+* `az webapp/containerapp/spring connection create/update`: Store configurations in App Config
+* `az source connection create`: Support auth opt out
+
+### Service Fabric
+
+* `az sf managed-cluster network-security-rule`: Add new network security rule commands
+
+### SQL
+
+* `az sql server create/update`: Add 1.3 to minTLSEnum and make TLS 1.2 as default
 
 ## April 02, 2024
 
