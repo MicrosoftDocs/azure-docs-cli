@@ -34,14 +34,18 @@ Use this script to list and delete resource groups that start with a given word.
 subscriptionID=00000000-0000-0000-0000-00000000
 az account set --subscription $subscriptionID
 
+# Set your log file location
+logFileLocation="myLogName.txt"
+
 # Get the name of all resource groups that start with 'msdocs'
 az group list --query "[?starts_with(name, 'msdocs') == \`true\`].name" -o table
 
 # Delete resource groups without a confirmation prompt (--yes)
 # Do not wait for the operation to finish (--no-wait)
+echo "Deleting resource groups">$logFileLocation
 for rgList in $(az group list --query "[?starts_with(name, 'msdocs') == \`true\`].name" -o tsv); 
 do
-    echo "deleting resource group $rgList"
+    echo "deleting resource group $rgList">>$logFileLocation
     az group delete --name $rgList --yes --no-wait
 done
 
@@ -54,6 +58,9 @@ az group list --query "[?starts_with(name, 'msdocs') == \`true\`].name" -o table
 Use this script to list and delete storage accounts that were created within a date range.
 
 ```azurecli-interactive
+# Set your log file location
+logFileLocation="myLogName.txt"
+
 # Set your resource group variable
 rgName=<msdocs-rg-0000000>
 
@@ -62,8 +69,10 @@ az storage account list --resource-group $rgName --query "[].{Name:name}" --outp
 
 # Delete storage accounts without a confirmation prompt (--yes).
 # Do not wait for the operation to finish (--no-wait)
-for saList in $(az storage account list --resource-group $rgName --query "[?starts_with(name, 'msdocs') == \`true\`].id" --output tsv); do
-    echo "deleting storage account $saList"
+echo "Deleting storage accounts">$logFileLocation
+for saList in $(az storage account list --resource-group $rgName --query "[?starts_with(name, 'msdocs') == \`true\`].id" --output tsv);
+do
+    echo "deleting storage account $saList">>$logFileLocation
     az storage account delete --ids $saList --yes --no-wait
 done
 
