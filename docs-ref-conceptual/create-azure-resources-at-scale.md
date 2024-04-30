@@ -4,7 +4,7 @@ description: Learn how to create multiple Azure resources from a script and log 
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 01/12/2024
+ms.date: 04/30/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -24,7 +24,7 @@ In this Azure CLI sample you will learn the following:
 > * Use IF..THEN statements to create dependent objects
 > * Log script progress to a local TXT file
 
-This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in both Bash and PowerShell environments. This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with an Ubunto2204 image using [Windows Terminal](/windows/terminal/).
+This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in both Bash and PowerShell environments. This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with Ubuntu 22.04.3 LTS using [Windows Terminal](/windows/terminal/).
 
 ## Prepare your environment
 
@@ -50,15 +50,16 @@ If you prefer, go directly to the CSV and script files used by this article at [
 
 ### Setup variables
 
-Get started by instantiating the variable needed for the script. The following two variables need actual values for your environment:
+Get started by instantiating the variables needed for the script. The following three variables need actual values for your environment:
 * subscriptionID
 * setupFileLocation
+* logFileLocation
 
-Variables with a **msdocs-rg-** prefix can be replaced with the prefix of your choice. All empty (**""**) variable values use input from the CSV setup file.
+Variables with a **msdocs-** prefix can be replaced with the prefix of your choice. All empty (`""`) variable values use input from the CSV setup file.
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="VariableBlock":::
 
-### Validate setup file values
+### Validate CSV file values
 
 Before you start to test the create script, make sure your CSV file is formatted correctly and variables will be assigned correct values. This script uses an IF..THEN statement so you can look at one scenario/CSV line at a time.
 
@@ -121,6 +122,10 @@ You have instantiated your variable block, validated CSV values, and completed a
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
 
+```logFile.txt
+
+``
+
 # [PowerShell](#tab/powershell)
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
@@ -135,9 +140,8 @@ Bash is case sensitive. The word `true` does not equal `TRUE`. Also `greater tha
 
 ### Variable values are not changing with each loop
 
-This is often caused by extra spaces in the CSV file. A line in a CSV file will look something like this: `column1,column2,column3`, but by habit it is easy to create a test file that contains `column1, column2, column3`.
+This is often caused by extra spaces in the CSV file. A line in a CSV file will look something like this: `column1,column2,column3` or `column1,,column3`, but by habit it is easy to create a test file that contains a space after each comma like `column1, column2, column3`. When you have a leading or trailing space in your CSV, the column value is actually `<space>columnValue`. The script logic `if [ "$columnName" = "columnValue" ]` returns "false". Remove all leading and trailing spaces in your CSV to fix the issue.
 
 ## See also
 
-* [Delete Azure resources at scale]()
-* [Modify Azure resources at scale]()
+* [Delete Azure resources at scale](./delete-azure-resources-at-scale.md)
