@@ -122,10 +122,6 @@ You have instantiated your variable block, validated CSV values, and completed a
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
 
-```logFile.txt
-
-``
-
 # [PowerShell](#tab/powershell)
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
