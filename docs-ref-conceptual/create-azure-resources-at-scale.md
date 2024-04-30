@@ -46,8 +46,6 @@ Select your preferred environment to run the script. _Both scripts use Azure CLI
 
 If you prefer, go directly to the CSV and script files used by this article at [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples/tree/master/azure-cli/create-azure-resources-at-scale).
 
-# [Bash](#tab/bash)
-
 ### Setup variables
 
 Get started by instantiating the variables needed for the script. The following three variables need actual values for your environment:
@@ -55,15 +53,33 @@ Get started by instantiating the variables needed for the script. The following 
 * setupFileLocation
 * logFileLocation
 
-Variables with a **msdocs-** prefix can be replaced with the prefix of your choice. All empty (`""`) variable values use input from the CSV setup file.
+Variables with a `msdocs-` prefix can be replaced with the prefix of your choice. All empty (`""`) variable values use input from the CSV setup file.
+
+# [Bash](#tab/bash)
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="VariableBlock":::
+
+# [PowerShell](#tab/powershell)
+
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="VariableBlock":::
+
+---
 
 ### Validate CSV file values
 
 Before you start to test the create script, make sure your CSV file is formatted correctly and variables will be assigned correct values. This script uses an IF..THEN statement so you can look at one scenario/CSV line at a time.
 
+# [Bash](#tab/bash)
+
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateFileValues":::
+
+# [PowerShell](#tab/powershell)
+
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateFileValues":::
+
+---
+
+Using the CSV provided in this article, the validation output is as follows:
 
 ```output
 resourceNo = 1
@@ -90,11 +106,21 @@ vmAdminPassword =  msdocs-pw-0000000
 
 ### Validate script logic
 
-If you are confident in your Bash scripting abilities, you can skip this step. However, because this script is designed to create Azure resources at scale, looping through the script with `echo` statements can save you time and unexpected billable Azure resources.
+If you are confident in your scripting abilities, you can skip this step. However, because this script is designed to create Azure resources at scale, looping through the script with `echo` statements can save you time and unexpected billable Azure resources.
+
+# [Bash](#tab/bash)
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateScriptLogic":::
 
 Did you just receive a "jq command not found" error? This is because this script depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command. [Install jq](https://jqlang.github.io/jq/download/) in your environment, or run this script in Azure Cloud Shell.
+
+# [PowerShell](#tab/powershell)
+
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateScriptLogic":::
+
+---
+
+Using the CSV provided in this article, the validation output is as follows:
 
 ```output
 resourceNo = 1
@@ -120,7 +146,11 @@ creating VM msdocs-vm-316251055 without Vnet in RG myResourceGroup
 
 You have instantiated your variable block, validated CSV values, and completed a test run. Execute this script to create Azure resources as indicated in your CSV setup file.
 
+# [Bash](#tab/bash)
+
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
+
+Did you just receive a "jq command not found" error? This is because this script depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command. [Install jq](https://jqlang.github.io/jq/download/) in your environment, or run this script in Azure Cloud Shell.
 
 # [PowerShell](#tab/powershell)
 
