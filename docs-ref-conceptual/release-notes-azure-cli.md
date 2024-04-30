@@ -84,6 +84,11 @@ Version 2.60.0
 * `az containerapp env create`: Support `--dapr-connection-string` to set application insights connection string used by Dapr to export service to service communication telemetry
 * Fix #28553: `az containerapp exec`: Fix the error of `inappropriate ioctl for device`
 
+### Core
+
+* Fix #28737: Fix token cache for service principal authentication
+* Resolve CVE-2023-3651
+
 ### Monitor
 
 * `az monitor log-analytics workspace update`: Add parameter `--sku-name`
