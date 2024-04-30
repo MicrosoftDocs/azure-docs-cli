@@ -49,8 +49,9 @@ do
     az group delete --name $rgList --yes --no-wait
 done
 
-# Verify the resource groups are gone.
-az group list --query "[?starts_with(name, 'msdocs') == \`true\`].name" -o table
+# read your log file with Linux "cat" command
+clear
+cat $logFileLocation
 ```
 
 ## Delete Azure resources filtering by creation date
@@ -64,20 +65,26 @@ logFileLocation="myLogName.txt"
 # Set your resource group variable
 rgName=<msdocs-rg-0000000>
 
-# Get the name of all storage accounts in a resource group.
-az storage account list --resource-group $rgName --query "[].{Name:name}" --output table
+# Get a list of Azure storage accounts that were created in the last 30 days. Return the results as a table.
+saDate=$(date +%F -d "-30days")
+az storage account list --resource-group $rgName \
+                        --query "[?creationTime >='$saDate'].{saName:name, createdTimeStamp:creationTime}" \
+                        --output table
 
 # Delete storage accounts without a confirmation prompt (--yes).
 # Do not wait for the operation to finish (--no-wait)
 echo "Deleting storage accounts">$logFileLocation
-for saList in $(az storage account list --resource-group $rgName --query "[?starts_with(name, 'msdocs') == \`true\`].id" --output tsv);
+for saList in $(az storage account list --resource-group $rgName \
+                        --query "[?creationTime >='$saDate'].{saName:name, createdTimeStamp:creationTime}" \
+                        --output tsv);
 do
     echo "deleting storage account $saList">>$logFileLocation
     az storage account delete --ids $saList --yes --no-wait
 done
 
-# Verify the storage accounts are gone.
-az storage account list --resource-group $rgName --query "[?starts_with(name, 'msdocs') == \`true\`].name"
+# read your log file with Linux "cat" command
+clear
+cat $logFileLocation
 ```
 
 ## Delete all azure resources of a type

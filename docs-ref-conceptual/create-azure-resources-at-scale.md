@@ -30,15 +30,14 @@ This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/ove
 
 * Download and save to a local directory the following CSV file. Replace `myResourceGroup` in line 3 with an actual resource group name, and any other values you wish for testing purposes.
 
-  ```
+  ```CSV
   resourceNo,location,createRG,exstingRgName,createVnet,vmImage,publicIpSku,adminUser,vnetAddressPrefix,subnetAddressPrefix
   1,eastus,TRUE,,TRUE,Ubuntu2204,standard,john-smith,10.0.0.0/16,10.0.0.0/24
-  2,westus,TRUE,,FALSE,Ubunto2004,standard,alex-smith,10.0.0.0/16,10.0.0.0/24
+  2,westus,TRUE,,FALSE,Ubuntu2004,standard,alex-smith,10.0.0.0/16,10.0.0.0/24
   3,southcentralus,FALSE,myResourceGroup,FALSE,Ubuntu2104,standard,jan-smith,10.0.0.0/16,10.0.0.0/24
   ```
 
 * [Install the Azure CLI](/cli/azure/install-azure-cli).
-* If you are going to run this sample in a local Bash environment, [install JQ](https://jqlang.github.io/jq/manual/)
 
 ## Run the scripts
 
@@ -53,7 +52,7 @@ Get started by instantiating the variables needed for the script. The following 
 * setupFileLocation
 * logFileLocation
 
-Variables with a `msdocs-` prefix can be replaced with the prefix of your choice. All empty (`""`) variable values use input from the CSV setup file.
+Variables with a `msdocs-` prefix can be replaced with the prefix of your choice. All empty (`""`) variable values use input from the CSV setup file and will be overwritten.
 
 # [Bash](#tab/bash)
 
@@ -112,8 +111,6 @@ If you are confident in your scripting abilities, you can skip this step. Howeve
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateScriptLogic":::
 
-Did you just receive a "jq command not found" error? This is because this script depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command. [Install jq](https://jqlang.github.io/jq/download/) in your environment, or run this script in Azure Cloud Shell.
-
 # [PowerShell](#tab/powershell)
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateScriptLogic":::
@@ -149,8 +146,6 @@ You have instantiated your variable block, validated CSV values, and completed a
 # [Bash](#tab/bash)
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
-
-Did you just receive a "jq command not found" error? This is because this script depends on the Bash [jq](https://jqlang.github.io/jq/manual/) command. [Install jq](https://jqlang.github.io/jq/download/) in your environment, or run this script in Azure Cloud Shell.
 
 # [PowerShell](#tab/powershell)
 
