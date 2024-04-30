@@ -179,10 +179,11 @@ directCommands:
   sourceType: Core
   syntax: >-
     az bicep format --file
-                    [--indent-kind]
+                    [--indent-kind {Space, Tab}]
                     [--indent-size]
                     [--insert-final-newline]
                     [--newline]
+                    [--newline-kind {CR, CRLF, LF}]
                     [--outdir]
                     [--outfile]
                     [--stdout]
@@ -215,8 +216,9 @@ directCommands:
       The path to the Bicep file to format in the file system.
   optionalParameters:
   - name: --indent-kind
+    parameterValueGroup: "Space, Tab"
     summary: |-
-      Set indentation kind. Valid values are ( Space | Tab ).
+      Set indentation kind.
   - name: --indent-size
     summary: |-
       Number of spaces to indent with (Only valid with --indent-kind set to Space).
@@ -226,6 +228,12 @@ directCommands:
   - name: --newline
     summary: |-
       Set newline char. Valid values are ( Auto | LF | CRLF | CR ).
+    isDeprecated: true
+    deprecateInfo: Option '--newline' has been deprecated and will be removed in a future release. Use '--newline-kind' instead.
+  - name: --newline-kind
+    parameterValueGroup: "CR, CRLF, LF"
+    summary: |-
+      Set line ending characters.
   - name: --outdir
     summary: |-
       When set, saves the output at the specified directory.
@@ -299,7 +307,7 @@ directCommands:
   status: GA
   sourceType: Core
   syntax: >-
-    az bicep install [--target-platform {linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-x64}]
+    az bicep install [--target-platform {linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-arm64, win-x64}]
                      [--version]
   examples:
   - summary: |-
@@ -313,7 +321,7 @@ directCommands:
     syntax: az bicep install --target-platform linux-x64
   optionalParameters:
   - name: --target-platform -t
-    parameterValueGroup: "linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-x64"
+    parameterValueGroup: "linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-arm64, win-x64"
     summary: |-
       The platform the Bicep CLI will be running on. Set this to skip automatic platform detection if it does not work properly.
   - name: --version -v
@@ -368,6 +376,7 @@ directCommands:
   syntax: >-
     az bicep publish --file
                      --target
+                     [--documentation-uri]
                      [--documentationUri]
                      [--force]
                      [--with-source]
@@ -380,10 +389,10 @@ directCommands:
     syntax: az bicep publish --file {bicep_file} --target "br:{registry}/{module_path}:{tag} --force"
   - summary: |-
       Publish a bicep file with documentation uri.
-    syntax: az bicep publish --file {bicep_file} --target "br:{registry}/{module_path}:{tag}" --documentationUri {documentationUri}
+    syntax: az bicep publish --file {bicep_file} --target "br:{registry}/{module_path}:{tag}" --documentation-uri {documentation_uri}
   - summary: |-
       Publish a bicep file with documentation uri and include source code
-    syntax: az bicep publish --file {bicep_file} --target "br:{registry}/{module_path}:{tag}" --documentationUri {documentationUri} --with-source
+    syntax: az bicep publish --file {bicep_file} --target "br:{registry}/{module_path}:{tag}" --documentation-uri {documentation_uri} --with-source
   requiredParameters:
   - isRequired: true
     name: --file -f
@@ -394,9 +403,14 @@ directCommands:
     summary: |-
       The target location where the Bicep module will be published.
   optionalParameters:
-  - name: --documentationUri -d
+  - name: --documentation-uri -d
     summary: |-
       The documentation uri of the Bicep module.
+  - name: --documentationUri
+    summary: |-
+      The documentation uri of the Bicep module.
+    isDeprecated: true
+    deprecateInfo: Option '--documentationuri' has been deprecated and will be removed in a future release. Use '--documentation-uri' instead.
   - name: --force
     summary: |-
       Allow overwriting an existing Bicep module version.
@@ -442,7 +456,7 @@ directCommands:
     Upgrade Bicep CLI to the latest version.
   status: GA
   sourceType: Core
-  syntax: az bicep upgrade [--target-platform {linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-x64}]
+  syntax: az bicep upgrade [--target-platform {linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-arm64, win-x64}]
   examples:
   - summary: |-
       Upgrade Bicep CLI.
@@ -452,7 +466,7 @@ directCommands:
     syntax: az bicep upgrade --target-platform linux-x64
   optionalParameters:
   - name: --target-platform -t
-    parameterValueGroup: "linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-x64"
+    parameterValueGroup: "linux-arm64, linux-musl-x64, linux-x64, osx-arm64, osx-x64, win-arm64, win-x64"
     summary: |-
       The platform the Bicep CLI will be running on. Set this to skip automatic platform detection if it does not work properly.
 - uid: az_bicep_version

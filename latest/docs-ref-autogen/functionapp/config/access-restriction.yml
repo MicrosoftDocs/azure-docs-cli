@@ -198,23 +198,29 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp config access-restriction set --use-same-restrictions-for-scm-site {false, true}
+    az functionapp config access-restriction set [--default-action {Allow, Deny}]
                                                  [--ids]
                                                  [--name]
                                                  [--resource-group]
+                                                 [--scm-default-action {Allow, Deny}]
                                                  [--slot]
                                                  [--subscription]
+                                                 [--use-same-restrictions-for-scm-site {false, true}]
   examples:
   - summary: |-
       Enable SCM site to use same access restrictions as main site.
     syntax: az functionapp config access-restriction set -g ResourceGroup -n AppName --use-same-restrictions-for-scm-site true
-  requiredParameters:
-  - isRequired: true
-    name: --use-same-restrictions-for-scm-site
-    parameterValueGroup: "false, true"
-    summary: |-
-      Use same access restrictions for scm site.
+  - summary: |-
+      Set default action to Allow for main site.
+    syntax: az functionapp config access-restriction set -g ResourceGroup -n AppName --default-action Allow
+  - summary: |-
+      Set default action to Deny for scm site.
+    syntax: az functionapp config access-restriction set -g ResourceGroup -n AppName --scm-default-action Deny
   optionalParameters:
+  - name: --default-action
+    parameterValueGroup: "Allow, Deny"
+    summary: |-
+      Configure default action for main site.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -224,12 +230,20 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --scm-default-action
+    parameterValueGroup: "Allow, Deny"
+    summary: |-
+      Configure default action for scm site.
   - name: --slot -s
     summary: |-
       The name of the slot. Default to the productions slot if not specified.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --use-same-restrictions-for-scm-site
+    parameterValueGroup: "false, true"
+    summary: |-
+      Use same access restrictions for scm site.
 - uid: az_functionapp_config_access-restriction_show
   name: az functionapp config access-restriction show
   summary: |-
@@ -293,5 +307,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 03/22/2024
+  ms.date: 04/22/2024
   description: Methods that show, set, add, and remove access restrictions on a functionapp.
