@@ -14,27 +14,26 @@ ms.custom: devx-track-azurecli
 
 # How to create resources at scale using the Azure CLI
 
-As an Azure resource manager, you frequently have to create multiple Azure resources when configuring new environments. Some companies also have an approval process that works best when the Azure resources is created automatically from a script.
+As an Azure resource manager, you frequently have to create multiple Azure resources when configuring new environments. Some companies also have an Azure resource approval process that works best when Azure resources are created automatically from a script.
 
-In this Azure CLI sample you will learn the following:
+In this article you will learn the following:
 
-> [!div class="checklist"]
->
-> * Create multiple Azure resources from a delimited CSV file
-> * Use IF..THEN statements to create dependent objects
-> * Log script progress to a local TXT file
+* Create multiple Azure resources from a delimited CSV file.
+* Use IF..THEN statements to create dependent Azure resources.
+* Log script progress to a local TXT file.
 
 This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in both Bash and PowerShell environments. This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with Ubuntu 22.04.3 LTS using [Windows Terminal](/windows/terminal/).
 
 ## Prepare your environment
 
-* Download and save to a local directory the following CSV file. Replace `myResourceGroup` in line 3 with an actual resource group name, and any other values you wish for testing purposes.
+* Download and save to a local directory the following CSV file. Replace `myResourceGroup` in line three with an actual resource group name, and any other values you wish for testing purposes.
 
   ```CSV
-  resourceNo,location,createRG,exstingRgName,createVnet,vmImage,publicIpSku,adminUser,vnetAddressPrefix,subnetAddressPrefix
-  1,eastus,TRUE,,TRUE,Ubuntu2204,standard,john-smith,10.0.0.0/16,10.0.0.0/24
-  2,westus,TRUE,,FALSE,Ubuntu2004,standard,alex-smith,10.0.0.0/16,10.0.0.0/24
-  3,southcentralus,FALSE,myResourceGroup,FALSE,Ubuntu2104,standard,jan-smith,10.0.0.0/16,10.0.0.0/24
+  resourceNo,location,createRG,exstingRgName,createVnet,vnetAddressPrefix,subnetAddressPrefixes,vmImage,publicIpSku,  Adminuser
+  1,eastus,TRUE,,TRUE,10.0.0.0/16,10.0.0.0/24,Ubuntu2204,standard,john-smith
+  2,westus,TRUE,,FALSE,,,Debian11,standard,alex-smith
+  3,southcentralus,FALSE,msdocs-rg-671528884,FALSE,,,Ubuntu2204,standard,jan-smith
+  0
   ```
 
 * [Install the Azure CLI](/cli/azure/install-azure-cli).
@@ -49,10 +48,10 @@ If you prefer, go directly to the CSV and script files used by this article at [
 
 Get started by instantiating the variables needed for the script. The following three variables need actual values for your environment:
 * subscriptionID
-* setupFileLocation
-* logFileLocation
+* setupFileLocation: This is the location and file name of your CSV config file.
+* logFileLocation: This is the location and file name the script will use to create a log file. You do not need to create or upload this file.
 
-Variables with a `msdocs-` prefix can be replaced with the prefix of your choice. All empty (`""`) variable values use input from the CSV setup file and will be overwritten.
+Variables with a `msdocs-` prefix can be replaced with the prefix of your choice. All empty (`""`) variables use values from the CSV setup file. These empty variables are placeholders needed by the script.
 
 # [Bash](#tab/bash)
 
@@ -165,7 +164,7 @@ This is often caused by extra spaces in the CSV file. A line in a CSV file will 
 
 ### Invalid CIDR notation
 
-You receive an **InvalidCIDRNotation** error when you pass an incorrect address prefix to `az network vnet create`. This can be challenging when visually, the address prefix, like `10.0.0.0/24` looks correct in an `echo` statement. To troubleshoot what is really being read from the CSV, try this script:
+You receive an **InvalidCIDRNotation** error when you pass an incorrect address prefix to `az network vnet create`. This can be challenging when visually, the address prefix looks correct when returned in an `echo` statement. To troubleshoot the actual value being read from the CSV, try this script:
 
 ```azurecli
 while IFS=, read -r resourceNo location createRG existingRgName createVnet vnetAddressPrefix subnetAddressPrefixes vmImage publicIpSku adminUser
@@ -180,7 +179,7 @@ do
 done < <(tail -n +2 $setupFileLocation)
 ```
 
-If your results look like `xzy10.0.0.0/24` and not expected `abc10.0.0.0/24xyz`, there might be a hidden character lurking in your CSV file. Add a test column with the same prefix value, rearrange your CSV columns, and copy/paste your CSV contents in/out of a simple Notepad editor. In writing this article, the rearrangement of the CSV columns finally fixed the error.
+If your results look like `xzy10.0.0.0/24` and not the expected `abc10.0.0.0/24xyz`, there might be a hidden character lurking in your CSV file. Add a test column with the same prefix value, rearrange your CSV columns, and copy/paste your CSV contents in/out of a simple Notepad editor. In writing this article, the rearrangement of the CSV columns finally fixed the error.
 
 ### Arguments are expected or required
 
