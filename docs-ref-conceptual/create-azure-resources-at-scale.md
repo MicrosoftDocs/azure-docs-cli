@@ -163,6 +163,33 @@ Bash is case sensitive. The word `true` does not equal `TRUE`. Also `greater tha
 
 This is often caused by extra spaces in the CSV file. A line in a CSV file will look something like this: `column1,column2,column3` or `column1,,column3`, but by habit it is easy to create a test file that contains a space after each comma like `column1, column2, column3`. When you have a leading or trailing space in your CSV, the column value is actually `<space>columnValue`. The script logic `if [ "$columnName" = "columnValue" ]` returns "false". Remove all leading and trailing spaces in your CSV to fix the issue.
 
+### Invalid CIDR notation
+
+You receive an **InvalidCIDRNotation** error when you pass an incorrect address prefix to `az network vnet create`. This can be challenging when visually, the address prefix, like `10.0.0.0/24` looks correct in an `echo` statement. To troubleshoot what is really being read from the CSV, try this script:
+
+```azurecli
+while IFS=, read -r resourceNo location createRG existingRgName createVnet vnetAddressPrefix subnetAddressPrefixes vmImage publicIpSku adminUser
+do
+    echo "resourceNo = $resourceNo"
+
+    if [ "$createVnet" == "TRUE" ]; then
+      startTest="abc"
+      endTest="xyz"
+      echo $startTest$vnetAddressPrefix$endTest
+    fi
+done < <(tail -n +2 $setupFileLocation)
+```
+
+If your results look like `xzy10.0.0.0/24` and not expected `abc10.0.0.0/24xyz`, there might be a hidden character lurking in your CSV file. Add a test column with the same prefix value, rearrange your CSV columns, and copy/paste your CSV contents in/out of a simple Notepad editor. In writing this article, the rearrangement of the CSV columns finally fixed the error.
+
+### Arguments are expected or required
+
+You receive this error when you have not supplied a required parameter or there is a typographical error that causes the Azure CLI to incorrectly parse the reference command.  When working with a script, you also receive this error when one of more of the following is true:
+
+* There is a missing or incorrect line continuation character.
+* There are trailing spaces on the right side of a line continuation character.
+* Your variable name contains a special character, such as a dash (`-`).
+
 ## See also
 
 * [Delete Azure resources at scale](./delete-azure-resources-at-scale.md)
