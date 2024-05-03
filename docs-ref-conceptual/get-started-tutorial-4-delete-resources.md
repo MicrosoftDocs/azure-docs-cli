@@ -28,7 +28,7 @@ Using random IDs and running these tutorial steps creates test resource groups t
 az group list --output table
 
 # Delete a resource group and do not wait for the operation to finish
-az group delete --name <msdocs-tutorial-rg-0000000> --no-wait
+az group delete --name "msdocs-tutorial-rg-0000000" --no-wait
 ```
 
 > [!TIP]
