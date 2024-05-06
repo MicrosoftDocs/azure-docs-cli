@@ -36,6 +36,7 @@ directCommands:
                         [--enable-ultra-ssd]
                         [--enable-vtpm]
                         [--eviction-policy {Deallocate, Delete}]
+                        [--gateway-prefix-size]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                         [--host-group-id]
                         [--kubelet-config]
@@ -47,7 +48,7 @@ directCommands:
                         [--max-surge]
                         [--message-of-the-day]
                         [--min-count]
-                        [--mode {System, User}]
+                        [--mode {Gateway, System, User}]
                         [--no-wait]
                         [--node-count]
                         [--node-osdisk-size]
@@ -178,6 +179,10 @@ directCommands:
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
       The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
+  - name: --gateway-prefix-size
+    summary: |-
+      The size of Public IPPrefix attached to the Gateway-mode node pool. The node pool must be in Gateway mode.
+    isPreview: true
   - name: --gpu-instance-profile
     parameterValueGroup: "MIG1g, MIG2g, MIG3g, MIG4g, MIG7g"
     summary: |-
@@ -218,7 +223,7 @@ directCommands:
       Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
     defaultValue: "User"
-    parameterValueGroup: "System, User"
+    parameterValueGroup: "Gateway, System, User"
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait
@@ -639,7 +644,7 @@ directCommands:
                            [--max-count]
                            [--max-surge]
                            [--min-count]
-                           [--mode {System, User}]
+                           [--mode {Gateway, System, User}]
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
@@ -747,7 +752,7 @@ directCommands:
     summary: |-
       Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
-    parameterValueGroup: "System, User"
+    parameterValueGroup: "Gateway, System, User"
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait
