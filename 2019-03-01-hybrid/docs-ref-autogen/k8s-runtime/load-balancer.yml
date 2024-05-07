@@ -7,24 +7,21 @@ extensionInformation: >-
   > This reference is part of the **k8s-runtime** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az k8s-runtime load-balancer** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage load balancers of Arc Kubernetes clusters.
-status: Preview
-isPreview: true
-previewOrExperimentalInfo: "Command group 'az k8s-runtime' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+status: GA
 sourceType: Extension
 directCommands:
 - uid: az_k8s-runtime_load-balancer_create
   name: az k8s-runtime load-balancer create
   summary: |-
     Create a LoadBalancer.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'k8s-runtime load-balancer' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az k8s-runtime load-balancer create --load-balancer-name
                                         --resource-uri
                                         [--addresses]
                                         [--advertise-mode {ARP, BGP, Both}]
+                                        [--bgp-peers]
                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--service-selector]
   examples:
@@ -48,6 +45,9 @@ directCommands:
     parameterValueGroup: "ARP, BGP, Both"
     summary: |-
       Advertise Mode.
+  - name: --bgp-peers
+    summary: |-
+      The list of BGP peers it should advertise to. Null or empty means to advertise to all peers.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -59,14 +59,11 @@ directCommands:
   name: az k8s-runtime load-balancer delete
   summary: |-
     Delete a LoadBalancer.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'k8s-runtime load-balancer' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az k8s-runtime load-balancer delete --load-balancer-name
                                         --resource-uri
-                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                         [--yes]
   examples:
   - summary: |-
@@ -82,10 +79,6 @@ directCommands:
     summary: |-
       The fully qualified Azure Resource manager identifier of the resource.
   optionalParameters:
-  - name: --no-wait
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Do not wait for the long-running operation to finish.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -94,9 +87,7 @@ directCommands:
   name: az k8s-runtime load-balancer disable
   summary: |-
     Disable load_balancer service in a connected cluster.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'k8s-runtime load-balancer' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: az k8s-runtime load-balancer disable --resource-uri
   requiredParameters:
@@ -108,9 +99,7 @@ directCommands:
   name: az k8s-runtime load-balancer enable
   summary: |-
     Enable load balancer service in a connected cluster.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'k8s-runtime load-balancer' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: az k8s-runtime load-balancer enable --resource-uri
   requiredParameters:
@@ -122,9 +111,7 @@ directCommands:
   name: az k8s-runtime load-balancer list
   summary: |-
     List LoadBalancer resources by parent.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'k8s-runtime load-balancer' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az k8s-runtime load-balancer list --resource-uri
@@ -150,9 +137,7 @@ directCommands:
   name: az k8s-runtime load-balancer show
   summary: |-
     Get a LoadBalancer.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'k8s-runtime load-balancer' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az k8s-runtime load-balancer show --load-balancer-name
@@ -170,13 +155,52 @@ directCommands:
     name: --resource-uri
     summary: |-
       The fully qualified Azure Resource manager identifier of the resource.
+- uid: az_k8s-runtime_load-balancer_update
+  name: az k8s-runtime load-balancer update
+  summary: |-
+    Update a LoadBalancer.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az k8s-runtime load-balancer update --load-balancer-name
+                                        --resource-uri
+                                        [--add]
+                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                        [--remove]
+                                        [--set]
+  requiredParameters:
+  - isRequired: true
+    name: --load-balancer-name
+    summary: |-
+      The name of the LoadBalancer.
+  - isRequired: true
+    name: --resource-uri
+    summary: |-
+      The fully qualified Azure Resource manager identifier of the resource.
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
 - uid: az_k8s-runtime_load-balancer_wait
   name: az k8s-runtime load-balancer wait
   summary: |-
     Place the CLI in a waiting state until a condition is met.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'k8s-runtime load-balancer' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az k8s-runtime load-balancer wait --load-balancer-name
@@ -232,6 +256,7 @@ commands:
 - az_k8s-runtime_load-balancer_enable
 - az_k8s-runtime_load-balancer_list
 - az_k8s-runtime_load-balancer_show
+- az_k8s-runtime_load-balancer_update
 - az_k8s-runtime_load-balancer_wait
 globalParameters:
 - name: --debug
