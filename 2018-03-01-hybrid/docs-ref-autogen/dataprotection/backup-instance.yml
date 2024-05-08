@@ -197,23 +197,30 @@ directCommands:
 - uid: az_dataprotection_backup-instance_initialize-backupconfig
   name: az dataprotection backup-instance initialize-backupconfig
   summary: |-
-    Initialize JSON request body for initializing and configuring backup of an AzureKubernetesService resource.
+    Initialize JSON request body for initializing and configuring backup for AzureKubernetesService or AzureBlobs (for vaulted backups) resources.
   status: GA
   sourceType: Extension
   syntax: >-
     az dataprotection backup-instance initialize-backupconfig --datasource-type {AzureBlob, AzureDatabaseForMySQL, AzureDatabaseForPostgreSQL, AzureDatabaseForPostgreSQLFlexibleServer, AzureDisk, AzureKubernetesService}
                                                               [--backup-hook-references]
+                                                              [--container-list]
                                                               [--excluded-namespaces]
                                                               [--excluded-resource-type]
+                                                              [--include-all-containers {false, true}]
                                                               [--include-cluster-scope {false, true}]
                                                               [--included-namespaces]
                                                               [--included-resource-type]
                                                               [--label-selectors]
                                                               [--snapshot-volumes {false, true}]
+                                                              [--storage-account-name]
+                                                              [--storage-account-resource-group]
   examples:
   - summary: |-
-      Initialize backup configuration
+      Initialize backup configuration for AzureKubernetesService
     syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type AzureKubernetesService --label-selectors key=val foo=bar --excluded-namespaces excludeNS1 excludeNS2
+  - summary: |-
+      Initialize backup configuration for AzureBlob
+    syntax: az dataprotection backup-instance initialize-backupconfig --datasource-type "AzureBlob" --include-all-containers --storage-account-rg "sampleRG" --storage-account-name "samplestorage"
   requiredParameters:
   - isRequired: true
     name: --datasource-type
@@ -224,12 +231,19 @@ directCommands:
   - name: --backup-hook-references --backup-hook-refs
     summary: |-
       Property sets the hook reference to be executed during backup.
+  - name: --container-list --vaulted-backup-containers
+    summary: |-
+      List of containers to be backed up inside the VaultStore. Use this parameter for DatasourceType AzureBlob.
   - name: --excluded-namespaces
     summary: |-
       List of namespaces to be excluded for backup.
   - name: --excluded-resource-type --excluded-resource-types
     summary: |-
       List of resource types to be excluded for backup.
+  - name: --include-all-containers
+    parameterValueGroup: "false, true"
+    summary: |-
+      Switch parameter to include all containers to be backed up inside the VaultStore. Use this parameter for DatasourceType AzureBlob.
   - name: --include-cluster-scope --include-cluster-scope-resources
     parameterValueGroup: "false, true"
     summary: |-
@@ -247,6 +261,12 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Boolean parameter to decide whether snapshot volumes are included for backup. By default this is taken as true.
+  - name: --storage-account-name
+    summary: |-
+      Storage account where the Datasource is present. Use this parameter for DatasourceType AzureBlob.
+  - name: --storage-account-resource-group --storage-account-rg
+    summary: |-
+      Storage account resource group name where the Datasource is present. Use this parameter for DatasourceType AzureBlob.
 - uid: az_dataprotection_backup-instance_initialize-restoreconfig
   name: az dataprotection backup-instance initialize-restoreconfig
   summary: |-
@@ -548,6 +568,43 @@ directCommands:
   - name: --vault-name -v
     summary: |-
       The name of the backup vault.
+- uid: az_dataprotection_backup-instance_update
+  name: az dataprotection backup-instance update
+  summary: |-
+    Update properties associated with a backup instance.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az dataprotection backup-instance update --backup-instance-name
+                                             --resource-group
+                                             --vault-name
+                                             [--container-blob-list]
+                                             [--no-wait]
+  examples:
+  - summary: |-
+      Update backed up containers for a vaulted blob backup instance
+    syntax: az dataprotection backup-instance update --backup-instance-name MyDisk1 --vaulted-blob-container-list {backup_configuration} -g MyResourceGroup --vault-name MyVault
+  requiredParameters:
+  - isRequired: true
+    name: --backup-instance-name
+    summary: |-
+      Backup instance name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --vault-name -v
+    summary: |-
+      Name of the backup vault.
+  optionalParameters:
+  - name: --container-blob-list --vaulted-blob-container-list
+    summary: |-
+      Enter the container list to modify a vaulted blob backup. The output for 'az dataprotection backup-instance initialize-backupconfig' needs to be provided as input.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
 - uid: az_dataprotection_backup-instance_update-msi-permissions
   name: az dataprotection backup-instance update-msi-permissions
   summary: |-
@@ -830,6 +887,7 @@ commands:
 - az_dataprotection_backup-instance_show
 - az_dataprotection_backup-instance_stop-protection
 - az_dataprotection_backup-instance_suspend-backup
+- az_dataprotection_backup-instance_update
 - az_dataprotection_backup-instance_update-msi-permissions
 - az_dataprotection_backup-instance_update-policy
 - az_dataprotection_backup-instance_validate-for-backup
