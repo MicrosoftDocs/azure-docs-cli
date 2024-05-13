@@ -4,7 +4,7 @@ name: az dataprotection backup-vault
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-vault** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **dataprotection** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az dataprotection backup-vault** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage backup vault with dataprotection.
 status: GA
@@ -21,6 +21,11 @@ directCommands:
                                           --storage-setting
                                           --vault-name
                                           [--azure-monitor-alerts-for-job-failures {Disabled, Enabled}]
+                                          [--cmk-encryption-key-uri]
+                                          [--cmk-encryption-state {Disabled, Enabled, Inconsistent}]
+                                          [--cmk-identity-type {SystemAssigned, UserAssigned}]
+                                          [--cmk-infra-encryption {Disabled, Enabled}]
+                                          [--cmk-uami]
                                           [--cross-region-restore-state {Disabled, Enabled}]
                                           [--cross-subscription-restore-state {Disabled, Enabled, PermanentlyDisabled}]
                                           [--e-tag]
@@ -31,6 +36,7 @@ directCommands:
                                           [--soft-delete-state {AlwaysOn, Off, On}]
                                           [--tags]
                                           [--type]
+                                          [--uami]
   examples:
   - summary: |-
       Create BackupVault
@@ -38,6 +44,9 @@ directCommands:
   - summary: |-
       Create BackupVault With MSI
     syntax: az dataprotection backup-vault create --type "systemAssigned" --location "WestUS" --azure-monitor-alerts-for-job-failures "Enabled" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --tags key1="val1" --resource-group "SampleResourceGroup" --vault-name "swaggerExample"
+  - summary: |-
+      Create BackupVault With CMK Encryption
+    syntax: az dataprotection backup-vault create -g "resourceGroupName" -v "vaultName" --location "eastasia" --storage-setting "[{type:'LocallyRedundant',datastore-type:'VaultStore'}]" --type "UserAssigned" --user-assigned-identities '{"/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/samplerg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleuami":{}}' --cmk-encryption-key-uri "https://samplekvazbckp.vault.azure.net/keys/testkey/3cd5235ad6ac4c11b40a6f35444bcbe1" --cmk-encryption-state "Enabled" --cmk-identity-type "UserAssigned" --cmk-infrastructure-encryption "Enabled" --cmk-user-assigned-identity-id  "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourcegroups/samplerg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sampleuami"
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
@@ -56,6 +65,24 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Property that specifies whether built-in Azure Monitor alerts should be fired for all failed jobs.
+  - name: --cmk-encryption-key-uri
+    summary: |-
+      The Key URI of the CMK key to be used for encryption.  To enable auto-rotation of keys, exclude the version component from the Key URI.
+  - name: --cmk-encryption-state
+    parameterValueGroup: "Disabled, Enabled, Inconsistent"
+    summary: |-
+      Enable CMK encryption state for a Backup Vault.
+  - name: --cmk-identity-type
+    parameterValueGroup: "SystemAssigned, UserAssigned"
+    summary: |-
+      The identity type to be used for CMK encryption - SystemAssigned or UserAssigned Identity.
+  - name: --cmk-infra-encryption --cmk-infrastructure-encryption
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable/Disable infrastructure encryption with CMK on this vault. Infrastructure encryption must be configured only when creating the vault.
+  - name: --cmk-uami --cmk-user-assigned-identity-id
+    summary: |-
+      This parameter is required if the identity type is UserAssigned. Add the user assigned managed identity id to be used which has access permissions to the Key Vault.
   - name: --cross-region-restore-state --crr-state
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
@@ -92,7 +119,10 @@ directCommands:
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --type
     summary: |-
-      The identityType which can be either SystemAssigned or None.
+      The identityType which can be "SystemAssigned", "UserAssigned", "SystemAssigned,UserAssigned" or "None".
+  - name: --uami --user-assigned-identities
+    summary: |-
+      Gets or sets the user assigned identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_dataprotection_backup-vault_delete
   name: az dataprotection backup-vault delete
   summary: |-
@@ -226,6 +256,10 @@ directCommands:
   syntax: >-
     az dataprotection backup-vault update [--add]
                                           [--azure-monitor-alerts-for-job-failures {Disabled, Enabled}]
+                                          [--cmk-encryption-key-uri]
+                                          [--cmk-encryption-state {Disabled, Enabled, Inconsistent}]
+                                          [--cmk-identity-type {SystemAssigned, UserAssigned}]
+                                          [--cmk-uami]
                                           [--cross-region-restore-state {Disabled, Enabled}]
                                           [--cross-subscription-restore-state {Disabled, Enabled, PermanentlyDisabled}]
                                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
@@ -242,6 +276,7 @@ directCommands:
                                           [--tags]
                                           [--tenant-id]
                                           [--type]
+                                          [--uami]
                                           [--vault-name]
   examples:
   - summary: |-
@@ -255,6 +290,20 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Property that specifies whether built-in Azure Monitor alerts should be fired for all failed jobs.
+  - name: --cmk-encryption-key-uri
+    summary: |-
+      The key uri of the Customer Managed Key.
+  - name: --cmk-encryption-state
+    parameterValueGroup: "Disabled, Enabled, Inconsistent"
+    summary: |-
+      Enable CMK encryption state for a Backup Vault.
+  - name: --cmk-identity-type
+    parameterValueGroup: "SystemAssigned, UserAssigned"
+    summary: |-
+      The identity type to be used for CMK encryption - SystemAssigned or UserAssigned Identity.
+  - name: --cmk-uami --cmk-user-assigned-identity-id
+    summary: |-
+      This parameter is required if the identity type is UserAssigned. Add the user assigned managed identity id to be used which has access permissions to the Key Vault.
   - name: --cross-region-restore-state --crr-state
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
@@ -280,7 +329,7 @@ directCommands:
       Do not wait for the long-running operation to finish.
   - name: --operation-requests --resource-guard-operation-requests
     summary: |-
-      Critical operation request which is protected by the resourceGuard  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--operation-requests`.
+      ResourceGuardOperationRequests on which LAC check will be performed  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--operation-requests`.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
@@ -308,7 +357,10 @@ directCommands:
       Tenant ID for cross-tenant calls.
   - name: --type
     summary: |-
-      The identityType which can be either SystemAssigned or None.
+      The identityType which can be "SystemAssigned", "UserAssigned", "SystemAssigned,UserAssigned" or "None".
+  - name: --uami --user-assigned-identities
+    summary: |-
+      Gets or sets the user assigned identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --vault-name -v
     summary: |-
       The name of the backup vault.
