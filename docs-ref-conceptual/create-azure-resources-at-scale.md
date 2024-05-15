@@ -76,7 +76,7 @@ Variables with a `msdocs-` prefix can be replaced with the prefix of your choice
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="VariableBlock":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="VariableBlock":::
 
 ---
 
@@ -90,7 +90,7 @@ Before you start to test the create script, make sure your CSV file is formatted
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateFileValues":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="ValidateFileValues":::
 
 ---
 
@@ -131,7 +131,7 @@ There are several ways to iterate through a CSV file using Bash. This example us
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateScriptLogic":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="ValidateScriptLogic":::
 
 ---
 
@@ -167,7 +167,7 @@ You have now created your variable block, validated your CSV values, and complet
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="FullScript":::
 
 ---
 
