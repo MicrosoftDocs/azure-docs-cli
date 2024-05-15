@@ -43,7 +43,7 @@ Follow these steps to prepare your environment to run the example script:
 
   > [!NOTE]
   >
-  > To be read properly by Bash, the CSV file needs a line continuation character at the end of line three. This results in a blank line at the end of the file. Your blank line does not need to say `[empty line]`. What's important is that you have a line continuation character after the last data line in your CSV file.
+  > To be read properly by Bash, the CSV file needs a line continuation character at the end of the last data line. This results in a blank line at the end of the file. Your blank line does not need to say `[empty line]` as this text is only provided to show you that an empty line exists.
 
 * Upload your modified CSV file to your Azure Cloud Shell blog storage account. The easiest way to do this is to use the `Manage files` drop down on the Azure Cloud Shell main menu. For more information on Cloud Shell storage, see [Persist files in Azure Cloud Shell](/azure/cloud-shell/persisting-shell-storage).
 
@@ -135,7 +135,7 @@ There are several ways to iterate through a CSV file using Bash. This example us
 
 ---
 
-Using the CSV provided in this article, the validation output is as follows: (The `00000001, 2, 3` random IDs will be different for each test, but each resourceNo should share the same ID.)
+Using the CSV provided in this article, the validation output is as follows: (The `00000001, 2, 3` random IDs will be different for each test, but each `resourceNo` should share the same ID.)
 
 ```output
 resourceNo = 1
