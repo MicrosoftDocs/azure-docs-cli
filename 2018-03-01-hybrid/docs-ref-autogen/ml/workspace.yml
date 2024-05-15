@@ -28,12 +28,15 @@ directCommands:
     az ml workspace create --resource-group
                            [--application-insights]
                            [--container-registry]
+                           [--default-resource-group]
                            [--description]
                            [--display-name]
                            [--enable-data-isolation]
                            [--file]
+                           [--hub-id]
                            [--image-build-compute]
                            [--key-vault]
+                           [--kind]
                            [--location]
                            [--managed-network]
                            [--name]
@@ -44,7 +47,6 @@ directCommands:
                            [--storage-account]
                            [--tags]
                            [--update-dependent-resources]
-                           [--workspace-hub]
   examples:
   - summary: |-
       Create a workspace from a YAML specification file.
@@ -61,6 +63,10 @@ directCommands:
   - name: --container-registry -c
     summary: |-
       ARM id of the container registry associated with this workspace.
+  - name: --default-resource-group
+    summary: |-
+      Hub kind only. If set, then child projects of this hub will have their resource group set this by default.
+    isPreview: true
   - name: --description
     summary: |-
       Description of the Azure ML workspace.
@@ -74,12 +80,20 @@ directCommands:
   - name: --file -f
     summary: |-
       Local path to the YAML file containing the Azure ML workspace specification. The YAML reference docs for workspace can be found at: https://aka.ms/ml-cli-v2-workspace-yaml-reference.
+  - name: --hub-id
+    summary: |-
+      Project kind only: An ARM ID which defines the parent hub of this project.
+    isPreview: true
   - name: --image-build-compute -i
     summary: |-
       The name of the compute target to use for building environment Docker images when the container registry is behind a VNet.
   - name: --key-vault -k
     summary: |-
       ARM id of the key vault associated with this workspace.
+  - name: --kind
+    summary: |-
+      Specifies the workspaces as a specific kind, overriding the value assigned in YAML, if it's present. Defaults to default. Valid kinds are: default, hub, and project.
+    isPreview: true
   - name: --location -l
     summary: |-
       The location to be used for the new workspace.
@@ -113,10 +127,6 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Specifying --update_dependent_resources, gives your consent to update the workspace dependent resources. Updating the workspace-attached Azure Container Registry or Application Insights resource may break lineage of previous jobs, deployed inference endpoints, or your ability to rerun earlier jobs in this workspace.
-  - name: --workspace-hub
-    summary: |-
-      An ARM ID provided to create a workspace, the workspace becomes a project workspace and all dependent resources are used from the WorkspaceHub.
-    isPreview: true
 - uid: az_ml_workspace_delete
   name: az ml workspace delete
   summary: |-
@@ -197,7 +207,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az ml workspace list [--max-results]
+    az ml workspace list [--filtered-kinds]
+                         [--max-results]
                          [--resource-group]
   examples:
   - summary: |-
@@ -207,6 +218,10 @@ directCommands:
       List all the workspace using --query argument to execute a JMESPath query on the results of commands.
     syntax: az ml workspace list --query "[].{Name:name}"  --output table --resource-group my-resource-group
   optionalParameters:
+  - name: --filtered-kinds
+    summary: |-
+      List only the specified kinds of workspaces, as a comma separated list. Valid kinds are: default, hub, and project.
+    isPreview: true
   - name: --max-results -r
     summary: |-
       Max number of results to return.
