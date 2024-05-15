@@ -14,7 +14,7 @@ ms.custom: devx-track-azurecli
 
 # How to create resources at scale using the Azure CLI
 
-As an Azure resource manager, you frequently have to create multiple Azure resources when configuring new environments. Some companies also have an Azure resource approval process that works best when Azure resources are created automatically from a script.
+As an Azure resource manager, you frequently have to create multiple Azure resources when configuring new environments. You might also have an Azure resource approval process that works best when Azure resources are created automatically from a script.
 
 In this article you will learn the following:
 
@@ -22,36 +22,52 @@ In this article you will learn the following:
 * Use IF..THEN statements to create dependent Azure resources.
 * Log script progress to a local TXT file.
 
-This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in both Bash and PowerShell environments. This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with Ubuntu 22.04.3 LTS using [Windows Terminal](/windows/terminal/).
+This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in both Bash and PowerShell environments. 
+
+**REMOVE:** This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with Ubuntu 22.04.3 LTS using [Windows Terminal](/windows/terminal/).
 
 ## Prepare your environment
 
-* Download and save to a local directory the following CSV file. Replace `myResourceGroup` in line three with an actual resource group name, and any other values you wish for testing purposes.
+Follow these steps to prepare your environment to run the example script:
+
+* Open either the Bash or PowerShell environment in [Azure Cloud Shell](https://shell.azure.com). For more information, see [Quickstart for Bash in Azure Cloud Shell](/azure/cloud-shell/quickstart).
+* Download and save to a local directory the following CSV file. Replace `myExistingResourceGroupName` in line three with an actual resource group name.
 
   ```CSV
-  resourceNo,location,createRG,exstingRgName,createVnet,vnetAddressPrefix,subnetAddressPrefixes,vmImage,publicIpSku,  Adminuser
+  resourceNo,location,createRG,exstingRgName,createVnet,vnetAddressPrefix,subnetAddressPrefixes,vmImage,publicIpSku,Adminuser
   1,eastus,TRUE,,TRUE,10.0.0.0/16,10.0.0.0/24,Ubuntu2204,standard,john-smith
-  2,westus,TRUE,,FALSE,,,Debian11,standard,alex-smith
-  3,southcentralus,FALSE,msdocs-rg-671528884,FALSE,,,Ubuntu2204,standard,jan-smith
-  0
+  2,eastus2,TRUE,,FALSE,,,Debian11,standard,alex-smith
+  3,southcentralus,FALSE,myExistingResourceGroupName,FALSE,,,Ubuntu2204,standard,jan-smith
+  [empty line]
   ```
 
-* [Install the Azure CLI](/cli/azure/install-azure-cli).
+  > [NOTE!]
+  > To be read properly by Bash, the CSV file needs a line continuation character at the end of line three. This results in a blank line at the end of the file. Your blank line does not need to say `[empty line]`. What's important is that you have a line continuation character after the last data line in your CSV file.
 
-## Run the scripts
+* Upload your modified CSV file to your Azure Cloud Shell blog storage account. The easiest way to do this is to use the `Manage files` drop down on the Azure Cloud Shell main menu. For more information on Cloud Shell storage, see [Persist files in Azure Cloud Shell](/azure/cloud-shell/persisting-shell-storage).
 
-Select your preferred environment to run the script. _Both scripts use Azure CLI commands._ It is the environment, or terminal, that is different.  For example, Bash uses `do...done` and `if...then...fi`.  In a PowerShell environment, you use the equivalent `foreach` and `if (something is true)...{do this}`.
+## Review the script
 
-If you prefer, go directly to the CSV and script files used by this article at [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples/tree/master/azure-cli/create-azure-resources-at-scale).
+Two scripts are provided in this article: one for Bash and the second for PowerShell. _Both scripts use the same Azure CLI commands._ It is the environment, or terminal profile, that is different. For example, Bash uses `do...done` and `if...then...fi`. In a PowerShell environment, you use the equivalent `foreach` and `if (something is true)...{do this}`. In Azure Cloud Shell you can switch between environments by using the `Switch to PowerShell` or `Switch to Bash` button in the Azure Cloud Shell main menu.
 
-### Setup variables
+This article breaks a single large script into four sections so each step can be explained.
 
-Get started by instantiating the variables needed for the script. The following three variables need actual values for your environment:
-* subscriptionID
-* setupFileLocation: This is the location and file name of your CSV config file.
-* logFileLocation: This is the location and file name the script will use to create a log file. You do not need to create or upload this file.
+* Variable setup
+* Data validation
+* Loop validation
+* Azure resource creation
 
-Variables with a `msdocs-` prefix can be replaced with the prefix of your choice. All empty (`""`) variables use values from the CSV setup file. These empty variables are placeholders needed by the script.
+If you prefer, go directly to the CSV and script files used by this article in [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples/tree/master/azure-cli/create-azure-resources-at-scale).
+
+## Set variables
+
+Get started by creating the variables needed for the script. The following three variables need actual values for your environment:
+
+* **subscriptionID**: This is your Azure subscription ID.
+* **csvFileLocation**: This is the location and file name of your CSV input file.
+* **logFileLocation**: This is the location and file name _the script will use to create a log file_. You do not need to create or upload this file.
+
+Variables with a `msdocs-` prefix can be replaced with the prefix of your choice. All empty (`""`) variables use values from the CSV input file. These empty variables are placeholders needed by the script.
 
 # [Bash](#tab/bash)
 
@@ -99,7 +115,7 @@ vmName = msdocs-vm-0000000
 vmImage = Ubuntu2204
 vmSku = standard
 vmAdminUser = john-smith
-vmAdminPassword =  msdocs-pw-0000000
+vmAdminPassword = msdocs-pw-0000000
 ```
 
 ### Validate script logic
@@ -107,6 +123,8 @@ vmAdminPassword =  msdocs-pw-0000000
 If you are confident in your scripting abilities, you can skip this step. However, because this script is designed to create Azure resources at scale, looping through the script with `echo` statements can save you time and unexpected billable Azure resources.
 
 # [Bash](#tab/bash)
+
+There are several ways to iterate through a CSV file using Bash. This example uses `IFS` with a `while loop`.
 
 :::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateScriptLogic":::
 
@@ -140,7 +158,7 @@ creating VM msdocs-vm-316251055 without Vnet in RG myResourceGroup
 
 ### Create Azure resources
 
-You have instantiated your variable block, validated CSV values, and completed a test run. Execute this script to create Azure resources as indicated in your CSV setup file.
+You have now created your variable block, validated your CSV values, and completed a test run with `echo`. Execute this final portion of the script to create Azure resources as indicated in your CSV input file.
 
 # [Bash](#tab/bash)
 
@@ -179,15 +197,27 @@ do
 done < <(tail -n +2 $setupFileLocation)
 ```
 
-If your results look like `xzy10.0.0.0/24` and not the expected `abc10.0.0.0/24xyz`, there might be a hidden character lurking in your CSV file. Add a test column with the same prefix value, rearrange your CSV columns, and copy/paste your CSV contents in/out of a simple Notepad editor. In writing this article, the rearrangement of the CSV columns finally fixed the error.
+If your results look like `xzy10.0.0.0` and not the expected `abc10.0.0.0/24xyz`, there might be a hidden character lurking in your CSV file. Add a test column with the same prefix value, rearrange your CSV columns, and copy/paste your CSV contents in/out of a simple Notepad editor. In writing this article, the rearrangement of the CSV columns finally fixed the error.
 
 ### Arguments are expected or required
 
-You receive this error when you have not supplied a required parameter or there is a typographical error that causes the Azure CLI to incorrectly parse the reference command.  When working with a script, you also receive this error when one of more of the following is true:
+You receive this error when you have not supplied a required parameter or there is a typographical error that causes the Azure CLI to incorrectly parse the reference command. When working with a script, you also receive this error when one of more of the following is true:
 
 * There is a missing or incorrect line continuation character.
 * There are trailing spaces on the right side of a line continuation character.
 * Your variable name contains a special character, such as a dash (`-`).
+
+## InvalidTemplateDeployment
+
+Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available in location 'westus'
+
+
+```Error
+{"error":{"code":"InvalidTemplateDeployment","message":"The template deployment 'vm_deploy_fZIVcQkGU0GS6HJBVxQaUNPaCr94lgym' is not valid according to the validation procedure. The tracking id is 'f6e6ff29-986f-49b2-9a67-12084b2e0217'. See inner errors for details.","details":[{"code":"SkuNotAvailable","message":"The requested VM size for resource 'Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available in location 'westus'. Please try another size or deploy to a different location or different zone. See https://aka.ms/azureskunotavailable for details."}]}}
+(ResourceGroupNotFound) Resource group 'msdocs-rg-671528884' could not be found.
+Code: ResourceGroupNotFound
+Message: Resource group 'msdocs-rg-671528884' could not be found.
+```
 
 ## See also
 
