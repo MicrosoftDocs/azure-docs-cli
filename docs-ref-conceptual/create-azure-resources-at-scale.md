@@ -41,7 +41,8 @@ Follow these steps to prepare your environment to run the example script:
   [empty line]
   ```
 
-  > [NOTE!]
+  > [!NOTE]
+  >
   > To be read properly by Bash, the CSV file needs a line continuation character at the end of line three. This results in a blank line at the end of the file. Your blank line does not need to say `[empty line]`. What's important is that you have a line continuation character after the last data line in your CSV file.
 
 * Upload your modified CSV file to your Azure Cloud Shell blog storage account. The easiest way to do this is to use the `Manage files` drop down on the Azure Cloud Shell main menu. For more information on Cloud Shell storage, see [Persist files in Azure Cloud Shell](/azure/cloud-shell/persisting-shell-storage).
@@ -93,7 +94,7 @@ Before you start to test the create script, make sure your CSV file is formatted
 
 ---
 
-Using the CSV provided in this article, the validation output is as follows:
+Using the CSV provided in this article, the validation output is as follows: (The `00000001` random ID will be different for each test.)
 
 ```output
 resourceNo = 1
@@ -101,21 +102,21 @@ location = eastus
 
 RESOURCE GROUP INFORMATION:
 createRG = TRUE
-newRGName = msdocs-rg-00000000
+newRGName = msdocs-rg-00000001
 
 VNET INFORMATION:
 createVnet = TRUE
-vnetName = msdocs-vnet-0000000
-subnetName = msdocs-subnet-0000000
+vnetName = msdocs-vnet-00000001
+subnetName = msdocs-subnet-00000001
 vnetAddressPrefix = 10.0.0.0/16
 subnetAddressPrefix = 10.0.0.0/24
 
 VM INFORMATION:
-vmName = msdocs-vm-0000000
+vmName = msdocs-vm-00000001
 vmImage = Ubuntu2204
 vmSku = standard
 vmAdminUser = john-smith
-vmAdminPassword = msdocs-pw-0000000
+vmAdminPassword = msdocs-pw-00000001
 ```
 
 ### Validate script logic
@@ -134,31 +135,31 @@ There are several ways to iterate through a CSV file using Bash. This example us
 
 ---
 
-Using the CSV provided in this article, the validation output is as follows:
+Using the CSV provided in this article, the validation output is as follows: (The `00000001, 2, 3` random IDs will be different for each test, but each resourceNo should share the same ID.)
 
 ```output
 resourceNo = 1
 create RG = TRUE
 create Vnet = TRUE
-creating RG msdocs-rg-249834648
-creating VNet msdocs-vnet-249834648 in RG msdocs-rg-249834648
-creating VM msdocs-vm-249834648 within Vnet msdocs-vnet-249834648 in RG msdocs-rg-249834648
+creating RG msdocs-rg-00000001
+creating VNet msdocs-vnet-00000001 in RG msdocs-rg-00000001
+creating VM msdocs-vm-00000001 within Vnet msdocs-vnet-00000001 in RG msdocs-rg-00000001
 
 resourceNo = 2
 create RG = TRUE
 create Vnet = FALSE
-creating RG msdocs-rg-236479852
-creating VM msdocs-vm-236479852 without Vnet in RG msdocs-rg-236479852
+creating RG msdocs-rg-00000002
+creating VM msdocs-vm-00000002 without Vnet in RG msdocs-rg-00000002
 
 resourceNo = 3
 create RG = FALSE
 create Vnet = FALSE
-creating VM msdocs-vm-316251055 without Vnet in RG myResourceGroup
+creating VM msdocs-vm-00000003 without Vnet in RG myExistingResourceGroup
 ```
 
 ### Create Azure resources
 
-You have now created your variable block, validated your CSV values, and completed a test run with `echo`. Execute this final portion of the script to create Azure resources as indicated in your CSV input file.
+You have now created your variable block, validated your CSV values, and completed a test run with `echo`. Execute the final portion of the script to create Azure resources as defined in your CSV input file.
 
 # [Bash](#tab/bash)
 
