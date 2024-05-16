@@ -76,11 +76,11 @@ Variables with a `msdocs-` prefix can be replaced with the prefix of your choice
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="VariableBlock":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="VariableBlock":::
 
 ---
 
-### Validate CSV file values
+## Validate CSV file values
 
 Before you start to test the create script, make sure your CSV file is formatted correctly and variables will be assigned correct values. This script uses an IF..THEN statement so you can look at one scenario/CSV line at a time.
 
@@ -90,7 +90,7 @@ Before you start to test the create script, make sure your CSV file is formatted
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="ValidateFileValues":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateFileValues":::
 
 ---
 
@@ -118,7 +118,7 @@ vmSku = standard
 SSH keys will be created
 ```
 
-### Validate script logic
+## Validate script logic
 
 If you are confident in your scripting abilities, you can skip this step. However, because this script is designed to create Azure resources at scale, looping through the script with `echo` statements can save you time and unexpected billable Azure resources.
 
@@ -130,7 +130,7 @@ There are several ways to iterate through a CSV file using Bash. This example us
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="ValidateScriptLogic":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateScriptLogic":::
 
 ---
 
@@ -153,10 +153,10 @@ will create VM msdocs-vm-00000002 without Vnet in RG msdocs-rg-00000002
 resourceNo = 3
 createRG = FALSE
 createVnet = FALSE
-will create VM msdocs-vm-00000003 without Vnet in RG myExistingResourceGroup
+will create VM msdocs-vm-00000003 without Vnet in RG <myExistingResourceGroup>
 ```
 
-### Create Azure resources
+## Create Azure resources
 
 You have now created your variable block, validated your CSV values, and completed a test run with `echo`. Execute the final portion of the script to create Azure resources as defined in your CSV input file.
 
@@ -166,9 +166,23 @@ You have now created your variable block, validated your CSV values, and complet
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.sh" id="FullScript":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
 
 ---
+
+Console output:
+
+```output
+Starting creation of resourceNo 1 at YYYY-MM-DD HH:MM:SS.
+  RG msdocs-rg-00000001 creation complete
+  VNet msdocs-vnet-00000001 creation complete
+  VM msdocs-vm-00000001 creation complete
+Starting creation of resourceNo 2 at YYYY-MM-DD HH:MM:SS.
+  RG msdocs-rg-00000002 creation complete
+  VM msdocs-vm-00000002 creation complete
+Starting creation of resourceNo 3 at YYYY-MM-DD HH:MM:SS.
+  VM msdocs-vm-00000003 creation complete
+```
 
 ## Troubleshooting
 
