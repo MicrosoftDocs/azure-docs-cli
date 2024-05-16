@@ -383,9 +383,9 @@ az vm list --resource-group VMResources --show-details --query "[?powerState=='V
 done
 ```
 
-### [Batch](#tab/batch2)
+### [Cmd](#tab/cmd)
 
-```console
+```azurecli
 ECHO OFF
 SETLOCAL
 FOR /F "tokens=* USEBACKQ" %%F IN (
