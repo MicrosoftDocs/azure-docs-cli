@@ -80,6 +80,14 @@ Version 2.61.0
 * `az containerapp compose create`: Fix variable mixing issue when `--compose-file-path` contains multiple services
 * Fix #28380: `az containerapp ingress access-restriction set`: Fix `KeyError` when `name` not exists
 
+### Core
+
+* Resolve CVE-2024-34064
+* [BREAKING CHANGE] `az login`: Use WAM as the default authentication method on Windows. For more details, see https://go.microsoft.com/fwlink/?linkid=2271136
+* `aaz`: Support extended values in `AAZArgEnum`
+* Add `tenantDefaultDomain` and `tenantDisplayName` properties to login contexts (shown by `az account list`)
+* Prompt for interactive authentication for all silent authentication failures
+
 ### Key Vault
 
 * [BREAKING CHANGE] `az keyvault create`: Default `--enable-rbac-authorization` to true
