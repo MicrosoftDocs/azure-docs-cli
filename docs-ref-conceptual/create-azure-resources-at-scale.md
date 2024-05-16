@@ -35,7 +35,7 @@ Follow these steps to prepare your environment to run the example script:
 
   ```CSV
   resourceNo,location,createRG,exstingRgName,createVnet,vnetAddressPrefix,subnetAddressPrefixes,vmImage,publicIpSku,Adminuser
-  1,eastus,TRUE,,TRUE,10.0.0.0/16,10.0.0.0/24,Ubuntu2204,standard,john-smith
+  1,eastus,TRUE,,TRUE,10.0.0.0/16,10.0.0.0/24,Ubuntu2204,standard,,
   2,eastus2,TRUE,,FALSE,,,Debian11,standard,alex-smith
   3,southcentralus,FALSE,myExistingResourceGroupName,FALSE,,,Ubuntu2204,standard,jan-smith
   [empty line]
@@ -115,8 +115,7 @@ VM INFORMATION:
 vmName = msdocs-vm-00000001
 vmImage = Ubuntu2204
 vmSku = standard
-vmAdminUser = john-smith
-vmAdminPassword = msdocs-pw-00000001
+SSH keys will be created
 ```
 
 ### Validate script logic
@@ -139,22 +138,22 @@ Using the CSV provided in this article, the validation output is as follows: (Th
 
 ```output
 resourceNo = 1
-create RG = TRUE
-create Vnet = TRUE
-creating RG msdocs-rg-00000001
-creating VNet msdocs-vnet-00000001 in RG msdocs-rg-00000001
-creating VM msdocs-vm-00000001 within Vnet msdocs-vnet-00000001 in RG msdocs-rg-00000001
+createRG = TRUE
+createVnet = TRUE
+will create RG msdocs-rg-00000001
+will create VNet msdocs-vnet-00000001 in RG msdocs-rg-00000001
+will create VM msdocs-vm-00000001 within Vnet msdocs-vnet-00000001 in RG msdocs-rg-00000001
 
 resourceNo = 2
-create RG = TRUE
-create Vnet = FALSE
-creating RG msdocs-rg-00000002
-creating VM msdocs-vm-00000002 without Vnet in RG msdocs-rg-00000002
+createRG = TRUE
+createVnet = FALSE
+will create RG msdocs-rg-00000002
+will create VM msdocs-vm-00000002 without Vnet in RG msdocs-rg-00000002
 
 resourceNo = 3
-create RG = FALSE
-create Vnet = FALSE
-creating VM msdocs-vm-00000003 without Vnet in RG myExistingResourceGroup
+createRG = FALSE
+createVnet = FALSE
+will create VM msdocs-vm-00000003 without Vnet in RG myExistingResourceGroup
 ```
 
 ### Create Azure resources
