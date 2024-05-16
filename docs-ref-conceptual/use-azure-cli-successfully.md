@@ -383,7 +383,7 @@ az vm list --resource-group VMResources --show-details --query "[?powerState=='V
 done
 ```
 
-### [Cmd](#tab/cmd)
+### [Cmd](#tab/cmd2)
 
 ```azurecli
 ECHO OFF
@@ -407,8 +407,20 @@ az vm stop --ids $vm_ids # CLI stops all VMs in parallel
 
 Use these scripts to loop through a list:
 
-### [Bash](#tab/bash2)
+### [Bash](#tab/bash3)
 
+```bash
+#!/bin/bash
+
+# Loop through the VM IDs and stop each VM
+az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv | while read -r vm_id; do
+    echo "Stopping $vm_id"
+    az vm stop --ids "$vm_id"
+done
+```
+
+
+### [Cmd](#tab/cmd3)
 ```console
 ECHO OFF
 SETLOCAL
@@ -420,7 +432,7 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 )
 ```
 
-### [PowerShell](#tab/powershell2)
+### [PowerShell](#tab/powershell3)
 
 ```powershell
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
