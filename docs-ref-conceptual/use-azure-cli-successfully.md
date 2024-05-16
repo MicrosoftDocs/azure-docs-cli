@@ -373,6 +373,18 @@ Use these scripts to save IDs to variables:
 
 ### [Bash](#tab/bash2)
 
+```bash
+#!/bin/bash
+
+# Loop through the VM IDs and stop each VM
+az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv | while read -r vm_id; do
+    echo "Stopping $vm_id"
+    az vm stop --ids "$vm_id"
+done
+```
+
+### [Batch](#tab/batch2)
+
 ```console
 ECHO OFF
 SETLOCAL
