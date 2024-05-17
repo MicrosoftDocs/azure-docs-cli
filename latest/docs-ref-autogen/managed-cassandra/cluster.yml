@@ -1,14 +1,10 @@
 ### YamlMime:AzureCLIGroup
 uid: az_managed-cassandra_cluster
 name: az managed-cassandra cluster
-importantNote: >-
-  > [!NOTE]
-
-  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Azure Managed Cassandra Cluster.
 status: GA
-sourceType: Core and Extension
+sourceType: Core
 directCommands:
 - uid: az_managed-cassandra_cluster_create
   name: az managed-cassandra cluster create
@@ -111,117 +107,6 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
-- uid: az_managed-cassandra_cluster_create(cosmosdb-preview)
-  name: az managed-cassandra cluster create
-  extensionSuffix: cosmosdb-preview
-  summary: |-
-    Create a Managed Cassandra Cluster.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az managed-cassandra cluster create --cluster-name
-                                        --delegated-management-subnet-id
-                                        --location
-                                        --resource-group
-                                        [--authentication-method {Cassandra, Ldap, None}]
-                                        [--cassandra-version]
-                                        [--client-certificates]
-                                        [--cluster-name-override]
-                                        [--cluster-type {NonProduction, Production}]
-                                        [--extensions]
-                                        [--external-gossip-certificates]
-                                        [--external-seed-nodes]
-                                        [--hours-between-backups]
-                                        [--identity-type {None, SystemAssigned}]
-                                        [--initial-cassandra-admin-password]
-                                        [--no-wait]
-                                        [--repair-enabled]
-                                        [--restore-from-backup-id]
-                                        [--tags]
-  examples:
-  - summary: |-
-      Create a Managed Cassandra Cluster in a given Subscription and ResourceGroup. Either a cassandra admin password or external seed needs are required.
-    syntax: >-
-      az managed-cassandra cluster create \
-
-      --resource-group MyResourceGroup \
-
-      --cluster-name MyCluster \
-
-      --location MyLocation \
-
-      --initial-cassandra-admin-password password \
-
-      --delegated-management-subnet-id /subscriptions/94d9b402-77b4-4049-b4c1-947bc6b7729b/resourceGroups/My-vnet/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/test-subnet
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name -c
-    summary: |-
-      Cluster Name.
-  - isRequired: true
-    name: --delegated-management-subnet-id -s
-    summary: |-
-      The resource id of a subnet where the ip address of the cassandra management server will be allocated. This subnet must have connectivity to the delegated_subnet_id subnet of each data center.
-  - isRequired: true
-    name: --location -l
-    summary: |-
-      Azure Location of the Cluster.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --authentication-method
-    parameterValueGroup: "Cassandra, Ldap, None"
-    summary: |-
-      Authentication mode can be None, Cassandra or Ldap. If None, no authentication will be required to connect to the Cassandra API. If Cassandra, then passwords will be used. Ldap is in preview.
-  - name: --cassandra-version
-    summary: |-
-      The version of Cassandra chosen.
-  - name: --client-certificates
-    summary: |-
-      If specified, enables client certificate authentication to the Cassandra API.
-  - name: --cluster-name-override
-    summary: |-
-      If a cluster must have a name that is not a valid azure resource name, this field can be specified to choose the Cassandra cluster name. Otherwise, the resource name will be used as the cluster name.
-  - name: --cluster-type
-    defaultValue: "Production"
-    parameterValueGroup: "NonProduction, Production"
-    summary: |-
-      Type of the cluster, can be Production or NonProduction. If set to Production, operations on cluster might have restrictions.
-  - name: --extensions
-    summary: |-
-      A set of extensions that will be effective on the cluster. It will replace the entire set of extensions with new set. Use "" to remove all. Now Available: cassandra-lucene-index.
-  - name: --external-gossip-certificates -e
-    summary: |-
-      A list of certificates that the managed cassandra data center's should accept.
-  - name: --external-seed-nodes
-    summary: |-
-      A list of ip addresses of the seed nodes of on-premise data centers.
-  - name: --hours-between-backups
-    summary: |-
-      The number of hours between backup attempts.
-  - name: --identity-type
-    defaultValue: "None"
-    parameterValueGroup: "None, SystemAssigned"
-    summary: |-
-      Type of identity used for Customer Managed Disk Key.
-  - name: --initial-cassandra-admin-password -i
-    summary: |-
-      The intial password to be configured when a cluster is created for authentication_method Cassandra.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --repair-enabled
-    summary: |-
-      Enables automatic repair.
-  - name: --restore-from-backup-id
-    summary: |-
-      The resource id of a backup. If provided on create, the backup will be used to prepopulate the cluster. The cluster data center count and node counts must match the backup.
-  - name: --tags
-    summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
 - uid: az_managed-cassandra_cluster_deallocate
   name: az managed-cassandra cluster deallocate
   summary: |-
@@ -250,85 +135,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
-- uid: az_managed-cassandra_cluster_deallocate(cosmosdb-preview)
-  name: az managed-cassandra cluster deallocate
-  extensionSuffix: cosmosdb-preview
-  summary: |-
-    Deallocate the Managed Cassandra Cluster and Associated Data Centers. Deallocation will deallocate the host virtual machine of this cluster, and reserved the data disk. This won't do anything on an already deallocated cluster. Use Start to restart the cluster.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az managed-cassandra cluster deallocate --cluster-name
-                                            --resource-group
-                                            [--force]
-                                            [--no-wait]
-                                            [--yes]
-  examples:
-  - summary: |-
-      This command deallocates this cluster.
-    syntax: az managed-cassandra cluster deallocate --resource-group MyResourceGroup --cluster-name MyCluster
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name -c
-    summary: |-
-      Cluster Name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --force -f
-    defaultValue: "false"
-    summary: |-
-      Force to deallocate the cluster.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --yes -y
-    defaultValue: "False"
-    summary: |-
-      Do not prompt for confirmation.
 - uid: az_managed-cassandra_cluster_delete
   name: az managed-cassandra cluster delete
   summary: |-
     Deletes a Managed Cassandra Cluster.
   status: GA
   sourceType: Core
-  syntax: >-
-    az managed-cassandra cluster delete --cluster-name
-                                        --resource-group
-                                        [--no-wait]
-                                        [--yes]
-  examples:
-  - summary: |-
-      Deletes a Managed Cassandra Cluster in the given Subscription and ResourceGroup.
-    syntax: az managed-cassandra cluster delete --resource-group MyResourceGroup --cluster-name MyCluster
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name -c
-    summary: |-
-      Cluster Name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --yes -y
-    defaultValue: "False"
-    summary: |-
-      Do not prompt for confirmation.
-- uid: az_managed-cassandra_cluster_delete(cosmosdb-preview)
-  name: az managed-cassandra cluster delete
-  extensionSuffix: cosmosdb-preview
-  summary: |-
-    Deletes a Managed Cassandra Cluster.
-  status: GA
-  sourceType: Extension
   syntax: >-
     az managed-cassandra cluster delete --cluster-name
                                         --resource-group
@@ -426,54 +238,12 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-- uid: az_managed-cassandra_cluster_list(cosmosdb-preview)
-  name: az managed-cassandra cluster list
-  extensionSuffix: cosmosdb-preview
-  summary: |-
-    List the Managed Cassandra Clusters in a ResourceGroup and Subscription. If the ResourceGroup is not specified all the clusters in this Subscription are returned.
-  status: GA
-  sourceType: Extension
-  syntax: az managed-cassandra cluster list [--resource-group]
-  examples:
-  - summary: |-
-      List all Managed Cassandra Clusters in a given Subscription and ResourceGroup.
-    syntax: az managed-cassandra cluster list --resource-group MyResourceGroup
-  - summary: |-
-      List all Managed Cassandra Clusters in a given Subscription.
-    syntax: az managed-cassandra cluster list
-  optionalParameters:
-  - name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_managed-cassandra_cluster_show
   name: az managed-cassandra cluster show
   summary: |-
     Get a Managed Cassandra Cluster Resource.
   status: GA
   sourceType: Core
-  syntax: >-
-    az managed-cassandra cluster show --cluster-name
-                                      --resource-group
-  examples:
-  - summary: |-
-      Gets a Managed Cassandra Cluster Resource. ProvisioningState tells the state of this cluster. If the cluster doesnot exist a NotFound response is returned.
-    syntax: az managed-cassandra cluster show --resource-group MyResourceGroup --cluster-name MyCluster
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name -c
-    summary: |-
-      Cluster Name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-- uid: az_managed-cassandra_cluster_show(cosmosdb-preview)
-  name: az managed-cassandra cluster show
-  extensionSuffix: cosmosdb-preview
-  summary: |-
-    Get a Managed Cassandra Cluster Resource.
-  status: GA
-  sourceType: Extension
   syntax: >-
     az managed-cassandra cluster show --cluster-name
                                       --resource-group
@@ -610,104 +380,16 @@ directCommands:
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
-- uid: az_managed-cassandra_cluster_update(cosmosdb-preview)
-  name: az managed-cassandra cluster update
-  extensionSuffix: cosmosdb-preview
-  summary: |-
-    Update a Managed Cassandra Cluster.
-  status: GA
-  sourceType: Extension
-  syntax: >-
-    az managed-cassandra cluster update --cluster-name
-                                        --resource-group
-                                        [--authentication-method {Cassandra, Ldap, None}]
-                                        [--cassandra-version]
-                                        [--client-certificates]
-                                        [--cluster-type {NonProduction, Production}]
-                                        [--extensions]
-                                        [--external-gossip-certificates]
-                                        [--external-seed-nodes]
-                                        [--hours-between-backups]
-                                        [--identity-type {None, SystemAssigned}]
-                                        [--no-wait]
-                                        [--repair-enabled]
-                                        [--tags]
-  examples:
-  - summary: |-
-      Update External Seed Nodes of a given cluster.
-    syntax: az managed-cassandra cluster update --resource-group MyResourceGroup --cluster-name MyCluster --external-seed-nodes 127.0.0.1 127.0.0.2
-  - summary: |-
-      Update External Gossip Certificates of a given cluster. Certs can be passed in as strings or the file locations.
-    syntax: az managed-cassandra cluster update --resource-group MyResourceGroup --cluster-name MyCluster --external-gossip-certificates C:/MyFolder/test.pem BeginCert-MLXCF-EndCert
-  requiredParameters:
-  - isRequired: true
-    name: --cluster-name -c
-    summary: |-
-      Cluster Name.
-  - isRequired: true
-    name: --resource-group -g
-    summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --authentication-method
-    parameterValueGroup: "Cassandra, Ldap, None"
-    summary: |-
-      Authentication mode can be None, Cassandra or Ldap. If None, no authentication will be required to connect to the Cassandra API. If Cassandra, then passwords will be used. Ldap is in preview.
-  - name: --cassandra-version
-    summary: |-
-      The version of Cassandra chosen.
-  - name: --client-certificates
-    summary: |-
-      If specified, enables client certificate authentication to the Cassandra API.
-  - name: --cluster-type
-    parameterValueGroup: "NonProduction, Production"
-    summary: |-
-      Type of the cluster, can be Production or NonProduction. If set to Production, operations on cluster might have restrictions.
-  - name: --extensions
-    summary: |-
-      A set of extensions that will be effective on the cluster. It will replace the entire set of extensions with new set. Use "" to remove all. Now Available: cassandra-lucene-index.
-  - name: --external-gossip-certificates -e
-    summary: |-
-      A list of certificates that the managed cassandra data center's should accept.
-  - name: --external-seed-nodes
-    summary: |-
-      A list of ip addresses of the seed nodes of on-premise data centers.
-  - name: --hours-between-backups
-    summary: |-
-      The number of hours between backup attempts.
-  - name: --identity-type
-    parameterValueGroup: "None, SystemAssigned"
-    summary: |-
-      Type of identity used for Customer Managed Disk Key.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --repair-enabled
-    summary: |-
-      Enables automatic repair.
-  - name: --tags
-    summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
 commands:
-- az_managed-cassandra_cluster_backup
-- az_managed-cassandra_cluster_backup_list
-- az_managed-cassandra_cluster_backup_show
 - az_managed-cassandra_cluster_create
-- az_managed-cassandra_cluster_create(cosmosdb-preview)
 - az_managed-cassandra_cluster_deallocate
-- az_managed-cassandra_cluster_deallocate(cosmosdb-preview)
 - az_managed-cassandra_cluster_delete
-- az_managed-cassandra_cluster_delete(cosmosdb-preview)
 - az_managed-cassandra_cluster_invoke-command
 - az_managed-cassandra_cluster_list
-- az_managed-cassandra_cluster_list(cosmosdb-preview)
 - az_managed-cassandra_cluster_show
-- az_managed-cassandra_cluster_show(cosmosdb-preview)
 - az_managed-cassandra_cluster_start
 - az_managed-cassandra_cluster_status
 - az_managed-cassandra_cluster_update
-- az_managed-cassandra_cluster_update(cosmosdb-preview)
 globalParameters:
 - name: --debug
   summary: |-
