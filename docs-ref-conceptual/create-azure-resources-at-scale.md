@@ -18,13 +18,11 @@ As an Azure resource manager, you frequently have to create multiple Azure resou
 
 In this article you will learn the following:
 
-* Create multiple Azure resources from a delimited CSV file.
+* Create multiple Azure resources from parameters received from a delimited CSV file.
 * Use IF..THEN statements to create dependent Azure resources.
 * Log script progress to a local TXT file.
 
-This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in both Bash and PowerShell environments. 
-
-**REMOVE:** This script has also been tested successfully in [PowerShell 7](/powershell/scripting/overview) and [Windows Subsystem for Linux](/windows/wsl/about) (WSL) with Ubuntu 22.04.3 LTS using [Windows Terminal](/windows/terminal/).
+This sample script has been tested in [Azure Cloud Shell](/azure/cloud-shell/overview) in both Bash and PowerShell environments, and [PowerShell 7](/powershell/scripting/overview). Find the CSV and full script in [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples/tree/master/azure-cli/create-azure-resources-at-scale).
 
 ## Prepare your environment
 
@@ -35,21 +33,19 @@ Follow these steps to prepare your environment to run the example script:
 
   ```CSV
   resourceNo,location,createRG,exstingRgName,createVnet,vnetAddressPrefix,subnetAddressPrefixes,vmImage,publicIpSku,Adminuser
-  1,eastus,TRUE,,TRUE,10.0.0.0/16,10.0.0.0/24,Ubuntu2204,standard,,
+  1,eastus,TRUE,,TRUE,10.0.0.0/16,10.0.0.0/24,Ubuntu2204,standard,
   2,eastus2,TRUE,,FALSE,,,Debian11,standard,alex-smith
   3,southcentralus,FALSE,myExistingResourceGroupName,FALSE,,,Ubuntu2204,standard,jan-smith
-  [empty line]
+  [empty line for Bash]
   ```
 
   > [!NOTE]
   >
   > To be read properly by Bash, the CSV file needs a line continuation character at the end of the last data line. This results in a blank line at the end of the file. Your blank line does not need to say `[empty line]` as this text is only provided to show you that an empty line exists. PowerShell environments do not have this "empty line" requirement.
 
-* Upload your modified CSV file to your Azure Cloud Shell blog storage account. The easiest way to do this is to use the `Manage files` drop down on the Azure Cloud Shell main menu. For more information on Cloud Shell storage, see [Persist files in Azure Cloud Shell](/azure/cloud-shell/persisting-shell-storage).
+* Upload your modified CSV file to your Azure Cloud Shell blog storage account. The easiest way to do this is to use the **Manage files** drop down on the Azure Cloud Shell main menu. For more information on Cloud Shell storage, see [Persist files in Azure Cloud Shell](/azure/cloud-shell/persisting-shell-storage).
 
-## Review the script
-
-Two scripts are provided in this article: one for Bash and the second for PowerShell. _Both scripts use the same Azure CLI commands._ It is the environment, or terminal profile, that is different. For example, Bash uses `do...done` and `if...then...fi`. In a PowerShell environment, you use the equivalent `foreach` and `if (something is true)...{do this}`. In Azure Cloud Shell you can switch between environments by using the `Switch to PowerShell` or `Switch to Bash` button in the Azure Cloud Shell main menu.
+## Script overview
 
 This article breaks a single large script into four sections so each step can be explained.
 
@@ -57,6 +53,8 @@ This article breaks a single large script into four sections so each step can be
 * Data validation
 * Loop validation
 * Azure resource creation
+  
+There are also two scripts provided: one for Bash and the second for PowerShell. _Both scripts use the same Azure CLI commands._ It is the environment, or terminal profile, that is different. For example, Bash uses `do...done` and `if...then...fi`. In a PowerShell environment, you use the equivalent `foreach` and `if (something is true)...{do this}`. In Azure Cloud Shell you can switch between environments by using the **Switch to PowerShell** or **Switch to Bash** button in the Azure Cloud Shell main menu.
 
 If you prefer, go directly to the CSV and script files used by this article in [Azure-samples/azure-cli-samples](https://github.com/Azure-Samples/azure-cli-samples/tree/master/azure-cli/create-azure-resources-at-scale).
 
@@ -120,7 +118,7 @@ SSH keys will be created
 
 ## Validate script logic
 
-If you are confident in your scripting abilities, you can skip this step. However, because this script is designed to create Azure resources at scale, looping through the script with `echo` statements can save you time and unexpected billable Azure resources.
+If you are confident in your scripting abilities, you can skip this step. However, because this script is designed to create Azure resources at scale, looping through the script with `echo` or `write-host` statements can save you time and unexpected billable Azure resources.
 
 # [Bash](#tab/bash)
 
@@ -158,7 +156,7 @@ Will create VM msdocs-vm-00000003 without Vnet in RG <myExistingResourceGroup>
 
 ## Create Azure resources
 
-You have now created your variable block, validated your CSV values, and completed a test run with `echo`. Execute the final portion of the script to create Azure resources as defined in your CSV input file.
+You have now created your variable block, validated your CSV values, and completed a test run with `echo` or `write-host`. Execute the final portion of the script to create Azure resources as defined in your CSV input file.
 
 # [Bash](#tab/bash)
 
@@ -188,11 +186,11 @@ Starting creation of resourceNo 3 at YYYY-MM-DD HH:MM:SS.
 
 ### Bash script ignores IF statement
 
-Bash is case sensitive. The word `true` does not equal `TRUE`. Also `greater than` is `-gt`, not `>`, and `equals` is `==`, not `=`. Make sure you do not have a typographical error.
+Bash is case sensitive. The word `true` does not equal `TRUE`. Also `greater than` is `-gt`, not `>`, and `equals` is `==`, not `=`. Make sure you do not have a typographical error, or leading/trailing spaces in your CSV column values.
 
 ### Variable values are not changing with each loop
 
-This is often caused by extra spaces in the CSV file. A line in a CSV file will look something like this: `column1,column2,column3` or `column1,,column3`, but by habit it is easy to create a test file that contains a space after each comma like `column1, column2, column3`. When you have a leading or trailing space in your CSV, the column value is actually `<space>columnValue`. The script logic `if [ "$columnName" = "columnValue" ]` returns "false". Remove all leading and trailing spaces in your CSV to fix the issue.
+This is often caused by extra spaces in the CSV file. A line in a CSV file will look something like this: `column1,column2,column3` or `column1,,column3`, but by habit it is easy to create a test file that contains a space after each comma like `column1, column2, column3`. When you have a leading or trailing space in your CSV, the column value is actually `<space>columnValue`. The script logic `if [ "$columnName" = "columnValue" ]` returns "false". Remove all leading and trailing spaces in your CSV rows to fix the issue.
 
 ### Invalid CIDR notation
 
@@ -211,7 +209,7 @@ do
 done < <(tail -n +2 $setupFileLocation)
 ```
 
-If your results look like `xzy10.0.0.0` and not the expected `abc10.0.0.0/24xyz`, there might be a hidden character lurking in your CSV file. Add a test column with the same prefix value, rearrange your CSV columns, and copy/paste your CSV contents in/out of a simple Notepad editor. In writing this article, the rearrangement of the CSV columns finally fixed the error.
+If your results look like `xzy10.0.0.0` and not the expected `abc10.0.0.0/24xyz`, there might be a hidden character or extra comma lurking in your CSV file. Add a test column with the same prefix value, rearrange your CSV columns, and copy/paste your CSV contents in/out of a simple Notepad editor. In writing this article, the rearrangement of the CSV columns finally fixed the error.
 
 ### Arguments are expected or required
 
@@ -221,17 +219,20 @@ You receive this error when you have not supplied a required parameter or there 
 * There are trailing spaces on the right side of a line continuation character.
 * Your variable name contains a special character, such as a dash (`-`).
 
-## InvalidTemplateDeployment
+### InvalidTemplateDeployment
 
-Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available in location 'westus'
+When you try to create an Azure resource in a location that does not offer that resource you receive an error similar to the following: "Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available in location 'westus'."
 
+Here's the full error example:
 
 ```Error
 {"error":{"code":"InvalidTemplateDeployment","message":"The template deployment 'vm_deploy_fZIVcQkGU0GS6HJBVxQaUNPaCr94lgym' is not valid according to the validation procedure. The tracking id is 'f6e6ff29-986f-49b2-9a67-12084b2e0217'. See inner errors for details.","details":[{"code":"SkuNotAvailable","message":"The requested VM size for resource 'Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available in location 'westus'. Please try another size or deploy to a different location or different zone. See https://aka.ms/azureskunotavailable for details."}]}}
-(ResourceGroupNotFound) Resource group 'msdocs-rg-671528884' could not be found.
+(ResourceGroupNotFound) Resource group 'msdocs-rg-00000000' could not be found.
 Code: ResourceGroupNotFound
-Message: Resource group 'msdocs-rg-671528884' could not be found.
+Message: Resource group 'msdocs-rg-00000000' could not be found.
 ```
+
+To correct the error, either change the location or select a different parameter value that is offered for your desired location.
 
 ## See also
 
