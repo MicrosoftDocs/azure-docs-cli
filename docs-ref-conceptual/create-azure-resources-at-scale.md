@@ -140,20 +140,20 @@ Using the CSV provided in this article, the validation output is as follows: (Th
 resourceNo = 1
 createRG = TRUE
 createVnet = TRUE
-will create RG msdocs-rg-00000001
-will create VNet msdocs-vnet-00000001 in RG msdocs-rg-00000001
-will create VM msdocs-vm-00000001 within Vnet msdocs-vnet-00000001 in RG msdocs-rg-00000001
+Will create RG msdocs-rg-00000001
+Will create VNet msdocs-vnet-00000001 in RG msdocs-rg-00000001
+Will create VM msdocs-vm-00000001 within Vnet msdocs-vnet-00000001 in RG msdocs-rg-00000001
 
 resourceNo = 2
 createRG = TRUE
 createVnet = FALSE
-will create RG msdocs-rg-00000002
-will create VM msdocs-vm-00000002 without Vnet in RG msdocs-rg-00000002
+Will create RG msdocs-rg-00000002
+Will create VM msdocs-vm-00000002 without Vnet in RG msdocs-rg-00000002
 
 resourceNo = 3
 createRG = FALSE
 createVnet = FALSE
-will create VM msdocs-vm-00000003 without Vnet in RG <myExistingResourceGroup>
+Will create VM msdocs-vm-00000003 without Vnet in RG <myExistingResourceGroup>
 ```
 
 ## Create Azure resources
@@ -170,7 +170,7 @@ You have now created your variable block, validated your CSV values, and complet
 
 ---
 
-Console output:
+Console output before log file read:
 
 ```output
 Starting creation of resourceNo 1 at YYYY-MM-DD HH:MM:SS.
