@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli references, reference types, reference status
 ---
 
-# Overview: Azure CLI terminology and support levels
+# Overview: Azure CLI terminology
 
 This article explains Azure CLI terminologies.  There are syntax components, reference types, and statuses.  it's the status that determines the support level.
 
@@ -36,14 +36,12 @@ See [Reference list A to Z](../latest/docs-ref-autogen/reference-index.yml) for 
 
 ## What is reference type?
 
-Azure CLI commands are either part of the **core** Azure CLI service, or they're an **extension**.  Extensions are optional add-ons.  The reference type determines the release schedule, status and installation method as described here:
+Azure CLI commands are either part of the **core** Azure CLI service, or they're an **extension**.  Extensions are optional add-ons.  The reference type determines the release schedule and installation method as described here:
 
 | Term | Core | Extension |
 | - | -| -|
 | **References** | Are part of the primary Azure CLI service | Are optional reference commands that must be installed |
 | **Install**    | Jointly with the [MSI installer](install-azure-cli-windows.md) | Individually with [az extension add](/cli/azure/extension#az-extension-add)                 |
-| **Released**   | On a schedule | As new features or updates become available |
-| **Status**     | Can be GA (Generally Available), preview or experimental | Also can be GA, preview or experimental |
 
 To get a list of command groups, run `az`.  For a list of extensions, use [az extension list-available --output table](/cli/azure/extension#az-extension-list-available) commands.
 
@@ -74,15 +72,14 @@ You can learn more about extension references including installation and updatin
 
 ## What is reference status?
 
-Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It's the reference command status (not type) that determines stability and support level.
+Regardless of reference type, Azure CLI references fall into two status categories: **GA** (Generally Available) and **public preview**. It's the reference command status (not type) that determines stability.
 
-| | GA  | Public preview | Experimental
-|-|-|-|-|
-| **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback. Often migrates to public preview.  Can be removed.
-| **Support level** | Full | Partial | None
+| | GA  | Public preview
+|-|-|-|
+| **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
 
 > [!NOTE]
-> Warnings indicating **public preview** or **experimental** are part of the Azure CLI command output and should be expected.
+> Warnings indicating **public preview** are part of the Azure CLI command output and should be expected.
 
 Most commands and parameters for a single reference have a single status, but not always. A GA reference that is being built out to offer more commands can have GA, preview, and experimental reference commands. As new parameters are added to increase functionality, a single command can also have parameters that fall under different status categories. Here are example references that have different statuses:
 
@@ -102,5 +99,6 @@ The above table is only an example and **isn't** representative of current refer
 
 ## See also
 
+- [Azure CLI support lifecycle](./azure-cli-support-lifecycle.md)
 - [Azure CLI A - Z reference list](../latest/docs-ref-autogen/reference-index.yml)
 - [Available extensions for the Azure CLI](azure-cli-extensions-list.md)
