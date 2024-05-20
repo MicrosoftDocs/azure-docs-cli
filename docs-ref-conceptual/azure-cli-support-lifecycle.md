@@ -92,6 +92,7 @@ Easily find the LTS release date by running the `az version` command. Notice the
   "extensions": {  
   }  
 }  
+```
 
 The following image illustrates the release cadence and support lifecycle of Azure PowerShell for LTS and STS releases.
 
