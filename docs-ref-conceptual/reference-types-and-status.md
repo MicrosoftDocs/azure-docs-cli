@@ -74,7 +74,7 @@ You can learn more about extension references including installation and updatin
 
 ## What is reference status?
 
-Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **deprecated**. It's the reference command status (not type) that determines stability..
+Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **deprecated**. It's the reference command status (not type) that determines stability.
 
 | | GA  | Public preview | Deprecated
 |-|-|-|-|

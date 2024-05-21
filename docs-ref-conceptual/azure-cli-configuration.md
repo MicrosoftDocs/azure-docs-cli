@@ -102,7 +102,7 @@ When you provide a default value, that argument is no longer required by any com
 | | display\_region\_identified | boolean | Azure customers can choose to deploy resources in many different regions.  In some cases, customers may be able to reduce costs by selecting nearby regions offering the same services.  If a nearby region is identified, a message will display the region to select for future deployments. This setting controls if the message is displayed. |
 | | collect\_telemetry | boolean | Allow Microsoft to collect anonymous data on the usage of the CLI. For privacy information, see the [Azure CLI MIT license](https://github.com/Azure/azure-cli/blob/dev/LICENSE). |
 | | only\_show\_errors | boolean | Only show errors during command invocation. In other words, only errors are written to `stderr`. It suppresses warnings from preview, deprecated and experimental commands. It's also available for individual commands with the `--only-show-errors` parameter. |
-| | enable\_broker\_on\_windows | boolean | Turn Web Account Manager (WAM) authentication on/off. |
+| | enable\_broker\_on\_windows | boolean | Use Web Account Manager (WAM) to authenticate to Azure through the `az login` command. |
 | | no\_color | boolean | Disable color. Originally colored messages are prefixed with `DEBUG`, `INFO`, `WARNING` and `ERROR`. This boolean bypasses the issue of a third-party library where the terminal's color can't revert back after a `stdout` redirection. |
 | __clients__ | show_secrets_warning | boolean | Turn the warning for sensitive information output on/off. |
 | __logging__ | enable\_log\_file | boolean | Turn logging on/off. |
