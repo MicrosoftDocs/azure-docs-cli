@@ -14,7 +14,8 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 # Sign in with Web Account Manager (WAM) using Azure CLI
 
-The Azure CLI now offers preview support for Web Account Manager (WAM). WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+The authentication with Azure CLI is now based on Web Account Manager (WAM) by default on Windows, the default authentication on Linux and MacOs is using the browser-based flow.
+WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
 
 Using WAM has several benefits:
 
@@ -23,17 +24,17 @@ Using WAM has several benefits:
 * Streamlined single sign-on.
 * Bug fixes and enhancements shipped with Windows.
 
-Signing in with WAM is a preview, opt-in feature. Once enabled, the previous browser-based user interface is replaced.
+You may disable WAM and switch to the browser-based flow using the following commands.
 
 ```azurecli-interactive
-az config set core.allow_broker=true
 az account clear
+az confir set core.enable_broker_on_windows=false
 az login
 ```
 
-At the current stage of development, there are a few known limitations to WAM:
+Currently there are a few known limitations to WAM:
 
-* WAM is available on Windows 10 and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, the Azure CLI automatically defaults to a browser.  
+* WAM is available on Windows 10 and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, the Azure CLI automatically defaults to a browser based flow.  
 * Microsoft Accounts (for example @outlook.com or @live.com) aren't currently supported. We're working with the Microsoft Identity team to bring the support later.
 
 ## See also
