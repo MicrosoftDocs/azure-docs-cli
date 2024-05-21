@@ -68,7 +68,7 @@ If you encounter any problem, please open an issue at https://aka.ms/azclibug
 
 The next time you login, the previously selected tenant and subscription is marked as the default
 with an asterisk (`*`) next to its number. This allows you to press <kbd>Enter</kbd> to select the
-default subscription. You can always type a different number to select a new default subscription.
+default subscription.
 
 Commands run against the selected subscription by default. You can still use `az account set` to
 change your subscription from a command line at any time. For more information, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
