@@ -14,7 +14,7 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 # Sign in with Web Account Manager (WAM) using Azure CLI
 
-As of Azure CLI version [](./release-notes-azure-cli#may-21-2024), WAM is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+As of Azure CLI version [3.0](./release-notes-azure-cli#may-21-2024), WAM is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
 
 Using WAM has several benefits:
 
