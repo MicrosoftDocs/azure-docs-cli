@@ -14,7 +14,8 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 # Sign in interactively with Azure CLI 
 
-The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
+On Windows 10 and later and on Windows 219 and later, the Azure CLI uses Web Account Manager (WAM) to sign in.
+On Linux or MacOs, the Azure CLI uses a web browser and access token to sign in.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
