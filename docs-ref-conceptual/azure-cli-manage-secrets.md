@@ -32,7 +32,7 @@ The purpose of the warning message is to decrease the unintentional exposure of 
 
 > [!IMPORTANT]
 > The new warning messages are sent to Standard Error (STDERR), not Standard Out (STDOUT).
-> Therefore, if you are running an Azure CLI command that results in sensitive information output, you might need to trap for the warning message, or turn warnings off using `clients.show_secrets_warning=no`.
+> Therefore, if you are running an Azure CLI command that results in sensitive information output, you might need to trap for the warning message, or turn warnings off.
 
 For example, in Azure DevOps Services [pipelines](/azure/devops/pipelines/get-started/what-is-azure-pipelines), if the `failOnStderr` parameter is set to `True` of the Bash v3 task, the warning message halts the pipeline. Consider enabling the `show_secrets_warning` message to identify if any secrets are exposed in your pipelines, and then take remediation actions.
 

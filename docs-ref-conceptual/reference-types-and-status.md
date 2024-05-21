@@ -83,21 +83,21 @@ Regardless of reference type, Azure CLI references fall into three status catego
 > [!NOTE]
 > Warnings indicating **public preview** or **deprecated** are part of the Azure CLI command output and should be expected.
 
-Most commands and parameters for a single reference have a single status, but not always. A GA reference that is being built out to offer more commands can have GA, preview, and experimental reference commands. As new parameters are added to increase functionality, a single command can also have parameters that fall under different status categories. Here are example references that have different statuses:
+Most commands and parameters for a single reference have a single status, but not always. A GA reference that is being built out to offer more commands can have both GA and preview reference commands. As new parameters are added to increase functionality, a single command can also have parameters that fall under different status categories. Here are example references that have different statuses:
 
-|   Full reference command   |                              Parameters                              |   Type    | GA  | Public preview | Experimental |
+|   Full reference command   |                              Parameters                              |   Type    | GA  | Public preview | Deprecated   |
 | -------------------------- | -------------------------------------------------------------------- | --------- | --- | -------------- | ------------ |
 | az network dns zone list   | All                                                                  | Core      | yes |                |              |
 | az network dns zone create | --name, --resource-group, --if-none-match, --parent-name             | Core      | yes |                |              |
-|                            | --newFutureParameter1                                                | Core      |     | yes            |              |
-|                            | --newFutureParameter2                                                | Core      |     |                | yes          |
+|                            | --existingParameter5                                                 | Core      |     |                | yes          |
+|                            | --newParameter6                                                      | Core      |     | yes            |              |
 | az network vhub list       | All                                                                  | Extension | yes |                |              |
 | az network vhub create     | --address-prefix, --name, --resource-group, -vwan, --location, --sku | Extension | yes |                |              |
-|                            | --newFutureParameter1                                                | Extension |     | yes            |              |
-|                            | --newFutureParameter2                                                | Extension |     |                | yes          |
-| az network firewall create | All                                                                  | Extension |     |                | yes          |
+|                            | --exsitingParameter7                                                 | Extension |     | yes            |              |
+|                            | --newParameter8                                                      | Extension | yes |                |              |
+| az network firewall create | All                                                                  | Extension |     | yes            |              |
 
-The above table is only an example and **isn't** representative of current reference status for examples.
+The above table is only an example and **isn't** representative of the current reference statuses for `az network`.
 
 ## See also
 
