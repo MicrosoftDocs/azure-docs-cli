@@ -4,7 +4,7 @@ description: Learn the details about the support lifecycle of the Azure CLI refe
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 11/13/2023
+ms.date: 05/21/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -22,7 +22,7 @@ The Azure CLI support lifecycle is designed to provide clarity and predictabilit
 
 There are two Azure CLI reference types.
 
-* **Core:** Azure CLI references that are published as a permanent part of the CLI are called core references. All core references install with the Azure CLI and you can't choose a subset of references. If you run the CLI through Azure Cloud Shell, core references are always up to date.
+* **Core:** Azure CLI references that are published as a permanent part of the CLI are called "core" references. All core references install with the Azure CLI and you can't choose a subset of references. If you run the CLI through Azure Cloud Shell, core references are always up to date.
 
 * **Extensions:** Extensions aren't shipped as part of the CLI but run as CLI commands. Some extensions are a permanent part of the Azure CLI, but often, an extension gives you access to more capabilities and preview features.
 
@@ -32,15 +32,17 @@ To learn more about Azure CLI extensions, see [Use and manage Azure CLI extensio
 
 ## Versioning
 
-Azure CLI follows [Semantic Versioning](https://semver.org/) for version numbering. Semantic versioning is a system that uses a three-part number format: `major.minor.patch`.
-
 ### Core
 
-* **Major versions:** Major changes, including architectural and fundamental design changes. We provide critical security fixes to the last minor version of the previous major version for three years.  
+Azure CLI core version is composed of three numbers: `major.minor.patch`.
+
+* **Major versions:** Major changes, including architectural and fundamental design changes. We provide critical security fixes to the last minor version of the previous major version for three years.
 * **Minor versions:** Updated for feature updates and improved Azure service coverage.
 * **Patch versions:** Backward compatible fixes without new features or functionality changes.
 
 ### Extensions
+
+Azure CLI extensions follows [Semantic Versioning](https://semver.org/) for version numbering. Semantic versioning is a system that uses a three-part number format: `major.minor.patch`.
 
 * **Major versions:** Breaking changes, often due to an incompatible API change.
 * **Minor versions:** Backward compatible feature updates, or added functionality.
@@ -65,21 +67,21 @@ The STS versions of Azure CLI core give you the most recent capabilities. STS re
 
 STS releases have the following characteristics:
 
-* STS releases are released monthly and receive feature updates, bug fixes, and security fixes.  
+* STS releases are released monthly and receive feature updates, bug fixes, and security fixes.
 * To be supported, you need to be on the latest minor version of the STS release.
 * STS releases don't have a specific marker when running the `az version` command. This ensures backward compatibility with tools or scripts that might utilize the information.
-
+  
 ## Long Term Support releases (LTS)
 
-The LTS versions of Azure CLI Core give you a "maintenance" period of 12 months following the "current" period. During this time, the LTS release doesn't experience breaking changes _unless required by a security fix_.  
+The LTS versions of Azure CLI Core give you a "maintenance" period of 12 months following the "current" period. During this time, the LTS release doesn't experience breaking changes _unless required by a security fix_.
 
-The LTS versions are based on Azure CLI releases that introduce major changes during the second quarter of the calendar year. This usually aligns with Microsoft Build.  
+The LTS versions are based on Azure CLI releases that introduce major changes during the second quarter of the calendar year. This usually aligns with Microsoft Build.
 
 LTS releases have the following characteristics:
 
 * During the first six months, the LTS releases are released monthly and receive feature updates, bug fixes and security fixes.
-* During the following 12 months, the LTS releases are released when necessary and only receive bug fixes and security fixes.  
-* To be supported, you need to be on the latest version of the LTS release.  
+* During the following 12 months, the LTS releases are released when necessary and only receive bug fixes and security fixes.
+* To be supported, you need to be on the latest version of the LTS release.
 
 Easily find the LTS release date by running the `az version` command. Notice the `azure-cli-support` line that indicates the LTS date.
 
@@ -94,7 +96,7 @@ Easily find the LTS release date by running the `az version` command. Notice the
 }  
 ```
 
-The following image illustrates the release cadence and support lifecycle of Azure CLI for LTS and STS releases.
+The following image illustrates the release cadence and support lifecycle of Azure CLI for STS and LTS releases.
 
 ![Support Lifecycle](./media/support-lifecycle/support-lifecycle.png)
 
@@ -106,19 +108,19 @@ lifecycle:
 
 | Version number | Release schedule | Breaking changes | Release type | Support type | Supported until version |
 | -------------- | ---------------- | ---------------- | ------------ | ------------ | ----------------------- |
-| 2.61.0          | May 2024         | ![Yes][1]        | Major        | LTS          | 2.62.0                  |
-| 2.62.0          | June 2024        |                  | Minor        | LTS          | 2.63.0                  |
-| 2.63.0          | July 2024        |                  | Minor        | LTS          | 2.64.0                  |
-| 2.64.0          | August 2024      |                  | Minor        | LTS          | 2.65.0                  |
-| 2.65.0          | September 2024   |                  | Minor        | LTS          | 2.66.0                  |
-| 2.66.0          | October 2024     |                  | Minor        | LTS          | _**2.79.0**_            |
-| 2.67.0          | November 2024    | ![Yes][1]        | Major        | STS          | 2.68.0                  |
-| 2.68.0          | December 2024    |                  | Minor        | STS          | 2.69.0                  |
-| 2.69.0          | January 2025     |                  | Minor        | STS          | 2.70.0                  |
-| 2.70.0          | February 2025    |                  | Minor        | STS          | 2.71.0                  |
-| 2.71.0          | March 2025       |                  | Minor        | STS          | 2.72.0                  |
-| 2.72.0          | April 2025       |                  | Minor        | STS          | _**2.90.0**_            |
-| 2.72.0          | May 2025         | ![Yes][1]        | Major        | LTS          | 2.73.0                  |
+| 2.61.0         | May 2024         | Yes              | Major        | LTS          | 2.62.0                  |
+| 2.62.0         | June 2024        |                  | Minor        | LTS          | 2.63.0                  |
+| 2.63.0         | July 2024        |                  | Minor        | LTS          | 2.64.0                  |
+| 2.64.0         | August 2024      |                  | Minor        | LTS          | 2.65.0                  |
+| 2.65.0         | September 2024   |                  | Minor        | LTS          | 2.66.0                  |
+| 2.66.0         | October 2024     |                  | Minor        | LTS          | _**2.79.0**_            |
+| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  |
+| 2.68.0         | December 2024    |                  | Minor        | STS          | 2.69.0                  |
+| 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  |
+| 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  |
+| 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  |
+| 2.72.0         | April 2025       |                  | Minor        | STS          | _**2.90.0**_            |
+| 2.72.0         | May 2025         | Yes              | Major        | LTS          | 2.73.0                  |
 
 **Examples:**
 
@@ -127,28 +129,26 @@ lifecycle:
 
 ## Breaking changes
 
-Major version releases of Azure CLI introduce breaking changes and occur up to two times per year. Breaking changes may occur at any point for preview extensions. Non-GA extensions aren't required to adhere to breaking change policies.
+Major version releases of Azure CLI introduce breaking changes and occur up to two times per year. Breaking changes can occur at any point for preview extensions. Non-GA extensions aren't required to adhere to breaking change policies.
 
 For detailed information about breaking changes in Azure CLI, see [Release notes](./release-notes-azure-cli.md).
 
 ## Supported environments
 
-The Azure CLI runs on multiple operating systems (OS) and architectures. For a complete list, see [Install the Azure CLI](./install-azure-cli.md). To be supported by Microsoft, the following criteria must be met:  
+The Azure CLI runs on multiple operating systems (OS) and architectures. For a complete list, see [Install the Azure CLI](./install-azure-cli.md). To be supported by Microsoft, the following criteria must be met:
 
-* The version of Azure CLI is supported.  
-* The version of the OS is currently in mainstream support by the OS publisher.  
+* The version of Azure CLI is supported.
+* The version of the OS is currently in mainstream support by the OS publisher.
 * The dependencies required by the current version of Azure CLI are supported on the OS.
 
 The Azure CLI ends support for a platform when one of the following conditions is met:
- 
+
 * The OS reaches its end of life as defined by the platform owner.
-* The version of Python required by Azure CLI reaches its end of life, is no longer supported on the OS, or has an unfixed critical security issue.  
+* The version of Python required by Azure CLI reaches its end of life, is no longer supported on the OS, or has an unfixed critical security issue.
 
-End of support of an OS or one of its dependencies by Azure CLI is announced within three months of the public announcement of the retirement. 
+Azure CLI announces the end of support of an OS or one of its dependencies within three months of the public announcement of the retirement.
 
-## Azure CLI dependencies
-
-### Python
+## Python dependency
 
 Azure CLI depends on Python version 3.8 or above. The following table summarizes the expected end of support for each version of Python:
 
@@ -159,16 +159,14 @@ Azure CLI depends on Python version 3.8 or above. The following table summarizes
 |3.10|October 2026
 |3.11|October 2027
 
-### Operating systems
-
 Azure CLI can only be supported on operating systems where the above versions of Python are supported.
 
-- **Windows:** The currently supported versions of Windows client and server meet Python version requirements.
-- **macOS:** The currently supported version of macOS 10.9 and above meet Python version requirements.
-- **Linux:** 
-  - Each supported operating system has a lifecycle defined by its sponsor organization.
-  - Support is typically removed when an operating system goes out of mainline support, at which time we stop testing and supporting it.
-  - Here are the supported Linux operating systems for the Azure CLI:
+* **Windows:** The currently supported versions of Windows client and server meet Python version requirements.
+* **macOS:** The currently supported version of macOS 10.9 and above meet Python version requirements.
+* **Linux:** 
+  * Each supported operating system has a lifecycle defined by its sponsor organization.
+  * Support is typically removed when an operating system goes out of mainline support, at which time we stop testing and supporting it.
+  * Here are the supported Linux operating systems for the Azure CLI:
 
     |Operating system|Version|End of support|
     |-|-|-|
@@ -184,9 +182,9 @@ Azure CLI can only be supported on operating systems where the above versions of
     | Alpine | 3.17 | November 22, 2024
     | | 3.16 | May 23, 2024
 
-> [!NOTE]
-> On RHEL 7, only Azure CLI 2.38 is supported and will receive security fixes until June 30, 2024. 
+    > [!NOTE]
+    > On RHEL 7, only Azure CLI 2.38 is supported and will receive security fixes until June 30, 2024. 
 
 ## See also
 
-- [Azure CLI terminology](./reference-types-and-status.md)
+* [Azure CLI terminology](./reference-types-and-status.md)
