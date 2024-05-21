@@ -4,7 +4,7 @@ description: Learn what's new in the Azure CLI
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 04/09/2024
+ms.date: 05/21/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli 

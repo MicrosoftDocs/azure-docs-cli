@@ -1,6 +1,6 @@
 ---
-title: Sign in with Azure CLI interactively at a command line | Microsoft Docs
-description: Learn how to sign into the Azure CLI interactively using az login.
+title: Sign in with Azure CLI at a command line | Microsoft Docs
+description: Learn how to sign into the Azure CLI interactively using az login, WAM, a web browser and a subscription selector.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
@@ -13,7 +13,12 @@ ms.custom: devx-track-azurecli
 
 # Sign in interactively with Azure CLI 
 
-Interactive logins to Azure offer a more intuitive and flexible user experience. Interactive login with Azure CLI allows users to authenticate to Azure directly through the [az login](/cli/azure/reference-index#az-login) command, which is useful for ad-hoc management tasks and for environments that require manual sign-in, such as those customers with multi-factor authentication (MFA). This method simplifies access for script testing, learning, and on-the-fly management without needing to preconfigure service principals or other noninteractive authentication methods.
+Interactive logins to Azure offer a more intuitive and flexible user experience. Interactive login
+with Azure CLI allows users to authenticate to Azure directly through the [az login](/cli/azure/reference-index#az-login)
+command, which is useful for ad-hoc management tasks and for environments that require manual
+sign-in, such as those customers with multi-factor authentication (MFA). This method simplifies
+access for script testing, learning, and on-the-fly management without needing to preconfigure
+service principals or other noninteractive authentication methods.
 
 ## Prerequisites
 
@@ -21,7 +26,9 @@ Interactive logins to Azure offer a more intuitive and flexible user experience.
 
 ## Interactive login
 
-To sign in interactively, use the [az login](/cli/azure/reference-index#az-login) command. Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Windows systems use Web Account Manager (WAM), and Linux and macOS systems use browser-based login by default.
+To sign in interactively, use the [az login](/cli/azure/reference-index#az-login) command. Beginning
+with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Windows systems use Web
+Account Manager (WAM), and Linux and macOS systems use browser-based login by default.
 
 ```azurecli-interactive
 az login
@@ -29,7 +36,9 @@ az login
 
 ## Subscription selector
 
-Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), if you have access to multiple subscriptions, you're prompted to select an Azure subscription at time of login, as shown in the following example.
+Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), if you have
+access to multiple subscriptions, you're prompted to select an Azure subscription at time of login,
+as shown in the following example.
 
 ```Output
 Retrieving subscriptions for the selection...
@@ -59,7 +68,7 @@ If you encounter any problem, please open an issue at https://aka.ms/azclibug
 
 The next time you login, the previously selected tenant and subscription is marked as the default
 with an asterisk (`*`) next to its number. This allows you to press <kbd>Enter</kbd> to select the
-default subscription.  You can always type a different number to set a new default subscription.
+default subscription. You can always type a different number to set a new default subscription.
 
 Commands run against the selected subscription by default. To change your active subscription, use
 the `az account set`. For more information, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
@@ -69,10 +78,14 @@ Here are some feature guidelines to keep in mind:
 * The subscription selector is only available in 64-bit Windows, Linux, or macOS.
 * The subscription selector is only available when using the `az login` command.
 * You aren't prompted to select a subscription when you're logging in with a service principal or managed identity.
-  
+
 ## Sign in with Web Account Manager (WAM) on Windows
 
-Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account
+Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component
+that acts as an authentication broker. (An authentication broker is an application that runs on a
+user’s machine that manages the authentication handshakes and token maintenance for connected
+accounts.)
 
 Using WAM has several benefits:
 
@@ -102,10 +115,12 @@ The Azure CLI defaults to a browser-based authentication method when one of the 
 
 ## Sign in with credentials on the command line
 
-Provide your Azure user credentials on the command line. Only use this authentication method for learning Azure CLI commands. Production-level applications should use a service principal or managed identity.
+Provide your Azure user credentials on the command line. Only use this authentication method for
+learning Azure CLI commands. Production-level applications should use a service principal or managed
+identity.
 
-This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
-You receive an _interactive authentication is needed_ message.
+This approach doesn't work with Microsoft accounts or accounts that have two-factor authentication
+enabled. You receive an _interactive authentication is needed_ message.
 
 ```azurecli-interactive
 az login --user <username> --password <password>
@@ -128,7 +143,9 @@ az login --user <username> --password <password>
 
 ## Sign in with a different tenant
 
-You can select a tenant to sign in under with the `--tenant` argument. The value of this argument can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive and command-line sign-in methods work with `--tenant`.
+You can select a tenant to sign in under with the `--tenant` argument. The value of this argument
+can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive
+and command-line sign-in methods work with `--tenant`.
 
 ```azurecli-interactive
 az login --tenant 00000000-0000-0000-0000-000000000000
@@ -143,9 +160,9 @@ After signing in, if you want to change your active tenant, see [How-to change y
 ## Troubleshooting
 
 When your default browser is Microsoft Edge, you might encounter the following error when attempting
-to sign in to Azure interactively with `az login`: "_The connection for this site isn't
-secure._" To resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in
-Microsoft Edge. Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
+to sign in to Azure interactively with `az login`: "_The connection for this site isn't secure._" To
+resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in Microsoft
+Edge. Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
 
 ## See also
 
