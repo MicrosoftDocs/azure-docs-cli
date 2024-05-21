@@ -106,19 +106,19 @@ lifecycle:
 
 | Version number | Release schedule | Breaking changes | Release type | Support type | Supported until version |
 | -------------- | ---------------- | ---------------- | ------------ | ------------ | ----------------------- |
-| 3.0.0          | May 2024         | ![Yes][1]        | Major        | LTS          | 3.1.0                  |
-| 3.1.0          | June 2024        |                  | Minor        | LTS          | 3.2.0                  |
-| 3.2.0          | July 2024        |                  | Minor        | LTS          | 3.3.0                  |
-| 3.3.0          | August 2024      |                  | Minor        | LTS          | 3.4.0                  |
-| 3.4.0          | September 2024   |                  | Minor        | LTS          | 3.5.0                  |
-| 3.5.0          | October 2024     |                  | Minor        | LTS          | _**6.0.0**_            |
-| 4.0.0          | November 2024    | ![Yes][1]        | Major        | STS          | 4.1.0                  |
-| 4.1.0          | December 2024    |                  | Minor        | STS          | 4.2.0                  |
-| 4.2.0          | January 2025     |                  | Minor        | STS          | 4.3.0                  |
-| 4.3.0          | February 2025    |                  | Minor        | STS          | 4.4.0                  |
-| 4.4.0          | March 2025       |                  | Minor        | STS          | 4.5.0                  |
-| 4.5.0          | April 2025       |                  | Minor        | STS          | _**7.0.0**_            |
-| 5.0.0          | May 2025         | ![Yes][1]        | Major        | LTS          | 5.1.0                  |
+| 2.61.0          | May 2024         | ![Yes][1]        | Major        | LTS          | 2.62.0                  |
+| 2.62.0          | June 2024        |                  | Minor        | LTS          | 2.63.0                  |
+| 2.63.0          | July 2024        |                  | Minor        | LTS          | 2.64.0                  |
+| 2.64.0          | August 2024      |                  | Minor        | LTS          | 2.65.0                  |
+| 2.65.0          | September 2024   |                  | Minor        | LTS          | 2.66.0                  |
+| 2.66.0          | October 2024     |                  | Minor        | LTS          | _**2.79.0**_            |
+| 2.67.0          | November 2024    | ![Yes][1]        | Major        | STS          | 2.68.0                  |
+| 2.68.0          | December 2024    |                  | Minor        | STS          | 2.69.0                  |
+| 2.69.0          | January 2025     |                  | Minor        | STS          | 2.70.0                  |
+| 2.70.0          | February 2025    |                  | Minor        | STS          | 2.71.0                  |
+| 2.71.0          | March 2025       |                  | Minor        | STS          | 2.72.0                  |
+| 2.72.0          | April 2025       |                  | Minor        | STS          | _**2.90.0**_            |
+| 2.72.0          | May 2025         | ![Yes][1]        | Major        | LTS          | 2.73.0                  |
 
 **Examples:**
 
