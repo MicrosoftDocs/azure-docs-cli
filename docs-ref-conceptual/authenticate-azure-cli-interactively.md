@@ -19,7 +19,7 @@ Interactive logins to Azure offer a more intuitive and flexible user experience.
 
 * [Install the Azure CLI](./install-azure-cli.md)
 
-# Interactive login
+## Interactive login
 
 To sign in interactively, use the [az login](/cli/azure/reference-index#az-login) command. Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Windows systems use Web Account Manager (WAM), and Linux and macOS systems use browser-based login by default.
 
@@ -27,7 +27,7 @@ To sign in interactively, use the [az login](/cli/azure/reference-index#az-login
 az login
 ```
 
-## Login experience
+## Subscription selector
 
 Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), if you have access to multiple subscriptions, you're prompted to select an Azure subscription at time of login, as shown in the following example.
 
