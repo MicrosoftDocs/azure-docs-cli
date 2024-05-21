@@ -14,7 +14,7 @@ keywords: azure cli references, reference types, reference status
 
 # Overview: Azure CLI terminology and support levels
 
-This article explains Azure CLI terminologies.  There are syntax components, reference types, and statuses.  it's the status that determines the support level.
+This article explains Azure CLI terminologies.  There are syntax components, reference types, and statuses.
 
 ## Azure CLI syntax components
 
@@ -39,11 +39,11 @@ See [Reference list A to Z](../latest/docs-ref-autogen/reference-index.yml) for 
 Azure CLI commands are either part of the **core** Azure CLI service, or they're an **extension**.  Extensions are optional add-ons.  The reference type determines the release schedule, status and installation method as described here:
 
 | Term | Core | Extension |
-| - | -| -|
+| - | - | -|
 | **References** | Are part of the primary Azure CLI service | Are optional reference commands that must be installed |
 | **Install**    | Jointly with the [MSI installer](install-azure-cli-windows.md) | Individually with [az extension add](/cli/azure/extension#az-extension-add)                 |
 | **Released**   | On a schedule | As new features or updates become available |
-| **Status**     | Can be GA (Generally Available), preview or experimental | Also can be GA, preview or experimental |
+| **Status**     | Can be GA (Generally Available), preview or deprecated | Also can be GA, preview or deprecated |
 
 To get a list of command groups, run `az`.  For a list of extensions, use [az extension list-available --output table](/cli/azure/extension#az-extension-list-available) commands.
 
@@ -74,33 +74,31 @@ You can learn more about extension references including installation and updatin
 
 ## What is reference status?
 
-Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **experimental**. It's the reference command status (not type) that determines stability and support level.
+Regardless of reference type, Azure CLI references fall into three status categories: **GA** (Generally Available), **public preview** or **deprecated**. It's the reference command status (not type) that determines stability.
 
-| | GA  | Public preview | Experimental
+| | GA  | Public preview | Deprecated
 |-|-|-|-|
-| **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Can change in response to customer feedback. Often migrates to public preview.  Can be removed.
-| **Support level** | Full | Partial | None
+| **Stability** | Permanent | Can change in response to customer feedback. Is subject to the terms of [Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/). | Will be removed.
 
 > [!NOTE]
-> Warnings indicating **public preview** or **experimental** are part of the Azure CLI command output and should be expected.
+> Warnings indicating **public preview** or **deprecated** are part of the Azure CLI command output and should be expected.
 
-Most commands and parameters for a single reference have a single status, but not always. A GA reference that is being built out to offer more commands can have GA, preview, and experimental reference commands. As new parameters are added to increase functionality, a single command can also have parameters that fall under different status categories. Here are example references that have different statuses:
+Most commands and parameters for a single reference have a single status, but not always. A GA reference that is being built out to offer more commands can have both GA and preview reference commands. As new parameters are added to increase functionality, a single command can also have parameters that fall under different status categories. Here are example references that have different statuses:
 
-|   Full reference command   |                              Parameters                              |   Type    | GA  | Public preview | Experimental |
+|   Full reference command   |                              Parameters                              |   Type    | GA  | Public preview | Deprecated   |
 | -------------------------- | -------------------------------------------------------------------- | --------- | --- | -------------- | ------------ |
 | az network dns zone list   | All                                                                  | Core      | yes |                |              |
 | az network dns zone create | --name, --resource-group, --if-none-match, --parent-name             | Core      | yes |                |              |
-|                            | --newFutureParameter1                                                | Core      |     | yes            |              |
-|                            | --newFutureParameter2                                                | Core      |     |                | yes          |
+|                            | --existingParameter5                                                 | Core      |     |                | yes          |
+|                            | --newParameter6                                                      | Core      |     | yes            |              |
 | az network vhub list       | All                                                                  | Extension | yes |                |              |
 | az network vhub create     | --address-prefix, --name, --resource-group, -vwan, --location, --sku | Extension | yes |                |              |
-|                            | --newFutureParameter1                                                | Extension |     | yes            |              |
-|                            | --newFutureParameter2                                                | Extension |     |                | yes          |
-| az network firewall create | All                                                                  | Extension |     |                | yes          |
+|                            | --exsitingParameter7                                                 | Extension |     | yes            |              |
+|                            | --newParameter8                                                      | Extension | yes |                |              |
+| az network firewall create | All                                                                  | Extension |     | yes            |              |
 
-The above table is only an example and **isn't** representative of current reference status for examples.
+The above table is only an example and **isn't** representative of the current reference statuses for `az network`.
 
 ## See also
 
-- [Azure CLI A - Z reference list](../latest/docs-ref-autogen/reference-index.yml)
-- [Available extensions for the Azure CLI](azure-cli-extensions-list.md)
+- [Azure CLI support lifecycle](./azure-cli-support-lifecycle.md)
