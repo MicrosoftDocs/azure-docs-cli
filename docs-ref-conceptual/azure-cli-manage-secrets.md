@@ -18,12 +18,12 @@ It's critical to protect this information! If acquired publicly from environment
 
 ## Set secrets warning configuration
 
-Beginning in [Azure CLI 2.57](./release-notes-azure-cli.md#february-06-2024), a warning message can be displayed when reference commands result in the output of sensitive information. 
+Beginning in [Azure CLI 2.61](./release-notes-azure-cli.md#may-21-2024), a warning message is displayed when reference commands result in the output of sensitive information.
 
-Turn sensitive information warnings on/off by setting the `clients.show_secrets_warning` configuration property to `yes` or `no`.
+Sensitive information warnings are **enabled** by default. Turn sensitive information warnings off by setting the `clients.show_secrets_warning` configuration property to `no`.
 
 ```azurecli-interactive
-az config set clients.show_secrets_warning=yes
+az config set clients.show_secrets_warning=no
 ```
 
 ## Considerations
@@ -32,13 +32,9 @@ The purpose of the warning message is to decrease the unintentional exposure of 
 
 > [!IMPORTANT]
 > The new warning messages are sent to Standard Error (STDERR), not Standard Out (STDOUT).
-> Therefore, if you are running an Azure CLI command that results in sensitive information output, you might need to trap for the warning message, or turn warnings off using `clients.show_secrets_warning=no`.
+> Therefore, if you are running an Azure CLI command that results in sensitive information output, you might need to trap for the warning message, or turn warnings off.
 
 For example, in Azure DevOps Services [pipelines](/azure/devops/pipelines/get-started/what-is-azure-pipelines), if the `failOnStderr` parameter is set to `True` of the Bash v3 task, the warning message halts the pipeline. Consider enabling the `show_secrets_warning` message to identify if any secrets are exposed in your pipelines, and then take remediation actions.
-
-## Default behavior
-
-Warnings are **enabled** by default in Azure Cloud Shell. If you run the Azure CLI locally through any supported shell (PowerShell or zsh for example), warnings are **disabled** by default.
 
 ## See also
 
