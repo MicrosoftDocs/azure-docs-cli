@@ -40,7 +40,7 @@ WAM is available on Windows 10 and later, and on Windows Server 2019 and later.
 
 The Azure CLI defaults to a browser-based authentication method when one of the following is true:
 
-* The OS is Mac, Linux, or an earlier versions of Windows.
+* The operating system (OS) is Mac, or Linux, or the Windows OS is earlier than Windows 10 or Windows Server 2019.
 * The `core.enable_broker_on_windows` configuration property is set to `false`.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
