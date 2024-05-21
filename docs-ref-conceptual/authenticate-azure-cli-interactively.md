@@ -4,12 +4,11 @@ description: Learn how to sign into the Azure CLI interactively using az login.
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 09/22/2023
+ms.date: 05/21/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure cli  
+ms.custom: devx-track-azurecli
 ---
 
 # Sign in interactively with Azure CLI 
@@ -18,7 +17,7 @@ Interactive logins to Azure offer a more intuitive and flexible user experience.
 
 ## Sign in with Web Account Manager (WAM) on Windows
 
-As of Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), WAM is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+As of Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
 
 Using WAM has several benefits:
 
