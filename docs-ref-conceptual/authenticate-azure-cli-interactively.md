@@ -17,7 +17,7 @@ Interactive logins to Azure offer a more intuitive and flexible user experience.
 
 ## Sign in with Web Account Manager (WAM) on Windows
 
-As of Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
 
 Using WAM has several benefits:
 
@@ -44,6 +44,44 @@ The Azure CLI defaults to a browser-based authentication method when one of the 
 * The `core.enable_broker_on_windows` configuration property is set to `false`.
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
+
+## Login experience
+
+Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), if you have access to multiple subscriptions, you're prompted to select an Azure subscription at time of login, as shown in the following example.
+
+```Output
+Retrieving subscriptions for the selection...
+
+[Tenant and subscription selection]
+
+No    Subscription name                     Subscription ID                           Tenant name
+----  ------------------------------------  ----------------------------------------  --------------
+[1]   Facility Services Subscription        00000000-0000-0000-0000-000000000000      Contoso
+[2]   Finance Department Subscription       00000000-0000-0000-0000-000000000000      Contoso
+[3]   Human Resources Subscription          00000000-0000-0000-0000-000000000000      Contoso
+[4] * Information Technology Subscription   00000000-0000-0000-0000-000000000000      Contoso
+
+The default is marked with an *; the default tenant is 'Contoso' and subscription is 'Information Technology Subscription' (00000000-0000-0000-0000-000000000000).
+
+Select a subscription and tenant (Type a number or Enter for no changes): 2
+
+Tenant: Contoso
+Subscription: Finance Department Subscription (00000000-0000-0000-0000-000000000000)
+
+[Announcements]
+With the new Azure CLI login experience, you can select the subscription you want to use more easily. Learn more about it and its configuration at https://go.microsoft.com/fwlink/?linkid=2271236
+
+If you encounter any problem, please open an issue at https://aka.ms/azclibug
+```
+
+The next time you login, the previously selected tenant and subscription is marked as the default
+with an asterisk (`*`) next to its number and highlighted in a cyan blue color. This allows you to
+press <kbd>Enter</kbd> to select the default or type a number to select a different tenant and
+subscription.
+
+Commands run against the selected subscription by default. To change your active subscription, use the
+`az account set`. For more information, see
+[How to manage Azure subscriptions with the Azure CLI][./manage-azure-subscriptions-azure-cli.md].
 
 ## Sign in with credentials on the command line
 
