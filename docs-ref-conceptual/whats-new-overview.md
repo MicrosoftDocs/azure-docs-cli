@@ -17,7 +17,7 @@ This page highlights new features, articles and learning paths for the Azure CLI
 
 ## Select your subscription at time of login
 
-We've listened to your feedback and improved the Azure CLI interactive login experience to include a subscription selector. To use the new feature, see [Choose your subscription when logging into Azure](./authenticate-azure-cli-preview.md).
+We've listened to your feedback and improved the Azure CLI interactive login experience to include a subscription selector. To use the new feature, see [Sign in interactively with Azure CLI ](./authenticate-azure-cli-interactively.md#interactive-login).
 
 ## Protect sensitive information
 
