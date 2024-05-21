@@ -120,17 +120,15 @@ lifecycle:
 | 4.5.0          | April 2025       |                  | Minor        | STS          | _**7.0.0**_            |
 | 5.0.0          | May 2025         | ![Yes][1]        | Major        | LTS          | 5.1.0                  |
 
-- Examples:
-  - To qualify for support, you must update to 3.1.0 when released if you have Azure CLI 3.0.0 installed.
-  - If Azure CLI 3.5.0 is the final release of Azure CLI version 3, it's supported until the release of Azure CLI
-    6.0.0.
-  - When Azure CLI 5.0.0 is released, Azure CLI version 4 is no longer supported.
+**Examples:**
+
+* To qualify for support, you must update to 3.1.0 when released if you have Azure CLI 3.0.0 installed.
+* If Azure CLI 3.5.0 is the final release of Azure CLI version 3, it's supported until the release of Azure CLI 6.0.0.
+* When Azure CLI 5.0.0 is released, Azure CLI version 4 is no longer supported.
 
 ## Breaking changes
 
-Major version releases of Azure CLI introduce breaking changes and occur up to two times per
-year. Breaking changes may occur at any point for preview extensions. Non-GA extensions aren't
-required to adhere to breaking change policies.
+Major version releases of Azure CLI introduce breaking changes and occur up to two times per year. Breaking changes may occur at any point for preview extensions. Non-GA extensions aren't required to adhere to breaking change policies.
 
 For detailed information about breaking changes in Azure CLI, see [Release notes](./release-notes-azure-cli.md).
 
@@ -140,10 +138,11 @@ The Azure CLI runs on multiple operating systems (OS) and architectures. For a c
 
 * The version of Azure CLI is supported.  
 * The version of the OS is currently in mainstream support by the OS publisher.  
-* The dependencies required by the current version of Azure CLI are supported on the OS.   
+* The dependencies required by the current version of Azure CLI are supported on the OS.
 
-The Azure CLI ends support for a platform when one of the following conditions is met:  
-* The OS reaches its end of life as defined by the platform owner  
+The Azure CLI ends support for a platform when one of the following conditions is met:
+ 
+* The OS reaches its end of life as defined by the platform owner.
 * The version of Python required by Azure CLI reaches its end of life, is no longer supported on the OS, or has an unfixed critical security issue.  
 
 End of support of an OS or one of its dependencies by Azure CLI is announced within three months of the public announcement of the retirement. 
