@@ -122,9 +122,8 @@ lifecycle:
 
 **Examples:**
 
-* To qualify for support, you must update to 3.1.0 when released if you have Azure CLI 3.0.0 installed.
-* If Azure CLI 3.5.0 is the final release of Azure CLI version 3, it's supported until the release of Azure CLI 6.0.0.
-* When Azure CLI 5.0.0 is released, Azure CLI version 4 is no longer supported.
+* To qualify for support, you must update to 2.63.0 when released if you have Azure CLI 2.62.0 installed.
+* If Azure CLI 2.66.0 is the last release of Azure CLI before breaking change in the fourth quarter of the calendar year, it's supported until the release of Azure CLI 2.79.0.
 
 ## Breaking changes
 
