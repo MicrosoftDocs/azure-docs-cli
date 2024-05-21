@@ -71,6 +71,7 @@ directCommands:
                         [--ssh-access {disabled, localuser}]
                         [--tags]
                         [--vm-set-type]
+                        [--vm-sizes]
                         [--vnet-subnet-id]
                         [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                         [--zones]
@@ -99,6 +100,9 @@ directCommands:
   - summary: |-
       Create a nodepool with ip allocation mode set to "StaticBlock" and using a pod subnet ID
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a nodepool of type VirtualMachines
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "Standard_D4s_v3,Standard_D8s_v3" --node-count 3
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -311,6 +315,10 @@ directCommands:
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of sizes. Must use VirtualMachines agent pool type.
+    isPreview: true
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -858,6 +866,10 @@ commands:
 - az_aks_nodepool_delete-machines
 - az_aks_nodepool_get-upgrades
 - az_aks_nodepool_list
+- az_aks_nodepool_manual-scale
+- az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_update
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_scale
 - az_aks_nodepool_show

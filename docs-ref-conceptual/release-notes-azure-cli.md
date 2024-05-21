@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 04/30/2024
+ms.date: 05/21/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,132 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## May 21, 2024
+
+Version 2.61.0
+
+### AKS
+
+* [BREAKING CHANGE] `az aks create`: Specifying `--enable-managed-identity` and `--service-principal`/`--client-secret` at the same time will cause a `MutuallyExclusiveArgumentError`
+* [BREAKING CHANGE] `az aks create`: Change the default value of option `--enable-managed-identity` from `True` to `False`
+* `az aks mesh upgrade rollback/complete`: Add `--yes` parameter to support not prompting the users to confirm the operation
+* `az aks create/update`: Add `SecurityPatch` option to `--node-os-upgrade-channel` parameter
+* `az aks create/update`: Add new parameter `--enable-cost-analysis` to enable exporting Kubernetes namespace and deployment details to the Cost Analysis views
+* `az aks create`: Backfill the value of `--enable-managed-identity` to `True`  when options `--service-principal` and `--client-secret` are not specified at the same time
+* `az aks nodepool update`: Add option `--os-sku` to support updating os sku in place
+* `az aks create`: Add `--ampls-resource-id` and `--enable-high-log-scale-mode` optional parameters for Monitoring Addon
+* `az aks enable-addons`: Add `--ampls-resource-id` and `--enable-high-log-scale-mode` optional parameters
+
+### App Service
+
+* [BREAKING CHANGE] `az webapp deploy`: Use deployment status API for deployment output for Linux Web Apps
+* [BREAKING CHANGE] `az webapp up`: Use deployment status API for deployment output for Linux Web Apps
+* [BREAKING CHANGE] `az webapp deployment source config-zip`: Use deployment status API for deployment output for Linux Web Apps
+* `az functionapp scale config always-ready`: Set alwaysReady property to empty array if it is null
+* `az functionapp`: Update messaging for flex function apps
+* `az functionapp deployment source config-zip`: Allow users with no Microsoft.Web/serverFarm read privileges to deploy function apps
+* `az webapp list`: Fix the bug `--show-details` fails while resource group name is not specified
+* `az webapp list-runtimes/create/up`: Add Java 21 support
+* `az functionapp create`: Use stacks API netFrameworkVersion value instead of the default value from the Python SDK
+* `az functionapp create`: The linuxFxVersion for dotnet-isolated linux consumption apps will no longer be left empty
+* `az functionapp`: Not block execution of command when runtime cannot be detected, and omit showing warning for runtime when not applicable (e.g. centauri apps, apps running a docker image)
+* `az appservice plan create/update`: Add IsolatedV2 memory intensive SKU support
+* `az functionapp create`: If customers do not provide an image when creating a Centauri function app, we use the updated default Centauri image
+
+### ARM
+
+* [BREAKING CHANGE] `az stack group/sub/mg create/delete`: Remove the deprecated `--delete-all`, `--delete-resources`, and `--delete-resource-groups` flags. Use the `--action-on-unmanage`/`--aou` parameter instead
+* `az group delete`: Add new option `Microsoft.Databricks/workspaces` for `--force-deletion-types` parameter
+* `az deployment`: Support inline parameters with `.bicepparam` in single `--parameters` argument
+* `az stack group/sub/mg validate`: Add new `validate` command to preform preflight validation on a stack deployment
+* `az stack group/sub create`: Validation of a stack will now occur before a stack is created or updated
+* `az stack group/sub/mg create/delete`: Action on unmanage behavior for stack managed management groups can now be configured
+* `az stack group/sub/mg create`: The correlation ID of the create operation is now returned as a property of the stack
+* `az stack group/sub/mg create/delete`: Add new flag `--bypass-stack-out-of-sync-error`/`--bse` that will bypass errors related to the resource list of a stack being out of sync
+
+### Compute
+
+* [BREAKING CHANGE] `az sig image-definition create`: Set the default values for Hyper-V generation and Security Type
+* `az vmss create/update`: Add new parameters `--enable-resilient-creation` and `--enable-resilient-deletion` to support Resiliency Policy on VMSS
+* `az vm create/update`: Add new option `NvmeDisk` for `--ephemeral-os-disk-placement` parameter
+* `az vmss create/update`: Add new option `NvmeDisk` for `--ephemeral-os-disk-placement` parameter
+* `az vm create`: Add new parameters `--source-snapshots-or-disks` and `--source-snapshots-or-disks-size-gb` to support implicit disk creation from snapshot and disk
+* `az vm create`: Add new parameters `--source-disk-restore-point` and `--source-disk-restore-point-size-gb` to support implicit disk creation from disk restore point
+* `az vmss update`: Add new parameter `--ephemeral-os-disk` to support in-place mutual migration of VMSS from ephemeral to non-ephemeral OS disk
+* `az vmss update`: Add new parameter `--ephemeral-option` to support setting ephemeral disk setting
+
+### Compute Diagnostic
+
+* `az compute-recommender spot-placement-recommender`: Add new command to support generating placement scores for Spot VM SKU
+
+### Container app
+
+* `az containerapp create/update`: Fix `--scale-rule-tcp-concurrency` for TCP scale rule
+* `az containerapp compose create`: Fix issue where the environment's location is not resolved from `--location`
+* Fix #28864: `az containerapp ingress update`: Fix updating transport from http to tcp with `--transport tcp`
+* `az containerapp compose create`: Fix variable mixing issue when `--compose-file-path` contains multiple services
+* Fix #28380: `az containerapp ingress access-restriction set`: Fix `KeyError` when `name` not exists
+
+### Core
+
+* Resolve CVE-2024-34064
+* [BREAKING CHANGE] `az login`: Use WAM as the default authentication method on Windows. For more details, see https://go.microsoft.com/fwlink/?linkid=2271136
+* `aaz`: Support extended values in `AAZArgEnum`
+* Add `tenantDefaultDomain` and `tenantDisplayName` properties to login contexts (shown by `az account list`)
+* Prompt for interactive authentication for all silent authentication failures
+
+### Key Vault
+
+* [BREAKING CHANGE] `az keyvault create`: Default `--enable-rbac-authorization` to true
+* `az keyvault key create`: Update the release policy used for `--default-cvm-policy`
+
+### NetAppFiles
+
+* [BREAKING CHANGE] `az account backup`: Replace backup commands with backup-vault commands
+* [BREAKING CHANGE] `az volume backup status`: Remove `volume backup status` command, replace with `az netappfiles volume latest-backup-status show`
+* `az netappfiles account backup-vault`: Add backup vault command group
+* `az netappfiles volume latest-backup-status show`: Add command to get latest backup status
+* `az netappfiles volume latest-restore-status show`: Add command to get latest backup status
+* `az netappfiles resource region-info list`: Add command to list region specific information
+* `az netappfiles resource region-info default show`: Add command to get storage to network proximity and logical zone mapping information
+
+### Network
+
+* [BREAKING CHANGE] `az network dns zone`: Deprecate `--zone-type`, `registration-vnets` and `resolution-vnets`
+* `az network vnet subnet`: Add parameter `--sharing-scope`
+* `az network private-endpoint-connnection`: Add `Microsoft.App/managedEnvironment` for private endpoint connections
+* Fix #28615: `az network application-gateway address-pool update`: Race condition in concurrent scenario
+* Fix #28705: `az network lb rule`: Authentication token not being generated
+
+### Packaging
+
+* Add Ubuntu 24.04 Noble Numbat support
+* [BREAKING CHANGE] Drop Ubuntu 18.04 support
+
+### Profile
+
+* `az login`: Introduce login experience v2. For more details, see https://go.microsoft.com/fwlink/?linkid=2271236
+
+### RDBMS
+
+* `az postgres flexible-server migration create`: Add private endpoint support for migrations by providing migration runtime resource ID as command line argument
+
+### Security
+
+* [BREAKING CHANGE] `az security contact create`: Deprecate `--alerts-admins` and `--email`
+* [BREAKING CHANGE] `az security setting update`: Deprecate `--enabled`
+
+### Service Connector
+
+* `az aks connection list/show`: Add kubernetes resource name
+* `az source connection create cognitiveservices`: Support OpenAI/AIServices/CognitiveServices as target
+* `az webapp connection list`: Fix interactive input
+
+### Storage
+
+* [BREAKING CHANGE] `az storage account update`: Prompt user for possible charge increases when changing `--access-tier`, add `--upgrade-to-storagev2`
+* [BREAKING CHANGE] `az storage container set-permission/get-permission` and `az storage container policy`: Remove `--auth-mode login` and `--sas-token` for container access policy commands as only shared key authorization is supported on server side
 
 ## April 30, 2024
 

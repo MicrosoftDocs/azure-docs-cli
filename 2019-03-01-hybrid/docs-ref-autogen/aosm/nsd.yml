@@ -4,9 +4,11 @@ name: az aosm nsd
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **aosm** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az aosm nsd** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **aosm** extension for the Azure CLI (version 2.54.0 or higher). The extension will automatically install the first time you run an **az aosm nsd** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage AOSM publisher Network Service Designs.
+description: |-
+  A Network Service Design (NSD) is a collection of Network Function Definitions (NFD) and any supporting infrastructure that define a network service. This command group allows you to build and publish NSDs to Azure.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'aosm' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -16,104 +18,73 @@ directCommands:
   name: az aosm nsd build
   summary: |-
     Build an AOSM Network Service Design.
+  description: |-
+    Builds an AOSM Network Service Design (NSD) based on the configuration file provided. The NSD is built from the Network Function Definitions (NFD) and ARM templates specifying supporting infrastructure, as specified in the configuration file. The output is a directory which can either be published directly (using the aosm nsd publish command) or manually customized before publishing.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'aosm' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
-  syntax: >-
-    az aosm nsd build --config-file
-                      [--force]
+  syntax: az aosm nsd build --config-file
+  examples:
+  - summary: |-
+      Build a Network Service Design.
+    syntax: az aosm nsd build --config-file my-nsd-input-config.jsonc
   requiredParameters:
   - isRequired: true
     name: --config-file -f
     summary: |-
-      The path to the configuration file.
-  optionalParameters:
-  - name: --force
-    defaultValue: "False"
-    summary: |-
-      Force the build, even if the design has already been built.
-- uid: az_aosm_nsd_delete
-  name: az aosm nsd delete
-  summary: |-
-    Delete a published NSD.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'aosm' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
-  sourceType: Extension
-  syntax: >-
-    az aosm nsd delete --config-file
-                       [--clean {false, true}]
-                       [--force]
-  requiredParameters:
-  - isRequired: true
-    name: --config-file -f
-    summary: |-
-      The path to the configuration file.
-  optionalParameters:
-  - name: --clean
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: |-
-      Also delete NSD Group. Use with care.
-  - name: --force
-    defaultValue: "False"
-    summary: |-
-      If True, will not prompt for confirmation before deleting the resources.
+      The path to the configuration file. This is a JSONC file that contains the required parameters for building the NSD.
 - uid: az_aosm_nsd_generate-config
   name: az aosm nsd generate-config
   summary: |-
     Generate configuration file for building an AOSM publisher Network Service Design.
+  description: |-
+    Generates a configuration file that you can use to build an AOSM Network Service Design (NSD). The configuration file is a JSONC file that contains the required parameters for building the NSD. You must complete the configuration file with your specific values before building the NSD.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'aosm' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: az aosm nsd generate-config [--output-file]
+  examples:
+  - summary: |-
+      Generate a configuration file for a Network Service Design.
+    syntax: az aosm nsd generate-config
+  - summary: |-
+      Generate a configuration file for a Network Service Design and write to a specific file.
+    syntax: az aosm nsd generate-config --output-file my-nsd-input-config.jsonc
   optionalParameters:
   - name: --output-file
-    defaultValue: "input.json"
     summary: |-
-      Path to output config file, defaults to "input.json".
+      The name of the output file to write the generated config text to.
 - uid: az_aosm_nsd_publish
   name: az aosm nsd publish
   summary: |-
     Publish a pre-built AOSM Network Service Design.
+  description: |-
+    Publishes a pre-built AOSM Network Service Design (NSD) to Azure. The NSD must be built using the aosm nsd build command before it can be published. The NSD and other required resources (publisher resource, artifact manifest(s), storage account(s) etc.) is published to the specified resource group in the currently active Azure subscription.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'aosm' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az aosm nsd publish --config-file
-                        [--design-file]
-                        [--manifest-file]
-                        [--manifest-params-file]
-                        [--parameters-json-file]
-                        [--skip {artifact-upload, bicep-publish}]
+    az aosm nsd publish --build-output-folder
+                        [--no-subscription-permissions]
+  examples:
+  - summary: |-
+      Publish a Network Service Design.
+    syntax: az aosm nsd publish --build-output-folder my-nsd-output-folder
   requiredParameters:
   - isRequired: true
-    name: --config-file -f
+    name: --build-output-folder -b
     summary: |-
-      The path to the configuration file.
+      Path to the folder to publish, created by the build command.
   optionalParameters:
-  - name: --design-file
+  - name: --no-subscription-permissions -u
+    defaultValue: "False"
     summary: |-
-      Optional path to an override bicep template to deploy the NSDV.
-  - name: --manifest-file
-    summary: |-
-      Optional path to an override bicep template to deploy manifests.
-  - name: --manifest-params-file
-    summary: |-
-      Optional path to an override bicep parameters file for manifest parameters.
-  - name: --parameters-json-file
-    summary: |-
-      Optional path to a parameters file for the bicep file, in case the user wants to edit the built NSDV template. If omitted, parameters from config will be turned into parameters for the bicep file.
-  - name: --skip
-    parameterValueGroup: "artifact-upload, bicep-publish"
-    summary: |-
-      Optional skip steps.
+      CNF definition_type publish only - ignored for VNF. Pass this flag if you do not have permission to import to the Publisher subscription (Contributor role + AcrPush role, or a custom role that allows the importImage action and AcrPush over the whole subscription). This means that the image artifacts will be pulled to your local machine and then pushed to the Artifact Store. Requires Docker to be installed locally.
 commands:
 - az_aosm_nsd_build
-- az_aosm_nsd_delete
 - az_aosm_nsd_generate-config
 - az_aosm_nsd_publish
 globalParameters:
@@ -141,4 +112,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage AOSM publisher Network Service Designs.
+  description: A Network Service Design (NSD) is a collection of Network Function Definitions (NFD) and any supporting infrastructure that define a network service. This command group allows you to build and publish NSDs to Azure.

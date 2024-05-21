@@ -55,12 +55,14 @@ directCommands:
                    [--enable-integrity-monitoring]
                    [--enable-osimage-notification {false, true}]
                    [--enable-proxy-agent {false, true}]
+                   [--enable-resilient-creation {false, true}]
+                   [--enable-resilient-deletion {false, true}]
                    [--enable-secure-boot {false, true}]
                    [--enable-spot-restore {false, true}]
                    [--enable-vtpm {false, true}]
                    [--encryption-at-host {false, true}]
                    [--ephemeral-os-disk {false, true}]
-                   [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
+                   [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                    [--eviction-policy {Deallocate, Delete}]
                    [--exclude-extensions]
                    [--generate-ssh-keys]
@@ -348,6 +350,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
+  - name: --enable-resilient-creation
+    parameterValueGroup: "false, true"
+    summary: |-
+      Automatically recover customers from OS Provisioning Timeout and VM Start Timeout errors experienced during a VM Create operation by deleting and recreating the affected VM.
+  - name: --enable-resilient-deletion
+    parameterValueGroup: "false, true"
+    summary: |-
+      Retry VM Delete requests asynchronously in the event of a failed delete operation.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -369,7 +379,7 @@ directCommands:
     summary: |-
       Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: "CacheDisk, ResourceDisk"
+    parameterValueGroup: "CacheDisk, NvmeDisk, ResourceDisk"
     summary: |-
       Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
   - name: --eviction-policy
@@ -1309,11 +1319,15 @@ directCommands:
                    [--enable-hibernation {false, true}]
                    [--enable-osimage-notification {false, true}]
                    [--enable-proxy-agent {false, true}]
+                   [--enable-resilient-creation {false, true}]
+                   [--enable-resilient-deletion {false, true}]
                    [--enable-secure-boot {false, true}]
                    [--enable-spot-restore {false, true}]
                    [--enable-terminate-notification {false, true}]
                    [--enable-vtpm {false, true}]
-                   [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
+                   [--ephemeral-option {Local}]
+                   [--ephemeral-os-disk {false, true}]
+                   [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                    [--exclude-extensions]
                    [--force-deletion]
                    [--force-string]
@@ -1421,6 +1435,14 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Specify whether proxy agent feature should be enabled on the virtual machine or virtual machine scale set.
+  - name: --enable-resilient-creation
+    parameterValueGroup: "false, true"
+    summary: |-
+      Automatically recover customers from OS Provisioning Timeout and VM Start Timeout errors experienced during a VM Create operation by deleting and recreating the affected VM.
+  - name: --enable-resilient-deletion
+    parameterValueGroup: "false, true"
+    summary: |-
+      Retry VM Delete requests asynchronously in the event of a failed delete operation.
   - name: --enable-secure-boot
     parameterValueGroup: "false, true"
     summary: |-
@@ -1437,8 +1459,16 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable vTPM.
+  - name: --ephemeral-option --ephemeral-os-disk-option
+    parameterValueGroup: "Local"
+    summary: |-
+      Specify the ephemeral disk settings for operating system disk.
+  - name: --ephemeral-os-disk
+    parameterValueGroup: "false, true"
+    summary: |-
+      Allow you to specify the ephemeral disk settings for the operating system disk. Specify it to false to set ephemeral disk setting as empty and migrate it to non ephemeral.
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: "CacheDisk, ResourceDisk"
+    parameterValueGroup: "CacheDisk, NvmeDisk, ResourceDisk"
     summary: |-
       Only applicable when used with `--vm-sku`. Allows you to choose the Ephemeral OS disk provisioning location.
   - name: --exclude-extensions --security-posture-reference-exclude-extensions

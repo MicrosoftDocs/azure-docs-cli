@@ -54,6 +54,7 @@ directCommands:
                                                  [--migration-mode {offline, online}]
                                                  [--migration-name]
                                                  [--migration-option {Migrate, Validate, ValidateAndMigrate}]
+                                                 [--migrationRuntimeResourceId]
                                                  [--tags]
   examples:
   - summary: |-
@@ -120,6 +121,9 @@ directCommands:
         }
       }
     syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver         --migration-name testmigration --properties "migrationConfig.json"
+  - summary: |-
+      Start a private endpoint enabled migration workflow on the target server identified by the parameters. The configurations of the migration should be specified in the migrationConfig.json file. Use --migrationRuntimeResourceId to define the migration runtime server that is responsible for migrating data between source and target server.
+    syntax: az postgres flexible-server migration create --subscription xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx --resource-group testGroup --name testserver --migration-name testmigration --properties "migrationConfig.json" --migrationRuntimeResourceId /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/testGroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/testsourcemigration
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -150,6 +154,9 @@ directCommands:
     parameterValueGroup: "Migrate, Validate, ValidateAndMigrate"
     summary: |-
       Supported Migration Option. Default is ValidateAndMigrate.
+  - name: --migrationRuntimeResourceId -r
+    summary: |-
+      For private endpoint migrations, this ID will be responsible for migrating data between source and target server.
   - name: --tags
     summary: |-
       Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.

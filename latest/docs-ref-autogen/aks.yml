@@ -148,6 +148,7 @@ directCommands:
                   [--aci-subnet-name]
                   [--admin-username]
                   [--aks-custom-headers]
+                  [--ampls-resource-id]
                   [--api-server-authorized-ip-ranges]
                   [--appgw-id]
                   [--appgw-name]
@@ -187,9 +188,11 @@ directCommands:
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
+                  [--enable-cost-analysis]
                   [--enable-defender]
                   [--enable-encryption-at-host]
                   [--enable-fips-image]
+                  [--enable-high-log-scale-mode {false, true}]
                   [--enable-image-cleaner]
                   [--enable-keda]
                   [--enable-managed-identity]
@@ -242,7 +245,7 @@ directCommands:
                   [--no-ssh-key]
                   [--no-wait]
                   [--node-count]
-                  [--node-os-upgrade-channel {NodeImage, None, Unmanaged}]
+                  [--node-os-upgrade-channel {NodeImage, None, SecurityPatch, Unmanaged}]
                   [--node-osdisk-diskencryptionset-id]
                   [--node-osdisk-size]
                   [--node-osdisk-type {Ephemeral, Managed}]
@@ -425,6 +428,9 @@ directCommands:
   - name: --aks-custom-headers
     summary: |-
       Comma-separated key-value pairs to specify custom headers.
+  - name: --ampls-resource-id
+    summary: |-
+      Resource ID of Azure Monitor Private Link scope for Monitoring Addon.
   - name: --api-server-authorized-ip-ranges
     summary: |-
       Comma-separated list of authorized apiserver IP ranges. Set to 0.0.0.0/32 to restrict apiserver traffic to node pools.
@@ -483,7 +489,6 @@ directCommands:
   - name: --data-collection-settings
     summary: |-
       Path to JSON file containing data collection settings for Monitoring addon.
-    isPreview: true
   - name: --defender-config
     summary: |-
       Path to JSON file containing Microsoft Defender profile configurations.
@@ -536,6 +541,8 @@ directCommands:
                                        Specify "--enable-msi-auth-for-monitoring" to use Managed Identity Auth.
                                        Specify "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
                                        Specify "--data-collection-settings" to configure data collection settings
+                                       Specify "--ampls-resource-id" for private link. Note MSI must be enabled.
+                                       Specify "--enable-high-log-scale-mode" to enable high log scale mode for container logs. Note MSI must be enabled.
                                        If monitoring addon is enabled --no-wait argument will have no effect
           - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
                                        Learn more at aka.ms/aks/policy.
@@ -582,6 +589,10 @@ directCommands:
       Enable cluster autoscaler, default value is false.
     description: |-
       If specified, please make sure the kubernetes version is larger than 1.10.6.
+  - name: --enable-cost-analysis
+    defaultValue: "False"
+    summary: |-
+      Enable exporting Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. For more information see aka.ms/aks/docs/cost-analysis.
   - name: --enable-defender
     defaultValue: "False"
     summary: |-
@@ -594,6 +605,12 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Use FIPS-enabled OS on agent nodes.
+  - name: --enable-high-log-scale-mode
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable High Log Scale Mode for Container Logs.
+    isPreview: true
   - name: --enable-image-cleaner
     defaultValue: "False"
     summary: |-
@@ -603,7 +620,7 @@ directCommands:
     summary: |-
       Enable KEDA workload auto-scaler.
   - name: --enable-managed-identity
-    defaultValue: "True"
+    defaultValue: "False"
     summary: |-
       Using a system assigned managed identity to manage cluster resource group.
   - name: --enable-msi-auth-for-monitoring
@@ -611,7 +628,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable Managed Identity Auth for Monitoring addon.
-    isPreview: true
   - name: --enable-node-public-ip
     defaultValue: "False"
     summary: |-
@@ -637,7 +653,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable syslog data collection for Monitoring addon.
-    isPreview: true
   - name: --enable-ultra-ssd
     defaultValue: "False"
     summary: |-
@@ -826,7 +841,7 @@ directCommands:
     summary: |-
       Number of nodes in the Kubernetes node pool. After creating a cluster, you can change the size of its node pool with `az aks scale`.
   - name: --node-os-upgrade-channel
-    parameterValueGroup: "NodeImage, None, Unmanaged"
+    parameterValueGroup: "NodeImage, None, SecurityPatch, Unmanaged"
     summary: |-
       Manner in which the OS on your nodes is updated. It could be NodeImage, None, SecurityPatch or Unmanaged.
   - name: --node-osdisk-diskencryptionset-id -d
@@ -1175,6 +1190,7 @@ directCommands:
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
+                  [--vm-sizes]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
@@ -1297,6 +1313,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a kubernetes cluster with a VirtualMachines nodepool
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -2022,6 +2041,10 @@ directCommands:
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of sizes. Must use VirtualMachines agent pool type.
+    isPreview: true
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -2217,7 +2240,9 @@ directCommands:
     - http_application_routing : configure ingress with automatic public DNS name creation.
     - monitoring               : turn on Log Analytics monitoring. Requires "--workspace-resource-id".
                                  Requires "--enable-msi-auth-for-monitoring" for managed identity auth.
-                                 Requires "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled
+                                 Requires "--enable-syslog" to enable syslog data collection from nodes. Note MSI must be enabled.
+                                 Requires "--ampls-resource-id" for private link. Note MSI must be enabled.
+                                 Requires "--enable-high-log-scale-mode" to enable high log scale mode for container logs. Note MSI must be enabled.
                                  If monitoring addon is enabled --no-wait argument will have no effect
     - virtual-node             : enable AKS Virtual Node. Requires --subnet-name to provide the name of an existing subnet for the Virtual Node to use.
     - azure-policy             : enable Azure policy. The Azure Policy add-on for AKS enables at-scale enforcements and safeguards on your clusters in a centralized, consistent manner.
@@ -2232,12 +2257,14 @@ directCommands:
     az aks enable-addons --addons
                          --name
                          --resource-group
+                         [--ampls-resource-id]
                          [--appgw-id]
                          [--appgw-name]
                          [--appgw-subnet-cidr]
                          [--appgw-subnet-id]
                          [--appgw-watch-namespace]
                          [--data-collection-settings]
+                         [--enable-high-log-scale-mode {false, true}]
                          [--enable-msi-auth-for-monitoring {false, true}]
                          [--enable-secret-rotation]
                          [--enable-sgxquotehelper]
@@ -2270,6 +2297,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --ampls-resource-id
+    summary: |-
+      Resource ID of Azure Monitor Private Link scope for Monitoring Addon.
   - name: --appgw-id
     summary: |-
       Resource Id of an existing Application Gateway to use with AGIC. Use with ingress-azure addon.
@@ -2288,13 +2318,17 @@ directCommands:
   - name: --data-collection-settings
     summary: |-
       Path to JSON file containing data collection settings for Monitoring addon.
+  - name: --enable-high-log-scale-mode
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable High Log Scale Mode for Container Logs.
     isPreview: true
   - name: --enable-msi-auth-for-monitoring
     defaultValue: "True"
     parameterValueGroup: "false, true"
     summary: |-
       Enable Managed Identity Auth for Monitoring addon.
-    isPreview: true
   - name: --enable-secret-rotation
     defaultValue: "False"
     summary: |-
@@ -2308,7 +2342,6 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable syslog data collection for Monitoring addon.
-    isPreview: true
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -3242,6 +3275,7 @@ directCommands:
                   [--disable-azure-rbac]
                   [--disable-blob-driver]
                   [--disable-cluster-autoscaler]
+                  [--disable-cost-analysis]
                   [--disable-defender]
                   [--disable-disk-driver]
                   [--disable-file-driver]
@@ -3263,6 +3297,7 @@ directCommands:
                   [--enable-azure-rbac]
                   [--enable-blob-driver]
                   [--enable-cluster-autoscaler]
+                  [--enable-cost-analysis]
                   [--enable-defender]
                   [--enable-disk-driver]
                   [--enable-file-driver]
@@ -3497,6 +3532,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable cluster autoscaler.
+  - name: --disable-cost-analysis
+    defaultValue: "False"
+    summary: |-
+      Disable exporting Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal.
   - name: --disable-defender
     defaultValue: "False"
     summary: |-
@@ -3580,6 +3619,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable cluster autoscaler.
+  - name: --enable-cost-analysis
+    defaultValue: "False"
+    summary: |-
+      Enable exporting Kubernetes Namespace and Deployment details to the Cost Analysis views in the Azure portal. For more information see aka.ms/aks/docs/cost-analysis.
   - name: --enable-defender
     defaultValue: "False"
     summary: |-
@@ -5160,6 +5203,7 @@ commands:
 - az_aks_connection_create
 - az_aks_connection_create_app-insights
 - az_aks_connection_create_appconfig
+- az_aks_connection_create_cognitiveservices
 - az_aks_connection_create_confluent-cloud
 - az_aks_connection_create_cosmos-cassandra
 - az_aks_connection_create_cosmos-gremlin
@@ -5194,6 +5238,7 @@ commands:
 - az_aks_connection_update
 - az_aks_connection_update_app-insights
 - az_aks_connection_update_appconfig
+- az_aks_connection_update_cognitiveservices
 - az_aks_connection_update_confluent-cloud
 - az_aks_connection_update_cosmos-cassandra
 - az_aks_connection_update_cosmos-gremlin
@@ -5292,6 +5337,10 @@ commands:
 - az_aks_nodepool_get-upgrades(aks-preview)
 - az_aks_nodepool_list
 - az_aks_nodepool_list(aks-preview)
+- az_aks_nodepool_manual-scale
+- az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_update
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_operation-abort(aks-preview)
 - az_aks_nodepool_scale
@@ -5321,8 +5370,11 @@ commands:
 - az_aks_nodepool_wait
 - az_aks_oidc-issuer
 - az_aks_oidc-issuer_rotate-signing-keys
+- az_aks_operation
 - az_aks_operation-abort
 - az_aks_operation-abort(aks-preview)
+- az_aks_operation_show
+- az_aks_operation_show-latest
 - az_aks_pod-identity
 - az_aks_pod-identity_add
 - az_aks_pod-identity_delete
