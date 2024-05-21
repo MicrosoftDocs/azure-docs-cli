@@ -61,7 +61,7 @@ Breaking changes might not affect existing scripts, but it's a good practice to 
 
 ## Standard Term Support releases (STS)
 
-The STS versions of Azure CLI core give you the most recent capabilities. STS releases don't experience breaking changes for six months. Breaking changes are released in the second and fourth quarters, and usually align with Microsoft Build and Microsoft Ignite.
+The STS versions of Azure CLI core give you the most recent capabilities. STS releases don't experience breaking changes for six months. Breaking changes are released in the second and fourth quarters of the calendar year, and usually align with Microsoft Build and Microsoft Ignite.
 
 STS releases have the following characteristics:
 
