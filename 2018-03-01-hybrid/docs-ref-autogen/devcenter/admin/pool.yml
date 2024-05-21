@@ -28,12 +28,19 @@ directCommands:
                                    [--network-connection-name]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--single-sign-on-status {Disabled, Enabled}]
+                                   [--stop-on-disconnect]
                                    [--tags]
                                    [--virtual-network-type {Managed, Unmanaged}]
   examples:
   - summary: |-
-      Create
-    syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled"
+      Create pool using unmanaged network
+    syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Unmanaged" --single-sign-on-status "Enabled"
+  - summary: |-
+      Create pool using managed network
+    syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Managed" --managed-virtual-network-region ["westus3"] --single-sign-on-status "Enabled"
+  - summary: |-
+      Create a pool with stop on disconnect enabled
+    syntax: az devcenter admin pool create --location "eastus" --devbox-definition-name "WebDevBox" --network-connection-name "Network1-westus2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --local-administrator "Enabled" --virtual-network-type "Unmanaged" --single-sign-on-status "Enabled" --stop-on-disconnect status="Enabled" grace-period-minutes="60"
   requiredParameters:
   - isRequired: true
     name: --devbox-definition-name -d
@@ -77,6 +84,10 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant.
+  - name: --stop-on-disconnect
+    summary: |-
+      Stop on disconnect configuration settings for dev boxes created in this pool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    isPreview: true
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -248,13 +259,14 @@ directCommands:
                                    [--resource-group]
                                    [--set]
                                    [--single-sign-on-status {Disabled, Enabled}]
+                                   [--stop-on-disconnect]
                                    [--subscription]
                                    [--tags]
                                    [--virtual-network-type {Managed, Unmanaged}]
   examples:
   - summary: |-
       Update
-    syntax: az devcenter admin pool update --devbox-definition-name "WebDevBox2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1"
+    syntax: az devcenter admin pool update --devbox-definition-name "WebDevBox2" --pool-name "DevPool" --project-name "DevProject" --resource-group "rg1" --stop-on-disconnect status="Disabled"
   optionalParameters:
   - name: --add
     summary: |-
@@ -305,6 +317,10 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant.
+  - name: --stop-on-disconnect
+    summary: |-
+      Stop on disconnect configuration settings for dev boxes created in this pool.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+    isPreview: true
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.

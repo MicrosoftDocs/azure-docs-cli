@@ -86,9 +86,9 @@ directCommands:
                                  --resource-group
                                  [--allowed-clients]
                                  [--avs-data-store {Disabled, Enabled}]
-                                 [--backup-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--backup-id]
                                  [--backup-policy-id]
+                                 [--backup-vault-id]
                                  [--ca-retrieval-policy {Default, Never, OnRead}]
                                  [--capacity-pool-resource-id]
                                  [--chown-mode {Restricted, Unrestricted}]
@@ -96,6 +96,7 @@ directCommands:
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--default-group-quota]
+                                 [--default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--default-user-quota]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
@@ -103,7 +104,6 @@ directCommands:
                                  [--endpoint-type {dst, src}]
                                  [--export-policy-rules]
                                  [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos-enabled {0, 1, f, false, n, no, t, true, y, yes}]
@@ -123,7 +123,6 @@ directCommands:
                                  [--ppg]
                                  [--protocol-types]
                                  [--relocation-requested {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--remote-path]
                                  [--remote-volume-id]
                                  [--remote-volume-region]
                                  [--replication-schedule {_10minutely, daily, hourly}]
@@ -151,7 +150,7 @@ directCommands:
   examples:
   - summary: |-
       Create an ANF volume
-    syntax: az netappfiles volume create -g group --account-name aname --pool-name pname --volume-name vname -l location --service-level "Premium" --usage-threshold 100 --creation-token "unique-token" --protocol-types NFSv3 --vnet myvnet --subnet-id "/subscriptions/mysubsid/resourceGroups/myrg/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/default" --rules '[{"allowed_clients":"0.0.0.0/0","rule_index":"1","unix_read_only":"true","unix_read_write":"false","cifs":"false","nfsv3":"true","nfsv41":"false"}]'
+    syntax: az netappfiles volume create -g group --account-name aname --pool-name pname --volume-name vname -l location --service-level "Premium" --usage-threshold 107374182400 --creation-token "unique-token" --protocol-types NFSv3 --vnet myvnet --subnet-id "/subscriptions/mysubsid/resourceGroups/myrg/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/default" --rules '[{"allowed_clients":"0.0.0.0/0","rule_index":"1","unix_read_only":"true","unix_read_write":"false","cifs":"false","nfsv3":"true","nfsv41":"false"}]'
   - summary: |-
       Create an ANF volume with zones (Availability Zone) specified
     syntax: az netappfiles volume create -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname -l westus2 --service-level premium --usage-threshold 100 --file-path "unique-file-path" --vnet myvnet --subnet mysubnet --protocol-types NFSv3 --zones zone1
@@ -188,16 +187,15 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose.
-  - name: --backup-enabled
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Backup Enabled.
   - name: --backup-id
     summary: |-
       Resource identifier used to identify the Backup.
   - name: --backup-policy-id
     summary: |-
       Backup Policy Resource ID.
+  - name: --backup-vault-id
+    summary: |-
+      Backup Vault Resource ID.
   - name: --ca-retrieval-policy --cool-access-retrieval-policy
     parameterValueGroup: "Default, Never, OnRead"
     summary: |-
@@ -225,6 +223,11 @@ directCommands:
     defaultValue: "0"
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Specifies if default quota is enabled for the volume.
   - name: --default-user-quota --default-user-quota-in-ki-bs
     defaultValue: "0"
     summary: |-
@@ -254,11 +257,6 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Has root access to volume. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
-  - name: --is-def-quota-enabled --is-default-quota-enabled
-    defaultValue: "False"
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Specifies if default quota is enabled for the volume.
   - name: --is-large-volume
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -334,10 +332,6 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Has relocation been requested for this volume.
-  - name: --remote-path
-    summary: |-
-      The full path to a volume that is to be migrated into ANF. Required for Migration volumes  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-    isPreview: true
   - name: --remote-volume-id --remote-volume-resource-id
     summary: |-
       The resource ID of the remote volume.
@@ -401,7 +395,6 @@ directCommands:
     summary: |-
       Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume.
   - name: --unix-permissions
-    defaultValue: "0770"
     summary: |-
       UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.
   - name: --unix-read-only
@@ -415,7 +408,7 @@ directCommands:
   - name: --usage-threshold
     defaultValue: "100"
     summary: |-
-      Maximum storage quota allowed for a file system as integer number of GiB.
+      Maximum storage quota allowed for a file system in bytes.
   - name: --vnet
     summary: |-
       Name or Resource ID of the vnet. If you want to use a vnet in other resource group, please provide the Resource ID instead of the name of the vnet.
@@ -735,6 +728,7 @@ directCommands:
                                  [--pool-name]
                                  [--resource-group]
                                  [--subscription]
+                                 [--yes]
   examples:
   - summary: |-
       Delete an ANF volume
@@ -766,6 +760,10 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_netappfiles_volume_finalize-relocation
   name: az netappfiles volume finalize-relocation
   summary: |-
@@ -971,7 +969,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --volume-name
+  - name: --volume-name -v
     summary: |-
       The name of the volume.
 - uid: az_netappfiles_volume_migrate-backup(netappfiles-preview)
@@ -1374,14 +1372,15 @@ directCommands:
     az netappfiles volume update [--account-name]
                                  [--add]
                                  [--avs-data-store {Disabled, Enabled}]
-                                 [--backup-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--backup-policy-id]
+                                 [--backup-vault-id]
                                  [--ca-retrieval-policy {Default, Never, OnRead}]
                                  [--capacity-pool-resource-id]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--creation-token]
                                  [--default-group-quota]
+                                 [--default-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--default-user-quota]
                                  [--delete-base-snapshot {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--enable-subvolumes {Disabled, Enabled}]
@@ -1390,12 +1389,12 @@ directCommands:
                                  [--export-policy-rules]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
-                                 [--is-def-quota-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id]
                                  [--ldap-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--name]
+                                 [--network-features {Basic, Basic_Standard, Standard, Standard_Basic}]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--placement-rules]
                                  [--policy-enforced {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1441,13 +1440,12 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose.
-  - name: --backup-enabled
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Backup Enabled.
   - name: --backup-policy-id
     summary: |-
       Backup Policy Resource ID.
+  - name: --backup-vault-id
+    summary: |-
+      Backup Vault Resource ID.
   - name: --ca-retrieval-policy --cool-access-retrieval-policy
     parameterValueGroup: "Default, Never, OnRead"
     summary: |-
@@ -1468,6 +1466,10 @@ directCommands:
   - name: --default-group-quota --default-group-quota-in-ki-bs
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Specifies if default quota is enabled for the volume.
   - name: --default-user-quota --default-user-quota-in-ki-bs
     summary: |-
       Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
@@ -1497,10 +1499,6 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --is-def-quota-enabled --is-default-quota-enabled
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Specifies if default quota is enabled for the volume.
   - name: --is-large-volume
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -1519,6 +1517,10 @@ directCommands:
   - name: --name --volume-name -n -v
     summary: |-
       The name of the volume.
+  - name: --network-features
+    parameterValueGroup: "Basic, Basic_Standard, Standard, Standard_Basic"
+    summary: |-
+      Basic network, or Standard features available to the volume. hide me.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -1610,7 +1612,7 @@ directCommands:
       UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.
   - name: --usage-threshold
     summary: |-
-      Maximum storage quota allowed for a file system as integer number of GiB.
+      Maximum storage quota allowed for a file system in bytes.
   - name: --vnet
     summary: |-
       Name or Resource ID of the vnet. If you want to use a vnet in other resource group or subscription, please provide the Resource ID instead of the name of the vnet.
@@ -2020,16 +2022,6 @@ directCommands:
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
 commands:
-- az_netappfiles_volume_backup
-- az_netappfiles_volume_backup_create
-- az_netappfiles_volume_backup_delete
-- az_netappfiles_volume_backup_list
-- az_netappfiles_volume_backup_restore-files
-- az_netappfiles_volume_backup_restore-status
-- az_netappfiles_volume_backup_show
-- az_netappfiles_volume_backup_status
-- az_netappfiles_volume_backup_update
-- az_netappfiles_volume_backup_wait
 - az_netappfiles_volume_break-file-locks
 - az_netappfiles_volume_create
 - az_netappfiles_volume_create(netappfiles-preview)
@@ -2047,6 +2039,9 @@ commands:
 - az_netappfiles_volume_latest-backup-status_current
 - az_netappfiles_volume_latest-backup-status_current_show
 - az_netappfiles_volume_latest-backup-status_current_show(netappfiles-preview)
+- az_netappfiles_volume_latest-restore-status
+- az_netappfiles_volume_latest-restore-status_current
+- az_netappfiles_volume_latest-restore-status_current_show
 - az_netappfiles_volume_list
 - az_netappfiles_volume_list(netappfiles-preview)
 - az_netappfiles_volume_migrate-backup

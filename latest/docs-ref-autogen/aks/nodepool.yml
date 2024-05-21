@@ -317,6 +317,7 @@ directCommands:
                         [--ssh-access {disabled, localuser}]
                         [--tags]
                         [--vm-set-type]
+                        [--vm-sizes]
                         [--vnet-subnet-id]
                         [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                         [--zones]
@@ -345,6 +346,9 @@ directCommands:
   - summary: |-
       Create a nodepool with ip allocation mode set to "StaticBlock" and using a pod subnet ID
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a nodepool of type VirtualMachines
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "Standard_D4s_v3,Standard_D8s_v3" --node-count 3
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -557,6 +561,10 @@ directCommands:
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of sizes. Must use VirtualMachines agent pool type.
+    isPreview: true
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -1142,6 +1150,7 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
+                           [--os-sku {AzureLinux, CBLMariner, Mariner}]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--tags]
                            [--update-cluster-autoscaler]
@@ -1218,6 +1227,10 @@ directCommands:
   - name: --node-taints
     summary: |-
       The node taints for the node pool. You can update the existing node taint of a nodepool or create a new node taint for a nodepool. Pass the empty string `""` to remove all taints.
+  - name: --os-sku
+    parameterValueGroup: "AzureLinux, CBLMariner, Mariner"
+    summary: |-
+      The os-sku of the agent node pool.
   - name: --scale-down-mode
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
@@ -1607,6 +1620,10 @@ commands:
 - az_aks_nodepool_get-upgrades(aks-preview)
 - az_aks_nodepool_list
 - az_aks_nodepool_list(aks-preview)
+- az_aks_nodepool_manual-scale
+- az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_update
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_operation-abort(aks-preview)
 - az_aks_nodepool_scale

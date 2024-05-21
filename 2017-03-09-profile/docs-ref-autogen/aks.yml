@@ -232,6 +232,7 @@ directCommands:
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
+                  [--vm-sizes]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
@@ -354,6 +355,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a kubernetes cluster with a VirtualMachines nodepool
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -1079,6 +1083,10 @@ directCommands:
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of sizes. Must use VirtualMachines agent pool type.
+    isPreview: true
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -2808,6 +2816,7 @@ commands:
 - az_aks_connection_create
 - az_aks_connection_create_app-insights
 - az_aks_connection_create_appconfig
+- az_aks_connection_create_cognitiveservices
 - az_aks_connection_create_confluent-cloud
 - az_aks_connection_create_cosmos-cassandra
 - az_aks_connection_create_cosmos-gremlin
@@ -2842,6 +2851,7 @@ commands:
 - az_aks_connection_update
 - az_aks_connection_update_app-insights
 - az_aks_connection_update_appconfig
+- az_aks_connection_update_cognitiveservices
 - az_aks_connection_update_confluent-cloud
 - az_aks_connection_update_cosmos-cassandra
 - az_aks_connection_update_cosmos-gremlin
@@ -2913,6 +2923,10 @@ commands:
 - az_aks_nodepool_delete-machines
 - az_aks_nodepool_get-upgrades
 - az_aks_nodepool_list
+- az_aks_nodepool_manual-scale
+- az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_update
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
@@ -2926,7 +2940,10 @@ commands:
 - az_aks_nodepool_stop
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
+- az_aks_operation
 - az_aks_operation-abort
+- az_aks_operation_show
+- az_aks_operation_show-latest
 - az_aks_pod-identity
 - az_aks_pod-identity_add
 - az_aks_pod-identity_delete
