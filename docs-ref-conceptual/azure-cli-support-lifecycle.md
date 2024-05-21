@@ -164,7 +164,7 @@ Azure CLI depends on Python version 3.8 or above. The following table summarizes
 Azure CLI can only be supported on operating systems where the above versions of Python are supported.
 
 - **Windows:** The currently supported versions of Windows client and server meet Python version requirements.
-- **macOS:** The currently supported version of maxOS 10.9 and above meet Python version requirements.
+- **macOS:** The currently supported version of macOS 10.9 and above meet Python version requirements.
 - **Linux:** 
   - Each supported operating system has a lifecycle defined by its sponsor organization.
   - Support is typically removed when an operating system goes out of mainline support, at which time we stop testing and supporting it.
