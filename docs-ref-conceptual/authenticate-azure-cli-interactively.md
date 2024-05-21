@@ -14,7 +14,30 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 # Sign in interactively with Azure CLI 
 
-The Azure CLI's default authentication method for logins uses a web browser and access token to sign in.
+Interactive logins to Azure offer a more intuitive and flexible user experience. Interactive login with Azure CLI allows users to authenticate to Azure directly through the [az login](/cli/azure/reference-index#az-login) command, which is useful for ad-hoc management tasks and for environments that require manual sign-in, such as those with multi-factor authentication (MFA). This method simplifies access for script testing, learning, and on-the-fly management without needing to pre-configure service principals or other noninteractive authentication methods.
+
+## Sign in with Web Account Manager (WAM) on Windows
+
+As of Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), WAM is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+
+Using WAM has several benefits:
+
+* Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
+* Support for Windows Hello, conditional access policies, and FIDO keys.
+* Streamlined single sign-on.
+* Bug fixes and enhancements shipped with Windows.
+
+If you encounter any issue and want to revert to the previous browser-based authentication method, run the following script:
+
+```azurecli-interactive
+az account clear
+az config set core.enable_broker_on_windows=false
+az login
+```
+
+## Sign in with a browser
+
+WAM is available on Windows 10 and later, and on Windows Server 2019 and later. On Mac, Linux, and earlier versions of Windows, the Azure CLI will continue to automatically default to a browser.  
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
@@ -69,5 +92,4 @@ Microsoft Edge. Add `localhost` under "_Delete domain security policy_" and sele
 ## See also
 
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
-* [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
