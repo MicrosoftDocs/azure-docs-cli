@@ -15,35 +15,17 @@ ms.custom: devx-track-azurecli
 
 Interactive logins to Azure offer a more intuitive and flexible user experience. Interactive login with Azure CLI allows users to authenticate to Azure directly through the [az login](/cli/azure/reference-index#az-login) command, which is useful for ad-hoc management tasks and for environments that require manual sign-in, such as those customers with multi-factor authentication (MFA). This method simplifies access for script testing, learning, and on-the-fly management without needing to preconfigure service principals or other noninteractive authentication methods.
 
-## Sign in with Web Account Manager (WAM) on Windows
+## Prerequisites
 
-Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+* [Install the Azure CLI](./install-azure-cli.md)
 
-Using WAM has several benefits:
+# Interactive login
 
-* Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
-* Support for Windows Hello, conditional access policies, and FIDO keys.
-* Streamlined single sign-on.
-* Bug fixes and enhancements shipped with Windows.
-
-If you encounter any issue and want to revert to the previous browser-based authentication method, run the following script:
+To sign in interactively, use the [az login](/cli/azure/reference-index#az-login) command. Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Windows systems use Web Account Manager (WAM), and Linux and macOS systems use browser-based login by default.
 
 ```azurecli-interactive
-az account clear
-az config set core.enable_broker_on_windows=false
 az login
 ```
-
-WAM is available on Windows 10 and later, and on Windows Server 2019 and later.
-
-## Sign in with a browser
-
-The Azure CLI defaults to a browser-based authentication method when one of the following is true:
-
-* The operating system (OS) is Mac, or Linux, or the Windows OS is earlier than Windows 10 or Windows Server 2019.
-* The `core.enable_broker_on_windows` configuration property is set to `false`.
-
-[!INCLUDE [interactive_login](includes/interactive-login.md)]
 
 ## Login experience
 
@@ -82,6 +64,42 @@ subscription.
 Commands run against the selected subscription by default. To change your active subscription, use the
 `az account set`. For more information, see
 [How to manage Azure subscriptions with the Azure CLI][./manage-azure-subscriptions-azure-cli.md].
+
+Here are some feature guidelines to keep in mind:
+
+* The subscription selector is only available in 64-bit Windows, Linux, or macOS.
+* The subscription selector is only available when using the `az login` command.
+* You aren't prompted to select a subscription when you're logging in with a service principal or managed identity.
+  
+## Sign in with Web Account Manager (WAM) on Windows
+
+Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account Manager (WAM) is now the default authentication method on Windows. WAM is a Windows 10+ component that acts as an authentication broker. (An authentication broker is an application that runs on a user’s machine that manages the authentication handshakes and token maintenance for connected accounts.)
+
+Using WAM has several benefits:
+
+* Enhanced security. See [Conditional Access: Token protection (preview)](/azure/active-directory/conditional-access/concept-token-protection).
+* Support for Windows Hello, conditional access policies, and FIDO keys.
+* Streamlined single sign-on.
+* Bug fixes and enhancements shipped with Windows.
+
+If you encounter any issue and want to revert to the previous browser-based authentication method, run the following script:
+
+```azurecli-interactive
+az account clear
+az config set core.enable_broker_on_windows=false
+az login
+```
+
+WAM is available on Windows 10 and later, and on Windows Server 2019 and later.
+
+## Sign in with a browser
+
+The Azure CLI defaults to a browser-based authentication method when one of the following is true:
+
+* The operating system (OS) is Mac, or Linux, or the Windows OS is earlier than Windows 10 or Windows Server 2019.
+* The `core.enable_broker_on_windows` configuration property is set to `false`.
+
+[!INCLUDE [interactive_login](includes/interactive-login.md)]
 
 ## Sign in with credentials on the command line
 
