@@ -51,19 +51,18 @@ Tenant: Contoso
 Subscription: Finance Department Subscription (00000000-0000-0000-0000-000000000000)
 
 [Announcements]
-With the new Azure CLI login experience, you can select the subscription you want to use more easily. Learn more about it and its configuration at https://go.microsoft.com/fwlink/?linkid=2271236
+With the new Azure CLI login experience, you can select the subscription you want to use more easily.
+Learn more about it and its configuration at https://go.microsoft.com/fwlink/?linkid=2271236
 
 If you encounter any problem, please open an issue at https://aka.ms/azclibug
 ```
 
 The next time you login, the previously selected tenant and subscription is marked as the default
-with an asterisk (`*`) next to its number and highlighted in a cyan blue color. This allows you to
-press <kbd>Enter</kbd> to select the default or type a number to select a different tenant and
-subscription.
+with an asterisk (`*`) next to its number. This allows you to press <kbd>Enter</kbd> to select the
+default subscription.  You can always type a different number to set a new default subscription.
 
-Commands run against the selected subscription by default. To change your active subscription, use the
-`az account set`. For more information, see
-[How to manage Azure subscriptions with the Azure CLI][./manage-azure-subscriptions-azure-cli.md].
+Commands run against the selected subscription by default. To change your active subscription, use
+the `az account set`. For more information, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 Here are some feature guidelines to keep in mind:
 
