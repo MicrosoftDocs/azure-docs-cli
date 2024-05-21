@@ -328,6 +328,8 @@ directCommands:
                            [--dapr-http-read-buffer-size]
                            [--dapr-log-level {debug, error, info, warn}]
                            [--enable-dapr {false, true}]
+                           [--enable-java-agent {false, true}]
+                           [--enable-java-metrics {false, true}]
                            [--env-vars]
                            [--environment]
                            [--environment-type {connected, managed}]
@@ -346,6 +348,7 @@ directCommands:
                            [--repo]
                            [--revision-suffix]
                            [--revisions-mode {multiple, single}]
+                           [--runtime {generic, java}]
                            [--scale-rule-auth]
                            [--scale-rule-http-concurrency]
                            [--scale-rule-metadata]
@@ -446,6 +449,18 @@ directCommands:
       --registry-user MyRegistryUser --registry-pass MyRegistryPass \
 
       --source .
+  - summary: |-
+      Create a container app with java metrics enabled
+    syntax: >-
+      az containerapp create -n my-containerapp -g MyResourceGroup \
+          --image my-app:v1.0 --environment MyContainerappEnv \
+          --enable-java-metrics
+  - summary: |-
+      Create a container app with java agent enabled
+    syntax: >-
+      az containerapp create -n my-containerapp -g MyResourceGroup \
+          --image my-app:v1.0 --environment MyContainerappEnv \
+          --enable-java-agent
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -526,6 +541,16 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Boolean indicating if the Dapr side car is enabled.
+  - name: --enable-java-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Boolean indicating whether to enable Java agent for the app. Only applicable for Java runtime.
+    isPreview: true
+  - name: --enable-java-metrics
+    parameterValueGroup: "false, true"
+    summary: |-
+      Boolean indicating whether to enable Java metrics for the app. Only applicable for Java runtime.
+    isPreview: true
   - name: --env-vars
     summary: |-
       A list of environment variable(s) for the container. Space-separated values in 'key=value' format. Empty string to clear existing values. Prefix value with 'secretref:' to reference a secret.
@@ -589,6 +614,11 @@ directCommands:
     parameterValueGroup: "multiple, single"
     summary: |-
       The active revisions mode for the container app.
+  - name: --runtime
+    parameterValueGroup: "generic, java"
+    summary: |-
+      The runtime of the container app.
+    isPreview: true
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
@@ -1369,6 +1399,8 @@ directCommands:
                            [--container-name]
                            [--cpu]
                            [--customized-keys]
+                           [--enable-java-agent {false, true}]
+                           [--enable-java-metrics {false, true}]
                            [--ids]
                            [--image]
                            [--max-inactive-revisions]
@@ -1382,6 +1414,7 @@ directCommands:
                            [--replace-env-vars]
                            [--resource-group]
                            [--revision-suffix]
+                           [--runtime {generic, java}]
                            [--scale-rule-auth]
                            [--scale-rule-http-concurrency]
                            [--scale-rule-metadata]
@@ -1425,6 +1458,21 @@ directCommands:
   - summary: |-
       Update a Container App from the provided application source
     syntax: az containerapp update -n my-containerapp -g MyResourceGroup --source .
+  - summary: |-
+      Update a container app with java metrics enabled
+    syntax: >-
+      az containerapp update -n my-containerapp -g MyResourceGroup \
+          --enable-java-metrics
+  - summary: |-
+      Update a container app with java agent enabled
+    syntax: >-
+      az containerapp update -n my-containerapp -g MyResourceGroup \
+          --enable-java-agent
+  - summary: |-
+      Update a container app to erase java enhancement capabilities, like java metrics, java agent, etc.
+    syntax: >-
+      az containerapp update -n my-containerapp -g MyResourceGroup \
+          --runtime generic
   optionalParameters:
   - name: --args
     summary: |-
@@ -1453,6 +1501,16 @@ directCommands:
   - name: --customized-keys
     summary: |-
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+    isPreview: true
+  - name: --enable-java-agent
+    parameterValueGroup: "false, true"
+    summary: |-
+      Boolean indicating whether to enable Java agent for the app. Only applicable for Java runtime.
+    isPreview: true
+  - name: --enable-java-metrics
+    parameterValueGroup: "false, true"
+    summary: |-
+      Boolean indicating whether to enable Java metrics for the app. Only applicable for Java runtime.
     isPreview: true
   - name: --ids
     summary: |-
@@ -1496,6 +1554,11 @@ directCommands:
   - name: --revision-suffix
     summary: |-
       User friendly suffix that is appended to the revision name.
+  - name: --runtime
+    parameterValueGroup: "generic, java"
+    summary: |-
+      The runtime of the container app.
+    isPreview: true
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
@@ -1619,6 +1682,7 @@ commands:
 - az_containerapp_connection_create
 - az_containerapp_connection_create_app-insights
 - az_containerapp_connection_create_appconfig
+- az_containerapp_connection_create_cognitiveservices
 - az_containerapp_connection_create_confluent-cloud
 - az_containerapp_connection_create_cosmos-cassandra
 - az_containerapp_connection_create_cosmos-gremlin
@@ -1653,6 +1717,7 @@ commands:
 - az_containerapp_connection_update
 - az_containerapp_connection_update_app-insights
 - az_containerapp_connection_update_appconfig
+- az_containerapp_connection_update_cognitiveservices
 - az_containerapp_connection_update_confluent-cloud
 - az_containerapp_connection_update_cosmos-cassandra
 - az_containerapp_connection_update_cosmos-gremlin
@@ -1709,11 +1774,26 @@ commands:
 - az_containerapp_env_dapr-component_show
 - az_containerapp_env_delete
 - az_containerapp_env_delete(containerapp)
+- az_containerapp_env_dotnet-component
+- az_containerapp_env_dotnet-component_create
+- az_containerapp_env_dotnet-component_delete
+- az_containerapp_env_dotnet-component_list
+- az_containerapp_env_dotnet-component_show
 - az_containerapp_env_identity
 - az_containerapp_env_identity_assign
 - az_containerapp_env_identity_remove
 - az_containerapp_env_identity_show
 - az_containerapp_env_java-component
+- az_containerapp_env_java-component_config-server-for-spring
+- az_containerapp_env_java-component_config-server-for-spring_create
+- az_containerapp_env_java-component_config-server-for-spring_delete
+- az_containerapp_env_java-component_config-server-for-spring_show
+- az_containerapp_env_java-component_config-server-for-spring_update
+- az_containerapp_env_java-component_eureka-server-for-spring
+- az_containerapp_env_java-component_eureka-server-for-spring_create
+- az_containerapp_env_java-component_eureka-server-for-spring_delete
+- az_containerapp_env_java-component_eureka-server-for-spring_show
+- az_containerapp_env_java-component_eureka-server-for-spring_update
 - az_containerapp_env_java-component_list
 - az_containerapp_env_java-component_spring-cloud-config
 - az_containerapp_env_java-component_spring-cloud-config_create
@@ -1802,6 +1882,11 @@ commands:
 - az_containerapp_ingress_traffic_set
 - az_containerapp_ingress_traffic_show
 - az_containerapp_ingress_update
+- az_containerapp_java
+- az_containerapp_java_logger
+- az_containerapp_java_logger_delete
+- az_containerapp_java_logger_set
+- az_containerapp_java_logger_show
 - az_containerapp_job
 - az_containerapp_job_create
 - az_containerapp_job_create(containerapp)
@@ -1869,6 +1954,20 @@ commands:
 - az_containerapp_secret_remove
 - az_containerapp_secret_set
 - az_containerapp_secret_show
+- az_containerapp_session
+- az_containerapp_session_code-interpreter
+- az_containerapp_session_code-interpreter_delete-file
+- az_containerapp_session_code-interpreter_execute
+- az_containerapp_session_code-interpreter_list-files
+- az_containerapp_session_code-interpreter_show-file-content
+- az_containerapp_session_code-interpreter_show-file-metadata
+- az_containerapp_session_code-interpreter_upload-file
+- az_containerapp_sessionpool
+- az_containerapp_sessionpool_create
+- az_containerapp_sessionpool_delete
+- az_containerapp_sessionpool_list
+- az_containerapp_sessionpool_show
+- az_containerapp_sessionpool_update
 - az_containerapp_show
 - az_containerapp_show(containerapp)
 - az_containerapp_show-custom-domain-verification-id

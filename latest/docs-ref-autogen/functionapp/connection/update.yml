@@ -14,13 +14,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update app-insights [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python}]
+    az functionapp connection update app-insights [--appconfig-id]
+                                                  [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--id]
                                                   [--name]
                                                   [--no-wait]
-                                                  [--opt-out {configinfo, publicnetwork}]
+                                                  [--opt-out {auth, configinfo, publicnetwork}]
                                                   [--resource-group]
                                                   [--secret]
                                                   [--vault-id]
@@ -32,6 +33,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update app-insights --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python"
     summary: |-
@@ -53,9 +57,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--id' is not specified.None.
@@ -75,13 +79,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update appconfig [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
+    az functionapp connection update appconfig [--appconfig-id]
+                                               [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                [--connection]
                                                [--customized-keys]
                                                [--id]
                                                [--name]
                                                [--no-wait]
-                                               [--opt-out {configinfo, publicnetwork}]
+                                               [--opt-out {auth, configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -97,6 +102,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update appconfig --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
@@ -118,13 +126,103 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains the function app. Required if '--id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
+- uid: az_functionapp_connection_update_cognitiveservices
+  name: az functionapp connection update cognitiveservices
+  summary: |-
+    Update a functionapp to cognitiveservices connection.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
+  syntax: >-
+    az functionapp connection update cognitiveservices [--appconfig-id]
+                                                       [--client-type {dotnet, none, python}]
+                                                       [--connection]
+                                                       [--customized-keys]
+                                                       [--id]
+                                                       [--name]
+                                                       [--no-wait]
+                                                       [--opt-out {auth, configinfo, publicnetwork}]
+                                                       [--resource-group]
+                                                       [--secret]
+                                                       [--service-principal]
+                                                       [--system-identity]
+                                                       [--user-identity]
+                                                       [--vault-id]
+  examples:
+  - summary: |-
+      Update the client type of a connection with resource name
+    syntax: az functionapp connection update cognitiveservices -g FuncAppRG -n MyFunctionApp --connection MyConnection --client-type dotnet
+  - summary: |-
+      Update the client type of a connection with resource id
+    syntax: az functionapp connection update cognitiveservices --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
+  optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
+  - name: --client-type
+    parameterValueGroup: "dotnet, none, python"
+    summary: |-
+      The client type used on the functionapp.
+  - name: --connection
+    summary: |-
+      Name of the functionapp connection.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --id
+    summary: |-
+      The resource id of the connection. ['--resource-group', '--name', '--connection'] are required if '--id' is not specified.
+  - name: --name -n
+    summary: |-
+      Name of the function app. Required if '--id' is not specified.None.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "auth, configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--id' is not specified.None.
@@ -167,6 +265,7 @@ directCommands:
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
     az functionapp connection update confluent-cloud --connection
+                                                     [--appconfig-id]
                                                      [--bootstrap-server]
                                                      [--client-type {dotnet, dotnet-internal, go, java, none, python, springBoot}]
                                                      [--customized-keys]
@@ -174,7 +273,7 @@ directCommands:
                                                      [--kafka-secret]
                                                      [--name]
                                                      [--no-wait]
-                                                     [--opt-out {configinfo, publicnetwork}]
+                                                     [--opt-out {auth, configinfo, publicnetwork}]
                                                      [--resource-group]
                                                      [--schema-key]
                                                      [--schema-registry]
@@ -200,6 +299,9 @@ directCommands:
     summary: |-
       Name of the connection.
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --bootstrap-server
     summary: |-
       Kafka bootstrap server url.
@@ -224,9 +326,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--source-id' is not specified.None.
@@ -253,13 +355,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update cosmos-cassandra [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
+    az functionapp connection update cosmos-cassandra [--appconfig-id]
+                                                      [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                       [--connection]
                                                       [--customized-keys]
                                                       [--id]
                                                       [--name]
                                                       [--no-wait]
-                                                      [--opt-out {configinfo, publicnetwork}]
+                                                      [--opt-out {auth, configinfo, publicnetwork}]
                                                       [--private-endpoint {false, true}]
                                                       [--resource-group]
                                                       [--secret]
@@ -276,6 +379,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update cosmos-cassandra --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -297,9 +403,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -349,13 +455,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update cosmos-gremlin [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python}]
+    az functionapp connection update cosmos-gremlin [--appconfig-id]
+                                                    [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python}]
                                                     [--connection]
                                                     [--customized-keys]
                                                     [--id]
                                                     [--name]
                                                     [--no-wait]
-                                                    [--opt-out {configinfo, publicnetwork}]
+                                                    [--opt-out {auth, configinfo, publicnetwork}]
                                                     [--private-endpoint {false, true}]
                                                     [--resource-group]
                                                     [--secret]
@@ -372,6 +479,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update cosmos-gremlin --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python"
     summary: |-
@@ -393,9 +503,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -445,13 +555,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update cosmos-mongo [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, springBoot}]
+    az functionapp connection update cosmos-mongo [--appconfig-id]
+                                                  [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--id]
                                                   [--name]
                                                   [--no-wait]
-                                                  [--opt-out {configinfo, publicnetwork}]
+                                                  [--opt-out {auth, configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -468,6 +579,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update cosmos-mongo --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, springBoot"
     summary: |-
@@ -489,9 +603,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -541,13 +655,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update cosmos-sql [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
+    az functionapp connection update cosmos-sql [--appconfig-id]
+                                                [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                 [--connection]
                                                 [--customized-keys]
                                                 [--id]
                                                 [--name]
                                                 [--no-wait]
-                                                [--opt-out {configinfo, publicnetwork}]
+                                                [--opt-out {auth, configinfo, publicnetwork}]
                                                 [--private-endpoint {false, true}]
                                                 [--resource-group]
                                                 [--secret]
@@ -564,6 +679,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update cosmos-sql --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -585,9 +703,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -637,13 +755,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update cosmos-table [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
+    az functionapp connection update cosmos-table [--appconfig-id]
+                                                  [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--id]
                                                   [--name]
                                                   [--no-wait]
-                                                  [--opt-out {configinfo, publicnetwork}]
+                                                  [--opt-out {auth, configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -660,6 +779,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update cosmos-table --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -681,9 +803,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -733,13 +855,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update eventhub [--client-type {dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
+    az functionapp connection update eventhub [--appconfig-id]
+                                              [--client-type {dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--id]
                                               [--name]
                                               [--no-wait]
-                                              [--opt-out {configinfo, publicnetwork}]
+                                              [--opt-out {auth, configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -756,6 +879,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update eventhub --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot"
     summary: |-
@@ -777,9 +903,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -829,13 +955,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update keyvault [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
+    az functionapp connection update keyvault [--appconfig-id]
+                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--id]
                                               [--name]
                                               [--no-wait]
-                                              [--opt-out {configinfo, publicnetwork}]
+                                              [--opt-out {auth, configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--service-endpoint {false, true}]
@@ -851,6 +978,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update keyvault --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -872,9 +1002,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -921,13 +1051,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update mysql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection update mysql [--appconfig-id]
+                                           [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--id]
                                            [--name]
                                            [--no-wait]
-                                           [--opt-out {configinfo, publicnetwork}]
+                                           [--opt-out {auth, configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -941,6 +1072,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update mysql --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -962,9 +1096,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -999,13 +1133,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update mysql-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection update mysql-flexible [--appconfig-id]
+                                                    [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                     [--connection]
                                                     [--customized-keys]
                                                     [--id]
                                                     [--name]
                                                     [--no-wait]
-                                                    [--opt-out {configinfo, publicnetwork}]
+                                                    [--opt-out {auth, configinfo, publicnetwork}]
                                                     [--resource-group]
                                                     [--secret]
                                                     [--service-principal]
@@ -1020,6 +1155,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update mysql-flexible --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1041,9 +1179,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--id' is not specified.None.
@@ -1096,13 +1234,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update postgres [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection update postgres [--appconfig-id]
+                                              [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--id]
                                               [--name]
                                               [--no-wait]
-                                              [--opt-out {configinfo, publicnetwork}]
+                                              [--opt-out {auth, configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -1119,6 +1258,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update postgres --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1140,9 +1282,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1199,13 +1341,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update postgres-flexible [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection update postgres-flexible [--appconfig-id]
+                                                       [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                        [--connection]
                                                        [--customized-keys]
                                                        [--id]
                                                        [--name]
                                                        [--no-wait]
-                                                       [--opt-out {configinfo, publicnetwork}]
+                                                       [--opt-out {auth, configinfo, publicnetwork}]
                                                        [--resource-group]
                                                        [--secret]
                                                        [--service-principal]
@@ -1220,6 +1363,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update postgres-flexible --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1241,9 +1387,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--id' is not specified.None.
@@ -1292,13 +1438,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update redis [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
+    az functionapp connection update redis [--appconfig-id]
+                                           [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--id]
                                            [--name]
                                            [--no-wait]
-                                           [--opt-out {configinfo, publicnetwork}]
+                                           [--opt-out {auth, configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -1311,6 +1458,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update redis --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1332,9 +1482,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1358,13 +1508,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update redis-enterprise [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
+    az functionapp connection update redis-enterprise [--appconfig-id]
+                                                      [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                       [--connection]
                                                       [--customized-keys]
                                                       [--id]
                                                       [--name]
                                                       [--no-wait]
-                                                      [--opt-out {configinfo, publicnetwork}]
+                                                      [--opt-out {auth, configinfo, publicnetwork}]
                                                       [--resource-group]
                                                       [--secret]
                                                       [--vault-id]
@@ -1376,6 +1527,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update redis-enterprise --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1397,9 +1551,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains the function app. Required if '--id' is not specified.None.
@@ -1419,13 +1573,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update servicebus [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
+    az functionapp connection update servicebus [--appconfig-id]
+                                                [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                 [--connection]
                                                 [--customized-keys]
                                                 [--id]
                                                 [--name]
                                                 [--no-wait]
-                                                [--opt-out {configinfo, publicnetwork}]
+                                                [--opt-out {auth, configinfo, publicnetwork}]
                                                 [--private-endpoint {false, true}]
                                                 [--resource-group]
                                                 [--secret]
@@ -1442,6 +1597,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update servicebus --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1463,9 +1621,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1515,13 +1673,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update signalr [--client-type {dotnet, dotnet-internal, none}]
+    az functionapp connection update signalr [--appconfig-id]
+                                             [--client-type {dotnet, dotnet-internal, none}]
                                              [--connection]
                                              [--customized-keys]
                                              [--id]
                                              [--name]
                                              [--no-wait]
-                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--opt-out {auth, configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -1537,6 +1696,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update signalr --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, none"
     summary: |-
@@ -1558,9 +1720,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1606,13 +1768,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update sql [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection update sql [--appconfig-id]
+                                         [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--id]
                                          [--name]
                                          [--no-wait]
-                                         [--opt-out {configinfo, publicnetwork}]
+                                         [--opt-out {auth, configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
@@ -1629,6 +1792,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update sql --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1650,9 +1816,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1709,13 +1875,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update storage-blob [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
+    az functionapp connection update storage-blob [--appconfig-id]
+                                                  [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--id]
                                                   [--name]
                                                   [--no-wait]
-                                                  [--opt-out {configinfo, publicnetwork}]
+                                                  [--opt-out {auth, configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -1732,6 +1899,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update storage-blob --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1753,9 +1923,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1805,13 +1975,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update storage-file [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot}]
+    az functionapp connection update storage-file [--appconfig-id]
+                                                  [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--id]
                                                   [--name]
                                                   [--no-wait]
-                                                  [--opt-out {configinfo, publicnetwork}]
+                                                  [--opt-out {auth, configinfo, publicnetwork}]
                                                   [--private-endpoint {false, true}]
                                                   [--resource-group]
                                                   [--secret]
@@ -1825,6 +1996,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update storage-file --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1846,9 +2020,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1876,13 +2050,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update storage-queue [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
+    az functionapp connection update storage-queue [--appconfig-id]
+                                                   [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                                    [--connection]
                                                    [--customized-keys]
                                                    [--id]
                                                    [--name]
                                                    [--no-wait]
-                                                   [--opt-out {configinfo, publicnetwork}]
+                                                   [--opt-out {auth, configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
@@ -1899,6 +2074,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update storage-queue --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1920,9 +2098,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1972,13 +2150,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update storage-table [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
+    az functionapp connection update storage-table [--appconfig-id]
+                                                   [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                    [--connection]
                                                    [--customized-keys]
                                                    [--id]
                                                    [--name]
                                                    [--no-wait]
-                                                   [--opt-out {configinfo, publicnetwork}]
+                                                   [--opt-out {auth, configinfo, publicnetwork}]
                                                    [--private-endpoint {false, true}]
                                                    [--resource-group]
                                                    [--secret]
@@ -1995,6 +2174,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update storage-table --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
@@ -2016,9 +2198,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2068,13 +2250,14 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/appservice/_help.py
   syntax: >-
-    az functionapp connection update webpubsub [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
+    az functionapp connection update webpubsub [--appconfig-id]
+                                               [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                                [--connection]
                                                [--customized-keys]
                                                [--id]
                                                [--name]
                                                [--no-wait]
-                                               [--opt-out {configinfo, publicnetwork}]
+                                               [--opt-out {auth, configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -2090,6 +2273,9 @@ directCommands:
       Update the client type of a connection with resource id
     syntax: az functionapp connection update webpubsub --id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site}/providers/Microsoft.ServiceLinker/linkers/{linker} --client-type dotnet
   optionalParameters:
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
@@ -2111,9 +2297,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2154,6 +2340,7 @@ directCommands:
 commands:
 - az_functionapp_connection_update_app-insights
 - az_functionapp_connection_update_appconfig
+- az_functionapp_connection_update_cognitiveservices
 - az_functionapp_connection_update_confluent-cloud
 - az_functionapp_connection_update_cosmos-cassandra
 - az_functionapp_connection_update_cosmos-gremlin
@@ -2201,5 +2388,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 03/22/2024
+  ms.date: 04/22/2024
   description: Update a functionapp connection.

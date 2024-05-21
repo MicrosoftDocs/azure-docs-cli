@@ -6,9 +6,9 @@ extensionInformation: >-
 
   > This reference is part of the **ml** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az ml connection** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Azure ML workspace connection.
+  Manage Azure ML workspac connection and its more specific derivatives.
 description: |-
-  Azure ML workspace connection provides a secure way to store authentication and configuration information needed to connect and interact with the external resources.
+  Azure ML connection provides a secure way to store authentication and configuration information needed to connect and interact with the external resources.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
@@ -17,9 +17,9 @@ directCommands:
 - uid: az_ml_connection_create
   name: az ml connection create
   summary: |-
-    Create a workspace connection.
+    Create a connection.
   description: |-
-    Workspace connection allow to store authentication and configuration information needed to connect and interact with the external resources.
+    Connection allow to store authentication and configuration information needed to connect and interact with the external resources.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'ml connection' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -29,16 +29,20 @@ directCommands:
                             --resource-group
                             --workspace-name
                             [--name]
+                            [--populate-secrets]
                             [--set]
   examples:
   - summary: |-
-      Create a workspace connection from a YAML specification file.
+      Create a connection from a YAML specification file.
     syntax: az ml connection create --file connection.yml --resource-group my-resource-group --workspace-name my-workspace
+  - summary: |-
+      Create a connection from a YAML specification file, and show the API key in the returned connection for verification.
+    syntax: az ml connection create --file connection.yml --resource-group my-resource-group --workspace-name my-workspace --populate-secrets
   requiredParameters:
   - isRequired: true
     name: --file -f
     summary: |-
-      Local path to the YAML file containing the Azure ML workspace connection specification.
+      Local path to the YAML file containing the Azure ML connection specification.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -51,13 +55,17 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the environment.
+  - name: --populate-secrets -p
+    defaultValue: "False"
+    summary: |-
+      For API key-based connections, try to populate the returned credentials with the actual secret value. Does nothing for non-API key-based connections.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set. Example: --set property1.property2=<value>.
 - uid: az_ml_connection_delete
   name: az ml connection delete
   summary: |-
-    Delete a workspace connection.
+    Delete a connection.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'ml connection' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -88,7 +96,7 @@ directCommands:
 - uid: az_ml_connection_list
   name: az ml connection list
   summary: |-
-    List all the workspaces connection.
+    List all connections.
   description: |-
     The list of connections in a workspace.
   status: Preview
@@ -99,11 +107,15 @@ directCommands:
     az ml connection list --resource-group
                           --workspace-name
                           [--max-results]
+                          [--populate-secrets]
                           [--type]
   examples:
   - summary: |-
       List all connections in a workspace
     syntax: az ml connection list --resource-group my-resource-group --workspace-name my-workspace
+  - summary: |-
+      List all connections in a workspace, and show the API key for applicable connections
+    syntax: az ml connection list --resource-group my-resource-group --workspace-name my-workspace --populate-secrets
   - summary: |-
       List all the connections in a workspace using --query argument to execute a JMESPath query on the results of commands.
     syntax: az ml connection list --query "[].{Name:name}"  --output table --resource-group my-resource-group --workspace-name my-workspace
@@ -120,13 +132,17 @@ directCommands:
   - name: --max-results -r
     summary: |-
       Max number of results to return.
+  - name: --populate-secrets -p
+    defaultValue: "False"
+    summary: |-
+      For API key-based connections, try to populate the returned credentials with the actual secret value. Does nothing for non-API key-based connections.
   - name: --type -t
     summary: |-
-      The type of Azure ML workspace connection to list.
+      The type of Azure ML connection to list.
 - uid: az_ml_connection_show
   name: az ml connection show
   summary: |-
-    Show details of a workspace connection.
+    Show details of a connection.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'ml connection' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -135,6 +151,11 @@ directCommands:
     az ml connection show --name
                           --resource-group
                           --workspace-name
+                          [--populate-secrets]
+  examples:
+  - summary: |-
+      Show details of a connection, including its API key.
+    syntax: az ml connection show --resource-group my-resource-group --name my-connection-name --workspace-name my-workspace --populate-secrets
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -148,10 +169,15 @@ directCommands:
     name: --workspace-name -w
     summary: |-
       Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
+  optionalParameters:
+  - name: --populate-secrets -p
+    defaultValue: "False"
+    summary: |-
+      For API key-based connections, try to populate the returned credentials with the actual secret value. Does nothing for non-API key-based connections.
 - uid: az_ml_connection_update
   name: az ml connection update
   summary: |-
-    Update a workspace connection.
+    Update a connection.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'ml connection' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -162,12 +188,13 @@ directCommands:
                             --workspace-name
                             [--add]
                             [--force-string]
+                            [--populate-secrets]
                             [--remove]
                             [--set]
   examples:
   - summary: |-
-      update a workspace connection from a YAML specification file.
-    syntax: az ml connection update --resource-group my-resource-group --name my-workspace-connection-name --workspace-name my-workspace
+      update a connection from a YAML specification file.
+    syntax: az ml connection update --resource-group my-resource-group --name my-connection-name --workspace-name my-workspace
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -190,6 +217,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --populate-secrets -p
+    defaultValue: "False"
+    summary: |-
+      For API key-based connections, try to populate the returned credentials with the actual secret value. Does nothing for non-API key-based connections.
   - name: --remove
     defaultValue: "[]"
     summary: |-
@@ -229,4 +260,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Azure ML workspace connection provides a secure way to store authentication and configuration information needed to connect and interact with the external resources.
+  description: Azure ML connection provides a secure way to store authentication and configuration information needed to connect and interact with the external resources.

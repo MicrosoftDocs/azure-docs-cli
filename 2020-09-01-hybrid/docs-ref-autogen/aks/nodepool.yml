@@ -25,6 +25,7 @@ directCommands:
                         [--allowed-host-ports]
                         [--asg-ids]
                         [--crg-id]
+                        [--disable-windows-outbound-nat]
                         [--drain-timeout]
                         [--enable-cluster-autoscaler]
                         [--enable-encryption-at-host]
@@ -114,6 +115,10 @@ directCommands:
   - name: --crg-id
     summary: |-
       The crg id used to associate the new nodepool with the existed Capacity Reservation Group resource.
+  - name: --disable-windows-outbound-nat
+    defaultValue: "False"
+    summary: |-
+      Disable Windows OutboundNAT on Windows agent node pool.
   - name: --drain-timeout
     summary: |-
       When nodes are drain how many minutes to wait for all pods to be evicted.
@@ -277,6 +282,7 @@ directCommands:
                         [--enable-ultra-ssd]
                         [--enable-vtpm]
                         [--eviction-policy {Deallocate, Delete}]
+                        [--gateway-prefix-size]
                         [--gpu-instance-profile {MIG1g, MIG2g, MIG3g, MIG4g, MIG7g}]
                         [--host-group-id]
                         [--kubelet-config]
@@ -288,7 +294,7 @@ directCommands:
                         [--max-surge]
                         [--message-of-the-day]
                         [--min-count]
-                        [--mode {System, User}]
+                        [--mode {Gateway, System, User}]
                         [--no-wait]
                         [--node-count]
                         [--node-osdisk-size]
@@ -298,7 +304,7 @@ directCommands:
                         [--node-soak-duration]
                         [--node-taints]
                         [--node-vm-size]
-                        [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022}]
+                        [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022, WindowsAnnual}]
                         [--os-type]
                         [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
                         [--pod-subnet-id]
@@ -311,6 +317,7 @@ directCommands:
                         [--ssh-access {disabled, localuser}]
                         [--tags]
                         [--vm-set-type]
+                        [--vm-sizes]
                         [--vnet-subnet-id]
                         [--workload-runtime {KataCcIsolation, KataMshvVmIsolation, OCIContainer, WasmWasi}]
                         [--zones]
@@ -339,6 +346,9 @@ directCommands:
   - summary: |-
       Create a nodepool with ip allocation mode set to "StaticBlock" and using a pod subnet ID
     syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster  --os-sku Ubuntu --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/MySubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a nodepool of type VirtualMachines
+    syntax: az aks nodepool add -g MyResourceGroup -n nodepool1 --cluster-name MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "Standard_D4s_v3,Standard_D8s_v3" --node-count 3
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -419,6 +429,10 @@ directCommands:
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
       The eviction policy of the Spot node pool. It can only be set when --priority is Spot.
+  - name: --gateway-prefix-size
+    summary: |-
+      The size of Public IPPrefix attached to the Gateway-mode node pool. The node pool must be in Gateway mode.
+    isPreview: true
   - name: --gpu-instance-profile
     parameterValueGroup: "MIG1g, MIG2g, MIG3g, MIG4g, MIG7g"
     summary: |-
@@ -459,7 +473,7 @@ directCommands:
       Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
     defaultValue: "User"
-    parameterValueGroup: "System, User"
+    parameterValueGroup: "Gateway, System, User"
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait
@@ -494,9 +508,9 @@ directCommands:
     summary: |-
       Size of Virtual Machines to create as Kubernetes nodes.
   - name: --os-sku
-    parameterValueGroup: "AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022"
+    parameterValueGroup: "AzureLinux, CBLMariner, Mariner, Ubuntu, Windows2019, Windows2022, WindowsAnnual"
     summary: |-
-      The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019 or Windows2022 when os-type is Windows, the current default is Windows2019 if not set, and the default will be changed to Windows2022 after Windows2019 is deprecated.
+      The os-sku of the agent node pool. Ubuntu or CBLMariner when os-type is Linux, default is Ubuntu if not set; Windows2019, Windows2022 or WindowsAnnual when os-type is Windows, the current default is Windows2022 if not set.
   - name: --os-type
     summary: |-
       The OS Type. Linux or Windows. Windows not supported yet for "VirtualMachines" VM set type.
@@ -547,6 +561,10 @@ directCommands:
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of sizes. Must use VirtualMachines agent pool type.
+    isPreview: true
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -1132,6 +1150,7 @@ directCommands:
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
+                           [--os-sku {AzureLinux, CBLMariner, Mariner}]
                            [--scale-down-mode {Deallocate, Delete}]
                            [--tags]
                            [--update-cluster-autoscaler]
@@ -1208,6 +1227,10 @@ directCommands:
   - name: --node-taints
     summary: |-
       The node taints for the node pool. You can update the existing node taint of a nodepool or create a new node taint for a nodepool. Pass the empty string `""` to remove all taints.
+  - name: --os-sku
+    parameterValueGroup: "AzureLinux, CBLMariner, Mariner"
+    summary: |-
+      The os-sku of the agent node pool.
   - name: --scale-down-mode
     parameterValueGroup: "Deallocate, Delete"
     summary: |-
@@ -1249,7 +1272,7 @@ directCommands:
                            [--max-count]
                            [--max-surge]
                            [--min-count]
-                           [--mode {System, User}]
+                           [--mode {Gateway, System, User}]
                            [--no-wait]
                            [--node-soak-duration]
                            [--node-taints]
@@ -1357,7 +1380,7 @@ directCommands:
     summary: |-
       Minimun nodes count used for autoscaler, when "--enable-cluster-autoscaler" specified. Please specify the value in the range of [0, 1000] for user nodepool, and [1,1000] for system nodepool.
   - name: --mode
-    parameterValueGroup: "System, User"
+    parameterValueGroup: "Gateway, System, User"
     summary: |-
       The mode for a node pool which defines a node pool's primary function. If set as "System", AKS prefers system pods scheduling to node pools with mode `System`. Learn more at https://aka.ms/aks/nodepool/mode.
   - name: --no-wait
@@ -1597,6 +1620,10 @@ commands:
 - az_aks_nodepool_get-upgrades(aks-preview)
 - az_aks_nodepool_list
 - az_aks_nodepool_list(aks-preview)
+- az_aks_nodepool_manual-scale
+- az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_update
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_operation-abort(aks-preview)
 - az_aks_nodepool_scale

@@ -4,11 +4,11 @@ name: az aks
 importantNote: >-
   > [!NOTE]
 
-  > This command group has commands that are defined in two or more extensions. Each extension will automatically install the first time you run an extension command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This command group has commands that are defined in both Azure CLI and at least one extension. Install each extension to benefit from its extended capabilities. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure Kubernetes Services.
 status: GA
-sourceType: Extension
+sourceType: Core and Extension
 directCommands:
 - uid: az_aks_browse
   name: az aks browse
@@ -107,6 +107,7 @@ directCommands:
                   [--enable-aad]
                   [--enable-addon-autoscaling]
                   [--enable-addons]
+                  [--enable-advanced-network-observability]
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
@@ -139,6 +140,7 @@ directCommands:
                   [--enable-secret-rotation]
                   [--enable-secure-boot]
                   [--enable-sgxquotehelper]
+                  [--enable-static-egress-gateway]
                   [--enable-syslog {false, true}]
                   [--enable-ultra-ssd]
                   [--enable-vpa]
@@ -203,7 +205,7 @@ directCommands:
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
                   [--os-sku {AzureLinux, CBLMariner, Mariner, Ubuntu}]
-                  [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--pod-cidrs]
                   [--pod-ip-allocation-mode {DynamicIndividual, StaticBlock}]
@@ -230,6 +232,7 @@ directCommands:
                   [--tags]
                   [--tier {free, premium, standard}]
                   [--vm-set-type]
+                  [--vm-sizes]
                   [--vnet-subnet-id]
                   [--windows-admin-password]
                   [--windows-admin-username]
@@ -352,6 +355,9 @@ directCommands:
   - summary: |-
       Create a kubernetes cluster with a nodepool having ip allocation mode set to "StaticBlock"
     syntax: az aks create -g MyResourceGroup -n MyManagedCluster --os-sku Ubuntu --max-pods MaxPodsPerNode --network-plugin azure --vnet-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/NodeSubnet --pod-subnet-id /subscriptions/00000/resourceGroups/AnotherResourceGroup/providers/Microsoft.Network/virtualNetworks/MyVnet/subnets/PodSubnet --pod-ip-allocation-mode StaticBlock
+  - summary: |-
+      Create a kubernetes cluster with a VirtualMachines nodepool
+    syntax: az aks create -g MyResourceGroup -n MyManagedCluster --vm-set-type VirtualMachines --vm-sizes "VMSize1,VMSize2" --node-count 3
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -541,6 +547,10 @@ directCommands:
       - gitops                          : enable GitOps (PREVIEW).
       - azure-keyvault-secrets-provider : enable Azure Keyvault Secrets Provider addon.
       - web_application_routing         : enable Web Application Routing addon (PREVIEW). Specify "--dns-zone-resource-id" to configure DNS.
+  - name: --enable-advanced-network-observability
+    summary: |-
+      Enable advanced network observability functionalities for cluster.
+    isPreview: true
   - name: --enable-ahub
     defaultValue: "False"
     summary: |-
@@ -629,7 +639,7 @@ directCommands:
       Enable KEDA workload auto-scaler.
     isPreview: true
   - name: --enable-managed-identity
-    defaultValue: "True"
+    defaultValue: "False"
     summary: |-
       Using managed identity to manage cluster resource group. Default value is true, you can explicitly specify "--client-id" and "--secret" to disable managed identity.
   - name: --enable-msi-auth-for-monitoring
@@ -680,6 +690,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable SGX quote helper for confcom addon.
+  - name: --enable-static-egress-gateway
+    defaultValue: "False"
+    summary: |-
+      Enable Static Egress Gateway addon to the cluster.
+    isPreview: true
   - name: --enable-syslog
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -953,7 +968,7 @@ directCommands:
     summary: |-
       The os-sku of the agent node pool. Ubuntu or CBLMariner.
   - name: --outbound-type
-    parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
+    parameterValueGroup: "loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting"
     summary: |-
       How outbound traffic will be configured for a cluster.
     description: |-
@@ -1068,6 +1083,10 @@ directCommands:
   - name: --vm-set-type
     summary: |-
       Agent pool vm set type. VirtualMachineScaleSets, AvailabilitySet or VirtualMachines(Preview).
+  - name: --vm-sizes
+    summary: |-
+      Comma-separated list of sizes. Must use VirtualMachines agent pool type.
+    isPreview: true
   - name: --vnet-subnet-id
     summary: |-
       The ID of a subnet in an existing VNet into which to deploy the cluster.
@@ -1119,6 +1138,7 @@ directCommands:
   syntax: >-
     az aks delete --name
                   --resource-group
+                  [--if-match]
                   [--ignore-pod-disruption-budget]
                   [--no-wait]
                   [--yes]
@@ -1136,6 +1156,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --if-match
+    summary: |-
+      The request should only proceed if an entity matches this string. Default value is None.
   - name: --ignore-pod-disruption-budget
     summary: |-
       Ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. Default value is None.
@@ -1735,6 +1758,7 @@ directCommands:
                   [--defender-config]
                   [--detach-acr]
                   [--disable-addon-autoscaling]
+                  [--disable-advanced-network-observability]
                   [--disable-ahub]
                   [--disable-ai-toolchain-operator]
                   [--disable-azure-container-storage {all, azureDisk, elasticSan, ephemeralDisk}]
@@ -1761,11 +1785,13 @@ directCommands:
                   [--disable-public-fqdn]
                   [--disable-secret-rotation]
                   [--disable-snapshot-controller]
+                  [--disable-static-egress-gateway]
                   [--disable-vpa]
                   [--disable-workload-identity]
                   [--disk-driver-version {v1, v2}]
                   [--enable-aad]
                   [--enable-addon-autoscaling]
+                  [--enable-advanced-network-observability]
                   [--enable-ahub]
                   [--enable-ai-toolchain-operator]
                   [--enable-apiserver-vnet-integration]
@@ -1795,6 +1821,7 @@ directCommands:
                   [--enable-public-fqdn]
                   [--enable-secret-rotation]
                   [--enable-snapshot-controller]
+                  [--enable-static-egress-gateway]
                   [--enable-vpa]
                   [--enable-windows-gmsa]
                   [--enable-windows-recording-rules]
@@ -1831,7 +1858,7 @@ directCommands:
                   [--nodepool-labels]
                   [--nodepool-taints]
                   [--nrg-lockdown-restriction-level {ReadOnly, Unrestricted}]
-                  [--outbound-type {loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting}]
+                  [--outbound-type {loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting}]
                   [--pod-cidr]
                   [--private-dns-zone]
                   [--rotation-poll-interval]
@@ -2047,6 +2074,10 @@ directCommands:
     summary: |-
       Disable addon autoscaling for cluster.
     isPreview: true
+  - name: --disable-advanced-network-observability
+    summary: |-
+      Disable advanced network observability functionalities on a cluster.
+    isPreview: true
   - name: --disable-ahub
     defaultValue: "False"
     summary: |-
@@ -2160,6 +2191,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disable CSI Snapshot Controller.
+  - name: --disable-static-egress-gateway
+    defaultValue: "False"
+    summary: |-
+      Disable Static Egress Gateway addon to the cluster.
+    isPreview: true
   - name: --disable-vpa
     defaultValue: "False"
     summary: |-
@@ -2181,6 +2217,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable addon autoscaling for cluster.
+    isPreview: true
+  - name: --enable-advanced-network-observability
+    summary: |-
+      Enable advanced network observability functionalities on a cluster.
     isPreview: true
   - name: --enable-ahub
     defaultValue: "False"
@@ -2304,6 +2344,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Enable Snapshot Controller.
+  - name: --enable-static-egress-gateway
+    defaultValue: "False"
+    summary: |-
+      Enable Static Egress Gateway addon to the cluster.
+    isPreview: true
   - name: --enable-vpa
     defaultValue: "False"
     summary: |-
@@ -2466,7 +2511,7 @@ directCommands:
     description: |-
       The restriction level of permissions allowed on the cluster's managed node resource group, supported values are Unrestricted, and ReadOnly (recommended ReadOnly).
   - name: --outbound-type
-    parameterValueGroup: "loadBalancer, managedNATGateway, userAssignedNATGateway, userDefinedRouting"
+    parameterValueGroup: "loadBalancer, managedNATGateway, none, userAssignedNATGateway, userDefinedRouting"
     summary: |-
       How outbound traffic will be configured for a cluster.
     description: |-
@@ -2570,9 +2615,12 @@ directCommands:
                    [--aks-custom-headers]
                    [--cluster-snapshot-id]
                    [--control-plane-only]
+                   [--disable-force-upgrade]
+                   [--enable-force-upgrade]
                    [--kubernetes-version]
                    [--no-wait]
                    [--node-image-only]
+                   [--upgrade-override-until]
                    [--yes]
   examples:
   - summary: |-
@@ -2599,6 +2647,14 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Upgrade the cluster control plane only. If not specified, control plane AND all node pools will be upgraded.
+  - name: --disable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Disable forceUpgrade cluster upgrade settings override.
+  - name: --enable-force-upgrade
+    defaultValue: "False"
+    summary: |-
+      Enable forceUpgrade cluster upgrade settings override.
   - name: --kubernetes-version -k
     summary: |-
       Version of Kubernetes to upgrade the cluster to, such as "1.11.12".
@@ -2611,6 +2667,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Only upgrade node image for agent pools.
+  - name: --upgrade-override-until
+    summary: |-
+      Until when the cluster upgradeSettings overrides are effective.
+    description: |-
+      It needs to be in a valid date-time format that's within the next 30 days. For example, 2023-04-01T13:00:00Z. Note that if --force-upgrade is set to true and --upgrade-override-until is not set, by default it will be set to 3 days from now.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -2751,6 +2812,70 @@ commands:
 - az_aks_browse
 - az_aks_check-network
 - az_aks_check-network_outbound
+- az_aks_connection
+- az_aks_connection_create
+- az_aks_connection_create_app-insights
+- az_aks_connection_create_appconfig
+- az_aks_connection_create_cognitiveservices
+- az_aks_connection_create_confluent-cloud
+- az_aks_connection_create_cosmos-cassandra
+- az_aks_connection_create_cosmos-gremlin
+- az_aks_connection_create_cosmos-mongo
+- az_aks_connection_create_cosmos-sql
+- az_aks_connection_create_cosmos-table
+- az_aks_connection_create_eventhub
+- az_aks_connection_create_keyvault
+- az_aks_connection_create_mysql
+- az_aks_connection_create_mysql-flexible
+- az_aks_connection_create_mysql-flexible(serviceconnector-passwordless)
+- az_aks_connection_create_postgres
+- az_aks_connection_create_postgres(serviceconnector-passwordless)
+- az_aks_connection_create_postgres-flexible
+- az_aks_connection_create_postgres-flexible(serviceconnector-passwordless)
+- az_aks_connection_create_redis
+- az_aks_connection_create_redis-enterprise
+- az_aks_connection_create_servicebus
+- az_aks_connection_create_signalr
+- az_aks_connection_create_sql
+- az_aks_connection_create_sql(serviceconnector-passwordless)
+- az_aks_connection_create_storage-blob
+- az_aks_connection_create_storage-file
+- az_aks_connection_create_storage-queue
+- az_aks_connection_create_storage-table
+- az_aks_connection_create_webpubsub
+- az_aks_connection_delete
+- az_aks_connection_list
+- az_aks_connection_list-configuration
+- az_aks_connection_list-support-types
+- az_aks_connection_show
+- az_aks_connection_update
+- az_aks_connection_update_app-insights
+- az_aks_connection_update_appconfig
+- az_aks_connection_update_cognitiveservices
+- az_aks_connection_update_confluent-cloud
+- az_aks_connection_update_cosmos-cassandra
+- az_aks_connection_update_cosmos-gremlin
+- az_aks_connection_update_cosmos-mongo
+- az_aks_connection_update_cosmos-sql
+- az_aks_connection_update_cosmos-table
+- az_aks_connection_update_eventhub
+- az_aks_connection_update_keyvault
+- az_aks_connection_update_mysql
+- az_aks_connection_update_mysql-flexible
+- az_aks_connection_update_postgres
+- az_aks_connection_update_postgres-flexible
+- az_aks_connection_update_redis
+- az_aks_connection_update_redis-enterprise
+- az_aks_connection_update_servicebus
+- az_aks_connection_update_signalr
+- az_aks_connection_update_sql
+- az_aks_connection_update_storage-blob
+- az_aks_connection_update_storage-file
+- az_aks_connection_update_storage-queue
+- az_aks_connection_update_storage-table
+- az_aks_connection_update_webpubsub
+- az_aks_connection_validate
+- az_aks_connection_wait
 - az_aks_create
 - az_aks_delete
 - az_aks_disable-addons
@@ -2798,6 +2923,10 @@ commands:
 - az_aks_nodepool_delete-machines
 - az_aks_nodepool_get-upgrades
 - az_aks_nodepool_list
+- az_aks_nodepool_manual-scale
+- az_aks_nodepool_manual-scale_add
+- az_aks_nodepool_manual-scale_delete
+- az_aks_nodepool_manual-scale_update
 - az_aks_nodepool_operation-abort
 - az_aks_nodepool_scale
 - az_aks_nodepool_show
@@ -2811,7 +2940,10 @@ commands:
 - az_aks_nodepool_stop
 - az_aks_nodepool_update
 - az_aks_nodepool_upgrade
+- az_aks_operation
 - az_aks_operation-abort
+- az_aks_operation_show
+- az_aks_operation_show-latest
 - az_aks_pod-identity
 - az_aks_pod-identity_add
 - az_aks_pod-identity_delete

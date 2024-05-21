@@ -20,12 +20,15 @@ directCommands:
     az devcenter admin project create --dev-center-id
                                       --name
                                       --resource-group
+                                      [--catalog-item-sync-types]
                                       [--description]
                                       [--display-name]
+                                      [--identity-type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
                                       [--location]
                                       [--max-dev-boxes-per-user]
                                       [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                       [--tags]
+                                      [--user-assigned-identities]
   examples:
   - summary: |-
       Create
@@ -44,12 +47,19 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --catalog-item-sync-types -c
+    summary: |-
+      Indicates catalog item types that can be synced.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --description
     summary: |-
       Description of the project.
   - name: --display-name
     summary: |-
       The display name of the project.
+  - name: --identity-type
+    parameterValueGroup: "None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned"
+    summary: |-
+      Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
   - name: --location -l
     summary: |-
       The geo-location where the resource lives. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.  When not specified, the location of the resource group will be used.
@@ -63,6 +73,9 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --user-assigned-identities -u
+    summary: |-
+      The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_devcenter_admin_project_delete
   name: az devcenter admin project delete
   summary: |-
@@ -101,6 +114,34 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not prompt for confirmation.
+- uid: az_devcenter_admin_project_get-inherited-setting
+  name: az devcenter admin project get-inherited-setting
+  summary: |-
+    Gets applicable inherited settings for this project.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az devcenter admin project get-inherited-setting [--ids]
+                                                     [--name]
+                                                     [--resource-group]
+                                                     [--subscription]
+  examples:
+  - summary: |-
+      Get inherited settings
+    syntax: az devcenter admin project get-inherited-setting --name "DevProject" --resource-group "rg1"
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name -n
+    summary: |-
+      The name of the project.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_devcenter_admin_project_list
   name: az devcenter admin project list
   summary: |-
@@ -164,9 +205,11 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az devcenter admin project update [--add]
+                                      [--catalog-item-sync-types]
                                       [--description]
                                       [--display-name]
                                       [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                      [--identity-type {None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned}]
                                       [--ids]
                                       [--max-dev-boxes-per-user]
                                       [--name]
@@ -176,6 +219,7 @@ directCommands:
                                       [--set]
                                       [--subscription]
                                       [--tags]
+                                      [--user-assigned-identities]
   examples:
   - summary: |-
       Update
@@ -184,6 +228,9 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --catalog-item-sync-types -c
+    summary: |-
+      Indicates catalog item types that can be synced.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --description
     summary: |-
       Description of the project.
@@ -194,6 +241,10 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --identity-type
+    parameterValueGroup: "None, SystemAssigned, SystemAssigned, UserAssigned, UserAssigned"
+    summary: |-
+      Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -222,6 +273,9 @@ directCommands:
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --user-assigned-identities -u
+    summary: |-
+      The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_devcenter_admin_project_wait
   name: az devcenter admin project wait
   summary: |-
@@ -283,6 +337,7 @@ directCommands:
 commands:
 - az_devcenter_admin_project_create
 - az_devcenter_admin_project_delete
+- az_devcenter_admin_project_get-inherited-setting
 - az_devcenter_admin_project_list
 - az_devcenter_admin_project_show
 - az_devcenter_admin_project_update

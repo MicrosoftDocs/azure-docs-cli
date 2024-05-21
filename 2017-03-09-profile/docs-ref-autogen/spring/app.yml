@@ -4,7 +4,7 @@ name: az spring app
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **spring** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az spring app** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **spring** extension for the Azure CLI (version 2.56.0 or higher). The extension will automatically install the first time you run an **az spring app** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage apps in Azure Spring Apps.
 status: GA
@@ -163,6 +163,7 @@ directCommands:
                          [--assign-public-endpoint {false, true}]
                          [--backend-protocol {Default, GRPC}]
                          [--bind-acs]
+                         [--bind-config-server]
                          [--bind-service-registry]
                          [--client-auth-certs]
                          [--cpu]
@@ -206,8 +207,8 @@ directCommands:
       Create an public accessible app with 3 instances and 2 cpu cores and 3 GB of memory per instance.
     syntax: az spring app create -n MyApp -s MyCluster -g MyResourceGroup --assign-endpoint true --cpu 2 --memory 3 --instance-count 3
   - summary: |-
-      Create an app binding to the default Service Registry and Application Configuration Service.
-    syntax: az spring app create -n MyApp -s MyCluster -g MyResourceGroup --bind-service-registry --bind-application-configuration-service
+      Create an app binding to the default Service Registry, Application Configuration Service and Spring Cloud Config Server.
+    syntax: az spring app create -n MyApp -s MyCluster -g MyResourceGroup --bind-service-registry --bind-application-configuration-service --bind-config-server
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -238,6 +239,10 @@ directCommands:
   - name: --bind-acs --bind-application-configuration-service
     summary: |-
       Bind the app to the default Application Configuration Service automatically.
+  - name: --bind-config-server --bind-cs
+    summary: |-
+      Bind the app to the default Config Server automatically.
+    isPreview: true
   - name: --bind-service-registry --bind-sr
     summary: |-
       Bind the app to the default Service Registry automatically.
@@ -408,6 +413,8 @@ directCommands:
                          [--container-command]
                          [--container-image]
                          [--container-registry]
+                         [--custom-actuator-path]
+                         [--custom-actuator-port]
                          [--deployment]
                          [--disable-app-log]
                          [--disable-probe {false, true}]
@@ -510,6 +517,12 @@ directCommands:
     defaultValue: "docker.io"
     summary: |-
       The registry of the container image.
+  - name: --custom-actuator-path
+    summary: |-
+      (Enterprise Tier Only) Custom actuator path for the app. Default to "/actuator".
+  - name: --custom-actuator-port
+    summary: |-
+      (Enterprise Tier Only) Custom actuator port for the app. Default to 8080.
   - name: --deployment -d
     summary: |-
       Name of an existing deployment of the app. Default to the production deployment if not specified.
@@ -1088,6 +1101,8 @@ directCommands:
                          [--backend-protocol {Default, GRPC}]
                          [--client-auth-certs]
                          [--config-file-patterns]
+                         [--custom-actuator-path]
+                         [--custom-actuator-port]
                          [--deployment]
                          [--disable-probe {false, true}]
                          [--enable-ingress-to-app-tls {false, true}]
@@ -1149,6 +1164,12 @@ directCommands:
   - name: --config-file-patterns
     summary: |-
       (Enterprise Tier Only) Config file patterns separated with ',' to decide which patterns of Application Configuration Service will be used. Use '""' to clear existing configurations.
+  - name: --custom-actuator-path
+    summary: |-
+      (Enterprise Tier Only) Custom actuator path for the app. Default to "/actuator".
+  - name: --custom-actuator-port
+    summary: |-
+      (Enterprise Tier Only) Custom actuator port for the app. Default to 8080.
   - name: --deployment -d
     summary: |-
       Name of an existing deployment of the app. Default to the production deployment if not specified.

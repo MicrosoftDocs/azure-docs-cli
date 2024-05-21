@@ -32,8 +32,10 @@ directCommands:
                      [--enable-alv]
                      [--enable-api-portal]
                      [--enable-app-acc]
+                     [--enable-config-server]
                      [--enable-dataplane-public-endpoint {false, true}]
                      [--enable-gateway]
+                     [--enable-private-storage-access {false, true}]
                      [--enable-service-registry]
                      [--gateway-instance-count]
                      [--infra-resource-group]
@@ -91,7 +93,7 @@ directCommands:
 
       az term accept --publisher vmware-inc --product azure-spring-cloud-vmware-tanzu-2 --plan asa-ent-hr-mtr
 
-      az spring create -n MyService -g MyResourceGroup --sku Enterprise --enable-application-configuration-service --enable-service-registry --enable-gateway --enable-api-portal --enable-application-live-view  --enable-application-accelerator
+      az spring create -n MyService -g MyResourceGroup --sku Enterprise --enable-application-configuration-service --enable-config-server --enable-service-registry --enable-gateway --enable-api-portal --enable-application-live-view  --enable-application-accelerator
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -150,6 +152,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (Enterprise Tier Only) Enable Application Accelerator.
+  - name: --enable-config-server --enable-cs
+    defaultValue: "False"
+    summary: |-
+      (Enterprise Tier Only) Enable Config Server.
+    isPreview: true
   - name: --enable-dataplane-public-endpoint --enable-dppa
     parameterValueGroup: "false, true"
     summary: |-
@@ -158,6 +165,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       (Enterprise Tier Only) Enable Spring Cloud Gateway.
+  - name: --enable-private-storage-access --enable-psa
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, set private network access to backend storage in vnet injection instance.
+    isPreview: true
   - name: --enable-service-registry --enable-sr
     defaultValue: "False"
     summary: |-
@@ -403,6 +415,7 @@ directCommands:
                      [--build-pool-size {S1, S2, S3, S4, S5, S6, S7, S8, S9}]
                      [--enable-dataplane-public-endpoint {false, true}]
                      [--enable-planned-maintenance]
+                     [--enable-private-storage-access {false, true}]
                      [--ingress-read-timeout]
                      [--no-wait]
                      [--planned-maintenance-day {Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday}]
@@ -441,6 +454,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       If set, enable planned maintenance for the instance.
+    isPreview: true
+  - name: --enable-private-storage-access --enable-psa
+    parameterValueGroup: "false, true"
+    summary: |-
+      If true, set private network access to backend storage in vnet injection instance.
     isPreview: true
   - name: --ingress-read-timeout
     summary: |-
@@ -619,7 +637,10 @@ commands:
 - az_spring_component_list
 - az_spring_component_logs
 - az_spring_config-server
+- az_spring_config-server_bind
 - az_spring_config-server_clear
+- az_spring_config-server_create
+- az_spring_config-server_delete
 - az_spring_config-server_disable
 - az_spring_config-server_enable
 - az_spring_config-server_git
@@ -631,10 +652,12 @@ commands:
 - az_spring_config-server_git_set
 - az_spring_config-server_set
 - az_spring_config-server_show
+- az_spring_config-server_unbind
 - az_spring_connection
 - az_spring_connection_create
 - az_spring_connection_create_app-insights
 - az_spring_connection_create_appconfig
+- az_spring_connection_create_cognitiveservices
 - az_spring_connection_create_confluent-cloud
 - az_spring_connection_create_cosmos-cassandra
 - az_spring_connection_create_cosmos-gremlin
@@ -665,6 +688,7 @@ commands:
 - az_spring_connection_update
 - az_spring_connection_update_app-insights
 - az_spring_connection_update_appconfig
+- az_spring_connection_update_cognitiveservices
 - az_spring_connection_update_confluent-cloud
 - az_spring_connection_update_cosmos-cassandra
 - az_spring_connection_update_cosmos-gremlin
@@ -727,9 +751,28 @@ commands:
 - az_spring_gateway_show
 - az_spring_gateway_sync-cert
 - az_spring_gateway_update
+- az_spring_job
+- az_spring_job_create
+- az_spring_job_delete
+- az_spring_job_deploy
+- az_spring_job_execution
+- az_spring_job_execution_cancel
+- az_spring_job_execution_instance
+- az_spring_job_execution_instance_list
+- az_spring_job_execution_list
+- az_spring_job_execution_show
+- az_spring_job_list
+- az_spring_job_logs
+- az_spring_job_show
+- az_spring_job_start
+- az_spring_job_update
 - az_spring_list
 - az_spring_list-marketplace-plan
 - az_spring_list-support-server-versions
+- az_spring_private-dns-zone
+- az_spring_private-dns-zone_add
+- az_spring_private-dns-zone_clean
+- az_spring_private-dns-zone_update
 - az_spring_service-registry
 - az_spring_service-registry_bind
 - az_spring_service-registry_create

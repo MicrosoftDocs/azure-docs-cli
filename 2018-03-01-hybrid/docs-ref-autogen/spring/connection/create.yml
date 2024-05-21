@@ -15,12 +15,13 @@ directCommands:
   syntax: >-
     az spring connection create app-insights [--app]
                                              [--app-insights]
+                                             [--appconfig-id]
                                              [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python}]
                                              [--connection]
                                              [--customized-keys]
                                              [--deployment]
                                              [--no-wait]
-                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--opt-out {auth, configinfo, publicnetwork}]
                                              [--resource-group]
                                              [--secret]
                                              [--service]
@@ -45,6 +46,9 @@ directCommands:
   - name: --app-insights
     summary: |-
       Name of the app insights. Required if '--target-id' is not specified.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python"
     summary: |-
@@ -57,17 +61,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -100,12 +102,13 @@ directCommands:
   syntax: >-
     az spring connection create appconfig [--app]
                                           [--app-config]
+                                          [--appconfig-id]
                                           [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                           [--connection]
                                           [--customized-keys]
                                           [--deployment]
                                           [--no-wait]
-                                          [--opt-out {configinfo, publicnetwork}]
+                                          [--opt-out {auth, configinfo, publicnetwork}]
                                           [--private-endpoint {false, true}]
                                           [--resource-group]
                                           [--secret]
@@ -134,6 +137,9 @@ directCommands:
   - name: --app-config
     summary: |-
       Name of the app configuration. Required if '--target-id' is not specified.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
@@ -146,17 +152,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -206,6 +210,118 @@ directCommands:
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
+- uid: az_spring_connection_create_cognitiveservices
+  name: az spring connection create cognitiveservices
+  summary: |-
+    Create a spring app connection to cognitiveservices.
+  status: GA
+  sourceType: Core
+  syntax: >-
+    az spring connection create cognitiveservices [--account]
+                                                  [--app]
+                                                  [--appconfig-id]
+                                                  [--client-type {dotnet, none, python}]
+                                                  [--connection]
+                                                  [--customized-keys]
+                                                  [--deployment]
+                                                  [--no-wait]
+                                                  [--opt-out {auth, configinfo, publicnetwork}]
+                                                  [--resource-group]
+                                                  [--secret]
+                                                  [--service]
+                                                  [--service-principal]
+                                                  [--source-id]
+                                                  [--system-identity]
+                                                  [--target-id]
+                                                  [--target-resource-group]
+                                                  [--user-identity]
+                                                  [--vault-id]
+  examples:
+  - summary: |-
+      Create a connection between spring app and cognitiveservices interactively
+    syntax: az spring connection create cognitiveservices
+  - summary: |-
+      Create a connection between spring app and cognitiveservices with resource name
+    syntax: az spring connection create cognitiveservices -g SpringCloudRG --service MySpringService --app MyApp --tg CognitiveServicesRG --account MyAccount --system-identity
+  - summary: |-
+      Create a connection between spring app and cognitiveservices with resource id
+    syntax: az spring connection create cognitiveservices --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.AppPlatform/Spring/{spring}/apps/{app} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.CognitiveServices/accounts/{account} --system-identity
+  optionalParameters:
+  - name: --account
+    summary: |-
+      Name of the cognitive services account. Required if '--target-id' is not specified.
+  - name: --app
+    summary: |-
+      Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
+  - name: --client-type
+    parameterValueGroup: "dotnet, none, python"
+    summary: |-
+      The client type used on the spring.
+  - name: --connection
+    summary: |-
+      Name of the spring connection.
+  - name: --customized-keys
+    summary: |-
+      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
+  - name: --deployment
+    summary: |-
+      The deployment name of the app.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --opt-out
+    parameterValueGroup: "auth, configinfo, publicnetwork"
+    summary: |-
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
+  - name: --resource-group -g
+    summary: |-
+      The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --secret
+    summary: |-
+      The secret auth info.
+    description: |-
+      Usage: --secret.
+  - name: --service
+    summary: |-
+      Name of the the Azure Spring Apps resource. Required if '--source-id' is not specified.None.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
+  - name: --source-id
+    summary: |-
+      The resource id of a spring. Required if ['--resource-group', '--service', '--app'] are not specified.
+  - name: --system-identity
+    summary: |-
+      The system assigned identity auth info.
+    description: |-
+      Usage: --system-identity.
+  - name: --target-id
+    summary: |-
+      The resource id of target service. Required if ['--target-resource-group', '--account'] are not specified.
+  - name: --target-resource-group --tg
+    summary: |-
+      The resource group which contains the cognitive services. Required if '--target-id' is not specified.
+  - name: --user-identity
+    summary: |-
+      The user assigned identity auth info.
+    description: |-
+      Usage: --user-identity client-id=XX subs-id=XX
+
+      client-id      : Required. Client id of the user assigned identity.
+      subs-id        : Required. Subscription id of the user assigned identity.
+  - name: --vault-id
+    summary: |-
+      The id of key vault to store secret value.
 - uid: az_spring_connection_create_confluent-cloud
   name: az spring connection create confluent-cloud
   summary: |-
@@ -220,12 +336,13 @@ directCommands:
                                                 --schema-registry
                                                 --schema-secret
                                                 [--app]
+                                                [--appconfig-id]
                                                 [--client-type {dotnet, dotnet-internal, go, java, none, python, springBoot}]
                                                 [--connection]
                                                 [--customized-keys]
                                                 [--deployment]
                                                 [--no-wait]
-                                                [--opt-out {configinfo, publicnetwork}]
+                                                [--opt-out {auth, configinfo, publicnetwork}]
                                                 [--resource-group]
                                                 [--service]
                                                 [--source-id]
@@ -263,6 +380,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, none, python, springBoot"
     summary: |-
@@ -275,17 +395,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -307,13 +425,14 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-cassandra [--account]
                                                  [--app]
+                                                 [--appconfig-id]
                                                  [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--customized-keys]
                                                  [--deployment]
                                                  [--key-space]
                                                  [--no-wait]
-                                                 [--opt-out {configinfo, publicnetwork}]
+                                                 [--opt-out {auth, configinfo, publicnetwork}]
                                                  [--private-endpoint {false, true}]
                                                  [--resource-group]
                                                  [--secret]
@@ -343,6 +462,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -355,9 +477,7 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --key-space
     summary: |-
       Name of the keyspace. Required if '--target-id' is not specified.
@@ -366,9 +486,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -431,6 +551,7 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-gremlin [--account]
                                                [--app]
+                                               [--appconfig-id]
                                                [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python}]
                                                [--connection]
                                                [--customized-keys]
@@ -438,7 +559,7 @@ directCommands:
                                                [--deployment]
                                                [--graph]
                                                [--no-wait]
-                                               [--opt-out {configinfo, publicnetwork}]
+                                               [--opt-out {auth, configinfo, publicnetwork}]
                                                [--private-endpoint {false, true}]
                                                [--resource-group]
                                                [--secret]
@@ -468,6 +589,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python"
     summary: |-
@@ -483,9 +607,7 @@ directCommands:
       Name of the database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --graph
     summary: |-
       Name of the graph. Required if '--target-id' is not specified.
@@ -494,9 +616,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -559,13 +681,14 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-mongo [--account]
                                              [--app]
+                                             [--appconfig-id]
                                              [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--database]
                                              [--deployment]
                                              [--no-wait]
-                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--opt-out {auth, configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -595,6 +718,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, springBoot"
     summary: |-
@@ -610,17 +736,15 @@ directCommands:
       Name of the database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -683,13 +807,14 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-sql [--account]
                                            [--app]
+                                           [--appconfig-id]
                                            [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--database]
                                            [--deployment]
                                            [--no-wait]
-                                           [--opt-out {configinfo, publicnetwork}]
+                                           [--opt-out {auth, configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -719,6 +844,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -734,17 +862,15 @@ directCommands:
       Name of the database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -807,12 +933,13 @@ directCommands:
   syntax: >-
     az spring connection create cosmos-table [--account]
                                              [--app]
+                                             [--appconfig-id]
                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--deployment]
                                              [--no-wait]
-                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--opt-out {auth, configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -843,6 +970,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -855,17 +985,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -930,13 +1058,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create eventhub [--app]
+                                         [--appconfig-id]
                                          [--client-type {dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--deployment]
                                          [--namespace]
                                          [--no-wait]
-                                         [--opt-out {configinfo, publicnetwork}]
+                                         [--opt-out {auth, configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
@@ -963,6 +1092,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, kafka-springBoot, nodejs, none, python, springBoot"
     summary: |-
@@ -975,9 +1107,7 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --namespace
     summary: |-
       Name of the eventhub namespace. Required if '--target-id' is not specified.
@@ -986,9 +1116,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1050,13 +1180,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create keyvault [--app]
+                                         [--appconfig-id]
                                          [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                          [--connection]
                                          [--customized-keys]
                                          [--deployment]
                                          [--new {false, true}]
                                          [--no-wait]
-                                         [--opt-out {configinfo, publicnetwork}]
+                                         [--opt-out {auth, configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--service]
@@ -1089,6 +1220,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1101,9 +1235,7 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --new
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -1114,9 +1246,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1178,13 +1310,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create mysql [--app]
+                                      [--appconfig-id]
                                       [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                       [--connection]
                                       [--customized-keys]
                                       [--database]
                                       [--deployment]
                                       [--no-wait]
-                                      [--opt-out {configinfo, publicnetwork}]
+                                      [--opt-out {auth, configinfo, publicnetwork}]
                                       [--private-endpoint {false, true}]
                                       [--resource-group]
                                       [--secret]
@@ -1209,6 +1342,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1224,17 +1360,15 @@ directCommands:
       Name of the mysql database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1284,13 +1418,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create mysql-flexible [--app]
+                                               [--appconfig-id]
                                                [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                [--connection]
                                                [--customized-keys]
                                                [--database]
                                                [--deployment]
                                                [--no-wait]
-                                               [--opt-out {configinfo, publicnetwork}]
+                                               [--opt-out {auth, configinfo, publicnetwork}]
                                                [--resource-group]
                                                [--secret]
                                                [--server]
@@ -1316,6 +1451,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1331,17 +1469,15 @@ directCommands:
       Name of the mysql flexible database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -1409,6 +1545,7 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create postgres [--app]
+                                         [--appconfig-id]
                                          [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                          [--connection]
                                          [--customized-keys]
@@ -1416,7 +1553,7 @@ directCommands:
                                          [--deployment]
                                          [--new {false, true}]
                                          [--no-wait]
-                                         [--opt-out {configinfo, publicnetwork}]
+                                         [--opt-out {auth, configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
                                          [--resource-group]
                                          [--secret]
@@ -1450,6 +1587,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1465,9 +1605,7 @@ directCommands:
       Name of postgres database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --new
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -1478,9 +1616,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1552,13 +1690,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create postgres-flexible [--app]
+                                                  [--appconfig-id]
                                                   [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                                   [--connection]
                                                   [--customized-keys]
                                                   [--database]
                                                   [--deployment]
                                                   [--no-wait]
-                                                  [--opt-out {configinfo, publicnetwork}]
+                                                  [--opt-out {auth, configinfo, publicnetwork}]
                                                   [--resource-group]
                                                   [--secret]
                                                   [--server]
@@ -1584,6 +1723,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -1599,17 +1741,15 @@ directCommands:
       Name of postgres flexible database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -1673,13 +1813,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create redis [--app]
+                                      [--appconfig-id]
                                       [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                       [--connection]
                                       [--customized-keys]
                                       [--database]
                                       [--deployment]
                                       [--no-wait]
-                                      [--opt-out {configinfo, publicnetwork}]
+                                      [--opt-out {auth, configinfo, publicnetwork}]
                                       [--private-endpoint {false, true}]
                                       [--resource-group]
                                       [--secret]
@@ -1703,6 +1844,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1718,17 +1862,15 @@ directCommands:
       Name of the redis database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1767,13 +1909,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create redis-enterprise [--app]
+                                                 [--appconfig-id]
                                                  [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                                  [--connection]
                                                  [--customized-keys]
                                                  [--database]
                                                  [--deployment]
                                                  [--no-wait]
-                                                 [--opt-out {configinfo, publicnetwork}]
+                                                 [--opt-out {auth, configinfo, publicnetwork}]
                                                  [--resource-group]
                                                  [--secret]
                                                  [--server]
@@ -1796,6 +1939,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1811,17 +1957,15 @@ directCommands:
       Name of the redis enterprise database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --resource-group -g
     summary: |-
       The resource group which contains app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
@@ -1856,13 +2000,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create servicebus [--app]
+                                           [--appconfig-id]
                                            [--client-type {dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot}]
                                            [--connection]
                                            [--customized-keys]
                                            [--deployment]
                                            [--namespace]
                                            [--no-wait]
-                                           [--opt-out {configinfo, publicnetwork}]
+                                           [--opt-out {auth, configinfo, publicnetwork}]
                                            [--private-endpoint {false, true}]
                                            [--resource-group]
                                            [--secret]
@@ -1889,6 +2034,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, go, java, nodejs, none, python, springBoot"
     summary: |-
@@ -1901,9 +2049,7 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --namespace
     summary: |-
       Name of the servicebus namespace. Required if '--target-id' is not specified.
@@ -1912,9 +2058,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -1976,12 +2122,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create signalr [--app]
+                                        [--appconfig-id]
                                         [--client-type {dotnet, dotnet-internal, none}]
                                         [--connection]
                                         [--customized-keys]
                                         [--deployment]
                                         [--no-wait]
-                                        [--opt-out {configinfo, publicnetwork}]
+                                        [--opt-out {auth, configinfo, publicnetwork}]
                                         [--private-endpoint {false, true}]
                                         [--resource-group]
                                         [--secret]
@@ -2008,6 +2155,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, none"
     summary: |-
@@ -2020,17 +2170,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2091,13 +2239,14 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create sql [--app]
+                                    [--appconfig-id]
                                     [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
                                     [--connection]
                                     [--customized-keys]
                                     [--database]
                                     [--deployment]
                                     [--no-wait]
-                                    [--opt-out {configinfo, publicnetwork}]
+                                    [--opt-out {auth, configinfo, publicnetwork}]
                                     [--private-endpoint {false, true}]
                                     [--resource-group]
                                     [--secret]
@@ -2125,6 +2274,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -2140,17 +2292,15 @@ directCommands:
       Name of the sql database. Required if '--target-id' is not specified.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2223,13 +2373,14 @@ directCommands:
   syntax: >-
     az spring connection create storage-blob [--account]
                                              [--app]
+                                             [--appconfig-id]
                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--deployment]
                                              [--new {false, true}]
                                              [--no-wait]
-                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--opt-out {auth, configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -2265,6 +2416,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -2277,9 +2431,7 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --new
     defaultValue: "False"
     parameterValueGroup: "false, true"
@@ -2290,9 +2442,9 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2355,12 +2507,13 @@ directCommands:
   syntax: >-
     az spring connection create storage-file [--account]
                                              [--app]
+                                             [--appconfig-id]
                                              [--client-type {dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot}]
                                              [--connection]
                                              [--customized-keys]
                                              [--deployment]
                                              [--no-wait]
-                                             [--opt-out {configinfo, publicnetwork}]
+                                             [--opt-out {auth, configinfo, publicnetwork}]
                                              [--private-endpoint {false, true}]
                                              [--resource-group]
                                              [--secret]
@@ -2387,6 +2540,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, php, python, ruby, springBoot"
     summary: |-
@@ -2399,17 +2555,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2450,12 +2604,13 @@ directCommands:
   syntax: >-
     az spring connection create storage-queue [--account]
                                               [--app]
+                                              [--appconfig-id]
                                               [--client-type {dotnet, dotnet-internal, java, nodejs, none, python, springBoot}]
                                               [--connection]
                                               [--customized-keys]
                                               [--deployment]
                                               [--no-wait]
-                                              [--opt-out {configinfo, publicnetwork}]
+                                              [--opt-out {auth, configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -2485,6 +2640,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python, springBoot"
     summary: |-
@@ -2497,17 +2655,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2570,12 +2726,13 @@ directCommands:
   syntax: >-
     az spring connection create storage-table [--account]
                                               [--app]
+                                              [--appconfig-id]
                                               [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                               [--connection]
                                               [--customized-keys]
                                               [--deployment]
                                               [--no-wait]
-                                              [--opt-out {configinfo, publicnetwork}]
+                                              [--opt-out {auth, configinfo, publicnetwork}]
                                               [--private-endpoint {false, true}]
                                               [--resource-group]
                                               [--secret]
@@ -2605,6 +2762,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
@@ -2617,17 +2777,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2689,12 +2847,13 @@ directCommands:
   sourceType: Core
   syntax: >-
     az spring connection create webpubsub [--app]
+                                          [--appconfig-id]
                                           [--client-type {dotnet, dotnet-internal, java, nodejs, none, python}]
                                           [--connection]
                                           [--customized-keys]
                                           [--deployment]
                                           [--no-wait]
-                                          [--opt-out {configinfo, publicnetwork}]
+                                          [--opt-out {auth, configinfo, publicnetwork}]
                                           [--private-endpoint {false, true}]
                                           [--resource-group]
                                           [--secret]
@@ -2721,6 +2880,9 @@ directCommands:
   - name: --app
     summary: |-
       Name of the app in the Azure Spring Apps. Required if '--source-id' is not specified.None.
+  - name: --appconfig-id
+    summary: |-
+      The app configuration id to store configuration.
   - name: --client-type
     parameterValueGroup: "dotnet, dotnet-internal, java, nodejs, none, python"
     summary: |-
@@ -2733,17 +2895,15 @@ directCommands:
       The customized keys used to change default configuration names. Key is the original name, value is the customized name.
   - name: --deployment
     summary: |-
-      The deployment name of the app. Note: The default value of `--deployment` is removed. Use `--deployment default` if you want stay in default behavior.
-    isDeprecated: true
-    deprecateInfo: Argument 'deployment' has been deprecated and will be removed in a future release.
+      The deployment name of the app.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --opt-out
-    parameterValueGroup: "configinfo, publicnetwork"
+    parameterValueGroup: "auth, configinfo, publicnetwork"
     summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.
+      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
   - name: --private-endpoint
     parameterValueGroup: "false, true"
     summary: |-
@@ -2799,6 +2959,7 @@ directCommands:
 commands:
 - az_spring_connection_create_app-insights
 - az_spring_connection_create_appconfig
+- az_spring_connection_create_cognitiveservices
 - az_spring_connection_create_confluent-cloud
 - az_spring_connection_create_cosmos-cassandra
 - az_spring_connection_create_cosmos-gremlin

@@ -239,7 +239,7 @@ directCommands:
                  [--enable-vtpm {false, true}]
                  [--encryption-at-host {false, true}]
                  [--ephemeral-os-disk {false, true}]
-                 [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
+                 [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                  [--eviction-policy {Deallocate, Delete}]
                  [--generate-ssh-keys]
                  [--host]
@@ -280,6 +280,10 @@ directCommands:
                  [--secrets]
                  [--security-type {ConfidentialVM, Standard, TrustedLaunch}]
                  [--size]
+                 [--source-disk-restore-point]
+                 [--source-disk-restore-point-size-gb]
+                 [--source-resource]
+                 [--source-resource-size]
                  [--specialized {false, true}]
                  [--ssh-dest-key-path]
                  [--ssh-key-name]
@@ -503,7 +507,7 @@ directCommands:
     summary: |-
       Allows you to create an OS disk directly on the host node, providing local disk performance and faster VM/VMSS reimage time.
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: "CacheDisk, ResourceDisk"
+    parameterValueGroup: "CacheDisk, NvmeDisk, ResourceDisk"
     summary: |-
       Only applicable when used with `--ephemeral-os-disk`. Allows you to choose the Ephemeral OS disk provisioning location.
   - name: --eviction-policy
@@ -646,6 +650,18 @@ directCommands:
     summary: |-
       The VM size to be created. See https://azure.microsoft.com/pricing/details/virtual-machines/ for size info.
     valueFrom: az vm list-sizes
+  - name: --source-disk-restore-point --source-disk-rp
+    summary: |-
+      Create a data disk from a disk restore point. Can use the ID of a disk restore point.
+  - name: --source-disk-restore-point-size-gb --source-rp-size
+    summary: |-
+      The size of the source disk restore point in GB.
+  - name: --source-resource --source-snapshots-or-disks
+    summary: |-
+      Create a data disk from a snapshot or another disk. Can use the ID of a disk or snapshot.
+  - name: --source-resource-size --source-snapshots-or-disks-size-gb
+    summary: |-
+      The size of the source disk in GB.
   - name: --specialized
     parameterValueGroup: "false, true"
     summary: |-
@@ -1640,7 +1656,7 @@ directCommands:
                  [--enable-proxy-agent {false, true}]
                  [--enable-secure-boot {false, true}]
                  [--enable-vtpm {false, true}]
-                 [--ephemeral-os-disk-placement {CacheDisk, ResourceDisk}]
+                 [--ephemeral-os-disk-placement {CacheDisk, NvmeDisk, ResourceDisk}]
                  [--force-string]
                  [--host]
                  [--host-group]
@@ -1731,7 +1747,7 @@ directCommands:
     summary: |-
       Enable vTPM.
   - name: --ephemeral-os-disk-placement --ephemeral-placement
-    parameterValueGroup: "CacheDisk, ResourceDisk"
+    parameterValueGroup: "CacheDisk, NvmeDisk, ResourceDisk"
     summary: |-
       Only applicable when used with `--size`. Allows you to choose the Ephemeral OS disk provisioning location.
   - name: --force-string
