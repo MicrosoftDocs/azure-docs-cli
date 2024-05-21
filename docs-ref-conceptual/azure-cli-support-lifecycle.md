@@ -36,7 +36,7 @@ Azure CLI follows [Semantic Versioning](https://semver.org/) for version numberi
 
 ### Core
 
-* **Major versions:** Breaking changes, including architectural and fundamental design changes. We provide critical security fixes to the last minor version of the previous major version for three years.  
+* **Major versions:** Major changes, including architectural and fundamental design changes. We provide critical security fixes to the last minor version of the previous major version for three years.  
 * **Minor versions:** Backward compatible feature updates and improved Azure service coverage.
 * **Patch versions:** Backward compatible fixes without new features or functionality changes.
 
