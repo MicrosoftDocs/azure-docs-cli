@@ -79,6 +79,13 @@ Here are some guidelines about the subscription selector to keep in mind:
 * The subscription selector is only available when using the `az login` command.
 * You aren't prompted to select a subscription when you're logging in with a service principal or managed identity.
 
+If you encounter any issue and want to rever to the previous login experience, run the following commands:
+
+```azurecli-interactive
+az config set core.login_experience_v2=off
+az login
+```
+
 ## Sign in with Web Account Manager (WAM) on Windows
 
 Beginning with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Web Account
