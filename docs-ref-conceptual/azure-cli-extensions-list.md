@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 05/21/2024
+ms.date: 05/22/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -88,7 +88,7 @@ You will be prompted to install an extension on first use.
 |[datadog](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog) | 2.17.0 | Microsoft Azure Command-Line Tools MicrosoftDatadogClient Extension | Experimental | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datadog/HISTORY.rst) |
 |[datafactory](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory) | 2.15.0 | Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/datafactory/HISTORY.rst) |
 |[datamigration](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration) | 2.15.0 | Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/master/src/datamigration/HISTORY.rst) |
-|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.57.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
+|[dataprotection](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection) | 2.57.0 | Microsoft Azure Command-Line Tools DataProtectionClient Extension | GA | [1.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/dataprotection/HISTORY.rst) |
 |[datashare](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare) | 2.15.0 | Microsoft Azure Command-Line Tools DataShareManagementClient Extension | Experimental | [0.2.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/datashare/HISTORY.rst) |
 |[db-up](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up) | 2.0.46 | Additional commands to simplify Azure Database workflows. | Preview | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/db-up/HISTORY.rst) |
 |[deploy-to-azure](https://github.com/Azure/deploy-to-azure-cli-extension) | 2.0.60 | Deploy to Azure using Github Actions. | Preview | [0.2.0](https://github.com/Azure/deploy-to-azure-cli-extension) |
