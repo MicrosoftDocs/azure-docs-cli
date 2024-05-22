@@ -79,7 +79,7 @@ Here are some guidelines about the subscription selector to keep in mind:
 * The subscription selector is only available when using the `az login` command.
 * You aren't prompted to select a subscription when you're logging in with a service principal or managed identity.
 
-If you encounter any issue and want to rever to the previous login experience, run the following commands:
+If want to disable the subscription selector feature, run the following commands:
 
 ```azurecli-interactive
 az config set core.login_experience_v2=off
