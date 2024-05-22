@@ -351,6 +351,7 @@ directCommands:
                            [--runtime {generic, java}]
                            [--scale-rule-auth]
                            [--scale-rule-http-concurrency]
+                           [--scale-rule-identity]
                            [--scale-rule-metadata]
                            [--scale-rule-name]
                            [--scale-rule-type]
@@ -414,8 +415,20 @@ directCommands:
           --scale-rule-type azure-queue \
           --scale-rule-metadata "accountName=mystorageaccountname" \
                                 "cloud=AzurePublicCloud" \
-                                "queueLength": "5" "queueName": "foo" \
+                                "queueLength=5" "queueName=foo" \
           --scale-rule-auth "connection=my-connection-string-secret-name"
+  - summary: |-
+      Create a container app with a custom scale rule using identity to authenticate
+    syntax: >-
+      az containerapp create -n my-containerapp -g MyResourceGroup \
+          --image my-queue-processor --environment MyContainerappEnv \
+          --user-assigned myUserIdentityResourceId --min-replicas 4 --max-replicas 8 \
+          --scale-rule-name queue-based-autoscaling \
+          --scale-rule-type azure-queue \
+          --scale-rule-metadata "accountName=mystorageaccountname" \
+                                "cloud=AzurePublicCloud" \
+                                "queueLength=5" "queueName=foo" \
+          --scale-rule-identity myUserIdentityResourceId
   - summary: |-
       Create a container app with secrets and mounts them in a volume.
     syntax: >-
@@ -625,6 +638,10 @@ directCommands:
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
     summary: |-
       The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
+  - name: --scale-rule-identity --sri
+    summary: |-
+      Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
+    isPreview: true
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
@@ -1417,6 +1434,7 @@ directCommands:
                            [--runtime {generic, java}]
                            [--scale-rule-auth]
                            [--scale-rule-http-concurrency]
+                           [--scale-rule-identity]
                            [--scale-rule-metadata]
                            [--scale-rule-name]
                            [--scale-rule-type]
@@ -1565,6 +1583,10 @@ directCommands:
   - name: --scale-rule-http-concurrency --scale-rule-tcp-concurrency --srhc --srtc
     summary: |-
       The maximum number of concurrent requests before scale out. Only supported for http and tcp scale rules.
+  - name: --scale-rule-identity --sri
+    summary: |-
+      Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
+    isPreview: true
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
@@ -1784,6 +1806,11 @@ commands:
 - az_containerapp_env_identity_remove
 - az_containerapp_env_identity_show
 - az_containerapp_env_java-component
+- az_containerapp_env_java-component_admin-for-spring
+- az_containerapp_env_java-component_admin-for-spring_create
+- az_containerapp_env_java-component_admin-for-spring_delete
+- az_containerapp_env_java-component_admin-for-spring_show
+- az_containerapp_env_java-component_admin-for-spring_update
 - az_containerapp_env_java-component_config-server-for-spring
 - az_containerapp_env_java-component_config-server-for-spring_create
 - az_containerapp_env_java-component_config-server-for-spring_delete
@@ -1795,6 +1822,11 @@ commands:
 - az_containerapp_env_java-component_eureka-server-for-spring_show
 - az_containerapp_env_java-component_eureka-server-for-spring_update
 - az_containerapp_env_java-component_list
+- az_containerapp_env_java-component_nacos
+- az_containerapp_env_java-component_nacos_create
+- az_containerapp_env_java-component_nacos_delete
+- az_containerapp_env_java-component_nacos_show
+- az_containerapp_env_java-component_nacos_update
 - az_containerapp_env_java-component_spring-cloud-config
 - az_containerapp_env_java-component_spring-cloud-config_create
 - az_containerapp_env_java-component_spring-cloud-config_delete
