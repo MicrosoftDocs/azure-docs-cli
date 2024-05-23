@@ -157,7 +157,7 @@ and command-line sign-in methods work with `--tenant`.
 In select environments and beginning in Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), you need to first disable the subscription selector by setting the `core.login_experience_v2` configuration property to `off`.
 
 ```azurecli-interactive
-# disable the subscription selector
+# disable the subscription selector (v. 2.61.0 and up)
 az config set core.login_experience_v2=off
 
 # login with a tenant ID
