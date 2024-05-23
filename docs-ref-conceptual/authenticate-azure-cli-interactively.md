@@ -154,11 +154,20 @@ You can select a tenant to sign in under with the `--tenant` argument. The value
 can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive
 and command-line sign-in methods work with `--tenant`.
 
+In some environments, you might need to first disable the subscription selector by setting the
+`core.login_experience_v2` configuration property to `off`.
+
 ```azurecli-interactive
+# disable the subscription selector (optional)
+az config set core.login_experience_v2=off
+
+# login with a tenant ID
 az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
-After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant).
+To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [Sign in interactively with Azure CLI](./authenticate-azure-cli-interactively.md#interactive-login)
+
+After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
 
 ## Refresh tokens
 
