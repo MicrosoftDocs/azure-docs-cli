@@ -47,7 +47,7 @@ Three common output formats are used with Azure CLI commands:
    - The TSV strips double quotes that the JSON format preserves.
    - To specify the format you want for TSV, use the `--query` parameter.
 
-    ```bash
+    ```azurecli
     export vm_ids=$(az vm list --show-details --resource-group myResourceGroup --query "[?powerState=='VM running'].id" --output tsv)
     az vm stop --ids $vm_ids
     ```
@@ -58,7 +58,7 @@ For more information about these and other formats, see [Output formats for Azur
 
 If the value is used more than once, assign it to a variable. Variables allow you to use values more than once or to create more general scripts.  This example assigns an ID found by the [az vm list](/cli/azure/vm#az-vm-list) command to a variable.
 
-  ```bash
+  ```azurecli
   # assign the list of running VMs to a variable
   running_vm_ids=$(az vm list --resource-group MyResourceGroup --show-details \
       --query "[?powerState=='VM running'].id" --output tsv)
@@ -77,7 +77,7 @@ For multi-value lists, consider the following options:
 
 1. If you need more controls on the result, use a "for" loop:
 
-    ```bash
+    ```azurecli
     #!/usr/bin/env bash
     for vmList in $(az vm list --resource-group MyResourceGroup --show-details --query "[?powerState=='VM running'].id"   --output tsv); do
         echo stopping $vmList
@@ -224,7 +224,7 @@ To avoid unanticipated results, here are a few suggestions:
 
 - The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
 
-  ```bash
+  ```azurecli
   # Correct
   $ az '{"key":"value"}' --debug
   Command arguments: ['{"key":"value"}', '--debug']
@@ -314,7 +314,7 @@ To avoid potential failures, you may isolate the Azure CLI configuration folder 
 
   ### [Cmd](#tab/cmd)
 
-  ```azurecli
+  ```cmd
   set AZURE_CONFIG_DIR=D:\my\config\dir
   ```
 
@@ -373,7 +373,7 @@ Use these scripts to save IDs to variables:
 
 ### [Bash](#tab/bash2)
 
-```console
+```azurecli
 ECHO OFF
 SETLOCAL
 FOR /F "tokens=* USEBACKQ" %%F IN (
@@ -386,7 +386,7 @@ az vm stop --ids %vm_ids% :: CLI stops all VMs in parallel
 
 ### [PowerShell](#tab/powershell2)
 
-```powershell
+```azurecli
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
 az vm stop --ids $vm_ids # CLI stops all VMs in parallel
 ```
@@ -397,7 +397,7 @@ Use these scripts to loop through a list:
 
 ### [Bash](#tab/bash2)
 
-```console
+```azurecli
 ECHO OFF
 SETLOCAL
 FOR /F "tokens=* USEBACKQ" %%F IN (
@@ -410,7 +410,7 @@ FOR /F "tokens=* USEBACKQ" %%F IN (
 
 ### [PowerShell](#tab/powershell2)
 
-```powershell
+```azurecli
 $vm_ids=(az vm list --resource-group VMResources --show-details --query "[?powerState=='VM running'].id" --output tsv)
 foreach ($vm_id in $vm_ids) {
     Write-Output "Stopping $vm_id"
