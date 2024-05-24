@@ -52,7 +52,8 @@ No    Subscription name                     Subscription ID                     
 [3]   Human Resources Subscription          00000000-0000-0000-0000-000000000000      Contoso
 [4] * Information Technology Subscription   00000000-0000-0000-0000-000000000000      Contoso
 
-The default is marked with an *; the default tenant is 'Contoso' and subscription is 'Information Technology Subscription' (00000000-0000-0000-0000-000000000000).
+The default is marked with an *; the default tenant is 'Contoso' and subscription is
+'Information Technology Subscription' (00000000-0000-0000-0000-000000000000).
 
 Select a subscription and tenant (Type a number or Enter for no changes): 2
 
@@ -71,7 +72,8 @@ with an asterisk (`*`) next to its number. This allows you to press <kbd>Enter</
 default subscription.
 
 Commands run against the selected subscription by default. You can still use `az account set` to
-change your subscription from a command line at any time. For more information, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
+change your subscription from a command line at any time. For more information,
+see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 Here are some guidelines about the subscription selector to keep in mind:
 
@@ -79,7 +81,8 @@ Here are some guidelines about the subscription selector to keep in mind:
 * The subscription selector is only available when using the `az login` command.
 * You aren't prompted to select a subscription when you're logging in with a service principal or managed identity.
 
-If want to disable the subscription selector feature, run the following commands:
+If want to disable the subscription selector feature, set the
+[core.login_experience_v2](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables) configuration property to `off`.
 
 ```azurecli-interactive
 az config set core.login_experience_v2=off
@@ -101,7 +104,8 @@ Using WAM has several benefits:
 * Streamlined single sign-on.
 * Bug fixes and enhancements shipped with Windows.
 
-If you encounter any issue and want to revert to the previous browser-based authentication method, run the following script:
+If you encounter an issue and want to revert to the previous browser-based authentication method,
+set the [core.enable_broker_on_windows](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables) configuration property to `false`.
 
 ```azurecli-interactive
 az account clear
@@ -117,6 +121,8 @@ The Azure CLI defaults to a browser-based authentication method when one of the 
 
 * The operating system (OS) is Mac, or Linux, or the Windows OS is earlier than Windows 10 or Windows Server 2019.
 * The `core.enable_broker_on_windows` configuration property is set to `false`.
+
+Follow these steps to sign in with a browser:
 
 [!INCLUDE [interactive_login](includes/interactive-login.md)]
 
@@ -154,11 +160,20 @@ You can select a tenant to sign in under with the `--tenant` argument. The value
 can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant. Both interactive
 and command-line sign-in methods work with `--tenant`.
 
+In select environments and beginning in Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024),
+you need to first disable the subscription selector by setting the `core.login_experience_v2` configuration property to `off`.
+
 ```azurecli-interactive
+# disable the subscription selector (v. 2.61.0 and up)
+az config set core.login_experience_v2=off
+
+# login with a tenant ID
 az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
-After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant).
+To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [#interactive-login)
+
+After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
 
 ## Refresh tokens
 
