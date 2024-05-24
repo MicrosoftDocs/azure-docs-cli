@@ -103,6 +103,54 @@ directCommands:
     parameterValueGroup: "asset, assetendpointprofile, assettype, broker, brokerlistener, configuration, datalakeconnector, dataset, diagnosticservice, instance, kafkaconnector, lnm, mqttbridgeconnector, pipeline"
     summary: |-
       Only run checks on specific resource kinds. Use space-separated values.
+- uid: az_iot_ops_delete
+  name: az iot ops delete
+  summary: |-
+    Delete IoT Operations from the cluster.
+  description: |-
+    The operation uses Azure Resource Graph to determine correlated resources. Resource Graph being eventually consistent does not guarantee a synchronized state at the time of execution.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops delete --cluster
+                      --resource-group
+                      [--force {false, true}]
+                      [--no-progress {false, true}]
+                      [--yes {false, true}]
+  examples:
+  - summary: |-
+      Minimum input for complete deletion.
+    syntax: az iot ops delete --cluster mycluster -g myresourcegroup
+  - summary: |-
+      Skip confirmation prompt and continue to deletion process. Useful for CI scenarios.
+    syntax: az iot ops delete --cluster mycluster -g myresourcegroup -y
+  - summary: |-
+      Force deletion regardless of warnings. May lead to errors.
+    syntax: az iot ops delete --cluster mycluster -g myresourcegroup --force
+  requiredParameters:
+  - isRequired: true
+    name: --cluster
+    summary: |-
+      Target cluster name for IoT Operations deletion.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --force
+    parameterValueGroup: "false, true"
+    summary: |-
+      Force the operation to execute.
+  - name: --no-progress
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable visual representation of work.
+  - name: --yes -y
+    parameterValueGroup: "false, true"
+    summary: |-
+      Confirm [y]es without a prompt. Useful for CI and automation scenarios.
 - uid: az_iot_ops_init
   name: az iot ops init
   summary: |-
@@ -122,7 +170,8 @@ directCommands:
                     [--ca-valid-days]
                     [--cluster-namespace]
                     [--context]
-                    [--csi-driver-ver]
+                    [--csi-config]
+                    [--csi-ver]
                     [--custom-location]
                     [--disable-rotation {false, true}]
                     [--disable-rsync-rules {false, true}]
@@ -179,6 +228,9 @@ directCommands:
   - summary: |-
       To avoid calling MS Graph such as for CI scenarios where the logged-in to az cli service principal permissions are limited or an existing service principal should be re-used, provide all of `--sp-app-id`, `--sp-object-id` and `--sp-secret`. These values should reflect the desired service principal that will be used for the Key Vault CSI driver setup.
     syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --sp-object-id 224a7a3f-c63d-4923-8950-c4a85f0d2f29 --sp-secret $SP_SECRET
+  - summary: |-
+      To customize configuration of the Key Vault CSI driver, --csi-config can be used. For example setting resource limits on the telegraf container dependency.
+    syntax: az iot ops init --cluster mycluster -g myresourcegroup --kv-id $KEYVAULT_ID --sp-app-id a14e216b-6802-4e9c-a6ac-844f9ffd230d --csi-config telegraf.resources.limits.memory=500Mi telegraf.resources.limits.cpu=100m
   requiredParameters:
   - isRequired: true
     name: --cluster
@@ -209,10 +261,13 @@ directCommands:
   - name: --context
     summary: |-
       Kubeconfig context name to use for k8s cluster communication. If no context is provided current_context is used.
-  - name: --csi-driver-ver
-    defaultValue: "1.5.2"
+  - name: --csi-config
     summary: |-
-      CSI driver version.
+      CSI driver extension custom configuration. Format is space-separated key=value pairs. --csi-config can be used one or more times.
+  - name: --csi-ver
+    defaultValue: "1.5.3"
+    summary: |-
+      CSI driver extension version.
   - name: --custom-location
     summary: |-
       The custom location name corresponding to the IoT Operations deployment. The default is in the form '{cluster_name}-ops-init-cl'.
@@ -311,7 +366,7 @@ directCommands:
   - name: --no-progress
     parameterValueGroup: "false, true"
     summary: |-
-      Disable init progress bar.
+      Disable visual representation of work.
   - name: --no-tls
     parameterValueGroup: "false, true"
     summary: |-
@@ -397,6 +452,7 @@ commands:
 - az_iot_ops_asset_show
 - az_iot_ops_asset_update
 - az_iot_ops_check
+- az_iot_ops_delete
 - az_iot_ops_init
 - az_iot_ops_mq
 - az_iot_ops_mq_get-password-hash
