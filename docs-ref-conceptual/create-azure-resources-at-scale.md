@@ -132,7 +132,7 @@ There are several ways to iterate through a CSV file using Bash. This example us
 
 ---
 
-Using the CSV provided in this article, the validation output is as follows: (The `00000001, 2, 3` random IDs will be different for each test, but each `resourceNo` should share the same ID.)
+Using the CSV provided in this article, the validation output is as follows: (The `00000001, 2, 3` random IDs will be different for each test, but each resource under each `resourceNo` should share the same random ID.)
 
 ```output
 resourceNo = 1
@@ -156,7 +156,7 @@ Will create VM msdocs-vm-00000003 without Vnet in RG <myExistingResourceGroup>
 
 ## Create Azure resources
 
-You have now created your variable block, validated your CSV values, and completed a test run with `echo` or `write-host`. Execute the final portion of the script to create Azure resources as defined in your CSV input file.
+You have now created your variable block, validated your CSV values, and completed a test run with `echo` or `write-host`. Execute the fourth and final portion of the script to create Azure resources as defined in your CSV input file.
 
 # [Bash](#tab/bash)
 
