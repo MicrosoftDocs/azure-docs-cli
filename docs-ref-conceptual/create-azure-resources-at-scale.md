@@ -41,7 +41,7 @@ Follow these steps to prepare your environment to run the example script:
 
   > [!NOTE]
   >
-  > To be read properly by Bash, the CSV file needs a line continuation character at the end of the last data line. This results in a blank line at the end of the file. Your blank line does not need to say `[empty line]` as this text is only provided to show you that an empty line exists. PowerShell environments do not have this "empty line" requirement.
+  > To be a proper Unix text file and be read by Bash, the CSV file needs a newline character at the end of the last data line. This results in a blank line at the end of the file. Your blank line does not need to say `[empty line]` as this text is only provided to show you that an empty line exists. PowerShell environments do not have this newline character requirement.
 
 * Upload your modified CSV file to your Azure Cloud Shell blog storage account. The easiest way to do this is to use the **Manage files** drop down on the Azure Cloud Shell main menu. For more information on Cloud Shell storage, see [Persist files in Azure Cloud Shell](/azure/cloud-shell/persisting-shell-storage).
 
@@ -70,11 +70,11 @@ Variables with a `msdocs-` prefix can be replaced with the prefix of your choice
 
 # [Bash](#tab/bash)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="VariableBlock":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="step1":::
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="VariableBlock":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="step1":::
 
 ---
 
@@ -84,11 +84,11 @@ Before you start to test the create script, make sure your CSV file is formatted
 
 # [Bash](#tab/bash)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateFileValues":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="step2":::
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateFileValues":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="step2":::
 
 ---
 
@@ -124,11 +124,11 @@ If you are confident in your scripting abilities, you can skip this step. Howeve
 
 There are several ways to iterate through a CSV file using Bash. This example uses `IFS` with a `while loop`.
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="ValidateScriptLogic":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="step3":::
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="ValidateScriptLogic":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="step3":::
 
 ---
 
@@ -160,11 +160,11 @@ You have now created your variable block, validated your CSV values, and complet
 
 # [Bash](#tab/bash)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="FullScript":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/bash/create-azure-resources-at-scale.sh" id="step4":::
 
 # [PowerShell](#tab/powershell)
 
-:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="FullScript":::
+:::code language="azurecli" source="~/azure_cli_scripts/azure-cli/create-azure-resources-at-scale/powershell/create-azure-resources-at-scale.ps1" id="step4":::
 
 ---
 
