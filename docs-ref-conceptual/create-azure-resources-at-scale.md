@@ -222,7 +222,7 @@ Starting creation of resourceNo 3 at YYYY-MM-DD HH:MM:SS.
 
 ## Troubleshooting
 
-### In Bash, the Create Azure resources step stops after step 1
+### In Bash, the "Create Azure resources" step stops after step 1
 
 In Ubuntu 22.04.3 LTS and Debian version 12 (bookworm) the [Create Azure resources](#create-azure-resources) stops after resource 1. The [Validate script logic](#validate-script-logic) works as expected returning results for all three resources. The reason for this issue is that the creating the VNet in step #1 takes a few seconds. Both Ubuntu and Debian proceed to the second resource without waiting for the completion of resource 1. You can read more about this in [wait doesn't wait for the processes in the while loop to finish]([https://mywiki.wooledge.org/BashFAQ/024](https://stackoverflow.com/questions/63489618/wait-doesnt-wait-for-the-processes-in-the-while-loop-to-finish)) or [Waiting for any process to finish in bash script](https://unix.stackexchange.com/questions/656103/waiting-for-any-process-to-finish-in-bash-script).
 
