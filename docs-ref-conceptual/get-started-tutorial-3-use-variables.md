@@ -113,7 +113,7 @@ Combine what you learned about quoting with what you just learned about `--query
 In Bash, you can't have a space before or after the equal (`=`) sign. You can opt to use quotes around the variable value, so `msdocs-tutorial-rg-00000000` and `"msdocs-tutorial-rg-00000000"` are both correct.
 
 ```azurecli-interactive
-rgName=<msdocs-tutorial-rg-00000000>
+rgName="<msdocs-tutorial-rg-00000000>"
 
 # Get a list of all Azure storage accounts that allow blob public access.
 # Notice the backticks and escape characters needed for boolean values.
@@ -171,9 +171,9 @@ These examples use `echo` to verify variable values because this is a teaching t
 ```azurecli-interactive
 # Set your variables.
 let "randomIdentifier=$RANDOM*$RANDOM"
-rgName=<msdocs-tutorial-rg-00000000>
-kvName=msdocs-kv-$randomIdentifier
-location=eastus
+rgName="<msdocs-tutorial-rg-00000000>"
+kvName="msdocs-kv-$randomIdentifier"
+location="eastus"
 
 # Set your default output to none
 az config set core.output=none
@@ -185,8 +185,8 @@ echo "My new Azure Kev Vault ID is $myNewKeyVaultID"
 # Wait about 1 minute for your Key Vault creation to complete.
 
 # Create a new secret returning the secret ID
-kvSecretName=<myKVSecretName>
-kvSecretValue=<myKVSecretValue>
+kvSecretName="<myKVSecretName>"
+kvSecretValue="<myKVSecretValue>"
 myNewSecretID=$(az keyvault secret set --vault-name $kvName --name $kvSecretName --value $kvSecretValue --query id --output tsv)
 echo "My new secret ID is $myNewSecretID"
 
@@ -265,7 +265,7 @@ This Bash script was tested in [Azure Cloud Shell](/azure/cloud-shell/overview) 
 
 ```bash
 # Show the contents of a file in the console
-fileName=msdocs-tutorial.json
+fileName="msdocs-tutorial.json"
 cat $fileName | jq
 
 # Get a JSON dictionary object

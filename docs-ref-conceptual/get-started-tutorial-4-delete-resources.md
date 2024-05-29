@@ -42,7 +42,7 @@ When you're working with a large number of resources and you don't want to delet
 
 ```azurecli-interactive
 # Set your resource group variable
-rgName=<msdocs-tutorial-rg-0000000>
+rgName="<msdocs-tutorial-rg-0000000>"
 
 # Get the name of all storage accounts in a resource group.
 az storage account list --resource-group $rgName \
@@ -66,7 +66,7 @@ az storage account list --resource-group $rgName \
 
 ```azurecli-interactive
 # Set your resource group variable
-$rgName=<msdocs-tutorial-rg-0000000>
+$rgName="<msdocs-tutorial-rg-0000000>"
 
 # Get the name of all storage accounts in a resource group.
 az storage account list --resource-group $rgName `
