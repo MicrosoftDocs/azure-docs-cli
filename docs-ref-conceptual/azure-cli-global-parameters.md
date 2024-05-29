@@ -146,6 +146,8 @@ You can skip preloading in a single pass by CTRL+C or turn it off by setting 'az
 Loading command table... Expected time around 1 minute.
 ```
 
+---
+
 ## `--subscription` global parameter
 
 You can use the `--subscription` global parameter to set a specific subscription for a command. The
