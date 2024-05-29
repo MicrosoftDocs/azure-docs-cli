@@ -89,7 +89,7 @@ This next script example demonstrates environment-specific syntax for the follow
 ```azurecli-interactive
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
-location=eastus
+location="eastus"
 resourceGroup="<msdocs-tutorial-rg-00000000>"
 storageAccount="msdocssa$randomIdentifier"
 
@@ -127,7 +127,7 @@ az storage account create --name $storageAccount `
 ```azurecli-interactive
 :: Variable block
 set randomIdentifier=%RANDOM%
-set location=eastus
+set location="eastus"
 set resourceGroup="<msdocs-tutorial-rg-00000000>"
 set storageAccount="msdocssa%randomIdentifier%"
 
