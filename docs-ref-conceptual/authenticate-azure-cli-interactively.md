@@ -177,7 +177,7 @@ After signing in, if you want to change your active tenant, see [How-to change y
 
 ## Logout
 
-To remove access to Azure, use the [az logout](reference-index#az-logout) command.
+To remove access to Azure, use the [az logout](/cli/azure/reference-index#az-logout) command.
 
 ```azurecli-interactive
 az logout
