@@ -4,7 +4,7 @@ description: Learn how to sign into the Azure CLI interactively using az login, 
 author: jiasli
 ms.author: jiasli
 manager: yonzhan
-ms.date: 05/21/2024
+ms.date: 05/30/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -174,6 +174,24 @@ az login --tenant 00000000-0000-0000-0000-000000000000
 To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [#interactive-login)
 
 After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
+
+## Logout
+
+To remove access to Azure, use the [az logout](reference-index#az-logout) command.
+
+```azurecli-interactive
+az logout
+```
+
+## Clear your subscription cache
+
+To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear) command. You will need to login again to see an updated list.
+
+```azurecli-interactive
+az account clear
+
+az login
+```
 
 ## Refresh tokens
 
