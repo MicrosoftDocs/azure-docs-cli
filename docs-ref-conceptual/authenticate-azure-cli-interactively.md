@@ -72,8 +72,7 @@ with an asterisk (`*`) next to its number. This allows you to press <kbd>Enter</
 default subscription.
 
 Commands run against the selected subscription by default. You can still use `az account set` to
-change your subscription from a command line at any time. For more information,
-see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
+change your subscription from a command line at any time. For more information, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 Here are some guidelines about the subscription selector to keep in mind:
 
@@ -161,7 +160,8 @@ can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant
 and command-line sign-in methods work with `--tenant`.
 
 In select environments and beginning in Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024),
-you need to first disable the subscription selector by setting the `core.login_experience_v2` configuration property to `off`.
+you need to first disable the subscription selector by setting the `core.login_experience_v2`
+configuration property to `off`.
 
 ```azurecli-interactive
 # disable the subscription selector (v. 2.61.0 and up)
@@ -185,13 +185,18 @@ az logout
 
 ## Clear your subscription cache
 
-To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear) command. You will need to login again to see an updated list.
+To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear)
+command. You will need to login again to see an updated list.
 
 ```azurecli-interactive
 az account clear
 
 az login
 ```
+
+Clearing your subscription cache is not technically the same process as logging out of Azure.
+However, when you clear your subscription cache, you cannot run Azure CLI commands, including
+`az account set`, until you login again.
 
 ## Refresh tokens
 
