@@ -175,6 +175,12 @@ To reenable the subscription selector, run `az config set core.login_experience_
 
 After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
 
+## Sign in using --scope
+
+```
+az login --scope https://management.core.windows.net//.default
+```
+
 ## Logout
 
 To remove access to Azure, use the [az logout](/cli/azure/reference-index#az-logout) command.
