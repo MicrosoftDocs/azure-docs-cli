@@ -26,7 +26,6 @@ ms.custom: devx-track-azurecli
 | |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | |  | [Create metric alert in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | |  | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
 | | [az appservice plan show](/cli/azure/appservice/plan#az-appservice-plan-show) | [Create metric alert in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | **az batch**| [az batch account create](/cli/azure/batch/account#az-batch-account-create) | [CLI example: Add an application to an Azure Batch account](/azure/batch/scripts/batch-cli-sample-add-application) |
 | |  | [CLI example: Create a Batch account in Batch service mode](/azure/batch/scripts/batch-cli-sample-create-account) |
@@ -64,14 +63,13 @@ ms.custom: devx-track-azurecli
 | | [az batch pool supported-images list](/cli/azure/batch/pool/supported-images#az-batch-pool-supported-images-list) | [CLI example: Create and manage a Linux pool in Azure Batch](/azure/batch/scripts/batch-cli-sample-manage-linux-pool) |
 | | [az batch task create](/cli/azure/batch/task#az-batch-task-create) | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | | [az batch task show](/cli/azure/batch/task#az-batch-task-show) | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
-| **az cdn**| [az cdn custom-domain create](/cli/azure/cdn/custom-domain#az-cdn-custom-domain-create) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | [az cdn custom-domain enable-https](/cli/azure/cdn/custom-domain#az-cdn-custom-domain-enable-https) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | [az cdn endpoint create](/cli/azure/cdn/endpoint#az-cdn-endpoint-create) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | [az cdn endpoint update](/cli/azure/cdn/endpoint#az-cdn-endpoint-update) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | [az cdn origin create](/cli/azure/cdn/origin#az-cdn-origin-create) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | [az cdn origin-group create](/cli/azure/cdn/origin-group#az-cdn-origin-group-create) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| | [az cdn profile create](/cli/azure/cdn/profile#az-cdn-profile-create) | [Create an Azure CDN profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
-| **az container**| [az container create](/cli/azure/container#az-container-create) | [Deploy the Sample Labeling tool](/azure/ai-services/document-intelligence/deploy-label-tool) |
+| **az cdn**| [az cdn custom-domain create](/cli/azure/cdn/custom-domain#az-cdn-custom-domain-create) | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
+| | [az cdn custom-domain enable-https](/cli/azure/cdn/custom-domain#az-cdn-custom-domain-enable-https) | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
+| | [az cdn endpoint create](/cli/azure/cdn/endpoint#az-cdn-endpoint-create) | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
+| | [az cdn endpoint update](/cli/azure/cdn/endpoint#az-cdn-endpoint-update) | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
+| | [az cdn origin create](/cli/azure/cdn/origin#az-cdn-origin-create) | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
+| | [az cdn origin-group create](/cli/azure/cdn/origin-group#az-cdn-origin-group-create) | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
+| | [az cdn profile create](/cli/azure/cdn/profile#az-cdn-profile-create) | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
 | **az cosmosdb**| [az cosmosdb cassandra keyspace create](/cli/azure/cosmosdb/cassandra/keyspace#az-cosmosdb-cassandra-keyspace-create) | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/create) |
 | |  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless) |
 | |  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
@@ -101,6 +99,7 @@ ms.custom: devx-track-azurecli
 | |  | [Create an Azure Cosmos DB for NoSQL serverless account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/serverless) |
 | |  | [Create an Azure Cosmos DB Table API account and table using Azure CLI](/azure/cosmos-db/scripts/cli/table/create) |
 | |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
+| |  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
 | |  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
 | |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
 | |  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
@@ -129,6 +128,7 @@ ms.custom: devx-track-azurecli
 | | [az cosmosdb gremlin graph throughput show](/cli/azure/cosmosdb/gremlin/graph/throughput#az-cosmosdb-gremlin-graph-throughput-show) | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
 | | [az cosmosdb gremlin graph throughput update](/cli/azure/cosmosdb/gremlin/graph/throughput#az-cosmosdb-gremlin-graph-throughput-update) | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
 | | [az cosmosdb keys list](/cli/azure/cosmosdb/keys#az-cosmosdb-keys-list) | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
+| |  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
 | |  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
 | | [az cosmosdb keys regenerate](/cli/azure/cosmosdb/keys#az-cosmosdb-keys-regenerate) | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
 | | [az cosmosdb list](/cli/azure/cosmosdb#az-cosmosdb-list) | [Find an existing Azure Cosmos DB free-tier account in a subscription using Azure CLI](/azure/cosmos-db/scripts/cli/common/free-tier) |
@@ -167,6 +167,7 @@ ms.custom: devx-track-azurecli
 | | [az cosmosdb sql database throughput show](/cli/azure/cosmosdb/sql/database/throughput#az-cosmosdb-sql-database-throughput-show) | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
 | | [az cosmosdb sql database throughput update](/cli/azure/cosmosdb/sql/database/throughput#az-cosmosdb-sql-database-throughput-update) | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
 | | [az cosmosdb table create](/cli/azure/cosmosdb/table#az-cosmosdb-table-create) | [Create an Azure Cosmos DB Table API account and table using Azure CLI](/azure/cosmos-db/scripts/cli/table/create) |
+| |  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
 | |  | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) |
 | |  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](/azure/cosmos-db/scripts/cli/table/autoscale) |
 | |  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](/azure/cosmos-db/scripts/cli/table/serverless) |
@@ -175,6 +176,7 @@ ms.custom: devx-track-azurecli
 | | [az cosmosdb table throughput update](/cli/azure/cosmosdb/table/throughput#az-cosmosdb-table-throughput-update) | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) |
 | | [az cosmosdb update](/cli/azure/cosmosdb#az-cosmosdb-update) | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
 | **az deployment**| [az deployment group create](/cli/azure/deployment/group#az-deployment-group-create) | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
+| |  | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
 | **az devops**| [az devops configure](/cli/azure/devops#az-devops-configure) | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | [az devops login](/cli/azure/devops#az-devops-login) | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | | [az devops project create](/cli/azure/devops/project#az-devops-project-create) | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
@@ -194,10 +196,14 @@ ms.custom: devx-track-azurecli
 | |  | [Copy snapshot of a managed disk to same or different subscription with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-same-or-different-subscription) |
 | |  | [Create a managed disk from a snapshot with CLI (Linux)](/azure/virtual-machines/scripts/create-managed-disk-from-snapshot) |
 | **az eventgrid**| [az eventgrid event-subscription create](/cli/azure/eventgrid/event-subscription#az-eventgrid-event-subscription-create) | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
+| |  | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
 | | [az eventgrid topic create](/cli/azure/eventgrid/topic#az-eventgrid-topic-create) | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
 | | [az eventgrid topic key list](/cli/azure/eventgrid/topic/key#az-eventgrid-topic-key-list) | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
 | | [az eventgrid topic show](/cli/azure/eventgrid/topic#az-eventgrid-topic-show) | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
 | **az extension**| [az extension add](/cli/azure/extension#az-extension-add) | [Azure CLI script sample - create a logic app](/azure/logic-apps/sample-logic-apps-cli-script) |
+| |  | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
+| | [az extension list](/cli/azure/extension#az-extension-list) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
+| | [az extension remove](/cli/azure/extension#az-extension-remove) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | **az functionapp**| [az functionapp config appsettings set](/cli/azure/functionapp/config/appsettings#az-functionapp-config-appsettings-set) | [Create a function app with a named Storage account connection](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-storage-account) |
 | |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
 | | [az functionapp create](/cli/azure/functionapp#az-functionapp-create) | [Create a function app for serverless code execution](/azure/azure-functions/scripts/functions-cli-create-serverless) |
@@ -214,9 +220,7 @@ ms.custom: devx-track-azurecli
 | **az graph**| [az graph query](/cli/azure/graph#az-graph-query) | [Advanced Resource Graph query samples](/azure/governance/resource-graph/samples/advanced) |
 | |  | [Azure Resource Graph sample queries by category](/azure/governance/resource-graph/samples/samples-by-category) |
 | |  | [Azure Resource Graph sample queries by table](/azure/governance/resource-graph/samples/samples-by-table) |
-| |  | [Azure Resource Graph sample queries for Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/resource-graph-samples) |
 | |  | [Azure Resource Graph sample queries for Azure Policy](/azure/governance/policy/samples/resource-graph-samples) |
-| |  | [Azure Resource Graph sample queries for Azure Resource Manager](/azure/azure-resource-manager/management/resource-graph-samples) |
 | |  | [Azure Resource Graph sample queries for Azure Service Health](/azure/service-health/resource-graph-samples) |
 | |  | [Azure Resource Graph sample queries for Azure Virtual Machines](/azure/virtual-machines/resource-graph-samples) |
 | |  | [Azure Resource Graph sample queries for management groups](/azure/governance/management-groups/resource-graph-samples) |
@@ -226,6 +230,7 @@ ms.custom: devx-track-azurecli
 | **az hdinsight**| [az hdinsight application create](/cli/azure/hdinsight/application#az-hdinsight-application-create) | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | | [az hdinsight create](/cli/azure/hdinsight#az-hdinsight-create) | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | | [az hdinsight script-action execute](/cli/azure/hdinsight/script-action#az-hdinsight-script-action-execute) | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
+| **az iot**| [az iot hub device-identity connection-string show](/cli/azure/iot/hub/device-identity/connection-string#az-iot-hub-device-identity-connection-string-show) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | **az keyvault**| [az keyvault certificate import](/cli/azure/keyvault/certificate#az-keyvault-certificate-import) | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
 | | [az keyvault create](/cli/azure/keyvault#az-keyvault-create) | [Azure CLI script to enable transparent data encryption using your own key](/azure/azure-sql/managed-instance/scripts/transparent-data-encryption-byok-sql-managed-instance-cli) |
 | |  | [CLI example: Create a Batch account in user subscription mode](/azure/batch/scripts/batch-cli-sample-create-user-subscription-account) |
@@ -277,6 +282,7 @@ ms.custom: devx-track-azurecli
 | | [az mariadb server vnet-rule create](/cli/azure/mariadb/server/vnet-rule#az-mariadb-server-vnet-rule-create) | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | | [az mariadb server-logs download](/cli/azure/mariadb/server-logs#az-mariadb-server-logs-download) | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
 | | [az mariadb server-logs list](/cli/azure/mariadb/server-logs#az-mariadb-server-logs-list) | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
+| **az ml**| [az ml workspace create](/cli/azure/ml/workspace#az-ml-workspace-create) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | **az monitor**| [az monitor action-group create](/cli/azure/monitor/action-group#az-monitor-action-group-create) | [Create metric alert in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | | [az monitor diagnostic-settings create](/cli/azure/monitor/diagnostic-settings#az-monitor-diagnostic-settings-create) | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
 | | [az monitor log-analytics workspace create](/cli/azure/monitor/log-analytics/workspace#az-monitor-log-analytics-workspace-create) | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
@@ -406,9 +412,7 @@ ms.custom: devx-track-azurecli
 | | [az network route-table create](/cli/azure/network/route-table#az-network-route-table-create) | [Create an Azure SQL Managed Instance using the Azure CLI](/azure/azure-sql/managed-instance/scripts/create-configure-managed-instance-cli) |
 | | [az network route-table route create](/cli/azure/network/route-table/route#az-network-route-table-route-create) | [Create an Azure SQL Managed Instance using the Azure CLI](/azure/azure-sql/managed-instance/scripts/create-configure-managed-instance-cli) |
 | | [az network traffic-manager endpoint create](/cli/azure/network/traffic-manager/endpoint#az-network-traffic-manager-endpoint-create) | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
 | | [az network traffic-manager profile create](/cli/azure/network/traffic-manager/profile#az-network-traffic-manager-profile-create) | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
 | | [az network vnet create](/cli/azure/network/vnet#az-network-vnet-create) | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
 | |  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
 | |  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints) |
@@ -465,15 +469,20 @@ ms.custom: devx-track-azurecli
 | | [az postgres server-logs download](/cli/azure/postgres/server-logs#az-postgres-server-logs-download) | [Enable and download server slow query logs of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-server-logs) |
 | | [az postgres server-logs list](/cli/azure/postgres/server-logs#az-postgres-server-logs-list) | [Enable and download server slow query logs of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-server-logs) |
 | **az provider**| [az provider register](/cli/azure/provider#az-provider-register) | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
+| |  | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
 | | [az provider show](/cli/azure/provider#az-provider-show) | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
+| |  | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
 | **az redis**| [az redis create](/cli/azure/redis#az-redis-create) | [Create a Premium Azure Cache for Redis with clustering](/azure/azure-cache-for-redis/scripts/create-manage-premium-cache-cluster) |
 | |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache) |
+| |  | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
 | | [az redis delete](/cli/azure/redis#az-redis-delete) | [Create a Premium Azure Cache for Redis with clustering](/azure/azure-cache-for-redis/scripts/create-manage-premium-cache-cluster) |
 | |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache) |
+| | [az redis export](/cli/azure/redis#az-redis-export) | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
 | | [az redis list-keys](/cli/azure/redis#az-redis-list-keys) | [Create a Premium Azure Cache for Redis with clustering](/azure/azure-cache-for-redis/scripts/create-manage-premium-cache-cluster) |
 | |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache) |
 | | [az redis show](/cli/azure/redis#az-redis-show) | [Create a Premium Azure Cache for Redis with clustering](/azure/azure-cache-for-redis/scripts/create-manage-premium-cache-cluster) |
 | |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache) |
+| |  | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
 | **az resource**| [az resource move](/cli/azure/resource#az-resource-move) | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
 | **az rest**| [az rest](/cli/azure/reference-index#az-rest) | [Express configuration Azure Command Line Interface (CLI) commands reference](/azure/defender-for-cloud/express-configuration-azure-commands) |
 | |  | [Import a BACPAC file into a database in SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/import-from-bacpac-cli) |
@@ -574,6 +583,7 @@ ms.custom: devx-track-azurecli
 | |  | [Create a serverless Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-create-serverless-python) |
 | |  | [Create a storage account and rotate its account access keys](/azure/storage/scripts/storage-common-rotate-account-keys-cli) |
 | |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
+| |  | [How to use the Azure SDK for Go with Azure Table](/azure/cosmos-db/table/how-to-use-go) |
 | |  | [Import a BACPAC file into a database in SQL Database using the Azure CLI](/azure/azure-sql/database/scripts/import-from-bacpac-cli) |
 | |  | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
 | |  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
@@ -606,6 +616,7 @@ ms.custom: devx-track-azurecli
 | | [az storage container list](/cli/azure/storage/container#az-storage-container-list) | [Use an Azure CLI script to delete containers based on container name prefix](/azure/storage/scripts/storage-blobs-container-delete-by-prefix-cli) |
 | | [az storage directory create](/cli/azure/storage/directory#az-storage-directory-create) | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
 | | [az storage share create](/cli/azure/storage/share#az-storage-share-create) | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
+| | [az storage table create](/cli/azure/storage/table#az-storage-table-create) | [How to use the Azure SDK for Go with Azure Table](/azure/cosmos-db/table/how-to-use-go) |
 | **az vm**| [az vm availability-set create](/cli/azure/vm/availability-set#az-vm-availability-set-create) | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | | [az vm create](/cli/azure/vm#az-vm-create) | [Create a virtual machine from a snapshot with CLI](/azure/virtual-machines/scripts/create-vm-from-snapshot) |
 | |  | [Create a virtual machine using an existing managed OS disk with CLI](/azure/virtual-machines/scripts/create-vm-from-managed-os-disks) |
@@ -621,6 +632,7 @@ ms.custom: devx-track-azurecli
 | | [az vm list](/cli/azure/vm#az-vm-list) | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
 | | [az vm list-ip-addresses](/cli/azure/vm#az-vm-list-ip-addresses) | [Create an Azure Database for MySQL - Flexible Server database in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
 | | [az vm open-port](/cli/azure/vm#az-vm-open-port) | [Create an Azure Database for MySQL - Flexible Server database in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
+| | [az vm run-command invoke](/cli/azure/vm/run-command#az-vm-run-command-invoke) | [Install software and set up resources for the tutorial](/azure/azure-sql-edge/tutorial-deploy-azure-resources) |
 | | [az vm show](/cli/azure/vm#az-vm-show) | [Create metric alert in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
 | |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
 | **az vmss**| [az vmss create](/cli/azure/vmss#az-vmss-create) | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
@@ -637,11 +649,8 @@ ms.custom: devx-track-azurecli
 | |  | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
 | |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
 | |  | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
 | | [az webapp deployment source config](/cli/azure/webapp/deployment/source#az-webapp-deployment-source-config) | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
 | |  | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
 | | [az webapp deployment source config-local-git](/cli/azure/webapp/deployment/source#az-webapp-deployment-source-config-local-git) | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
 | | [az webapp deployment user set](/cli/azure/webapp/deployment/user#az-webapp-deployment-user-set) | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
 | | [az webapp show](/cli/azure/webapp#az-webapp-show) | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| |  | [Route traffic for high availability of applications using Azure CLI](/azure/traffic-manager/scripts/traffic-manager-cli-websites-high-availability) |
