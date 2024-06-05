@@ -1,7 +1,6 @@
 ---
 title: Learn about Azure CLI environments, terms, and compare the Azure CLI to Azure PowerShell | Microsoft Docs
 description: Learn the environments you can use to execute Azure CLI commands, Azure CLI terms, how the Azure CLI compares to Azure PowerShell.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 12/04/2023
