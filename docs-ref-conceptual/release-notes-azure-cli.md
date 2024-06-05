@@ -1,6 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI.
+manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 05/21/2024
@@ -153,7 +154,7 @@ Version 2.60.0
 * `az aks create/update`: Prompt warning during disablement about CR deletion
 * `az aks create/update`: Udpate RP registration code to work on azure monitor subscription
 * `az aks create/update`: Update to add default region for workspace creation in air gapped cloud
-* `az aks nodepool add`: Add parameter `--disable-windows-outbound-nat` to add a Windows agent pool which the Windows OutboundNAT is disabled
+* `az aks nodepool add`: Add parameter `--disable-windows-outbound-nat` to add a Windows agent pool which the Windows OutboundNAT is disabled
 
 ### App Service
 
@@ -983,7 +984,7 @@ Version 2.53.0
 ### Backup
 
 * `az backup backup-properties`: Add option for setting `--soft-delete-feature-state` to "AlwaysOn", and `--soft-delete-duration` with values between 14 to 180 (inclusive)
-* `az backup vault list-soft-deleted-containers`: List all soft-deleted containers in a backup vault
+* `az backup vault list-soft-deleted-containers`: List all soft-deleted containers in a backup vault
 
 ### Compute
 
@@ -1794,7 +1795,7 @@ Version 2.46.0
 * [BREAKING CHANGE] `az network watcher connection-monitor endpoint add`: Remove deprecated parameters `filter-item` and `filter-type`
 * `az network nsg rule list`: Fix `-o table` cannot be used
 * `az network private-endpoint-connection`: Add provider `Microsoft.Monitor/Accounts`
-* `az network express-route gateway connection create/update`: Add parameters `--inbound-route-map` and `--outbound-route-map` to support route map
+* `az network express-route gateway connection create/update`: Add parameters `--inbound-route-map` and `--outbound-route-map` to support route map
 * Fix #25408: `az network application-gateway rule create`: Creation fails with `--redirect-config` when there are multiple pools
 * `az network private-endpoint-connection`: Add provider `Microsoft.DBforMySQL/flexibleServers`
 
@@ -4229,7 +4230,7 @@ Version 2.28.0
 * Upgrade api-version for VM and VMSS from `2021-03-01` to `2021-04-01`
 * `az vmss create/update`: Support spot restore policy to VM scale sets
 * Add new examples for creating disk from share image gallery
-* `az vm image​ list/list-offers/list-skus/list-publishers/show`: Add new parameter ​`--edge-zone`​ to support querying the image under edge zone
+* `az vm image​ list/list-offers/list-skus/list-publishers/show`: Add new parameter ​`--edge-zone`​ to support querying the image under edge zone
 * Fix the issue caused by the lack of `os_type` when creating VM from shared gallery id
 * Update shared image gallery doc
 * `az capacity reservation`: Add new commands to manage capacity reservation
