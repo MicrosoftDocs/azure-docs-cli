@@ -1,9 +1,8 @@
 ---
 title: Tips for using the Azure CLI | Microsoft Docs
 description: Learn tips for using Azure CLI successfully, such as output formats, passing parameter values, and quoting rules for different shells.
-manager: jasongroce
-author: dbradish-microsoft
-ms.author: dbradish
+author: jiasli
+ms.author: jiasli
 ms.date: 12/04/2023
 ms.topic: conceptual
 ms.service: azure-cli

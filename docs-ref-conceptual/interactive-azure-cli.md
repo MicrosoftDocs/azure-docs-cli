@@ -1,7 +1,6 @@
 ---
 title: Learn to use Azure CLI interactive mode | Microsoft Docs
 description: The Azure CLI interactive mode is an interactive shell with autocompletion, command descriptions, and examples. 
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 08/2/2023
