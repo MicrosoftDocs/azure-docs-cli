@@ -2512,8 +2512,6 @@ ms.custom: devx-track-azurecli
 |  | [Quickstart: Azure Key Vault secret client library for Python](/azure/key-vault/secrets/quick-create-python)
 | [az keyvault security-domain](/cli/azure/keyvault/security-domain) | [Quickstart: Provision and activate a Managed HSM using Azure CLI](/azure/key-vault/managed-hsm/quick-create-cli)
 |  | [Managed HSM disaster recovery](/azure/key-vault/managed-hsm/disaster-recovery-guide)
-| [az keyvault storage](/cli/azure/keyvault/storage) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
-| [az keyvault storage sas-definition](/cli/azure/keyvault/storage/sas-definition) | [Manage storage account keys with Key Vault and the Azure CLI (legacy)](/azure/key-vault/secrets/overview-storage-keys)
 
 ## az kusto
 
@@ -4825,9 +4823,7 @@ ms.custom: devx-track-azurecli
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az support services](/cli/azure/support/services) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
-| [az support services problem-classifications](/cli/azure/support/services/problem-classifications) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
-| [az support tickets](/cli/azure/support/tickets) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
-| [az support tickets communications](/cli/azure/support/tickets/communications) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-request)
+| [az support services problem-classifications](/cli/azure/support/services/problem-classifications) | [Create an Azure support ticket in Azure CLI](/cli/azure/azure-cli-support-reques
 
 ## az synapse
 
