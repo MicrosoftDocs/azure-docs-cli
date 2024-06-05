@@ -1,7 +1,6 @@
 ---
 title: Get an existing service principal using the Azure CLI | Microsoft Docs
 description: Learn how to retrieve an existing service principal using the Azure CLI.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 10/10/2023

@@ -1,7 +1,6 @@
 ---
 title: Delete multiple resources from a script using Azure CLI
 description: Learn how to delete multiple Azure resources from a script and log progress to a file.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 04/30/2024

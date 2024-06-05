@@ -1,7 +1,6 @@
 ---
 title: Configure your Azure CLI environment | Microsoft Docs
 description: Learn Azure CLI installation, sign in, setting environment variables, and creating Azure resources containing a random ID.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 12/04/2023
