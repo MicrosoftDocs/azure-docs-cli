@@ -1,7 +1,6 @@
 ---
 title: Create Azure service principals using the Azure CLI | Microsoft Docs
 description: Learn how to create and use service principals to control access to Azure resources using the Azure CLI.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 10/10/2023
@@ -57,6 +56,22 @@ When you create a service principal without parameters, also complete these step
 
 * Record your system-assigned password as you can't retrieve it again. If you lose the password, reset it using [az ad sp credential reset](/cli/azure/ad/sp/credential#az-ad-sp-credential-reset) as explained in [Reset service principal credentials](./azure-cli-sp-tutorial-7.md).
 * Set the role assignment for your new service principal by using [az role assignment create](/cli/azure/role/assignment#az-role-assignment-create) as explained in [Manage service principal roles](./azure-cli-sp-tutorial-5.md).
+
+> [!NOTE]
+> If your account doesn't have permission to create a service principal, `az ad sp create-for-rbac`
+> returns an error message containing "Insufficient privileges to complete the operation". Contact
+> your Microsoft Entra admin to create a service principal.
+>
+> In a Microsoft Entra ID directory where user setting **Users can register applications** has been
+> set to **No**, you must be a member of one of the following Microsoft Entra ID built-in roles
+> (which have the action: `microsoft.directory/applications/createAsOwner` or `microsoft.directory/applications/create`):
+> - [Application Developer](/entra/identity/role-based-access-control/permissions-reference#application-developer)	
+> - [Application Administrator](/entra/identity/role-based-access-control/permissions-reference#application-administrator)
+> - [Cloud Application Administrator](/entra/identity/role-based-access-control/permissions-reference#cloud-application-administrator)
+> - [Global Administrator](/entra/identity/role-based-access-control/permissions-reference#global-administrator)
+> - [Hybrid Identity Administrator](/entra/identity/role-based-access-control/permissions-reference#hybrid-identity-administrator)
+>
+> For more information about user settings in Microsoft Entra ID, see [Restrict who can create applications](/entra/identity/role-based-access-control/delegate-app-roles#restrict-who-can-create-applications).
 
 ## Create a service principal with role and scope
 

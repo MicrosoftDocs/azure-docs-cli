@@ -1,7 +1,6 @@
 ---
 title: Learn how to use the Azure REST API with Azure CLI| Microsoft Docs
 description: Learn how to use Azure rest with Azure Command Line (CLI). 
-manager: jasongroce
 author: daphnemamsft
 ms.author: daphnema
 ms.date: 01/31/2024

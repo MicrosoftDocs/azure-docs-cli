@@ -3,8 +3,12 @@ title: Sign in with Azure CLI at a command line | Microsoft Docs
 description: Learn how to sign into the Azure CLI interactively using az login, WAM, a web browser and a subscription selector.
 author: jiasli
 ms.author: jiasli
+<<<<<<< dbradish_logout
 manager: yonzhan
 ms.date: 05/30/2024
+=======
+ms.date: 05/21/2024
+>>>>>>> main
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli

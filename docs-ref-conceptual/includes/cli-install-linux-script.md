@@ -1,11 +1,9 @@
 ---
-author: chasecrum
-ms.author: chasecrum
-manager: mamccrea
+author: dbradish-microsoft
+ms.author: dbradish
 ms.date: 08/01/2023
 ms.topic: include
 ms.service: azure-cli
-ms.devlang: azurecli
 ms.custom: devx-track-azurecli
 ---
 
