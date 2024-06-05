@@ -1,10 +1,8 @@
 --- 
 title: How-to use the Azure CLI in a Bash environment | Microsoft Docs
 description: Learn how to use Bash with Azure CLI.  Query, format output, filter, use variables, and use Bash constructs of loops, if/exists/then and case statements.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.prod: non-product-specific
 ms.topic: sample
 ms.custom: devx-track-azurecli
 ms.date: 12/04/2023

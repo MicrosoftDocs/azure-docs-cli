@@ -1,7 +1,6 @@
 ---
 title: What's new in Azure Command-Line Interface (CLI) | Microsoft Docs
 description: Learn what's new in the Azure CLI
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 05/21/2024

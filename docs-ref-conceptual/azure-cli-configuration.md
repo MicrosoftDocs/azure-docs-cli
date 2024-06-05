@@ -3,7 +3,6 @@ title: Azure CLI configuration options | Microsoft Docs
 description: The Azure CLI allows user configuration for various settings. Manage values with the az configure command, environment variables, or in the configuration file.
 author: dbradish-microsoft
 ms.author: dbradish
-manager: barbkess
 ms.date: 08/2/2023 
 ms.topic: conceptual
 ms.service: azure-cli

@@ -3,7 +3,6 @@ title: How to run Azure CLI in a Docker Container | Microsoft Docs
 description: Learn how to run a Docker container hosting the Azure CLI. Docker gets you started quickly with an isolated environment in which to run the Azure CLI.
 author: jiasli
 ms.author: jiasli
-manager: yonzhan
 ms.date: 03/14/2024
 ms.topic: conceptual
 ms.service: azure-cli

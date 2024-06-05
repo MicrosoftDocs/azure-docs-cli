@@ -2,7 +2,6 @@
 title: Cleanup virtual machine resources (VM) – Azure CLI | Microsoft Docs
 description: Clean up resources used in the virtual machine tutorial.
 ms.date: 06/19/2023
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.tool: azure-cli
