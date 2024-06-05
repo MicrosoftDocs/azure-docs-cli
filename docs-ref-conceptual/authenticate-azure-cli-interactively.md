@@ -72,7 +72,8 @@ with an asterisk (`*`) next to its number. This allows you to press <kbd>Enter</
 default subscription.
 
 Commands run against the selected subscription by default. You can still use `az account set` to
-change your subscription from a command line at any time. For more information, see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
+change your subscription from a command line at any time. For more information,
+see [How to manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
 
 Here are some guidelines about the subscription selector to keep in mind:
 
@@ -171,9 +172,11 @@ az config set core.login_experience_v2=off
 az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
-To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [#interactive-login)
+To reenable the subscription selector, run `az config set core.login_experience_v2=on`.
+For more information on the subscription selector, see [#interactive-login)
 
-After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
+After signing in, if you want to change your active tenant,
+see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
 
 ## Sign in using --scope
 
@@ -192,7 +195,7 @@ az logout
 ## Clear your subscription cache
 
 To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear)
-command. You will need to login again to see an updated list.
+command. You will need to sign in again to see an updated list.
 
 ```azurecli-interactive
 az account clear
@@ -202,7 +205,7 @@ az login
 
 Clearing your subscription cache is not technically the same process as logging out of Azure.
 However, when you clear your subscription cache, you cannot run Azure CLI commands, including
-`az account set`, until you login again.
+`az account set`, until you sign in again.
 
 ## Refresh tokens
 
