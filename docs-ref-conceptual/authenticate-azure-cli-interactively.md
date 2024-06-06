@@ -170,7 +170,7 @@ az config set core.login_experience_v2=off
 az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
-To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [#interactive-login)
+To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [Interactive login](#interactive-login)
 
 After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
 
