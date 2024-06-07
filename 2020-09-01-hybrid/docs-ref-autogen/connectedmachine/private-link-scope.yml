@@ -4,28 +4,28 @@ name: az connectedmachine private-link-scope
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **connectedmachine** extension for the Azure CLI (version 2.49.0 or higher). The extension will automatically install the first time you run an **az connectedmachine private-link-scope** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **connectedmachine** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az connectedmachine private-link-scope** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage private link scope of an Azure Arc-Enabled Server.
+  Private link scope.
 status: GA
 sourceType: Extension
 directCommands:
 - uid: az_connectedmachine_private-link-scope_create
   name: az connectedmachine private-link-scope create
   summary: |-
-    Create (or updates) a Azure Arc PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
+    Create an Azure Arc PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
   status: GA
   sourceType: Extension
   syntax: >-
     az connectedmachine private-link-scope create --name
                                                   --resource-group
                                                   [--location]
-                                                  [--public-network-access {Disabled, Enabled}]
+                                                  [--public-network-access {Disabled, Enabled, SecuredByPerimeter}]
                                                   [--tags]
   examples:
   - summary: |-
       Sample command for private-link-scope create
-    syntax: az connectedmachine private-link-scope create --location westus --resource-group my-resource-group --scope-name my-privatelinkscope
+    syntax: az connectedmachine private-link-scope create --location eastus2euap --resource-group myResourceGroup --scope-name myPrivateLinkScope --subscription mySubscription
   requiredParameters:
   - isRequired: true
     name: --name --scope-name -n
@@ -41,7 +41,7 @@ directCommands:
       Resource location  When not specified, the location of the resource group will be used.
   - name: --public-network-access
     defaultValue: "Disabled"
-    parameterValueGroup: "Disabled, Enabled"
+    parameterValueGroup: "Disabled, Enabled, SecuredByPerimeter"
     summary: |-
       Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints.
   - name: --tags
@@ -63,7 +63,7 @@ directCommands:
   examples:
   - summary: |-
       Sample command for private-link-scope delete
-    syntax: az connectedmachine private-link-scope delete --resource-group my-resource-group --scope-name my-privatelinkscope
+    syntax: az connectedmachine private-link-scope delete --resource-group myResourceGroup --scope-name myPrivateLinkScope --subscription mySubcription
   optionalParameters:
   - name: --ids
     summary: |-
@@ -88,18 +88,24 @@ directCommands:
 - uid: az_connectedmachine_private-link-scope_list
   name: az connectedmachine private-link-scope list
   summary: |-
-    Get a list of Azure Arc PrivateLinkScopes within a resource group. And Gets a list of all Azure Arc PrivateLinkScopes within a subscription.
+    Get a list of Azure Arc PrivateLinkScopes within a resource group and get a list of all Azure Arc PrivateLinkScopes within a subscription.
   status: GA
   sourceType: Extension
-  syntax: az connectedmachine private-link-scope list [--resource-group]
+  syntax: >-
+    az connectedmachine private-link-scope list [--max-items]
+                                                [--next-token]
+                                                [--resource-group]
   examples:
   - summary: |-
       Sample command for private-link-scope list
-    syntax: >-
-      az connectedmachine private-link-scope list --resource-group my-resource-group
-
-      az connectedmachine private-link-scope list
+    syntax: az connectedmachine private-link-scope list --subscription mySubscription --resource-group myResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -117,7 +123,7 @@ directCommands:
   examples:
   - summary: |-
       Sample command for private-link-scope show
-    syntax: az connectedmachine private-link-scope show --resource-group my-resource-group --scope-name my-privatelinkscope
+    syntax: az connectedmachine private-link-scope show --scope-name myPrivateLinkScope --resource-group myResourceGroup --subscription mySubscription
   optionalParameters:
   - name: --ids
     summary: |-
@@ -134,7 +140,7 @@ directCommands:
 - uid: az_connectedmachine_private-link-scope_update
   name: az connectedmachine private-link-scope update
   summary: |-
-    Update an Azure Arc PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
+    Update an Azure Arc PrivateLinkScope. Note: You cannot                                          specify a different value for InstrumentationKey nor AppId in the Put operation.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -142,7 +148,7 @@ directCommands:
                                                   [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                                   [--ids]
                                                   [--name]
-                                                  [--public-network-access {Disabled, Enabled}]
+                                                  [--public-network-access {Disabled, Enabled, SecuredByPerimeter}]
                                                   [--remove]
                                                   [--resource-group]
                                                   [--set]
@@ -151,7 +157,7 @@ directCommands:
   examples:
   - summary: |-
       Sample command for private-link-scope update
-    syntax: az connectedmachine private-link-scope update --location westus --tags Tag1=Value1 --resource-group my-resource-group --scope-name my-privatelinkscope
+    syntax: az connectedmachine private-link-scope update --location westus --tags Tag1=Value1 --resource-group my-resource-group --scope-name my-privatelinkscope --subscription mySubscription
   optionalParameters:
   - name: --add
     summary: |-
@@ -167,7 +173,7 @@ directCommands:
     summary: |-
       The name of the Azure Arc PrivateLinkScope resource.
   - name: --public-network-access
-    parameterValueGroup: "Disabled, Enabled"
+    parameterValueGroup: "Disabled, Enabled, SecuredByPerimeter"
     summary: |-
       Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints.
   - name: --remove
@@ -279,6 +285,9 @@ commands:
 - az_connectedmachine_private-link-scope_create
 - az_connectedmachine_private-link-scope_delete
 - az_connectedmachine_private-link-scope_list
+- az_connectedmachine_private-link-scope_network-security-perimeter-configuration
+- az_connectedmachine_private-link-scope_network-security-perimeter-configuration_list
+- az_connectedmachine_private-link-scope_network-security-perimeter-configuration_show
 - az_connectedmachine_private-link-scope_show
 - az_connectedmachine_private-link-scope_update
 - az_connectedmachine_private-link-scope_update-tag
@@ -308,4 +317,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage private link scope of an Azure Arc-Enabled Server.
+  description: Private link scope.
