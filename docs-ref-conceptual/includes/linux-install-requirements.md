@@ -3,7 +3,7 @@ author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 07/05/2023
 ms.topic: include
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, linux-related-content
 ---
 > [!NOTE]
 > To install the CLI, you need the following software:
