@@ -4,7 +4,7 @@ ms.author: dbradish
 ms.date: 08/01/2023
 ms.topic: include
 ms.service: azure-cli
-ms.custom: devx-track-azurecli
+ms.custom: devx-track-azurecli, linux-related-content
 ---
 
 ## Before you begin
@@ -103,4 +103,3 @@ following addresses:
 * Endpoints used by your distribution's package manager (if any) for core packages
 
 [!INCLUDE[troubleshoot-wsl.md](troubleshoot-wsl.md)]
-
