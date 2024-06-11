@@ -169,7 +169,7 @@ az config set core.login_experience_v2=off
 az login --tenant 00000000-0000-0000-0000-000000000000
 ```
 
-To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [#interactive-login)
+To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [Interactive login](#interactive-login)
 
 After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
 
@@ -182,6 +182,7 @@ After signing in, if you want to change your active tenant, see [How-to change y
 When your default browser is Microsoft Edge, you might encounter the following error when attempting
 to sign in to Azure interactively with `az login`: "_The connection for this site isn't secure._" To
 resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in Microsoft
+
 Edge. Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
 
 ## See also
