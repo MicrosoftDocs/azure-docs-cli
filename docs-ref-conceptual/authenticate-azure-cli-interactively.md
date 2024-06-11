@@ -3,7 +3,7 @@ title: Sign in with Azure CLI at a command line | Microsoft Docs
 description: Learn how to sign into the Azure CLI interactively using az login, WAM, a web browser and a subscription selector.
 author: jiasli
 ms.author: jiasli
-ms.date: 05/21/2024
+ms.date: 06/10/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -159,7 +159,8 @@ can either be an `.onmicrosoft.com` domain or the Azure object ID for the tenant
 and command-line sign-in methods work with `--tenant`.
 
 In select environments and beginning in Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024),
-you need to first disable the subscription selector by setting the `core.login_experience_v2` configuration property to `off`.
+you need to first disable the subscription selector by setting the `core.login_experience_v2`
+configuration property to `off`.
 
 ```azurecli-interactive
 # disable the subscription selector (v. 2.61.0 and up)
@@ -171,7 +172,37 @@ az login --tenant 00000000-0000-0000-0000-000000000000
 
 To reenable the subscription selector, run `az config set core.login_experience_v2=on`. For more information on the subscription selector, see [Interactive login](#interactive-login)
 
-After signing in, if you want to change your active tenant, see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
+After signing in, if you want to change your active tenant,
+see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#change-the-active-tenant). 
+
+## Sign in using --scope
+
+```
+az login --scope https://management.core.windows.net//.default
+```
+
+## Logout
+
+To remove access to Azure, use the [az logout](/cli/azure/reference-index#az-logout) command.
+
+```azurecli-interactive
+az logout
+```
+
+## Clear your subscription cache
+
+To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear)
+command. You will need to sign in again to see an updated list.
+
+```azurecli-interactive
+az account clear
+
+az login
+```
+
+Clearing your subscription cache is not technically the same process as logging out of Azure.
+However, when you clear your subscription cache, you cannot run Azure CLI commands, including
+`az account set`, until you sign in again.
 
 ## Refresh tokens
 
