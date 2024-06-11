@@ -26,8 +26,7 @@ service principals or other noninteractive authentication methods.
 ## Interactive login
 
 To sign in interactively, use the [az login](/cli/azure/reference-index#az-login) command. Beginning
-with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Windows systems use Web
-Account Manager (WAM), and Linux and macOS systems use browser-based login by default.
+with Azure CLI version [2.61.0](./release-notes-azure-cli.md#may-21-2024), Azure CLI uses Web Account Manager (WAM) on Windows, and a browser-based login on Linux and macOS by default.
 
 ```azurecli-interactive
 az login
