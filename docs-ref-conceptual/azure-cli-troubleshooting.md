@@ -25,6 +25,13 @@ ms.custom: devx-track-azurecli
 
 ## Object reference not set to an instance of an object
 
+## Error message: unrecognized arguments
+
+## Error message:
+
+
+## Error message:
+
 
 ## Error message for JSON output when TSV is expected
 
