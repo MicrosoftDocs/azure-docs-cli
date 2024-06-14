@@ -4,7 +4,7 @@ name: az monitor data-collection rule
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **monitor-control-service** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az monitor data-collection rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **monitor-control-service** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az monitor data-collection rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage data collection rule for monitor control service.
 status: GA
@@ -19,6 +19,7 @@ directCommands:
   syntax: >-
     az monitor data-collection rule create --data-collection-rule-name
                                            --resource-group
+                                           [--agent-settings]
                                            [--data-collection-endpoint-id]
                                            [--data-flows]
                                            [--data-sources]
@@ -27,6 +28,7 @@ directCommands:
                                            [--identity]
                                            [--kind]
                                            [--location]
+                                           [--references]
                                            [--rule-file]
                                            [--stream-declarations]
                                            [--tags]
@@ -44,6 +46,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --agent-settings
+    summary: |-
+      Agent settings used to modify agent behavior on a given host  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --data-collection-endpoint-id --endpoint-id
     summary: |-
       The resource ID of the data collection endpoint that is to be associated.
@@ -64,10 +69,13 @@ directCommands:
       Managed service identity of the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --kind
     summary: |-
-      The kind of the resource. Such as `Linux`, `Windows`.
+      The kind of the resource.  Allowed values: Linux, Windows.
   - name: --location -l
     summary: |-
       The geo-location where the resource lives.
+  - name: --references
+    summary: |-
+      Defines all the references that may be used in other sections of the DCR  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --rule-file
     summary: |-
       The json file for rule parameters. If provided, corresponding parameter will be overwrited by value from rule file
@@ -106,6 +114,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az monitor data-collection rule delete [--data-collection-rule-name]
+                                           [--delete-associations {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--ids]
                                            [--resource-group]
                                            [--subscription]
@@ -118,6 +127,11 @@ directCommands:
   - name: --data-collection-rule-name --name --rule-name -n
     summary: |-
       The name of the data collection rule. The name is case insensitive.
+  - name: --delete-associations
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      If set to 'true' then all associations of this data collection rule will also be deleted.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -194,6 +208,7 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az monitor data-collection rule update [--add]
+                                           [--agent-settings]
                                            [--data-collection-endpoint-id]
                                            [--data-collection-rule-name]
                                            [--data-flows]
@@ -209,6 +224,7 @@ directCommands:
                                            [--log-analytics]
                                            [--monitor-metrics]
                                            [--performance-counters]
+                                           [--references]
                                            [--remove]
                                            [--resource-group]
                                            [--set]
@@ -225,6 +241,9 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --agent-settings
+    summary: |-
+      Agent settings used to modify agent behavior on a given host  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --data-collection-endpoint-id --endpoint-id
     summary: |-
       The resource ID of the data collection endpoint that is to be associated.
@@ -266,7 +285,7 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --kind
     summary: |-
-      The kind of the resource. Such as `Linux`, `Windows`.
+      The kind of the resource.  Allowed values: Linux, Windows.
   - name: --log-analytics
     summary: |-
       List of Log Analytics destinations.
@@ -291,6 +310,9 @@ directCommands:
                   name: Required. A friendly name for the data source.  This name should be unique across all data sources (regardless of type) within the data collection rule.
                   Multiple actions can be specified by using more than one --performance-counters argument.
                     Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --references
+    summary: |-
+      Defines all the references that may be used in other sections of the DCR  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
