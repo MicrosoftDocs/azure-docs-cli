@@ -6,16 +6,132 @@ extensionInformation: >-
 
   > This reference is part of the **arcdata** extension for the Azure CLI (version 2.3.1 or higher). The extension will automatically install the first time you run an **az sql server-arc availability-group** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Manage Availability Groups.
+  Manage availability groups.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: 'This command group is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
 sourceType: Extension
 directCommands:
+- uid: az_sql_server-arc_availability-group_create
+  name: az sql server-arc availability-group create
+  summary: |-
+    Create an availability group.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'sql server-arc availability-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az sql server-arc availability-group create --mirroring-port
+                                                --name
+                                                --replica-ids
+                                                --resource-group
+                                                [--automated-backup-preference]
+                                                [--availability-mode]
+                                                [--certificate-name]
+                                                [--cluster-type]
+                                                [--databases]
+                                                [--db-failover]
+                                                [--dtc-support]
+                                                [--endpoint-auth-mode]
+                                                [--endpoint-login]
+                                                [--failover-mode]
+                                                [--failure-condition-level]
+                                                [--health-check-timeout]
+                                                [--listener-ipv4-addresses]
+                                                [--listener-ipv4-masks]
+                                                [--listener-ipv6-addresses]
+                                                [--listener-name]
+                                                [--listener-port]
+                                                [--no-wait]
+                                                [--required-synchronized-secondaries]
+                                                [--seeding-mode]
+  examples:
+  - summary: |-
+      Ex 1 - Create an availability group
+    syntax: az sql server-arc availability-group create --name myAvailabilityGroupName --resource-group myResourceGroup --replica-ids "/subscriptions/.../resourceGroups/.../providers/Microsoft.AzureArcData/sqlServerInstances/mySqlServerInstance" --mirroring-port 5022
+  requiredParameters:
+  - isRequired: true
+    name: --mirroring-port
+    summary: |-
+      The port number for the database mirroring endpoint.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the availability group.
+  - isRequired: true
+    name: --replica-ids
+    summary: |-
+      One or more SQL Server Instance resource IDs (space-delimited). The first ID will be the initial primary replica.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of the resource group where the Arc-enabled SQL Server instance is located.
+  optionalParameters:
+  - name: --automated-backup-preference
+    summary: |-
+      The automated backup preference for the availability group (PRIMARY | SECONDARY_ONLY | SECONDARY | NONE).
+  - name: --availability-mode
+    summary: |-
+      The availability mode for the availability group (SYNCHRONOUS_COMMIT | ASYNCHRONOUS_COMMIT).
+  - name: --certificate-name
+    summary: |-
+      The name of the certificate for authenticating connections to the mirroring endpoint.
+  - name: --cluster-type
+    summary: |-
+      The cluster type for the availability group (WSFC | NONE).
+  - name: --databases
+    summary: |-
+      Database names (space-delimited).
+  - name: --db-failover
+    summary: |-
+      Turns on database level failover for the availability group (ON | OFF).
+  - name: --dtc-support
+    summary: |-
+      Turns on support for cross-database transactions through the distributed transaction coordinator for the availability group (PER_DB | OFF).
+  - name: --endpoint-auth-mode
+    summary: |-
+      The authentication mode for connecting to the mirroring endpoint.
+  - name: --endpoint-login
+    summary: |-
+      The login to grant connect permissions on the mirroring endpoint.
+  - name: --failover-mode
+    summary: |-
+      The failover mode for the availability group (AUTOMATIC | MANUAL | EXTERNAL).
+  - name: --failure-condition-level
+    summary: |-
+      The failure condition level for the availability group (1 | 2 | 3 | 4 | 5).
+  - name: --health-check-timeout
+    summary: |-
+      The health check timeout (in milliseconds) for the availability group. The minimum value is 15000.
+  - name: --listener-ipv4-addresses
+    summary: |-
+      One or more IPv4 addresses (space-delimited) for the availability group listener.
+  - name: --listener-ipv4-masks
+    summary: |-
+      One or more subnet masks for the IPv4 addresses of the availability group listener. Must match the order and number of IPv4 addresses.
+  - name: --listener-ipv6-addresses
+    summary: |-
+      One or more IPv6 addresses (space-delimited) for the availability group listener.
+  - name: --listener-name
+    summary: |-
+      The name of the availability group listener.
+  - name: --listener-port
+    summary: |-
+      The port number for the availability group listener.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      If given, the command will return once the create request has been submitted. It will not wait until the availability group has been created.
+  - name: --required-synchronized-secondaries
+    summary: |-
+      Specifies the minimum number of synchronous secondaries required to commit before the primary commits a transaction (min 0 max num replicas - 1).
+  - name: --seeding-mode
+    summary: |-
+      The seeding mode for the availability group (AUTOMATIC | MANUAL).
 - uid: az_sql_server-arc_availability-group_failover
   name: az sql server-arc availability-group failover
   summary: |-
-    Request manual failover of an Availability Group.
+    Request manual failover of an availability group.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'sql server-arc availability-group' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -26,13 +142,13 @@ directCommands:
                                                   --server-name
   examples:
   - summary: |-
-      Ex 1 - Request manual failover of an Availability Group
+      Ex 1 - Request manual failover of an availability group
     syntax: az sql server-arc availability-group failover --name myAvailabilityGroupName --resource-group myResourceGroup --server-name myServerName
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the Availability Group.
+      Name of the availability group.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -42,6 +158,7 @@ directCommands:
     summary: |-
       Name of the failover target Arc-enabled SQL Server.
 commands:
+- az_sql_server-arc_availability-group_create
 - az_sql_server-arc_availability-group_failover
 globalParameters:
 - name: --debug
@@ -68,4 +185,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Manage Availability Groups.
+  description: Manage availability groups.
