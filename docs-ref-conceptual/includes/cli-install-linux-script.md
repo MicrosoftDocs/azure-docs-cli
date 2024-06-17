@@ -19,7 +19,8 @@ The install script for the Azure CLI requires the following software:
 
 ## Install or update Azure CLI
 
-> [!IMPORTANT] The install script only works on Python 3.8.x, 3.9.x, or 3.10.x. This install script does not work on Python 3.11.x or later versions.
+> [!IMPORTANT]
+> The install script only works on Python 3.8.x, 3.9.x, or 3.10.x. This install script does not work on Python 3.11.x or later versions.
 
 Both installing and updating the Azure CLI requires rerunning the install script:
 
