@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 06/13/2024
+ms.date: 06/17/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -68,7 +68,7 @@ You will be prompted to install an extension on first use.
 |[cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 2.13.0 | Translate ARM template to executable Azure CLI scripts. | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) |
 |[cloud-service](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudservice) | 2.55.0 | Microsoft Azure Command-Line Tools ComputeManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudservice/HISTORY.rst) |
 |[command-change](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change) | 2.19.0 | Microsoft Azure Command-Line Tools CommandChange Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change/HISTORY.rst) |
-|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.59.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.9.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
+|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.59.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.9.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[compute-diagnostic-rp](https://github.com/Azure/azure-cli-extensions/tree/main/src/compute-diagnostic-rp) | 2.56.0 | Microsoft Azure Command-Line Tools ComputeDiagnosticRp Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/compute-diagnostic-rp/HISTORY.rst) |
 |[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [0.3.5](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
@@ -110,7 +110,7 @@ You will be prompted to install an extension on first use.
 |[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.48.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.1.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
 |[footprint](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint/HISTORY.rst) |
-|[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.57.0 | Manage networking Front Doors. | GA | [1.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
+|[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.57.0 | Manage networking Front Doors. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
 |[functionapp](https://github.com/Azure/azure-cli-extensions/tree/main/src/functionapp) | 2.0.46 | Additional commands for Azure Functions. | Preview | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/functionapp/HISTORY.rst) |
 |[fzf](https://github.com/phealy/azure-cli-fzf) | 2.9.0 | Microsoft Azure Command-Line Tools fzf Extension | Experimental | [1.0.2](https://github.com/phealy/azure-cli-fzf) |
 |[gallery-service-artifact](https://github.com/Azure/azure-cli-extensions/tree/main/src/gallery-service-artifact) | 2.57.0 | Microsoft Azure Command-Line Tools GalleryServiceArtifact Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/gallery-service-artifact/HISTORY.rst) |
