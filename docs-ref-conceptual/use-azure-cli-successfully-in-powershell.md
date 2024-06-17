@@ -1,7 +1,6 @@
 ---
 title: Tips to use the Azure CLI successfully in a PowerShell environment | Microsoft Docs
 description: Learn how to format Azure CLI parameters for a PowerShell environment.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.topic: quickstart

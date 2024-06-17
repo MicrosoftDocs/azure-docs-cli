@@ -1,7 +1,6 @@
 ---
 title: Choose the right Azure command-line tool - Azure CLI | Microsoft Docs
 description: Learn which Azure command-line tool fits your needs with an Azure CLI vs Azure PowerShell comparison — get started with your preferred command-line tool.
-manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
 ms.topic: quickstart

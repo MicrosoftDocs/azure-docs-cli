@@ -2,9 +2,8 @@
 title: Azure CLI samples full list | Microsoft Docs
 description: Find links to Azure CLI samples.  Search by Azure service, command name, or GitHub file name.
 author: dbradish-microsoft
-manager: jasongroce
 ms.author: dbradish
-ms.date: 11/27/2023
+ms.date: 06/01/2024
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.topic: sample 

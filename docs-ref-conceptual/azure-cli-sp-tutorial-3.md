@@ -1,7 +1,6 @@
 ---
 title: Create a service principal containing a certificate using Azure CLI | Microsoft Docs
-description: Learn to use service principals with a self-signed certificate to control access to Azure resources.
-manager: jasongroce
+description: Learn to use service principals with a self-signed certificate to control access to Azure resources
 author: dbradish-microsoft
 ms.author: dbradish
 ms.date: 10/10/2023
@@ -107,7 +106,7 @@ az keyvault secret download --file /path/to/cert.pfx \
                             --encoding base64
 openssl pkcs12 -in cert.pfx -passin pass: -passout pass: -out cert.pem -nodes
 
-az login --service-principal -u "$AppClientId" -p cert.pem --tenant "$TenantId"
+az login --service-principal -u "<myAppClientID>" -p cert.pem --tenant "<myTenantID>"
 ```
 
 ## Convert an existing PKCS12 file
