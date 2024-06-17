@@ -256,8 +256,8 @@ When you delete a resource group, all the resources that belong to it are also r
 Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az-vm-wait) command to support creating independent resources in parallel:
 
 ```azurecli
-az vm create --resource-group VMResources --name virtual-machine-01 --image debian-11 --no-wait
-az vm create --resource-group VMResources --name virtual-machine-02 --image debian-11 --no-wait
+az vm create --resource-group VMResources --name virtual-machine-01 --image debian-12 --no-wait
+az vm create --resource-group VMResources --name virtual-machine-02 --image debian-12 --no-wait
 
 subscription=$(az account show --query "id" -o tsv)
 vm1_id="/subscriptions/$subscription/resourceGroups/VMResources/providers/Microsoft.Compute/virtualMachines/virtual-machine-01"
