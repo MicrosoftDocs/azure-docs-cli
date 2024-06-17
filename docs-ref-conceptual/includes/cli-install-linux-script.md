@@ -15,7 +15,7 @@ It's strongly recommend to install the CLI with a package manager. A package man
 
 The CLI requires the following software:
 
-* [Python](https://www.python.org/downloads/) - For more information, see [Support lifecycle - Python dependency](./azure-cli-support-lifecycle.md#python-dependency).
+* [Python](https://www.python.org/downloads/) - For more information, see [Support lifecycle - Python dependency](../azure-cli-support-lifecycle.md#python-dependency).
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
