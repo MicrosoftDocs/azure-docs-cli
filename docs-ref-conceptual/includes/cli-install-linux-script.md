@@ -13,13 +13,13 @@ It's strongly recommend to install the CLI with a package manager. A package man
 
 The install script for the Azure CLI requires the following software:
 
-* [Python 3.8.x, 3.9.x, 3.10.x(https://www.python.org/downloads/) - For more information, see [Support lifecycle - Python dependency](../azure-cli-support-lifecycle.md#python-dependency).
+* [Python 3.8.x, 3.9.x, 3.10.x](https://www.python.org/downloads/) - For more information, see [Support lifecycle - Python dependency](../azure-cli-support-lifecycle.md#python-dependency).
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
 ## Install or update Azure CLI
 
-> ![IMPORTANT] The install script only works on Python 3.8.x, 3.9.x, or 3.10.x. This install script does not work on Python 3.11.x or later versions.
+> [!IMPORTANT] The install script only works on Python 3.8.x, 3.9.x, or 3.10.x. This install script does not work on Python 3.11.x or later versions.
 
 Both installing and updating the Azure CLI requires rerunning the install script:
 
