@@ -22,11 +22,13 @@ Here are some of the benefits of using managed identities:
 
 Signing in with the resource's identity is done through the `--identity` flag.
 
+To sign in with a system-assigned managed identity:
+
 ```azurecli-interactive
 az login --identity
 ```
 
-If the resource has multiple user assigned managed identities and no system assigned identity, you must specify the client ID or object ID or resource ID of the user assigned managed identity with `--username` for login.
+To sign in with a user-assigned managed identity, you must specify the client ID, object ID or resource ID of the user-assigned managed identity with `--username`:
 
 ```azurecli-interactive
 az login --identity --username <client_id|object_id|resource_id>
