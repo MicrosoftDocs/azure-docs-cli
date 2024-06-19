@@ -12,9 +12,6 @@ ms.custom: devx-track-azurecli, seo-azure-cli, linux-related-content
 
 # Tips for using the Azure CLI successfully
 
-> [!CAUTION]
-> This article references CentOS, a Linux distribution that is nearing End Of Life (EOL) status. Please consider your use and plan accordingly. For more information, see the [CentOS End Of Life guidance](/azure/virtual-machines/workloads/centos/centos-end-of-life).
-
 Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments. After you [choose your preferred shell environment](./choose-the-right-azure-command-line-tool.md#different-shell-environments) and [install the Azure CLI](./install-azure-cli.md), use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
 
 To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](../latest/docs-ref-autogen/reference-index.yml).
@@ -258,8 +255,8 @@ When you delete a resource group, all the resources that belong to it are also r
 Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az-vm-wait) command to support creating independent resources in parallel:
 
 ```azurecli
-az vm create --resource-group VMResources --name virtual-machine-01 --image centos --no-wait
-az vm create --resource-group VMResources --name virtual-machine-02 --image centos --no-wait
+az vm create --resource-group VMResources --name virtual-machine-01 --image Debian:debian-11:11-backports-gen2:latest --generate-ssh-keys --no-wait
+az vm create --resource-group VMResources --name virtual-machine-02 --image Debian:debian-11:11-backports-gen2:latest --generate-ssh-keys --no-wait
 
 subscription=$(az account show --query "id" -o tsv)
 vm1_id="/subscriptions/$subscription/resourceGroups/VMResources/providers/Microsoft.Compute/virtualMachines/virtual-machine-01"
@@ -278,7 +275,7 @@ If you're using Azure CLI over a proxy server that uses self-signed certificates
 | Windows 32-bit         | `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem`                   |
 | Windows 64-bit         | `C:\Program Files\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem`                         |
 | Ubuntu/Debian Linux    | `/opt/az/lib/python<version>/site-packages/certifi/cacert.pem`                                            |
-| CentOS/RHEL/SUSE Linux | `/usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem`                                      |
+| CentOS Stream/RHEL/SUSE Linux | `/usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem`                                      |
 | macOS                  | `/usr/local/Cellar/azure-cli/<cliversion>/libexec/lib/python<version>/site-packages/certifi/cacert.pem`   |
 
 Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file.  Then set `REQUESTS_CA_BUNDLE` to the new file location. Here's an example:
