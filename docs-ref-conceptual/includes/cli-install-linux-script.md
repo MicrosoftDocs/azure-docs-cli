@@ -1,7 +1,7 @@
 ---
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/01/2023
+ms.date: 06/17/2024
 ms.topic: include
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, linux-related-content
@@ -11,21 +11,24 @@ ms.custom: devx-track-azurecli, linux-related-content
 
 It's strongly recommend to install the CLI with a package manager. A package manager makes sure you always get the latest updates, and guarantees the stability of CLI components. Check and see if there's a package for your distribution before installing manually.
 
-The CLI requires the following software:
+The install script for the Azure CLI requires the following software:
 
-* [Python 3.6.x, 3.7.x or 3.8.x](https://www.python.org/downloads/).
+* [Python 3.8.x, 3.9.x, 3.10.x](https://www.python.org/downloads/) - For more information, see [Support lifecycle - Python dependency](../azure-cli-support-lifecycle.md#python-dependency).
 * [libffi](https://sourceware.org/libffi/)
 * [OpenSSL 1.0.2](https://www.openssl.org/source/)
 
 ## Install or update Azure CLI
 
-Both installing and updating the Azure CLI requires rerunning the install script.
+> [!IMPORTANT]
+> The install script only works on Python 3.8.x, 3.9.x, or 3.10.x. This install script does not work on Python 3.11.x or later versions.
+
+Both installing and updating the Azure CLI requires rerunning the install script:
 
 ```bash
 curl -L https://aka.ms/InstallAzureCli | bash
 ```
 
-The script can also be downloaded and run locally. You may have to restart your shell in order for the changes to take effect.
+The script can also be downloaded and run locally. You may have to restart your shell for the changes to take effect.
 
 ## Uninstall Azure CLI
 
@@ -84,7 +87,7 @@ hash -r
 ```
 
 The issue can also occur if you didn't restart your shell after installation. Make sure that the location of the `az` command is in your `$PATH`. The location
-of the `az` command is
+of the `az` command is ...
 
 ```
  <install path>/bin
