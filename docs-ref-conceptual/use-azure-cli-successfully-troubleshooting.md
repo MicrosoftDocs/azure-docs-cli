@@ -1,10 +1,8 @@
 ---
 title: Troubleshoot Azure CLI | Microsoft Docs
-description: Learn to troubleshoot common Azure CLI errors.
-author: dbradish-microsoft
-ms.author: dbradish
-ms.date: 06/14/2025
-ms.topic: conceptual
+description: Learn to use the Azure CLI successfully by understanding common Azure CLI errors and how to fix them.
+ms.date: 06/21/2024
+ms.topic: concept-article
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli
@@ -12,25 +10,21 @@ ms.custom: devx-track-azurecli
 
 # Troubleshooting Azure CLI
 
-Errors returned by the Azure CLI usually fall into one of these groups:
+Errors returned by the Azure CLI usually fall into one of these types:
 
 |-|-|
 |Error type | General error description |
-|Unrecognized argument | A parameter is misspelled or not recognized by Azure CLI.
-|Required argument missing | A required parameter is not specified.
+|Unrecognized argument | A parameter is misspelled or doesn't exist.
+|Required argument missing | A required parameter is not specified or only one of two "parameter pairs" is specified.
 |Mutually exclusive argument | Two or more parameters cannot be specified together.
-|Invalid argument value | Parameter value is not valid.
-|Bad request | **need more information here**
-|Resource not found | An Azure resource cannot be found.
-|Authentication | 
-
-
-
-
+|Invalid argument value | Parameter value is not valid. This is often due to quoting, an escape character or spacing.
+|Bad request | An HTTP status code of 400 returns this error. This is often caused by a missing space, missing parameter dash, or an extra or missing single or double quotation mark. This error also happens when a parameter value doesn't contain an allowed value.
+|Resource not found | An Azure resource referenced in a parameter value cannot be found.
+|Authentication | Microsoft Entra authentication failed.
 
 ## The `--debug` parameter
 
-One of the best ways to see what the Azure CLI is executing for each Azure CLI reference command is to use the `--debug` parameter. Look at all this great information!
+One of the best ways to see what the Azure CLI is executing for each Azure CLI reference command is to use the `--debug` parameter. The Azure CLI returns a plethora of information! Here's are examples of `--debug` for both a failed and successful command:
 
 ```azurecli
 -- Error example: Create a resource group, but omit the quotes around the resource group name.
@@ -48,7 +42,7 @@ cli.azure.cli.core.azclierror: unrecognized arguments: msdocs-rg-2
 ...
 ```
 
-Compare the error `--debug` output to a successful execution:
+Compare the error `--debug` output above to a successful execution:
 
 ```azurecli
 -- Correct example: Because the resource group name contains special characters, enclose it in quotes
@@ -105,9 +99,9 @@ Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there a
 There are several Azure CLI articles dedicated to explaining syntax errors and providing working examples:
 
 * [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
-* [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md)
-* [How-to use the Azure CLI in a Bash environment](./azure-cli-learn-bash.md)
-* [Considerations for running the Azure CLI in a PowerShell environment](./use-azure-cli-successfully-in-powershell.md)
+* [How to query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md)
+* [How-to use the Azure CLI in a Bash environment](./use-azure-cli-successfully-bash.md)
+* [Considerations for running the Azure CLI in a PowerShell environment](./use-azure-cli-successfully-powershell.md)
 
 ## Service principals
 
