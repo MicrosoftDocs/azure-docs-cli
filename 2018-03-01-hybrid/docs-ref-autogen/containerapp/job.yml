@@ -237,6 +237,7 @@ directCommands:
                                [--replica-retry-limit]
                                [--replica-timeout]
                                [--scale-rule-auth]
+                               [--scale-rule-identity]
                                [--scale-rule-metadata]
                                [--scale-rule-name]
                                [--scale-rule-type]
@@ -287,8 +288,28 @@ directCommands:
           --scale-rule-type azure-queue \
           --scale-rule-metadata "accountName=mystorageaccountname" \
                                 "cloud=AzurePublicCloud" \
-                                "queueLength": "5" "queueName": "foo" \
+                                "queueLength=5" "queueName=foo" \
           --scale-rule-auth "connection=my-connection-string-secret-name" \
+          --image imageName
+  - summary: |-
+      Create container app job with Trigger Type as Event using identity to authenticate
+    syntax: >-
+      az containerapp job create -n MyContainerappsjob -g MyResourceGroup \
+          --environment MyContainerappEnv
+          --trigger-type Event \
+          --replica-timeout 5 \
+          --replica-retry-limit 2 \
+          --replica-completion-count 1 \
+          --parallelism 1 \
+          --polling-interval 30 \
+          --min-executions 0 \
+          --max-executions 1 \
+          --scale-rule-name azure-queue \
+          --scale-rule-type azure-queue \
+          --scale-rule-metadata "accountName=mystorageaccountname" \
+                                "cloud=AzurePublicCloud" \
+                                "queueLength=5" "queueName=foo" \
+          --scale-rule-identity myUserIdentityResourceId \
           --image imageName
   - summary: |-
       Create a container apps job hosted on a Connected Environment.
@@ -400,6 +421,10 @@ directCommands:
   - name: --scale-rule-auth --sra
     summary: |-
       Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+  - name: --scale-rule-identity --sri
+    summary: |-
+      Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
+    isPreview: true
   - name: --scale-rule-metadata --srm
     summary: |-
       Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
@@ -856,6 +881,148 @@ directCommands:
   - name: --yaml
     summary: |-
       Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
+- uid: az_containerapp_job_update(containerapp)
+  name: az containerapp job update
+  extensionSuffix: containerapp
+  summary: |-
+    Update a Container Apps Job.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az containerapp job update [--args]
+                               [--command]
+                               [--container-name]
+                               [--cpu]
+                               [--cron-expression]
+                               [--ids]
+                               [--image]
+                               [--max-executions]
+                               [--memory]
+                               [--min-executions]
+                               [--name]
+                               [--no-wait]
+                               [--parallelism]
+                               [--polling-interval]
+                               [--rcc]
+                               [--remove-all-env-vars]
+                               [--remove-env-vars]
+                               [--replace-env-vars]
+                               [--replica-retry-limit]
+                               [--replica-timeout]
+                               [--resource-group]
+                               [--scale-rule-auth]
+                               [--scale-rule-identity]
+                               [--scale-rule-metadata]
+                               [--scale-rule-name]
+                               [--scale-rule-type]
+                               [--set-env-vars]
+                               [--subscription]
+                               [--tags]
+                               [--workload-profile-name]
+                               [--yaml]
+  examples:
+  - summary: |-
+      Update a job's replica timeout.
+    syntax: >-
+      az containerapp job update -n my-containerapp-job -g MyResourceGroup \
+          --replica-timeout 10
+  optionalParameters:
+  - name: --args
+    summary: |-
+      A list of container startup command argument(s). Space-separated values e.g. "-c" "mycommand". Empty string to clear existing values.
+  - name: --command
+    summary: |-
+      A list of supported commands on the container that will executed during startup. Space-separated values e.g. "/bin/queue" "mycommand". Empty string to clear existing values.
+  - name: --container-name
+    summary: |-
+      Name of the container.
+  - name: --cpu
+    summary: |-
+      Required CPU in cores from 0.25 - 2.0, e.g. 0.5.
+  - name: --cron-expression
+    summary: |-
+      Cron expression. Only supported for trigger type "Schedule".
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --image
+    summary: |-
+      Container image, e.g. publisher/image-name:tag.
+  - name: --max-executions
+    summary: |-
+      Maximum number of job executions to run per polling interval.
+  - name: --memory
+    summary: |-
+      Required memory from 0.5 - 4.0 ending with "Gi", e.g. 1.0Gi.
+  - name: --min-executions
+    summary: |-
+      Minimum number of job executions to run per polling interval.
+  - name: --name -n
+    summary: |-
+      The name of the Container Apps Job. A name must consist of lower case alphanumeric characters or '-', start with a letter, end with an alphanumeric character, cannot have '--', and must be less than 32 characters.
+  - name: --no-wait
+    defaultValue: "False"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --parallelism
+    summary: |-
+      Maximum number of replicas to run per execution.
+  - name: --polling-interval
+    summary: |-
+      Interval to check each event source in seconds. Defaults to 30s.
+  - name: --rcc --replica-completion-count
+    summary: |-
+      Number of replicas that need to complete successfully for execution to succeed.
+  - name: --remove-all-env-vars
+    defaultValue: "False"
+    summary: |-
+      Remove all environment variable(s) from container..
+  - name: --remove-env-vars
+    summary: |-
+      Remove environment variable(s) from container. Space-separated environment variable names.
+  - name: --replace-env-vars
+    summary: |-
+      Replace environment variable(s) in container. Other existing environment variables are removed. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+  - name: --replica-retry-limit
+    summary: |-
+      Maximum number of retries before the replica fails.
+  - name: --replica-timeout
+    summary: |-
+      Maximum number of seconds a replica can execute.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --scale-rule-auth --sra
+    summary: |-
+      Scale rule auth parameters. Auth parameters must be in format "<triggerParameter>=<secretRef> <triggerParameter>=<secretRef> ...".
+  - name: --scale-rule-identity --sri
+    summary: |-
+      Resource ID of a managed identity to authenticate with Azure scaler resource(storage account/eventhub or else), or System to use a system-assigned identity.
+    isPreview: true
+  - name: --scale-rule-metadata --srm
+    summary: |-
+      Scale rule metadata. Metadata must be in format "<key>=<value> <key>=<value> ...".
+  - name: --scale-rule-name --srn
+    summary: |-
+      The name of the scale rule.
+  - name: --scale-rule-type --srt
+    summary: |-
+      The type of the scale rule.
+  - name: --set-env-vars
+    summary: |-
+      Add or update environment variable(s) in container. Existing environment variables are not modified. Space-separated values in 'key=value' format. If stored as a secret, value must start with 'secretref:' followed by the secret name.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --tags
+    summary: |-
+      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+  - name: --workload-profile-name -w
+    summary: |-
+      The friendly name for the workload profile.
+  - name: --yaml
+    summary: |-
+      Path to a .yaml file with the configuration of a container app. All other parameters will be ignored. For an example, see  https://docs.microsoft.com/azure/container-apps/azure-resource-manager-api-spec#examples.
 commands:
 - az_containerapp_job_create
 - az_containerapp_job_create(containerapp)
@@ -870,6 +1037,10 @@ commands:
 - az_containerapp_job_identity_show
 - az_containerapp_job_list
 - az_containerapp_job_list(containerapp)
+- az_containerapp_job_logs
+- az_containerapp_job_logs_show
+- az_containerapp_job_replica
+- az_containerapp_job_replica_list
 - az_containerapp_job_secret
 - az_containerapp_job_secret_list
 - az_containerapp_job_secret_remove
@@ -880,6 +1051,7 @@ commands:
 - az_containerapp_job_start
 - az_containerapp_job_stop
 - az_containerapp_job_update
+- az_containerapp_job_update(containerapp)
 globalParameters:
 - name: --debug
   summary: |-
