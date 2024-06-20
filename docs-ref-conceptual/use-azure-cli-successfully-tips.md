@@ -9,46 +9,37 @@ ms.custom: devx-track-azurecli, seo-azure-cli, linux-related-content
 
 # Tips for using the Azure CLI successfully
 
-> [!CAUTION]
-> This article references CentOS, a Linux distribution that is nearing End Of Life (EOL) status. Please consider your use and plan accordingly. For more information, see the [CentOS End Of Life guidance](/azure/virtual-machines/workloads/centos/centos-end-of-life).
-
 Azure CLI is a command-line tool that allows you to configure and manage Azure resources from many shell environments. After you [choose your preferred shell environment](./choose-the-right-azure-command-line-tool.md#different-shell-environments) and [install the Azure CLI](./install-azure-cli.md), use this article to discover useful tips on how to avoid common pitfalls and use the Azure CLI successfully.
 
 To learn more about specific Azure CLI commands, see the [Azure CLI Reference list](../latest/docs-ref-autogen/reference-index.yml).
 
-## Output formatting
+## Choose a scripting language
 
-Three common output formats are used with Azure CLI commands:
+The Azure CLI is an open source _tool_ that you can run in many _scripting languages_.
 
-1. The `json` format shows information as a JSON string.
-   - JSON gives you the most comprehensive information.
-   - This format is the default but you can use the `--output` parameter to specify a different option.
-   - Change the global default format to one of your personal preferences by using [az config](../latest/docs-ref-autogen/config.yml) such as `az config set core.output=table`.
-   - JSON format preserves the double quotes, generally making it unsuitable for scripting purposes.
+* It is the scripting language that determines the quoting, escape character, and line continuation rules for Azure CLI commands.
+* You cannot easily copy Azure CLI command syntax _containing single or double quotes, escape characters or line continuation characters_ from a Bash scripting language to a PowerShell scripting language.
+* **Most Microsoft documentation for the Azure CLI is written and tested in Bash.** 
+* If PowerShell is your scripting language of choice, consider using the tool, [Azure PowerShell](/powershell/azure/), which has native [PowerShell](/powershell/) scripting language functionality.
 
-2. The `table` format presents output as a readable table. You can specify which values appear in the table and use queries to customize the output as shown here:
+For more information on scripting language options for Azure CLI, see [Choose the right command-line tool](./choose-the-right-azure-command-line-tool.md).
 
-    ```azurecli
-    # command
-    az vm show --resource-group myResourceGroup --name myVMname --query "{name: name, os:storageProfile.imageReference.offer}" --output table
+## FAQ
 
-    # output
-    Name    Os
-    ------  ------------
-    myVMname   UbuntuServer
-    ```
+Here are some links to help you answer the most frequently asked Azure CLI questions:
 
-3. The `tsv` format returns tab-separated and newline-separated values without extra formatting, keys, or other symbols.
-   - The TSV format is useful for concise output and scripting purposes.
-   - The TSV strips double quotes that the JSON format preserves.
-   - To specify the format you want for TSV, use the `--query` parameter.
+| Subject area with article link | Tip |
+|-|-|
+| [Authentication]() | Find answers to questions on WAM and MFA.
+| [Configuration settings]() | Learn how to turn on/off Azure CLI features and set default values.
+| [Output format](./format-output-azure-cli.md) | Your command output determines how secrets are protected and the format returned by the `--query` parameter.
+| [Support lifecycle](./azure-cli-support-lifecycle.md) | Information on supported operating systems, scripting languages and end of life (EOL).
+| [Command type and status](./reference-types-and-status.md) | 
+| [List of Azure CLI reference groups](./reference-docs-index.md) | A to Z list of Azure CLI reference groups with drill down to subgroups and commands.
+| [List of Azure CLI articles](/cli/azure/reference-index) | A to Z list of Quickstarts, How-to guides, Tutorials using Azure CLI reference commands.
+| [List of Azure CLI samples](./samples-index.md) | A to Z list of Samples, including those in Azure-samples/azure-cli-samples GitHub repository.
+| [Troubleshooting](./use-azure-cli-successfully-troubleshooting.md) | Find error output cause and remediation tips.
 
-    ```azurecli
-    export vm_ids=$(az vm list --show-details --resource-group myResourceGroup --query "[?powerState=='VM running'].id" --output tsv)
-    az vm stop --ids $vm_ids
-    ```
-
-For more information about these and other formats, see [Output formats for Azure CLI commands](./format-output-azure-cli.md).
 
 ## Pass values to another command
 
@@ -73,178 +64,40 @@ For multi-value lists, consider the following options:
 
 1. If you need more controls on the result, use a "for" loop:
 
-    ```azurecli
-    #!/usr/bin/env bash
-    for vmList in $(az vm list --resource-group MyResourceGroup --show-details --query "[?powerState=='VM running'].id"   --output tsv); do
-        echo stopping $vmList
-        az vm stop --ids $vmList
-        if [ $? -ne 0 ]; then
-            echo "Failed to stop $vmList"
-            exit 1
-        fi
-        echo $vmList stopped
-    done
-    ```
+  ```azurecli
+  #!/usr/bin/env bash
+  for vmList in $(az vm list --resource-group MyResourceGroup --show-details --query "[?powerState=='VM running'].id"   -output tsv); do
+      echo stopping $vmList
+      az vm stop --ids $vmList
+      if [ $? -ne 0 ]; then
+          echo "Failed to stop $vmList"
+          exit 1
+      fi
+      echo $vmList stopped
+  done
+  ```
 
 1. Alternatively, use `xargs` and consider using the `-P` flag to run the operations in parallel for improved performance:
 
-    ```azurecli
-    az vm list --resource-group MyResourceGroup --show-details \
+  ```azurecli
+  az vm list --resource-group MyResourceGroup --show-details \
       --query "[?powerState=='VM stopped'].id" \
       --output tsv | xargs -I {} -P 10 az vm start --ids "{}"
-    ```
+  ```
 
 1. Finally, Azure CLI has built-in support to process commands with multiple `--ids` in parallel to achieve the same effect of xargs. `@-` is used to get values from the pipe:
 
-    ```azurecli
-    az vm list --resource-group MyResourceGroup --show-details \
+  ```azurecli
+  az vm list --resource-group MyResourceGroup --show-details \
       --query "[?powerState=='VM stopped'].id" \
       --output tsv | az vm start --ids @-
-    ```
+  ```
 
 For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
 
-## Use quotation marks in parameters
+## Common update parameters
 
-When you work with Azure CLI commands, be aware of how your shell uses quotation marks and escapes characters. If you support scripts used in different shells, understand how they differ.
-
-- Bash. [Quoting](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
-- PowerShell. [About Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
-- Windows Command Prompt. [How-to: Escape Characters, Delimiters and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
-
-> [!NOTE]
-> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
-
-To avoid unanticipated results, here are a few suggestions:
-
-- If you provide a parameter that contains whitespace, wrap it in quotation marks.
-
-- In Bash or PowerShell, both single and double quotes are interpreted correctly. In Windows Command Prompt, only double quotes are interpreted correctly -- single quotes are treated as part of the value.
-
-- If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single quotes are necessary when supplying inline JSON values. For example, this JSON is correct in Bash: `'{"key": "value"}'`.
-
-- If your command runs at a Windows Command Prompt, you must use double quotes. If the value contains double quotes, you must escape it. The equivalent of the above JSON string is `"{\"key\": \"value\"}"`
-
-- In PowerShell, if your value is an empty string, use `'""'`.
-
-- In Bash or PowerShell, if your value is an empty quotes string `''`, use `"''"`.
-
-- Use Azure CLI's `@<file>` convention to load from a file and bypass the shell's interpretation mechanisms.
-
-  ```azurecli
-  az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
-  ```
-
-- Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
-
-- Some Azure CLI commands take a list of space separated values.
-  - If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`.  For example:
-
-    ```azurecli
-    az web app config app settings set --resource-group myResourceGroup --name myWebAppName --settings "client id=id1" "my name=john"
-    ```
-
-  - When a CLI parameter states that it accepts a space-separated list, one of two formats is expected:
-    1. Unquoted, space-separated list
-       `--parameterName firstValue secondValue`
-    1. Quoted space-separated list
-       `--parameterName "firstValue" "secondValue"`
-
-    This example is a string with a space in it. It isn't a space-separated list:
-       `--parameterName "firstValue secondValue"`
-
-- There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. You can also enclose the value in single or double quotes `"`/`"`.
-
-  ```powershell
-  # The following three examples will work in PowerShell
-  --parameterName `@parameters.json
-  --parameterName '@parameters.json'
-  --parameterName "@parameters.json"
-
-  # This example will not work in PowerShell
-  --parameterName @parameters.json
-  ```
-
-- When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
-
-  ### [Bash](#tab/bash)
-
-  These three commands are correct and equivalent in Bash:
-
-  ```azurecli
-  az version --query '"azure-cli"'
-  az version --query \"azure-cli\"
-  az version --query "\"azure-cli\""
-  ```
-
-  Here are two examples of incorrect commands in Bash:
-
-  ```azurecli
-  # Wrong, as the dash needs to be quoted in a JMESPath query
-  az version --query azure-cli
-  az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
-
-  # Wrong, as the dash needs to be quoted in a JMESPath query, but quotes are interpreted by Bash
-  az version --query "azure-cli"
-  az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
-  ```
-
-  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
-
-  ### [PowerShell](#tab/powershell)
-
-  These five commands work correctly in PowerShell:
-
-  ```azurecli
-  az version --query '\"azure-cli\"'
-  az version --query "\`"azure-cli\`""
-  az version --query "\""azure-cli\"""
-  az --% version --query "\"azure-cli\""
-  az --% version --query \"azure-cli\"
-  ```
-
-  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
-
-  ### [Cmd](#tab/cmd)
-
-  These two commands work correctly in Windows Command Prompt:
-
-  ```azurecli
-  az version --query "\"azure-cli\""
-  az version --query \"azure-cli\"
-  ```
-
-  For more example comparisons between Bash, PowerShell and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
-
-  ---
-
-- The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
-
-  ```azurecli
-  # Correct
-  $ az '{"key":"value"}' --debug
-  Command arguments: ['{"key":"value"}', '--debug']
-
-  # Correct
-  $ az "{\"key\":\"value\"}" --debug
-  Command arguments: ['{"key":"value"}', '--debug']
-
-  # Wrong, as quotes and spaces are interpreted by Bash
-  $ az {"key": "value"} --debug
-  Command arguments: ['{key:', 'value}', '--debug']
-
-  # Wrong, as quotes are interpreted by Bash
-  $ az {"key":"value"} --debug
-  Command arguments: ['{key:value}', '--debug']
-  ```
-
-## Use hyphen characters in parameters
-
-If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a parameter name. To parse it as value, use `=` to concatenate the parameter name and value: `--password="-VerySecret"`.
-
-## Generic update parameters
-
-Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az-vm-update) command. Most update commands offer the three generic parameters: `--add`, `--set`, and `--remove`.
+Azure CLI command groups often feature an update command. For instance, [Azure Virtual Machines](/cli/azure/vm) includes the [az vm update](/cli/azure/vm#az-vm-update) command. Most update commands offer the three common parameters: `--add`, `--set`, and `--remove`.
 
 The `--set` and `--add` parameters take a list of space-separated key-value pairs: `key1=value1 key2=value2`. To see what properties you can update, use a show command, such as [az vm show](/cli/azure/vm#az-vm-show).
 
@@ -262,30 +115,9 @@ az vm update --resource-group VMResources --name virtual-machine-01 \
    \"lun\": 1}"
 ```
 
-## Generic resource commands (az resource)
+## Generic resource commands
 
-A service you want to work with may not have Azure CLI support. You can use the [az resource](../latest/docs-ref-autogen/resource.yml) commands to work with these resources.
-
-If you only need create or update commands, use the [az deployment group create](/cli/azure/deployment/group#az-deployment-group-create). For working examples, see [Azure Quickstart Templates](https://azure.microsoft.com/resources/templates/).
-
-## REST API commands (az rest)
-
-If generic update parameters and [az resource](../latest/docs-ref-autogen/resource.yml) don't meet your needs, you can use the [az rest](/cli/azure/reference-index#az-rest) command to call the REST API. The command automatically authenticates using the logged-in credential and sets header `Content-Type: application/json`. For more information, see [Azure REST API reference](/rest/api/azure/).
-
-This example works with the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
-
-```azurecli
-# Get the application
-az rest --method GET \
-    --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001'
-
-# Update `redirectUris` for `web` property
-az rest --method PATCH \
-    --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001' \
-    --body '{"web":{"redirectUris":["https://myapp.com"]}}'
-```
-
-When using `--uri-parameters` for requests in the form of OData, make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``
+A service you want to work with may not have Azure CLI support. You can use the [az resource](../latest/docs-ref-autogen/resource.yml) or [az rest](/cli/azure/reference-index#az-rest) commands to work with these resources.
 
 ## Script examples
 
