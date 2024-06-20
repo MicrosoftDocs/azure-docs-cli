@@ -40,7 +40,6 @@ Here are some links to help you answer the most frequently asked Azure CLI quest
 | [List of Azure CLI samples](./samples-index.md) | A to Z list of Samples, including those in Azure-samples/azure-cli-samples GitHub repository.
 | [Troubleshooting](./use-azure-cli-successfully-troubleshooting.md) | Find error output cause and remediation tips.
 
-
 ## Pass values to another command
 
 If the value is used more than once, assign it to a variable. Variables allow you to use values more than once or to create more general scripts.  This example assigns an ID found by the [az vm list](/cli/azure/vm#az-vm-list) command to a variable.
@@ -119,6 +118,56 @@ az vm update --resource-group VMResources --name virtual-machine-01 \
 
 A service you want to work with may not have Azure CLI support. You can use the [az resource](../latest/docs-ref-autogen/resource.yml) or [az rest](/cli/azure/reference-index#az-rest) commands to work with these resources.
 
+## Concurrent execution
+
+If you run Azure CLI commands concurrently on the same machine, write conflicts can happen if multiple Azure CLI commands write to the same MSAL token cache.
+
+To avoid potential failures, isolate the Azure CLI configuration folder for each script by setting environment variable `AZURE_CONFIG_DIR` for each script to a separate directory. Azure CLI commands in that script save the configuration and token cache to the configured location instead of the default `~/.azure` folder.
+
+### [Bash](#tab/bash)
+
+```bash
+export AZURE_CONFIG_DIR=/my/config/dir
+```
+
+### [PowerShell](#tab/powershell)
+
+```powershell
+$env:AZURE_CONFIG_DIR='D:\my\config\dir'
+```
+
+### [Cmd](#tab/cmd)
+
+```cmd
+set AZURE_CONFIG_DIR=D:\my\config\dir
+```
+
+---
+
+## Asynchronous operations
+
+Operations in Azure can take a noticeable amount of time. For instance, configuring a virtual machine at a data center isn't instantaneous. Azure CLI waits until the command has finished to accept other commands. Many commands therefore offer a `--no-wait` parameter as shown here:
+
+```azurecli
+az group delete --name MyResourceGroup --no-wait
+```
+
+When you delete a resource group, all the resources that belong to it are also removed. Removing these resources can take a long time. When you run the command with the `--no-wait` parameter, the console accepts new commands without interrupting the removal.
+
+Many commands offer a wait option, pausing the console until some condition is met. The following example uses the [az vm wait](/cli/azure/vm#az-vm-wait) command to support creating independent resources in parallel:
+
+```azurecli
+az vm create --resource-group VMResources --name virtual-machine-01 --image centos --no-wait
+az vm create --resource-group VMResources --name virtual-machine-02 --image centos --no-wait
+
+subscription=$(az account show --query "id" -o tsv)
+vm1_id="/subscriptions/$subscription/resourceGroups/VMResources/providers/Microsoft.Compute/virtualMachines/virtual-machine-01"
+vm2_id="/subscriptions/$subscription/resourceGroups/VMResources/providers/Microsoft.Compute/virtualMachines/virtual-machine-02"
+az vm wait --created --ids $vm1_id $vm2_id
+```
+
+After both IDs are created, you can use the console again.
+
 ## Script examples
 
 Here are examples for using variables and looping through a list when working with Azure Virtual Machines. For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
@@ -176,8 +225,5 @@ foreach ($vm_id in $vm_ids) {
 
 ## See also
 
-- [Configure the Azure CLI](./azure-cli-configuration.md)
-- [Learn to use Bash with Azure CLI](./azure-cli-learn-bash.md)
-- [Query Azure CLI command output](./query-azure-cli.md)
-- [Use variables in Azure CLI commands](./azure-cli-variables.md)
+* [Troubleshooting the Azure CLI](./use-azure-cli-successfully-troubleshooting.md)
 - Find Azure CLI [samples](./samples-index.md) and [published articles](./reference-docs-index.md)
