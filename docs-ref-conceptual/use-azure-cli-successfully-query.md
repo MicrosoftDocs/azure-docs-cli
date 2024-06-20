@@ -3,9 +3,7 @@ title: Query Azure CLI command results | Microsoft Docs
 description: Learn to use the Azure CLI --query parameter syntax to return information about Azure resources. Find tips to JMESPath syntax.
 ms.date: 06/21/2024
 ms.topic: concept-article
-ms.service: azure-cli
-ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 ---
 
 # How to query Azure CLI command output using a JMESPath query

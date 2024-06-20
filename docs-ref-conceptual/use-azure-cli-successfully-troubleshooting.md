@@ -3,8 +3,6 @@ title: Troubleshoot Azure CLI | Microsoft Docs
 description: Learn to use the Azure CLI successfully by understanding common Azure CLI errors and how to fix them.
 ms.date: 06/21/2024
 ms.topic: concept-article
-ms.service: azure-cli
-ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 ---
 
