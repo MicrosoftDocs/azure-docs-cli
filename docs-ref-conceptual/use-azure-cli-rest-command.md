@@ -1,10 +1,8 @@
 ---
-title: Learn how to use the Azure REST API with Azure CLI| Microsoft Docs
-description: Learn how to use Azure rest with Azure Command Line (CLI). 
-author: daphnemamsft
-ms.author: daphnema
-ms.date: 01/31/2024
-ms.topic: conceptual
+title: Use the Azure REST API with Azure CLI| Microsoft Docs
+description: Learn how to use the Azure REST API for Azure CLI including PUT, PATCH, GET, POST, and DELETE HTTP requests.
+ms.date: 06/21/2024
+ms.topic: concept-article
 ms.service: azure-cli
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli
@@ -15,11 +13,11 @@ ms.custom: devx-track-azurecli
 [Representational State Transfer (REST) APIs](/rest/api/gettingstarted/#components-of-a-rest-api-requestresponse)
 are service endpoints that support different sets of HTTP operations (or methods). These HTTP
 methods allow you to perform different actions for your service's resources. The `az rest` command
-should only be used when an existing [Azure CLI command](./use-azure-cli-successfully.md) isn't
+should only be used when an existing [Azure CLI command](/cli/azure/reference-index) isn't
 available.
 
-Upon completion of this article, you will know how to use the PUT, PATCH, GET, POST, and DELETE HTTP
-requests to manage Azure Container Registry resources. The [Azure Container Registry](/azure/container-registry/container-registry-intro)
+This article demonstrates the PUT, PATCH, GET, POST, and DELETE HTTP requests to manage Azure
+Container Registry resources. The [Azure Container Registry](/azure/container-registry/container-registry-intro)
 is a managed registry service that allows you to create and maintain Azure container registries that
 store container images and related artifacts.
 
@@ -27,21 +25,16 @@ store container images and related artifacts.
 
 [!INCLUDE [include](~/articles/reusable-content/azure-cli/azure-cli-prepare-your-environment-no-header.md)]
 
-## Set up your custom Azure REST API request:
+## Tips for using `az rest`
 
-To invoke a custom Azure REST API request with Azure CLI, use the [`az rest`](/cli/azure/reference-index?#az-rest)
-command, followed by the `--url` parameter. The `--url` parameter defines the URL of the requested
-resource, and is the only required parameter.
+Here's some helpful information when working with `az rest`:
 
-> [!NOTE]
-> - The `az rest` command automatically authenticates using the logged-in credential. If
-> Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where
-> `<token>` is retrieved from [Microsoft Entra ID](/entra/identity/). The target resource of the
-> token will be derived from the `--url` parameter when the `--url` parameter starts with an
-> endpoint from the output of the `az cloud show --query endpoints` command. Use the `--resource`
-> parameter for a custom resource.
-> - If Content-Type header is not set and `--body` is a valid JSON
-> string, Content-Type header will default to "application/json".
+* The `az rest` command automatically authenticates using the logged-in credential.
+* If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from [Microsoft Entra ID](/entra/identity/).
+* The target resource of the token will be derived from the `--url` parameter when the `--url` parameter starts with an endpoint from the output of the `az cloud show --query endpoints` command. The `--url` parameter required.
+* Use the `--resource` parameter for a custom resource.
+* If Content-Type header is not set and `--body` is a valid JSON string, Content-Type header will default to "application/json".
+* When using `--uri-parameters` for requests in the form of OData, make sure to escape `$` in different environments: in `Bash`, escape `$` as `\$` and in `PowerShell`, escape `$` as `` `$``.
 
 ## Use PUT to create an Azure Container Registry
 
@@ -167,8 +160,6 @@ JSON output for both Bash and Powershell:
 }
 ```
 
-You have now successfully created your new Azure Container Registry using `az rest`!
-
 ## Use PATCH to update your Azure Container Registry
 
 Update your Azure Container Registry by using the PATCH HTTP request. Edit the `--body` parameter
@@ -201,7 +192,7 @@ az rest --method patch `
 
 ---
 
-The following JSON dictionary output has fields omitted for brevity: 
+The following JSON dictionary output has fields omitted for brevity:
 
 ```JSON
 {
@@ -274,7 +265,7 @@ az rest --method post `
 
 ---
 
-The following JSON dictionary output has fields omitted for brevity: 
+The following JSON dictionary output has fields omitted for brevity:
 
 ```JSON
 {
@@ -319,6 +310,21 @@ az rest --method delete `
 
 ---
 
+## Additional `az rest` example for Microsoft Graph
+
+Sometimes it helps to see an example for a different scenario, so here is an example that uses the [Microsoft Graph API](/graph/api/overview?toc=./ref/toc.json). To update redirect URIs for an [Application](/graph/api/resources/application), call the [Update application](/graph/api/application-update?tabs=http) REST API, as in this code:
+
+```azurecli
+# Get the application
+az rest --method GET \
+    --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001'
+
+# Update `redirectUris` for `web` property
+az rest --method PATCH \
+    --uri 'https://graph.microsoft.com/v1.0/applications/b4e4d2ab-e2cb-45d5-a31a-98eb3f364001' \
+    --body '{"web":{"redirectUris":["https://myapp.com"]}}'
+```
+
 ## Clean up resources
 
 When you are finished with the resources created in this article, you can delete the resource group.
@@ -327,3 +333,8 @@ When you delete the resource group, all resources in that resource group are del
 ```azurecli-interactive
 az group delete --resource-group <resourceGroupName>
 ```
+
+## See also
+
+* [Azure REST API reference](/rest/api/azure/)
+* [az resource](../latest/docs-ref-autogen/resource.yml) command
