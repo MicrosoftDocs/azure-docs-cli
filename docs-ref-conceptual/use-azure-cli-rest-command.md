@@ -27,7 +27,7 @@ store container images and related artifacts.
 
 ## Tips for using `az rest`
 
-Here's some helpful information when working with `az rest`:
+Here's some helpful information when working with [az rest](/cli/azure/reference-index):
 
 * The `az rest` command automatically authenticates using the logged-in credential.
 * If Authorization header is not set, it attaches header `Authorization: Bearer <token>`, where `<token>` is retrieved from [Microsoft Entra ID](/entra/identity/).

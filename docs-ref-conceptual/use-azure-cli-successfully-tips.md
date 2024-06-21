@@ -17,7 +17,7 @@ To learn more about specific Azure CLI commands, see the [Azure CLI Reference li
 The Azure CLI is an open source _tool_ that you can run in many _scripting languages_.
 
 * It's the scripting language that determines the quoting, escape character, and line continuation rules for Azure CLI commands.
-* You can't easily copy Azure CLI command syntax _containing single or double quotes, escape characters, or line continuation characters_ from a Bash scripting language to a PowerShell scripting language.
+* You can't easily copy Azure CLI command syntax _containing single or double quotes, escape characters, or line continuation characters_ between languages.
 * **Most Microsoft documentation for the Azure CLI is written and tested in Bash.** 
 * If PowerShell is your scripting language of choice, consider using the tool, [Azure PowerShell](/powershell/azure/), which has native [PowerShell](/powershell/) scripting language functionality.
 
@@ -29,10 +29,11 @@ Here are some links to help you answer the most frequently asked Azure CLI quest
 
 | Subject area with article link | Tip |
 |-|-|
-| [Authentication]() | Find answers to questions on Web Account Manager (WAM) and Multifactor Authentication (MFA).
-| [Configuration settings]() | Learn how to turn on/off Azure CLI features and set default values.
+| [Authentication](./authenticate-azure-cli.md) | Find answers to questions on Web Account Manager (WAM) and multifactor authentication (MFA).
+| [Configuration settings](./azure-cli-configuration.md) | Learn how to turn on/off Azure CLI features and set default values.
 | [Output format](./format-output-azure-cli.md) | Your command output determines how secrets are protected and the format returned by the `--query` parameter.
 | [Support lifecycle](./azure-cli-support-lifecycle.md) | Information on supported operating systems, scripting languages and end of life (EOL).
+| [REST API](./use-azure-cli-rest-command.md) | When an Azure CLI command is not available, consider using [az rest](/cli/azure/reference-index) or [az resource](/cli/azure/resource).
 | [List of Azure CLI reference groups](./reference-docs-index.md) | A to Z list of Azure CLI reference groups with drill-down to subgroups and all Azure CLI commands.
 | [List of Azure CLI articles](/cli/azure/reference-index) | A to Z list of Quickstarts, How-to guides, and Tutorials that use Azure CLI reference commands.
 | [List of Azure CLI samples](./samples-index.md) | A to Z list of Samples, including those samples in Azure-samples/azure-cli-samples GitHub repository.
