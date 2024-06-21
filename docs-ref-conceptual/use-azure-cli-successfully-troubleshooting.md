@@ -8,14 +8,14 @@ ms.custom: devx-track-azurecli
 
 # Troubleshooting Azure CLI
 
-Errors returned by the Azure CLI usually fall into one of these types:
+Most errors returned by the Azure CLI fall into one of these categories:
 
-|Error type | General error description |
+|Error category | General error cause |
 |-|-|
 |Unrecognized argument | A parameter is misspelled or doesn't exist.
-|Required argument missing | A required parameter isn't specified or only one of two "parameter pairs" is specified.
+|Required argument missing | A required parameter isn't specified or only one of two "parameter pairs" is specified. A parameter might also be misspelled.
 |Mutually exclusive argument | Two or more parameters can't be specified together.
-|Invalid argument value | Parameter value isn't valid. This error is often due to quoting, an escape character or spacing.
+|Invalid argument value | Parameter _value_ isn't valid. This error is often due to quoting, an escape character or spacing.
 |Bad request | An HTTP status code of 400 returns this error. This error is often caused by a missing space, missing parameter dash, or an extra or missing single or double quotation mark. This error also happens when a parameter value doesn't contain an allowed value.
 |Resource not found | An Azure resource referenced in a parameter value can't be found.
 |Authentication | Microsoft Entra authentication failed.
@@ -80,7 +80,7 @@ cli.__main__: Command ran in 1.829 seconds (init: 0.111, invoke: 1.718)
 
 ## Common syntax errors
 
-Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there are syntax differences between environments. This challenge reveals itself most often in parameter values. Azure CLI scripts containing single quotes, double quotes, and escape characters aren't easily copied between environments with successful execution. Here are some common error messages:
+Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there are syntax differences between scripting languages. Azure CLI scripts containing single quotes, double quotes, and escape characters aren't easily copied between languages. This challenge reveals itself most often in parameter values, most notably in values assigned to the `--query` parameter.  Here are some common error messages:
 
 * "**Bad request ...{something} is invalid**" might be caused by a space, single or double quotation mark, or lack of a quote.
 
@@ -96,16 +96,20 @@ Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there a
 
 There are several Azure CLI articles dedicated to explaining syntax errors and providing working examples:
 
-* [Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md)
-* [How-to query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md)
+* [Quoting differences between scripting languages](./use-azure-cli-successfully-quoting.md)
+* [Syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
+* Find many `--query` parameter examples in [How-to query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md)
 * [How-to use the Azure CLI in a Bash scripting language](./use-azure-cli-successfully-bash.md)
 * [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
+
+> [!TIP]
+> If you can't seem to get past a command error, try using a different scripting language. Most Azure CLI documentation is written and tested in Azure Cloud Shell with a Bash scripting language.
 
 ## Service principals
 
 For information on troubleshooting service principals, see [Cleanup and Troubleshooting](./azure-cli-sp-tutorial-8.md#troubleshoot-service-principals) in the [Work with service principals](./azure-cli-sp-tutorial-1.md) tutorial.
 
-## Error: Invalid value found or unrecognized arguments
+## Error: Doesn't exist, invalid value found or unrecognized arguments
 
 These errors often occur when trying to use a variable value that contains an incorrect format. The default output for Azure CLI is JSON, so if you're trying to store an ID for an Azure resource in a variable, you must specify `--output tsv`. Here's an example:
 
@@ -140,39 +144,40 @@ az account set --subscription $subscriptionID
 
 ## Error: Failed to parse string as JSON
 
-There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. See [Quoting issues with the PowerShell scripting language](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md#best-practice-use-file-input-for-json) for more information, or [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-in-powershell.md). [Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) provides more examples.
+There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. See [Quoting issues with the PowerShell scripting language](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md#best-practice-use-file-input-for-json) for more information, or [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-in-powershell.md). The [Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial provides more examples.
 
 ## Error: Arguments are expected or required
 
-You receive this error when an Azure CLI command is missing a required parameter, or there's a typographical error that causes the Azure CLI to incorrectly parse the reference command. When working with a script, you also receive this error when one or more conditions are true:
+You receive this error when an Azure CLI command is missing a required parameter, or _there's a typographical error that causes the Azure CLI to incorrectly parse the reference command_. When working with a script, you also receive this error when one or more conditions are true:
 
 * A line continuation character is missing or incorrect.
-* A trailing space exists on the right side of a line continuation character.
+* A trailing space exists on the right side of a line continuation character when working in the PowerShell scripting language. At this time, [splatting](/powershell/module/microsoft.powershell.core/about/about_splatting) is not supported with Azure CLI commands.
 * A variable name contains a special character, such as a dash (-).
 
 ## Error: InvalidTemplateDeployment
 
-When you try to create an Azure resource in a location that doesn't offer that resource, you receive an error similar to this message: "Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available in location 'westus'."
+When you try to create an Azure resource in a location that doesn't offer that resource, you receive an error similar to this message: "Following SKUs have failed for Capacity Restrictions: myDesiredSkuName' is currently not available in location 'mySpecifiedLocation'."
 
-Here's a full error example for a VM that can't be created in the specified location:
+Here's a full error example for a VM that can't be created in the `westus` location:
 
 ```azurecli
 {"error":{"code":"InvalidTemplateDeployment","message":"The template deployment 'vm_deploy_<32 character ID>'
 is not valid according to the validation procedure. The tracking id is '<36 character ID>'.
 See inner errors for details.","details":[{"code":"SkuNotAvailable","message":"The requested VM size for resource
 'Following SKUs have failed for Capacity Restrictions: Standard_DS1_v2' is currently not available
-in location '<your specified location>'. Please try another size or deploy to a different location
+in location 'westus'. Please try another size or deploy to a different location
 or different zone. See https://aka.ms/azureskunotavailable for details."}]}}
 ```
+The solution is to change your Azure resource or try a different location.
 
 ## Error: Resource not found
 
 When the Azure CLI can't find the resource name or ID passed in a parameter value, it's usually because of one of these reasons:
 
-* The resource name is spelled incorrectly.
+* The resource name or ID is spelled incorrectly.
 * The resource name contains special characters and isn't surrounded by single or double quotes.
-* A variable value has unseen leading or trailing spaces.
-* The resource is in a different subscription.
+* The value being passed to a variable has unseen leading or trailing spaces.
+* The resource exists, but is in a different subscription.
 
 ## Error: SSLError "bad handshake...certificate verify failed" (Proxy blocks connection)
 
@@ -183,7 +188,7 @@ If you're using Azure CLI over a proxy server that uses self-signed certificates
 | Windows 32-bit | `C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem` |
 | Windows 64-bit | `C:\Program Files\Microsoft SDKs\Azure\CLI2\Lib\site-packages\certifi\cacert.pem` |
 | Ubuntu/Debian Linux | `/opt/az/lib/python<version>/site-packages/certifi/cacert.pem` |
-| CentOS/RHEL/SUSE Linux | `/usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem` |
+| CentOS Stream/RHEL/SUSE Linux | `/usr/lib64/az/lib/python<version>/site-packages/certifi/cacert.pem` |
 | macOS | `/usr/local/Cellar/azure-cli/<cliversion>/libexec/lib/python<version>/site-packages/certifi/cacert.pem` |
 
 Append the proxy server's certificate to the CA bundle certificate file, or copy the contents to another certificate file. Then set `REQUESTS_CA_BUNDLE` to the new file location. Here's an example:
@@ -200,7 +205,7 @@ Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PR
 
 ## Other issues
 
-If you experience a product issue with Azure CLI not listed in this article or require further assistance, file an issue on GitHub.
+If you experience a product issue with Azure CLI not listed in this article or require further assistance, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
 
 ## See also
 
