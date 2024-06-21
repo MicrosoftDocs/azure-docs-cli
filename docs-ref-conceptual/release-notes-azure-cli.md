@@ -2731,6 +2731,20 @@ Version 2.39.0
 * `az synapse workspace`: Add `--last-commit-id` for git repo config
 * `az synapse ad-only-auth`: New command group for supporting synapse azure ad only authentication
 
+## June 21, 2024
+
+Version 2.38.2
+
+This version is only released for CentOS 7 and RHEL 7. CVE-2023-36052 is fixed in this version.
+
+### App Service
+
+* [BREAKING CHANGE] Redact appsettings output on set/delete commands
+* [BREAKING CHANGE] `az webapp config`: Redact webapp config connection-string and storage-account values
+* [BREAKING CHANGE] `az functionapp`: Redact key value output on keys set
+* [BREAKING CHANGE] `az functionapp/webapp deployment source update-token`: Redact tokens output on deployment source update-token
+* [BREAKING CHANGE] Redact output on deployment source config
+
 ## September 01, 2023
 
 Version 2.38.1
