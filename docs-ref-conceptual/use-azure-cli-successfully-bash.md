@@ -8,9 +8,9 @@ ms.custom: devx-track-azurecli
 ms.date: 12/04/2023
 ms.tool: azure-cli
 ---
-# How-to use the Azure CLI in a Bash environment
+# How-to use the Azure CLI in a Bash scripting language
 
-Azure CLI reference commands can execute in several different [shell environments](choose-the-right-azure-command-line-tool.md#different-shell-environments), but Microsoft Docs primarily use the Bash environment. If you're new to Bash and also the Azure CLI, this article a great place to begin your learning journey.  Work through this article much like you would a tutorial to learn how to use the Azure CLI in a Bash environment with ease.
+Azure CLI reference commands can execute in several different [shell environments](choose-the-right-azure-command-line-tool.md#different-shell-environments), but Microsoft Docs primarily use the Bash scripting language. If you're new to Bash and also the Azure CLI, this article a great place to begin your learning journey.  Work through this article much like you would a tutorial to learn how to use the Azure CLI in a Bash scripting language with ease.
 
 In this article, you learn how to:
 

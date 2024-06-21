@@ -15,7 +15,7 @@ Most errors returned by the Azure CLI fall into one of these categories:
 |Unrecognized argument | A parameter is misspelled or doesn't exist.
 |Required argument missing | A required parameter isn't specified or only one of two "parameter pairs" is specified. A parameter might also be misspelled.
 |Mutually exclusive argument | Two or more parameters can't be specified together.
-|Invalid argument value | Parameter _value_ isn't valid. This error is often due to quoting, an escape character or spacing.
+|[Invalid argument value](#error-invalid-value-or-doesnt-exist) | Parameter _value_ isn't valid. This error is often due to quoting, an escape character or spacing.
 |Bad request | An HTTP status code of 400 returns this error. This error is often caused by a missing space, missing parameter dash, or an extra or missing single or double quotation mark. This error also happens when a parameter value doesn't contain an allowed value.
 |Resource not found | An Azure resource referenced in a parameter value can't be found.
 |Authentication | Microsoft Entra authentication failed.
@@ -90,7 +90,7 @@ Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there a
 
 * "**Variable reference is not valid**" is received when a string isn't formatted properly often due to concatenation or a missing escape character.
 
-* "**Unrecognized arguments**" is often caused by an incorrect line continuation character or incorrectly formatted parameter value.
+* "**Unrecognized arguments**" is often caused by an incorrect line continuation character or misspelled parameter name.
 
 * "**Missing expression after unary operator**" is seen when a line continuation character is missing.
 
@@ -103,13 +103,13 @@ There are several Azure CLI articles dedicated to explaining syntax errors and p
 * [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
 
 > [!TIP]
-> If you can't seem to get past a command error, try using a different scripting language. Most Azure CLI documentation is written and tested in Azure Cloud Shell with a Bash scripting language.
+> If you can't resolve a command error, try using a different scripting language. Most Azure CLI documentation is written and tested in Azure Cloud Shell with a Bash scripting language.
 
 ## Service principals
 
 For information on troubleshooting service principals, see [Cleanup and Troubleshooting](./azure-cli-sp-tutorial-8.md#troubleshoot-service-principals) in the [Work with service principals](./azure-cli-sp-tutorial-1.md) tutorial.
 
-## Error: Doesn't exist, invalid value found or unrecognized arguments
+## Error: Invalid value or doesn't exist
 
 These errors often occur when trying to use a variable value that contains an incorrect format. The default output for Azure CLI is JSON, so if you're trying to store an ID for an Azure resource in a variable, you must specify `--output tsv`. Here's an example:
 
