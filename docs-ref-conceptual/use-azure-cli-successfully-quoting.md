@@ -61,19 +61,18 @@ To avoid unanticipated results with parameters containing single or double quote
   
   If you want the quotes included in the output, escape the variable like this: `\"$myVariable\"`.
 
-  ```output
+  ```azurecli
   myVariable="my string ' ' wrapped in double quotes"
   echo \"$myVariable\"
+  >> "my string ' ' wrapped in double quotes"
 
   myVariable='my string " " wrapped in single quotes'
   echo \'$myVariable\'
+  >> 'my string " " wrapped in single quotes'
 
   myVariable="my string with escaped \" \" double quotes wrapped in double quotes"
   echo \"$myVariable\"
-
-  "my string ' ' wrapped in double quotes"
-  'my string " " wrapped in single quotes'
-  "my string with escaped " " double quotes wrapped in double quotes"
+  >> "my string with escaped " " double quotes wrapped in double quotes"
 
   ```
 
