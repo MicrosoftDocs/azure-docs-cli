@@ -38,12 +38,12 @@ To avoid unanticipated results with parameters containing single or double quote
   ### [Bash](#tab/bash)
 
   ```azurecli
-  # Correct syntax in Bash
+  # Correct
   myVariable="my string ' ' wrapped in double quotes"
   myVariable='my string " " wrapped in single quotes'
   myVariable="my string with escaped \" \" double quotes wrapped in double quotes"
 
-  # Wrong syntax in Bash
+  # Wrong, escaped single quotes in Bash are not treated as part of the string
   myVariable='my value with escaped \' \' single quotes wrapped in single quotes'
 
   # after each example ...
@@ -80,11 +80,11 @@ To avoid unanticipated results with parameters containing single or double quote
   ### [PowerShell](#tab/PowerShell)
 
   ```azurecli
-  # Correct syntax in PowerShell
+  # Correct
   $myVariable = "my string ' ' wrapped in single quotes"
   $myVariable = 'my string " " wrapped in double quotes'
 
-  # Wrong syntax in PowerShell
+  # Wrong
   $myVariable = "my value with escaped `" `" double quotes"
   $myVariable = 'my value with escaped `' `' single quotes'
 
@@ -102,7 +102,6 @@ To avoid unanticipated results with parameters containing single or double quote
   ### [cmd](#tab/cmd)
 
   ```azurecli
-  # Correct in Cmd
   set myVariable="my value with ' ' single quotes"
   set myVariable='my value with " " double quotes'
 
@@ -122,13 +121,13 @@ To avoid unanticipated results with parameters containing single or double quote
   'my second value with ' ' single quotes'
   ```
 
----
+  ---
 
 ### Exported variables
 
-  Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
+Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
 
-  **TO DO**: need example of this
+  **TO DO**: need example of this. results were identical with and without the `export` keyword
 
 ### JSON strings
 
@@ -144,9 +143,9 @@ To avoid unanticipated results with parameters containing single or double quote
 
 ### Empty strings
 
-* In PowerShell, if your value is an empty quotes string, use `'""'`.
+* In PowerShell, if your value is an empty quotes string (`''`), use `'""'`.
 
-* In Bash or PowerShell, if your value is an empty quotes string `''`, use `"''"`.
+* In Bash or PowerShell, if your value is an empty quotes string (`''`), use `"''"`.
   
   ```azurecli
   # Correct in Bash
