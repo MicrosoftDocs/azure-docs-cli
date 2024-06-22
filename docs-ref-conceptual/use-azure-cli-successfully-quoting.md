@@ -1,5 +1,5 @@
 ---
-title: Quoting differences in CLI scripting languages | Microsoft Docs
+title: Quoting differences in scripting languages | Microsoft Docs
 description: Learn about quoting difference between Bash, PowerShell, and Cmd. Find examples for escape characters, single and double quotes.
 ms.date: 06/21/2024
 ms.topic: concept-article
@@ -126,7 +126,7 @@ To avoid unanticipated results with parameters containing single or double quote
 
 ### Exported variables
 
-* Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
+  Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
 
   **TO DO**: need example of this
 
@@ -159,25 +159,25 @@ To avoid unanticipated results with parameters containing single or double quote
 
 ### Space-separated values
 
-* Some Azure CLI commands take a list of space separated values.
-  * If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`. For example:
+Some Azure CLI commands take a list of space separated values. If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`. For example:
 
-    ```azurecli
-    az web app config app settings set --resource-group myResourceGroup --name myWebAppName --settings "client id=id1" "my name=john"
-    ```
+```azurecli
+az web app config app settings set --resource-group myResourceGroup --name myWebAppName --settings "client id=id1" "my name=john"
+```
 
-  * When a CLI parameter states that it accepts a space-separated list, one of two formats is expected:
-    1. Unquoted, space-separated list
-       `--parameterName firstValue secondValue`
-    1. Quoted space-separated list
-       `--parameterName "firstValue" "secondValue"`
+When a CLI parameter states that it accepts a space-separated list, one of two formats is expected:
 
-    This example is a string with a space in it. It isn't a space-separated list:
-       `--parameterName "firstValue secondValue"`
+* Unquoted, space-separated list
+  Example: `--parameterName firstValue secondValue`
+
+* Quoted space-separated list
+  Example: `--parameterName "firstValue" "secondValue"`
+
+**This example is a string with a space in it. It isn't a space-separated list**: `--parameterName "firstValue secondValue"`
 
 ### Special characters
 
-* There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. You can also enclose the value in single or double quotes `"`/`"`.
+There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. You can also enclose the value in single or double quotes `"`/`"`.
 
   ```powershell
   # The following three examples will work in PowerShell
@@ -195,7 +195,7 @@ If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a pa
 
 ### `--query` parameter
 
-* When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
+  When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
   ### [Bash](#tab/bash)
 
