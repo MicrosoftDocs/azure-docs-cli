@@ -35,7 +35,7 @@ To avoid unanticipated results with parameters containing single or double quote
 
 * In Windows Command Prompt, quotes inside variable values are treated as part of the value.
   
-  ### [Bash](#tab/bash)
+  ### [Bash](#tab/bash1)
 
   ```azurecli
   # Correct
@@ -77,7 +77,7 @@ To avoid unanticipated results with parameters containing single or double quote
 
   ```
 
-  ### [PowerShell](#tab/PowerShell)
+  ### [PowerShell](#tab/powershell1)
 
   ```azurecli
   # Correct
@@ -99,7 +99,7 @@ To avoid unanticipated results with parameters containing single or double quote
   my string " " wrapped in single quotes
   ```
 
-  ### [cmd](#tab/cmd)
+  ### [cmd](#tab/cmd1)
 
   ```azurecli
   set myVariable="my value with ' ' single quotes"
@@ -196,7 +196,7 @@ If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a pa
 
   When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
-  ### [Bash](#tab/bash)
+  ### [Bash](#tab/bash2)
 
   These three commands are correct and equivalent in Bash:
 
@@ -220,7 +220,7 @@ If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a pa
 
   For more example comparisons between Bash, PowerShell, and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
 
-  ### [PowerShell](#tab/powershell)
+  ### [PowerShell](#tab/powershell2)
 
   These five commands work correctly in PowerShell:
 
@@ -234,7 +234,7 @@ If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a pa
 
   For more example comparisons between Bash, PowerShell, and Cmd, see [Query Azure CLI command output](./query-azure-cli.md)
 
-  ### [Cmd](#tab/cmd)
+  ### [Cmd](#tab/cmd2)
 
   These two commands work correctly in Windows Command Prompt:
 
@@ -247,7 +247,7 @@ If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a pa
 
   ---
 
-## Using the `debug` parameter
+## Use the `debug` parameter
 
 The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings). For more information on debugging Azure CLI commands, see the [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter)
 
