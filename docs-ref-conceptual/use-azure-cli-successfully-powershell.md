@@ -437,6 +437,15 @@ scenarios:
 * special characters
 * variables
 
+## Stop-parsing symbol
+
+The stop-parsing symbol (`--%`), introduced in PowerShell 3.0, directs PowerShell to refrain from interpreting input as PowerShell commands or expressions. When it encounters a stop-parsing symbol, PowerShell treats the remaining characters in the line as a literal.
+
+```azurecli
+az --% vm create --name xxx
+```
+
+
 ## Error handling for Azure CLI in PowerShell
 
 You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md).
@@ -497,8 +506,8 @@ For more information about PowerShell error handling, see [Everything you wanted
 
 ## See also
 
+* [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 * Compare syntax of Bash, PowerShell, and Cmd in these articles:
   * [Syntax differences between scripting languages](./get-started-tutorial-2-environment-syntax.md)
   * [Query command output using JMESPath](./use-azure-cli-successfully-query.md)
 * [Use quotation marks in parameters](./use-azure-cli-successfully-quoting.md)
-* [Learn quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)

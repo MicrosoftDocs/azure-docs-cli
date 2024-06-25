@@ -10,22 +10,9 @@ ms.custom: devx-track-azurecli, seo-azure-cli, linux-related-content
 
 When you work with Azure CLI commands, be aware of how your scripting language uses quotation marks and escapes characters. If you support scripts used in different shells, understanding how they differ saves you valuable development hours.
 
-## Scripting language rules
-
-Here are quick links to scripting language rules as published by their respective organizations:
-
-* Bash scripting language: [Bash quoting rules](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
-* PowerShell scripting language: [PowerShell Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
-* Windows Command Prompt: [How-to: Escape Characters, Delimiters, and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
-
-> [!NOTE]
-> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
-
-## Tips for parameter values containing quotes
-
 To avoid unanticipated results with parameters containing single or double quotes, or escape characters, here are a few suggestions:
 
-### White spaces
+## White spaces
 
 * If you provide a parameter value that contains white space, wrap the value in quotation marks.
 
@@ -122,13 +109,13 @@ To avoid unanticipated results with parameters containing single or double quote
 
   ---
 
-### Exported variables
+## Exported variables
 
 Bash evaluates double quotes in exported variables. If this behavior isn't what you want, escape the variable: `"\$variable"`.
 
   **TO DO**: need example of this. results were identical with and without the `export` keyword
 
-### JSON strings
+## JSON strings
 
 * If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content inside the JSON string. Single quotes are necessary when supplying inline JSON values. For example, this JSON is correct in Bash: `'{"key": "value"}'`.
 
@@ -140,7 +127,7 @@ Bash evaluates double quotes in exported variables. If this behavior isn't what 
   az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
   ```
 
-### Empty strings
+## Empty strings
 
 * In PowerShell, if your value is an empty quotes string (`''`), use `'""'`.
 
@@ -155,7 +142,7 @@ Bash evaluates double quotes in exported variables. If this behavior isn't what 
   $myVariable = '""'   
   ```
 
-### Space-separated values
+## Space-separated values
 
 Some Azure CLI commands take a list of space separated values. If the key name or value contains spaces, wrap the whole pair: `"my key=my value"`. For example:
 
@@ -173,7 +160,7 @@ When a CLI parameter states that it accepts a space-separated list, one of two f
 
 **This example is a string with a space in it. It isn't a space-separated list**: `--parameterName "firstValue secondValue"`
 
-### Special characters
+## Special characters
 
 There are special characters of PowerShell, such as at `@`. To run Azure CLI in PowerShell, add `` ` `` before the special character to escape it. You can also enclose the value in single or double quotes `"`/`"`.
 
@@ -187,11 +174,11 @@ There are special characters of PowerShell, such as at `@`. To run Azure CLI in 
   --parameterName @parameters.json
   ```
 
-### Hyphen characters in parameters
+## Hyphen characters in parameters
 
 If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a parameter name. To parse it as value, use `=` to concatenate the parameter name and value: `--password="-VerySecret"`.
 
-### `--query` parameter
+## `--query` parameter
 
   When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
@@ -246,7 +233,7 @@ If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a pa
 
   ---
 
-## Use the `debug` parameter
+## `debug` parameter
 
 The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings). For more information on debugging Azure CLI commands, see the [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter)
 
@@ -270,11 +257,23 @@ Command arguments: ['{key:value}', '--debug']
 
 For more information on troubleshooting Azure CLI commands with `--debug`, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter)
 
+## Scripting language rules
+
+Here are quick links to scripting language rules as published by their respective organizations:
+
+* Bash scripting language: [Bash quoting rules](https://www.gnu.org/software/bash/manual/html_node/Quoting.html)
+* PowerShell scripting language: [PowerShell Quoting Rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)
+* Windows Command Prompt: [How-to: Escape Characters, Delimiters, and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
+
+> [!NOTE]
+> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+
 ## See also
 
 Find many more scripting language comparisons in these articles:
 
+* [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
 * [Syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
 * [How to query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md)
 * [How-to use the Azure CLI in a Bash scripting language](./use-azure-cli-successfully-bash.md)
-* [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
+
