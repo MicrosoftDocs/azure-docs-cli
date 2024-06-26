@@ -1,9 +1,10 @@
 ---
 title: Troubleshoot Azure CLI | Microsoft Docs
 description: Learn to use the Azure CLI successfully by understanding common Azure CLI errors and how to fix them.
-ms.date: 06/21/2024
+ms.date: 06/26/2024
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
+#customer intent: As an Azure CLI customer, I want to be able to search for Azure CLI errors and receive more explanation than what is available from the in-line error message. Just don't tell me what an error is, also tell me how to fix it.
 ---
 
 # Troubleshooting Azure CLI
@@ -16,7 +17,7 @@ Most errors returned by the Azure CLI fall into one of these categories:
 |Required argument missing | A required parameter isn't specified or only one of two "parameter pairs" is specified. A parameter might also be misspelled.
 |Mutually exclusive argument | Two or more parameters can't be specified together.
 |[Invalid argument value](#error-invalid-value-or-doesnt-exist) | Parameter _value_ isn't valid. This error is often due to quoting, an escape character or spacing.
-|Bad request | An HTTP status code of 400 returns this error. This error is often caused by a missing space, missing parameter dash, or an extra or missing single or double quotation mark. This error also happens when a parameter value doesn't contain an allowed value.
+|Bad request | An HTTP status code of 400 returns this error. Check for a missing space, missing parameter dash, or an extra or missing single or double quotation mark. This error also happens when a parameter value doesn't contain an allowed value.
 |Resource not found | An Azure resource referenced in a parameter value can't be found.
 |Authentication | Microsoft Entra authentication failed.
 
@@ -155,7 +156,7 @@ There are quoting differences between Bash, PowerShell in Linux, and PowerShell 
 You receive this error when an Azure CLI command is missing a required parameter, or _there's a typographical error that causes the Azure CLI to incorrectly parse the reference command_. When working with a script, you also receive this error when one or more conditions are true:
 
 * A line continuation character is missing or incorrect.
-* A trailing space exists on the right side of a line continuation character when working in the PowerShell scripting language. At this time, [splatting](/powershell/module/microsoft.powershell.core/about/about_splatting) is not supported with Azure CLI commands.
+* A trailing space exists on the right side of a line continuation character when working in the PowerShell scripting language. At this time, [splatting](/powershell/module/microsoft.powershell.core/about/about_splatting) isn't supported with Azure CLI commands.
 * A variable name contains a special character, such as a dash (-).
 
 ## Error: InvalidTemplateDeployment

@@ -22,7 +22,7 @@ scripting languages:
   using the PowerShell 5 terminal.
 * PowerShell running in a Windows 11 using the PowerShell 7 terminal.
 
-If you're new to CLI, differentiating between a _tool_ and an _scripting language_ might be confusing. [How-to choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
+If you're new to CLI, differentiating between a _tool_ and a _scripting language_ might be confusing. [How-to choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
 provides a good comparison.
 
 ## Prerequisites
@@ -389,9 +389,8 @@ backtick `` ` `` before the special character to escape it. You can also enclose
 ## Pass parameters containing JSON
 
 For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>`
-convention to load from a file to bypass the shell's interpretation. Note that the _At_ (`@`) symbol
-is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting) in
-PowerShell, so it should be quoted.
+convention to load from a file to bypass the shell's interpretation. The _At_ (`@`) symbol is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting)
+in PowerShell, so it should be quoted.
 
 There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that
 contain both JSON file content and command examples. Here's a code snippet:
