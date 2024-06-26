@@ -22,7 +22,7 @@ Most errors returned by the Azure CLI fall into one of these categories:
 
 ## The `--debug` parameter
 
-One of the best ways to see what the Azure CLI is executing for each Azure CLI reference command is to use the `--debug` parameter. The Azure CLI returns a plethora of information! Here's examples of `--debug` for both a failed and successful command:
+One of the best ways to see what the Azure CLI is executing for each Azure CLI reference command is to use the `--debug` parameter. Here's examples of `--debug` for both a failed and successful command:
 
 ```azurecli
 -- Error example: Create a resource group, but omit the quotes around the resource group name.
@@ -36,7 +36,7 @@ cli.knack.cli: Command arguments: ['group', 'create', '-l', 'eastus2', '-name', 
 ...
 cli.azure.cli.core.azlogging: metadata file logging enabled - writing logs to '/home/myName/.azure/commands/YYYY-MM-DD.HH-MM-SS.group_create.8912.log'.
 ...
-cli.azure.cli.core.azclierror: unrecognized arguments: msdocs-rg-2
+cli.azure.cli.core.azclierror: unrecognized arguments: msdocs-rg-test
 ...
 ```
 
@@ -80,7 +80,7 @@ cli.__main__: Command ran in 1.829 seconds (init: 0.111, invoke: 1.718)
 
 ## Common syntax errors
 
-Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there are syntax differences between scripting languages. Azure CLI scripts containing single quotes, double quotes, and escape characters aren't easily copied between languages. This challenge reveals itself most often in parameter values, most notably in values assigned to the `--query` parameter.  Here are some common error messages:
+Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there are syntax differences between scripting languages. Azure CLI scripts containing single quotes, double quotes, and escape characters usually must be modified when copied between languages. This challenge reveals itself most often in parameter values, especially in values assigned to the `--query` parameter. Here are some common error messages:
 
 * "**Bad request ...{something} is invalid**" might be caused by a space, single or double quotation mark, or lack of a quote.
 
@@ -103,7 +103,7 @@ There are several Azure CLI articles dedicated to explaining syntax errors and p
 * [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
 
 > [!TIP]
-> If you can't resolve a command error, try using a different scripting language. Most Azure CLI documentation is written and tested in Azure Cloud Shell with a Bash scripting language.
+> If you can't resolve a command error, try using a different scripting language. **Most Azure CLI documentation is written and tested in Azure Cloud Shell (ACS) with a Bash scripting language.** If you can get an article example to execute in ACS Bash, but it won't execute in Windows PowerShell, review your use of single and double quotes, and escape characters.
 
 ## Service principals
 
@@ -114,37 +114,41 @@ For information on troubleshooting service principals, see [Cleanup and Troubles
 These errors often occur when trying to use a variable value that contains an incorrect format. The default output for Azure CLI is JSON, so if you're trying to store an ID for an Azure resource in a variable, you must specify `--output tsv`. Here's an example:
 
 ```azurecli
---Get a subscription that contains a name or phrase
+# Get a subscription that contains a name or phrase
 subscriptionID=$(az account list --query "[?contains(name,'my case sensitive search phrase')].id")
 echo $subscriptionID
 
---output as JSON
+# output as JSON
 [ "00000000-0000-0000-0000-000000000000" ]
 
---Try to set your subscription to the new ID
+# Try to set your subscription to the new ID
 az account set --subscription $subscriptionID
 
---error output
+# error output
 The subscription of '"00000000-0000-0000-0000-000000000000"' doesn't exist in cloud 'AzureCloud'.
 ```
 
 Now use the `tsv` output type.
 
 ```azurecli
---Get the active subscription
+# Get the active subscription
 subscriptionID=$(az account list --query "[?contains(name,'my case sensitive search phrase')].id" --output tsv)
 echo $subscriptionID
 
---output as TSV
+# output as TSV
 00000000-0000-0000-0000-000000000000
 
---Successfully set your subscription to the new ID
+# Successfully set your subscription to the new ID
 az account set --subscription $subscriptionID
 ```
 
 ## Error: Failed to parse string as JSON
 
-There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. See [Quoting issues with the PowerShell scripting language](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md#best-practice-use-file-input-for-json) for more information, or [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-in-powershell.md). The [Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial provides more examples.
+There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. For more information, see one of these articles:
+
+* [Quoting differences in scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings)
+* [Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
+* [Quoting issues with the PowerShell scripting language](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md#best-practice-use-file-input-for-json)
 
 ## Error: Arguments are expected or required
 
@@ -168,7 +172,8 @@ See inner errors for details.","details":[{"code":"SkuNotAvailable","message":"T
 in location 'westus'. Please try another size or deploy to a different location
 or different zone. See https://aka.ms/azureskunotavailable for details."}]}}
 ```
-The solution is to change your Azure resource or try a different location.
+
+The solution is to change a property of your requested Azure resource, or try a different location.
 
 ## Error: Resource not found
 
@@ -201,11 +206,11 @@ Append the proxy server's certificate to the CA bundle certificate file, or copy
 -----END CERTIFICATE-----
 ```
 
-Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure libraries](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
+Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure SDK for Python](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
 
 ## Other issues
 
-If you experience a product issue with Azure CLI not listed in this article or require further assistance, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
+If you experience a product issue with Azure CLI not listed in this article, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues/new/choose).
 
 ## See also
 
