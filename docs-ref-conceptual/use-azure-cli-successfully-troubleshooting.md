@@ -9,16 +9,18 @@ ms.custom: devx-track-azurecli
 
 # Troubleshooting Azure CLI
 
+## Error categories
+
 Most errors returned by the Azure CLI fall into one of these categories:
 
 |Error category | General error cause |
 |-|-|
 |Unrecognized argument | A parameter is misspelled or doesn't exist.
-|Required argument missing | A required parameter isn't specified or only one of two "parameter pairs" is specified. A parameter might also be misspelled.
+|[Required argument missing](#error-arguments-are-expected-or-required) | A required parameter isn't specified or only one of two "parameter pairs" is specified. A parameter might also be misspelled.
 |Mutually exclusive argument | Two or more parameters can't be specified together.
 |[Invalid argument value](#error-invalid-value-or-doesnt-exist) | Parameter _value_ isn't valid. This error is often due to quoting, an escape character or spacing.
 |Bad request | An HTTP status code of 400 returns this error. Check for a missing space, missing parameter dash, or an extra or missing single or double quotation mark. This error also happens when a parameter value doesn't contain an allowed value.
-|Resource not found | An Azure resource referenced in a parameter value can't be found.
+|[Resource not found](#error-resource-not-found) | An Azure resource referenced in a parameter value can't be found.
 |Authentication | Microsoft Entra authentication failed.
 
 ## The `--debug` parameter
@@ -106,10 +108,6 @@ There are several Azure CLI articles dedicated to explaining syntax errors and p
 > [!TIP]
 > If you can't resolve a command error, try using a different scripting language. **Most Azure CLI documentation is written and tested in Azure Cloud Shell (ACS) with a Bash scripting language.** If you can get an article example to execute in ACS Bash, but it won't execute in Windows PowerShell, review your use of single and double quotes, and escape characters.
 
-## Service principals
-
-For information on troubleshooting service principals, see [Cleanup and Troubleshooting](./azure-cli-sp-tutorial-8.md#troubleshoot-service-principals) in the [Work with service principals](./azure-cli-sp-tutorial-1.md) tutorial.
-
 ## Error: Invalid value or doesn't exist
 
 These errors often occur when trying to use a variable value that contains an incorrect format. The default output for Azure CLI is JSON, so if you're trying to store an ID for an Azure resource in a variable, you must specify `--output tsv`. Here's an example:
@@ -143,14 +141,6 @@ echo $subscriptionID
 az account set --subscription $subscriptionID
 ```
 
-## Error: Failed to parse string as JSON
-
-There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. For more information, see one of these articles:
-
-* [Quoting differences in scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings)
-* [Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
-* [Quoting issues with the PowerShell scripting language](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md#best-practice-use-file-input-for-json)
-
 ## Error: Arguments are expected or required
 
 You receive this error when an Azure CLI command is missing a required parameter, or _there's a typographical error that causes the Azure CLI to incorrectly parse the reference command_. When working with a script, you also receive this error when one or more conditions are true:
@@ -158,6 +148,23 @@ You receive this error when an Azure CLI command is missing a required parameter
 * A line continuation character is missing or incorrect.
 * A trailing space exists on the right side of a line continuation character when working in the PowerShell scripting language. At this time, [splatting](/powershell/module/microsoft.powershell.core/about/about_splatting) isn't supported with Azure CLI commands.
 * A variable name contains a special character, such as a dash (-).
+
+## Error: Resource not found
+
+When the Azure CLI can't find the resource name or ID passed in a parameter value, it's usually because of one of these reasons:
+
+* The resource name or ID is spelled incorrectly.
+* The resource name contains special characters and isn't surrounded by single or double quotes.
+* The value being passed to a variable has unseen leading or trailing spaces.
+* The resource exists, but is in a different subscription.
+
+## Error: Failed to parse string as JSON
+
+There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. For more information, see one of these articles:
+
+* [Quoting differences in scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings)
+* [Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
+* [Quoting issues with the PowerShell scripting language](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md#best-practice-use-file-input-for-json)
 
 ## Error: InvalidTemplateDeployment
 
@@ -175,15 +182,6 @@ or different zone. See https://aka.ms/azureskunotavailable for details."}]}}
 ```
 
 The solution is to change a property of your requested Azure resource, or try a different location.
-
-## Error: Resource not found
-
-When the Azure CLI can't find the resource name or ID passed in a parameter value, it's usually because of one of these reasons:
-
-* The resource name or ID is spelled incorrectly.
-* The resource name contains special characters and isn't surrounded by single or double quotes.
-* The value being passed to a variable has unseen leading or trailing spaces.
-* The resource exists, but is in a different subscription.
 
 ## Error: SSLError "bad handshake...certificate verify failed" (Proxy blocks connection)
 
@@ -208,6 +206,10 @@ Append the proxy server's certificate to the CA bundle certificate file, or copy
 ```
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure SDK for Python](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
+
+## Service principals
+
+For information on troubleshooting service principals, see [Cleanup and Troubleshooting](./azure-cli-sp-tutorial-8.md#troubleshoot-service-principals) in the [Work with service principals](./azure-cli-sp-tutorial-1.md) tutorial.
 
 ## Other issues
 

@@ -33,11 +33,11 @@ Here are some links to help you answer the most frequently asked Azure CLI quest
 | [Web Account Manager (WAM)](./authenticate-azure-cli-interactively.md#sign-in-with-web-account-manager-wam-on-windows) | Information on WAM and how to disable it.
 | [Configuration settings](./azure-cli-configuration.md) | List of available Azure CLI configuration settings, how to turn on/off Azure CLI features, and set default values.
 | [Output format](./format-output-azure-cli.md) | Instructions on how to store Azure resource IDs in variables, and protect secrets returned by Azure CLI commands.
-| [Support lifecycle](./azure-cli-support-lifecycle.md) | Information about supported operating systems, scripting languages and end of service of Azure CLI versions and dependencies.
-| [REST API](./use-azure-cli-rest-command.md) | Use [az rest](/cli/azure/reference-index) or [az resource](/cli/azure/resource) when an Azure CLI command isn't available.
+| [Support lifecycle](./azure-cli-support-lifecycle.md) | Information about supported operating systems, scripting languages and the end of service for Azure CLI versions and dependencies.
+| [REST API](./use-azure-cli-rest-command.md) | Alternative [az rest](/cli/azure/reference-index) command to use when a specific Azure CLI command isn't available for an Azure resource.
 | [Azure CLI reference groups](./reference-docs-index.md) | A to Z list of Azure CLI reference groups with drill-down to subgroups and all Azure CLI commands.
-| [Azure CLI articles](/cli/azure/reference-index) | A to Z list of Quickstarts, How-to guides, and Tutorials that use Azure CLI reference commands.
-| [Azure CLI samples](./samples-index.md) | A to Z list of Samples, including those samples in Azure-samples/azure-cli-samples GitHub repository.
+| [Azure CLI articles](/cli/azure/reference-index) | A to Z list of Quickstarts, How-to guides, and Tutorials that use Azure CLI reference commands. The list is grouped by reference group and subgroup for easy search.
+| [Azure CLI samples](./samples-index.md) | A to Z list of Samples, including those samples in the Azure-samples/azure-cli-samples GitHub repository.
 | [Troubleshooting](./use-azure-cli-successfully-troubleshooting.md) | Error cause and remediation tips.
 | [What's new](./whats-new-overview.md) | Short summary of new Azure CLI features.
 

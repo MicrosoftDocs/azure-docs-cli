@@ -13,10 +13,10 @@ When you work with Azure CLI commands, be aware of how your scripting language u
 and escapes characters. If you support scripts used in different shells, understanding quoting
 differences saves you valuable development hours.
 
-To avoid unanticipated results with parameters containing single or double quotes, or escape
+To avoid unanticipated results with parameter values containing single or double quotes, or escape
 characters, here are a few suggestions:
 
-## White spaces
+## White spaces and quotation marks
 
 * If you provide a parameter value that contains white space, wrap the value in quotation marks.
 
@@ -26,93 +26,88 @@ characters, here are a few suggestions:
 * In Bash, double quotes that are escaped, are treated as part of the string.
 
 * In Windows Command Prompt, quotes inside variable values are treated as part of the value.
-  
-  ### [Bash](#tab/bash1)
 
-  ```azurecli
-  # Correct
-  myVariable="my string ' ' wrapped in double quotes"
-  myVariable='my string " " wrapped in single quotes'
-  myVariable="my string with escaped \" \" double quotes wrapped in double quotes"
+Here are a few examples:
 
-  # Wrong, escaped single quotes in Bash are not treated as part of the string
-  myVariable='my value with escaped \' \' single quotes wrapped in single quotes'
+### [Bash](#tab/bash1)
 
-  # after each example ...
-  echo $myVariable
-  ```
+```azurecli
+# Correct
+myVariable="my string ' ' wrapped in double quotes"
+myVariable='my string " " wrapped in single quotes'
+myVariable="my string with escaped \" \" double quotes wrapped in double quotes"
+# Wrong, escaped single quotes in Bash are not treated as part of the string
+myVariable='my value with escaped \' \' single quotes wrapped in single quotes'
+# after each example ...
+echo $myVariable
+```
 
-  Bash output for the correct examples is as follows:
+Bash output for the correct examples is as follows:
 
-  ```output
-  my string ' ' wrapped in double quotes
-  my string " " wrapped in single quotes
-  my string with escaped " " double quotes wrapped in double quotes
+```output
+my string ' ' wrapped in double quotes
+my string " " wrapped in single quotes
+my string with escaped " " double quotes wrapped in double quotes
+```
 
-  ```
-  
-  If you want the quotes included in the output, escape the variable like this: `echo \"$myVariable\"`. 
+If you want the quotes included in the output, escape the variable like this: `echo \"$myVariable\"`.
 
-  ```output
-  echo \"$myVariable\"
-  "my string ' ' wrapped in double quotes"
+```output
+echo \"$myVariable\"
+"my string ' ' wrapped in double quotes"
+echo \'$myVariable\'
+'my string " " wrapped in single quotes'
+echo \"$myVariable\"
+"my string with escaped " " double quotes wrapped in double quotes"
+```
 
-  echo \'$myVariable\'
-  'my string " " wrapped in single quotes'
+### [PowerShell](#tab/powershell1)
 
-  echo \"$myVariable\"
-  "my string with escaped " " double quotes wrapped in double quotes"
-  ```
+```azurecli
+# Correct
+$myVariable = "my string ' ' wrapped in single quotes"
+$myVariable = 'my string " " wrapped in double quotes'
 
-  ```
+# Wrong
+$myVariable = "my value with escaped `" `" double quotes"
+$myVariable = 'my value with escaped `' `' single quotes'
 
-  ### [PowerShell](#tab/powershell1)
+# after each example ...
+echo $myVariable
+```
 
-  ```azurecli
-  # Correct
-  $myVariable = "my string ' ' wrapped in single quotes"
-  $myVariable = 'my string " " wrapped in double quotes'
+PowerShell output for the correct examples is as follows:
 
-  # Wrong
-  $myVariable = "my value with escaped `" `" double quotes"
-  $myVariable = 'my value with escaped `' `' single quotes'
+```output
+my string ' ' wrapped in double quotes
+my string " " wrapped in single quotes
+```
 
-  # after each example ...
-  echo $myVariable
-  ```
+### [cmd](#tab/cmd1)
 
-  PowerShell output for the correct examples is as follows:
+```azurecli
+set myVariable="my value with ' ' single quotes"
+set myVariable='my value with " " double quotes'
 
-  ```output
-  my string ' ' wrapped in double quotes
-  my string " " wrapped in single quotes
-  ```
+set myVariable="my second value with " " double quotes"
+set myVariable='my second value with ' ' single quotes'
 
-  ### [cmd](#tab/cmd1)
+# after each example ...
+echo %myVariable%
+```
 
-  ```azurecli
-  set myVariable="my value with ' ' single quotes"
-  set myVariable='my value with " " double quotes'
+Cmd.exe is the only scripting language in our examples that allow embedded quotes that are the same
+as the string wrapper. However, also note that Cmd.exe returns the outer quotation marks. Bash and
+PowerShell don't.
 
-  set myVariable="my second value with " " double quotes"
-  set myVariable='my second value with ' ' single quotes'
+```output
+"my value with ' ' single quotes"
+'my value with " " double quotes'
+"my second value with " " double quotes"
+'my second value with ' ' single quotes'
+```
 
-  # after each example ...
-  echo %myVariable%
-  ```
-
-  Cmd.exe is the only script language in our examples that allow embedded quotes that are the same
-  as the string wrapper. However, also note that Cmd.exe returns the outer quotation marks. Bash and
-  PowerShell don't.
-
-  ```output
-  "my value with ' ' single quotes"
-  'my value with " " double quotes'
-  "my second value with " " double quotes"
-  'my second value with ' ' single quotes'
-  ```
-
-  ---
+---
 
 ## JSON strings
 
@@ -179,60 +174,59 @@ in single or double quotes `"`/`"`.
   --parameterName @parameters.json
   ```
 
-## Hyphen characters in parameters
+## Hyphen characters
 
 If a parameter's value begins with a hyphen, Azure CLI tries to parse it as a parameter name. To
 parse it as value, use `=` to concatenate the parameter name and value: `--password="-VerySecret"`.
 
 ## The `--query` parameter
 
-  When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html)
-  need to be escaped in the shell.
+When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
-  ### [Bash](#tab/bash2)
+### [Bash](#tab/bash2)
 
-  These three commands are correct and equivalent in Bash:
+These three commands are correct and equivalent in Bash:
 
-  ```azurecli
-  az version --query '"azure-cli"'
-  az version --query \"azure-cli\"
-  az version --query "\"azure-cli\""
-  ```
+```azurecli
+az version --query '"azure-cli"'
+az version --query \"azure-cli\"
+az version --query "\"azure-cli\""
+```
 
-  Here are two examples of _incorrect commands_ in Bash:
+Here are two examples of _incorrect commands_ in Bash:
 
-  ```azurecli
-  # Wrong, as the dash needs to be quoted in a JMESPath query
-  az version --query azure-cli
-  az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
+```azurecli
+# Wrong, as the dash needs to be quoted in a JMESPath query
+az version --query azure-cli
+az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
 
-  # Wrong, as the dash needs to be quoted in a JMESPath query, but quotes are interpreted by Bash
-  az version --query "azure-cli"
-  az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
-  ```
+# Wrong, as the dash needs to be quoted in a JMESPath query, but quotes are interpreted by Bash
+az version --query "azure-cli"
+az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
+```
 
-  ### [PowerShell](#tab/powershell2)
+### [PowerShell](#tab/powershell2)
 
-  These five commands work correctly in PowerShell:
+These five commands work correctly in PowerShell:
 
-  ```azurecli
-  az version --query '\"azure-cli\"'
-  az version --query "\`"azure-cli\`""
-  az version --query "\""azure-cli\"""
-  az --% version --query "\"azure-cli\""
-  az --% version --query \"azure-cli\"
-  ```
+```azurecli
+az version --query '\"azure-cli\"'
+az version --query "\`"azure-cli\`""
+az version --query "\""azure-cli\"""
+az --% version --query "\"azure-cli\""
+az --% version --query \"azure-cli\"
+```
 
-  ### [Cmd](#tab/cmd2)
+### [Cmd](#tab/cmd2)
 
-  These two commands work correctly in Windows Command Prompt:
+These two commands work correctly in Windows Command Prompt:
 
-  ```azurecli
-  az version --query "\"azure-cli\""
-  az version --query \"azure-cli\"
-  ```
+```azurecli
+az version --query "\"azure-cli\""
+az version --query \"azure-cli\"
+```
 
-  ---
+---
 
 For more example comparisons between Bash, PowerShell, and Cmd, see [Query Azure CLI command output](./query-azure-cli.md).
 
@@ -244,19 +238,19 @@ flag reveals the actual arguments received by the Azure CLI in [Python's syntax]
 ```azurecli
 # Correct
 $ az '{"key":"value"}' --debug
-Command arguments: ['{"key":"value"}', '--debug']
+>> Command arguments: ['{"key":"value"}', '--debug']
 
 # Correct
 $ az "{\"key\":\"value\"}" --debug
-Command arguments: ['{"key":"value"}', '--debug']
+>> Command arguments: ['{"key":"value"}', '--debug']
 
 # Wrong, as quotes and spaces are interpreted by Bash
 $ az {"key": "value"} --debug
-Command arguments: ['{key:', 'value}', '--debug']
+>> Command arguments: ['{key:', 'value}', '--debug']
 
 # Wrong, as quotes are interpreted by Bash
 $ az {"key":"value"} --debug
-Command arguments: ['{key:value}', '--debug']
+>> Command arguments: ['{key:value}', '--debug']
 ```
 
 For more information on troubleshooting Azure CLI commands with `--debug`, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter).
@@ -276,7 +270,6 @@ Here are quick links to scripting language rules as published by their respectiv
 
 Find many more scripting language comparisons in these articles:
 
-* Find [syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
-* [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
-* [Use the Azure CLI in a Bash scripting language](./use-azure-cli-successfully-bash.md)
+* [Learn syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
 * [Query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md)
+* [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
