@@ -140,7 +140,7 @@ RGDEMO001   KBDemo020
 > az vm list --query "[].{objectID:id}" --output table
 > ```
 
-For more about using queries to filter data, see [Use JMESPath queries with Azure CLI](./query-azure-cli.md).
+For more about using queries to filter data, see [Use JMESPath queries with Azure CLI](./use-azure-cli-successfully-query.md).
 
 ## TSV output format
 
@@ -163,7 +163,7 @@ None    None        /subscriptions/.../resourceGroups/RGDEMO001/providers/Micros
 One restriction of the TSV output format is that there isn't a guarantee on output ordering. The CLI makes a best effort to preserve ordering by sorting keys in the response JSON alphabetically,
 and then printing their values in order for TSV output. There is no guarantee that the order is always identical, since the Azure service response format can change.
 
-In order to enforce consistent ordering, you'll need to use the `--query` parameter and the [multiselect list](query-azure-cli.md#get-multiple-values) format. When a CLI command returns a single
+In order to enforce consistent ordering, you'll need to use the `--query` parameter and the [multiselect list](use-azure-cli-successfully-query.md#get-multiple-values) format. When a CLI command returns a single
 JSON dictionary, use the general format `[key1, key2, ..., keyN]` to force a key order.  For CLI commands that return an array, use the general format `[].[key1, key2, ..., keyN]` to order column values.
 
 For example, to order the information displayed above by ID, location, resource group, and VM name:
@@ -212,7 +212,7 @@ echo "Using subscription ID $subscriptionID"
 
 ---
 
-For more `--query` parameter examples, see [How to query Azure CLI command output](./query-azure-cli.md).
+For more `--query` parameter examples, see [How to query Azure CLI command output](./use-azure-cli-successfully-query.md).
 
 ## None output format
 
@@ -290,7 +290,7 @@ echo "New password: $myNewPassword"
 ```
 
 ---
-For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-azure-cli-successfully.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./query-azure-cli.md).
+For more examples on storing output to a variable, see [Use the Azure CLI successfully - pass values to another command](./use-azure-cli-successfully-tips.md#pass-values-to-another-command). To learn more about `--query` parameter syntax, see [How to query Azure CLI command output](./use-azure-cli-successfully-query.md).
 
 ## Set the default output format
 
@@ -327,5 +327,5 @@ az config set core.output=json
 ## See also
 
 - [Azure CLI configuration](./azure-cli-configuration.md)
-- [How to query Azure CLI command output](./query-azure-cli.md)
-- [Use the Azure CLI successfully](./use-azure-cli-successfully.md)
+- [How to query Azure CLI command output](./use-azure-cli-successfully-query.md)
+- [Tips to use the Azure CLI successfully](./use-azure-cli-successfully-tips.md)

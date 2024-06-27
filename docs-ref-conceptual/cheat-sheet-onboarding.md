@@ -49,7 +49,7 @@ Jump straight to reference command examples, sample scripts, and tutorials using
 
 For a side-by-side comparison of Azure CLI and Azure PowerShell syntax, see [Azure CLI vs Azure PowerShell: Side-by-side Command Comparison](/cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison).
 
-See script comparisons between Bash, PowerShell, and Cmd in [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md).
+See script comparisons between Bash, PowerShell, and Cmd in [How to query Azure CLI command output using a JMESPath query](use-azure-cli-successfully-query.md).
 
 ## Learning Azure CLI
 
@@ -82,6 +82,6 @@ Another great way to learn to use the Azure CLI is through [Microsoft Learn Modu
 | How do I know what subscription I'm using? | `az account show --output table` | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli#get-the-active-subscription)
 | How do I change my subscription? | `az account set --subscription "mySubscriptionName"` | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli#change-the-active-subscription)
 | How can I set a default resource group and location? | `az config set defaults.location=westus2 defaults.group=MyResourceGroup` | [Configure settings using az config](/cli/azure/azure-cli-configuration#configure-settings-using-az-config)
-| How do I query command output? | `az account show --query "{tenantId:tenantId,subscriptionid:id}"` | See [How to query Azure CLI command output using a JMESPath query](query-azure-cli.md) for many `--query` examples in Bash, PowerShell and Cmd.
+| How do I query command output? | `az account show --query "{tenantId:tenantId,subscriptionid:id}"` | See [How to query Azure CLI command output using a JMESPath query](use-azure-cli-successfully-query.md) for many `--query` examples in Bash, PowerShell and Cmd.
 | How do I format output from a command? | `az account list --output table` | [Output formats for Azure CLI commands](format-output-azure-cli.md)
-| Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different technical strengths, and for that reason, Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](azure-cli-learn-bash.md)
+| Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different technical strengths, and for that reason, Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](use-azure-cli-successfully-bash.md)

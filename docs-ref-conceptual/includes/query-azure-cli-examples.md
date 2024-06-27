@@ -105,7 +105,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the 50 in the command previous. The extra escape characters are present because Azure CLI commands are considered Command Prompt scripts.  Take into consideration the built-in parsing of both PowerShell and of a Command Prompt. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the 50 in the command previous. The extra escape characters are present because Azure CLI commands are considered Command Prompt scripts.  Take into consideration the built-in parsing of both PowerShell and of a Command Prompt. Azure CLI will only receive a symbol if it still exists after 2 rounds of parsing. For more information about other possible quoting issues in PowerShell, see [Considerations for running the Azure CLI in a PowerShell scripting language](../use-azure-cli-successfully-powershell.md).
 
 ### [Cmd](#tab/cmd)
 

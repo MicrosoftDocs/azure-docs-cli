@@ -65,4 +65,4 @@ Use the `az extension list` command to see installed extension. You can also use
 * [Sign in with the Azure CLI](./authenticate-azure-cli.md)
 * [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
 * Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
-* [How to use the Azure CLI successfully](use-azure-cli-successfully.md)
+* [Tips to use the Azure CLI successfully](use-azure-cli-successfully-tips.md)
