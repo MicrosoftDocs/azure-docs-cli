@@ -370,11 +370,71 @@ az rest --method get --url https://management.azure.com/subscriptions/$subscript
 
 ---
 
-## Pass parameters containing a PowerShell special character
+## Pass parameters containing the ampersand symbol
 
-There are special characters of PowerShell, such as the _At_ (`@`) symbol. To run Azure CLI in PowerShell, add a
-backtick `` ` `` before the special character to escape it. You can also enclose the value in single
-(`'`) or double (`"`) quotes.
+If you have a scenario where you need to pass an ampersand in a parameter value, be aware that the ampersand (`&`) symbol is interpreted by PowerShell. You can see this happen using the `--debug` parameter:
+
+```azurecli
+az "a&b" --debug
+
+# output
+'a' is misspelled or not recognized by the system.
+'b' is not recognized as an internal or external command
+```
+
+However, if you use this same test to add a tag to a resource group, the ampersand in the tag value doesn't cause an error.
+
+```azurecli
+az group create --location eastus2 --name "msdocs-rg-test"
+az group update --name "msdocs-rg-test" --tags "company name=Contoso & Sons"
+
+# output
+{
+  "id": "/subscriptions/3618afcd-ea52-4ceb-bb46-53bb962d4e0b/resourceGroups/msdocs-rg-test",
+  "location": "eastus2",
+  "managedBy": null,
+  "name": "msdocs-rg-test",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": {
+    "company name": "Contoso & Sons"
+  },
+  "type": "Microsoft.Resources/resourceGroups"
+}
+```
+
+If you have a scenario where the ampersand in a parameter value is causing an error, here are some solutions:
+
+```azurecli
+# When quoted by single quotes ('), double quotes (") are preserved by PowerShell and sent
+# to Command Prompt, so that ampersand (&) is treated as a literal character
+> az '"a&b"' --debug
+Command arguments: ['a&b', '--debug']
+
+# Escape double quotes (") with backticks (`) as required by PowerShell
+> az "`"a&b`"" --debug
+Command arguments: ['a&b', '--debug']
+
+# Escape double quotes (") by repeating them
+> az """a&b""" --debug
+Command arguments: ['a&b', '--debug']
+
+# With a whitespace in the argument, double quotes (") are preserved by PowerShell and
+# sent to Command Prompt
+> az "a&b " --debug
+Command arguments: ['a&b ', '--debug']
+
+# Use --% to stop PowerShell from parsing the argument
+> az --% "a&b" --debug
+Command arguments: ['a&b', '--debug']
+```
+
+## Pass parameters containing an _at_ (`@`)  symbol
+
+There are special characters of PowerShell, such as the _at_ (`@`) symbol which is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting)
+in PowerShell.  Add a backtick `` ` `` before the special character to escape it. You can also enclose
+the value in single (`'`) or double (`"`) quotes.
 
 **The following three examples will work in PowerShell:**
 
@@ -386,29 +446,7 @@ backtick `` ` `` before the special character to escape it. You can also enclose
 
 * parameterName @parameters.json
 
-## Pass parameters containing JSON
-
-For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>`
-convention to load from a file to bypass the shell's interpretation. The _At_ (`@`) symbol is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting)
-in PowerShell, so it should be quoted.
-
-There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that
-contain both JSON file content and command examples. Here's a code snippet:
-
-# [Bash](#tab/Bash2)
-
-```azurecli
-# Script for a Bash scripting language
-
-az ad app create --display-name myTestAppName \
-    --is-fallback-public-client \
-    --required-resource-accesses @manifest.json
-```
-
-# [PowerShell](#tab/ps2)
-
-In this example, notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell
-scripting language.
+Here's another example in the `az ad app create` command:  Notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell scripting language.
 
 ```azurecli
 # Script for a PowerShell scripting language
@@ -418,7 +456,29 @@ az ad app create --display-name myTestAppName `
     --required-resource-accesses "@manifest.json"
 ```
 
----
+## Pass parameters containing JSON
+
+For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>`
+convention to load from a file to bypass the shell's interpretation. However, here are some additional JSON parameter format values that are correct in PowerShell:
+
+```azurecli
+# Correct
+> az '{\"key\": \"value\"}' --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+> az "{\`"key\`": \`"value\`"}" --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+> az "{\""key\"": \""value\""}" --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+> az --% "{\"key\": \"value\"}" --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+# Wrong!
+> az '{"key": "value"}' --debug
+Command arguments: ['{key: value}', '--debug']
+```
 
 ## Pass parameters containing key:value pairs
 
@@ -443,7 +503,6 @@ The stop-parsing symbol (`--%`), introduced in PowerShell 3.0, directs PowerShel
 ```azurecli
 az --% vm create --name xxx
 ```
-
 
 ## Error handling for Azure CLI in PowerShell
 

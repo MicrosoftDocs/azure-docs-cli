@@ -83,6 +83,8 @@ my string ' ' wrapped in double quotes
 my string " " wrapped in single quotes
 ```
 
+For more quoting considerations and examples when working in a PowerShell scripting language, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+
 ### [cmd](#tab/cmd1)
 
 ```azurecli
@@ -125,6 +127,8 @@ PowerShell don't.
   ```azurecli
   az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
   ```
+
+If you are working in the PowerShell scripting language, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
 
 ## Empty strings
 

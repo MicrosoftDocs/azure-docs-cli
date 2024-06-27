@@ -60,7 +60,7 @@ Every Azure CLI parameter is a string. However, each scripting language has its 
 |Number|\\\`50\\\` | \`\`50\`\` | \`50\`
 |Boolean|\\\`true\\\` | \`\`false\`\` | \'true\'
 |Date|'2021-11-15'|'2021-11-15'|'2021-11-15'
-|JSON|'{"key":"value"}' or "{\"key\":\"value\"}" |'{"key":"value"}'|"{\"key\":\"value\"}"
+|JSON|'{"key":"value"}' or "{\"key\":\"value\"}" |'{\"key\": \"value\"}' or "{\`"key\`": \`"value\`"}" or "{\""key\"": \""value\""}" |"{\"key\":\"value\"}"
 
 Many Azure CLI parameters accept a space-separated list of values. This impacts quoting.
 
@@ -501,11 +501,13 @@ This example is **correct** in both Bash and PowerShell.
 az '{"key":"value"}' --debug
 ```
 
-See what the Azure CLI is interpreting in the `Command arguments` line of the output. The double quotes missing around the output `key:value` pair is a known issue in PowerShell.
+See what the Azure CLI is interpreting in the `Command arguments` line of the `--debug` output. The double quotes missing around the output `key:value` pair is a known issue in PowerShell.
 
 ```output
 Command arguments: ['{key:value}', '--debug']
 ```
+
+For more examples of accepted JSON parameter formats, see [Considerations for running the Azure CLI in a PowerShell scripting language - Pass parameters containing JSON](./use-azure-cli-successfully-powershell.md#pass-parameters-containing-json).
 
 These examples are all **incorrect**. Use PowerShell's `cls` command to remove console output between tests.
 
