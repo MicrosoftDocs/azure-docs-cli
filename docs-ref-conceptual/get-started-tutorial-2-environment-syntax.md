@@ -56,11 +56,11 @@ Every Azure CLI parameter is a string. However, each scripting language has its 
 
 |String value|Azure CLI|PowerShell|Cmd
 |-|-|-|-|
-|Text|'text' or "text"|'text' or "text"|"text"
-|Number|\\\`50\\\` | \`\`50\`\` | \`50\`
-|Boolean|\\\`true\\\` | \`\`false\`\` | \'true\'
-|Date|'2021-11-15'|'2021-11-15'|'2021-11-15'
-|JSON|`'{"key":"value"}'` or `"{\"key\":\"value\"}"` | `'{\"key\": \"value\"}'` or `"{\`"key\`": \`"value\`"}"` or `"{\""key\"": \""value\""}"` |`"{\"key\":\"value\"}"`
+|Text|'text' or "text"|'text' or "text"|"text" |
+|Number|\\\`50\\\` | \`\`50\`\` | \`50\` |
+|Boolean|\\\`true\\\` | \`\`false\`\` | \'true\' |
+|Date|'2021-11-15'|'2021-11-15'|'2021-11-15' |
+|JSON|`'{"key":"value"}'` or `"{\"key\":\"value\"}"` | `'{\"key\": \"value\"}'` or `"{\`"key\`": \`"value\`"}"` or `"{\""key\"": \""value\""}"` |`"{\"key\":\"value\"}"` |
 
 Many Azure CLI parameters accept a space-separated list of values. This impacts quoting.
 
