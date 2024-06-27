@@ -314,7 +314,7 @@ az account list --query "[?!isDefault].name"
 az account list --query "[?isDefault == ``false``].name"
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the value `false` in the previous command. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be considered. Azure CLI will only receive a symbol if it still exists after two rounds of parsing. For more information about other possible quoting issues in PowerShell, see [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the value `false` in the previous command. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be considered. Azure CLI will only receive a symbol if it still exists after two rounds of parsing. For more information about other possible quoting issues in PowerShell, see [Considerations for running the Azure CLI in a PowerShell scripting language](../use-azure-cli-successfully-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
@@ -376,7 +376,7 @@ az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeG
 az vm list --resource-group QueryDemo --query "[?storageProfile.osDisk.diskSizeGb >=``50``].{Name:name,  admin:osProfile.adminUsername, DiskSize:storageProfile.osDisk.diskSizeGb }" --output table
 ```
 
-Notice the extra escape characters (`` ` ``) surrounding the 50 in the previous command. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be considered. Azure CLI will only receive a symbol if it still exists after two rounds of parsing. For more information about other possible quoting issues in PowerShell, see[Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md).
+Notice the extra escape characters (`` ` ``) surrounding the 50 in the previous command. These extra escape characters are present because Azure CLI commands are considered Command Prompt scripts, so both PowerShell and Command Prompt's parsing need to be considered. Azure CLI will only receive a symbol if it still exists after two rounds of parsing. For more information about other possible quoting issues in PowerShell, see[Considerations for running the Azure CLI in a PowerShell scripting language](../use-azure-cli-successfully-powershell.md).
 
 ### [Cmd](#tab/cmd)
 
