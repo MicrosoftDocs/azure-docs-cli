@@ -48,6 +48,26 @@ To run a specific version of the Azure CLI in the Docker container, use this com
 ```bash
 docker run -it mcr.microsoft.com/azure-cli:<version>
 ```
+## Run the Azure CLI using a helper script
+
+You can create a helper script to simplify running the Azure CLI in a Docker container. Here is an example script:
+
+```bash
+#!/usr/bin/env bash
+exec docker run -it -v ${HOME}/.azure:/root/.azure -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli az $@
+```
+
+Save this script as `az` and make it executable:
+
+```bash
+chmod +x az
+```
+
+Now you can use the `az` command as if the Azure CLI is installed locally:
+
+```bash
+./az <your-azure-cli-command>
+```
 
 ## Update Docker image
 
