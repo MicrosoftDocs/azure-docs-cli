@@ -132,7 +132,7 @@ There are some arguments that are available for most commands.
 * `--output` changes the output format. The available output formats are `json`, `jsonc` (colorized JSON), `tsv` (Tab-Separated
   Values), `table` (human-readable ASCII tables), and `yaml`. By default the CLI outputs `json`. To learn more about the available
   output formats, see [Output formats for Azure CLI](format-output-azure-cli.md).
-* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn more about queries, see [Query command results with Azure CLI](query-azure-cli.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
+* `--query` uses the [JMESPath query language](http://jmespath.org/) to filter the output returned from Azure services. To learn more about queries, see [Query command results with Azure CLI](use-azure-cli-successfully-query.md) and the [JMESPath tutorial](http://jmespath.org/tutorial.html).
 * `--verbose` prints information about resources created in Azure during an operation, and other useful information.
 * `--debug` prints even more information about CLI operations, used for debugging purposes. If you find a bug, provide output generated with the `--debug` flag on when submitting a bug report. It can be used, for example, to identify the REST API that the command executed is invoking underneath, and the response received from the service.
 * `--subscription` is the name or ID of a subscription. For more information about setting your default subscription, see [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md).
@@ -185,5 +185,5 @@ az feedback
 
 * [Onboarding cheat sheet](./cheat-sheet-onboarding.md)
 * [Learn to use the Azure CLI tutorial](./get-started-tutorial-0-before-you-begin.md)
-* [Use the Azure CLI in a Bash environment](./azure-cli-learn-bash.md)
-* [Considerations for using the Azure CLI in a PowerShell environment](./use-azure-cli-successfully-in-powershell.md)
+* [Use the Azure CLI in a Bash environment](./use-azure-cli-successfully-bash.md)
+* [Considerations for using the Azure CLI in a PowerShell environment](./use-azure-cli-successfully-powershell.md)

@@ -204,7 +204,7 @@ Output console:
 ]
 ```
 
-To learn more about querying command output, see [How to query Azure CLI command output using a JMESPath query](../docs-ref-conceptual/query-azure-cli.md).
+To learn more about querying command output, see [How to query Azure CLI command output using a JMESPath query](../docs-ref-conceptual/use-azure-cli-successfully-query.md).
 
 ## See also
 

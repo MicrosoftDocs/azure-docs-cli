@@ -32,7 +32,8 @@ Here are some links to help you answer the most frequently asked Azure CLI quest
 |-|-|
 | [Web Account Manager (WAM)](./authenticate-azure-cli-interactively.md#sign-in-with-web-account-manager-wam-on-windows) | Information on WAM and how to disable it.
 | [Configuration settings](./azure-cli-configuration.md) | List of available Azure CLI configuration settings, how to turn on/off Azure CLI features, and set default values.
-| [Output format](./format-output-azure-cli.md) | Instructions on how to store Azure resource IDs in variables, and protect secrets returned by Azure CLI commands.
+| [Output formats](./format-output-azure-cli.md) | Instructions on how to store Azure resource IDs in variables, and protect secrets returned by Azure CLI commands.
+| [Passing JSON values in a string](./use-azure-cli-successfully-troubleshooting.md#error-failed-to-parse-string-as-json) | Quoting examples for JSON parameter values.
 | [Support lifecycle](./azure-cli-support-lifecycle.md) | Information about supported operating systems, scripting languages and the end of service for Azure CLI versions and dependencies.
 | [REST API](./use-azure-cli-rest-command.md) | Alternative [az rest](/cli/azure/reference-index) command to use when a specific Azure CLI command isn't available for an Azure resource.
 | [Azure CLI reference groups](./reference-docs-index.md) | A to Z list of Azure CLI reference groups with drill-down to subgroups and all Azure CLI commands.
@@ -93,7 +94,7 @@ For multi-value lists, consider the following options:
       --output tsv | az vm start --ids @-
   ```
 
-For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
+For more information on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./use-azure-cli-successfully-bash.md).
 
 ## Common update parameters
 
@@ -171,7 +172,7 @@ After both IDs are created, you can use the console again.
 
 ## Script examples
 
-Here are examples for using variables and looping through a list when working with Azure Virtual Machines. For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
+Here are examples for using variables and looping through a list when working with Azure Virtual Machines. For in-depth examples on using Bash constructs with the Azure CLI including loops, case statements, if..then..else, and error handling, see [Learn to use Bash with the Azure CLI](./use-azure-cli-successfully-bash.md).
 
 Use these scripts to save IDs to variables:
 

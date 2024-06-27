@@ -41,7 +41,7 @@ ways for you to get in touch.
 For more information on the CLI features that were shown in the tutorial, see:
 
 * [Output formats for Azure CLI commands](./format-output-azure-cli.md)
-* [How to query Azure CLI command output](./query-azure-cli.md)
+* [How to query Azure CLI command output](./use-azure-cli-successfully-query.md)
 * [How to use variables in Azure CLI commands](./azure-cli-variables.md)
 
 For more information on virtual networks and virtual machines, see:

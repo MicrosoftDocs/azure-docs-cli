@@ -134,7 +134,7 @@ az account show --query [name,id,user.name] # return multiple values
 az account show --query [name,id,user.name] -o table # return multiple values as a table
 ```
 
-For more information about returning multiple values, see [Get multiple values](./query-azure-cli.md#get-multiple-values).
+For more information about returning multiple values, see [Get multiple values](./use-azure-cli-successfully-query.md#get-multiple-values).
 
 ### Renaming properties in a query
 
@@ -147,7 +147,7 @@ az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: 
 az account show --query "{SubscriptionName: name, SubscriptionId: id, UserName: user.name}" -o table # Rename the values returned in a table
 ```
 
-For more information on renaming properties in a query, see [Rename properties in a query](./query-azure-cli.md#rename-properties-in-a-query).
+For more information on renaming properties in a query, see [Rename properties in a query](./use-azure-cli-successfully-query.md#rename-properties-in-a-query).
 
 ### Querying boolean values
 
@@ -180,7 +180,7 @@ subscriptionId="$(az account list --query "[? contains(name, 'Test')].id" -o tsv
 az account set -s $subscriptionId # Sets the current active subscription
 ```
 
-- For more information about filtering arrays and querying boolean values, see [Filter arrays with boolean expressions](./query-azure-cli.md#filter-arrays-with-boolean-expressions).
+- For more information about filtering arrays and querying boolean values, see [Filter arrays with boolean expressions](./use-azure-cli-successfully-query.md#filter-arrays-with-boolean-expressions).
 - For more information about using variables, see [How to use variables](./azure-cli-variables.md).
 - For more information on working with subscriptions, see [Managing subscriptions](./manage-azure-subscriptions-azure-cli.md).
 
@@ -255,7 +255,7 @@ fi
 The following script deletes an existing new resource group if one with the specified name already
 exists. You could use the `--no-wait` argument to return control without waiting for the command to
 complete. However, for this article, we want to wait for the resource group to be deleted before
-continuing. For more information on asynchronous operations, see [Asynchronous operations](./use-azure-cli-successfully.md#asynchronous-operations).
+continuing. For more information on asynchronous operations, see [Tips for using the Azure CLI successfully - Asynchronous operations](./use-azure-cli-successfully-tips.md#asynchronous-operations).
 We demonstrate the use of the `--no-wait` argument at the end of this article.
 
 ```azurecli

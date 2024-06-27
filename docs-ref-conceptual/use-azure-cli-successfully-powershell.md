@@ -564,7 +564,7 @@ For more information about PowerShell error handling, see [Everything you wanted
 
 ## See also
 
-* [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+* Azure CLI engineering notes on [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 * Compare syntax of Bash, PowerShell, and Cmd in these articles:
   * [Syntax differences between scripting languages](./get-started-tutorial-2-environment-syntax.md)
   * [Query command output using JMESPath](./use-azure-cli-successfully-query.md)

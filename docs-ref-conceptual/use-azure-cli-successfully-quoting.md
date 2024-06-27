@@ -83,7 +83,7 @@ my string ' ' wrapped in double quotes
 my string " " wrapped in single quotes
 ```
 
-For more quoting considerations and examples when working in a PowerShell scripting language, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+For more quoting considerations and examples when working in a PowerShell scripting language, see [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md).
 
 ### [cmd](#tab/cmd1)
 
@@ -128,7 +128,7 @@ PowerShell don't.
   az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
   ```
 
-If you are working in the PowerShell scripting language, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+If you are working in the PowerShell scripting language, see [Considerations for running the Azure CLI in a PowerShell scripting language - JSON strings](./use-azure-cli-successfully-powershell.md#pass-parameters-containing-json).
 
 ## Empty strings
 
@@ -232,7 +232,7 @@ az version --query \"azure-cli\"
 
 ---
 
-For more example comparisons between Bash, PowerShell, and Cmd, see [Query Azure CLI command output](./query-azure-cli.md).
+For more example comparisons between Bash, PowerShell, and Cmd, see [Query Azure CLI command output](./use-azure-cli-successfully-query.md).
 
 ## The `--debug` parameter
 
@@ -268,7 +268,7 @@ Here are quick links to scripting language rules as published by their respectiv
 * Windows Command Prompt: [How-to: Escape Characters, Delimiters, and Quotes at the Windows command line](https://ss64.com/nt/syntax-esc.html)
 
 > [!NOTE]
-> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md).
+> Due to a known issue in PowerShell, some extra escaping rules apply. For more information, see [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md).
 
 ## See also
 

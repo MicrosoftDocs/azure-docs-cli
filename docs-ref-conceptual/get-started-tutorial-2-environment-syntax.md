@@ -142,6 +142,9 @@ az storage account create --name %storageAccount% ^
 
 ---
 
+> [!NOTE]
+> Did you just receive a "Subscription not found" error? This error occurs when `Microsoft.Storage` is not registered in the active subscription. To register a resource provider, see [Azure resource providers and types](/azure/azure-resource-manager/management/resource-providers-and-types).
+
 The Azure CLI returns over 100 lines of JSON as output when a new storage account is created. The following JSON dictionary output has fields omitted for brevity.
 
 ```output
@@ -604,10 +607,10 @@ Do you want more detail on one of the subjects covered in this tutorial step? Us
 |Scripting differences | [Quoting differences between scripting languages](./use-azure-cli-successfully-quoting.md) |
 | | [Bash quoting rules](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Quoting)|
 | | [PowerShell quoting rules](/powershell/module/microsoft.powershell.core/about/about_quoting_rules)|
-| | [Quoting issues with PowerShell when using Azure CLI](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md) |
+| | [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md) |
 | | [Windows command-line tips](https://ss64.com/nt/syntax-esc.html) |
-|Parameters | [Use quotation marks in Azure CLI parameters](./use-azure-cli-successfully.md#use-quotation-marks-in-parameters) |
-| | Find more syntax examples of Bash, PowerShell and Cmd in [Query command output using JMESPath](./query-azure-cli.md) |
+|Parameters | [Use quotation marks in Azure CLI parameters](./use-azure-cli-successfully-quoting.md) |
+| | Find more syntax examples of Bash, PowerShell and Cmd in [Query command output using JMESPath](./use-azure-cli-successfully-query.md) |
 
 ## Next Step
 

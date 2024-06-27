@@ -162,9 +162,8 @@ When the Azure CLI can't find the resource name or ID passed in a parameter valu
 
 There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. For more information, see one of these articles:
 
-* [Quoting differences in scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings)
-* [Learn Azure CLI syntax differences in Bash, PowerShell, and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
-* [Quoting issues with the PowerShell scripting language](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md#best-practice-use-file-input-for-json)
+* If you are working in the PowerShell scripting language, see [Considerations for running the Azure CLI in a PowerShell scripting language - JSON strings](./use-azure-cli-successfully-powershell.md#pass-parameters-containing-json).
+* For JSON syntax examples for Bash, PowerShell and Cmd.exe, see [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial.
 
 ## Error: InvalidTemplateDeployment
 
@@ -206,6 +205,10 @@ Append the proxy server's certificate to the CA bundle certificate file, or copy
 ```
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure SDK for Python](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
+
+## Error: Subscription not found
+
+Assuming that you have not incorrectly typed a subscription name or ID, this error occurs when a resource provider is not registered in the active subscription. For example, if you want to execute `az storage account create`, the `Microsoft.Storage` provider must be registered. To register a resource provider, see [Azure resource providers and types](/azure/azure-resource-manager/management/resource-providers-and-types).
 
 ## Service principals
 
