@@ -1,24 +1,20 @@
 ---
-title: Tips to use the Azure CLI successfully in a PowerShell environment | Microsoft Docs
-description: Learn how to format Azure CLI parameters for a PowerShell environment.
-author: dbradish-microsoft
-ms.author: dbradish
-ms.topic: quickstart
-ms.service: azure
-ms.date: 02/20/2024
-ms.tool: azure-cli, powershell
+title: Tips to use the Azure CLI successfully in PowerShell | Microsoft Docs
+description: Learn how to format Azure CLI parameters for a PowerShell scripting language.
+ms.date: 06/21/2024
+ms.topic: concept-article
 ms.custom: devx-track-azurecli
 ---
 
-# Considerations for running the Azure CLI in a PowerShell environment
+# Considerations for running the Azure CLI in a PowerShell scripting language
 
 Azure CLI is a tool to manage Azure resources through Azure CLI reference commands that run in both
-a Bash and PowerShell environment. However, there are slight syntax differences in parameter
-formatting between environments that can result in unexpected results. The purpose of this article
-is to help you resolve Azure CLI syntax errors when working in a PowerShell environment.
+a Bash and PowerShell scripting language. However, there are slight syntax differences in parameter
+formatting between scripting languages that can result in unexpected results. The purpose of this article
+is to help you resolve Azure CLI syntax errors when working in a PowerShell scripting language.
 
 This article compares syntax differences of Azure CLI commands executed in the following
-environments:
+scripting languages:
 
 * Bash running in a Linux operating system using [Azure Cloud Shell](/azure/cloud-shell/overview).
 * [PowerShell](/powershell/scripting/overview) running in a Linux operating system using Azure Cloud Shell.
@@ -26,7 +22,7 @@ environments:
   using the PowerShell 5 terminal.
 * PowerShell running in a Windows 11 using the PowerShell 7 terminal.
 
-If you're new to CLI, differentiating between a _tool_ and an _environment_ might be confusing. [How-to choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
+If you're new to CLI, differentiating between a _tool_ and a _scripting language_ might be confusing. [How-to choose the right command-line tool](./choose-the-right-azure-command-line-tool.md)
 provides a good comparison.
 
 ## Prerequisites
@@ -34,11 +30,11 @@ provides a good comparison.
 # [Read and learn](#tab/read)
 
 This article is intended for you to read and learn. However, if you want to run the examples, select
-the `Prepare your environments` tab to install the environments used in this article.
+the `Prepare your environments` tab to install the scripting languages used in this article.
 
 # [Prepare your environments](#tab/install)
 
-1. To execute the test cases given in this article, install or open these environments:
+1. To execute the test cases given in this article, install or open these scripting languages:
 
    **Linux environments**
 
@@ -46,10 +42,10 @@ the `Prepare your environments` tab to install the environments used in this art
    tabs using the links provided.
 
    * An instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with Bash.
-     If Azure Cloud Shell opens in a PowerShell environment, select the **switch to Bash** option in
+     If Azure Cloud Shell opens in a PowerShell scripting language, select the **switch to Bash** option in
      the Cloud Shell menu bar.
    * A second instance of [Azure Cloud Shell](https://ms.portal.azure.com/#cloudshell/) running with
-     PowerShell. If Azure Cloud Shell opens in a Bash environment, select the **switch to
+     PowerShell. If Azure Cloud Shell opens in a Bash scripting language, select the **switch to
      PowerShell** option in the Cloud Shell menu bar.
 
    **Microsoft Windows environments**
@@ -215,13 +211,13 @@ the `Prepare your environments` tab to install the environments used in this art
 ---
 
 > [!IMPORTANT]
-> When you have an Azure CLI script that is producing an error, **consider how the environment you
+> When you have an Azure CLI script that is producing an error, **consider how the scripting language you
 are working in is parsing the Azure CLI command syntax.**
 
 ## Pass spaces in Azure CLI parameters
 
 In Azure CLI, when you need to pass a parameter value containing a space, there are quoting
-differences between operating systems and environments. In this example, use [az storage account list](/cli/azure/storage/account#az-storage-account-list)
+differences between operating systems and scripting languages. In this example, use [az storage account list](/cli/azure/storage/account#az-storage-account-list)
 and rename output columns with a word containing a space.
 
 # [Bash in Linux](#tab/Bash1)
@@ -241,7 +237,7 @@ doesn't run in PowerShell.
  az storage account list --query "[?creationTime >='2024-02-01'].{\"SA Name\":name,\"Primary endpoint\":primaryEndpoints.blob}" --output table
 ```
 
-If you just tried to run the filter syntax in a PowerShell environment, you received error message
+If you just tried to run the filter syntax in a PowerShell scripting language, you received error message
 `argument --query: invalid jmespath_type value: "[?creationTime >=..."`. However, in Bash within a
 Linux environment, your output is similar to this:
 
@@ -327,7 +323,7 @@ example that opens step 3 in [Learn to use the Azure CLI](./get-started-tutorial
 
 The `?view=azure-cli-2020-09-01-hybrid` results in the desired version of the Azure CLI reference content.
 
-When you execute Azure CLI commands in a PowerShell environment, PowerShell allows question marks to
+When you execute Azure CLI commands in a PowerShell scripting language, PowerShell allows question marks to
 be part of a variable name. This might create confusion in Azure CLI parameter values.
 
 Here's an example from the [Use the Azure REST API](./use-azure-cli-rest-command.md?tabs=powershell#use-get-to-retrieve-your-azure-container-registry)
@@ -338,7 +334,7 @@ article:
 Notice how `$containerRegistryName?api-version` concatenates together without error in Bash.
 
 ```azurecli
-# Script for a Bash environment
+# Script for a Bash scripting language
 
 # Variable block
 let "randomIdentifier=$RANDOM*$RANDOM"
@@ -359,7 +355,7 @@ interprets a question mark (`?`) as being part of the parameter name `$container
 This behavior is the same in PowerShell 5 and PowerShell 7 running in Linux or Windows.
 
 ```azurecli
-# Script for a PowerShell environment
+# Script for a PowerShell scripting language
 
 # Variable block
 $randomIdentifier = (New-Guid).ToString().Substring(0,8)
@@ -374,11 +370,71 @@ az rest --method get --url https://management.azure.com/subscriptions/$subscript
 
 ---
 
-## Pass parameters containing a PowerShell special character
+## Pass parameters containing the ampersand symbol
 
-There are special characters of PowerShell, such as the _At_ (`@`) symbol. To run Azure CLI in PowerShell, add a
-backtick `` ` `` before the special character to escape it. You can also enclose the value in single
-(`'`) or double (`"`) quotes.
+If you have a scenario where you need to pass an ampersand in a parameter value, be aware that the ampersand (`&`) symbol is interpreted by PowerShell. You can see this happen using the `--debug` parameter:
+
+```azurecli
+az "a&b" --debug
+
+# output
+'a' is misspelled or not recognized by the system.
+'b' is not recognized as an internal or external command
+```
+
+However, if you use this same test to add a tag to a resource group, the ampersand in the tag value doesn't cause an error.
+
+```azurecli
+az group create --location eastus2 --name "msdocs-rg-test"
+az group update --name "msdocs-rg-test" --tags "company name=Contoso & Sons"
+
+# output
+{
+  "id": "/subscriptions/3618afcd-ea52-4ceb-bb46-53bb962d4e0b/resourceGroups/msdocs-rg-test",
+  "location": "eastus2",
+  "managedBy": null,
+  "name": "msdocs-rg-test",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": {
+    "company name": "Contoso & Sons"
+  },
+  "type": "Microsoft.Resources/resourceGroups"
+}
+```
+
+If you have a scenario where the ampersand in a parameter value is causing an error, here are some solutions:
+
+```azurecli
+# When quoted by single quotes ('), double quotes (") are preserved by PowerShell and sent
+# to Command Prompt, so that ampersand (&) is treated as a literal character
+> az '"a&b"' --debug
+Command arguments: ['a&b', '--debug']
+
+# Escape double quotes (") with backticks (`) as required by PowerShell
+> az "`"a&b`"" --debug
+Command arguments: ['a&b', '--debug']
+
+# Escape double quotes (") by repeating them
+> az """a&b""" --debug
+Command arguments: ['a&b', '--debug']
+
+# With a whitespace in the argument, double quotes (") are preserved by PowerShell and
+# sent to Command Prompt
+> az "a&b " --debug
+Command arguments: ['a&b ', '--debug']
+
+# Use --% to stop PowerShell from parsing the argument
+> az --% "a&b" --debug
+Command arguments: ['a&b', '--debug']
+```
+
+## Pass parameters containing an _at_ (`@`)  symbol
+
+There are special characters of PowerShell, such as the _at_ (`@`) symbol which is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting)
+in PowerShell.  Add a backtick `` ` `` before the special character to escape it. You can also enclose
+the value in single (`'`) or double (`"`) quotes.
 
 **The following three examples will work in PowerShell:**
 
@@ -390,40 +446,39 @@ backtick `` ` `` before the special character to escape it. You can also enclose
 
 * parameterName @parameters.json
 
-## Pass parameters containing JSON
-
-For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>`
-convention to load from a file to bypass the shell's interpretation. Note that the _At_ (`@`) symbol
-is a [splatting operator](/powershell/module/microsoft.powershell.core/about/about_splatting) in
-PowerShell, so it should be quoted.
-
-There are good examples in [az ad app create](/cli/azure/ad/app#az-ad-app-create-examples) that
-contain both JSON file content and command examples. Here's a code snippet:
-
-# [Bash](#tab/Bash2)
+Here's another example in the `az ad app create` command:  Notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell scripting language.
 
 ```azurecli
-# Script for a Bash environment
-
-az ad app create --display-name myTestAppName \
-    --is-fallback-public-client \
-    --required-resource-accesses @manifest.json
-```
-
-# [PowerShell](#tab/ps2)
-
-In this example, notice the double quotes (`"..."`) around the JSON file name needed in a PowerShell
-environment.
-
-```azurecli
-# Script for a PowerShell environment
+# Script for a PowerShell scripting language
 
 az ad app create --display-name myTestAppName `
     --is-fallback-public-client `
     --required-resource-accesses "@manifest.json"
 ```
 
----
+## Pass parameters containing JSON
+
+For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>`
+convention to load from a file to bypass the shell's interpretation. However, here are some additional JSON parameter format values that are correct in PowerShell:
+
+```azurecli
+# Correct
+> az '{\"key\": \"value\"}' --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+> az "{\`"key\`": \`"value\`"}" --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+> az "{\""key\"": \""value\""}" --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+> az --% "{\"key\": \"value\"}" --debug
+Command arguments: ['{"key": "value"}', '--debug']
+
+# Wrong!
+> az '{"key": "value"}' --debug
+Command arguments: ['{key: value}', '--debug']
+```
 
 ## Pass parameters containing key:value pairs
 
@@ -441,6 +496,14 @@ scenarios:
 * special characters
 * variables
 
+## Stop-parsing symbol
+
+The stop-parsing symbol (`--%`), introduced in PowerShell 3.0, directs PowerShell to refrain from interpreting input as PowerShell commands or expressions. When it encounters a stop-parsing symbol, PowerShell treats the remaining characters in the line as a literal.
+
+```azurecli
+az --% vm create --name xxx
+```
+
 ## Error handling for Azure CLI in PowerShell
 
 You can run Azure CLI commands in PowerShell, as described in [Choose the right Azure command-line tool](choose-the-right-azure-command-line-tool.md).
@@ -454,7 +517,7 @@ see [about_Automatic_Variables](/powershell/module/microsoft.powershell.core/abo
 The following example shows how this automatic variable can work for error handling:
 
 ```azurecli
-# Script for a PowerShell environment
+# Script for a PowerShell scripting language
 
 az group create --name MyResourceGroup
 if ($? -eq $false) {
@@ -469,7 +532,7 @@ If you want to use the `try` and `catch` keywords, you can use `throw` to create
 the `try` block to catch:
 
 ```azurecli
-# Script for a PowerShell environment
+# Script for a PowerShell scripting language
 
 $ErrorActionPreference = "Stop"
 try {
@@ -501,8 +564,8 @@ For more information about PowerShell error handling, see [Everything you wanted
 
 ## See also
 
+* Azure CLI engineering notes on [Quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
 * Compare syntax of Bash, PowerShell, and Cmd in these articles:
-  * [Syntax differences between environments](./get-started-tutorial-2-environment-syntax.md)
-  * [Query command output using JMESPath](./query-azure-cli.md)
-* [Use quotation marks in parameters](./use-azure-cli-successfully.md#use-quotation-marks-in-parameters)
-* [Learn quoting issues with PowerShell](https://github.com/Azure/azure-cli/blob/dev/doc/quoting-issues-with-powershell.md)
+  * [Quoting differences between scripting languages](./use-azure-cli-successfully-quoting.md)
+  * [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial
+  * [Query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md)

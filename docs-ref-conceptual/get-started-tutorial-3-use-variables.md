@@ -308,10 +308,10 @@ Do you want more detail on one of the subjects covered in this tutorial step? Us
 
 |Subject| Learn more|
 |-|-|
-|Variables| See advanced examples in [Use the Azure CLI successfully - Pass values to another command](./use-azure-cli-successfully.md#pass-values-to-another-command)
+|Variables| See advanced examples in [Use the Azure CLI successfully - Pass values to another command](./use-azure-cli-successfully-tips.md#pass-values-to-another-command)
 || Read a good overview of variables in [How to use variables in Azure CLI commands](./azure-cli-variables.md).
-|Querying| Find a wide range of examples in [How to query Azure CLI command output using a JMESPath query](./query-azure-cli.md).
-| | Take a deeper dive in Bash using `--query` in [Learn to use Bash with the Azure CLI](./azure-cli-learn-bash.md).
+|Querying| Find a wide range of examples in [How to query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md).
+| | Take a deeper dive in Bash using `--query` in [Learn to use Bash with the Azure CLI](./use-azure-cli-successfully-bash.md).
 |Azure key vault| [About Azure Key Vault](/azure/key-vault/general/overview)
 | | [Provide access to Key Vault keys, certificates, and secrets with an Azure role-based access control](/azure/key-vault/general/rbac-guide?tabs=azure).
 | | [Common error codes for Azure Key Vault](/azure/key-vault/general/common-error-codes)
