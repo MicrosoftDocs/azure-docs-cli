@@ -160,7 +160,7 @@ To learn how to use the Azure CLI, try our [onboarding tutorial](./get-started-t
 * [Create an Azure resource containing a random ID in the name.](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
 * [Set environment variables.](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
 * [Learn syntax differences between Bash, PowerShell, and Cmd.](./get-started-tutorial-2-environment-syntax.md)
-* [Debug Azure CLI reference commands.](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
+* [Debug Azure CLI reference commands.](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter)
 * [Get properties from a local JSON file.](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable). This example shows how to get configuration values for development, stage, and production. 
 * [Delete multiple resources using a script.](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
 
