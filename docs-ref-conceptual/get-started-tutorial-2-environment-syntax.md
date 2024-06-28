@@ -60,7 +60,7 @@ Every Azure CLI parameter is a string. However, each scripting language has its 
 |Number|\\\`50\\\` | \`\`50\`\` | \`50\` |
 |Boolean|\\\`true\\\` | \`\`false\`\` | \'true\' |
 |Date|'2021-11-15'|'2021-11-15'|'2021-11-15' |
-|JSON|`'{"key":"value"}'` or `"{\"key\":\"value\"}"` | `'{\"key\": \"value\"}'` or `"{\""key\"": \""value\""}"` or `"{\\`"key\\`": \\`"value\\`"}"`|`"{\"key\":\"value\"}"` |
+|JSON|`'{"key":"value"}'` or `"{\"key\":\"value\"}"` | '{"key": "value"}' or "{`"key`": `"value`"}" or "{""key"": ""value""}" |`"{\"key\":\"value\"}"` |
 
 Many Azure CLI parameters accept a space-separated list of values. This impacts quoting.
 
@@ -460,89 +460,40 @@ az storage account list --resource-group <msdocs-tutorial-rg-00000000> ^
 
 ### Use `--debug` parameter
 
-The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is extensive, but it gives you more information on execution errors. Use the Bash `clear` command to remove console output between tests.
+The Azure CLI offers a `--debug` parameter that can be used with any command. Debug output is extensive, but it gives you information including the following:
 
-These examples reveal the actual arguments received by the Azure CLI in Python syntax.
+* Command arguments (parameter values) as interpreted by your scripting language
+* Location of your log file
+* API call detail
+* Execution errors
 
-# [Bash](#tab/Bash)
+If when working with Azure CLI commands you experience difficulty understanding and correcting an execution error, `--debug` is your answer to see the steps Azure CLI is executing.
 
-This example is **correct** in both Bash and PowerShell.
-
-```azurecli-interactive
-az '{"key":"value"}' --debug
-```
-
-See what the Azure CLI is interpreting in the `Command arguments` line of the output.
+Here is a small portion of the debug output when creating a storage account:
 
 ```output
-Command arguments: ['{"key":"value"}', '--debug']
+ cli.knack.cli: Command arguments: ['storage', 'account', 'create', '--name', 'msdocssa00000000', '--resource-group', 'msdocs-rg-test', '--location', 'eastus', '--sku', 'Standard_RAGRS', '--kind', 'StorageV2', '--output', 'json', '--debug']
+ ...
+ cli.azure.cli.core.sdk.policies: Request URL: 'https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/checkNameAvailability?api-version=2023-01-01'
+cli.azure.cli.core.sdk.policies: Request method: 'POST'
+cli.azure.cli.core.sdk.policies: Request headers:
+cli.azure.cli.core.sdk.policies:     'Content-Type': 'application/json'
+cli.azure.cli.core.sdk.policies:     'Content-Length': '73'
+cli.azure.cli.core.sdk.policies:     'Accept': 'application/json'
+cli.azure.cli.core.sdk.policies:     'x-ms-client-request-id': '00000000-0000-0000-0000-000000000000'
+cli.azure.cli.core.sdk.policies:     'CommandName': 'storage account create'
+cli.azure.cli.core.sdk.policies:     'ParameterSetName': '--name --resource-group --location --sku --kind --output --debug'
+cli.azure.cli.core.sdk.policies:     'User-Agent': 'AZURECLI/2.61.0 (DEB) azsdk-python-core/1.28.0 Python/3.11.8 (Linux-5.15.153.1-microsoft-standard-WSL2-x86_64-with-glibc2.35)'
+cli.azure.cli.core.sdk.policies:     'Authorization': '*****'
+cli.azure.cli.core.sdk.policies: Request body:
+cli.azure.cli.core.sdk.policies: {"name": "msdocssa00000000", "type": "Microsoft.Storage/storageAccounts"}
+urllib3.connectionpool: Starting new HTTPS connection (1): management.azure.com:443
+urllib3.connectionpool: https://management.azure.com:443 "POST /subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Storage/checkNameAvailability?api-version=2023-01-01 HTTP/1.1" 200 22
+cli.azure.cli.core.sdk.policies: Response status: 200
+...
 ```
 
-This second example is also **correct**. Use the Bash `clear` command to remove console output between tests.
-
-```azurecli-interactive
-clear
-az "{\"key\":\"value\"}" --debug
-```
-
-```output
-Command arguments: ['{"key":"value"}', '--debug']
-```
-
-These next two examples are **incorrect** as quotes and spaces are interpreted by Bash.
-
-|Incorrect format|Problem|Console output|
-|-|-|-|
-|az {"key":"value"} --debug |Missing single quotes or escape characters| Command arguments: ['{key:value}', '--debug']
-|az {"key": "value"} --debug |Missing single quotes or escape characters, and contains extra space | Command arguments: ['{key:', 'value}', '--debug']
-
-# [PowerShell](#tab/powershell)
-
-This example is **correct** in both Bash and PowerShell.
-
-```azurecli-interactive
-az '{"key":"value"}' --debug
-```
-
-See what the Azure CLI is interpreting in the `Command arguments` line of the `--debug` output. The double quotes missing around the output `key:value` pair is a known issue in PowerShell.
-
-```output
-Command arguments: ['{key:value}', '--debug']
-```
-
-For more examples of accepted JSON parameter formats, see [Considerations for running the Azure CLI in a PowerShell scripting language - Pass parameters containing JSON](./use-azure-cli-successfully-powershell.md#pass-parameters-containing-json).
-
-These examples are all **incorrect**. Use PowerShell's `cls` command to remove console output between tests.
-
-|Incorrect format|Problem |Console output|
-|-|-|-|
-|az "{\\"key\\":\\"value\\"}" --debug | Contains escape characters | Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
-|az {"key":"value"} --debug | Missing single quotes | Unexpected token ':"value"' in expression or statement.
-|az {"key": "value"} --debug | Missing single quotes and contains an extra space | Error: Unexpected token ':' in expression or statement.
-
-# [Cmd](#tab/cmd)
-
-This example is **correct**.
-
-```azurecli-interactive
-az "{\"key\":\"value\"}" --debug
-```
-
-See what the Azure CLI is interpreting in the `Command arguments` line of the output.
-
-```output
-Command arguments: ['{"key":"value"}', '--debug']
-```
-
-These examples are all **incorrect**. Use the Cmd's `cls` command to remove console output between tests.
-
-|Incorrect format|Problem |Console output|
-|-|-|-|
-|az "{"key":"value"}" --debug | Missing escape characters | Command arguments: ['{key:value}', '--debug']
-|az '{"key":"value"}' --debug |Missing escape characters and is using single quotes where double quotes are expected.| Command arguments: ["'{key:value}'", '--debug']
-|az {"key":"value"} --debug | Missing escape characters and double quotes | Command arguments: ['{key:value}', '--debug']
-
----
+For more troubleshooting tips, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md).
 
 ### Use `echo` command
 
@@ -564,11 +515,16 @@ echo $strExpression
 ```azurecli-interactive
 $strExpression='{"key":"value"}'
 echo $strExpression
+
+--PowerShell's Write-Host
 ```
 
 ```output
 {"key":"value"}
 ```
+
+> [!NOTE]
+> The Bash `echo` command is an alias of PowerShell's [Write-Host](/powershell/module/microsoft.powershell.utility/write-host) command.
 
 # [Cmd](#tab/cmd)
 
@@ -598,6 +554,8 @@ Here are common errors when an Azure CLI reference command syntax isn't written 
 
 * "Missing expression after unary operator" is seen when a line continuation character is missing.
 
+For additional troubleshooting tips, see [Troubleshooting Azure CLI commands](./use-azure-cli-successfully-troubleshooting.md).
+
 ## Get more details
 
 Do you want more detail on one of the subjects covered in this tutorial step? Use the links in this table to learn more.
@@ -611,6 +569,7 @@ Do you want more detail on one of the subjects covered in this tutorial step? Us
 | | [Windows command-line tips](https://ss64.com/nt/syntax-esc.html) |
 |Parameters | [Use quotation marks in Azure CLI parameters](./use-azure-cli-successfully-quoting.md) |
 | | Find more syntax examples of Bash, PowerShell and Cmd in [Query command output using JMESPath](./use-azure-cli-successfully-query.md) |
+| Troubleshooting | [Troubleshooting Azure CLI commands](./use-azure-cli-successfully-troubleshooting.md) | 
 
 ## Next Step
 
