@@ -28,7 +28,7 @@ Most errors returned by the Azure CLI fall into one of these categories:
 One of the best ways to see what the Azure CLI is executing for each Azure CLI reference command is to use the `--debug` parameter. Here's examples of `--debug` for both a failed and successful command:
 
 ```azurecli
--- Error example: Create a resource group, but omit the quotes around the resource group name.
+# Error example: Create a resource group, but omit the quotes around the resource group name.
 az group create --location eastus2 --name msdocs-rg-test --debug
 ```
 
@@ -46,7 +46,7 @@ cli.azure.cli.core.azclierror: unrecognized arguments: msdocs-rg-test
 Compare the error `--debug` output given above to a successful execution:
 
 ```azurecli
--- Correct example: Because the resource group name contains special characters, enclose it in quotes
+# Correct example: Because the resource group name contains special characters, enclose it in quotes
 az group create --location eastus2 --name "msdocs-rg-test" --debug
 ```
 
@@ -80,6 +80,8 @@ cli.azure.cli.core.sdk.policies: {"id":"/subscriptions/00000000-0000-0000-0000-0
 ...
 cli.__main__: Command ran in 1.829 seconds (init: 0.111, invoke: 1.718)
 ```
+
+For examples of `--debug` for JSON formatting, see [Quoting differences between scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings).
 
 ## Common syntax errors
 
@@ -162,8 +164,7 @@ When the Azure CLI can't find the resource name or ID passed in a parameter valu
 
 There are quoting differences between Bash, PowerShell in Linux, and PowerShell in Windows. Furthermore, different versions of PowerShell can produce different results. For complex parameters, like a JSON string, the best practice is to use Azure CLI's `@<file>` convention to bypass a shell's interpretation. For more information, see one of these articles:
 
-* If you are working in the PowerShell scripting language, see [Considerations for running the Azure CLI in a PowerShell scripting language - JSON strings](./use-azure-cli-successfully-powershell.md#pass-parameters-containing-json).
-* For JSON syntax examples for Bash, PowerShell and Cmd.exe, see [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md) tutorial.
+For JSON syntax examples for Bash, PowerShell and Cmd.exe, see [Quoting differences between scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings) tutorial.
 
 ## Error: InvalidTemplateDeployment
 

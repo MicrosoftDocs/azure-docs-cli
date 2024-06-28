@@ -4,7 +4,7 @@ name: az providerhub provider-registration
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az providerhub provider-registration** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az providerhub provider-registration** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage provider registration with providerhub.
 status: GA
@@ -17,222 +17,260 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az providerhub provider-registration create --provider-namespace
+    az providerhub provider-registration create --name
+                                                [--authorization-owners]
+                                                [--canary-manifest-owners]
                                                 [--capabilities]
+                                                [--cross-tenant-token-validation {EnsureSecureValidation, PassthroughInsecureToken}]
+                                                [--custom-manifest-vers]
+                                                [--dsts-configuration]
+                                                [--enable-linked-notif {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--error-response-message-options]
+                                                [--expedited-rollout-metadata]
+                                                [--expedited-rollout-submitters]
+                                                [--global-notif-endpoints]
                                                 [--incident-contact-email]
                                                 [--incident-routing-service]
                                                 [--incident-routing-team]
-                                                [--lighthouse-auth]
-                                                [--managed-by-tenant-id]
-                                                [--manifest-owners]
+                                                [--kind {Direct, Hybrid, Managed}]
+                                                [--legacy-namespace]
+                                                [--legacy-registrations]
+                                                [--linked-notif-rules]
+                                                [--management-group-global-notification-endpoints]
+                                                [--manifest-owner]
                                                 [--metadata]
-                                                [--metadata-authn]
-                                                [--metadata-authz]
                                                 [--namespace]
-                                                [--no-wait]
-                                                [--opt-in-headers {ClientGroupMembership, NotSpecified, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership}]
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--notification-options {EmitSpendingLimit, None, NotSpecified}]
+                                                [--notification-settings]
+                                                [--notifications]
+                                                [--opt-in-headers {ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership}]
+                                                [--opt-out-headers {NotSpecified, SystemDataCreatedByLastModifiedBy}]
+                                                [--optional-features]
                                                 [--override-actions]
+                                                [--pc-code]
+                                                [--pc-program-id]
+                                                [--private-resource-provider-configuration]
+                                                [--provider-auth]
                                                 [--provider-authentication]
-                                                [--provider-authorizations]
-                                                [--provider-type]
+                                                [--provider-hub-metadata]
+                                                [--provider-type {AuthorizationFree, External, Hidden, Internal, LegacyRegistrationRequired, NotSpecified, RegistrationFree, TenantOnly}]
                                                 [--provider-version]
                                                 [--req-features-policy {All, Any}]
                                                 [--required-features]
+                                                [--resc-hydration-accts]
                                                 [--resource-access-policy {AcisActionAllowed, AcisReadAllowed, NotSpecified}]
                                                 [--resource-access-roles]
-                                                [--schema-owners]
-                                                [--service-tree-infos]
+                                                [--resource-group-lock-option-during-move]
+                                                [--resource-provider-authorization-rules]
+                                                [--response-options]
+                                                [--schema-owner]
+                                                [--service-name]
+                                                [--service-tree-info]
+                                                [--services]
                                                 [--soft-delete-ttl]
                                                 [--template-deployment-options]
+                                                [--token-auth-config]
   examples:
   - summary: |-
-      ProviderRegistrations_CreateOrUpdate
-    syntax: az providerhub provider-registration create     --providerhub-metadata-authorizations application-id="00000000-0000-0000-0000-000000000000"     role-definition-id="00000000-0000-0000-0000-000000000000"     --providerhub-metadata-authentication allowed-audiences="https://management.core.windows.net/"     --service-tree-infos service-id="00000000-0000-0000-0000-000000000000"     component-id="00000000-0000-0000-0000-000000000000"     --capabilities effect="Allow" quota-id="CSP_2015-05-01"     --capabilities effect="Allow" quota-id="CSP_MG_2017-12-01"     --manifest-owners "SPARTA-PlatformServiceAdministrator"     --incident-contact-email "helpme@contoso.com"     --incident-routing-service "Contoso Resource Provider"     --incident-routing-team "Contoso Triage"     --provider-type "Internal"     --provider-version "2.0"     --provider-namespace "Microsoft.Contoso"
+      provider-registration create
+    syntax: az providerhub provider-registration create --token-auth-configuration authentication-scheme="PoP" signed-request-scope="ResourceUri" --service-tree-infos service-id="d1b7d8ba-05e2-48e6-90d6-d781b99c6e69" component-id="d1b7d8ba-05e2-48e6-90d6-d781b99c6e69" --capabilities effect="Allow" quota-id="CSP_2015-05-01" --capabilities effect="Allow" quota-id="CSP_MG_2017-12-01" --manifest-owners "SPARTA-PlatformServiceAdministrator" --incident-contact-email "rpaascore@microsoft.com" --incident-routing-service "Resource Provider Service as a Service" --incident-routing-team "RPaaS" --provider-version "2.0" --provider-namespace "{providerNamespace}" --metadata "BypassManifestValidation":true
   requiredParameters:
   - isRequired: true
-    name: --provider-namespace
+    name: --name --provider-namespace -n
     summary: |-
       The name of the resource provider hosted within ProviderHub.
   optionalParameters:
-  - name: --capabilities
+  - name: --authorization-owners
     summary: |-
-      The resource provider capabilities.
-    description: |-
-      Usage: --capabilities quota-id=XX effect=XX required-features=XX
-
-
-      Multiple actions can be specified by using more than one --capabilities argument.
+      The authorization owners.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --canary-manifest-owners
+    summary: |-
+      List of manifest owners for canary  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --capabilities --capabilities --capability
+    summary: |-
+      This allows a restrictive subscription type to have access to register and use the Resource Provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--capability` `--capabilities`.
+  - name: --cross-tenant-token-validation --token-validation
+    parameterValueGroup: "EnsureSecureValidation, PassthroughInsecureToken"
+    summary: |-
+      The cross tenant token validation.
+  - name: --custom-manifest-vers --custom-manifest-version
+    summary: |-
+      Custom manifest version.
+  - name: --dsts-configuration
+    summary: |-
+      The DSTS configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enable-linked-notif --enable-tenant-linked-notification
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The enable tenant linked notification.
+  - name: --error-response-message-options --message-options
+    summary: |-
+      Options for error response messages.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --expedited-rollout-metadata --rollout-metadata
+    summary: |-
+      Metadata for expedited rollout.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --expedited-rollout-submitters --rollout-submitters
+    summary: |-
+      List of expedited rollout submitters.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --global-notif-endpoints --global-notification-endpoints
+    summary: |-
+      The global notification endpoints.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --incident-contact-email
     summary: |-
       The email address of contacts for incidents related to the RP.
-    description: |-
-      Usage: --incident-contact-email "helpme@contoso.com".
   - name: --incident-routing-service --incident-service
     summary: |-
       The service in IcM when creating or transferring incidents to the RP.
-    description: |-
-      Usage: --incident-routing-service "Contoso Resource Provider".
   - name: --incident-routing-team --incident-team
     summary: |-
       The team in IcM when creating or transferring incidents to the RP.
-    description: |-
-      Usage: --incident-routing-team "Contoso Triage".
-  - name: --lighthouse-auth --lighthouse-authorizations
+  - name: --kind
+    defaultValue: "Managed"
+    parameterValueGroup: "Direct, Hybrid, Managed"
     summary: |-
-      The lighthouse authorizations.
-    description: |-
-      Usage: --lighthouse-authorizations principal-id=XX role-definition-id=XX
-
-      principal-id: Required. The principal ID.
-      role-definition-id: Required. The role definition ID.
-  - name: --managed-by-tenant-id
+      Provider registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type.
+  - name: --legacy-namespace
     summary: |-
-      The managed by tenant ID.
-    description: |-
-      Usage: --managed-by-tenant-id "00000000-0000-0000-0000-000000000000".
-  - name: --manifest-owners
+      Legacy namespace.
+  - name: --legacy-registrations
     summary: |-
-      Specifies an array of required ACIS claims to modify the resource provider's manifest content via ACIS.
-    description: |-
-      Usage: --manifest-owners "SPARTA-PlatformServiceAdministrator"
-
-       Multiple actions can be specified by using more than one --manifest-owners argument.
+      Legacy registrations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --linked-notif-rules --linked-notification-rules
+    summary: |-
+      The linked notification rules.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --management-group-global-notification-endpoints --mg-notif-endpoints
+    summary: |-
+      Management groups global notification endpoints.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --manifest-owner --manifest-owners
+    summary: |-
+      Specifies an array of required ACIS claims to modify the resource provider's manifest content via ACIS.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--manifest-owner`.
   - name: --metadata
     summary: |-
-      The metadata.
-  - name: --metadata-authn --providerhub-metadata-authentication
-    summary: |-
-      The ProviderHub metadata authentication.
-    description: |-
-      Usage: --providerhub-metadata-authentication allowed-audiences=XX
-
-      allowed-audiences: Required. The allowed audiences.
-  - name: --metadata-authz --providerhub-metadata-authorizations
-    summary: |-
-      The ProviderHub metadata authorizations.
-    description: |-
-      Usage: --providerhub-metadata-authorizations application-id=XX role-definition-id=XX managed-by-role-definition-id=XX
-
-      application-id: Required. The application ID.
-      role-definition-id: Required. The role definition ID.
-      managed-by-role-definition-id: Required. The managed by role definition ID.
-
-      Multiple actions can be specified by using more than one --providerhub-metadata-authorizations argument.
+      The metadata.  Support json-file and yaml-file.
   - name: --namespace
     summary: |-
       The name of the resource provider hosted within ProviderHub.
-    description: |-
-      Usage: --namespace "Microsoft.Contoso".
   - name: --no-wait
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --notification-options
+    parameterValueGroup: "EmitSpendingLimit, None, NotSpecified"
+    summary: |-
+      Notification options.
+  - name: --notification-settings
+    summary: |-
+      Notification settings.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --notifications
+    summary: |-
+      The notifications object.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --opt-in-headers
-    parameterValueGroup: "ClientGroupMembership, NotSpecified, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership"
+    parameterValueGroup: "ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership"
     summary: |-
       The opt-in headers.
-    description: |-
-      Usage: --opt-in-headers "SignedUserToken".
+  - name: --opt-out-headers
+    parameterValueGroup: "NotSpecified, SystemDataCreatedByLastModifiedBy"
+    summary: |-
+      The opt-out headers.
+  - name: --optional-features
+    summary: |-
+      Optional features.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --override-actions --subscription-state-override-actions
     summary: |-
-      The subscription state override actions.
-    description: |-
-      Usage: --subscription-state-override-actions state=XX action=XX
-
-
-      Multiple actions can be specified by using more than one --subscription-state-override-actions argument.
+      The subscription state override actions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --pc-code
+    summary: |-
+      The profit center code for the subscription.
+  - name: --pc-program-id --profit-center-program-id
+    summary: |-
+      The profit center program id for the subscription.
+  - name: --private-resource-provider-configuration --private-rp-config
+    summary: |-
+      The private resource provider configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --provider-auth --provider-authorizations --provider-authorizations --provider-authz
+    summary: |-
+      The resource provider authorizations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--provider-auth` `--provider-authz` `--provider-authorizations`.
   - name: --provider-authentication --provider-authn
     summary: |-
-      Used to set alternative audiences or resources that ARM should accept from the token while authenticating requests for the provider.
-    description: |-
-      Usage: --provider-authentication allowed-audiences=XX
-
-      allowed-audiences: Required. The allowed audiences.
-  - name: --provider-authorizations --provider-authz
+      Used to set alternative audiences or resources that ARM should accept from the token while authenticating requests for the provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --provider-hub-metadata
     summary: |-
-      The resource provider authorizations.
-    description: |-
-      Usage: --provider-authorizations application-id=XX role-definition-id=XX managed-by-role-definition-id=XX
-
-      application-id: Required. The application ID.
-      role-definition-id: Required. The role definition ID.
-      managed-by-role-definition-id: Required. The managed by role definition ID.
-
-      Multiple actions can be specified by using more than one --provider-authorizations argument.
+      The ProviderHub metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --provider-type
+    parameterValueGroup: "AuthorizationFree, External, Hidden, Internal, LegacyRegistrationRequired, NotSpecified, RegistrationFree, TenantOnly"
     summary: |-
       The provider type.
-    description: |-
-      Usage: --provider-type "Internal"
-
-      Available provider types include: Internal, External, Hidden, RegistrationFree, LegacyRegistrationRequired, TenantOnly, AuthorizationFree.
   - name: --provider-version
     summary: |-
       The provider version.
-    description: |-
-      Usage: --provider-version "2.0".
   - name: --req-features-policy --required-features-policy
     parameterValueGroup: "All, Any"
     summary: |-
-      The accepted values are "Any" or "All". If the value is "All", then only the subscriptions registered to all the corresponding feature flag will be allowed.​.
+      The accepted values are "Any" or "All".
   - name: --required-features
     summary: |-
-      The required features.
+      The required features.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resc-hydration-accts --resource-hydration-accounts
+    summary: |-
+      Resource hydration accounts  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --resource-access-policy
     parameterValueGroup: "AcisActionAllowed, AcisReadAllowed, NotSpecified"
     summary: |-
       The resource access policy.
-    description: |-
-      Usage: --resource-access-policy "AcisReadAllowed, AcisActionAllowed".
   - name: --resource-access-roles
     summary: |-
-      The resource access roles. Expected value: json-string/@json-file.
-  - name: --schema-owners
+      The resource access roles.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resource-group-lock-option-during-move --rg-lock-option
     summary: |-
-      Specifies an array of needed ACIS claims to modify the resource provider schema via ACIS.
-    description: |-
-      Usage: --schema-owners "Contoso schema owners"
-
-       Multiple actions can be specified by using more than one --schema-owners argument.
-  - name: --service-tree-infos
+      Resource group lock option during move.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resource-provider-authorization-rules --rp-auth-rules
     summary: |-
-      The ServiceTree information for the resource provider.
-    description: |-
-      Usage: --service-tree-infos service-id=XX component-id=XX
-
-      service-id: Required. The service ID.
-      component-id: Required. The component ID.
-
-
-      Multiple actions can be specified by using more than one --service-tree-infos argument.
+      The resource provider authorization rules.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --response-options
+    summary: |-
+      Response options.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --schema-owner --schema-owners --schema-owners
+    summary: |-
+      Specifies an array of needed ACIS claims to modify the resource provider schema via ACIS.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--schema-owner` `--schema-owners`.
+  - name: --service-name
+    summary: |-
+      The service name.
+  - name: --service-tree-info --service-tree-infos --service-tree-infos
+    summary: |-
+      The ServiceTree information for the resource provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--service-tree-info` `--service-tree-infos`.
+  - name: --services
+    summary: |-
+      The services.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --soft-delete-ttl
     summary: |-
       The soft delete time to live.
   - name: --template-deployment-options --tmplt-deploy-opt
     summary: |-
-      The template deployment options.
-    description: |-
-      Usage: --template-deployment-options preflight-supported=XX preflight-options=XX.
+      The template deployment options.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --token-auth-config --token-auth-configuration
+    summary: |-
+      The token auth configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_providerhub_provider-registration_delete
   name: az providerhub provider-registration delete
   summary: |-
-    Deletes a provider registration.
+    Delete a provider registration.
   status: GA
   sourceType: Extension
   syntax: >-
     az providerhub provider-registration delete [--ids]
-                                                [--provider-namespace]
+                                                [--name]
                                                 [--subscription]
                                                 [--yes]
   examples:
   - summary: |-
-      ProviderRegistrations_Delete
-    syntax: az providerhub provider-registration delete --provider-namespace "Microsoft.Contoso"
+      provider-registration delete
+    syntax: az providerhub provider-registration delete -y --provider-namespace "{providerNamespace}"
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --provider-namespace
+  - name: --name --provider-namespace -n
     summary: |-
       The name of the resource provider hosted within ProviderHub.
   - name: --subscription
@@ -254,8 +292,8 @@ directCommands:
                                                             [--subscription]
   examples:
   - summary: |-
-      ProviderRegistrations_GenerateOperations
-    syntax: az providerhub provider-registration generate-operation --provider-namespace "Microsoft.Contoso"
+      provider-registration generate-operation
+    syntax: az providerhub provider-registration generate-operation --provider-namespace "{providerNamespace}"
   optionalParameters:
   - name: --ids
     summary: |-
@@ -269,44 +307,374 @@ directCommands:
 - uid: az_providerhub_provider-registration_list
   name: az providerhub provider-registration list
   summary: |-
-    Gets the list of the provider registrations in the subscription.
+    List the list of the provider registrations in the subscription.
   status: GA
   sourceType: Extension
-  syntax: az providerhub provider-registration list
+  syntax: >-
+    az providerhub provider-registration list [--max-items]
+                                              [--next-token]
   examples:
   - summary: |-
-      ProviderRegistrations_List
+      provider-registration list
     syntax: az providerhub provider-registration list
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_providerhub_provider-registration_show
   name: az providerhub provider-registration show
   summary: |-
-    Gets the provider registration details.
+    Get the provider registration details.
   status: GA
   sourceType: Extension
   syntax: >-
     az providerhub provider-registration show [--ids]
-                                              [--provider-namespace]
+                                              [--name]
                                               [--subscription]
   examples:
   - summary: |-
-      ProviderRegistrations_Get
-    syntax: az providerhub provider-registration show --provider-namespace "Microsoft.Contoso"
+      provider-registration show
+    syntax: az providerhub provider-registration show --provider-namespace "{providerNamespace}"
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --provider-namespace
+  - name: --name --provider-namespace -n
     summary: |-
       The name of the resource provider hosted within ProviderHub.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_providerhub_provider-registration_update
+  name: az providerhub provider-registration update
+  summary: |-
+    Update the provider registration.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub provider-registration update [--add]
+                                                [--authorization-owners]
+                                                [--canary-manifest-owners]
+                                                [--capabilities]
+                                                [--cross-tenant-token-validation {EnsureSecureValidation, PassthroughInsecureToken}]
+                                                [--custom-manifest-vers]
+                                                [--dsts-configuration]
+                                                [--enable-linked-notif {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--error-response-message-options]
+                                                [--expedited-rollout-metadata]
+                                                [--expedited-rollout-submitters]
+                                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--global-notif-endpoints]
+                                                [--ids]
+                                                [--incident-contact-email]
+                                                [--incident-routing-service]
+                                                [--incident-routing-team]
+                                                [--kind {Direct, Hybrid, Managed}]
+                                                [--legacy-namespace]
+                                                [--legacy-registrations]
+                                                [--linked-notif-rules]
+                                                [--management-group-global-notification-endpoints]
+                                                [--manifest-owner]
+                                                [--metadata]
+                                                [--name]
+                                                [--namespace]
+                                                [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                [--notification-options {EmitSpendingLimit, None, NotSpecified}]
+                                                [--notification-settings]
+                                                [--notifications]
+                                                [--opt-in-headers {ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership}]
+                                                [--opt-out-headers {NotSpecified, SystemDataCreatedByLastModifiedBy}]
+                                                [--optional-features]
+                                                [--override-actions]
+                                                [--pc-code]
+                                                [--pc-program-id]
+                                                [--private-resource-provider-configuration]
+                                                [--provider-auth]
+                                                [--provider-authentication]
+                                                [--provider-hub-metadata]
+                                                [--provider-type {AuthorizationFree, External, Hidden, Internal, LegacyRegistrationRequired, NotSpecified, RegistrationFree, TenantOnly}]
+                                                [--provider-version]
+                                                [--remove]
+                                                [--req-features-policy {All, Any}]
+                                                [--required-features]
+                                                [--resc-hydration-accts]
+                                                [--resource-access-policy {AcisActionAllowed, AcisReadAllowed, NotSpecified}]
+                                                [--resource-access-roles]
+                                                [--resource-group-lock-option-during-move]
+                                                [--resource-provider-authorization-rules]
+                                                [--response-options]
+                                                [--schema-owner]
+                                                [--service-name]
+                                                [--service-tree-info]
+                                                [--services]
+                                                [--set]
+                                                [--soft-delete-ttl]
+                                                [--subscription]
+                                                [--template-deployment-options]
+                                                [--token-auth-config]
+  examples:
+  - summary: |-
+      provider-registration update
+    syntax: az providerhub provider-registration update --token-auth-configuration authentication-scheme="PoP" signed-request-scope="ResourceUri" --service-tree-infos service-id="d1b7d8ba-05e2-48e6-90d6-d781b99c6e69" component-id="d1b7d8ba-05e2-48e6-90d6-d781b99c6e69" --capabilities effect="Allow" quota-id="CSP_2015-05-01" --capabilities effect="Allow" quota-id="CSP_MG_2017-12-01" --manifest-owners "SPARTA-PlatformServiceAdministrator" --incident-contact-email "rpaascore@microsoft.com" --incident-routing-service "Resource Provider Service as a Service" --incident-routing-team "RPaaS" --provider-version "2.0" --provider-namespace "{providerNamespace}" --metadata "BypassManifestValidation":true
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --authorization-owners
+    summary: |-
+      The authorization owners.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --canary-manifest-owners
+    summary: |-
+      List of manifest owners for canary.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --capabilities --capabilities --capability
+    summary: |-
+      This allows a restrictive subscription type to have access to register and use the Resource Provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--capability` `--capabilities`.
+  - name: --cross-tenant-token-validation --token-validation
+    parameterValueGroup: "EnsureSecureValidation, PassthroughInsecureToken"
+    summary: |-
+      The cross tenant token validation.
+  - name: --custom-manifest-vers --custom-manifest-version
+    summary: |-
+      Custom manifest version.
+  - name: --dsts-configuration
+    summary: |-
+      The DSTS configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --enable-linked-notif --enable-tenant-linked-notification
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      The enable tenant linked notification.
+  - name: --error-response-message-options --message-options
+    summary: |-
+      Options for error response messages.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --expedited-rollout-metadata --rollout-metadata
+    summary: |-
+      Metadata for expedited rollout.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --expedited-rollout-submitters --rollout-submitters
+    summary: |-
+      List of expedited rollout submitters.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --global-notif-endpoints --global-notification-endpoints
+    summary: |-
+      The global notification endpoints.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --incident-contact-email
+    summary: |-
+      The email address of contacts for incidents related to the RP.
+  - name: --incident-routing-service --incident-service
+    summary: |-
+      The service in IcM when creating or transferring incidents to the RP.
+  - name: --incident-routing-team --incident-team
+    summary: |-
+      The team in IcM when creating or transferring incidents to the RP.
+  - name: --kind
+    parameterValueGroup: "Direct, Hybrid, Managed"
+    summary: |-
+      Provider registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type.
+  - name: --legacy-namespace
+    summary: |-
+      Legacy namespace.
+  - name: --legacy-registrations
+    summary: |-
+      Legacy registrations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --linked-notif-rules --linked-notification-rules
+    summary: |-
+      The linked notification rules.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --management-group-global-notification-endpoints --mg-notif-endpoints
+    summary: |-
+      Management groups global notification endpoints.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --manifest-owner --manifest-owners
+    summary: |-
+      Specifies an array of required ACIS claims to modify the resource provider's manifest content via ACIS.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--manifest-owner`.
+  - name: --metadata
+    summary: |-
+      The metadata.  Support json-file and yaml-file.
+  - name: --name --provider-namespace -n
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --namespace
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --notification-options
+    parameterValueGroup: "EmitSpendingLimit, None, NotSpecified"
+    summary: |-
+      Notification options.
+  - name: --notification-settings
+    summary: |-
+      Notification settings.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --notifications
+    summary: |-
+      The notifications object.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --opt-in-headers
+    parameterValueGroup: "ClientGroupMembership, ClientPrincipalNameEncoded, MSIResourceIdEncoded, ManagementGroupAncestorsEncoded, NotSpecified, PrivateLinkId, PrivateLinkResourceId, PrivateLinkVnetTrafficTag, ResourceGroupLocation, SignedAuxiliaryTokens, SignedUserToken, UnboundedClientGroupMembership"
+    summary: |-
+      The opt-in headers.
+  - name: --opt-out-headers
+    parameterValueGroup: "NotSpecified, SystemDataCreatedByLastModifiedBy"
+    summary: |-
+      The opt-out headers.
+  - name: --optional-features
+    summary: |-
+      Optional features.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --override-actions --subscription-state-override-actions
+    summary: |-
+      The subscription state override actions.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --pc-code
+    summary: |-
+      The profit center code for the subscription.
+  - name: --pc-program-id --profit-center-program-id
+    summary: |-
+      The profit center program id for the subscription.
+  - name: --private-resource-provider-configuration --private-rp-config
+    summary: |-
+      The private resource provider configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --provider-auth --provider-authorizations --provider-authorizations --provider-authz
+    summary: |-
+      The resource provider authorizations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--provider-auth` `--provider-authz` `--provider-authorizations`.
+  - name: --provider-authentication --provider-authn
+    summary: |-
+      Used to set alternative audiences or resources that ARM should accept from the token while authenticating requests for the provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --provider-hub-metadata
+    summary: |-
+      The ProviderHub metadata.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --provider-type
+    parameterValueGroup: "AuthorizationFree, External, Hidden, Internal, LegacyRegistrationRequired, NotSpecified, RegistrationFree, TenantOnly"
+    summary: |-
+      The provider type.
+  - name: --provider-version
+    summary: |-
+      The provider version.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --req-features-policy --required-features-policy
+    parameterValueGroup: "All, Any"
+    summary: |-
+      The accepted values are "Any" or "All".
+  - name: --required-features
+    summary: |-
+      The required features.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resc-hydration-accts --resource-hydration-accounts
+    summary: |-
+      Resource hydration accounts  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resource-access-policy
+    parameterValueGroup: "AcisActionAllowed, AcisReadAllowed, NotSpecified"
+    summary: |-
+      The resource access policy.
+  - name: --resource-access-roles
+    summary: |-
+      The resource access roles.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resource-group-lock-option-during-move --rg-lock-option
+    summary: |-
+      Resource group lock option during move.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resource-provider-authorization-rules --rp-auth-rules
+    summary: |-
+      The resource provider authorization rules.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --response-options
+    summary: |-
+      Response options.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --schema-owner --schema-owners --schema-owners
+    summary: |-
+      Specifies an array of needed ACIS claims to modify the resource provider schema via ACIS.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--schema-owner` `--schema-owners`.
+  - name: --service-name
+    summary: |-
+      The service name.
+  - name: --service-tree-info --service-tree-infos --service-tree-infos
+    summary: |-
+      The ServiceTree information for the resource provider.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.  Singular flags: `--service-tree-info` `--service-tree-infos`.
+  - name: --services
+    summary: |-
+      The services.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --soft-delete-ttl
+    summary: |-
+      The soft delete time to live.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --template-deployment-options --tmplt-deploy-opt
+    summary: |-
+      The template deployment options.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --token-auth-config --token-auth-configuration
+    summary: |-
+      The token auth configuration.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+- uid: az_providerhub_provider-registration_wait
+  name: az providerhub provider-registration wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub provider-registration wait [--created]
+                                              [--custom]
+                                              [--deleted]
+                                              [--exists]
+                                              [--ids]
+                                              [--interval]
+                                              [--name]
+                                              [--subscription]
+                                              [--timeout]
+                                              [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --provider-namespace -n
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_providerhub_provider-registration_create
 - az_providerhub_provider-registration_delete
 - az_providerhub_provider-registration_generate-operation
 - az_providerhub_provider-registration_list
+- az_providerhub_provider-registration_resource-action
+- az_providerhub_provider-registration_resource-action_delete-resource
 - az_providerhub_provider-registration_show
+- az_providerhub_provider-registration_update
+- az_providerhub_provider-registration_wait
 globalParameters:
 - name: --debug
   summary: |-

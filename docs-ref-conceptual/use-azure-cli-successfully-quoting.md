@@ -36,8 +36,10 @@ Here are a few examples:
 myVariable="my string ' ' wrapped in double quotes"
 myVariable='my string " " wrapped in single quotes'
 myVariable="my string with escaped \" \" double quotes wrapped in double quotes"
+
 # Wrong, escaped single quotes in Bash are not treated as part of the string
 myVariable='my value with escaped \' \' single quotes wrapped in single quotes'
+
 # after each example ...
 echo $myVariable
 ```
@@ -55,8 +57,10 @@ If you want the quotes included in the output, escape the variable like this: `e
 ```output
 echo \"$myVariable\"
 "my string ' ' wrapped in double quotes"
+
 echo \'$myVariable\'
 'my string " " wrapped in single quotes'
+
 echo \"$myVariable\"
 "my string with escaped " " double quotes wrapped in double quotes"
 ```
@@ -85,7 +89,7 @@ my string " " wrapped in single quotes
 
 For more quoting considerations and examples when working in a PowerShell scripting language, see [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md).
 
-### [cmd](#tab/cmd1)
+### [Cmd](#tab/cmd1)
 
 ```azurecli
 set myVariable="my value with ' ' single quotes"
@@ -105,6 +109,7 @@ PowerShell don't.
 ```output
 "my value with ' ' single quotes"
 'my value with " " double quotes'
+
 "my second value with " " double quotes"
 'my second value with ' ' single quotes'
 ```
@@ -113,13 +118,11 @@ PowerShell don't.
 
 ## JSON strings
 
-* If your command is only going to run on Bash (or Zsh), use single quotes to preserve the content
-  inside the JSON string. Single quotes are necessary when supplying inline JSON values. For
-  example, this JSON is correct in Bash: `'{"key": "value"}'`.
+* Use single quotes to preserve the content inside a JSON string. Single quotes are necessary when supplying inline JSON values. For example, this JSON is correct in both Bash and PowerShell: `'{"key": "value"}'`.
 
-* If your command runs at a Windows Command Prompt, you must use double quotes. If the value
-  contains double quotes, you must escape it. The equivalent of the above JSON string in Cmd.exe is
-  `"{\"key\": \"value\"}"`.
+* If your command runs at a Windows Command Prompt, you must use double quotes. The equivalent of the above JSON string in Cmd.exe is `"{"key":"value"}" `.
+
+* If the JSON value contains double quotes, you must escape them.
   
 * When working with JSON parameter values, consider using Azure CLI's `@<file>` convention and
   bypass the shell's interpretation mechanisms.
@@ -128,7 +131,71 @@ PowerShell don't.
   az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
   ```
 
-If you are working in the PowerShell scripting language, see [Considerations for running the Azure CLI in a PowerShell scripting language - JSON strings](./use-azure-cli-successfully-powershell.md#pass-parameters-containing-json).
+Here are the accepted JSON format patterns for Bash, PowerShell and Cmd:
+
+### [Bash](#tab/bash2)
+
+Use Bash's `clear` command to remove console output between tests.
+
+```azurecli
+# Correct in Bash
+az '{"key":"value"}' --debug
+>> Command arguments: ['{"key":"value"}', '--debug']
+
+az "{\"key\":\"value\"}" --debug
+>> Command arguments: ['{"key":"value"}', '--debug']
+```
+
+These next two examples are **incorrect** as quotes and spaces are interpreted by Bash.
+
+|Incorrect format|Problem|Console output|
+|-|-|-|
+|az {"key":"value"} --debug |Missing single quotes or escape characters| Command arguments: ['{key:value}', '--debug']
+|az {"key": "value"} --debug |Missing single quotes or escape characters, and contains extra space | Command arguments: ['{key:', 'value}', '--debug']
+
+### [Powershell](#tab/powershell2)
+
+Use PowerShell's `cls` or `clear` command to remove console output between tests.
+
+```azurecli
+# Correct in PowerShell
+az '{"key": "value"}' --debug
+>> Command arguments: ['{key: value}', '--debug']
+
+az "{`"key`": `"value`"}" --debug
+>> Command arguments: ['{key: value}', '--debug']
+
+az "{""key"": ""value""}" --debug
+>> Command arguments: ['{key: value}', '--debug']
+```
+
+These next three examples are all **incorrect** in PowerShell.
+
+|Incorrect format|Problem |Console output|
+|-|-|-|
+|az "{\\"key\\":\\"value\\"}" --debug | Contains Bash escape characters | Command arguments: ['{\\', 'key\\:\\value\\}', '--debug']
+|az {"key":"value"} --debug | Missing single quotes | Unexpected token ':"value"' in expression or statement.
+|az {"key": "value"} --debug | Missing single quotes and contains an extra space | Error: Unexpected token ':' in expression or statement.
+
+### [Cmd](#tab/cmd2)
+
+Use the Cmd's `cls` command to remove console output between tests.
+
+```azurecli
+# Correct in Windows Command 
+az "{"key":"value"}" --debug
+>> Command arguments: ['{key:value}', '--debug']
+```
+
+These next three examples are all **incorrect** in Windows Command. 
+
+|Incorrect format|Problem |Console output|
+|-|-|-|
+|az "{"key":"value"}" --debug | Missing escape characters | Command arguments: ['{key:value}', '--debug']
+|az '{"key":"value"}' --debug |Missing escape characters and is using single quotes where double quotes are expected.| Command arguments: ["'{key:value}'", '--debug']
+|az {"key":"value"} --debug | Missing escape characters and double quotes | Command arguments: ['{key:value}', '--debug']
+
+---
 
 ## Empty strings
 
@@ -187,7 +254,7 @@ parse it as value, use `=` to concatenate the parameter name and value: `--passw
 
 When you use the `--query` parameter with a command, some characters of [JMESPath](https://jmespath.org/specification.html) need to be escaped in the shell.
 
-### [Bash](#tab/bash2)
+### [Bash](#tab/bash3)
 
 These three commands are correct and equivalent in Bash:
 
@@ -209,7 +276,7 @@ az version --query "azure-cli"
 az version: error: argument --query: invalid jmespath_type value: 'azure-cli'
 ```
 
-### [PowerShell](#tab/powershell2)
+### [PowerShell](#tab/powershell3)
 
 These five commands work correctly in PowerShell:
 
@@ -221,7 +288,7 @@ az --% version --query "\"azure-cli\""
 az --% version --query \"azure-cli\"
 ```
 
-### [Cmd](#tab/cmd2)
+### [Cmd](#tab/cmd3)
 
 These two commands work correctly in Windows Command Prompt:
 
@@ -239,23 +306,7 @@ For more example comparisons between Bash, PowerShell, and Cmd, see [Query Azure
 The best way to troubleshoot a quoting issue is to run the command with the `--debug` flag. This
 flag reveals the actual arguments received by the Azure CLI in [Python's syntax](https://docs.python.org/3/tutorial/introduction.html#strings).
 
-```azurecli
-# Correct
-$ az '{"key":"value"}' --debug
->> Command arguments: ['{"key":"value"}', '--debug']
 
-# Correct
-$ az "{\"key\":\"value\"}" --debug
->> Command arguments: ['{"key":"value"}', '--debug']
-
-# Wrong, as quotes and spaces are interpreted by Bash
-$ az {"key": "value"} --debug
->> Command arguments: ['{key:', 'value}', '--debug']
-
-# Wrong, as quotes are interpreted by Bash
-$ az {"key":"value"} --debug
->> Command arguments: ['{key:value}', '--debug']
-```
 
 For more information on troubleshooting Azure CLI commands with `--debug`, see [Troubleshooting Azure CLI](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter).
 

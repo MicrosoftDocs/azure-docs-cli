@@ -4,7 +4,7 @@ name: az providerhub operation
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az providerhub operation** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az providerhub operation** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage operation with providerhub.
 status: GA
@@ -17,25 +17,25 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az providerhub operation create --contents
-                                    --provider-namespace
+    az providerhub operation create --provider-namespace
+                                    [--contents]
   examples:
   - summary: |-
-      Operations_CreateOrUpdate
-    syntax: az providerhub operation create --contents "[{\"name\":\"Microsoft.Contoso/Employees/Read\",\"display\":{\"description\":\"Read employees\",\"operation\":\"Gets/List employee resources\",\"provider\":\"Microsoft.Contoso\",\"resource\":\"Employees\"}}]" --provider-namespace "Microsoft.Contoso"
+      operation create
+    syntax: az providerhub operation create --contents "[{{\"name\":\"Private.VPTest/Employees/Read\",\"display\":{{\"default\":{{\"description\":\"Read employees\",\"operation\":\"Gets/List employee resources\",\"provider\":\"Private.VPTest\",\"resource\":\"Employees\"}}}}}}]" --provider-namespace "{providerNamespace}"
   requiredParameters:
-  - isRequired: true
-    name: --contents
-    summary: |-
-      Expected value: json-string/@json-file.
   - isRequired: true
     name: --provider-namespace
     summary: |-
       The name of the resource provider hosted within ProviderHub.
+  optionalParameters:
+  - name: --contents
+    summary: |-
+      Operations content.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_providerhub_operation_delete
   name: az providerhub operation delete
   summary: |-
-    Deletes an operation.
+    Delete an operation.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -45,8 +45,8 @@ directCommands:
                                     [--yes]
   examples:
   - summary: |-
-      Operations_Delete
-    syntax: az providerhub operation delete --provider-namespace "Microsoft.Contoso"
+      operation delete
+    syntax: az providerhub operation delete -y --provider-namespace "{providerNamespace}"
   optionalParameters:
   - name: --ids
     summary: |-
@@ -64,23 +64,69 @@ directCommands:
 - uid: az_providerhub_operation_list
   name: az providerhub operation list
   summary: |-
-    Gets the operations supported by the given provider.
+    List the operations supported by the given provider.
   status: GA
   sourceType: Extension
   syntax: az providerhub operation list --provider-namespace
   examples:
   - summary: |-
-      Operations_ListByProviderRegistration
-    syntax: az providerhub operation list --provider-namespace "Microsoft.Contoso"
+      operation list
+    syntax: az providerhub operation list --provider-namespace "{providerNamespace}"
   requiredParameters:
   - isRequired: true
     name: --provider-namespace
     summary: |-
       The name of the resource provider hosted within ProviderHub.
+- uid: az_providerhub_operation_update
+  name: az providerhub operation update
+  summary: |-
+    Update the operation supported by the given provider.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub operation update [--add]
+                                    [--contents]
+                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                    [--ids]
+                                    [--provider-namespace]
+                                    [--remove]
+                                    [--set]
+                                    [--subscription]
+  examples:
+  - summary: |-
+      operation update
+    syntax: az providerhub operation update --contents "[{{\"name\":\"Private.VPTest/Employees/Read\",\"display\":{{\"default\":{{\"description\":\"Read employees\",\"operation\":\"Gets/List employee resources\",\"provider\":\"Private.VPTest\",\"resource\":\"Employees\"}}}}}}]" --provider-namespace "{providerNamespace}"
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --contents
+    summary: |-
+      Operations content.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --provider-namespace
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 commands:
 - az_providerhub_operation_create
 - az_providerhub_operation_delete
 - az_providerhub_operation_list
+- az_providerhub_operation_update
 globalParameters:
 - name: --debug
   summary: |-

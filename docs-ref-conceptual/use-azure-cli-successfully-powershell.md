@@ -4,6 +4,7 @@ description: Learn how to format Azure CLI parameters for a PowerShell scripting
 ms.date: 06/21/2024
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
+#customer intent: As an Azure CLI developer, I need a single place of information for troubleshooting errors that are unique to executing the Azure CLI in a PowerShell scripting language. When a Bash script won't copy without execution error to PowerShell, I don't want to look through multiple troubleshooting docs. Just give me one-stop troubleshooting for PowerShell. 
 ---
 
 # Considerations for running the Azure CLI in a PowerShell scripting language
@@ -459,26 +460,7 @@ az ad app create --display-name myTestAppName `
 ## Pass parameters containing JSON
 
 For complex arguments like a JSON string, the best practice is to use Azure CLI's `@<file>`
-convention to load from a file to bypass the shell's interpretation. However, here are some additional JSON parameter format values that are correct in PowerShell:
-
-```azurecli
-# Correct
-> az '{\"key\": \"value\"}' --debug
-Command arguments: ['{"key": "value"}', '--debug']
-
-> az "{\`"key\`": \`"value\`"}" --debug
-Command arguments: ['{"key": "value"}', '--debug']
-
-> az "{\""key\"": \""value\""}" --debug
-Command arguments: ['{"key": "value"}', '--debug']
-
-> az --% "{\"key\": \"value\"}" --debug
-Command arguments: ['{"key": "value"}', '--debug']
-
-# Wrong!
-> az '{"key": "value"}' --debug
-Command arguments: ['{key: value}', '--debug']
-```
+convention to load from a file to bypass the shell's interpretation. For JSON syntax examples for Bash, PowerShell and Cmd.exe, see [Quoting differences between scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings).
 
 ## Pass parameters containing key:value pairs
 
@@ -486,10 +468,9 @@ Some Azure CLI parameter values, such as Azure resource tags, require key:value 
 or `value` contains a space or special character, the Bash and PowerShell syntax aren't always the
 same.
 
-See [Create tags to practice quoting differences](./get-started-tutorial-2-environment-syntax.md#create-tags-to-practice-quoting-differences)
+For syntax examples for Bash, PowerShell and Cmd, see [Create tags to practice quoting differences](./get-started-tutorial-2-environment-syntax.md#create-tags-to-practice-quoting-differences)
 in the [Learn to use the Azure CLI](./get-started-tutorial-0-before-you-begin.md) tutorial. This
-tutorial step gives examples for Bash, PowerShell, and Cmd for the following key:value pair
-scenarios:
+tutorial step gives examples for the following key:value pair scenarios:
 
 * spaces
 * empty values
