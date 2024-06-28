@@ -28,7 +28,7 @@ Most errors returned by the Azure CLI fall into one of these categories:
 One of the best ways to see what the Azure CLI is executing for each Azure CLI reference command is to use the `--debug` parameter. Here's examples of `--debug` for both a failed and successful command:
 
 ```azurecli
--- Error example: Create a resource group, but omit the quotes around the resource group name.
+# Error example: Create a resource group, but omit the quotes around the resource group name.
 az group create --location eastus2 --name msdocs-rg-test --debug
 ```
 
@@ -46,7 +46,7 @@ cli.azure.cli.core.azclierror: unrecognized arguments: msdocs-rg-test
 Compare the error `--debug` output given above to a successful execution:
 
 ```azurecli
--- Correct example: Because the resource group name contains special characters, enclose it in quotes
+# Correct example: Because the resource group name contains special characters, enclose it in quotes
 az group create --location eastus2 --name "msdocs-rg-test" --debug
 ```
 

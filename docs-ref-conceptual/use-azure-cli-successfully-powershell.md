@@ -4,6 +4,7 @@ description: Learn how to format Azure CLI parameters for a PowerShell scripting
 ms.date: 06/21/2024
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
+#customer intent: As an Azure CLI developer, I need a single place of information for troubleshooting errors that are unique to executing the Azure CLI in a PowerShell scripting language. When a Bash script won't copy without execution error to PowerShell, I don't want to look through multiple troubleshooting docs. Just give me one-stop troubleshooting for PowerShell. 
 ---
 
 # Considerations for running the Azure CLI in a PowerShell scripting language
