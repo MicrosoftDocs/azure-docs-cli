@@ -126,7 +126,7 @@ PowerShell don't.
   az ad app create --display-name myName --native-app --required-resource-accesses @manifest.json
   ```
 
-Here are the accepted format patterns for Bash, PowerShell and Cmd:
+Here are the accepted JSON format patterns for Bash, PowerShell and Cmd:
 
 ### [Bash](#tab/bash3)
 

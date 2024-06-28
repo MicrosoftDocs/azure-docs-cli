@@ -515,8 +515,6 @@ echo $strExpression
 ```azurecli-interactive
 $strExpression='{"key":"value"}'
 echo $strExpression
-
---PowerShell's Write-Host
 ```
 
 ```output
@@ -524,7 +522,7 @@ echo $strExpression
 ```
 
 > [!NOTE]
-> The Bash `echo` command is an alias of PowerShell's [Write-Host](/powershell/module/microsoft.powershell.utility/write-host) command.
+> The Bash `echo` command when run in a PowerShell scripting language is an alias of PowerShell's [Write-Host](/powershell/module/microsoft.powershell.utility/write-host) command.
 
 # [Cmd](#tab/cmd)
 

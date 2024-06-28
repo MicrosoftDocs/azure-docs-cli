@@ -81,6 +81,8 @@ cli.azure.cli.core.sdk.policies: {"id":"/subscriptions/00000000-0000-0000-0000-0
 cli.__main__: Command ran in 1.829 seconds (init: 0.111, invoke: 1.718)
 ```
 
+For examples of `--debug` for JSON formatting, see [Quoting differences between scripting languages - JSON strings](./use-azure-cli-successfully-quoting.md#json-strings).
+
 ## Common syntax errors
 
 Although the Azure CLI can run in both Bash, PowerShell and Windows Cmd, there are syntax differences between scripting languages. Azure CLI scripts containing single quotes, double quotes, and escape characters usually must be modified when copied between languages. This challenge reveals itself most often in parameter values, especially in values assigned to the `--query` parameter. Here are some common error messages:
