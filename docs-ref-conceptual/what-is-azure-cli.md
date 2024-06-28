@@ -52,7 +52,7 @@ For more information on managing subscriptions, see [Manage subscriptions with A
 | Create Resource Group | az group create --name \<ResourceGroupName> --location eastus |New-AzResourceGroup -Name \<ResourceGroupName> -Location eastus
 | Create Azure Storage Account | az storage account create --name \<StorageAccountName> --resource-group \<ResourceGroupName> --location eastus --sku Standard_LRS --kind StorageV2 | New-AzStorageAccount -Name \<StorageAccountName> -ResourceGroupName \<ResourceGroupName> -Location eastus -SkuName Standard_LRS -Kind StorageV2
 
-For Azure CLI syntax comparisons between Bash and PowerShell environments, see [Learn Azure CLI syntax differences](./get-started-tutorial-2-environment-syntax.md).
+For Azure CLI syntax comparisons between Bash and PowerShell environments, see [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md).
 
 ## Output formats
 

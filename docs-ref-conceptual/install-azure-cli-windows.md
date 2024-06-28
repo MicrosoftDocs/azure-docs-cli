@@ -76,7 +76,7 @@ To install a specific version, replace the `-Uri` argument with the URL describe
 Although most Azure CLI documentation is written and tested in a Bash shell, you can also install and run the Azure CLI using PowerShell. There are subtle syntax differences between Bash and PowerShell. Review these articles to avoid scripting errors:
 - [Considerations for running the Azure CLI in a PowerShell scripting language](./use-azure-cli-successfully-powershell.md)
 - [Use quotation marks in Azure CLI parameters](./use-azure-cli-successfully-quoting.md)
-- Compare syntax of CMD, PowerShell and Bash in [Query command output using JMESPath](./use-azure-cli-successfully-query.md)
+- Compare syntax of Bash, PowerShell and Cmd.exe in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
 
 When running the Azure CLI in PowerShell, there are also error handling differences and the ability to enable tab completion. See these articles for more information:
 - [Error handling for the Azure CLI in PowerShell](./use-azure-cli-successfully-powershell.md#error-handling-for-azure-cli-in-powershell)

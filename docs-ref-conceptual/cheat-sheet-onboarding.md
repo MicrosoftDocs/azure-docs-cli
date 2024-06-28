@@ -49,7 +49,7 @@ Jump straight to reference command examples, sample scripts, and tutorials using
 
 For a side-by-side comparison of Azure CLI and Azure PowerShell syntax, see [Azure CLI vs Azure PowerShell: Side-by-side Command Comparison](/cli/azure/choose-the-right-azure-command-line-tool#azure-cli-vs-azure-powershell-side-by-side-command-comparison).
 
-See script comparisons between Bash, PowerShell, and Cmd in [How to query Azure CLI command output using a JMESPath query](use-azure-cli-successfully-query.md).
+See script comparisons between Bash, PowerShell, and Cmd in [Learn Azure CLI syntax differences in Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md).
 
 ## Learning Azure CLI
 
@@ -60,15 +60,15 @@ The [Learn to use the Azure CLI tutorial](./get-started-tutorial-0-before-you-be
 - [Create an Azure resource containing a random ID in the name](./get-started-tutorial-1-prepare-environment.md#create-a-resource-group-containing-a-random-id)
 - [Set environment variables](./get-started-tutorial-1-prepare-environment.md#set-environment-variables)
 - [Learn syntax differences between Bash, PowerShell and Cmd](./get-started-tutorial-2-environment-syntax.md)
-- [Debug Azure CLI reference commands](./get-started-tutorial-2-environment-syntax.md#debug-azure-cli-reference-commands)
+- [Debug Azure CLI reference commands](./use-azure-cli-successfully-troubleshooting.md#the---debug-parameter)
 - [Get properties from a local JSON file](./get-started-tutorial-3-use-variables.md#get-the-contents-of-a-json-file-and-store-it-in-a-variable)
-- [Delete multiple resources using a script](./get-started-tutorial-4-delete-resources.md#delete-multiple-azure-resources-using-a-script)
+- [Delete multiple resources using a script](./delete-azure-resources-at-scale.md)
 
 There are also several reference commands that provide interactive prompts to help you learn the Azure CLI.
 
 | Command | Description | Example
 |-|-|-|
-| [az interactive](interactive-azure-cli.md) | In a PowerShell console, get auto-completion, command descriptions, and examples as you type. | See [Work in interactive mode](interactive-azure-cli.md) for more information. Example: Type `az interactive` in your console window then <kbd>Enter</kbd>.
+| [az interactive](./interactive-azure-cli.md) | In a PowerShell console, get auto-completion, command descriptions, and examples as you type. | See [Work in interactive mode](./interactive-azure-cli.md) for more information. Example: Type `az interactive` in your console window then <kbd>Enter</kbd>.
 | [az scenario](/cli/azure/scenario) | Get end to end (E2E) examples and execute them with walk-through prompts. | Type `az scenario guide "keywords of interest"` in your console then <kbd>Enter</kbd>. The Azure CLI returns scenarios based on your keyword(s). Example: `az scenario guide "virtual machines"`
 | [az next](/cli/azure/reference-index#az-next) | Get recommendations for the next Azure CLI command based on customer execution patterns. You are prompted to select a command path. | Type `az next` in your console then <kbd>Enter</kbd>. Pick from 1 of 7 preset command paths.
 | [az find](/cli/azure/reference-index#az-find) | This is an AI robot that will return reference examples for keywords. | Type `az find "active subscription"` in your console then <kbd>Enter</kbd>.
@@ -82,6 +82,6 @@ Another great way to learn to use the Azure CLI is through [Microsoft Learn Modu
 | How do I know what subscription I'm using? | `az account show --output table` | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli#get-the-active-subscription)
 | How do I change my subscription? | `az account set --subscription "mySubscriptionName"` | [How to manage Azure subscriptions with the Azure CLI](/cli/azure/manage-azure-subscriptions-azure-cli#change-the-active-subscription)
 | How can I set a default resource group and location? | `az config set defaults.location=westus2 defaults.group=MyResourceGroup` | [Configure settings using az config](/cli/azure/azure-cli-configuration#configure-settings-using-az-config)
-| How do I query command output? | `az account show --query "{tenantId:tenantId,subscriptionid:id}"` | See [How to query Azure CLI command output using a JMESPath query](use-azure-cli-successfully-query.md) for many `--query` examples in Bash, PowerShell and Cmd.
-| How do I format output from a command? | `az account list --output table` | [Output formats for Azure CLI commands](format-output-azure-cli.md)
-| Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different technical strengths, and for that reason, Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](use-azure-cli-successfully-bash.md)
+| How do I query command output? | `az account show --query "{tenantId:tenantId,subscriptionid:id}"` | See [How to query Azure CLI command output using a JMESPath query](./use-azure-cli-successfully-query.md) for many `--query` examples in Bash, PowerShell and Cmd.
+| How do I format output from a command? | `az account list --output table` | [Output formats for Azure CLI commands](./format-output-azure-cli.md)
+| Can you help me to learn Bash with Azure CLI commands? | Absolutely! We all have different technical strengths, and for that reason, Microsoft offers a How-to guide for learning Bash.  Enjoy! |  [Learn to use Bash with the Azure CLI](./use-azure-cli-successfully-bash.md)
