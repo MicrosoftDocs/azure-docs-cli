@@ -4,7 +4,7 @@ name: az providerhub custom-rollout
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az providerhub custom-rollout** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az providerhub custom-rollout** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage custom rollout with providerhub.
 status: GA
@@ -17,61 +17,167 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az providerhub custom-rollout create --canary
+    az providerhub custom-rollout create --name
                                          --provider-namespace
-                                         --rollout-name
+                                         [--auto-provision-config]
+                                         [--canary]
+                                         [--manifest-checkin-spec]
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--provider-registration]
+                                         [--refresh-sub-reg {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--release-scopes]
+                                         [--resource-type-registrations]
+                                         [--skip-release-scope-validation {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--status]
   examples:
   - summary: |-
-      CustomRollouts_CreateOrUpdate
-    syntax: az providerhub custom-rollout create --canary regions="eastus2euap" regions="centraluseuap" --provider-namespace "Microsoft.Contoso" --rollout-name "eastus2euapShoeBoxTesting"
+      custom-rollout create
+    syntax: az providerhub custom-rollout create --provider-namespace "{providerNamespace}" --rollout-name "{customRolloutName}" --canary region="EastUS2EUAP" region="centraluseuap"
   requiredParameters:
   - isRequired: true
-    name: --canary
+    name: --name --rollout-name -n
     summary: |-
-      The canary regions to apply the manifest.
-    description: |-
-      Usage: --canary regions=XX
-
-      Multiple actions can be specified by using more than one regions=XX argument.
+      The rollout name.
   - isRequired: true
     name: --provider-namespace
     summary: |-
       The name of the resource provider hosted within ProviderHub.
-  - isRequired: true
-    name: --rollout-name
+  optionalParameters:
+  - name: --auto-provision-config
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --canary
+    summary: |-
+      The canary regions to apply the manifest.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --manifest-checkin-spec --manifest-checkin-specification
+    summary: |-
+      The manifest checkin specification.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --provider-registration
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --refresh-sub-reg --refresh-subscription-registration
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Determines if subscription registration should be refreshed.
+  - name: --release-scopes
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --resource-type-registrations --rt-regs
+    summary: |-
+      The resource type registrations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --skip-release-scope-validation --skip-validation
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Determines if release scope validation should be skipped.
+  - name: --status
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+- uid: az_providerhub_custom-rollout_delete
+  name: az providerhub custom-rollout delete
+  summary: |-
+    Delete the custom rollout resource. Custom rollout must be in terminal state.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub custom-rollout delete [--ids]
+                                         [--name]
+                                         [--provider-namespace]
+                                         [--subscription]
+                                         [--yes]
+  examples:
+  - summary: |-
+      custom-rollout delete
+    syntax: az providerhub custom-rollout delete --provider-namespace "{providerNamespace}" --rollout-name "{customRolloutName}"
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --rollout-name -n
     summary: |-
       The rollout name.
+  - name: --provider-namespace
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_providerhub_custom-rollout_list
   name: az providerhub custom-rollout list
   summary: |-
-    Gets the list of the custom rollouts for the given provider.
+    List the list of the custom rollouts for the given provider.
   status: GA
   sourceType: Extension
-  syntax: az providerhub custom-rollout list --provider-namespace
+  syntax: >-
+    az providerhub custom-rollout list --provider-namespace
+                                       [--max-items]
+                                       [--next-token]
   examples:
   - summary: |-
-      CustomRollouts_ListByProviderRegistration
-    syntax: az providerhub custom-rollout list --provider-namespace "Microsoft.Contoso"
+      custom-rollout list
+    syntax: az providerhub custom-rollout list --provider-namespace "{providerNamespace}"
   requiredParameters:
   - isRequired: true
     name: --provider-namespace
     summary: |-
       The name of the resource provider hosted within ProviderHub.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_providerhub_custom-rollout_show
   name: az providerhub custom-rollout show
   summary: |-
-    Gets the custom rollout details.
+    Get the custom rollout details.
   status: GA
   sourceType: Extension
   syntax: >-
     az providerhub custom-rollout show [--ids]
+                                       [--name]
+                                       [--provider-namespace]
+                                       [--subscription]
+  examples:
+  - summary: |-
+      custom-rollout show
+    syntax: az providerhub custom-rollout show --provider-namespace "{providerNamespace}" --rollout-name "{customRolloutName}"
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --rollout-name -n
+    summary: |-
+      The rollout name.
+  - name: --provider-namespace
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_providerhub_custom-rollout_stop
+  name: az providerhub custom-rollout stop
+  summary: |-
+    Stops or cancels the custom rollout, if in progress.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub custom-rollout stop [--ids]
                                        [--provider-namespace]
                                        [--rollout-name]
                                        [--subscription]
   examples:
   - summary: |-
-      CustomRollouts_Get
-    syntax: az providerhub custom-rollout show --provider-namespace "Microsoft.Contoso" --rollout-name "canaryTesting99"
+      custom-rollout stop
+    syntax: az providerhub custom-rollout stop --provider-namespace "{providerNamespace}" --rollout-name "{customRolloutName}"
   optionalParameters:
   - name: --ids
     summary: |-
@@ -85,10 +191,160 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_providerhub_custom-rollout_update
+  name: az providerhub custom-rollout update
+  summary: |-
+    Update the rollout details.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub custom-rollout update [--add]
+                                         [--auto-provision-config]
+                                         [--canary]
+                                         [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--ids]
+                                         [--manifest-checkin-spec]
+                                         [--name]
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--provider-namespace]
+                                         [--provider-registration]
+                                         [--refresh-sub-reg {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--release-scopes]
+                                         [--remove]
+                                         [--resource-type-registrations]
+                                         [--set]
+                                         [--skip-release-scope-validation {0, 1, f, false, n, no, t, true, y, yes}]
+                                         [--status]
+                                         [--subscription]
+  examples:
+  - summary: |-
+      custom-rollout update
+    syntax: az providerhub custom-rollout update --provider-namespace "{providerNamespace}" --rollout-name "{customRolloutName}" --canary region="EastUS2EUAP" region="centraluseuap"
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --auto-provision-config
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --canary
+    summary: |-
+      The canary regions to apply the manifest.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --manifest-checkin-spec --manifest-checkin-specification
+    summary: |-
+      The manifest checkin specification.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --name --rollout-name -n
+    summary: |-
+      The rollout name.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --provider-namespace
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --provider-registration
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --refresh-sub-reg --refresh-subscription-registration
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Determines if subscription registration should be refreshed.
+  - name: --release-scopes
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --resource-type-registrations --rt-regs
+    summary: |-
+      The resource type registrations.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --skip-release-scope-validation --skip-validation
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Determines if release scope validation should be skipped.
+  - name: --status
+    summary: |-
+      Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_providerhub_custom-rollout_wait
+  name: az providerhub custom-rollout wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub custom-rollout wait [--created]
+                                       [--custom]
+                                       [--deleted]
+                                       [--exists]
+                                       [--ids]
+                                       [--interval]
+                                       [--name]
+                                       [--provider-namespace]
+                                       [--subscription]
+                                       [--timeout]
+                                       [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --rollout-name -n
+    summary: |-
+      The rollout name.
+  - name: --provider-namespace
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_providerhub_custom-rollout_create
+- az_providerhub_custom-rollout_delete
 - az_providerhub_custom-rollout_list
 - az_providerhub_custom-rollout_show
+- az_providerhub_custom-rollout_stop
+- az_providerhub_custom-rollout_update
+- az_providerhub_custom-rollout_wait
 globalParameters:
 - name: --debug
   summary: |-

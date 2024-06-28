@@ -4,7 +4,7 @@ name: az providerhub notification-registration
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.15.0 or higher). The extension will automatically install the first time you run an **az providerhub notification-registration** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **providerhub** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az providerhub notification-registration** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage notification registration with providerhub.
 status: GA
@@ -25,8 +25,8 @@ directCommands:
                                                     [--notification-mode {EventHub, NotSpecified, WebHook}]
   examples:
   - summary: |-
-      NotificationRegistrations_CreateOrUpdate
-    syntax: az providerhub notification-registration create --name "testNotificationRegistration" --included-events "*/write" "Microsoft.Contoso/employees/delete" --message-scope "RegisteredSubscriptions" --notification-endpoints locations="" locations="East US" notification-destination="/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications" --notification-endpoints locations="North Europe" notification-destination="/subscriptions/00000000-0000-0000-0000-000000000000   /resourceGroups/mgmtexp-northeurope/providers/Microsoft.EventHub/namespaces/europe-mgmtexpint/eventhubs/armlinkednotifications" --notification-mode "EventHub" --provider-namespace "Microsoft.Contoso"
+      notification-registration create
+    syntax: az providerhub notification-registration create --name "{notificationRegistration}" --included-events "*/write" "Microsoft.Contoso/employees/delete" --message-scope "RegisteredSubscriptions" --notification-endpoints [{notification-destination:/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications,locations:[EastUS]}] --notification-mode "EventHub" --provider-namespace "{providerNamespace}"
   requiredParameters:
   - isRequired: true
     name: --name --notification-registration-name -n
@@ -39,19 +39,14 @@ directCommands:
   optionalParameters:
   - name: --included-events
     summary: |-
-      These are the events that the RP should be messaged on. The message format is in the form {RP Namespace}/{Resource Type}/{action}. The availabe actions are: write, delete and move/action.
+      These are the events that the RP should be messaged on. The message format is in the form {RP Namespace}/{ResourceType}/{action}. The available actions are: write, delete and move/action.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --message-scope
     parameterValueGroup: "NotSpecified, RegisteredSubscriptions"
     summary: |-
       Limits the messages that are sent to the RP. The default value is RegisteredSubscriptions. The available values are Global (all messages in Azure) and RegisteredSubscriptions (only messages in subscriptions registered by RP).
   - name: --notification-endpoints
     summary: |-
-      These are the locations for the notification messages. Notifications will be sent to the region of the event resource's location (e.g. VM in East Us will send message to the specified endpoint in East US).
-    description: |-
-      Usage: --notification-endpoints notification-destination=XX locations=XX
-
-
-      Multiple actions can be specified by using more than one --notification-endpoints argument.
+      These are the locations for the notification messages. Notifications will be sent to the region of the event resource's location (e.g. VM in East Us will send message to the specified endpoint in East US).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --notification-mode
     parameterValueGroup: "EventHub, NotSpecified, WebHook"
     summary: |-
@@ -59,7 +54,7 @@ directCommands:
 - uid: az_providerhub_notification-registration_delete
   name: az providerhub notification-registration delete
   summary: |-
-    Deletes a notification registration.
+    Delete a notification registration.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -70,8 +65,8 @@ directCommands:
                                                     [--yes]
   examples:
   - summary: |-
-      NotificationRegistrations_Delete
-    syntax: az providerhub notification-registration delete --name "testNotificationRegistration" --provider-namespace "Microsoft.Contoso"
+      notification-registration delete
+    syntax: az providerhub notification-registration delete -y --name "{notificationRegistration}" --provider-namespace "{providerNamespace}"
   optionalParameters:
   - name: --ids
     summary: |-
@@ -92,23 +87,33 @@ directCommands:
 - uid: az_providerhub_notification-registration_list
   name: az providerhub notification-registration list
   summary: |-
-    Gets the list of the notification registrations for the given provider.
+    List the list of the notification registrations for the given provider.
   status: GA
   sourceType: Extension
-  syntax: az providerhub notification-registration list --provider-namespace
+  syntax: >-
+    az providerhub notification-registration list --provider-namespace
+                                                  [--max-items]
+                                                  [--next-token]
   examples:
   - summary: |-
-      NotificationRegistrations_ListByProviderRegistration
-    syntax: az providerhub notification-registration list --provider-namespace "Microsoft.Contoso"
+      notification-registration list
+    syntax: az providerhub notification-registration list --provider-namespace "{providerNamespace}"
   requiredParameters:
   - isRequired: true
     name: --provider-namespace
     summary: |-
       The name of the resource provider hosted within ProviderHub.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_providerhub_notification-registration_show
   name: az providerhub notification-registration show
   summary: |-
-    Gets the notification registration details.
+    Get the notification registration details.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -118,8 +123,8 @@ directCommands:
                                                   [--subscription]
   examples:
   - summary: |-
-      NotificationRegistrations_Get
-    syntax: az providerhub notification-registration show --name "testNotificationRegistration" --provider-namespace "Microsoft.Contoso"
+      notification-registration show
+    syntax: az providerhub notification-registration show --name "{notificationRegistration}" --provider-namespace "{providerNamespace}"
   optionalParameters:
   - name: --ids
     summary: |-
@@ -133,11 +138,75 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+- uid: az_providerhub_notification-registration_update
+  name: az providerhub notification-registration update
+  summary: |-
+    Update a notification registration.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az providerhub notification-registration update [--add]
+                                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                                    [--ids]
+                                                    [--included-events]
+                                                    [--message-scope {NotSpecified, RegisteredSubscriptions}]
+                                                    [--name]
+                                                    [--notification-endpoints]
+                                                    [--notification-mode {EventHub, NotSpecified, WebHook}]
+                                                    [--provider-namespace]
+                                                    [--remove]
+                                                    [--set]
+                                                    [--subscription]
+  examples:
+  - summary: |-
+      notification-registration update
+    syntax: az providerhub notification-registration update --name "{notificationRegistration}" --included-events "*/write" "Microsoft.Contoso/employees/delete" --message-scope "RegisteredSubscriptions" --notification-endpoints [{notification-destination:/subscriptions/ac6bcfb5-3dc1-491f-95a6-646b89bf3e88/resourceGroups/mgmtexp-eastus/providers/Microsoft.EventHub/namespaces/unitedstates-mgmtexpint/eventhubs/armlinkednotifications,locations:[EastUS]}] --notification-mode "EventHub" --provider-namespace "{providerNamespace}"
+  optionalParameters:
+  - name: --add
+    summary: |-
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --force-string
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --included-events
+    summary: |-
+      These are the events that the RP should be messaged on. The message format is in the form {RP Namespace}/{ResourceType}/{action}. The available actions are: write, delete and move/action.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --message-scope
+    parameterValueGroup: "NotSpecified, RegisteredSubscriptions"
+    summary: |-
+      Limits the messages that are sent to the RP. The default value is RegisteredSubscriptions. The available values are Global (all messages in Azure) and RegisteredSubscriptions (only messages in subscriptions registered by RP).
+  - name: --name --notification-registration-name -n
+    summary: |-
+      The notification registration.
+  - name: --notification-endpoints
+    summary: |-
+      These are the locations for the notification messages. Notifications will be sent to the region of the event resource's location (e.g. VM in East Us will send message to the specified endpoint in East US).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --notification-mode
+    parameterValueGroup: "EventHub, NotSpecified, WebHook"
+    summary: |-
+      Determines how the notifications are sent to the RP. The two available modes are EventHub and Webhook.
+  - name: --provider-namespace
+    summary: |-
+      The name of the resource provider hosted within ProviderHub.
+  - name: --remove
+    summary: |-
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+  - name: --set
+    summary: |-
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 commands:
 - az_providerhub_notification-registration_create
 - az_providerhub_notification-registration_delete
 - az_providerhub_notification-registration_list
 - az_providerhub_notification-registration_show
+- az_providerhub_notification-registration_update
 globalParameters:
 - name: --debug
   summary: |-
