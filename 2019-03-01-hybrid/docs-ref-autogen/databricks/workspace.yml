@@ -4,7 +4,7 @@ name: az databricks workspace
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **databricks** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az databricks workspace** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **databricks** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az databricks workspace** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage databricks workspace.
 status: GA
@@ -19,11 +19,15 @@ directCommands:
   syntax: >-
     az databricks workspace create --name
                                    --resource-group
+                                   [--access-connector]
+                                   [--default-catalog]
+                                   [--default-storage-firewall {Disabled, Enabled}]
                                    [--disk-key-auto-rotation {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--disk-key-name]
                                    [--disk-key-vault]
                                    [--disk-key-version]
                                    [--enable-no-public-ip {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--enhanced-security-compliance]
                                    [--location]
                                    [--managed-resource-group]
                                    [--managed-services-key-name]
@@ -56,6 +60,16 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --access-connector
+    summary: |-
+      Access Connector Resource that is going to be associated with Databricks Workspace  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --default-catalog
+    summary: |-
+      Properties for Default Catalog configuration during workspace creation.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --default-storage-firewall
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Gets or Sets Default Storage Firewall configuration information.
   - name: --disk-key-auto-rotation
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -73,6 +87,9 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Flag to enable the no public ip feature.
+  - name: --enhanced-security-compliance
+    summary: |-
+      Contains settings related to the Enhanced Security and Compliance Add-On.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.  When not specified, the location of the resource group will be used.
@@ -130,7 +147,8 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az databricks workspace delete [--ids]
+    az databricks workspace delete [--force-deletion {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--ids]
                                    [--name]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--resource-group]
@@ -141,6 +159,11 @@ directCommands:
       Delete the workspace
     syntax: az databricks workspace delete --resource-group MyResourceGroup --name MyWorkspace -y
   optionalParameters:
+  - name: --force-deletion
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Optional parameter to retain default unity catalog data. By default the data will retained if Uc is enabled on the workspace.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -167,7 +190,10 @@ directCommands:
     Get all the workspaces.
   status: GA
   sourceType: Extension
-  syntax: az databricks workspace list [--resource-group]
+  syntax: >-
+    az databricks workspace list [--max-items]
+                                 [--next-token]
+                                 [--resource-group]
   examples:
   - summary: |-
       List workspaces within a resource group
@@ -176,6 +202,12 @@ directCommands:
       List workspaces within the default subscription
     syntax: az databricks workspace list
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -214,12 +246,16 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az databricks workspace update [--add]
+    az databricks workspace update [--access-connector]
+                                   [--add]
+                                   [--default-catalog]
+                                   [--default-storage-firewall {Disabled, Enabled}]
                                    [--disk-key-auto-rotation {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--disk-key-name]
                                    [--disk-key-vault]
                                    [--disk-key-version]
                                    [--enable-no-public-ip {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--enhanced-security-compliance]
                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--ids]
                                    [--key-name]
@@ -258,9 +294,19 @@ directCommands:
       Revert encryption to Microsoft Managed Keys
     syntax: az databricks workspace update --resource-group MyResourceGroup --name MyWorkspace --key-source Default
   optionalParameters:
+  - name: --access-connector
+    summary: |-
+      Access Connector Resource that is going to be associated with Databricks Workspace  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --default-catalog
+    summary: |-
+      Properties for Default Catalog configuration during workspace creation.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --default-storage-firewall
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Gets or Sets Default Storage Firewall configuration information.
   - name: --disk-key-auto-rotation
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -278,6 +324,9 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Flag to enable the no public ip feature.
+  - name: --enhanced-security-compliance
+    summary: |-
+      Contains settings related to the Enhanced Security and Compliance Add-On.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
