@@ -18,25 +18,24 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az apic metadata create --assignments
-                            --metadata-schema
+                            --metadata-name
                             --resource-group
                             --schema
-                            --service
-                            [--file-name]
+                            --service-name
   examples:
   - summary: |-
       Create metadata example 1
-    syntax: "az apic metadata create --resource-group api-center-test --service-name contoso --name \"test1\" --schema '{\"type\":\"string\", \"title\":\"First name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}' --assignments '[{entity:api,required:true,deprecated:false}]'"
+    syntax: "az apic metadata create --resource-group api-center-test --service-name contoso --metadata-name \"test1\" --schema '{\"type\":\"string\", \"title\":\"First name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}' --assignments '[{entity:api,required:true,deprecated:false}]'"
   - summary: |-
       Create metadata example 2
-    syntax: az apic metadata create --resource-group api-center-test --service-name contoso  --name testregion --schema '{"type":"string","title":"testregion","oneOf":[{"const":"Region1","description":""},{"const":"Region2","description":""},{"const":"Region3","description":""}]}' --assignments '[{entity:api,required:true,deprecated:false},{entity:environment,required:true,deprecated:false}]'
+    syntax: az apic metadata create --resource-group api-center-test --service-name contoso  --metadata-name testregion --schema '{"type":"string","title":"testregion","oneOf":[{"const":"Region1","description":""},{"const":"Region2","description":""},{"const":"Region3","description":""}]}' --assignments '[{entity:api,required:true,deprecated:false},{entity:environment,required:true,deprecated:false}]'
   requiredParameters:
   - isRequired: true
     name: --assignments
     summary: |-
       Defines the assignment scope for the custom metadata, e.g. "[{entity:api,required:true,deprecated:false}]". The available entity values are: api, deployment, environment.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - isRequired: true
-    name: --metadata-schema --metadata-schema-name --name
+    name: --metadata-name
     summary: |-
       The name of the metadata schema.
   - isRequired: true
@@ -48,13 +47,9 @@ directCommands:
     summary: |-
       JSON schema defining the type.
   - isRequired: true
-    name: --service --service-name -s
+    name: --service-name -n
     summary: |-
-      The name of the API Center service.
-  optionalParameters:
-  - name: --file-name
-    summary: |-
-      Name of the file from that contains the metadata schema.
+      The name of Azure API Center service.
 - uid: az_apic_metadata_delete
   name: az apic metadata delete
   summary: |-
@@ -63,31 +58,31 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az apic metadata delete [--ids]
-                            [--metadata-schema]
+                            [--metadata-name]
                             [--resource-group]
-                            [--service]
+                            [--service-name]
                             [--subscription]
                             [--yes]
   examples:
   - summary: |-
       Delete Metadata Schema
-    syntax: az apic metadata delete --resource-group api-center-test --service-name contoso --name "test1"
+    syntax: az apic metadata delete --resource-group api-center-test --service-name contoso --metadata-name "test1"
   - summary: |-
       Delete schema
-    syntax: az apic metadata delete -g api-center-test -s contosoeuap --name "approver"
+    syntax: az apic metadata delete -g api-center-test -n contosoeuap --metadata-name "approver"
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --metadata-schema --metadata-schema-name --name
+  - name: --metadata-name
     summary: |-
       The name of the metadata schema.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -105,20 +100,20 @@ directCommands:
     az apic metadata export --assignments {api, deployment, environment}
                             --file-name
                             [--ids]
-                            [--name]
                             [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                             [--resource-group]
+                            [--service-name]
                             [--subscription]
   examples:
   - summary: |-
       Export Metadata Schema assigned to api
-    syntax: az apic metadata export -g api-center-test -s contosoeuap --assignments api --file-name filename.json
+    syntax: az apic metadata export -g api-center-test -n contosoeuap --assignments api --file-name filename.json
   - summary: |-
       Export Metadata Schema assigned to deployment
-    syntax: az apic metadata export -g api-center-test -s contosoeuap --assignments deployment --file-name filename.json
+    syntax: az apic metadata export -g api-center-test -n contosoeuap --assignments deployment --file-name filename.json
   - summary: |-
       Export Metadata Schema assigned to environment
-    syntax: az apic metadata export -g api-center-test -s contosoeuap --assignments environment --file-name filename.json
+    syntax: az apic metadata export -g api-center-test -n contosoeuap --assignments environment --file-name filename.json
   requiredParameters:
   - isRequired: true
     name: --assignments
@@ -133,9 +128,6 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name --service --service-name -s
-    summary: |-
-      The name of the API Center service.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -143,6 +135,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --service-name -n
+    summary: |-
+      The name of the API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -154,23 +149,23 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az apic metadata list --resource-group
-                          --service
+                          --service-name
                           [--filter]
                           [--max-items]
                           [--next-token]
   examples:
   - summary: |-
       List schemas
-    syntax: az apic metadata list -g api-center-test -s contosoeuap
+    syntax: az apic metadata list -g api-center-test -n contosoeuap
   requiredParameters:
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --service --service-name -s
+    name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   optionalParameters:
   - name: --filter
     summary: |-
@@ -189,30 +184,30 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az apic metadata show [--ids]
-                          [--metadata-schema]
+                          [--metadata-name]
                           [--resource-group]
-                          [--service]
+                          [--service-name]
                           [--subscription]
   examples:
   - summary: |-
       Show schema details 1
-    syntax: az apic metadata show -g api-center-test -s contosoeuap --name approver
+    syntax: az apic metadata show -g api-center-test -n contosoeuap --metadata-name approver
   - summary: |-
       Show schema details 2
-    syntax: az apic metadata show --resource-group api-center-test --service-name contoso --name "testchoices"
+    syntax: az apic metadata show --resource-group api-center-test --service-name contoso --metadata-name "testchoices"
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --metadata-schema --metadata-schema-name --name
+  - name: --metadata-name
     summary: |-
       The name of the metadata schema.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -225,20 +220,19 @@ directCommands:
   syntax: >-
     az apic metadata update [--add]
                             [--assignments]
-                            [--file-name]
                             [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                             [--ids]
-                            [--metadata-schema]
+                            [--metadata-name]
                             [--remove]
                             [--resource-group]
                             [--schema]
-                            [--service]
+                            [--service-name]
                             [--set]
                             [--subscription]
   examples:
   - summary: |-
       Update schema
-    syntax: "az apic metadata update --resource-group api-center-test --service-name contoso --name \"test1\" --schema '{\"type\":\"string\", \"title\":\"Last name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}'"
+    syntax: "az apic metadata update --resource-group api-center-test --service-name contoso --metadata-name \"test1\" --schema '{\"type\":\"string\", \"title\":\"Last name\", \"pattern\": \"^[a-zA-Z0-9]+$\"}'"
   optionalParameters:
   - name: --add
     summary: |-
@@ -246,9 +240,6 @@ directCommands:
   - name: --assignments
     summary: |-
       Defines the assignment scope for the custom metadata, e.g. "[{entity:api,required:true,deprecated:false}]". The available entity values are: api, deployment, environment.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --file-name
-    summary: |-
-      Name of the file from that contains the metadata schema.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -256,7 +247,7 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --metadata-schema --metadata-schema-name --name
+  - name: --metadata-name
     summary: |-
       The name of the metadata schema.
   - name: --remove
@@ -268,9 +259,9 @@ directCommands:
   - name: --schema
     summary: |-
       YAML schema defining the type.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.

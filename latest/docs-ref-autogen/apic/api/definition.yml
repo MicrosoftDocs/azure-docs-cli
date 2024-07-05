@@ -20,14 +20,14 @@ directCommands:
     az apic api definition create --api-id
                                   --definition-id
                                   --resource-group
-                                  --service
+                                  --service-name
                                   --title
                                   --version-id
                                   [--description]
   examples:
   - summary: |-
       Create API definition
-    syntax: az apic api definition create -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi" --title "OpenAPI"
+    syntax: az apic api definition create -g api-center-test -n contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi" --title "OpenAPI"
   requiredParameters:
   - isRequired: true
     name: --api-id
@@ -42,9 +42,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --service --service-name -s
+    name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - isRequired: true
     name: --title
     summary: |-
@@ -68,14 +68,14 @@ directCommands:
                                   [--definition-id]
                                   [--ids]
                                   [--resource-group]
-                                  [--service]
+                                  [--service-name]
                                   [--subscription]
                                   [--version-id]
                                   [--yes]
   examples:
   - summary: |-
       Delete API definition
-    syntax: az apic api definition delete -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi"
+    syntax: az apic api definition delete -g api-center-test -n contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi"
   optionalParameters:
   - name: --api-id
     summary: |-
@@ -89,9 +89,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -115,13 +115,13 @@ directCommands:
                                                 [--ids]
                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--resource-group]
-                                                [--service]
+                                                [--service-name]
                                                 [--subscription]
                                                 [--version-id]
   examples:
   - summary: |-
       Export Specification
-    syntax: az apic api version definition export-specification -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id default
+    syntax: az apic api definition export-specification -g api-center-test -n contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id default --file-name filename.json
   requiredParameters:
   - isRequired: true
     name: --file-name
@@ -144,9 +144,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -160,25 +160,38 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az apic api definition import-specification [--api-id]
+    az apic api definition import-specification --format {inline, link}
+                                                --specification
+                                                --value
+                                                [--api-id]
                                                 [--definition-id]
-                                                [--file-name]
-                                                [--format {inline, link}]
                                                 [--ids]
                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                                 [--resource-group]
-                                                [--service]
-                                                [--specification]
+                                                [--service-name]
                                                 [--subscription]
-                                                [--value]
                                                 [--version-id]
   examples:
   - summary: |-
       Import specification example 1
-    syntax: az apic api definition import-specification -g api-center-test -s contosoeuap --api-id echo-api-2 --version-id 2023-08-01 --definition-id openapi3 --format "inline" --value '{"openapi":"3.0.1","info":{"title":"httpbin.org","description":"API Management facade for a very handy and free online HTTP tool.","version":"1.0"}}' --specification '{"name":"openapi","version":"3.0.0"}'
+    syntax: az apic api definition import-specification -g api-center-test -n contosoeuap --api-id echo-api-2 --version-id 2023-08-01 --definition-id openapi3 --format "inline" --value '{"openapi":"3.0.1","info":{"title":"httpbin.org","description":"API Management facade for a very handy and free online HTTP tool.","version":"1.0"}}' --specification '{"name":"openapi","version":"3.0.0"}'
   - summary: |-
       Import specification example 2
-    syntax: az apic api definition import-specification -g api-center-test -s contoso --api-id echo-api --version-id 2023-11-01 --definition-id openapi --format "link" --value 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json' --specification '{"name":"openapi","version":"3.0.0"}'
+    syntax: az apic api definition import-specification -g api-center-test -n contoso --api-id echo-api --version-id 2023-11-01 --definition-id openapi --format "link" --value 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json' --specification '{"name":"openapi","version":"3.0.0"}'
+  requiredParameters:
+  - isRequired: true
+    name: --format
+    parameterValueGroup: "inline, link"
+    summary: |-
+      Format of the API specification source.
+  - isRequired: true
+    name: --specification
+    summary: |-
+      API specification details.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - isRequired: true
+    name: --value
+    summary: |-
+      Value of the API specification source.
   optionalParameters:
   - name: --api-id
     summary: |-
@@ -186,13 +199,6 @@ directCommands:
   - name: --definition-id
     summary: |-
       The id of the API definition.
-  - name: --file-name
-    summary: |-
-      Name of the file from where to import the spec from.
-  - name: --format
-    parameterValueGroup: "inline, link"
-    summary: |-
-      Format of the API specification source.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -203,18 +209,12 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
-  - name: --specification
-    summary: |-
-      API specification details.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --value
-    summary: |-
-      Value of the API specification source.
   - name: --version-id
     summary: |-
       The id of the API version.
@@ -227,7 +227,7 @@ directCommands:
   syntax: >-
     az apic api definition list --api-id
                                 --resource-group
-                                --service
+                                --service-name
                                 --version-id
                                 [--filter]
                                 [--max-items]
@@ -235,7 +235,7 @@ directCommands:
   examples:
   - summary: |-
       List API definitions
-    syntax: az apic api definition list -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01
+    syntax: az apic api definition list -g api-center-test -n contosoeuap --api-id echo-api --version-id 2023-01-01
   requiredParameters:
   - isRequired: true
     name: --api-id
@@ -246,9 +246,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --service --service-name -s
+    name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - isRequired: true
     name: --version-id
     summary: |-
@@ -274,13 +274,13 @@ directCommands:
                                 [--definition-id]
                                 [--ids]
                                 [--resource-group]
-                                [--service]
+                                [--service-name]
                                 [--subscription]
                                 [--version-id]
   examples:
   - summary: |-
       Show API definition details
-    syntax: az apic api definition show -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi"
+    syntax: az apic api definition show -g api-center-test -n contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi"
   optionalParameters:
   - name: --api-id
     summary: |-
@@ -294,9 +294,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -318,7 +318,7 @@ directCommands:
                                   [--ids]
                                   [--remove]
                                   [--resource-group]
-                                  [--service]
+                                  [--service-name]
                                   [--set]
                                   [--subscription]
                                   [--title]
@@ -326,7 +326,7 @@ directCommands:
   examples:
   - summary: |-
       Update API definition
-    syntax: az apic api definition update -g api-center-test -s contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi" --title "OpenAPI"
+    syntax: az apic api definition update -g api-center-test -n contosoeuap --api-id echo-api --version-id 2023-01-01 --definition-id "openapi" --title "OpenAPI"
   optionalParameters:
   - name: --add
     summary: |-
@@ -353,9 +353,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
