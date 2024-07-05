@@ -18,60 +18,59 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az apic api deployment create --api-id
+                                  --definition-id
                                   --deployment-id
+                                  --environment-id
                                   --resource-group
-                                  --service
+                                  --server
+                                  --service-name
+                                  --title
                                   [--custom-properties]
-                                  [--definition-id]
                                   [--description]
-                                  [--environment-id]
-                                  [--server]
-                                  [--state {active, inactive}]
-                                  [--title]
   examples:
   - summary: |-
       Create deployment
-    syntax: az apic api deployment create -g api-center-test -s contoso --deployment-id production --title "Production deployment" --description "Public cloud production deployment." --api-id echo-api --environment-id "/workspaces/default/environments/production" --definition-id "/workspaces/default/apis/echo-api/versions/2023-01-01/definitions/openapi" --server '{"runtimeUri":["https://example.com"]}'
+    syntax: az apic api deployment create -g api-center-test -n contoso --deployment-id production --title "Production deployment" --description "Public cloud production deployment." --api-id echo-api --environment-id "/workspaces/default/environments/production" --definition-id "/workspaces/default/apis/echo-api/versions/2023-01-01/definitions/openapi" --server '{"runtimeUri":["https://example.com"]}'
   requiredParameters:
   - isRequired: true
     name: --api-id
     summary: |-
       The id of the API.
   - isRequired: true
+    name: --definition-id
+    summary: |-
+      API center-scoped definition resource ID.
+  - isRequired: true
     name: --deployment-id
     summary: |-
       The id of the API deployment.
+  - isRequired: true
+    name: --environment-id
+    summary: |-
+      API center-scoped environment resource ID.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --service --service-name -s
+    name: --server
     summary: |-
-      The name of the API Center service.
+      Server  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - isRequired: true
+    name: --service-name -n
+    summary: |-
+      The name of Azure API Center service.
+  - isRequired: true
+    name: --title
+    summary: |-
+      Deployment title.
   optionalParameters:
   - name: --custom-properties
     summary: |-
       The custom metadata defined for API catalog entities.  Support json-file and yaml-file.
-  - name: --definition-id
-    summary: |-
-      API center-scoped definition resource ID.
   - name: --description
     summary: |-
       Description of the deployment.
-  - name: --environment-id
-    summary: |-
-      API center-scoped environment resource ID.
-  - name: --server
-    summary: |-
-      Server  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --state
-    parameterValueGroup: "active, inactive"
-    summary: |-
-      State of API deployment.
-  - name: --title
-    summary: |-
-      Deployment title.
 - uid: az_apic_api_deployment_delete
   name: az apic api deployment delete
   summary: |-
@@ -83,13 +82,13 @@ directCommands:
                                   [--deployment-id]
                                   [--ids]
                                   [--resource-group]
-                                  [--service]
+                                  [--service-name]
                                   [--subscription]
                                   [--yes]
   examples:
   - summary: |-
       Delete API deployment
-    syntax: az apic api deployment delete -g api-center-test -s contoso --deployment-id production --api-id echo-api
+    syntax: az apic api deployment delete -g api-center-test -n contoso --deployment-id production --api-id echo-api
   optionalParameters:
   - name: --api-id
     summary: |-
@@ -103,9 +102,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -122,14 +121,14 @@ directCommands:
   syntax: >-
     az apic api deployment list --api-id
                                 --resource-group
-                                --service
+                                --service-name
                                 [--filter]
                                 [--max-items]
                                 [--next-token]
   examples:
   - summary: |-
       List API deployments
-    syntax: az apic api deployment list -g api-center-test -s contoso --api-id echo-api
+    syntax: az apic api deployment list -g api-center-test -n contoso --api-id echo-api
   requiredParameters:
   - isRequired: true
     name: --api-id
@@ -140,9 +139,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --service --service-name -s
+    name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   optionalParameters:
   - name: --filter
     summary: |-
@@ -164,12 +163,12 @@ directCommands:
                                 [--deployment-id]
                                 [--ids]
                                 [--resource-group]
-                                [--service]
+                                [--service-name]
                                 [--subscription]
   examples:
   - summary: |-
       Show API deployment details
-    syntax: az apic api deployment show -g api-center-test -s contoso --deployment-id production --api-id echo-api
+    syntax: az apic api deployment show -g api-center-test -n contoso --deployment-id production --api-id echo-api
   optionalParameters:
   - name: --api-id
     summary: |-
@@ -183,9 +182,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -208,15 +207,14 @@ directCommands:
                                   [--remove]
                                   [--resource-group]
                                   [--server]
-                                  [--service]
+                                  [--service-name]
                                   [--set]
-                                  [--state {active, inactive}]
                                   [--subscription]
                                   [--title]
   examples:
   - summary: |-
       Update API deployment
-    syntax: az apic api deployment update -g api-center-test -s contoso --deployment-id production --title "Production deployment" --api-id echo-api
+    syntax: az apic api deployment update -g api-center-test -n contoso --deployment-id production --title "Production deployment" --api-id echo-api
   optionalParameters:
   - name: --add
     summary: |-
@@ -255,16 +253,12 @@ directCommands:
   - name: --server
     summary: |-
       Server  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --service --service-name -s
+  - name: --service-name -n
     summary: |-
-      The name of the API Center service.
+      The name of Azure API Center service.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
-  - name: --state
-    parameterValueGroup: "active, inactive"
-    summary: |-
-      State of API deployment.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.

@@ -4,7 +4,7 @@ name: az network perimeter profile access-rule
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **nsp** extension for the Azure CLI (version 2.54.0 or higher). The extension will automatically install the first time you run an **az network perimeter profile access-rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **nsp** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az network perimeter profile access-rule** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Access Rules of a Profile inside an NSP.
 status: GA
@@ -27,6 +27,7 @@ directCommands:
                                                     [--fqdn]
                                                     [--location]
                                                     [--phone-numbers]
+                                                    [--service-tags]
                                                     [--subscriptions]
                                                     [--tags]
   examples:
@@ -34,11 +35,17 @@ directCommands:
       Create IP based access rule
     syntax: az network perimeter profile access-rule create -n MyAccessRule --profile-name MyProfile --perimeter-name MyPerimeter -g MyResourceGroup --address-prefixes "[10.10.0.0/16]"
   - summary: |-
+      Create NSP based access rule
+    syntax: az network perimeter profile access-rule create -n MyAccessRule --profile-name MyProfile --perimeter-name MyPerimeter -g MyResourceGroup --nsp "[{id:<NSP_ARM_ID>}]"
+  - summary: |-
       Create FQDN based access rule
     syntax: az network perimeter profile access-rule create -n MyAccessRule --profile-name MyProfile --perimeter-name MyPerimeter -g MyResourceGroup --fqdn "['www.abc.com', 'www.google.com']" --direction "Outbound"
   - summary: |-
       Create Subscription based access rule
     syntax: az network perimeter profile access-rule create -n MyAccessRule --profile-name MyProfile --perimeter-name MyPerimeter -g MyResourceGroup --subscriptions [0].id="<SubscriptionID1>" [1].id="<SubscriptionID2>"
+  - summary: |-
+      Create ServiceTags based access rule
+    syntax: az network perimeter profile access-rule create -n MyAccessRule --profile-name MyProfile --perimeter-name MyPerimeter -g MyResourceGroup --service-tags  [st1,st2]
   requiredParameters:
   - isRequired: true
     name: --access-rule-name --name -n
@@ -76,6 +83,9 @@ directCommands:
   - name: --phone-numbers
     summary: |-
       Outbound rules phone number format.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --service-tags
+    summary: |-
+      Inbound rules service tag names.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscriptions
     summary: |-
       Subscription id in the ARM id format.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -206,7 +216,7 @@ directCommands:
 - uid: az_network_perimeter_profile_access-rule_update
   name: az network perimeter profile access-rule update
   summary: |-
-    Updates a network access rule.
+    Creates or updates a network access rule.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -224,6 +234,7 @@ directCommands:
                                                     [--profile-name]
                                                     [--remove]
                                                     [--resource-group]
+                                                    [--service-tags]
                                                     [--set]
                                                     [--subscription]
                                                     [--subscriptions]
@@ -277,6 +288,9 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --service-tags
+    summary: |-
+      Inbound rules service tag names.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
