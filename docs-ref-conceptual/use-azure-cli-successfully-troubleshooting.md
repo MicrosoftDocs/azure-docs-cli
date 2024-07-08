@@ -183,7 +183,15 @@ or different zone. See https://aka.ms/azureskunotavailable for details."}]}}
 
 The solution is to change a property of your requested Azure resource, or try a different location.
 
-## Error: SSLError "bad handshake...certificate verify failed" (Proxy blocks connection)
+## Error: Subscription not found
+
+Assuming that you have not incorrectly typed a subscription name or ID, this error occurs when a resource provider is not registered in the active subscription. For example, if you want to execute `az storage account create`, the `Microsoft.Storage` provider must be registered. To register a resource provider, see [Azure resource providers and types](/azure/azure-resource-manager/management/resource-providers-and-types).
+
+## SSLError "bad handshake...certificate verify failed" (Proxy blocks connection)
+
+See [Work behind a proxy](#work-behind-a-proxy) for information on how to resolve this error.
+
+## Work behind a proxy
 
 If you're using Azure CLI over a proxy server that uses self-signed certificates, the Python [requests library](https://github.com/kennethreitz/requests) used by the Azure CLI might cause the following error: `SSLError("bad handshake: Error([('SSL routines', 'tls_process_server_certificate', 'certificate verify failed')],)",)`. To address this error, set the environment variable `REQUESTS_CA_BUNDLE` to the path of CA bundle certificate file in PEM format.
 
@@ -206,10 +214,6 @@ Append the proxy server's certificate to the CA bundle certificate file, or copy
 ```
 
 Some proxies require authentication. The format of the `HTTP_PROXY` or `HTTPS_PROXY` environment variables should include the authentication, such as `HTTPS_PROXY="https://username:password@proxy-server:port"`. For details, see [How to configure proxies for the Azure SDK for Python](/azure/developer/python/sdk/azure-sdk-configure-proxy?tabs=bash).
-
-## Error: Subscription not found
-
-Assuming that you have not incorrectly typed a subscription name or ID, this error occurs when a resource provider is not registered in the active subscription. For example, if you want to execute `az storage account create`, the `Microsoft.Storage` provider must be registered. To register a resource provider, see [Azure resource providers and types](/azure/azure-resource-manager/management/resource-providers-and-types).
 
 ## Service principals
 
