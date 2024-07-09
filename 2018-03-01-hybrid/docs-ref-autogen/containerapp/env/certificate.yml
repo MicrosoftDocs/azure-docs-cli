@@ -17,6 +17,48 @@ directCommands:
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/containerapp/_help.py
+  syntax: >-
+    az containerapp env certificate create --hostname
+                                           --name
+                                           --resource-group
+                                           --validation-method {CNAME, HTTP, TXT}
+                                           [--certificate-name]
+  examples:
+  - summary: |-
+      Create a managed certificate.
+    syntax: az containerapp env certificate create -g MyResourceGroup --name MyEnvironment --certificate-name MyCertificate --hostname MyHostname --validation-method CNAME
+  requiredParameters:
+  - isRequired: true
+    name: --hostname
+    summary: |-
+      The custom domain name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Container Apps environment.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - isRequired: true
+    name: --validation-method -v
+    parameterValueGroup: "CNAME, HTTP, TXT"
+    summary: |-
+      Validation method of custom domain ownership.
+  optionalParameters:
+  - name: --certificate-name -c
+    summary: |-
+      Name of the managed certificate which should be unique within the Container Apps environment.
+- uid: az_containerapp_env_certificate_create(containerapp)
+  name: az containerapp env certificate create
+  extensionSuffix: containerapp
+  summary: |-
+    Create a managed certificate.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az containerapp env certificate create --hostname
@@ -167,6 +209,8 @@ directCommands:
                                          --resource-group
                                          [--certificate]
                                          [--location]
+                                         [--managed-certificates-only]
+                                         [--private-key-certificates-only]
                                          [--thumbprint]
   examples:
   - summary: |-
@@ -181,6 +225,12 @@ directCommands:
   - summary: |-
       List certificates by certificate thumbprint.
     syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --thumbprint MyCertificateThumbprint
+  - summary: |-
+      List managed certificates for an environment.
+    syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --managed-certificates-only
+  - summary: |-
+      List private key certificates for an environment.
+    syntax: az containerapp env certificate list -g MyResourceGroup --name MyEnvironment --private-key-certificates-only
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -197,6 +247,16 @@ directCommands:
   - name: --location -l
     summary: |-
       Location of resource. Examples: eastus2, northeurope.
+  - name: --managed-certificates-only -m
+    defaultValue: "False"
+    summary: |-
+      List managed certificates only.
+    isPreview: true
+  - name: --private-key-certificates-only -p
+    defaultValue: "False"
+    summary: |-
+      List private-key certificates only.
+    isPreview: true
   - name: --thumbprint -t
     summary: |-
       Thumbprint of the certificate.
@@ -386,6 +446,7 @@ directCommands:
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 commands:
 - az_containerapp_env_certificate_create
+- az_containerapp_env_certificate_create(containerapp)
 - az_containerapp_env_certificate_delete
 - az_containerapp_env_certificate_delete(containerapp)
 - az_containerapp_env_certificate_list

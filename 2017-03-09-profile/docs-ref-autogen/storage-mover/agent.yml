@@ -4,7 +4,7 @@ name: az storage-mover agent
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **storage-mover** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az storage-mover agent** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **storage-mover** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az storage-mover agent** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Agent resource, which references a hybrid compute machine that can run jobs.
 status: GA
@@ -132,10 +132,20 @@ directCommands:
                                   [--set]
                                   [--storage-mover-name]
                                   [--subscription]
+                                  [--upload-limit-schedule]
   examples:
   - summary: |-
       agent update
     syntax: az storage-mover agent update -g {rg} -n {agent_name} --storage-mover-name {mover_name} --description 123
+  - summary: |-
+      add upload-limit-schedule
+    syntax: az storage-mover agent update -g test-storagemover-rg2 -n agent2 --storage-mover-name teststoragemover2 --upload-limit-schedule "{weekly-recurrences:[{days:[Monday,Wednesday],start-time:{hour:10,minute:0},end-time:{hour:12,minute:30},limit-in-mbps:20}]}"
+  - summary: |-
+      add another weekly-recurrence to existing upload-limit-schedule list
+    syntax: az storage-mover agent update -g test-storagemover-rg2 -n agent2 --storage-mover-name teststoragemover2 --upload-limit-schedule weekly-recurrences[1]="{days:[Tuesday,Thursday],start-time:{hour:10,minute:0},end-time:{hour:12,minute:30},limit-in-mbps:20}"
+  - summary: |-
+      clear upload-limit-schedule
+    syntax: az storage-mover agent update -g test-storagemover-rg2 -n agent2 --storage-mover-name teststoragemover2 --upload-limit-schedule null
   optionalParameters:
   - name: --add
     summary: |-
@@ -168,6 +178,9 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --upload-limit-schedule
+    summary: |-
+      The WAN-link upload limit schedule that applies to any Job Run the agent executes. Data plane operations (migrating files) are affected. Control plane operations ensure seamless migration functionality and are not limited by this schedule. The schedule is interpreted with the agent's local time.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_storage-mover_agent_wait
   name: az storage-mover agent wait
   summary: |-

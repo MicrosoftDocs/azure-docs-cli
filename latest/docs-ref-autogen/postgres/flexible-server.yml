@@ -67,6 +67,7 @@ directCommands:
                                        [--backup-identity]
                                        [--backup-key]
                                        [--backup-retention]
+                                       [--create-default-database {Disabled, Enabled}]
                                        [--database-name]
                                        [--geo-redundant-backup {Disabled, Enabled}]
                                        [--high-availability {Disabled, SameZone, ZoneRedundant}]
@@ -100,8 +101,8 @@ directCommands:
     syntax: >-
       az postgres flexible-server create --location northeurope --resource-group testGroup \
         --name testserver --admin-user username --admin-password password \
-        --sku-name Standard_B1ms --tier Burstable --public-access 153.24.26.117 --storage-size 128 \
-        --tags "key=value" --version 13 --high-availability ZoneRedundant --zone 1 \
+        --sku-name Standard_D2s_v3 --tier GeneralPurpose --public-access 153.24.26.117 --storage-size 128 \
+        --tags "key=value" --version 16 --high-availability ZoneRedundant --zone 1 \
         --standby-zone 3
   - summary: |-
       Create a PostgreSQL flexible server using Premium SSD v2 Disks.
@@ -283,7 +284,7 @@ directCommands:
     summary: |-
       The password of the administrator. Minimum 8 characters and maximum 128 characters. Password must contain characters from three of the following categories: English uppercase letters, English lowercase letters, numbers, and non-alphanumeric characters.
   - name: --admin-user -u
-    defaultValue: "playfulkitten7"
+    defaultValue: "overtroedeer5"
     summary: |-
       Administrator username for the server. Once set, it cannot be changed.
   - name: --backup-identity
@@ -296,6 +297,11 @@ directCommands:
     defaultValue: "7"
     summary: |-
       The number of days a backup is retained. Range of 7 to 35 days. Default is 7 days.
+  - name: --create-default-database -c
+    defaultValue: "Enabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable the creation of default database flexibleserverdb. Default value is Enabled.
   - name: --database-name -d
     summary: |-
       The name of the database to be created when provisioning the database server.
@@ -661,6 +667,7 @@ directCommands:
                                         [--private-dns-zone]
                                         [--resource-group]
                                         [--restore-time]
+                                        [--storage-type {PremiumV2_LRS}]
                                         [--subnet]
                                         [--subnet-prefixes]
                                         [--subscription]
@@ -684,6 +691,9 @@ directCommands:
     syntax: >-
       az postgres flexible-server restore --resource-group testGroup --name testserverNew \
         --source-server /subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroup}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{sourceServerName}
+  - summary: |-
+      Restore 'testserver' to current point-in-time as a new server 'testserverNew' using Premium SSD v2 Disks by setting storage type to "PremiumV2_LRS"
+    syntax: az postgres flexible-server restore --resource-group testGroup --name testserverNew --source-server testserver --storage-type PremiumV2_LRS
   requiredParameters:
   - isRequired: true
     name: --source-server
@@ -727,9 +737,13 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --restore-time
-    defaultValue: "2024-07-08T00:11:38+00:00"
+    defaultValue: "2024-07-09T03:27:02+00:00"
     summary: |-
       The point in time in UTC to restore from (ISO8601 format), e.g., 2017-04-26T02:10:00+00:00The default value is set to current time.
+  - name: --storage-type
+    parameterValueGroup: "PremiumV2_LRS"
+    summary: |-
+      Storage type for the new server. Allowed value is PremiumV2_LRS. Default value is none.
   - name: --subnet
     summary: |-
       Name or resource ID of a new or existing subnet. If you want to use a subnet from different resource group or subscription, please provide resource ID instead of name. Please note that the subnet will be delegated to flexibleServers. After delegation, this subnet cannot be used for any other type of Azure resources.
@@ -1015,6 +1029,7 @@ directCommands:
                                        [--password-auth {Disabled, Enabled}]
                                        [--performance-tier]
                                        [--private-dns-zone]
+                                       [--public-access {Disabled, Enabled}]
                                        [--remove]
                                        [--resource-group]
                                        [--set]
@@ -1128,6 +1143,10 @@ directCommands:
   - name: --private-dns-zone
     summary: |-
       This parameter only applies for a server with private access. The name or id of new or existing private dns zone. You can use the private dns zone from same resource group, different resource group, or different subscription. If you want to use a zone from different resource group or subscription, please provide resource Id. CLI creates a new private dns zone within the same resource group as virtual network if not provided by users.
+  - name: --public-access
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Enable or disable the public access on a server.
   - name: --remove
     defaultValue: "[]"
     summary: |-
@@ -1183,8 +1202,8 @@ directCommands:
                                         [--yes]
   examples:
   - summary: |-
-      Upgrade server 'testsvr' to PostgreSQL major version 14.
-    syntax: az postgres flexible-server upgrade -g testgroup -n testsvr -v 14
+      Upgrade server 'testsvr' to PostgreSQL major version 16.
+    syntax: az postgres flexible-server upgrade -g testgroup -n testsvr -v 16
   requiredParameters:
   - isRequired: true
     name: --version -v

@@ -1056,10 +1056,12 @@ directCommands:
                      [--keys]
                      [--keys-to-remove]
                      [--maint-config-id]
+                     [--manual-cutover {false, true}]
                      [--max-size]
                      [--min-capacity]
                      [--name]
                      [--no-wait]
+                     [--perform-cutover {false, true}]
                      [--preferred-enclave-type {Default, VBS}]
                      [--read-scale {Disabled, Enabled}]
                      [--remove]
@@ -1101,6 +1103,12 @@ directCommands:
   - summary: |-
       Update exhaustion behavior of free limit database to BillOverUsage
     syntax: az sql db update -g mygroup -s myserver -n mydb --free-limit-exhaustion-behavior BillOverUsage
+  - summary: |-
+      Update a database to Hyperscale edition, 2 vcores with Gen5 hardware, with manual cutover option
+    syntax: az sql db update -g mygroup -s myserver -n mydb --edition Hyperscale --service-objective HS_Gen5_2 --manual-cutover
+  - summary: |-
+      Trigger cutover with perform cutover option when update database to Hyperscale edition is in progress
+    syntax: az sql db update -g mygroup -s myserver -n mydb --perform-cutover
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -1173,6 +1181,10 @@ directCommands:
   - name: --maint-config-id -m
     summary: |-
       Specified maintenance configuration id or name for this resource.
+  - name: --manual-cutover
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to do manual cutover during Update SLO. Allowed when updating database to Hyperscale tier.
   - name: --max-size
     summary: |-
       The new maximum size of the database expressed in bytes.
@@ -1186,6 +1198,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --perform-cutover
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether to perform cutover when updating database to Hyperscale tier is in progress.
   - name: --preferred-enclave-type
     parameterValueGroup: "Default, VBS"
     summary: |-
@@ -1316,5 +1332,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 05/15/2024
+  ms.date: 05/21/2024
   description: Manage databases.
