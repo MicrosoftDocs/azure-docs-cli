@@ -166,7 +166,7 @@ All extensions install with endpoint **azcliprod.blob.core.windows.net** with th
 
 ## See also
 
-- [Azure CLI troubleshooting - Proxy blocks connection](./use-azure-cli-successfully-troubleshooting.md#work-behind-a-proxy)
+- [Azure CLI troubleshooting - Work behind a proxy](./use-azure-cli-successfully-troubleshooting.md#work-behind-a-proxy)
 - [Work with existing on-premises proxy servers](/azure/active-directory/app-proxy/application-proxy-configure-connectors-with-proxy-servers)
 - [Azure Firewall threat intelligence configuration - Allowlist addresses](/azure/firewall-manager/threat-intelligence-settings#allowlist-addresses)
 - Azure IP ranges and Service Tags
