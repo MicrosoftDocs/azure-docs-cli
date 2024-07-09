@@ -82,6 +82,7 @@ Version 2.62.0
 * Fix #29172: `az containerapp secret set`: Remove the limit of length for secret name
 
 ### Core
+
 * Fix #28997: Fix error "User cancelled the Accounts Control Operation" when logging in with WAM as Administrator
 * Resolve CVE-2024-37891
 * Resolve CVE-2024-35195
