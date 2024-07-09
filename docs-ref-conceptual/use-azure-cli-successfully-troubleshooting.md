@@ -187,7 +187,7 @@ The solution is to change a property of your requested Azure resource, or try a 
 
 Assuming that you have not incorrectly typed a subscription name or ID, this error occurs when a resource provider is not registered in the active subscription. For example, if you want to execute `az storage account create`, the `Microsoft.Storage` provider must be registered. To register a resource provider, see [Azure resource providers and types](/azure/azure-resource-manager/management/resource-providers-and-types).
 
-## Error: Bad handshake...certificate verify failed (Proxy blocks connection)
+## Error: Bad handshake...certificate verify failed
 
 See [Work behind a proxy](#work-behind-a-proxy) for information on how to resolve this error.
 
