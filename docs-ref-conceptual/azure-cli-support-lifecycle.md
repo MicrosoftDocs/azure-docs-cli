@@ -118,8 +118,8 @@ lifecycle:
 | 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  |
 | 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  |
 | 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  |
-| 2.72.0         | April 2025       |                  | Minor        | STS          | _**2.90.0**_            |
-| 2.72.0         | May 2025         | Yes              | Major        | LTS          | 2.73.0                  |
+| 2.72.0         | April 2025       |                  | Minor        | STS          | _**2.73.0**_            |
+| 2.73.0         | May 2025         | Yes              | Major        | LTS          | 2.91.0                  |
 
 **Examples:**
 
@@ -161,7 +161,7 @@ Azure CLI depends on Python version 3.8 or above. The following table summarizes
 Azure CLI can only be supported on operating systems where the above versions of Python are supported.
 
 * **Windows:** The currently supported versions of Windows client and server meet Python version requirements.
-* **macOS:** The currently supported version of macOS 10.9 and above meet Python version requirements.
+* **macOS:** The currently supported version of macOS 12 and above meet Python version requirements.
 * **Linux:**
   * Each supported operating system has a lifecycle defined by its sponsor organization.
   * Support is typically removed when an operating system goes out of mainline support, at which time we stop testing and supporting it.
@@ -169,8 +169,9 @@ Azure CLI can only be supported on operating systems where the above versions of
 
     |Operating system|Version|End of support|
     |-|-|-|
-    | Ubuntu| 20.04 LTS| April 2025 |
+    | Ubuntu | 20.04 LTS | April 2025 |
     | | 22.04 LTS | April 2027 |
+    | | 24.04 LTS | June 2029 |
     | Debian | 10 | June 2024 |
     | | 11 | |
     | | 12 | |
@@ -178,11 +179,9 @@ Azure CLI can only be supported on operating systems where the above versions of
     | | 9 | May 31, 2032 |
     | CentOS Stream | 9 | Estimated 2027 |
     | Mariner | 2.0 | |
-    | Alpine | 3.17 | November 22, 2024 |
-    | | 3.16 | May 23, 2024 |
 
     > [!NOTE]
-    > On RHEL 7, only Azure CLI 2.38 is supported and will receive security fixes until June 30, 2024.
+    > On RHEL 7, only Azure CLI 2.38 is supported without security fixes.
 
 ## See also
 
