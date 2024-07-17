@@ -330,14 +330,12 @@ directCommands:
     Create a storage account.
   description: |-
     The SKU of the storage account defaults to 'Standard_RAGRS'.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az storage' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az storage account create --name
                               --resource-group
-                              [--access-tier {Cool, Hot, Premium}]
+                              [--access-tier {Cold, Cool, Hot, Premium}]
                               [--account-type]
                               [--action]
                               [--allow-append {false, true}]
@@ -382,9 +380,9 @@ directCommands:
                               [--key-vault-user-identity-id]
                               [--kind {BlobStorage, BlockBlobStorage, FileStorage, Storage, StorageV2}]
                               [--location]
-                              [--min-tls-version {TLS1_0, TLS1_1, TLS1_2}]
+                              [--min-tls-version {TLS1_0, TLS1_1, TLS1_2, TLS1_3}]
                               [--net-bios-domain-name]
-                              [--public-network-access {Disabled, Enabled}]
+                              [--public-network-access {Disabled, Enabled, SecuredByPerimeter}]
                               [--publish-internet-endpoints {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--require-infrastructure-encryption {false, true}]
@@ -411,7 +409,7 @@ directCommands:
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
   - name: --access-tier
-    parameterValueGroup: "Cool, Hot, Premium"
+    parameterValueGroup: "Cold, Cool, Hot, Premium"
     summary: |-
       Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The "Premium" access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type.
   - name: --account-type
@@ -581,14 +579,14 @@ directCommands:
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
   - name: --min-tls-version
-    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2"
+    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2, TLS1_3"
     summary: |-
       The minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property.
   - name: --net-bios-domain-name
     summary: |-
       Specify the NetBIOS domain name. Required when --enable-files-adds is set to True.
   - name: --public-network-access
-    parameterValueGroup: "Disabled, Enabled"
+    parameterValueGroup: "Disabled, Enabled, SecuredByPerimeter"
     summary: |-
       Enable or disable public network access to the storage account. Possible values include: `Enabled` or `Disabled`.
   - name: --publish-internet-endpoints
@@ -1256,12 +1254,10 @@ directCommands:
   extensionSuffix: storage-preview
   summary: |-
     Update the properties of a storage account.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az storage' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
-    az storage account update [--access-tier {Cool, Hot, Premium}]
+    az storage account update [--access-tier {Cold, Cool, Hot, Premium}]
                               [--account-type]
                               [--add]
                               [--allow-append {false, true}]
@@ -1299,10 +1295,10 @@ directCommands:
                               [--key-exp-days]
                               [--key-vault-federated-client-id]
                               [--key-vault-user-identity-id]
-                              [--min-tls-version {TLS1_0, TLS1_1, TLS1_2}]
+                              [--min-tls-version {TLS1_0, TLS1_1, TLS1_2, TLS1_3}]
                               [--name]
                               [--net-bios-domain-name]
-                              [--public-network-access {Disabled, Enabled}]
+                              [--public-network-access {Disabled, Enabled, SecuredByPerimeter}]
                               [--publish-internet-endpoints {false, true}]
                               [--publish-microsoft-endpoints {false, true}]
                               [--remove]
@@ -1318,7 +1314,7 @@ directCommands:
                               [--user-identity-id]
   optionalParameters:
   - name: --access-tier
-    parameterValueGroup: "Cool, Hot, Premium"
+    parameterValueGroup: "Cold, Cool, Hot, Premium"
     summary: |-
       Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The "Premium" access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type.
   - name: --account-type
@@ -1458,7 +1454,7 @@ directCommands:
     summary: |-
       Resource identifier of the UserAssigned identity to be associated with server-side encryption on the storage account.
   - name: --min-tls-version
-    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2"
+    parameterValueGroup: "TLS1_0, TLS1_1, TLS1_2, TLS1_3"
     summary: |-
       The minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property.
   - name: --name -n
@@ -1468,7 +1464,7 @@ directCommands:
     summary: |-
       Specify the NetBIOS domain name. Required when --enable-files-adds is set to True.
   - name: --public-network-access
-    parameterValueGroup: "Disabled, Enabled"
+    parameterValueGroup: "Disabled, Enabled, SecuredByPerimeter"
     summary: |-
       Enable or disable public network access to the storage account. Possible values include: `Enabled` or `Disabled`.
   - name: --publish-internet-endpoints
@@ -1555,12 +1551,19 @@ commands:
 - az_storage_account_list
 - az_storage_account_local-user
 - az_storage_account_local-user_create
+- az_storage_account_local-user_create(storage-preview)
 - az_storage_account_local-user_delete
+- az_storage_account_local-user_delete(storage-preview)
 - az_storage_account_local-user_list
+- az_storage_account_local-user_list(storage-preview)
 - az_storage_account_local-user_list-keys
+- az_storage_account_local-user_list-keys(storage-preview)
 - az_storage_account_local-user_regenerate-password
+- az_storage_account_local-user_regenerate-password(storage-preview)
 - az_storage_account_local-user_show
+- az_storage_account_local-user_show(storage-preview)
 - az_storage_account_local-user_update
+- az_storage_account_local-user_update(storage-preview)
 - az_storage_account_management-policy
 - az_storage_account_management-policy_create
 - az_storage_account_management-policy_delete
@@ -1598,6 +1601,14 @@ commands:
 - az_storage_account_show
 - az_storage_account_show-connection-string
 - az_storage_account_show-usage
+- az_storage_account_task-assignment
+- az_storage_account_task-assignment_create
+- az_storage_account_task-assignment_delete
+- az_storage_account_task-assignment_list
+- az_storage_account_task-assignment_list-report
+- az_storage_account_task-assignment_show
+- az_storage_account_task-assignment_update
+- az_storage_account_task-assignment_wait
 - az_storage_account_update
 - az_storage_account_update(storage-preview)
 globalParameters:
