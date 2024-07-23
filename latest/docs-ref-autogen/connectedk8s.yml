@@ -27,7 +27,9 @@ directCommands:
                             [--disable-auto-upgrade]
                             [--distribution {aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
                             [--distribution-version]
+                            [--enable-oidc-issuer {false, true}]
                             [--enable-private-link {false, true}]
+                            [--enable-wi {false, true}]
                             [--infrastructure {LTSCWindows 10 Enterprise LTSC, Windows 10 Enterprise, Windows 10 Enterprise LTSC 2019, Windows 10 Enterprise LTSC 2021, Windows 10 Enterprise N, Windows 10 Enterprise N LTSC 2019, Windows 10 Enterprise N LTSC 2021, Windows 10 IoT Enterprise, Windows 10 IoT Enterprise LTSC 2019, Windows 10 IoT Enterprise LTSC 2021, Windows 10 Pro, Windows 11 Enterprise, Windows 11 Enterprise N, Windows 11 IoT Enterprise, Windows 11 Pro, Windows Server 2019, Windows Server 2019 Datacenter, Windows Server 2019 Standard, Windows Server 2022, Windows Server 2022 Datacenter, Windows Server 2022 Standard, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server}]
                             [--kube-config]
                             [--kube-context]
@@ -38,6 +40,7 @@ directCommands:
                             [--proxy-http]
                             [--proxy-https]
                             [--proxy-skip-range]
+                            [--self-hosted-issuer]
                             [--skip-ssl-verification]
                             [--tags]
                             [--yes]
@@ -63,6 +66,12 @@ directCommands:
   - summary: |-
       Onboard a connected kubernetes cluster with custom onboarding timeout.
     syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName --onboarding-timeout 600
+  - summary: |-
+      Onboard a connected kubernetes cluster with oidc issuer and the workload identity webhook enabled.
+    syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName --enable-oidc-issuer --enable-workload-identity
+  - summary: |-
+      Onboard a connected kubernetes cluster with oidc issuer enabled using a self hosted issuer url for public cloud cluster.
+    syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName --enable-oidc-issuer --self-hosted-issuer aksissuerurl
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -101,10 +110,22 @@ directCommands:
   - name: --distribution-version
     summary: |-
       The Kubernetes distribution version of the connected cluster.
+  - name: --enable-oidc-issuer
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable creation of OIDC issuer url used for workload identity.
+    isPreview: true
   - name: --enable-private-link
     parameterValueGroup: "false, true"
     summary: |-
       Flag to enable/disable private link support on a connected cluster resource. Allowed values: false, true.
+    isPreview: true
+  - name: --enable-wi --enable-workload-identity
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable workload identity webhook.
     isPreview: true
   - name: --infrastructure
     defaultValue: "generic"
@@ -141,6 +162,10 @@ directCommands:
   - name: --proxy-skip-range
     summary: |-
       List of URLs/CIDRs for which proxy should not to be used.
+  - name: --self-hosted-issuer
+    summary: |-
+      Self hosted issuer url for public cloud clusters - AKS, GKE, EKS.
+    isPreview: true
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
@@ -491,8 +516,11 @@ directCommands:
                            [--container-log-path]
                            [--custom-ca-cert]
                            [--disable-proxy]
+                           [--disable-wi {false, true}]
                            [--distribution {aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
                            [--distribution-version]
+                           [--enable-oidc-issuer {false, true}]
+                           [--enable-wi {false, true}]
                            [--ids]
                            [--kube-config]
                            [--kube-context]
@@ -501,6 +529,7 @@ directCommands:
                            [--proxy-https]
                            [--proxy-skip-range]
                            [--resource-group]
+                           [--self-hosted-issuer]
                            [--skip-ssl-verification]
                            [--subscription]
                            [--tags]
@@ -515,6 +544,15 @@ directCommands:
   - summary: |-
       Disable auto-upgrade of agents
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --auto-upgrade false
+  - summary: |-
+      Update a connected kubernetes cluster with oidc issuer and the workload identity webhook enabled.
+    syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --enable-oidc-issuer --enable-workload-identity
+  - summary: |-
+      Update a connected kubernetes cluster with oidc issuer enabled using a self hosted issuer url for public cloud cluster.
+    syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --enable-oidc-issuer --self-hosted-issuer aksissuerurl
+  - summary: |-
+      Disable the workload identity webhook on a connected kubernetes cluster.
+    syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --disable-workload-identity
   optionalParameters:
   - name: --auto-upgrade
     parameterValueGroup: "false, true"
@@ -534,6 +572,11 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Disables proxy settings for agents.
+  - name: --disable-wi --disable-workload-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Disable workload identity webhook.
+    isPreview: true
   - name: --distribution
     parameterValueGroup: "aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg"
     summary: |-
@@ -541,6 +584,16 @@ directCommands:
   - name: --distribution-version
     summary: |-
       The Kubernetes distribution version of the connected cluster.
+  - name: --enable-oidc-issuer
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable creation of OIDC issuer url used for workload identity.
+    isPreview: true
+  - name: --enable-wi --enable-workload-identity
+    parameterValueGroup: "false, true"
+    summary: |-
+      Enable workload identity webhook.
+    isPreview: true
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -565,6 +618,10 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --self-hosted-issuer
+    summary: |-
+      Self hosted issuer url for public cloud clusters - AKS, GKE, EKS.
+    isPreview: true
   - name: --skip-ssl-verification
     defaultValue: "False"
     summary: |-
