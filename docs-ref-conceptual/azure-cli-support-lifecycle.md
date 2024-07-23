@@ -118,7 +118,7 @@ lifecycle:
 | 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  |
 | 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  |
 | 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  |
-| 2.72.0         | April 2025       |                  | Minor        | STS          | _**2.73.0**_            |
+| 2.72.0         | April 2025       |                  | Minor        | STS          | 2.73.0            |
 | 2.73.0         | May 2025         | Yes              | Major        | LTS          | 2.91.0                  |
 
 **Examples:**
