@@ -1,18 +1,25 @@
 ---
-title: What's new in Azure Command-Line Interface (CLI) | Microsoft Docs
-description: Learn what's new in the Azure CLI
+title: Azure CLI release highlights | Microsoft Docs
+description: Learn what's new in the Azure CLI. Read about new features and upcoming changes. Check here for announcements.
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 05/21/2024
-ms.topic: conceptual
+ms.date: 08/01/2024
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli 
 ms.custom: devx-track-azurecli
 keywords: Azure CLI, new articles, new references, new samples, announcements
+#customer intent: As an Azure CLI developer, I want an easy way to see product change highlights and upcoming breaking change announcements.
 ---
-# What's new in the Azure CLI
 
-This page highlights new features, articles and learning paths for the Azure CLI.
+# Azure CLI release highlights
+
+This page highlights new features and upcoming changes for the Azure CLI.
+
+## Docker container image
+
+[!INCLUDE [docker container image announcement](includes/docker-container-images.md)]
+
+For more information on running the Azure CLI in docker container, see [How to run the Azure CLI in a Docker container](./run-azure-cli-docker.md).
 
 ## Select your subscription at time of login
 
@@ -45,7 +52,6 @@ You can now [install the Azure CLI on Windows](install-azure-cli-windows.md) wit
 ## ZIP file Windows install
 
 Beginning in [Azure CLI 2.57.0](./release-notes-azure-cli.md#february-06-2024), the Azure CLI can be installed using a ZIP file in Windows environments. See the ZIP tab in [Install Azure CLI on Windows](./install-azure-cli-windows.md?tabs=zip#install-or-update) for more information.
-
 
 ## Tab completion in PowerShell
 
