@@ -181,7 +181,7 @@ Azure CLI can only be supported on operating systems where the above versions of
     | Mariner | 2.0 | |
 
     > [!NOTE]
-    > On RHEL 7, only Azure CLI 2.38 is supported but will no longer receive security fixes.
+    > On RHEL 7, only Azure CLI 2.38 is supported. Microsoft is no longer providing updates or bug fixes for this distribution.
 
 ## See also
 
