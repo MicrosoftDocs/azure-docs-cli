@@ -172,9 +172,9 @@ Azure CLI can only be supported on operating systems where the above versions of
     | Ubuntu | 20.04 LTS | April 2025 |
     | | 22.04 LTS | April 2027 |
     | | 24.04 LTS | June 2029 |
-    | Debian | 10 | June 2024 |
-    | | 11 | |
+    | Debian | 11 | |
     | | 12 | |
+    | Alpine | 3.17 | November 22, 2024 |
     | RHEL | 8 | May 31, 2029 |
     | | 9 | May 31, 2032 |
     | CentOS Stream | 9 | Estimated 2027 |
