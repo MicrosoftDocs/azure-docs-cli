@@ -105,21 +105,28 @@ lifecycle:
 > [!NOTE]
 > The dates in the following table are for example purposes only. The actual release dates vary.
 
-| Version number | Release schedule | Breaking changes | Release type | Support type | Supported until version |
-| -------------- | ---------------- | ---------------- | ------------ | ------------ | ----------------------- |
-| 2.61.0         | May 2024         | Yes              | Major        | LTS          | 2.62.0                  |
-| 2.62.0         | June 2024        |                  | Minor        | LTS          | 2.63.0                  |
-| 2.63.0         | July 2024        |                  | Minor        | LTS          | 2.64.0                  |
-| 2.64.0         | August 2024      |                  | Minor        | LTS          | 2.65.0                  |
-| 2.65.0         | September 2024   |                  | Minor        | LTS          | 2.66.0                  |
-| 2.66.0         | October 2024     |                  | Minor        | LTS          | _**2.79.0**_            |
-| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  |
-| 2.68.0         | December 2024    |                  | Minor        | STS          | 2.69.0                  |
-| 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  |
-| 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  |
-| 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  |
-| 2.72.0         | April 2025       |                  | Minor        | STS          | 2.73.0                  |
-| 2.73.0         | May 2025         | Yes              | Major        | LTS          | _**2.91.0**_            |
+| Version number | Release schedule | Breaking changes | Release type | Support type | Supported until version | LTS version |
+| -------------- | ---------------- | ---------------- | ------------ | ------------ | ----------------------- | ----------- |
+| 2.61.0         | May 2024         | Yes              | Major        | STS          | 2.62.0                  | |
+| 2.62.0         | June 2024        |                  | Minor        | STS          | 2.63.0                  | |
+| 2.63.0         | July 2024        |                  | Minor        | STS          | 2.64.0                  | |
+| 2.64.0         | August 2024      |                  | Minor        | STS          | 2.65.0                  | |
+| 2.65.0         | September 2024   |                  | Minor        | STS          | 2.66.0                  | |
+| 2.66.0         | October 2024     |                  | Minor        | **LTS**      | _**2.79.0**_            | 2.66.0 |
+| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  | 2.66.x |
+| 2.68.0         | December 2024    |                  | Minor        | STS          | 2.69.0                  | 2.66.x |
+| 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  | 2.66.x |
+| 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  | 2.66.x |
+| 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  | 2.66.x |
+| 2.72.0         | April 2025       |                  | Minor        | STS          | 2.73.0                  | 2.66.x |
+| 2.73.0         | May 2025         | Yes              | Major        | STS          | 2.74.0                  | 2.66.x |
+| 2.74.0         | June 2025        |                  | Minor        | STS          | 2.75.0                  | 2.66.x |
+| 2.75.0         | July 2025        |                  | Minor        | STS          | 2.76.0                  | 2.66.x |
+| 2.76.0         | August 2025      |                  | Minor        | STS          | 2.77.0                  | 2.66.x |
+| 2.77.0         | September 2025   |                  | Minor        | STS          | 2.78.0                  | 2.66.x |
+| 2.78.0         | October 2025     |                  | Minor        | STS          | 2.79.0                  | 2.66.x |
+| 2.79.0         | November 2025    | Yes              | Major        | **LTS**      | _**2.91.0**_            | 2.79.0 | 
+| 2.80.0         | December 2025    | Yes              | Minor        | STS          | 2.81.0                  | 2.79.x | 
 
 **Examples:**
 
