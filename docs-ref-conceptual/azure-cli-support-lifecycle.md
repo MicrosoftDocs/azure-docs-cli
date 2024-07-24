@@ -67,7 +67,7 @@ The STS versions of Azure CLI core give you the most recent capabilities. STS re
 STS releases have the following characteristics:
 
 * STS releases are released monthly and receive feature updates, bug fixes, and security fixes.
-* To be supported, you need to be on the latest minor version of the STS release.
+* For a STS version to be supported, you need to be on the latest minor version of the STS release.
 * STS releases don't have a specific marker when running the `az version` command. This ensures backward compatibility with tools or scripts that might utilize the information.
   
 ## Long Term Support releases (LTS)
@@ -80,7 +80,7 @@ LTS releases have the following characteristics:
 
 * During the first six months, the LTS releases are released monthly and receive feature updates, bug fixes and security fixes.
 * During the following 12 months, the LTS releases are released when necessary and only receive bug fixes and security fixes.
-* To be supported, you need to be on the latest version of the LTS release.
+* For a LTS version to be supported, you need to be on the latest version of the LTS release.
 
 Easily find the LTS release date by running the `az version` command. Notice the `azure-cli-support` line that indicates the LTS date.
 
