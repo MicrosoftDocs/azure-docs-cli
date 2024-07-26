@@ -30,6 +30,7 @@ Here are some links to help you answer the most frequently asked Azure CLI quest
 
 | Subject area with article link | Tip |
 |-|-|
+| [Work behind a proxy](./use-azure-cli-successfully-troubleshooting.md#work-behind-a-proxy) | Information on how to work over a proxy server.
 | [Web Account Manager (WAM)](./authenticate-azure-cli-interactively.md#sign-in-with-web-account-manager-wam-on-windows) | Information on WAM and how to disable it.
 | [Configuration settings](./azure-cli-configuration.md) | List of available Azure CLI configuration settings, how to turn on/off Azure CLI features, and set default values.
 | [Output formats](./format-output-azure-cli.md) | Instructions on how to store Azure resource IDs in variables, and protect secrets returned by Azure CLI commands.
