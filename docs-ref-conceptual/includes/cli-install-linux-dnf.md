@@ -8,7 +8,7 @@ ms.custom: devx-track-azurecli, linux-related-content
 
 ## Before you begin
 
-- Azure CLI [2.38.2](/cli/azure/release-notes-azure-cli#june-21-2024) (released on June 21, 2024) is the last version supported on RHEL 7 and Centos 7 and will continue to receive security fixes until the end of life of the operating systems. Microsoft isn't providing other updates or bug fixes for these distributions.
+- Azure CLI [2.38.2](/cli/azure/release-notes-azure-cli#june-21-2024) (released on June 21, 2024) is the last version supported on RHEL 7 and Centos 7. Microsoft is no longer providing updates or bug fixes for these distributions.
 
 - Microsoft continues to develop and support Azure CLI and the Linux [Install script](/cli/azure/install-azure-cli-linux?pivots=script).
 
@@ -48,7 +48,7 @@ To install the Azure CLI, follow these steps:
    ```
 
    > [!CAUTION]
-   > CentOS 7 End Of Life (EOL) is June 30, 2024. For information on Azure CLI supported environments, see [Azure CLI support lifecycle](../azure-cli-support-lifecycle.md#supported-environments)
+   > CentOS 7 End Of Life (EOL) was June 30, 2024. For information on Azure CLI supported environments, see [Azure CLI support lifecycle](../azure-cli-support-lifecycle.md#supported-environments)
 
 3. Install with the `dnf install` command.
 

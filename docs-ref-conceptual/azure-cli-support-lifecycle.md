@@ -67,7 +67,7 @@ The STS versions of Azure CLI core give you the most recent capabilities. STS re
 STS releases have the following characteristics:
 
 * STS releases are released monthly and receive feature updates, bug fixes, and security fixes.
-* To be supported, you need to be on the latest minor version of the STS release.
+* For a STS version to be supported, you need to be on the latest minor version of the STS release.
 * STS releases don't have a specific marker when running the `az version` command. This ensures backward compatibility with tools or scripts that might utilize the information.
   
 ## Long Term Support releases (LTS)
@@ -80,7 +80,7 @@ LTS releases have the following characteristics:
 
 * During the first six months, the LTS releases are released monthly and receive feature updates, bug fixes and security fixes.
 * During the following 12 months, the LTS releases are released when necessary and only receive bug fixes and security fixes.
-* To be supported, you need to be on the latest version of the LTS release.
+* For a LTS version to be supported, you need to be on the latest version of the LTS release.
 
 Easily find the LTS release date by running the `az version` command. Notice the `azure-cli-support` line that indicates the LTS date.
 
@@ -105,21 +105,28 @@ lifecycle:
 > [!NOTE]
 > The dates in the following table are for example purposes only. The actual release dates vary.
 
-| Version number | Release schedule | Breaking changes | Release type | Support type | Supported until version |
-| -------------- | ---------------- | ---------------- | ------------ | ------------ | ----------------------- |
-| 2.61.0         | May 2024         | Yes              | Major        | LTS          | 2.62.0                  |
-| 2.62.0         | June 2024        |                  | Minor        | LTS          | 2.63.0                  |
-| 2.63.0         | July 2024        |                  | Minor        | LTS          | 2.64.0                  |
-| 2.64.0         | August 2024      |                  | Minor        | LTS          | 2.65.0                  |
-| 2.65.0         | September 2024   |                  | Minor        | LTS          | 2.66.0                  |
-| 2.66.0         | October 2024     |                  | Minor        | LTS          | _**2.79.0**_            |
-| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  |
-| 2.68.0         | December 2024    |                  | Minor        | STS          | 2.69.0                  |
-| 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  |
-| 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  |
-| 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  |
-| 2.72.0         | April 2025       |                  | Minor        | STS          | _**2.90.0**_            |
-| 2.72.0         | May 2025         | Yes              | Major        | LTS          | 2.73.0                  |
+| Version number | Release schedule | Breaking changes | Release type | Support type | Supported until version | LTS version |
+| -------------- | ---------------- | ---------------- | ------------ | ------------ | ----------------------- | ----------- |
+| 2.61.0         | May 2024         | Yes              | Major        | STS          | 2.62.0                  | |
+| 2.62.0         | June 2024        |                  | Minor        | STS          | 2.63.0                  | |
+| 2.63.0         | July 2024        |                  | Minor        | STS          | 2.64.0                  | |
+| 2.64.0         | August 2024      |                  | Minor        | STS          | 2.65.0                  | |
+| 2.65.0         | September 2024   |                  | Minor        | STS          | 2.66.0                  | |
+| 2.66.0         | October 2024     |                  | Minor        | **LTS**      | _**2.79.0**_            | 2.66.0 |
+| 2.67.0         | November 2024    | Yes              | Major        | STS          | 2.68.0                  | 2.66.x |
+| 2.68.0         | December 2024    |                  | Minor        | STS          | 2.69.0                  | 2.66.x |
+| 2.69.0         | January 2025     |                  | Minor        | STS          | 2.70.0                  | 2.66.x |
+| 2.70.0         | February 2025    |                  | Minor        | STS          | 2.71.0                  | 2.66.x |
+| 2.71.0         | March 2025       |                  | Minor        | STS          | 2.72.0                  | 2.66.x |
+| 2.72.0         | April 2025       |                  | Minor        | STS          | 2.73.0                  | 2.66.x |
+| 2.73.0         | May 2025         | Yes              | Major        | STS          | 2.74.0                  | 2.66.x |
+| 2.74.0         | June 2025        |                  | Minor        | STS          | 2.75.0                  | 2.66.x |
+| 2.75.0         | July 2025        |                  | Minor        | STS          | 2.76.0                  | 2.66.x |
+| 2.76.0         | August 2025      |                  | Minor        | STS          | 2.77.0                  | 2.66.x |
+| 2.77.0         | September 2025   |                  | Minor        | STS          | 2.78.0                  | 2.66.x |
+| 2.78.0         | October 2025     |                  | Minor        | STS          | 2.79.0                  | 2.66.x |
+| 2.79.0         | November 2025    | Yes              | Major        | **LTS**      | _**2.91.0**_            | 2.79.0 | 
+| 2.80.0         | December 2025    | Yes              | Minor        | STS          | 2.81.0                  | 2.79.x | 
 
 **Examples:**
 
@@ -161,7 +168,7 @@ Azure CLI depends on Python version 3.8 or above. The following table summarizes
 Azure CLI can only be supported on operating systems where the above versions of Python are supported.
 
 * **Windows:** The currently supported versions of Windows client and server meet Python version requirements.
-* **macOS:** The currently supported version of macOS 10.9 and above meet Python version requirements.
+* **macOS:** The currently supported version of macOS 12 and above meet Python version requirements.
 * **Linux:**
   * Each supported operating system has a lifecycle defined by its sponsor organization.
   * Support is typically removed when an operating system goes out of mainline support, at which time we stop testing and supporting it.
@@ -169,20 +176,19 @@ Azure CLI can only be supported on operating systems where the above versions of
 
     |Operating system|Version|End of support|
     |-|-|-|
-    | Ubuntu| 20.04 LTS| April 2025 |
+    | Ubuntu | 20.04 LTS | April 2025 |
     | | 22.04 LTS | April 2027 |
-    | Debian | 10 | June 2024 |
-    | | 11 | |
+    | | 24.04 LTS | June 2029 |
+    | Debian | 11 | |
     | | 12 | |
+    | Alpine | 3.17 | November 22, 2024 |
     | RHEL | 8 | May 31, 2029 |
     | | 9 | May 31, 2032 |
     | CentOS Stream | 9 | Estimated 2027 |
     | Mariner | 2.0 | |
-    | Alpine | 3.17 | November 22, 2024 |
-    | | 3.16 | May 23, 2024 |
 
     > [!NOTE]
-    > On RHEL 7, only Azure CLI 2.38 is supported and will receive security fixes until June 30, 2024.
+    > On RHEL 7, only Azure CLI 2.38 is supported. Microsoft is no longer providing updates or bug fixes for this distribution.
 
 ## See also
 
