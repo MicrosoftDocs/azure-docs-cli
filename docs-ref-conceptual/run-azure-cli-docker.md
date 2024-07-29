@@ -33,7 +33,7 @@ docker run -it mcr.microsoft.com/azure-cli:cbl-mariner2.0
 > use `-v ${HOME}/.ssh:/root/.ssh` to mount your SSH keys in the environment.
 >
 > ```bash
-> docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli:<alpine10 -- is this correct?>
+> docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli:cbl-mariner2.0
 > ```
 
 The CLI is installed on the image as the `az` command in `/usr/local/bin`.
@@ -54,8 +54,6 @@ Updating with Docker requires both pulling the new image and re-creating any exi
 try to avoid using a container that hosts the CLI as a data store.
 
 Update your local image with `docker pull`.
-
-**Discussion point #4:** Verify link with engineering
 
 ```bash
 docker pull mcr.microsoft.com/azure-cli:cbl-mariner2.0
