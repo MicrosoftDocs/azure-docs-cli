@@ -318,9 +318,9 @@ Linux environment_.
 ## Pass parameters in a URL containing a query string
 
 Question marks in URLs indicate the end of the URL and the beginning of a query string. Here's an
-example that opens step 3 in [Learn to use the Azure CLI](./get-started-tutorial-3-use-variables.md):
+example:
 
-`https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-2020-09-01-hybrid`.
+`https://learn.microsoft.com/cli/azure/account?view=azure-cli-2020-09-01-hybrid`.
 
 The `?view=azure-cli-2020-09-01-hybrid` results in the desired version of the Azure CLI reference content.
 
