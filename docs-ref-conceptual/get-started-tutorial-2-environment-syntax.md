@@ -76,6 +76,9 @@ The remainder of this tutorial step demonstrates quoting rules in Azure CLI comm
 
 Create an Azure storage account to use in this tutorial. This example assigns a random ID to the storage account name, but if you want to use a different name, see [Storage account overview](/azure/storage/common/storage-account-overview#storage-account-name) for storage account name rules.
 
+> [!IMPORTANT]
+> Before you can create a storage account, the `Microsoft.Storage` resource provider must be registered in your subscription. To learn about registering resource types, see [Register resource provider](/azure/azure-resource-manager/management/resource-providers-and-types#azure-portal).
+
 This next script example demonstrates scripting language-specific syntax for the following:
 
 * Line continuation

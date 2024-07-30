@@ -82,6 +82,8 @@ $myNewPassword = az ad sp credential reset --id myServicePrincipalID --query pas
 Write-Host $myNewPassword
 ```
 
+For more information on the `tsv` output type, see [Output formats for Azure CLI commands](./format-output-azure-cli.md#tsv-output-format).
+
 ---
 ## Next Steps
 
