@@ -18,7 +18,7 @@ You can use Docker to run a standalone Linux container with the Azure CLI preins
 With the release of Azure CLI [version 2.54.0](./release-notes-azure-cli.md#november-14-2023), the size of the Docker image of `azure-cli` was reduced from 1.1 GB to 700 MB! This reduction was a 36.3% decrease resulting in improved download speed and faster startup.
 
 > [!WARNING]
-> Azure CLI 2.63.0, to be released in July 2024, is the last version based on the Alpine 10 image. Microsoft isn't providing additional updates or bug fixes for this image. Consider migrating to the Azure Linux based image for the Azure CLI, which is fully supported.
+> Azure CLI 2.63.0, to be released in July 2024, is the last version based on the Alpine image. Microsoft isn't providing additional updates or bug fixes for this image. Consider migrating to the Azure Linux based image for the Azure CLI, which is fully supported.
 
 ## Start the Docker container with Azure CLI preinstalled
 
