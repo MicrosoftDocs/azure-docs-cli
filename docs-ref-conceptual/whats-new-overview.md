@@ -17,7 +17,7 @@ This page highlights new features and upcoming changes for the Azure CLI.
 
 ## Docker container image
 
-Beginning with Azure CLI version 2.67.0, to be released on November 21, 2024, the Docker container for the Azure CLI will be based on Azure Linux, formerly known as [CBL-Mariner](https://mcr.microsoft.com/en-us/product/cbl-mariner/base/core/about). When running the Azure CLI in a Docker container, always use a tag, like `cbl-mariner2.0` and do not rely on `latest`.
+Beginning with Azure CLI version 2.67.0, to be released on November 19, 2024, the default Docker container image for Azure CLI will be based on Azure Linux. To avoid any disruptions, review and update any dependencies you may have on the default Docker container image for Azure CLI.
 
 For more information see [How to run the Azure CLI in a Docker container](./run-azure-cli-docker.md).
 
