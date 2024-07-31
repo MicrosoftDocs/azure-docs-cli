@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 07/09/2024
+ms.date: 08/06/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,101 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## August 06, 2024
+
+Version 2.63.0
+
+### ACR
+
+* `az acr login`: Support optional resource group argument to skip subscription resource scan
+
+### AKS
+
+* `az aks create`: Not set the `--network-plugin` based on the default from the Python SDK
+* `az aks create/update`: Support in place param updates for managed Prometheus
+* `az aks create/update`: Add validations for PremiumV2 disk
+* `az aks upgrade`: Support tier switch with AKS upgrade
+* `az aks create/update`: Add `--network-policy none` option to command
+* `az aks create`: Remove unsupported scenario command in help message
+
+### App Config
+
+* `az appconfig import/export/restore`: Add correlation request id to bulk operations
+
+### App Service
+
+* `az webapp list-runtimes`: Add parameter `--show-runtime-details` to show detailed runtime stacks and update the format of java related stacks listed
+* `az webapp create`: Add parameter `--acr-identity` to allow users to choose user assigned identity for ACR image pull
+* `az webapp config set`: Add parameter `--acr-use-identity` and `--acr-identity` to allow users update ACR image pull related configs
+
+### ARM
+
+* `az stack group/sub/mg create`: Minor improvements to the confirmation message when updating an existing stack
+
+### CDN
+
+* Fix #28717: `az afd secret`: Change the way to access parameter
+* `az cdn portal-migration`: Add command group for classic CDN profile migration
+
+### Compute
+
+* `az sig create/update`: Hide `--soft-delete` parameter in help messages
+* Fix #29006: `az ssh`: Fix the `Permissions 0644 for '...' are too open` error
+* `az vmss update`: Add new parameter `--enable-auto-os-upgrade` to support updating automatic OS upgrade policy argument
+* `az vmss update`: Add new parameter `--upgrade-policy-mode` to support updating upgrade policy mode
+
+### Container app
+
+* Fix #26688: `az containerapp up`: Fix logic about updating an existing containerapp
+* `az containerapp job stop`: Return custom message for stop job execution
+* Fix #29330: `az containerapp auth update`: Fix split logic for `--set`
+
+### Cosmos DB
+
+* `az cosmosdb delete`: Support `--no-wait`
+
+### MySQL
+
+* `az mysql flexible-server import stop-replication`: Stop replication between source single server and target flexible server
+
+### NetAppFiles
+
+* `az netappfiles account create`: Change `--key-vault-resource-id` to be optional
+
+### Network
+
+* `az network custom-ip prefix create`: Add parameter `--is-parent`
+* `az network network-watcher connection-monitor`: Support to create connection monitor v2
+* `az network vnet peering`: Support virtual network subnet peering
+
+### RDBMS
+
+* [BREAKING CHANGE] `az postgres flexible-server create`: Update default value of PG version to be 16
+* Fix #27422: `az postgres flexible-server create`: Bug fix for using existing subnet while creating pg flex server
+* `az postgres flexible-server restore`: Bug fix when using resource id as value for source-server argument
+
+### Role
+
+* `az role assignment list`: Add warning for classic administrators retirement
+
+### Service Connector
+
+* `az containerapp connection create containerapp`: Support ACA2ACA connection
+
+### SQL
+
+* `az sql midb move/copy`: Add destination subscription Id for managed database move/copy
+* `az sql mi create`: Add `--dns-zone-partner` optional parameter
+
+### Storage
+
+* `az storage fs directory upload/download`: Add back `--auth-mode login` as AzCopy supports Oauth now
+* `az storage blob sync`: Add back `--auth-mode login` as AzCopy supports Oauth now
+
+### Synapse
+
+* `az synapse spark job submit`: Add optional `--python-files` argument to support job submission
 
 ## July 09, 2024
 
