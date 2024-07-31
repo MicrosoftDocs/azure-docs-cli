@@ -20,7 +20,7 @@ You can use Docker to run a standalone Linux container with the Azure CLI preins
 
 ## Start the Docker container with Azure CLI preinstalled
 
-Open a command prompt and then start the Docker container with Azure CLI preinstalled. Always use a tag name when running the Azure CLI and do not rely on `latest`, which is the default.
+Open a command prompt and start the Docker container with Azure CLI preinstalled using the following command. When used in a pipeline, it is recommended to use a deterministic tag name (for example `cbl-mariner2.0`)
 
 ```bash
 docker run -it mcr.microsoft.com/azure-cli:cbl-mariner2.0
