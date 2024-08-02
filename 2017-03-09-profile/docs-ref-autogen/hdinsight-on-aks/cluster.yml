@@ -4,7 +4,7 @@ name: az hdinsight-on-aks cluster
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **hdinsightonaks** extension for the Azure CLI (version 2.56.0 or higher). The extension will automatically install the first time you run an **az hdinsight-on-aks cluster** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **hdinsightonaks** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az hdinsight-on-aks cluster** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Cluster operations.
 status: Preview
@@ -33,6 +33,7 @@ directCommands:
                                        [--authorization-user-id]
                                        [--autoscale-profile-graceful-decommission-timeout]
                                        [--autoscale-profile-type {LoadBased, ScheduleBased}]
+                                       [--availability-zones]
                                        [--cluster-type]
                                        [--cluster-version]
                                        [--cooldown-period]
@@ -55,6 +56,7 @@ directCommands:
                                        [--flink-storage-uri]
                                        [--history-server-cpu]
                                        [--history-server-memory]
+                                       [--identity-list]
                                        [--internal-ingress {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--job-manager-cpu]
                                        [--job-manager-memory]
@@ -95,26 +97,28 @@ directCommands:
                                        [--trino-plugins-spec]
                                        [--trino-profile-user-plugins-telemetry-spec]
                                        [--user-plugins-spec]
+                                       [--vm-size]
                                        [--worker-debug-port]
                                        [--worker-debug-suspend {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
-      Create a Trino cluster. need use az hdinsight-on-aks cluster node-profile create $node frist.
-    syntax: >-
-      az hdinsight-on-aks cluster node-profile create --count 5 --node-type Worker --vm-size Standard_D8d_v5
-
-      az hdinsightonaks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location} --assigned-identity-object-id {00000000-0000-0000-0000-000000000000} --assigned-identity-client-id {00000000-0000-0000-0000-000000000000} --authorization-user-id {00000000-0000-0000-0000-000000000000} --assigned-identity-id {/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi} --cluster-type Trino --cluster-version {1.0.6} --oss-version {0.410.0} --nodes $node-profile
+      Create a simple Trino cluster.
+    syntax: az az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location}--cluster-type trino --cluster-version {1.2.0} --oss-version {0.440.0} --node '[{"count":2,"type":"worker","vm-size":"Standard_D8d_v5"}]' --identity-list '[{"client-id":"00000000-0000-0000-0000-000000000000","object-id":"00000000-0000-0000-0000-000000000000","resource-id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi","type":"cluster"}]' --authorization-user-id "00000000-0000-0000-0000-000000000000"
   - summary: |-
-      Create a Flink cluster.
-    syntax: az hdinsight-on-aks cluster create  -n {clustername} --cluster-pool-name {clusterpoolname} -g {RG} -l {westus3} --assigned-identity-object-id {00000000-0000-0000-0000-000000000000} --assigned-identity-client-id {00000000-0000-0000-0000-000000000000} --authorization-user-id {00000000-0000-0000-0000-000000000000} --assigned-identity-id {/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi} --cluster-type Flink --cluster-version {flinkversion} --oss-version {flinkossversion} --nodes {nodes} --flink-storage-uri {storageUri} --job-manager-cpu {1} --job-manager-memory {2000} --task-manager-cpu {6} --task-manager-memory {49016}
+      Create a simple Flink cluster.
+    syntax: az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location}--cluster-type flink --flink-storage-uri {abfs://container@yourstorage.dfs.core.windows.net/} --cluster-version {1.2.0} --oss-version {1.17.0} --node '[{"count":5,"type":"worker","vm-size":"Standard_D8d_v5"}]' --identity-list '[{"client-id":"00000000-0000-0000-0000-000000000000","object-id":"00000000-0000-0000-0000-000000000000","resource-id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi","type":"cluster"}]' --authorization-user-id "00000000-0000-0000-0000-000000000000" --job-manager-cpu {1} --job-manager-memory {2000} --task-manager-cpu {6} --task-manager-memory {49016}
   - summary: |-
-      Create Trino cluster with hive catalog.
-    syntax: >-
-      az hdinsight-on-aks cluster trino-hive-catalog create --catalog-name {catalogName} --metastore-db-connection-url {metastoreDbConnectionURL} --metastore-db-connection-user-name {metastoreDbUserName}  --metastore-db-connection-password-secret {metastoreDbPasswordSecret} --metastore-warehouse-dir {metastoreWarehouseDir}
-
-      az hdinsight-on-aks cluster secret create --secret-name {secretName}  --reference-name {secretName}
-
-      az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {westus3} --assigned-identity-object-id {00000000-0000-0000-0000-000000000000} --assigned-identity-client-id {00000000-0000-0000-0000-000000000000} --authorization-user-id {00000000-0000-0000-0000-000000000000} --assigned-identity-id {/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/PSGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi} --cluster-type Trino --cluster-version {1.0.6} --oss-version {0.410.0} --nodes {node-profile} --secret-reference {secretReference} --key-vault-id {keyVaultResourceId} --trino-hive-catalog {trinoHiveCatalogOption}
+      Create a simple Spark cluster.
+    syntax: az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location}--cluster-type spark --spark-storage-url {abfs://container@yourstorage.dfs.core.windows.net/} --cluster-version {1.2.0} --oss-version {3.4.1} --node '[{"count":2,"type":"worker","vm-size":"Standard_D8d_v5"}]' --identity-list '[{"client-id":"00000000-0000-0000-0000-000000000000","object-id":"00000000-0000-0000-0000-000000000000","resource-id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi","type":"cluster"}]' --authorization-user-id "00000000-0000-0000-0000-000000000000"
+  - summary: |-
+      Create a simple Kafka cluster.
+    syntax: az az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location}--cluster-type kafka --cluster-version {1.2.0} --oss-version {3.6.0} --node '[{"count":2,"type":"worker","vm-size":"Standard_D8d_v5"}]' --identity-list '[{"client-id":"00000000-0000-0000-0000-000000000000","object-id":"00000000-0000-0000-0000-000000000000","resource-id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi","type":"cluster"}]' --authorization-user-id "00000000-0000-0000-0000-000000000000" --kafka-profile '{"disk-storage":{"data-disk-size":8,"data-disk-type":"Standard_SSD_LRS"}}'
+  - summary: |-
+      Create a Spark cluster with custom hive metastore.
+    syntax: az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location}--cluster-type spark --spark-storage-url {abfs://container@yourstorage.dfs.core.windows.net/} --cluster-version {1.2.0} --oss-version {3.4.1} --node '[{"count":2,"type":"worker","vm-size":"Standard_D8d_v5"}]' --identity-list '[{"client-id":"00000000-0000-0000-0000-000000000000","object-id":"00000000-0000-0000-0000-000000000000","resource-id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi","type":"cluster"}]' --authorization-user-id "00000000-0000-0000-0000-000000000000"  --secret-reference '[{reference-name:sqlpassword,secret-name:sqlpassword,type:Secret}]' --key-vault-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.KeyVault/vaults/CLIKV --spark-hive-kv-id /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.KeyVault/vaults/CLIKV --spark-db-auth-mode SqlAuth --spark-hive-db-name {sparkhms} --spark-hive-db-secret {sqlpassword} --spark-hive-db-server {yourserver.database.windows.net} --spark-hive-db-user {username}
+  - summary: |-
+      Create a Flink cluster with availability zones.
+    syntax: az hdinsight-on-aks cluster create -n {clustername} --cluster-pool-name {clusterpoolname} -g {resourcesGroup} -l {location}--cluster-type flink --flink-storage-uri {abfs://container@yourstorage.dfs.core.windows.net/} --cluster-version {1.2.0} --oss-version {1.17.0} --node '[{"count":5,"type":"worker","vm-size":"Standard_D8d_v5"}]' --identity-list '[{"client-id":"00000000-0000-0000-0000-000000000000","object-id":"00000000-0000-0000-0000-000000000000","resource-id":"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourcesGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/yourmsi","type":"cluster"}]' --authorization-user-id "00000000-0000-0000-0000-000000000000" --job-manager-cpu {1} --job-manager-memory {2000} --task-manager-cpu {6} --task-manager-memory {49016} --availability-zones [1,2]
   requiredParameters:
   - isRequired: true
     name: --cluster-name --name -n
@@ -159,6 +163,9 @@ directCommands:
     parameterValueGroup: "LoadBased, ScheduleBased"
     summary: |-
       User to specify which type of Autoscale to be implemented - Scheduled Based or Load Based.
+  - name: --availability-zones
+    summary: |-
+      The list of Availability zones to use for AKS VMSS nodes.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --cluster-type
     summary: |-
       The type of cluster.
@@ -204,6 +211,7 @@ directCommands:
     summary: |-
       True if log analytics is enabled for the cluster, otherwise false.
   - name: --enable-prometheu
+    defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable Prometheus for cluster or not.
@@ -236,6 +244,9 @@ directCommands:
   - name: --history-server-memory
     summary: |-
       History server memory size.
+  - name: --identity-list
+    summary: |-
+      The list of managed identity.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --internal-ingress --internal-ingress-enabled
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -358,6 +369,9 @@ directCommands:
   - name: --user-plugins-spec
     summary: |-
       Spark user plugins spec  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --vm-size
+    summary: |-
+      The virtual machine SKU.
   - name: --worker-debug-port
     summary: |-
       The debug port. Default: 8008.
@@ -584,6 +598,7 @@ directCommands:
                                        [--authorization-user-id]
                                        [--autoscale-profile-graceful-decommission-timeout]
                                        [--autoscale-profile-type {LoadBased, ScheduleBased}]
+                                       [--availability-zones]
                                        [--cluster-name]
                                        [--cluster-pool-name]
                                        [--cluster-version]
@@ -608,6 +623,7 @@ directCommands:
                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--history-server-cpu]
                                        [--history-server-memory]
+                                       [--identity-list]
                                        [--ids]
                                        [--job-manager-cpu]
                                        [--job-manager-memory]
@@ -651,6 +667,7 @@ directCommands:
                                        [--trino-plugins-spec]
                                        [--trino-profile-user-plugins-telemetry-spec]
                                        [--user-plugins-spec]
+                                       [--vm-size]
                                        [--worker-debug-port]
                                        [--worker-debug-suspend {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
@@ -691,6 +708,9 @@ directCommands:
     parameterValueGroup: "LoadBased, ScheduleBased"
     summary: |-
       User to specify which type of Autoscale to be implemented - Scheduled Based or Load Based.
+  - name: --availability-zones
+    summary: |-
+      The list of Availability zones to use for AKS VMSS nodes.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --cluster-name --name -n
     summary: |-
       The name of the HDInsight cluster.
@@ -775,6 +795,9 @@ directCommands:
   - name: --history-server-memory
     summary: |-
       History server memory size.
+  - name: --identity-list
+    summary: |-
+      The list of managed identity.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -905,6 +928,9 @@ directCommands:
   - name: --user-plugins-spec
     summary: |-
       Spark user plugins spec  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --vm-size
+    summary: |-
+      The virtual machine SKU.
   - name: --worker-debug-port
     summary: |-
       The debug port. Default: 8008.
@@ -985,19 +1011,20 @@ commands:
 - az_hdinsight-on-aks_cluster_job
 - az_hdinsight-on-aks_cluster_job_list
 - az_hdinsight-on-aks_cluster_job_run
+- az_hdinsight-on-aks_cluster_library
+- az_hdinsight-on-aks_cluster_library_list
+- az_hdinsight-on-aks_cluster_library_manage
 - az_hdinsight-on-aks_cluster_list
 - az_hdinsight-on-aks_cluster_list-service-config
 - az_hdinsight-on-aks_cluster_node-profile
 - az_hdinsight-on-aks_cluster_node-profile_create
 - az_hdinsight-on-aks_cluster_resize
-- az_hdinsight-on-aks_cluster_secret
-- az_hdinsight-on-aks_cluster_secret_create
 - az_hdinsight-on-aks_cluster_show
-- az_hdinsight-on-aks_cluster_trino-hive-catalog
-- az_hdinsight-on-aks_cluster_trino-hive-catalog_create
 - az_hdinsight-on-aks_cluster_update
 - az_hdinsight-on-aks_cluster_upgrade
+- az_hdinsight-on-aks_cluster_upgrade_history
 - az_hdinsight-on-aks_cluster_upgrade_list
+- az_hdinsight-on-aks_cluster_upgrade_rollback
 - az_hdinsight-on-aks_cluster_upgrade_run
 - az_hdinsight-on-aks_cluster_wait
 globalParameters:
