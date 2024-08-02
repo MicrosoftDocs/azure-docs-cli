@@ -4,7 +4,7 @@ name: az vmware private-cloud
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **vmware** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az vmware private-cloud** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **vmware** extension for the Azure CLI (version 2.54.0 or higher). The extension will automatically install the first time you run an **az vmware private-cloud** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Commands to manage private clouds.
 status: GA
@@ -190,36 +190,29 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az vmware private-cloud create --cluster-size
-                                   --name
-                                   --network-block
+    az vmware private-cloud create --name
                                    --resource-group
                                    --sku
                                    [--accept-eula]
+                                   [--cluster-size]
                                    [--ext-nw-blocks]
                                    [--internet {Disabled, Enabled}]
                                    [--location]
                                    [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--network-block]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--nsxt-password]
                                    [--secondary-zone]
                                    [--strategy {DualZone, SingleZone}]
                                    [--tags]
                                    [--vcenter-password]
+                                   [--virtual-network-id]
                                    [--zone]
   requiredParameters:
-  - isRequired: true
-    name: --cluster-size
-    summary: |-
-      Number of hosts for the default management cluster. Minimum of 3 and maximum of 16.
   - isRequired: true
     name: --name --private-cloud-name -n
     summary: |-
       Name of the private cloud.
-  - isRequired: true
-    name: --network-block
-    summary: |-
-      The block of addresses should be unique across VNet in your subscription as well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where A,B,C,D are between 0 and 255, and X is between 0 and 22.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -227,12 +220,15 @@ directCommands:
   - isRequired: true
     name: --sku
     summary: |-
-      The name of the SKU.
+      The name of the SKU. E.g. P3. It is typically a letter+number code.
   optionalParameters:
   - name: --accept-eula --yes -y
     defaultValue: "False"
     summary: |-
       Accept the end-user license agreement without prompting.
+  - name: --cluster-size
+    summary: |-
+      Number of hosts for the default management cluster. Minimum of 3 and maximum of 16.
   - name: --ext-nw-blocks --extended-network-blocks
     summary: |-
       Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -243,18 +239,21 @@ directCommands:
       Connectivity to internet is enabled or disabled.
   - name: --location -l
     summary: |-
-      Resource location  When not specified, the location of the resource group will be used.
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
   - name: --mi-system-assigned
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable a system assigned identity.
+  - name: --network-block
+    summary: |-
+      The block of addresses should be unique across VNet in your subscription as well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where A,B,C,D are between 0 and 255, and X is between 0 and 22.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --nsxt-password
     summary: |-
-      NSX-T Manager password when the private cloud is created  If value is blank it's asked from the tty.
+      Optionally, set the NSX-T Manager password when the private cloud is created  If value is blank it's asked from the tty.
   - name: --secondary-zone
     summary: |-
       The secondary availability zone for the private cloud.
@@ -267,7 +266,10 @@ directCommands:
       Resource tags  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --vcenter-password
     summary: |-
-      VCenter admin password when the private cloud is created  If value is blank it's asked from the tty.
+      Optionally, set the vCenter admin password when the private cloud is created  If value is blank it's asked from the tty.
+  - name: --virtual-network-id
+    summary: |-
+      Azure resource ID of the virtual network.
   - name: --zone
     summary: |-
       The primary availability zone for the private cloud.
@@ -538,11 +540,38 @@ directCommands:
     Rotate the NSX-T Manager password.
   status: GA
   sourceType: Extension
-  syntax: az vmware private-cloud rotate-nsxt-password
+  syntax: >-
+    az vmware private-cloud rotate-nsxt-password [--ids]
+                                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                                 [--private-cloud]
+                                                 [--resource-group]
+                                                 [--subscription]
+                                                 [--yes]
   examples:
   - summary: |-
-      Rotate the NSX-T Manager password.
-    syntax: az vmware private-cloud rotate-nsxt-password
+      Rotate the NSX-T password
+    syntax: az rotate-nsxt-password --resource-group MyResourceGroup --private-cloud MyPrivateCloud
+  optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --private-cloud -c
+    summary: |-
+      Name of the private cloud.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_vmware_private-cloud_rotate-vcenter-password
   name: az vmware private-cloud rotate-vcenter-password
   summary: |-
@@ -614,11 +643,14 @@ directCommands:
   syntax: >-
     az vmware private-cloud update [--add]
                                    [--cluster-size]
+                                   [--dns-zone-type {Private, Public}]
                                    [--ext-nw-blocks]
                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--hosts]
                                    [--ids]
                                    [--internet {Disabled, Enabled}]
                                    [--name]
+                                   [--network-block]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--nsxt-password]
                                    [--remove]
@@ -627,13 +659,18 @@ directCommands:
                                    [--subscription]
                                    [--tags]
                                    [--vcenter-password]
+                                   [--vsan-datastore-name]
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --cluster-size
     summary: |-
-      The cluster size.
+      Number of hosts for the default management cluster. Minimum of 3 and maximum of 16.
+  - name: --dns-zone-type
+    parameterValueGroup: "Private, Public"
+    summary: |-
+      The type of DNS zone to use.
   - name: --ext-nw-blocks --extended-network-blocks
     summary: |-
       Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X).  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -641,6 +678,9 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --hosts
+    summary: |-
+      The hosts  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
@@ -651,6 +691,9 @@ directCommands:
   - name: --name --private-cloud-name -n
     summary: |-
       Name of the private cloud.
+  - name: --network-block
+    summary: |-
+      The block of addresses should be unique across VNet in your subscription as well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where A,B,C,D are between 0 and 255, and X is between 0 and 22.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -676,6 +719,9 @@ directCommands:
   - name: --vcenter-password
     summary: |-
       Optionally, set the vCenter admin password when the private cloud is created  If value is blank it's asked from the tty.
+  - name: --vsan-datastore-name
+    summary: |-
+      Name of the vsan datastore associated with the cluster.
 - uid: az_vmware_private-cloud_wait
   name: az vmware private-cloud wait
   summary: |-
