@@ -116,12 +116,16 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az confcom katapolicygen --yaml
-                             [--config-map-file]
+    az confcom katapolicygen [--config-map-file]
+                             [--containerd-pull]
+                             [--containerd-socket-path]
                              [--outraw]
                              [--print-policy]
+                             [--print-version]
+                             [--rules-file-name]
                              [--settings-file-name]
                              [--use-cached-files]
+                             [--yaml]
   examples:
   - summary: |-
       Input a Kubernetes YAML file to inject a base64 encoded Confidential Container Security Policy into the YAML file
@@ -135,15 +139,23 @@ directCommands:
   - summary: |-
       Input a Kubernetes YAML file and external config map file
     syntax: az confcom katapolicygen --yaml "./pod.json" --config-map-file "./configmap.json"
-  requiredParameters:
-  - isRequired: true
-    name: --yaml -y
-    summary: |-
-      Input YAML Kubernetes file.
+  - summary: |-
+      Input a Kubernetes YAML file and custom rules file
+    syntax: az confcom katapolicygen --yaml "./pod.json" -p "./rules.rego"
+  - summary: |-
+      Input a Kubernetes YAML file with a custom containerd socket path
+    syntax: az confcom katapolicygen --yaml "./pod.json" --containerd-pull --containerd-socket-path "/my/custom/containerd.sock"
   optionalParameters:
   - name: --config-map-file -c
     summary: |-
       Path to config map file.
+  - name: --containerd-pull -d
+    defaultValue: "False"
+    summary: |-
+      Use containerd to pull the image. This option is only supported on Linux.
+  - name: --containerd-socket-path
+    summary: |-
+      Path to the containerd socket. This option is only supported on Linux.
   - name: --outraw
     defaultValue: "False"
     summary: |-
@@ -152,6 +164,13 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Print the base64 encoded generated policy in the terminal.
+  - name: --print-version -v
+    defaultValue: "False"
+    summary: |-
+      Print the version of genpolicy tooling.
+  - name: --rules-file-name -p
+    summary: |-
+      Path to custom rules file.
   - name: --settings-file-name -j
     summary: |-
       Path to custom settings file.
@@ -159,6 +178,9 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Use cached files to save on computation time.
+  - name: --yaml -y
+    summary: |-
+      Input YAML Kubernetes file.
 commands:
 - az_confcom_acipolicygen
 - az_confcom_katapolicygen
