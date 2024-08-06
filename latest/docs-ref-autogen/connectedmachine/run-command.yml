@@ -15,7 +15,7 @@ directCommands:
 - uid: az_connectedmachine_run-command_create
   name: az connectedmachine run-command create
   summary: |-
-    Create operation to create or update a run command.
+    Create a run command.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az connectedmachine run-command' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -24,30 +24,30 @@ directCommands:
     az connectedmachine run-command create --machine-name
                                            --name
                                            --resource-group
-                                           [--async {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--async-execution {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--command-id]
-                                           [--error-blob-managed-identity]
+                                           [--error-blob-id]
                                            [--error-blob-uri]
                                            [--location]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--output-blob-managed-identity]
+                                           [--output-blob-id]
                                            [--output-blob-uri]
                                            [--parameters]
-                                           [--password]
                                            [--protected-parameters]
+                                           [--run-as-password]
                                            [--run-as-user]
                                            [--script]
                                            [--script-uri]
-                                           [--script-uri-managed-id]
+                                           [--script-uri-id]
                                            [--tags]
-                                           [--timeout]
+                                           [--timeout-in-seconds]
   examples:
   - summary: |-
       Sample command for run-command create
     syntax: >-
-      az connectedmachine run-command create --resource-group "myResourceGroup" --location "West US" --async false --parameters "[{"name":"param1","value":"value1"}]" --password "<runAsPassword>" --user "user1" --script "Write-Host Hello World!" --timeout 3600 --name "myRunCommand" --machine-name "myMachine" --subscription "mySubscription"
+      az connectedmachine run-command create --resource-group myResourceGroup --location "WestUS" --async false --parameters "[{"name":"param1","value":"value1"}]" --password "<runAsPassword>" --user "user1" --script "Write-Host Hello World!" --timeout 3600 --name myRunCommand --machine-name myMachine --subscription mySubscription
 
-      az connectedmachine run-command create --resource-group "myResourceGroup" --location "West US" --script "Write-Host Hello World!" --name "myRunCommand" --machine-name "myMachine" --output-uri "outputuri" --subscription "mySubscription"
+      az connectedmachine run-command create --resource-group myResourceGroup --location "WestUS" --script "Write-Host Hello World!" --name myRunCommand --machine-name myMachine --output-uri "outputuri" --subscription mySubscription
   requiredParameters:
   - isRequired: true
     name: --machine-name
@@ -62,7 +62,7 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --async --async-execution
+  - name: --async-execution
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -70,10 +70,10 @@ directCommands:
   - name: --command-id
     summary: |-
       Specifies the commandId of predefined built-in script.
-  - name: --error-blob-managed-identity --error-id
+  - name: --error-blob-id --error-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --error-blob-uri --error-uri
+  - name: --error-blob-uri
     summary: |-
       Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter.
   - name: --location -l
@@ -83,22 +83,22 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --output-blob-managed-identity --output-id
+  - name: --output-blob-id --output-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --output-blob-uri --output-uri
+  - name: --output-blob-uri
     summary: |-
       Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter.
   - name: --parameters
     summary: |-
       The parameters used by the script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --password --run-as-password
-    summary: |-
-      Specifies the user account password on the machine when executing the run command.
   - name: --protected-parameters
     summary: |-
       The parameters used by the script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --run-as-user --user
+  - name: --run-as-password
+    summary: |-
+      Specifies the user account password on the machine when executing the run command.
+  - name: --run-as-user
     summary: |-
       Specifies the user account on the machine when executing the run command.
   - name: --script
@@ -107,19 +107,19 @@ directCommands:
   - name: --script-uri
     summary: |-
       Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or public URI.
-  - name: --script-uri-managed-id --script-uri-managed-identity
+  - name: --script-uri-id --script-uri-managed-identity
     summary: |-
       User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --timeout --timeout-in-seconds
+  - name: --timeout-in-seconds
     summary: |-
       The timeout in seconds to execute the run command.
 - uid: az_connectedmachine_run-command_delete
   name: az connectedmachine run-command delete
   summary: |-
-    Delete operation to delete a run command.
+    Delete a run command.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az connectedmachine run-command' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -135,7 +135,7 @@ directCommands:
   examples:
   - summary: |-
       Sample command for run-command delete
-    syntax: az connectedmachine run-command delete --resource-group "myResourceGroup" --name "myRunCommand" --machine-name "myMachine"
+    syntax: az connectedmachine run-command delete --resource-group myResourceGroup --machine-name myMachine --name myRunCommand
   optionalParameters:
   - name: --ids
     summary: |-
@@ -163,7 +163,7 @@ directCommands:
 - uid: az_connectedmachine_run-command_list
   name: az connectedmachine run-command list
   summary: |-
-    List operation to get all the run commands of a non-Azure machine.
+    Get all the run commands of a non-Azure machine.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az connectedmachine run-command' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -177,7 +177,7 @@ directCommands:
   examples:
   - summary: |-
       Sample command for run-command list
-    syntax: az connectedmachine run-command list --resource-group "myResourceGroup" --machine-name "myMachine"
+    syntax: az connectedmachine run-command list --resource-group myResourceGroup --machine-name myMachine --subscription mySubscription
   requiredParameters:
   - isRequired: true
     name: --machine-name
@@ -200,7 +200,7 @@ directCommands:
 - uid: az_connectedmachine_run-command_show
   name: az connectedmachine run-command show
   summary: |-
-    Get operation to get a run command.
+    Get a run command.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az connectedmachine run-command' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -214,7 +214,7 @@ directCommands:
   examples:
   - summary: |-
       Sample command for run-command show
-    syntax: az connectedmahine run-command show --resource-group "myResourceGroup" --name "myRunCommand" --machine-name "myMachine"
+    syntax: az connectedmachine run-command show --resource-group myResourceGroup --machine-name myMachine --name myRunCommand
   optionalParameters:
   - name: --ids
     summary: |-
@@ -234,50 +234,56 @@ directCommands:
 - uid: az_connectedmachine_run-command_update
   name: az connectedmachine run-command update
   summary: |-
-    Update operation to create or update a run command.
+    Update a run command.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'az connectedmachine run-command' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
     az connectedmachine run-command update [--add]
-                                           [--async {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--error-blob-managed-identity]
+                                           [--async-execution {0, 1, f, false, n, no, t, true, y, yes}]
+                                           [--command-id]
+                                           [--error-blob-id]
                                            [--error-blob-uri]
                                            [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                            [--ids]
                                            [--machine-name]
                                            [--name]
                                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
-                                           [--output-blob-managed-identity]
+                                           [--output-blob-id]
                                            [--output-blob-uri]
                                            [--parameters]
-                                           [--password]
                                            [--protected-parameters]
                                            [--remove]
                                            [--resource-group]
+                                           [--run-as-password]
                                            [--run-as-user]
+                                           [--script]
+                                           [--script-uri]
+                                           [--script-uri-id]
                                            [--set]
-                                           [--source]
                                            [--subscription]
                                            [--tags]
-                                           [--timeout]
+                                           [--timeout-in-seconds]
   examples:
   - summary: |-
       Sample command for run-command update
-    syntax: az connetcedmachine run-command update --resource-group "myResourceGroup" --name "myRunCommand" --machine-name "myMachine" --subscription "mySubscription" --tags Tag1=Value1
+    syntax: az connetcedmachine run-command update --resource-group myResourceGroup --name myRunCommand --machine-name myMachine --subscription mySubscription --tags Tag1=Value1
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
-  - name: --async --async-execution
+  - name: --async-execution
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete.
-  - name: --error-blob-managed-identity --error-id
+  - name: --command-id
+    summary: |-
+      Specifies the commandId of predefined built-in script.
+  - name: --error-blob-id --error-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --error-blob-uri --error-uri
+  - name: --error-blob-uri
     summary: |-
       Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter.
   - name: --force-string
@@ -297,18 +303,15 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
-  - name: --output-blob-managed-identity --output-id
+  - name: --output-blob-id --output-blob-managed-identity
     summary: |-
       User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --output-blob-uri --output-uri
+  - name: --output-blob-uri
     summary: |-
       Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter.
   - name: --parameters
     summary: |-
       The parameters used by the script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --password --run-as-password
-    summary: |-
-      Specifies the user account password on the machine when executing the run command.
   - name: --protected-parameters
     summary: |-
       The parameters used by the script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -318,22 +321,31 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --run-as-user --user
+  - name: --run-as-password
+    summary: |-
+      Specifies the user account password on the machine when executing the run command.
+  - name: --run-as-user
     summary: |-
       Specifies the user account on the machine when executing the run command.
+  - name: --script
+    summary: |-
+      Specifies the script content to be executed on the machine.
+  - name: --script-uri
+    summary: |-
+      Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or public URI.
+  - name: --script-uri-id --script-uri-managed-identity
+    summary: |-
+      User-assigned managed identity that has access to scriptUri in case of Azure storage blob. Use an empty object in case of system-assigned identity. Make sure the Azure storage blob exists, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
-  - name: --source
-    summary: |-
-      The source of the run command script.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
-  - name: --timeout --timeout-in-seconds
+  - name: --timeout-in-seconds
     summary: |-
       The timeout in seconds to execute the run command.
 - uid: az_connectedmachine_run-command_wait
