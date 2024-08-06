@@ -88,6 +88,10 @@ Version 2.63.0
 * `az network network-watcher connection-monitor`: Support to create connection monitor v2
 * `az network vnet peering`: Support virtual network subnet peering
 
+### Packaging
+
+* Drop Alpine Docker image
+
 ### RDBMS
 
 * [BREAKING CHANGE] `az postgres flexible-server create`: Update default value of PG version to be 16
