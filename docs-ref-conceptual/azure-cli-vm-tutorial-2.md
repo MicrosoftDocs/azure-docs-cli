@@ -47,15 +47,21 @@ $vnetName = "TutorialVNet1"
 $subnetName = "TutorialSubnet1"
 $vnetAddressPrefix = "10.0.0.0/16"
 $subnetAddressPrefix = "10.0.0.0/24"
+$location = 'eastus'
 
 # Use the existing resource group
 $resourceGroup = "VMTutorialResources"
 
+# Create a Subnet Config
+$Subnet = New-AzVirtualNetworkSubnetConfig `
+  -Name $subnetName `
+  -AddressPrefix $subnetAddressPrefix
+
 # Create a virtual network and subnet
-az network vnet create `
-  --name $vnetName `
-  --resource-group $resourceGroup `
-  --address-prefixes $vnetAddressPrefix `
-  --subnet-name $subnetName `
-  --subnet-prefixes $subnetAddressPrefix
+New-AzVirtualNetwork `
+  -Name $vnetName `
+  -ResourceGroupName $resourceGroup `
+  -AddressPrefix $vnetAddressPrefix `
+  -Subnet $Subnet `
+  -Location $location 
 ```
