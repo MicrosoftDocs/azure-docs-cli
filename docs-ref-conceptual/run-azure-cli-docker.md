@@ -15,26 +15,25 @@ keywords: azure cli docker, docker azure cli
 
 You can use Docker to run a standalone Linux container with the Azure CLI preinstalled. Docker gets you started quickly with an isolated environment to run the CLI in. The image can also be used as a base for your own deployments.
 
-With the release of Azure CLI [version 2.54.0](./release-notes-azure-cli.md#november-14-2023), the size of the Docker image of `azure-cli` is reduced from 1.1 GB to 700 MB! This reduction is a 36.3% decrease resulting in improved download speed and faster startup.
+> [!WARNING]
+> Azure CLI 2.63.0 (released in August 2024) is the last version supported on the Alpine docker image. Microsoft will not be providing additional updates or bug fixes for this image. Consider migrating to the Azure Linux based image for the Azure CLI, which is fully supported.
+>
+> To disable warning messages, run `az config set core.only_show_errors=yes`. For more information on Azure CLI configuration settings, see [CLI configuration values and environment variables](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
 
 ## Start the Docker container with Azure CLI preinstalled
 
-> [!NOTE]
-> The Azure CLI has migrated to [Microsoft Container Registry](https://azure.microsoft.com/services/container-registry).
-> Existing tags on Docker Hub are still supported, but new releases will only be available as mcr.microsoft.com/azure-cli.
+Open a command prompt and start the Docker container with Azure CLI preinstalled using the following command. When used in a pipeline, it is recommended to use a deterministic tag name (for example `cbl-mariner2.0`)
 
-Open a command prompt and then start the Docker container with Azure CLI preinstalled using the following command.
-
-   ```bash
-   docker run -it mcr.microsoft.com/azure-cli
-   ```
+```bash
+docker run -it mcr.microsoft.com/azure-cli:cbl-mariner2.0
+```
 
 > [!NOTE]
 > If you want to pick up the SSH keys from your user environment,
 > use `-v ${HOME}/.ssh:/root/.ssh` to mount your SSH keys in the environment.
 >
 > ```bash
-> docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli
+> docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli:cbl-mariner2.0
 > ```
 
 The CLI is installed on the image as the `az` command in `/usr/local/bin`.
@@ -43,10 +42,10 @@ The CLI is installed on the image as the `az` command in `/usr/local/bin`.
 
 Available versions can be found at [Azure CLI release notes](./release-notes-azure-cli.md).
 
-To run a specific version of the Azure CLI in the Docker container, use this command:
+To run a specific version of the Azure CLI in the Docker container, use this command. Change `2.62.0` with your desired version.
 
 ```bash
-docker run -it mcr.microsoft.com/azure-cli:<version>
+docker run -it mcr.microsoft.com/azure-cli:2.62.0-cbl-mariner2.0
 ```
 
 ## Update Docker image
@@ -57,7 +56,7 @@ try to avoid using a container that hosts the CLI as a data store.
 Update your local image with `docker pull`.
 
 ```bash
-docker pull mcr.microsoft.com/azure-cli
+docker pull mcr.microsoft.com/azure-cli:cbl-mariner2.0
 ```
 
 ## Uninstall Docker image
