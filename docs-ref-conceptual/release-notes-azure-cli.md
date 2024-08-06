@@ -63,6 +63,13 @@ Version 2.63.0
 * `az containerapp job stop`: Return custom message for stop job execution
 * Fix #29330: `az containerapp auth update`: Fix split logic for `--set`
 
+### Core
+
+* Resolve CVE-2024-39689
+* Resolve CVE-2024-6345
+* Support `az config set extension.dynamic_install_allow_preview` for extension dynamic installation configuration
+* `az logout`: Remove service principal access tokens from token cache
+
 ### Cosmos DB
 
 * `az cosmosdb delete`: Support `--no-wait`
