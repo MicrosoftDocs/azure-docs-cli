@@ -17,6 +17,8 @@ You can use Docker to run a standalone Linux container with the Azure CLI preins
 
 > [!WARNING]
 > Azure CLI 2.63.0 (released in August 2024) is the last version supported on the Alpine docker image. Microsoft will not be providing additional updates or bug fixes for this image. Consider migrating to the Azure Linux based image for the Azure CLI, which is fully supported.
+>
+> To disable warning messages, run `az config set core.only_show_errors=yes`. For more information on Azure CLI configuration settings, see [CLI configuration values and environment variables](./azure-cli-configuration.md#cli-configuration-values-and-environment-variables).
 
 ## Start the Docker container with Azure CLI preinstalled
 
