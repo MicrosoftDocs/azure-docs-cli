@@ -25,7 +25,11 @@ directCommands:
                                    [--allow-forwarded-traffic {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--allow-gateway-transit {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--allow-vnet-access {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--enable-only-ipv6 {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--local-subnet-names]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--peer-complete-vnets {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--remote-subnet-names]
                                    [--use-remote-gateways {0, 1, f, false, n, no, t, true, y, yes}]
   examples:
   - summary: |-
@@ -64,10 +68,24 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space.
+  - name: --enable-only-ipv6
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Whether only Ipv6 address space is peered for subnet peering.
+  - name: --local-subnet-names
+    summary: |-
+      List of local subnet names that are subnet peered with remote virtual network.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --peer-complete-vnets
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Whether complete virtual network address space is peered.
+  - name: --remote-subnet-names
+    summary: |-
+      List of remote subnet names from remote virtual network that are subnet peered.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --use-remote-gateways
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -121,6 +139,8 @@ directCommands:
   syntax: >-
     az network vnet peering list --resource-group
                                  --vnet-name
+                                 [--max-items]
+                                 [--next-token]
   examples:
   - summary: |-
       List all peerings of a specified virtual network.
@@ -134,6 +154,13 @@ directCommands:
     name: --vnet-name
     summary: |-
       The virtual network (VNet) name.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_network_vnet_peering_show
   name: az network vnet peering show
   summary: |-
@@ -360,5 +387,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 10/11/2023
+  ms.date: 07/19/2024
   description: To learn more about virtual network peering visit https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering.

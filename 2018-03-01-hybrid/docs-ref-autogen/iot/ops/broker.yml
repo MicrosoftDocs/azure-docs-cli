@@ -1,79 +1,107 @@
 ### YamlMime:AzureCLIGroup
-uid: az_iot_ops_mq
-name: az iot ops mq
+uid: az_iot_ops_broker
+name: az iot ops broker
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.46.0 or higher). The extension will automatically install the first time you run an **az iot ops mq** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops broker** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  MQ specific tools.
+  Mqtt broker management and operations.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
 sourceType: Extension
 directCommands:
-- uid: az_iot_ops_mq_get-password-hash
-  name: az iot ops mq get-password-hash
+- uid: az_iot_ops_broker_list
+  name: az iot ops broker list
   summary: |-
-    Generates a PBKDF2 hash of the passphrase applying PBKDF2-HMAC-SHA512. A 128-bit salt is used from os.urandom.
+    List mqtt brokers associated with an instance.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops mq get-password-hash --phrase
-                                    [--iterations]
+    az iot ops broker list --instance
+                           --resource-group
   examples:
   - summary: |-
-      Produce a hash of the phrase 'mypassphrase' using the default number of hash iterations.
-    syntax: az iot ops mq get-password-hash -p mypassphrase
+      Enumerate all brokers in the instance 'mycluster-ops-instance'.
+    syntax: az iot ops broker list --in mycluster-ops-instance -g myresourcegroup
   requiredParameters:
   - isRequired: true
-    name: --phrase -p
+    name: --instance -i
     summary: |-
-      Passphrase to apply hashing algorithm to.
-  optionalParameters:
-  - name: --iterations -i
-    defaultValue: "210000"
+      IoT Operations instance name.
+  - isRequired: true
+    name: --resource-group -g
     summary: |-
-      Using a higher iteration count will increase the cost of an exhaustive search but will also make derivation proportionally slower.
-- uid: az_iot_ops_mq_stats
-  name: az iot ops mq stats
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_iot_ops_broker_show
+  name: az iot ops broker show
+  summary: |-
+    Show details of an mqtt broker.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  sourceType: Extension
+  syntax: >-
+    az iot ops broker show --instance
+                           --name
+                           --resource-group
+  examples:
+  - summary: |-
+      Show details of the default broker 'broker' in the instance 'mycluster-ops-instance'.
+    syntax: az iot ops broker show -n broker --in mycluster-ops-instance -g myresourcegroup
+  requiredParameters:
+  - isRequired: true
+    name: --instance -i
+    summary: |-
+      IoT Operations instance name.
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Mqtt broker name.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_iot_ops_broker_stats
+  name: az iot ops broker stats
   summary: |-
     Show dmqtt running statistics.
   description: |-
     {Supported service APIs}
-    - mq.iotoperations.azure.com/v1beta1.
+    - mqttbroker.iotoperations.azure.com/v1beta1.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az iot ops mq stats [--context]
-                        [--metrics-port]
-                        [--namespace]
-                        [--protobuf-port]
-                        [--raw {false, true}]
-                        [--refresh]
-                        [--trace-dir]
-                        [--trace-ids]
-                        [--watch {false, true}]
+    az iot ops broker stats [--context]
+                            [--metrics-port]
+                            [--namespace]
+                            [--protobuf-port]
+                            [--raw {false, true}]
+                            [--refresh]
+                            [--trace-dir]
+                            [--trace-ids]
+                            [--watch {false, true}]
   examples:
   - summary: |-
       Fetch key performance indicators from the diagnostics Prometheus metrics endpoint.
-    syntax: az iot ops mq stats
+    syntax: az iot ops broker stats
   - summary: |-
       Same as prior example except with a dynamic display that refreshes periodically.
-    syntax: az iot ops mq stats --watch
+    syntax: az iot ops broker stats --watch
   - summary: |-
       Return the raw output of the metrics endpoint with minimum processing.
-    syntax: az iot ops mq stats --raw
+    syntax: az iot ops broker stats --raw
   - summary: |-
       Fetch all available mq traces from the diagnostics Protobuf endpoint. This will produce a `.zip` with both `Otel` and Grafana `tempo` file formats. A trace files last modified attribute will match the trace timestamp.
-    syntax: az iot ops mq stats --trace-dir .
+    syntax: az iot ops broker stats --trace-dir .
   - summary: |-
       Fetch traces by trace Ids provided in space-separated hex format. Only `Otel` format is shown.
-    syntax: az iot ops mq stats --trace-ids 4e84000155a98627cdac7de46f53055d
+    syntax: az iot ops broker stats --trace-ids 4e84000155a98627cdac7de46f53055d
   optionalParameters:
   - name: --context
     summary: |-
@@ -108,8 +136,18 @@ directCommands:
     summary: |-
       The operation blocks and dynamically updates a stats table.
 commands:
-- az_iot_ops_mq_get-password-hash
-- az_iot_ops_mq_stats
+- az_iot_ops_broker_authn
+- az_iot_ops_broker_authn_list
+- az_iot_ops_broker_authn_show
+- az_iot_ops_broker_authz
+- az_iot_ops_broker_authz_list
+- az_iot_ops_broker_authz_show
+- az_iot_ops_broker_list
+- az_iot_ops_broker_listener
+- az_iot_ops_broker_listener_list
+- az_iot_ops_broker_listener_show
+- az_iot_ops_broker_show
+- az_iot_ops_broker_stats
 globalParameters:
 - name: --debug
   summary: |-
@@ -135,4 +173,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: MQ specific tools.
+  description: Mqtt broker management and operations.
