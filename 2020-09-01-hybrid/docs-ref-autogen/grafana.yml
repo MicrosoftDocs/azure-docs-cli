@@ -4,11 +4,9 @@ name: az grafana
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **amg** extension for the Azure CLI (version 2.38.0 or higher). The extension will automatically install the first time you run an **az grafana** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **amg** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az grafana** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands to manage Azure Grafana instances.
-description: |-
-  For optimized experience, not all data plane APIs, documented at https://grafana.com/docs/grafana/latest/http_api/, are exposed. On coverage gap, please reach out to ad4g@microsoft.com.
+  Commands to manage Azure Managed Grafana resources.
 status: GA
 sourceType: Extension
 directCommands:
@@ -59,80 +57,118 @@ directCommands:
 - uid: az_grafana_create
   name: az grafana create
   summary: |-
-    Create an Azure Managed Grafana instance.
+    Create a workspace for Grafana resource. This API is idempotent, so user can either create a new grafana or update an existing grafana.
   status: GA
   sourceType: Extension
   syntax: >-
     az grafana create --name
                       --resource-group
+                      [--api-key {Disabled, Enabled}]
                       [--deterministic-outbound-ip {Disabled, Enabled}]
+                      [--grafana-major-version]
                       [--location]
+                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                       [--principal-ids]
-                      [--principal-types {Group, ServicePrincipal, User}]
-                      [--skip-role-assignments {false, true}]
-                      [--skip-system-assigned-identity {false, true}]
+                      [--public-network-access {Disabled, Enabled}]
+                      [--skip-identity {0, 1, f, false, n, no, t, true, y, yes}]
+                      [--skip-role-assignments {0, 1, f, false, n, no, t, true, y, yes}]
+                      [--sku-tier]
                       [--tags]
                       [--zone-redundancy {Disabled, Enabled}]
+  examples:
+  - summary: |-
+      create Azure Managed Grafana resource with Standard Sku and public network access enabled
+    syntax: az grafana create --resource-group myResourceGroup --workspace-name myWorkspace --sku-tier Standard --public-network-access Enabled
   requiredParameters:
   - isRequired: true
-    name: --name -n
+    name: --name --workspace-name -n
     summary: |-
-      Name of the Azure Managed Grafana.
+      The workspace name of Azure Managed Grafana.
   - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --deterministic-outbound-ip -i
+  - name: --api-key --service-account
+    defaultValue: "Disabled"
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      If enabled, the Grafana workspace will have fixed egress IPs you can use them in the firewall of datasources. Default: Disabled.
+      The api key setting of the Grafana instance.
+  - name: --deterministic-outbound-ip -i
+    defaultValue: "Disabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Whether a Grafana instance uses deterministic outbound IPs.
+  - name: --grafana-major-version -v
+    summary: |-
+      The major Grafana software version to target.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      The geo-location where the grafana resource lives.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --principal-ids
     summary: |-
-      Space-separated Azure AD object ids for users, groups, etc to be made as Grafana Admins. Once provided, CLI won't make the current logged-in user as Grafana Admin.
-  - name: --principal-types
-    parameterValueGroup: "Group, ServicePrincipal, User"
-    summary: |-
-      Space-separated Azure AD principal types to pair with --principal-ids.
-  - name: --skip-role-assignments
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: |-
-      Do not create role assignments for managed identity and the current login user.
-  - name: --skip-system-assigned-identity -s
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: |-
-      Do not enable system assigned identity.
-  - name: --tags
-    summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
-  - name: --zone-redundancy
+      Space-separated Azure AD object ids for users, groups, etc. to be made as Grafana Admins. Once provided, CLI won't make the current logged-in user as Grafana Admin  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --public-network-access -p
+    defaultValue: "Enabled"
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Indicates whether or not zone redundancy should be enabled. Default: Disabled.
+      Indicate the state for enable or disable traffic over the public interface.
+  - name: --skip-identity --skip-system-assigned-identity
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not enable system assigned identity. Use this option if you want to manage the identity yourself.
+  - name: --skip-role-assignments
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Skip creating default role assignments for the managed identity of the Grafana instance and the current CLI account. Use this option if you want to manage role assignments yourself.
+  - name: --sku-tier
+    defaultValue: "Standard"
+    summary: |-
+      The Sku of the grafana resource.
+  - name: --tags
+    summary: |-
+      The tags for grafana resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --zone-redundancy
+    defaultValue: "Disabled"
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      The zone redundancy setting of the Grafana instance.
 - uid: az_grafana_delete
   name: az grafana delete
   summary: |-
-    Delete an Azure Managed Grafana instance.
+    Delete a workspace for Grafana resource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az grafana delete --name
+    az grafana delete [--ids]
+                      [--name]
+                      [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                       [--resource-group]
+                      [--subscription]
                       [--yes]
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the Azure Managed Grafana.
   optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --workspace-name -n
+    summary: |-
+      The workspace name of Azure Managed Grafana.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -140,11 +176,20 @@ directCommands:
 - uid: az_grafana_list
   name: az grafana list
   summary: |-
-    List Azure Managed Grafana instances.
+    List all resources of workspaces for Grafana under the specified subscription.
   status: GA
   sourceType: Extension
-  syntax: az grafana list [--resource-group]
+  syntax: >-
+    az grafana list [--max-items]
+                    [--next-token]
+                    [--resource-group]
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -190,43 +235,53 @@ directCommands:
 - uid: az_grafana_show
   name: az grafana show
   summary: |-
-    Show details of an Azure Managed Grafana instance.
+    Get the properties of a specific workspace for Grafana resource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az grafana show --name
+    az grafana show [--ids]
+                    [--name]
                     [--resource-group]
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the Azure Managed Grafana.
+                    [--subscription]
   optionalParameters:
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --workspace-name -n
+    summary: |-
+      The workspace name of Azure Managed Grafana.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
 - uid: az_grafana_update
   name: az grafana update
   summary: |-
-    Update an Azure Managed Grafana instance.
+    Update a workspace for Grafana resource.
   status: GA
   sourceType: Extension
   syntax: >-
-    az grafana update --name
-                      [--api-key {Disabled, Enabled}]
+    az grafana update [--api-key {Disabled, Enabled}]
                       [--deterministic-outbound-ip {Disabled, Enabled}]
                       [--from-address]
                       [--from-name]
+                      [--grafana-major-version]
                       [--host]
-                      [--major-version]
+                      [--ids]
+                      [--name]
                       [--password]
                       [--public-network-access {Disabled, Enabled}]
                       [--resource-group]
-                      [--skip-verify {false, true}]
-                      [--smtp {Disabled, Enabled}]
+                      [--skip-verify {0, 1, f, false, n, no, t, true, y, yes}]
+                      [--sku-tier]
+                      [--smtp {0, 1, f, false, n, no, t, true, y, yes}]
                       [--start-tls-policy {MandatoryStartTLS, NoStartTLS, OpportunisticStartTLS}]
+                      [--subscription]
                       [--tags]
                       [--user]
+                      [--zone-redundancy {Disabled, Enabled}]
   examples:
   - summary: |-
       disable the public network access
@@ -234,60 +289,130 @@ directCommands:
   - summary: |-
       enable mail notification through SMTP relay sevice of mailgun
     syntax: az grafana update -g MyResourceGroup -n MyGrafana --smtp enabled --from-address johndoe@outlook.com --from-name john --host "smtp.mailgun.org:587" --user "postmaster@sandbox12345.mailgun.org" --password "password" --start-tls-policy OpportunisticStartTLS --skip-verify true
-  requiredParameters:
-  - isRequired: true
-    name: --name -n
-    summary: |-
-      Name of the Azure Managed Grafana.
   optionalParameters:
   - name: --api-key --service-account
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      If enabled, you will be able to configure Grafana API keys and service accounts.
+      The api key setting of the Grafana instance.
   - name: --deterministic-outbound-ip -i
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      If enabled, the Grafana workspace will have fixed egress IPs you can use them in the firewall of datasources.
+      Whether a Grafana instance uses deterministic outbound IPs.
   - name: --from-address
     summary: |-
-      Address used when sending out emails.
+      Address used when sending out emails https://pkg.go.dev/net/mail#Address.
   - name: --from-name
     summary: |-
-      Name to be used when sending out emails.
+      Name to be used when sending out emails. Default is "Azure Managed Grafana Notification" https://pkg.go.dev/net/mail#Address.
+  - name: --grafana-major-version --major-version -v
+    summary: |-
+      The major Grafana software version to target.
   - name: --host
     summary: |-
-      SMTP server url (port included).
-  - name: --major-version
+      SMTP server hostname with port, e.g. test.email.net:587.
+  - name: --ids
     summary: |-
-      Grafana major version number.
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --workspace-name -n
+    summary: |-
+      The workspace name of Azure Managed Grafana.
   - name: --password
     summary: |-
-      SMTP server user password.
+      Password of SMTP auth. If the password contains # or ;, then you have to wrap it with triple quotes.
   - name: --public-network-access -p
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
-      Allow public network access.
+      Indicate the state for enable or disable traffic over the public interface.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --skip-verify
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Skip verifying SSL for SMTP server.
-  - name: --smtp
-    parameterValueGroup: "Disabled, Enabled"
+      Verify SSL for SMTP server. Default is false https://pkg.go.dev/crypto/tls#Config.
+  - name: --sku-tier
     summary: |-
-      Allow Grafana to send email.
+      The Sku of the grafana resource.
+  - name: --smtp --smtp-enabled
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable this to allow Grafana to send email. Default is false.
   - name: --start-tls-policy
     parameterValueGroup: "MandatoryStartTLS, NoStartTLS, OpportunisticStartTLS"
     summary: |-
-      TLS policy.
+      The StartTLSPolicy setting of the SMTP configuration https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing tags.
+      The tags for grafana resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --user
     summary: |-
-      SMTP server user name.
+      User of SMTP auth.
+  - name: --zone-redundancy
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      The zone redundancy setting of the Grafana instance.
+- uid: az_grafana_wait
+  name: az grafana wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az grafana wait [--created]
+                    [--custom]
+                    [--deleted]
+                    [--exists]
+                    [--ids]
+                    [--interval]
+                    [--name]
+                    [--resource-group]
+                    [--subscription]
+                    [--timeout]
+                    [--updated]
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --name --workspace-name -n
+    summary: |-
+      The workspace name of Azure Managed Grafana.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_grafana_api-key
 - az_grafana_api-key_create
@@ -342,6 +467,7 @@ commands:
 - az_grafana_user_actual-user
 - az_grafana_user_list
 - az_grafana_user_show
+- az_grafana_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -367,4 +493,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: For optimized experience, not all data plane APIs, documented at https://grafana.com/docs/grafana/latest/http_api/, are exposed. On coverage gap, please reach out to ad4g@microsoft.com.
+  description: Commands to manage Azure Managed Grafana resources.
