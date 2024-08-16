@@ -193,6 +193,60 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_grafana_migrate
+  name: az grafana migrate
+  summary: |-
+    Migrate an existing Grafana instance to an Azure Managed Grafana instance.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
+  syntax: >-
+    az grafana migrate --name
+                       --src-endpoint
+                       --src-token-or-key
+                       [--dry-run {false, true}]
+                       [--folders-to-exclude]
+                       [--folders-to-include]
+                       [--overwrite {false, true}]
+                       [--resource-group]
+  examples:
+  - summary: |-
+      Migrate dashboards and folders from a local Grafana instance to an Azure Managed Grafana instance.
+    syntax: az grafana migrate -g MyResourceGroup -n MyGrafana -s http://localhost:3000 -t YourServiceTokenOrAPIKey
+  requiredParameters:
+  - isRequired: true
+    name: --name -n
+    summary: |-
+      Name of the Azure Managed Grafana.
+  - isRequired: true
+    name: --src-endpoint -s
+    summary: |-
+      Grafana instance endpoint to migrate from.
+  - isRequired: true
+    name: --src-token-or-key -t
+    summary: |-
+      Grafana instance service token (or api key) to get access to migrate from.
+  optionalParameters:
+  - name: --dry-run -d
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Preview changes without committing. Takes priority over --overwrite.
+  - name: --folders-to-exclude -e
+    summary: |-
+      Folders to exclude in backup or sync.
+  - name: --folders-to-include -i
+    summary: |-
+      Folders to include in backup or sync.
+  - name: --overwrite
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Overwrite previous dashboards, library panels, and folders with the same uid or title.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_grafana_restore
   name: az grafana restore
   summary: |-
@@ -443,6 +497,7 @@ commands:
 - az_grafana_folder_show
 - az_grafana_folder_update
 - az_grafana_list
+- az_grafana_migrate
 - az_grafana_notification-channel
 - az_grafana_notification-channel_create
 - az_grafana_notification-channel_delete
