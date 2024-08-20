@@ -1425,6 +1425,7 @@ directCommands:
                                             [--database]
                                             [--kube-namespace]
                                             [--name]
+                                            [--new]
                                             [--no-wait]
                                             [--opt-out {auth, configinfo, publicnetwork}]
                                             [--resource-group]
@@ -1468,6 +1469,10 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the managed cluster. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    summary: |-
+      Deleting existing users with the same name before creating a new user in database.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1621,125 +1626,6 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the postgres service. Required if '--target-id' is not specified.
-- uid: az_aks_connection_create_postgres(serviceconnector-passwordless)
-  name: az aks connection create postgres
-  extensionSuffix: serviceconnector-passwordless
-  summary: |-
-    Create a aks connection to postgres.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: This command has been deprecated and will be removed in a future release.
-  sourceType: Extension
-  syntax: >-
-    az aks connection create postgres [--appconfig-id]
-                                      [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
-                                      [--connection]
-                                      [--customized-keys]
-                                      [--database]
-                                      [--kube-namespace]
-                                      [--name]
-                                      [--new {false, true}]
-                                      [--no-wait]
-                                      [--opt-out {auth, configinfo, publicnetwork}]
-                                      [--private-endpoint {false, true}]
-                                      [--resource-group]
-                                      [--secret]
-                                      [--server]
-                                      [--service-endpoint {false, true}]
-                                      [--source-id]
-                                      [--target-id]
-                                      [--target-resource-group]
-                                      [--yes]
-  examples:
-  - summary: |-
-      Create a connection between aks and postgres interactively
-    syntax: az aks connection create postgres
-  - summary: |-
-      Create a connection between aks and postgres with resource name
-    syntax: az aks connection create postgres -g ClusterRG -n MyCluster --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
-  - summary: |-
-      Create a connection between aks and postgres with resource id
-    syntax: az aks connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.ContainerService/managedClusters/{cluster} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/servers/{server}/databases/{database} --secret name=XX secret=XX
-  - summary: |-
-      Create a new postgres and connect aks to it interactively
-    syntax: az aks connection create postgres --new
-  - summary: |-
-      Create a new postgres and connect aks to it
-    syntax: az aks connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.ContainerService/managedClusters/{cluster} --new
-  optionalParameters:
-  - name: --appconfig-id
-    summary: |-
-      The app configuration id to store configuration.
-  - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
-    summary: |-
-      The client type used on the aks.
-  - name: --connection
-    summary: |-
-      Name of the aks connection.
-  - name: --customized-keys
-    summary: |-
-      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
-  - name: --database
-    summary: |-
-      Name of postgres database. Required if '--target-id' is not specified.
-  - name: --kube-namespace
-    defaultValue: "default"
-    summary: |-
-      The kubernetes namespace where the connection information will be saved into (as kubernetes secret).
-  - name: --name -n
-    summary: |-
-      Name of the managed cluster. Required if '--source-id' is not specified.None.
-  - name: --new
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: |-
-      Indicates whether to create a new postgres when creating the aks connection.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
-    summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
-  - name: --private-endpoint
-    parameterValueGroup: "false, true"
-    summary: |-
-      Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
-  - name: --resource-group -g
-    summary: |-
-      The resource group which contains the managed cluster. Required if '--source-id' is not specified.None.
-  - name: --secret
-    summary: |-
-      The secret auth info.
-    description: |-
-      Usage: --secret name=XX secret=XX
-             --secret name=XX secret-name=XX
-
-      name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
-  - name: --server
-    summary: |-
-      Name of postgres server. Required if '--target-id' is not specified.
-  - name: --service-endpoint
-    parameterValueGroup: "false, true"
-    summary: |-
-      Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
-  - name: --source-id
-    summary: |-
-      The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
-  - name: --target-id
-    summary: |-
-      The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
-  - name: --target-resource-group --tg
-    summary: |-
-      The resource group which contains the postgres service. Required if '--target-id' is not specified.
-  - name: --yes -y
-    defaultValue: "False"
-    summary: |-
-      Do not prompt for confirmation.
 - uid: az_aks_connection_create_postgres-flexible
   name: az aks connection create postgres-flexible
   summary: |-
@@ -1847,6 +1733,7 @@ directCommands:
                                                [--database]
                                                [--kube-namespace]
                                                [--name]
+                                               [--new]
                                                [--no-wait]
                                                [--opt-out {auth, configinfo, publicnetwork}]
                                                [--resource-group]
@@ -1890,6 +1777,10 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the managed cluster. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    summary: |-
+      Deleting existing users with the same name before creating a new user in database.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -2442,6 +2333,7 @@ directCommands:
                                  [--database]
                                  [--kube-namespace]
                                  [--name]
+                                 [--new]
                                  [--no-wait]
                                  [--opt-out {auth, configinfo, publicnetwork}]
                                  [--private-endpoint {false, true}]
@@ -2487,6 +2379,10 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the managed cluster. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    summary: |-
+      Deleting existing users with the same name before creating a new user in database.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -3096,7 +2992,6 @@ commands:
 - az_aks_connection_create_mysql-flexible
 - az_aks_connection_create_mysql-flexible(serviceconnector-passwordless)
 - az_aks_connection_create_postgres
-- az_aks_connection_create_postgres(serviceconnector-passwordless)
 - az_aks_connection_create_postgres-flexible
 - az_aks_connection_create_postgres-flexible(serviceconnector-passwordless)
 - az_aks_connection_create_redis
