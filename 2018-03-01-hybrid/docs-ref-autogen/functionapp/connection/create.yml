@@ -1462,6 +1462,7 @@ directCommands:
                                                     [--customized-keys]
                                                     [--database]
                                                     [--name]
+                                                    [--new]
                                                     [--no-wait]
                                                     [--opt-out {auth, configinfo, publicnetwork}]
                                                     [--resource-group]
@@ -1505,6 +1506,10 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the function app. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    summary: |-
+      Deleting existing users with the same name before creating a new user in database.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -1713,151 +1718,6 @@ directCommands:
   - name: --vault-id
     summary: |-
       The id of key vault to store secret value.
-- uid: az_functionapp_connection_create_postgres(serviceconnector-passwordless)
-  name: az functionapp connection create postgres
-  extensionSuffix: serviceconnector-passwordless
-  summary: |-
-    Create a functionapp connection to postgres.
-  status: Deprecated
-  isDeprecated: true
-  deprecateInfo: This command has been deprecated and will be removed in a future release.
-  sourceType: Extension
-  syntax: >-
-    az functionapp connection create postgres [--appconfig-id]
-                                              [--client-type {django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot}]
-                                              [--connection]
-                                              [--customized-keys]
-                                              [--database]
-                                              [--name]
-                                              [--new {false, true}]
-                                              [--no-wait]
-                                              [--opt-out {auth, configinfo, publicnetwork}]
-                                              [--private-endpoint {false, true}]
-                                              [--resource-group]
-                                              [--secret]
-                                              [--server]
-                                              [--service-endpoint {false, true}]
-                                              [--service-principal]
-                                              [--source-id]
-                                              [--system-identity]
-                                              [--target-id]
-                                              [--target-resource-group]
-                                              [--user-identity]
-                                              [--vault-id]
-                                              [--yes]
-  examples:
-  - summary: |-
-      Create a connection between functionapp and postgres interactively
-    syntax: az functionapp connection create postgres
-  - summary: |-
-      Create a connection between functionapp and postgres with resource name
-    syntax: az functionapp connection create postgres -g FuncAppRG -n MyFunctionApp --tg PostgresRG --server MyServer --database MyDB --secret name=XX secret=XX
-  - summary: |-
-      Create a connection between functionapp and postgres with resource id
-    syntax: az functionapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --target-id /subscriptions/{subscription}/resourceGroups/{target_resource_group}/providers/Microsoft.DBforPostgreSQL/servers/{server}/databases/{database} --secret name=XX secret=XX
-  - summary: |-
-      Create a new postgres and connect functionapp to it interactively
-    syntax: az functionapp connection create postgres --new
-  - summary: |-
-      Create a new postgres and connect functionapp to it
-    syntax: az functionapp connection create postgres --source-id /subscriptions/{subscription}/resourceGroups/{source_resource_group}/providers/Microsoft.Web/sites/{site} --new
-  optionalParameters:
-  - name: --appconfig-id
-    summary: |-
-      The app configuration id to store configuration.
-  - name: --client-type
-    parameterValueGroup: "django, dotnet, dotnet-internal, go, java, nodejs, none, php, python, ruby, springBoot"
-    summary: |-
-      The client type used on the functionapp.
-  - name: --connection
-    summary: |-
-      Name of the functionapp connection.
-  - name: --customized-keys
-    summary: |-
-      The customized keys used to change default configuration names. Key is the original name, value is the customized name.
-  - name: --database
-    summary: |-
-      Name of postgres database. Required if '--target-id' is not specified.
-  - name: --name -n
-    summary: |-
-      Name of the function app. Required if '--source-id' is not specified.None.
-  - name: --new
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
-    summary: |-
-      Indicates whether to create a new postgres when creating the functionapp connection.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
-  - name: --opt-out
-    parameterValueGroup: "auth, configinfo, publicnetwork"
-    summary: |-
-      Whether to disable some configuration steps. Use configinfo to disbale configuration information changes on source. Use publicnetwork to disable public network access configuration.Use auth to skip auth configuration such as enabling managed identity and granting RBAC roles.
-  - name: --private-endpoint
-    parameterValueGroup: "false, true"
-    summary: |-
-      Connect target service by private endpoint. The private endpoint in source virtual network must be created ahead.
-  - name: --resource-group -g
-    summary: |-
-      The resource group which contains the function app. Required if '--source-id' is not specified.None.
-  - name: --secret
-    summary: |-
-      The secret auth info.
-    description: |-
-      Usage: --secret name=XX secret=XX
-             --secret name=XX secret-uri=XX
-             --secret name=XX secret-name=XX
-
-      name    : Required. Username or account name for secret auth.
-      secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
-      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
-      secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
-  - name: --server
-    summary: |-
-      Name of postgres server. Required if '--target-id' is not specified.
-  - name: --service-endpoint
-    parameterValueGroup: "false, true"
-    summary: |-
-      Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
-  - name: --service-principal
-    summary: |-
-      The service principal auth info.
-    description: |-
-      Usage: --service-principal client-id=XX secret=XX
-
-      client-id      : Required. Client id of the service principal.
-      object-id      : Optional. Object id of the service principal (Enterprise Application).
-      secret         : Required. Secret of the service principal.
-  - name: --source-id
-    summary: |-
-      The resource id of a functionapp. Required if ['--resource-group', '--name'] are not specified.
-  - name: --system-identity
-    summary: |-
-      The system assigned identity auth info.
-    description: |-
-      Usage: --system-identity.
-  - name: --target-id
-    summary: |-
-      The resource id of target service. Required if ['--target-resource-group', '--server', '--database'] are not specified.
-  - name: --target-resource-group --tg
-    summary: |-
-      The resource group which contains the postgres service. Required if '--target-id' is not specified.
-  - name: --user-identity
-    summary: |-
-      The user assigned identity auth info.
-    description: |-
-      Usage: --user-identity client-id=XX subs-id=XX
-
-      client-id      : Required. Client id of the user assigned identity.
-      subs-id        : Required. Subscription id of the user assigned identity.
-  - name: --vault-id
-    summary: |-
-      The id of key vault to store secret value.
-  - name: --yes -y
-    defaultValue: "False"
-    summary: |-
-      Do not prompt for confirmation.
 - uid: az_functionapp_connection_create_postgres-flexible
   name: az functionapp connection create postgres-flexible
   summary: |-
@@ -1988,6 +1848,7 @@ directCommands:
                                                        [--customized-keys]
                                                        [--database]
                                                        [--name]
+                                                       [--new]
                                                        [--no-wait]
                                                        [--opt-out {auth, configinfo, publicnetwork}]
                                                        [--resource-group]
@@ -2031,6 +1892,10 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the function app. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    summary: |-
+      Deleting existing users with the same name before creating a new user in database.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -2633,6 +2498,7 @@ directCommands:
                                          [--customized-keys]
                                          [--database]
                                          [--name]
+                                         [--new]
                                          [--no-wait]
                                          [--opt-out {auth, configinfo, publicnetwork}]
                                          [--private-endpoint {false, true}]
@@ -2678,6 +2544,10 @@ directCommands:
   - name: --name -n
     summary: |-
       Name of the function app. Required if '--source-id' is not specified.None.
+  - name: --new
+    defaultValue: "False"
+    summary: |-
+      Deleting existing users with the same name before creating a new user in database.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -3323,7 +3193,6 @@ commands:
 - az_functionapp_connection_create_mysql-flexible
 - az_functionapp_connection_create_mysql-flexible(serviceconnector-passwordless)
 - az_functionapp_connection_create_postgres
-- az_functionapp_connection_create_postgres(serviceconnector-passwordless)
 - az_functionapp_connection_create_postgres-flexible
 - az_functionapp_connection_create_postgres-flexible(serviceconnector-passwordless)
 - az_functionapp_connection_create_redis
