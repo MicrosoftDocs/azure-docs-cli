@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/20/2024
+ms.date: 08/21/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -134,7 +134,7 @@ You will be prompted to install an extension on first use.
 |[ip-group](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools IpGroup Extension | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions) |
 |[k8s-configuration](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration) | 2.15.0 | Microsoft Azure Command-Line Tools K8s-configuration Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration/HISTORY.rst) |
 |[k8s-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension) | 2.51.0 | Microsoft Azure Command-Line Tools K8s-extension Extension | GA | [1.6.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension/HISTORY.rst) |
-|[k8s-runtime](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime) | 2.57.0 | Microsoft Azure Command-Line Tools K8sRuntime Extension. | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime/HISTORY.rst) |
+|[k8s-runtime](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime) | 2.57.0 | Microsoft Azure Command-Line Tools K8sRuntime Extension. | GA | [1.0.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime/HISTORY.rst) |
 |[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
 |[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.41.0 | Microsoft Azure Command-Line Tools Load Testing Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
