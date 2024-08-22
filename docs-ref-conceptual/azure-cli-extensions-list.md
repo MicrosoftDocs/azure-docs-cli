@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 08/20/2024
+ms.date: 08/22/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -134,7 +134,7 @@ You will be prompted to install an extension on first use.
 |[ip-group](https://github.com/Azure/azure-cli-extensions) | 2.0.67 | Microsoft Azure Command-Line Tools IpGroup Extension | Preview | [0.1.2](https://github.com/Azure/azure-cli-extensions) |
 |[k8s-configuration](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration) | 2.15.0 | Microsoft Azure Command-Line Tools K8s-configuration Extension | GA | [2.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-configuration/HISTORY.rst) |
 |[k8s-extension](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension) | 2.51.0 | Microsoft Azure Command-Line Tools K8s-extension Extension | GA | [1.6.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-extension/HISTORY.rst) |
-|[k8s-runtime](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime) | 2.57.0 | Microsoft Azure Command-Line Tools K8sRuntime Extension. | GA | [1.0.2](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime/HISTORY.rst) |
+|[k8s-runtime](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime) | 2.57.0 | Microsoft Azure Command-Line Tools K8sRuntime Extension. | GA | [1.0.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/k8s-runtime/HISTORY.rst) |
 |[k8sconfiguration](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) | 2.15.0 | Microsoft Azure Command-Line Tools K8sconfiguration Extension | Preview | [0.2.4](https://github.com/Azure/azure-cli-extensions/tree/master/src/k8sconfiguration) |
 |[kusto](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto) | 2.15.0 | Microsoft Azure Command-Line Tools KustoManagementClient Extension | GA | [0.5.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/kusto/HISTORY.rst) |
 |[load](https://github.com/Azure/azure-cli-extensions/tree/main/src/load) | 2.41.0 | Microsoft Azure Command-Line Tools Load Testing Extension. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/load/HISTORY.rst) |
@@ -162,7 +162,7 @@ You will be prompted to install an extension on first use.
 |[notification-hub](https://github.com/Azure/azure-cli-extensions/tree/main/src/notification-hub) | 2.49.0 | Microsoft Azure Command-Line Tools Notification Hub Extension | GA | [1.0.0a1](https://github.com/Azure/azure-cli-extensions/tree/main/src/notification-hub/HISTORY.rst) |
 |[nsp](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp) | 2.61.0 | Microsoft Azure Command-Line Tools Nsp Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/nsp/HISTORY.rst) |
 |[offazure](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure) | 2.15.0 | Microsoft Azure Command-Line Tools AzureMigrateV2 Extension | Experimental | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/offazure/HISTORY.rst) |
-|[oracle-database](https://github.com/Azure/azure-cli-extensions/tree/main/src/oracle-database) | 2.57.0 | Microsoft Azure Command-Line Tools OracleDatabase Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/oracle-database/HISTORY.rst) |
+|[oracle-database](https://github.com/Azure/azure-cli-extensions/tree/main/src/oracle-database) | 2.57.0 | Microsoft Azure Command-Line Tools OracleDatabase Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/oracle-database/HISTORY.rst) |
 |[orbital](https://github.com/Azure/azure-cli-extensions/tree/main/src/orbital) | 2.39.0 | Microsoft Azure Command-Line Tools Orbital Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/orbital/HISTORY.rst) |
 |[palo-alto-networks](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks) | 2.51.0 | Microsoft Azure Command-Line Tools PaloAltoNetworks Extension. | Preview | [1.1.1b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/palo-alto-networks/HISTORY.rst) |
 |[partnercenter](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter) | 2.0.67 | Microsoft Azure CLI Extension for Partner Center | Preview | [0.2.4](https://github.com/Azure/partnercenter-cli-extension/tree/main/partnercenter/HISTORY.rst) |
