@@ -222,7 +222,7 @@ az account lock delete --name "Cannot delete subscription"
 
 In addition to a typographical error, you can receive this error when there is a permissions timing issue. For example, if you have been given permissions to a new subscriptions _while your current terminal window is open_, this error can occur. The solution is to either close and reopen your terminal window, or use `az logout` then `az login` to refresh your available subscriptions list.
 
-Here is a script to help you find and change a subscription.
+Here is a script to help you find and change a subscription. For another way, please try [Clear your subscription cache](https://learn.microsoft.com/en-us/cli/azure/authenticate-azure-cli-interactively#clear-your-subscription-cache).
 
 ```azurecli
 # See what subscription you are currently using.
