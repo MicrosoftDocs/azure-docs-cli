@@ -144,6 +144,18 @@ If you change to a subscription that is in a different tenant, you will also be 
 
 If you received a "The subscription of ... doesn't exist..." error, see [Troubleshooting](#troubleshooting) for possible solutions.
 
+## Clear your subscription cache
+
+To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear) command. You will need to sign in again to see an updated list.
+
+```Azure CLI
+az account clear
+
+az login
+```
+
+Clearing your subscription cache is not technically the same process as logging out of Azure. However, when you clear your subscription cache, you cannot run Azure CLI commands, including `az account set`, until you sign in again.
+
 ## Create Azure management groups
 
 Azure management groups contain subscriptions. Management groups provide a way to manage access, policies, and compliance for those subscriptions. For more information, see [What are Azure management groups](/azure/governance/management-groups/overview).
@@ -235,6 +247,11 @@ az account list --output table
 #   close and reopen your terminal window,
 #   or logout and then sign in again.
 az logout
+az login
+
+# You can also clear your cache to refresh the
+#    available subscription list
+az account clear
 az login
 
 # Did your available subscription list change?
