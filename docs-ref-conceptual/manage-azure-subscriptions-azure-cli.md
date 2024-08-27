@@ -146,7 +146,7 @@ If you received a "The subscription of ... doesn't exist..." error, see [Trouble
 
 ## Clear your subscription cache
 
-To update your subscription list, use the [az account clear](/azure/account#az-account-clear) command. You will need to sign in again to see an updated list.
+To update your subscription list, use the [az account clear](/cli/azure/account#az-account-clear) command. You will need to sign in again to see an updated list.
 
 ```Azure CLI
 az account clear
