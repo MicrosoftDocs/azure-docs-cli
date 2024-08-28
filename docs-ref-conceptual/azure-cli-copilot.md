@@ -2,10 +2,7 @@
 title: Use Microsoft Copilot to learn Azure CLI | Microsoft Docs
 description: How to use the new AI functionalities of Microsoft Copilot to learn Azure CLI.
 ms.date: 04/05/2024
-author: daphnemamsft
-ms.author: daphnema
-ms.tool: azure-cli
-ms.topic: conceptual
+topic: conceptual
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: azure cli microsoft copilot, copilot for azure, azure command line
@@ -30,7 +27,7 @@ To enable access to Microsoft Copilot for Azure (preview) for your organization,
 
 To use Microsoft Copilot, go to the Azure Portal and select the **Copilot** icon on the top taskbar. The copilot window will open with a chat assistant where you can ask questions.
 
-:::image type="content" source="./media/copilot-cli-1.png" alt-text="<Copilot on Azure portal>":::
+:::image type="content" source="./media/azure-cli-copilot/copilot-cli-1.png" alt-text="<Copilot on Azure portal>":::
 
 When you tell Microsoft Copilot about a task you want to perform with Azure CLI, it provides a script with the necessary commands. 
 
@@ -38,7 +35,7 @@ When you tell Microsoft Copilot about a task you want to perform with Azure CLI,
 
 Ask Microsoft Copilot to assist with using the reference command `az group`. Note the placeholder values (marked in blue font) you need to update with actual values.
 
-:::image type="content" source="./media/copilot-cli-2.png" alt-text="<Reference command>":::
+:::image type="content" source="./media/azure-cli-copilot/copilot-cli-2.png" alt-text="<Reference command>":::
 
 Replace the variables (marked in blue) with actual values, or define the variables in your variable block before running the command.
 
@@ -67,7 +64,7 @@ az group create --name resourceGroup --location $location
 
 Suppose you encounter an Azure CLI script that includes references and parameters that are new to you. Use Microsoft Copilot to look up the reference command by entering the command as if you were in a terminal: 
 
-:::image type="content" source="./media/copilot-cli-3.png" alt-text="<Looking up a script>":::
+:::image type="content" source="./media/azure-cli-copilot/copilot-cli-3.png" alt-text="<Looking up a script>":::
 
 Microsoft Copilot references and links other Microsoft Learn documents related to your specific CLI topic and automatically generates follow-up questions. 
 
@@ -75,7 +72,7 @@ Microsoft Copilot references and links other Microsoft Learn documents related t
 
 Use Azure CLI with Microsoft Copilot to help you create an Azure SQL database.
 
-:::image type="content" source="./media/copilot-cli-4.png" alt-text="<Use Azure service>":::
+:::image type="content" source="./media/azure-cli-copilot/copilot-cli-4.png" alt-text="<Use Azure service>":::
 
 Follow the steps provided:
 
