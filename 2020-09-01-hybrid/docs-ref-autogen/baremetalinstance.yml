@@ -4,16 +4,84 @@ name: az baremetalinstance
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **baremetal-infrastructure** extension for the Azure CLI (version 2.56.0 or higher). The extension will automatically install the first time you run an **az baremetalinstance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **baremetal-infrastructure** extension for the Azure CLI (version 2.57.0 or higher). The extension will automatically install the first time you run an **az baremetalinstance** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  (PREVIEW) Manage BareMetal Instances.
+  Handle Operations for Compute Azure Bare Instances.
 status: GA
 sourceType: Extension
 directCommands:
+- uid: az_baremetalinstance_create
+  name: az baremetalinstance create
+  summary: |-
+    Create an Azure Bare Metal Instance for the specified subscription, resource group, and instance name.
+  status: GA
+  sourceType: Extension
+  syntax: >-
+    az baremetalinstance create --instance-name
+                                --resource-group
+                                [--bmi-id]
+                                [--hardware-profile]
+                                [--hw-revision]
+                                [--location]
+                                [--network-profile]
+                                [--os-profile]
+                                [--partner-node-id]
+                                [--power-state {restarting, started, starting, stopped, stopping, unknown}]
+                                [--ppg]
+                                [--storage-profile]
+                                [--tags]
+  examples:
+  - summary: |-
+      Create a compute resource
+    syntax: az baremetalinstance create -g myResourceGroup -name myBMIInstance --location westus --bmi-id 23415635-4d7e-41dc-9598-8194f22c24e1 --hw-revision Rev 3 --hardware-profile "{hardware-type:Cisco_UCS,azure-bare-metal-instance-size:S72}"
+  requiredParameters:
+  - isRequired: true
+    name: --instance-name -n
+    summary: |-
+      Name of the Azure Bare Metal Instance, also known as the ResourceName.
+  - isRequired: true
+    name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --bmi-id --instance-id
+    summary: |-
+      Specifies the Azure Bare Metal Instance unique ID.
+  - name: --hardware-profile
+    summary: |-
+      Specifies the hardware settings for the Azure Bare Metal Instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --hw-revision
+    summary: |-
+      Hardware revision of an Azure Bare Metal Instance.
+  - name: --location -l
+    summary: |-
+      The geo-location where the resource lives  When not specified, the location of the resource group will be used.
+  - name: --network-profile
+    summary: |-
+      Specifies the network settings for the Azure Bare Metal Instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --os-profile
+    summary: |-
+      Specifies the operating system settings for the Azure Bare Metal Instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --partner-node-id
+    summary: |-
+      ARM ID of another AzureBareMetalInstance that will share a network with this AzureBareMetalInstance.
+  - name: --power-state
+    parameterValueGroup: "restarting, started, starting, stopped, stopping, unknown"
+    summary: |-
+      Resource power state.
+  - name: --ppg --proximity-placement-group
+    summary: |-
+      Resource proximity placement group.
+  - name: --storage-profile
+    summary: |-
+      Specifies the storage settings for the Azure Bare Metal Instance disks.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_baremetalinstance_delete
   name: az baremetalinstance delete
   summary: |-
-    Delete a BareMetal Instance.
+    Delete an Azure Bare Metal Instance for the specified subscription, resource group, and instance name.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -21,54 +89,87 @@ directCommands:
                                 [--instance-name]
                                 [--resource-group]
                                 [--subscription]
+                                [--yes]
+  examples:
+  - summary: |-
+      Delete a compute resource
+    syntax: az baremetalinstance delete -g myResourceGroup -n myAzureBareMetalInstance
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name -n
     summary: |-
-      The name of the BareMetalInstance.
+      Name of the Azure Bare Metal Instance, also known as the ResourceName.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_baremetalinstance_list
   name: az baremetalinstance list
   summary: |-
-    List BareMetal Instances.
+    List a list of Azure Bare Metal Instances in the specified subscription. The operations returns various properties of each Azure Bare Metal Instance.
   status: GA
   sourceType: Extension
-  syntax: az baremetalinstance list [--resource-group]
+  syntax: >-
+    az baremetalinstance list [--max-items]
+                              [--next-token]
+                              [--resource-group]
+  examples:
+  - summary: |-
+      List all Azure Bare Metal Instances in a subscription
+    syntax: az baremetalinstance list
+  - summary: |-
+      List all Azure Bare Metal Instances in a subscription and resource group
+    syntax: az baremetalinstance list -g myResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_baremetalinstance_restart
   name: az baremetalinstance restart
   summary: |-
-    Restart a BareMetal Instance.
+    The operation to restart an Azure Bare Metal Instance.
   status: GA
   sourceType: Extension
   syntax: >-
-    az baremetalinstance restart [--force {false, true}]
+    az baremetalinstance restart [--force-state {active, inactive}]
                                  [--ids]
                                  [--instance-name]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--resource-group]
                                  [--subscription]
+  examples:
+  - summary: |-
+      Restart an Azure Bare Metal Instance
+    syntax: az baremetalinstance restart -g myResourceGroup -n myABMInstance
   optionalParameters:
-  - name: --force -f
-    defaultValue: "False"
-    parameterValueGroup: "false, true"
+  - name: --force-state
+    parameterValueGroup: "active, inactive"
     summary: |-
-      Force restart option.
+      Whether to force restart by shutting all processes.
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name -n
     summary: |-
-      The name of the BareMetalInstance.
+      Name of the Azure Bare Metal Instance, also known as the ResourceName.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -78,7 +179,7 @@ directCommands:
 - uid: az_baremetalinstance_show
   name: az baremetalinstance show
   summary: |-
-    Get the details of a BareMetal Instance.
+    Get an Azure Bare Metal Instance for the specified subscription, resource group, and instance name.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -86,13 +187,17 @@ directCommands:
                               [--instance-name]
                               [--resource-group]
                               [--subscription]
+  examples:
+  - summary: |-
+      Get an Azure Bare Metal Instance
+    syntax: az baremetalinstance show -g myResourceGroup -n myAzureBareMetalInstance
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name -n
     summary: |-
-      The name of the BareMetalInstance.
+      Name of the Azure Bare Metal Instance, also known as the ResourceName.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -102,21 +207,30 @@ directCommands:
 - uid: az_baremetalinstance_shutdown
   name: az baremetalinstance shutdown
   summary: |-
-    Shutdown a BareMetal Instance.
+    The operation to shutdown an Azure Bare Metal Instance.
   status: GA
   sourceType: Extension
   syntax: >-
     az baremetalinstance shutdown [--ids]
                                   [--instance-name]
+                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                   [--resource-group]
                                   [--subscription]
+  examples:
+  - summary: |-
+      Shutdown an Azure Bare Metal Instance
+    syntax: az baremetalinstance shutdown --resource-group myResourceGroup --instance-name myABMInstance
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name -n
     summary: |-
-      The name of the BareMetalInstance.
+      Name of the Azure Bare Metal Instance, also known as the ResourceName.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -126,21 +240,30 @@ directCommands:
 - uid: az_baremetalinstance_start
   name: az baremetalinstance start
   summary: |-
-    Start a BareMetal Instance.
+    The operation to start an Azure Bare Metal instance.
   status: GA
   sourceType: Extension
   syntax: >-
     az baremetalinstance start [--ids]
                                [--instance-name]
+                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                [--resource-group]
                                [--subscription]
+  examples:
+  - summary: |-
+      Start an Azure Bare Metal instance
+    syntax: az baremetalinstance start --resource-group myResourceGroup --instance-name myABMInstance
   optionalParameters:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name -n
     summary: |-
-      The name of the BareMetalInstance.
+      Name of the Azure Bare Metal Instance, also known as the ResourceName.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -150,26 +273,38 @@ directCommands:
 - uid: az_baremetalinstance_update
   name: az baremetalinstance update
   summary: |-
-    Update the tags field of a BareMetal Instance.
+    Update an Azure Bare Metal Instance for the specified subscription, resource group, and instance name.
   status: GA
   sourceType: Extension
   syntax: >-
     az baremetalinstance update [--add]
-                                [--force-string]
+                                [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                 [--ids]
                                 [--instance-name]
-                                [--no-wait]
                                 [--remove]
                                 [--resource-group]
                                 [--set]
                                 [--subscription]
+                                [--tags]
+  examples:
+  - summary: |-
+      To add a key-value pair to the Tags field of a specific BareMetal instance:
+    syntax: az baremetalinstance update -g $RESOURCE_GROUP -n $BM_INSTANCE_NAME --set tags.newKey=value
+  - summary: |-
+      To update a key-value pair in the Tags field of a specific BareMetal instance:
+    syntax: az baremetalinstance update --resource-group $RESOURCE_GROUP --instance-name $BM_INSTANCE_NAME --set tags.key=updatedValue
+  - summary: |-
+      To delete a key-value pair from the Tags field of a specific BareMetal instance:
+    syntax: az baremetalinstance update --resource-group $RESOURCE_GROUP --instance-name $BM_INSTANCE_NAME --remove tags.key
+  - summary: |-
+      To delete all key-value pairs in the Tags field of a specific BareMetal instance:
+    syntax: az baremetalinstance update --resource-group $RESOURCE_GROUP --instance-name $BM_INSTANCE_NAME --set tags={}
   optionalParameters:
   - name: --add
-    defaultValue: "[]"
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
   - name: --force-string
-    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
   - name: --ids
@@ -177,26 +312,24 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --instance-name -n
     summary: |-
-      The name of the BareMetalInstance.
-  - name: --no-wait
-    defaultValue: "False"
-    summary: |-
-      Do not wait for the long-running operation to finish.
+      Name of the Azure Bare Metal Instance, also known as the ResourceName.
   - name: --remove
-    defaultValue: "[]"
     summary: |-
-      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
+      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
-    defaultValue: "[]"
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
+      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 commands:
+- az_baremetalinstance_create
 - az_baremetalinstance_delete
 - az_baremetalinstance_list
 - az_baremetalinstance_restart
@@ -229,4 +362,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: (PREVIEW) Manage BareMetal Instances.
+  description: Handle Operations for Compute Azure Bare Instances.
