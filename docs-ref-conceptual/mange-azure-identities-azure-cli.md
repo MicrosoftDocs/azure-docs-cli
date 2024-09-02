@@ -22,10 +22,10 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az aks pod-identity](/cli/azure/aks/pod-identity) | [Migrate from pod managed-identity to workload identity](https://learn.microsoft.com/azure/aks/workload-identity-migrate-from-pod-identity)
-|  | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](https://learn.microsoft.com/azure/aks/use-azure-ad-pod-identity)
+| [az aks pod-identity](/cli/azure/aks/pod-identity) | [Migrate from pod managed-identity to workload identity](/azure/aks/workload-identity-migrate-from-pod-identity)
+|  | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
 | [az aks pod-identity exception](/cli/azure/aks/pod-identity/exception) | [Troubleshoot Azure Kubernetes Service backup and restore](/azure/backup/azure-kubernetes-service-backup-troubleshoot)
-|  | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](https://learn.microsoft.com/azure/aks/use-azure-ad-pod-identity)
+|  | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
 
 ## az appconfig
 
@@ -69,10 +69,10 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-|  | [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](https://learn.microsoft.com/azure/cosmos-db/how-to-setup-managed-identity)
-| [az cosmosdb identity](/cli/azure/cosmosdb/identity) | [Access Azure Key Vault from Azure Cosmos DB using a managed identity](https://learn.microsoft.com/azure/cosmos-db/access-key-vault-managed-identity)
-|  | [Create and manage container copy jobs in Azure Cosmos DB (Preview)](https://learn.microsoft.com/azure/cosmos-db/how-to-container-copy)
-|  | [Configure customer-managed keys for your Azure Cosmos DB account with Azure Managed HSM Key Vault](https://learn.microsoft.com/azure/cosmos-db/how-to-setup-customer-managed-keys-mhsm)
+|  | [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](/azure/cosmos-db/how-to-setup-managed-identity)
+| [az cosmosdb identity](/cli/azure/cosmosdb/identity) | [Access Azure Key Vault from Azure Cosmos DB using a managed identity](/azure/cosmos-db/access-key-vault-managed-identity)
+|  | [Create and manage container copy jobs in Azure Cosmos DB (Preview)](/azure/cosmos-db/how-to-container-copy)
+|  | [Configure customer-managed keys for your Azure Cosmos DB account with Azure Managed HSM Key Vault](/azure/cosmos-db/how-to-setup-customer-managed-keys-mhsm)
 
 ## az dt
 
@@ -100,21 +100,21 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |  | [Use Key Vault references as app settings in Azure App Service and Azure Functions](/azure/app-service/app-service-key-vault-references)
 |  | [Transfer an Azure subscription to a different Microsoft Entra directory](/azure/role-based-access-control/transfer-subscription)
 |  | [Configure a custom container for Azure App Service](/azure/app-service/configure-custom-container)
-|  | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](https://learn.microsoft.com/azure/aks/workload-identity-deploy-cluster)
+|  | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](/azure/aks/workload-identity-deploy-cluster)
 |  | [Migrate custom software to Azure App Service using a custom container](/azure/app-service/tutorial-custom-container)
 |  | [Provision and publish a bot](/azure/bot-service/provision-and-publish-a-bot)
 |  | [Configure a user-assigned managed identity to trust an external identity provider](/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity)
 |  | [Assign Azure roles using Azure CLI](/azure/role-based-access-control/role-assignments-cli)
-| [az identity federated-credential](/cli/azure/identity/federated-credential) | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](https://learn.microsoft.com/azure/aks/workload-identity-deploy-cluster)
+| [az identity federated-credential](/cli/azure/identity/federated-credential) | [Deploy and configure workload identity on an Azure Kubernetes Service (AKS) cluster](/azure/aks/workload-identity-deploy-cluster)
 |  | [Configure a user-assigned managed identity to trust an external identity provider](/entra/workload-id/workload-identity-federation-create-trust-user-assigned-managed-identity)
 |  | [Tutorial: Deploy applications using GitOps with Flux v2](/azure/azure-arc/kubernetes/tutorial-use-gitops-flux2)
-|  | [Migrate from pod managed-identity to workload identity](https://learn.microsoft.com/azure/aks/workload-identity-migrate-from-pod-identity)
+|  | [Migrate from pod managed-identity to workload identity](/azure/aks/workload-identity-migrate-from-pod-identity)
 |  | [Quickstart: Deploy Application Gateway for Containers ALB Controller](/azure/application-gateway/for-containers/quickstart-deploy-application-gateway-for-containers-alb-controller)
 |  | [Integrate KEDA with your Azure Kubernetes Service cluster](/azure/azure-monitor/containers/integrate-keda)
 |  | [Send Prometheus data to Azure Monitor by using Microsoft Entra Workload ID (preview) authentication](/azure/azure-monitor/containers/prometheus-remote-write-azure-workload-identity)
-|  | [Deploy a highly available PostgreSQL database on AKS](https://learn.microsoft.com/azure/aks/deploy-postgresql-ha)
-|  | [Configure and deploy a Valkey cluster on Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/deploy-valkey-cluster)
-|  | [Securely scale your applications using the KEDA add-on and workload identity on Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/keda-workload-identity)
+|  | [Deploy a highly available PostgreSQL database on AKS](/azure/aks/deploy-postgresql-ha)
+|  | [Configure and deploy a Valkey cluster on Azure Kubernetes Service (AKS)](/azure/aks/deploy-valkey-cluster)
+|  | [Securely scale your applications using the KEDA add-on and workload identity on Azure Kubernetes Service (AKS)](/azure/aks/keda-workload-identity)
 
 ## az image
 
@@ -160,7 +160,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |---|---|
 | [az mysql flexible-server identity](/cli/azure/mysql/flexible-server/identity) | [Migrate an application to use passwordless connections with Azure Database for MySQL](/azure/developer/java/spring-framework/migrate-mysql-to-passwordless-connection)
 |  | [Configure passwordless database connections for Java apps on Oracle WebLogic Servers](/azure/developer/java/ee/how-to-configure-passwordless-datasource)
-|  | [Use Java and JDBC with Azure Database for MySQL - Flexible Server](https://learn.microsoft.com/azure/mysql/flexible-server/connect-java)
+|  | [Use Java and JDBC with Azure Database for MySQL - Flexible Server](/azure/mysql/flexible-server/connect-java)
 
 ## az policy
 
@@ -202,7 +202,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 | [az vm identity](/cli/azure/vm/identity) | [Sign in to a Linux virtual machine in Azure by using Microsoft Entra ID and OpenSSH](/entra/identity/devices/howto-vm-sign-in-azure-ad-linux)
 |  | [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity)
 |  | [Use the Linux diagnostic extension 4.0 to monitor metrics and logs](/azure/virtual-machines/extensions/diagnostics-linux)
-|  | [Connect with Managed Identity to Azure Database for PostgreSQL](https://learn.microsoft.com/azure/postgresql/single-server/how-to-connect-with-managed-identity)
+|  | [Connect with Managed Identity to Azure Database for PostgreSQL](/azure/postgresql/single-server/how-to-connect-with-managed-identity)
 |  | [Authenticate Azure-hosted apps to Azure resources with the Azure SDK for .NET](/dotnet/azure/sdk/authentication/azure-hosted-apps)
 |  | [Migrate a Python application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-python)
 |  | [Send Prometheus metrics from virtual machines, scale sets, or Kubernetes clusters to an Azure Monitor workspace](/azure/azure-monitor/essentials/prometheus-remote-write-virtual-machines)
@@ -220,7 +220,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |  | [Send Prometheus metrics from virtual machines, scale sets, or Kubernetes clusters to an Azure Monitor workspace](/azure/azure-monitor/essentials/prometheus-remote-write-virtual-machines)
 |  | [Send Prometheus data to Azure Monitor by using managed identity authentication](/azure/azure-monitor/containers/prometheus-remote-write-managed-identity)
 |  | [Create a chaos experiment that uses an agent-based fault with the Azure CLI](/azure/chaos-studio/chaos-studio-tutorial-agent-based-cli)
-|  | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/csi-secrets-store-identity-access)
+|  | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](/azure/aks/csi-secrets-store-identity-access)
 
 ## az webapp
 

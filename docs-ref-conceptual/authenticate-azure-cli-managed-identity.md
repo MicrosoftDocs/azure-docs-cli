@@ -44,7 +44,7 @@ Here are a few more articles showing how to work with managed identities using A
 
 * [Use a managed identity in Azure Kubernetes Service (AKS)](/azure/aks/use-managed-identity)
 * [How to use Azure managed identities for Azure Service and Azure functions](/azure/app-service/overview-managed-identity?tabs=cli%2Chttp)
-* [Create an Azure SQL Managed Instance with a user-assigned managed identity](/azure/azure-sql/managed-instance/authentication-azure-ad-user-assigned-managed-identity-create-managed-instance?view=azuresql&tabs=azure-cli)
+* [Create an Azure SQL Managed Instance with a user-assigned managed identity](/azure/azure-sql/managed-instance/authentication-azure-ad-user-assigned-managed-identity-create-managed-instance?tabs=azure-cli)
 * [How to use Managed Identity with Azure Communication Services](/azure/communication-services/how-tos/managed-identity?tabs=cli%2Cdotnet)
 * [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](/azure/cosmos-db/how-to-setup-managed-identity#using-the-azure-cli)
 
