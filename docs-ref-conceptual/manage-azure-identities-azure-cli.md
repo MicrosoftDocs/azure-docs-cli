@@ -8,13 +8,17 @@ ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure cli 
 ---
 
-# Work with managed identities using the Azure CLI
+# Work with identities using the Azure CLI
 
 There are many Azure CLI reference commands that help you to work with Azure identities. This article provides a list of Azure CLI commands and the quickstart, how-to guide or tutorial that shows the use of the command.
 
+> [!NOTE]
+>
+> Not all Azure CLI commands containing the word "identity" are about Microsoft Entra ID _managed_ identities. This article is an index of Azure CLI commands to help you manage any type of Azure identity.
+
 ## az acr
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Azure CLI article showing reference use|
 |---|---|
 | [az acr identity](/cli/azure/acr/identity) | [Troubleshoot a customer-managed key](/azure/container-registry/tutorial-troubleshoot-customer-managed-keys)
 

@@ -50,4 +50,4 @@ Here are a few more articles showing how to work with managed identities using A
 
 ## See also
 
-* Azure CLI [samples](./samples-index.md) and an [A to Z list](./reference-docs-index.md) of reference commands used in Azure articles.
+* [A to Z list](./manage-azure-identities-azure-cli.md) of Azure CLI reference commands for managing Azure identities.
