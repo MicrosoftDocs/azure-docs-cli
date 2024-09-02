@@ -1,14 +1,14 @@
 ---
-title: Use Azure CLI to manage Azure managed identities | Microsoft Docs
-description: Find Azure CLI reference commands that manage Azure managed identities
-ms.date: 09/22/2023
+title: Use Azure CLI to manage Azure identities | Microsoft Docs
+description: Find Azure CLI reference commands that manage the identity of Azure resources
+ms.date: 08/20/2024
 ms.topic: conceptual
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
 keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure cli 
 ---
 
-# Work with identities using the Azure CLI
+# How to work with Azure identities using the Azure CLI
 
 There are many Azure CLI reference commands that help you to work with Azure identities. This article provides a list of Azure CLI commands and the quickstart, how-to guide or tutorial that shows the use of the command.
 
@@ -73,8 +73,8 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-|  | [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](/azure/cosmos-db/how-to-setup-managed-identity)
-| [az cosmosdb identity](/cli/azure/cosmosdb/identity) | [Access Azure Key Vault from Azure Cosmos DB using a managed identity](/azure/cosmos-db/access-key-vault-managed-identity)
+|  [az cosmosdb identity](/cli/azure/cosmosdb/identity) | [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](/azure/cosmos-db/how-to-setup-managed-identity)
+|  | [Access Azure Key Vault from Azure Cosmos DB using a managed identity](/azure/cosmos-db/access-key-vault-managed-identity)
 |  | [Create and manage container copy jobs in Azure Cosmos DB (Preview)](/azure/cosmos-db/how-to-container-copy)
 |  | [Configure customer-managed keys for your Azure Cosmos DB account with Azure Managed HSM Key Vault](/azure/cosmos-db/how-to-setup-customer-managed-keys-mhsm)
 
