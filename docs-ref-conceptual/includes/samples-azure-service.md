@@ -9,19 +9,78 @@ ms.custom: devx-track-azurecli
 
 | Subject area | Sample name
 |---|---|
-| **application-gateway** | [Manage web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-cli) |
-|  | [Restrict web traffic using the Azure CLI](/azure/application-gateway/scripts/create-vmss-waf-cli) |
-| **app-service** | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
+|| **app-service** | [Create an App Service app with continuous deployment from an Azure DevOps repository using Azure CLI](/azure/app-service/scripts/cli-continuous-deployment-vsts) |
 |  | [Create an ASP.NET Core app in a Docker container in App Service from Azure Container Registry](/azure/app-service/scripts/cli-linux-acr-aspnetcore) |
+| **articles** | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/common/regions) |
+|  | [Configure audit logs on Azure Database for MySQL - Flexible Server using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-audit-logs) |
+|  | [Configure same-zone high availability in Azure Database for MySQL - Flexible Server using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-same-zone-ha) |
+|  | [Configure slow query logs on an Azure Database for MySQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-slow-query-logs) |
+|  | [Configure zone-redundant high availability in an Azure Database for MySQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-zone-redundant-ha) |
+|  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
+|  | [Convert every Azure Cosmos DB resource from standard to autoscale throughput](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/common/convert-to-autoscale) |
+|  | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/mongodb/create) |
+|  | [Create a database with autoscale and shared collections for API for MongoDB for Azure Cosmos DB using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/mongodb/autoscale) |
+|  | [Create a MariaDB server and configure a firewall rule using the Azure CLI](https://learn.microsoft.com/azure/mariadb/scripts/sample-create-server-and-firewall-rule) |
+|  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](https://learn.microsoft.com/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
+|  | [Create a MySQL server and configure a firewall rule using the Azure CLI](https://learn.microsoft.com/azure/mysql/scripts/sample-create-server-and-firewall-rule) |
+|  | [Create a resource lock for Azure Cosmos DB Cassandra API keyspace and table using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/cassandra/lock) |
+|  | [Create a resource lock for Azure Cosmos DB for Gremlin database and graph using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/gremlin/lock) |
+|  | [Create a resource lock for Azure Cosmos DB's API for MongoDB using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/mongodb/lock) |
+|  | [Create a serverless database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/mongodb/serverless) |
+|  | [Create an Azure Cosmos DB account with IP firewall using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/common/ipfirewall) |
+|  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/common/service-endpoints) |
+|  | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/cassandra/create) |
+|  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/cassandra/serverless) |
+|  | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/gremlin/create) |
+|  | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/nosql/create) |
+|  | [Create an Azure Cosmos DB for NoSQL account, database, and container with autoscale](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/nosql/autoscale) |
+|  | [Create an Azure Cosmos DB for NoSQL serverless account, database and container using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/nosql/serverless) |
+|  | [Create an Azure Cosmos DB Table API account and table using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/table/create) |
+|  | [Create an Azure Database for MySQL - Flexible Server database in a VNet using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
+|  | [Create an Azure Database for MySQL - Flexible Server instance and enable public access connectivity using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-create-connect-public-access) |
+|  | [Create an Azure Database for PostgreSQL - Flexible Server instance and configure a firewall rule using the Azure CLI](https://learn.microsoft.com/azure/postgresql/scripts/sample-create-server-and-firewall-rule) |
+|  | [Create an Azure Database for PostgreSQL - Flexible Server instance and configure a vNet rule using the Azure CLI](https://learn.microsoft.com/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
+|  | [Create and manage read replicas in Azure Database for MySQL - Flexible Server using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-read-replicas) |
+|  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/nosql/lock) |
+|  | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](https://learn.microsoft.com/azure/mariadb/scripts/sample-server-logs) |
+|  | [Enable and download server slow query logs of an Azure Database for MySQL server using Azure CLI](https://learn.microsoft.com/azure/mysql/scripts/sample-server-logs) |
+|  | [Enable and download server slow query logs of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/postgresql/scripts/sample-server-logs) |
+|  | [Find an existing Azure Cosmos DB free-tier account in a subscription using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/common/free-tier) |
+|  | [List and change server parameters of Azure Database for MySQL - Flexible Server using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-change-server-parameters) |
+|  | [List and update configurations of an Azure Database for MariaDB server using Azure CLI](https://learn.microsoft.com/azure/mariadb/scripts/sample-change-server-configuration) |
+|  | [List and update configurations of an Azure Database for MySQL server using Azure CLI](https://learn.microsoft.com/azure/mysql/scripts/sample-change-server-configuration) |
+|  | [List and update configurations of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/postgresql/scripts/sample-change-server-configuration) |
+|  | [Monitor and scale a single Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/postgresql/scripts/sample-scale-server-up-or-down) |
+|  | [Monitor and scale an Azure Database for MariaDB server using Azure CLI](https://learn.microsoft.com/azure/mariadb/scripts/sample-scale-server) |
+|  | [Monitor and scale an Azure Database for MySQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-monitor-and-scale) |
+|  | [Monitor and scale an Azure Database for MySQL server using Azure CLI](https://learn.microsoft.com/azure/mysql/scripts/sample-scale-server) |
+|  | [Restart/stop/start an Azure Database for MySQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-restart-stop-start) |
+|  | [Restore an Azure Database for MariaDB server using Azure CLI](https://learn.microsoft.com/azure/mariadb/scripts/sample-point-in-time-restore) |
+|  | [Restore an Azure Database for MySQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/mysql/flexible-server/scripts/sample-cli-restore-server) |
+|  | [Restore an Azure Database for MySQL server using Azure CLI](https://learn.microsoft.com/azure/mysql/scripts/sample-point-in-time-restore) |
+|  | [Restore an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](https://learn.microsoft.com/azure/postgresql/scripts/sample-point-in-time-restore) |
+|  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/nosql/throughput) |
+|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/gremlin/throughput) |
+|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/mongodb/throughput) |
+|  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/cassandra/throughput) |
+|  | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/table/throughput) |
+|  | [Use Azure CLI for resource lock operations on Azure Cosmos DB for Table tables](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/table/lock) |
+|  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/cassandra/autoscale) |
+|  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/gremlin/autoscale) |
+|  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/gremlin/serverless) |
+|  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/table/autoscale) |
+|  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/table/serverless) |
+|  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](https://learn.microsoft.com/azure/cosmos-db/scripts/cli/common/keys) |
 | **azure-app-configuration** | [Create an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-create-service) |
 |  | [Delete an Azure App Configuration store with the Azure CLI](/azure/azure-app-configuration/scripts/cli-delete-service) |
 |  | [Export from an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-export) |
 |  | [Import to an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-import) |
 |  | [Work with key-values in an Azure App Configuration store](/azure/azure-app-configuration/scripts/cli-work-with-keys) |
+| **azure-arc** | [Azure Resource Graph sample queries for Azure Arc-enabled Kubernetes](/azure/azure-arc/kubernetes/resource-graph-samples) |
 | **azure-cache-for-redis** | [Create a Premium Azure Cache for Redis with clustering](/azure/azure-cache-for-redis/scripts/create-manage-premium-cache-cluster) |
 |  | [Create an Azure Cache for Redis using the Azure CLI](/azure/azure-cache-for-redis/scripts/create-manage-cache) |
 |  | [Quickstart: Route Azure Cache for Redis events to web endpoint with Azure CLI](/azure/azure-cache-for-redis/cache-event-grid-quickstart-cli) |
-| **azure-devops** | [Use a variable group's secret and nonsecret variables in an Azure Pipeline](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
+| **azure-devops** | [Use Azure Devops CLI to manage variables in a variable group](/azure/devops/pipelines/scripts/cli/pipeline-variable-group-secret-nonsecret-variables) |
 | **azure-functions** | [Create a function app for serverless code execution](/azure/azure-functions/scripts/functions-cli-create-serverless) |
 |  | [Create a function app in a Premium plan - Azure CLI](/azure/azure-functions/scripts/functions-cli-create-premium-plan) |
 |  | [Create a Function App in an App Service plan](/azure/azure-functions/scripts/functions-cli-create-app-service-plan) |
@@ -31,7 +90,6 @@ ms.custom: devx-track-azurecli
 |  | [Create an Azure Function that connects to an Azure Cosmos DB](/azure/azure-functions/scripts/functions-cli-create-function-app-connect-to-cosmos-db) |
 |  | [Mount a file share to a Python function app using Azure CLI](/azure/azure-functions/scripts/functions-cli-mount-files-storage-linux) |
 | **azure-monitor** | [Create metric alert in Azure CLI](/azure/azure-monitor/alerts/azure-cli-metrics-alert-sample) |
-|  | [Managing Azure Monitor Logs in Azure CLI](/azure/azure-monitor/logs/azure-cli-log-analytics-workspace-sample) |
 | **azure-signalr** | [Create a SignalR Service](/azure/azure-signalr/scripts/signalr-cli-create-service) |
 |  | [Create a SignalR Service with an App Service](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service) |
 |  | [Create a web app that uses SignalR Service and GitHub authentication](/azure/azure-signalr/scripts/signalr-cli-create-with-app-service-github-oauth) |
@@ -44,83 +102,15 @@ ms.custom: devx-track-azurecli
 |  | [CLI example: Run a job and tasks with Azure Batch](/azure/batch/scripts/batch-cli-sample-run-job) |
 | **cdn** | [Create an Azure Content Delivery Network profile and endpoint using the Azure CLI](/azure/cdn/scripts/cli/cdn-azure-cli-create-endpoint) |
 | **chaos-studio** | [Use REST APIs to interact with Chaos Studio](/azure/chaos-studio/chaos-studio-samples-rest-api) |
-| **cosmos-db** | [Add regions, change failover priority, trigger failover for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/regions) |
-|  | [Connect an existing Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints-ignore-missing-vnet) |
-|  | [Create a database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/create) |
-|  | [Create a database with autoscale and shared collections for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/autoscale) |
-|  | [Create a resource lock for Azure Cosmos DB Cassandra API keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/lock) |
-|  | [Create a resource lock for Azure Cosmos DB for Gremlin database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/lock) |
-|  | [Create a resource lock for Azure Cosmos DB's API for MongoDB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/lock) |
-|  | [Create a serverless database and collection for API for MongoDB for Azure Cosmos DB using Azure CLI](/azure/cosmos-db/scripts/cli/mongodb/serverless) |
-|  | [Create an Azure Cosmos DB account with IP firewall using Azure CLI](/azure/cosmos-db/scripts/cli/common/ipfirewall) |
-|  | [Create an Azure Cosmos DB account with virtual network service endpoints using Azure CLI](/azure/cosmos-db/scripts/cli/common/service-endpoints) |
-|  | [Create an Azure Cosmos DB Cassandra API account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/create) |
-|  | [Create an Azure Cosmos DB Cassandra API serverless account, keyspace and table using Azure CLI](/azure/cosmos-db/scripts/cli/cassandra/serverless) |
-|  | [Create an Azure Cosmos DB for Gremlin account, database and graph using Azure CLI](/azure/cosmos-db/scripts/cli/gremlin/create) |
-|  | [Create an Azure Cosmos DB for NoSQL account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/create) |
-|  | [Create an Azure Cosmos DB for NoSQL account, database, and container with autoscale](/azure/cosmos-db/scripts/cli/nosql/autoscale) |
-|  | [Create an Azure Cosmos DB for NoSQL serverless account, database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/serverless) |
-|  | [Create an Azure Cosmos DB Table API account and table using Azure CLI](/azure/cosmos-db/scripts/cli/table/create) |
-|  | [Create resource lock for an Azure Cosmos DB for NoSQL database and container using Azure CLI](/azure/cosmos-db/scripts/cli/nosql/lock) |
-|  | [Find an existing Azure Cosmos DB free-tier account in a subscription using Azure CLI](/azure/cosmos-db/scripts/cli/common/free-tier) |
-|  | [How to use the Azure SDK for Go with Azure Table](/azure/cosmos-db/table/how-to-use-go) |
-|  | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](/azure/cosmos-db/table/quickstart-python) |
-|  | [Throughput (RU/s) operations with Azure CLI for a database or container for Azure Cosmos DB for NoSQL](/azure/cosmos-db/scripts/cli/nosql/throughput) |
-|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB - API for Gremlin](/azure/cosmos-db/scripts/cli/gremlin/throughput) |
-|  | [Throughput (RU/s) operations with Azure CLI for a database or graph for Azure Cosmos DB for MongoDB](/azure/cosmos-db/scripts/cli/mongodb/throughput) |
-|  | [Throughput (RU/s) operations with Azure CLI for a keyspace or table for Azure Cosmos DB - API for Cassandra](/azure/cosmos-db/scripts/cli/cassandra/throughput) |
-|  | [Throughput (RU/s) operations with Azure CLI for a table for Azure Cosmos DB for Table](/azure/cosmos-db/scripts/cli/table/throughput) |
-|  | [Use Azure CLI for resource lock operations on Azure Cosmos DB for Table tables](/azure/cosmos-db/scripts/cli/table/lock) |
-|  | [Use Azure CLI to create a API for Cassandra account, keyspace, and table with autoscale](/azure/cosmos-db/scripts/cli/cassandra/autoscale) |
-|  | [Use Azure CLI to create a API for Gremlin account, database, and graph with autoscale](/azure/cosmos-db/scripts/cli/gremlin/autoscale) |
-|  | [Use Azure CLI to create a Gremlin serverless account, database, and graph](/azure/cosmos-db/scripts/cli/gremlin/serverless) |
-|  | [Use Azure CLI to create an Azure Cosmos DB for Table account and table with autoscale](/azure/cosmos-db/scripts/cli/table/autoscale) |
-|  | [Use Azure CLI to create an Azure Cosmos DB for Table serverless account and table](/azure/cosmos-db/scripts/cli/table/serverless) |
-|  | [Work with account keys and connection strings for an Azure Cosmos DB account using Azure CLI](/azure/cosmos-db/scripts/cli/common/keys) |
-| **defender-for-cloud** | [Azure Resource Graph sample queries for Microsoft Defender for Cloud](/azure/defender-for-cloud/resource-graph-samples) |
-|  | [Express configuration Azure Command Line Interface (CLI) commands reference](/azure/defender-for-cloud/express-configuration-azure-commands) |
 | **devtest-labs** | [Azure CLI Samples for Azure DevTest Labs](/azure/devtest-labs/samples-cli) |
-| **dns** | [Azure CLI script example: Create a DNS zone and record](/azure/dns/scripts/dns-cli-create-dns-zone-record) |
 | **event-grid** | [Create custom topic and subscribe to events for an Azure subscription with Azure CLI](/azure/event-grid/scripts/cli-subscribe-custom-topic) |
 | **frontdoor** | [Azure Front Door: Deploy custom domain](/azure/frontdoor/scripts/custom-domain) |
-| **governance** | [Advanced Resource Graph query samples](/azure/governance/resource-graph/samples/advanced) |
-|  | [Azure Resource Graph sample queries by category](/azure/governance/resource-graph/samples/samples-by-category) |
-|  | [Azure Resource Graph sample queries by table](/azure/governance/resource-graph/samples/samples-by-table) |
-|  | [Azure Resource Graph sample queries for Azure Policy](/azure/governance/policy/samples/resource-graph-samples) |
+| **go** | [How to use the Azure SDK for Go with Azure Table](https://learn.microsoft.com/azure/cosmos-db/table/how-to-use-go) |
+| **governance** | [Azure Resource Graph sample queries for Azure Policy](/azure/governance/policy/samples/resource-graph-samples) |
 |  | [Azure Resource Graph sample queries for management groups](/azure/governance/management-groups/resource-graph-samples) |
-|  | [Starter Resource Graph query samples](/azure/governance/resource-graph/samples/starter) |
 | **hdinsight** | [Azure HDInsight: Azure CLI samples](/azure/hdinsight/azure-cli-samples) |
 | **logic-apps** | [Azure CLI script sample - create a logic app](/azure/logic-apps/sample-logic-apps-cli-script) |
-| **mariadb** | [Create a MariaDB server and configure a firewall rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-and-firewall-rule) |
-|  | [Create a MariaDB server and configure a vNet rule using the Azure CLI](/azure/mariadb/scripts/sample-create-server-with-vnet-rule) |
-|  | [Enable and download server slow query logs of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-server-logs) |
-|  | [List and update configurations of an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-change-server-configuration) |
-|  | [Monitor and scale an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-scale-server) |
-|  | [Restore an Azure Database for MariaDB server using Azure CLI](/azure/mariadb/scripts/sample-point-in-time-restore) |
-| **mysql** | [Configure audit logs on Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-audit-logs) |
-|  | [Configure same-zone high availability in Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-same-zone-ha) |
-|  | [Configure slow query logs on an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-slow-query-logs) |
-|  | [Configure zone-redundant high availability in an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-zone-redundant-ha) |
-|  | [Create a MySQL server and configure a firewall rule using the Azure CLI](/azure/mysql/scripts/sample-create-server-and-firewall-rule) |
-|  | [Create an Azure Database for MySQL - Flexible Server database in a VNet using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-private-access) |
-|  | [Create an Azure Database for MySQL - Flexible Server instance and enable public access connectivity using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-create-connect-public-access) |
-|  | [Create and manage read replicas in Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-read-replicas) |
-|  | [Enable and download server slow query logs of an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-server-logs) |
-|  | [List and change server parameters of Azure Database for MySQL - Flexible Server using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-change-server-parameters) |
-|  | [List and update configurations of an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-change-server-configuration) |
-|  | [Monitor and scale an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-monitor-and-scale) |
-|  | [Monitor and scale an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-scale-server) |
-|  | [Restart/stop/start an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-restart-stop-start) |
-|  | [Restore an Azure Database for MySQL - Flexible Server instance using Azure CLI](/azure/mysql/flexible-server/scripts/sample-cli-restore-server) |
-|  | [Restore an Azure Database for MySQL server using Azure CLI](/azure/mysql/scripts/sample-point-in-time-restore) |
-| **networking** | [Load balance multiple websites](/azure/networking/scripts/load-balancer-linux-cli-load-balance-multiple-websites-vm) |
-|  | [Route traffic for high availability of applications - Azure CLI](/azure/networking/scripts/traffic-manager-cli-websites-high-availability) |
-| **postgresql** | [Create an Azure Database for PostgreSQL - Flexible Server instance and configure a firewall rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-and-firewall-rule) |
-|  | [Create an Azure Database for PostgreSQL - Flexible Server instance and configure a vNet rule using the Azure CLI](/azure/postgresql/scripts/sample-create-server-with-vnet-rule) |
-|  | [Enable and download server slow query logs of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-server-logs) |
-|  | [List and update configurations of an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-change-server-configuration) |
-|  | [Monitor and scale a single Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-scale-server-up-or-down) |
-|  | [Restore an Azure Database for PostgreSQL - Flexible Server instance using Azure CLI](/azure/postgresql/scripts/sample-point-in-time-restore) |
+| **python** | [Quickstart: Build an API for Table app with Python SDK and Azure Cosmos DB](https://learn.microsoft.com/azure/cosmos-db/table/quickstart-python) |
 | **service-fabric** | [Create a secure Service Fabric Linux cluster via the Azure CLI](/azure/service-fabric/scripts/cli-create-cluster) |
 | **service-health** | [Azure Resource Graph sample queries for Azure Service Health](/azure/service-health/resource-graph-samples) |
 | **sql-server** | [Add a database to a failover group using the Azure CLI](/azure/azure-sql/database/scripts/add-database-to-failover-group-cli) |
@@ -151,4 +141,3 @@ ms.custom: devx-track-azurecli
 |  | [Export/Copy a managed disk to a storage account using the Azure CLI](/azure/virtual-machines/scripts/copy-managed-disks-vhd-to-storage-account) |
 |  | [Export/Copy a snapshot to a storage account in different region with CLI](/azure/virtual-machines/scripts/copy-snapshot-to-storage-account) |
 |  | [Move a Marketplace Azure Virtual Machine to another subscription](/azure/virtual-machines/azure-cli-change-subscription-marketplace) |
-| **virtual-network** | [Peer two virtual networks with an Azure CLI script sample](/azure/virtual-network/scripts/virtual-network-cli-sample-peer-two-virtual-networks) |
