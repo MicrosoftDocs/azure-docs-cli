@@ -1,16 +1,14 @@
 ---
 title: Sign in with Azure CLI at a command line | Microsoft Docs
 description: Learn how to sign into the Azure CLI interactively using az login, WAM, a web browser and a subscription selector.
-author: jiasli
-ms.author: jiasli
 ms.date: 06/10/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
 ms.custom: devx-track-azurecli
+#customer intent: As an app developer, I want a simple way to log into Azure while developing a script.
 ---
 
-# Sign in interactively with Azure CLI 
+# Sign into Azure interactively using the Azure CLI 
 
 Interactive logins to Azure offer a more intuitive and flexible user experience. Interactive login
 with Azure CLI allows users to authenticate to Azure directly through the [az login](/cli/azure/reference-index#az-login)

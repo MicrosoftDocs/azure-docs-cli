@@ -1,17 +1,14 @@
 ---
-title: Sign in with Azure CLI using a managed identity | Microsoft Docs
-description: Learn how to sign into the Azure CLI with managed identity.
-author: jiasli
-ms.author: jiasli
-ms.date: 09/22/2023
-ms.topic: conceptual
+title: Sign into Azure using a managed identity and the Azure CLI
+description: Learn how to sign into Azure using an managed identity and the Azure CLI. Find links to articles that show how to use the Azure CLI to manage Azure identities.
+ms.date: 09/02/2024
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types, authentication methods, azure, cli login, az login powershell, cli login, sign in, azure cli 
+#customer intent: As an app developer, I need to security automate authentication to Azure using a managed identity.
 ---
 
-# Sign in with a managed identity using Azure CLI 
+# Sign into Azure with a managed identity using the Azure CLI 
 
 On resources configured for managed identities for Azure resources, you can sign in using the managed identity.
 Here are some of the benefits of using managed identities:
@@ -34,14 +31,22 @@ To sign in with a user-assigned managed identity, you must specify the client ID
 az login --identity --username <client_id|object_id|resource_id>
 ```
 
-To learn more about managed identities for Azure resources, see [Configure managed identities for Azure resources](/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm). Here are more articles showing the use of the `--identity` parameter.
+To learn more about managed identities for Azure resources, see [What are managed identities for Azure resources?](/entra/identity/managed-identities-azure-resources/overview). 
+
+Here are three articles showing the use of the `az login --identity` command:
 
 * [How to use managed identities for Azure resources on an Azure VM for sign-in](/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-sign-in).
 * [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity?tabs=azure-cli)
+* [How to use managed identities with Azure container instances](/azure/container-instances/container-instances-managed-identity)
+
+Here are popular articles for specific Azure services that show how to work with managed identities using Azure CLI commands:
+
+* [Use a managed identity in **Azure Kubernetes Service** (AKS)](/azure/aks/use-managed-identity)
+* [How to use Azure managed identities for **Azure Service** and **Azure functions**](/azure/app-service/overview-managed-identity?tabs=cli%2Chttp)
+* [Create an **Azure SQL Managed Instance** with a user-assigned managed identity](/azure/azure-sql/managed-instance/authentication-azure-ad-user-assigned-managed-identity-create-managed-instance?tabs=azure-cli)
+* [How to use Managed Identity with **Azure Communication Services**](/azure/communication-services/how-tos/managed-identity?tabs=cli%2Cdotnet)
+* [Configure managed identities with Microsoft Entra ID for your **Azure Cosmos DB** account](/azure/cosmos-db/how-to-setup-managed-identity#using-the-azure-cli)
 
 ## See also
 
-* [Azure CLI Onboarding cheat sheet](./cheat-sheet-onboarding.md)
-* [Manage Azure subscriptions with the Azure CLI](./manage-azure-subscriptions-azure-cli.md)
-* [How to use Azure managed identities for Azure Service and Azure functions](/azure/app-service/overview-managed-identity?tabs=portal%2Chttp)
-* Find Azure CLI [samples](./samples-index.md) and [published docs](./reference-docs-index.md)
+* [A to Z list](./manage-azure-identities-azure-cli.md) of Azure CLI reference commands that manage Azure identities.
