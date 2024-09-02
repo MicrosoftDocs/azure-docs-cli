@@ -1,11 +1,11 @@
 ---
-title: Sign in with Azure CLI — Login and Authentication | Microsoft Docs
+title: Sign in with Azure CLI — Login and Authentication
 description: Learn the different authentication types for your Azure CLI login — sign in with Azure CLI automatically, locally, or interactively using the az login command.
-ms.date: 08/20/2024
-ms.topic: conceptual
+ms.date: 09/02/2024
+ms.topic: concept-article
 ms.service: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: az login, authentication types , authentication methods, azure, cli login, az login powershell, cli login, sign in 
+ms.custom: devx-track-azurecli
+#customer intent: As a new user of the Azure CLI, I want to learn about the different authentication methods I can use to sign into Azure.
 ---
 
 # Authenticate to Azure using Azure CLI
