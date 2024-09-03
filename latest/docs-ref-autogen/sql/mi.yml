@@ -19,6 +19,7 @@ directCommands:
                      --subnet
                      [--admin-password]
                      [--admin-user]
+                     [--am {AzureAD, Paired, Windows}]
                      [--assign-identity]
                      [--backup-storage-redundancy]
                      [--capacity]
@@ -94,6 +95,9 @@ directCommands:
   - summary: |-
       Create managed instance with dns zone partner
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --dns-zone-partner dns
+  - summary: |-
+      Create managed instance which uses Windows authentication metadata mode
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --am Windows
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -114,6 +118,10 @@ directCommands:
   - name: --admin-user -u
     summary: |-
       Administrator username for the managed instance. Canonly be specified when the managed instance is beingcreated (and is required for creation).
+  - name: --am --authentication-metadata
+    parameterValueGroup: "AzureAD, Paired, Windows"
+    summary: |-
+      Preferred metadata to use for authentication of synced on-prem users. Default is AzureAD.
   - name: --assign-identity -i
     defaultValue: "False"
     summary: |-
@@ -481,6 +489,7 @@ directCommands:
   syntax: >-
     az sql mi update [--add]
                      [--admin-password]
+                     [--am {AzureAD, Paired, Windows}]
                      [--assign-identity]
                      [--backup-storage-redundancy]
                      [--capacity]
@@ -565,6 +574,9 @@ directCommands:
   - summary: |-
       Update mi database format and pricing model
     syntax: az sql mi update -g mygroup -n myinstance --database-format AlwaysUpToDate --pricing-model Regular
+  - summary: |-
+      Update managed instance to use Windows authentication metadata mode
+    syntax: az sql mi update -g mygroup -n myinstance --am Windows
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -573,6 +585,10 @@ directCommands:
   - name: --admin-password -p
     summary: |-
       The administrator login password (required formanaged instance creation).
+  - name: --am --authentication-metadata
+    parameterValueGroup: "AzureAD, Paired, Windows"
+    summary: |-
+      Preferred metadata to use for authentication of synced on-prem users. Default is AzureAD.
   - name: --assign-identity -i
     defaultValue: "False"
     summary: |-
@@ -773,5 +789,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 07/16/2024
+  ms.date: 08/06/2024
   description: Manage SQL managed instances.

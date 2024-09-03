@@ -54,7 +54,10 @@ directCommands:
                         [--minimal-tls-version {1.2}]
                         [--no-validation-timeout]
                         [--no-wait]
+                        [--outbound-dependencies-managed-type {External, Managed}]
                         [--private-link-config]
+                        [--public-ip-tag-type]
+                        [--public-ip-tag-value]
                         [--resource-provider-connection {Inbound, Outbound}]
                         [--ssh-password]
                         [--ssh-public-key]
@@ -384,9 +387,19 @@ directCommands:
     defaultValue: "False"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --outbound-dependencies-managed-type --outbound-managed-type
+    parameterValueGroup: "External, Managed"
+    summary: |-
+      The direction for the resource provider connection.
   - name: --private-link-config --private-link-configurations
     summary: |-
       The private link configurations when creating cluster. Private Link Configurations may be supplied from a file using the `@{path}` syntax or a JSON string. Please see https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/tests/latest/privatelinkconfigurations.json.
+  - name: --public-ip-tag-type
+    summary: |-
+      Gets or sets the ipTag type: Example FirstPartyUsage.
+  - name: --public-ip-tag-value
+    summary: |-
+      Gets or sets value of the IpTag associated with the public IP.Example HDInsight, SQL, Storage etc.
   - name: --resource-provider-connection --rp-connection
     parameterValueGroup: "Inbound, Outbound"
     summary: |-
@@ -609,13 +622,14 @@ directCommands:
 - uid: az_hdinsight_update
   name: az hdinsight update
   summary: |-
-    Update the tags of the specified HDInsight cluster.
+    Update the tags or identity of the specified HDInsight cluster.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
   syntax: >-
     az hdinsight update --name
                         --resource-group
+                        [--assign-identity]
                         [--no-wait]
                         [--tags]
   examples:
@@ -632,6 +646,9 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --assign-identity
+    summary: |-
+      The name or ID of user assigned identity.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -714,6 +731,10 @@ commands:
 - az_hdinsight_autoscale_update
 - az_hdinsight_autoscale_wait
 - az_hdinsight_azure-monitor
+- az_hdinsight_azure-monitor-agent
+- az_hdinsight_azure-monitor-agent_disable
+- az_hdinsight_azure-monitor-agent_enable
+- az_hdinsight_azure-monitor-agent_show
 - az_hdinsight_azure-monitor_disable
 - az_hdinsight_azure-monitor_enable
 - az_hdinsight_azure-monitor_show
@@ -765,5 +786,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 06/23/2021
+  ms.date: 08/26/2024
   description: Manage HDInsight resources.
