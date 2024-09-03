@@ -81,6 +81,7 @@ Version 2.64.0
 
 * Support Python 3.12
 * Release Azure Linux 3 RPM package
+* [BREAKING CHANGE] Use CBL-Mariner 2.0 (`mcr.microsoft.com/cbl-mariner/base/core:2.0`) as the base image for docker image tag `latest` and `2.64.0`
 
 ### Redis
 
