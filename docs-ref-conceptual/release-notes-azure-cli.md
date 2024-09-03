@@ -4,7 +4,7 @@ description: Learn about the latest Azure Command-Line Interface (CLI) release n
 manager: jasongroce
 author: dbradish-microsoft
 ms.author: dbradish
-ms.date: 08/06/2024
+ms.date: 09/03/2024
 ms.topic: article
 ms.service: azure-cli
 ms.tool: azure-cli
@@ -13,6 +13,89 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## September 03, 2024
+
+Version 2.64.0
+
+### ACR
+
+* `az acr helm`: Improve deprecation message
+
+### AKS
+
+* `az aks nodepool update`: Add `--enable/disable-fips-image` flags for GA mutable fips
+* `az aks create/update`: Support UserAssigned Managed Identity for grafana linking in managed prometheus
+* `az aks create/update`: Update the VM SKU regex validation to include larger set of VMs for Azure Container Storage
+
+### App Service
+
+* `az staticwebapp create/update`: Add `Dedicated` as supported SKU
+* `az webapp config set`: Add MinTlsCipherSuite support
+* `az webapp config access-restriction add/remove`: Allow skipping service tag validation
+
+### ARM
+
+* `az ts create`: Fix incorrect handling of whitespace in string values
+
+### ARO
+
+* `az aro create`: Add feature for adding Multiple Public IPs on cluster load balancer
+* `az aro update`: Add feature for adding/removing Multiple Public IPs on cluster load balancer
+
+### Compute
+
+* `az vm update`: Add support of Gen1 VM to trusted launch upgrade
+* `az capacity reservation`: GA command group
+
+### Container app
+
+* Fix #28998: `az containerapp env workload-profile add/update`: Fix `NoneType` object is not iterable error when environment doesn't enable workload profile
+* `az containerapp create/up`: Make `--target-port` optional
+* `az containerapp env create`: Deprecate unused argument `--docker-bridge-cidr`
+* `az containerapp job stop`: Deprecate option to stop list of given job executions
+* Fix #29711: `az containerapp logs show`: Fix JSON escaping by default or with `--format json`
+
+### HDInsight
+
+* `az hdinsight create`: Support setting IP tags when creating HDInsight cluster
+* `az hdinsight update`: Support updating the managed identity of the cluster
+* `az hdinsight azure-monitor-agent show`: Support getting the managed identity of the cluster
+* `az hdinsight azure-monitor-agent enable`: Enable the Azure Monitor Agent logs integration on an HDInsight cluster
+* `az hdinsight azure-monitor-agent disable`: Disable the Azure Monitor Agent logs integration on an HDInsight cluster
+
+### MySQL
+
+* `az mysql flexible-server maintenance`: New command group for managing maintenance of MySQL flexible server
+* `az mysql flexible-server update`: Remove storage passing for server update
+
+### NetAppFiles
+
+* `az netappfiles volume create/update`: Update max for `--usage-threshold`
+
+### Network
+
+* Fix #29565: `az network nat gateway create`: Add `--tags` parameter
+
+### Packaging
+
+* Support Python 3.12
+* Release Azure Linux 3 RPM package
+* [BREAKING CHANGE] Use CBL-Mariner 2.0 (`mcr.microsoft.com/cbl-mariner/base/core:2.0`) as the base image for docker image tag `latest` and `2.64.0`
+
+### Redis
+
+* `az redis create/update`: Add `--disable-access-keys` to support disabling auth through access keys
+
+### SQL
+
+* `az sql mi create/update`: Add `--authentication-metadata` to support auth metadata configuration
+
+### Storage
+
+* `az storage account create/update`: Support account cold-tier
+* `az storage copy/remove`: Add `--auth-mode login` support
+* `az storage share delete`: Add `include-leased` for `--delete-snapshots`
 
 ## August 06, 2024
 
