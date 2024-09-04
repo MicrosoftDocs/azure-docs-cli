@@ -10,7 +10,7 @@ keywords: az login, authentication types, authentication methods, azure, cli log
 
 # How to work with Azure identities using the Azure CLI
 
-There are many Azure CLI reference commands that help you to work with Azure identities. This article provides a list of Azure CLI commands and the quickstart, how-to guide or tutorial that shows the use of the command.
+There are many Azure CLI reference commands that help you to work with Azure identities. This article provides a list of Azure CLI commands and the quickstart, how-to guide or tutorial that shows the use of the command. For identity commands without an article, rely on the reference example (the link in column one).
 
 > [!NOTE]
 >
@@ -18,13 +18,13 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az acr
 
-|Reference subgroup|Azure CLI article showing reference use|
+|Reference subgroup|Article showing reference use|
 |---|---|
 | [az acr identity](/cli/azure/acr/identity) | [Troubleshoot a customer-managed key](/azure/container-registry/tutorial-troubleshoot-customer-managed-keys)
 | [az acr task identity](/cli/azure/acr/task/identity) | |
 ## az aks
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az aks pod-identity](/cli/azure/aks/pod-identity) | [Migrate from pod managed-identity to workload identity](/azure/aks/workload-identity-migrate-from-pod-identity)
 |  | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
@@ -33,39 +33,39 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az ams
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az ams account identity](/cli/azure/ams/account/identity) |
 
 ## az appconfig
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az appconfig identity](/cli/azure/appconfig/identity) | [Use customer-managed keys to encrypt your App Configuration data](/azure/azure-app-configuration/concept-customer-managed-keys)
 |  | [How to use managed identities for Azure App Configuration](/azure/azure-app-configuration/overview-managed-identity)
 
 ## az backup
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az backup vault identity](/cli/azure/backup/vault/identity) | [Save and manage MARS agent passphrase securely in Azure Key Vault](/azure/backup/save-backup-passphrase-securely-in-azure-key-vault)
 |  | [Encrypt backup data by using customer-managed keys](/azure/backup/encryption-at-rest-with-cmk)
 
 ## az batch
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az batch account identity](/cli/azure/batch/account/identity) |
 
 ## az cognitiveservices
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az cognitiveservices account identity](/cli/azure/cognitiveservices/account/identity) |
 
 ## az communication
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az communication identity](/cli/azure/communication/identity) | [How to use Managed Identity with Azure Communication Services](/azure/communication-services/how-tos/managed-identity)
 | [az communication identity token](/cli/azure/communication/identity/token) | [Quickstart: Join a room call](/azure/communication-services/quickstarts/rooms/join-rooms-call)
@@ -74,7 +74,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az containerapp
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az containerapp identity](/cli/azure/containerapp/identity) | [Managed identities in Azure Container Apps](/azure/container-apps/managed-identity)
 |  | [Deploy to Azure Container Apps from Azure Pipelines](/azure/container-apps/azure-pipelines)
@@ -89,7 +89,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az cosmosdb
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 |  [az cosmosdb identity](/cli/azure/cosmosdb/identity) | [Configure managed identities with Microsoft Entra ID for your Azure Cosmos DB account](/azure/cosmos-db/how-to-setup-managed-identity)
 |  | [Access Azure Key Vault from Azure Cosmos DB using a managed identity](/azure/cosmos-db/access-key-vault-managed-identity)
@@ -98,25 +98,25 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az disk-encryption-set
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az disk-encryption-set identity](/cli/azure/disk-encryption-set/identity) |
 
 ## az dt
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az dt identity](/cli/azure/dt/identity) | [Set up an Azure Digital Twins instance and authentication (CLI)](/azure/digital-twins/how-to-set-up-instance-cli)
 
 ## az eventhubs
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az eventhubs namespace identity](/cli/azure/eventhubs/namespace/identity) |
 
 ## az functionapp
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az functionapp identity](/cli/azure/functionapp/identity) | [Create your first containerized functions on Azure Container Apps](/azure/azure-functions/functions-deploy-container-apps)
 |  | [Enable linting and analysis for API governance in your API center](/azure/api-center/enable-api-analysis-linting)
@@ -127,7 +127,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az identity
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az identity](/cli/azure/identity) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
 |  | [Manage user-assigned managed identities](/entra/identity/managed-identities-azure-resources/how-manage-user-assigned-managed-identities)
@@ -152,13 +152,13 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az image
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az image builder identity](/cli/azure/image/builder/identity) | [Troubleshoot Azure VM Image Builder](/azure/virtual-machines/linux/image-builder-troubleshoot)
 
 ## az iot
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az iot central app identity](/cli/azure/iot/central/app/identity) | [Export IoT data to Blob Storage](/azure/iot-central/core/howto-export-to-blob-storage)
 |  | [Export IoT data to Azure Data Explorer](/azure/iot-central/core/howto-export-to-azure-data-explorer)
@@ -190,19 +190,19 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az logic
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az logic workflow identity](/cli/azure/logic/workflow/identity) |
 
 ## az monitor
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az monitor app-insights workbook identity](/cli/azure/monitor/app-insights/workbook/identity) |
 
 ## az mysql
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az mysql flexible-server identity](/cli/azure/mysql/flexible-server/identity) | [Migrate an application to use passwordless connections with Azure Database for MySQL](/azure/developer/java/spring-framework/migrate-mysql-to-passwordless-connection)
 |  | [Configure passwordless database connections for Java apps on Oracle WebLogic Servers](/azure/developer/java/ee/how-to-configure-passwordless-datasource)
@@ -210,50 +210,50 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az network
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az network application-gateway identity](/cli/azure/network/application-gateway/identity) |
 | [az network express-route port identity](/cli/azure/network/express-route/port/identity) |
 
 ## az nexusidentity
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az nexusidentity](/cli/azure/nexusidentity) |
 
 ## az policy
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az policy assignment identity](/cli/azure/policy) | [Built-in policies for Azure Monitor](/azure/azure-monitor/essentials/diagnostics-settings-policies-deployifnotexists)
 
 ## az postgres
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az postgres flexible-server identity](/cli/azure/postgres/flexible-server/identity) |
 
 ## az redis
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az redis identity](/cli/azure/redis/identity) | [Managed identity for storage](/azure/azure-cache-for-redis/cache-managed-identity)
 
 ## az servicebus
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az servicebus namespace identity](/cli/azure/servicebus/namespace/identity) |
 
 ## az signalr
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az signalr identity](/cli/azure/signalr/identity) |
 
 ## az spring
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az spring app identity](/cli/azure/spring/app/identity) | [Migrate a Python application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-python)
 |  | [Migrate an application to use passwordless connections with Azure Blob Storage](/azure/storage/common/migrate-azure-credentials)
@@ -268,25 +268,25 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az stack-hci
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az stack-hci cluster identity](/cli/azure/stack-hci/cluster/identity) |
 
 ## az staticwebapp
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az staticwebapp identity](/cli/azure/staticwebapp/identity) |
 
 ## az synapse
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az synapse workspace managed-identity](/cli/azure/synapse/workspace/managed-identity) | [Move an Azure Synapse Analytics workspace from one region to another](/azure/synapse-analytics/how-to-move-workspace-from-one-region-to-another)
 
 ## az vm
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az vm identity](/cli/azure/vm/identity) | [Sign in to a Linux virtual machine in Azure by using Microsoft Entra ID and OpenSSH](/entra/identity/devices/howto-vm-sign-in-azure-ad-linux)
 |  | [Use an Azure managed identity to authenticate to an Azure container registry](/azure/container-registry/container-registry-authentication-managed-identity)
@@ -301,7 +301,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az vmss
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az vmss identity](/cli/azure/vmss/identity) | [Sign in to a Linux virtual machine in Azure by using Microsoft Entra ID and OpenSSH](/entra/identity/devices/howto-vm-sign-in-azure-ad-linux)
 |  | [Fail to pull images from Azure Container Registry to Azure Kubernetes Service cluster](/troubleshoot/azure/azure-kubernetes/extensions/cannot-pull-image-from-acr-to-aks-cluster)
@@ -313,14 +313,14 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 ## az vmware
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az vmware private-cloud identity](/cli/azure/vmware/private-cloud/identity) |
 | [az vmware private-cloud identity-source](/cli/azure/vmware/private-cloud/identity-source) |
 
 ## az webapp
 
-|Reference subgroup|Azure CLI article showing reference use
+|Reference subgroup|Article showing reference use
 |---|---|
 | [az webapp identity](/cli/azure/webapp/identity) | [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
 |  | [Tutorial: Connect to SQL Database from .NET App Service without secrets using a managed identity](/azure/app-service/tutorial-connect-msi-sql-database)
