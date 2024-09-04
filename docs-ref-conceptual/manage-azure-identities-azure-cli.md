@@ -21,7 +21,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |Reference subgroup|Azure CLI article showing reference use|
 |---|---|
 | [az acr identity](/cli/azure/acr/identity) | [Troubleshoot a customer-managed key](/azure/container-registry/tutorial-troubleshoot-customer-managed-keys)
-| [az acr task identity[(https://docs.microsoft.com/cli/azure/acr/task/identity) | |
+| [az acr task identity](/cli/azure/acr/task/identity) | |
 ## az aks
 
 |Reference subgroup|Azure CLI article showing reference use
@@ -35,7 +35,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az ams account identity[(https://docs.microsoft.com/cli/azure/ams/account/identity) |
+| [az ams account identity](/cli/azure/ams/account/identity) |
 
 ## az appconfig
 
@@ -55,13 +55,13 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az batch account identity[(https://docs.microsoft.com/cli/azure/batch/account/identity) |
+| [az batch account identity](/cli/azure/batch/account/identity) |
 
 ## az cognitiveservices
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az cognitiveservices account identity[(https://docs.microsoft.com/cli/azure/cognitiveservices/account/identity) |
+| [az cognitiveservices account identity](/cli/azure/cognitiveservices/account/identity) |
 
 ## az communication
 
@@ -100,7 +100,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az disk-encryption-set identity[(https://docs.microsoft.com/cli/azure/disk-encryption-set/identity) |
+| [az disk-encryption-set identity](/cli/azure/disk-encryption-set/identity) |
 
 ## az dt
 
@@ -112,7 +112,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az eventhubs namespace identity[(https://docs.microsoft.com/cli/azure/eventhubs/namespace/identity) |
+| [az eventhubs namespace identity](/cli/azure/eventhubs/namespace/identity) |
 
 ## az functionapp
 
@@ -192,13 +192,13 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az logic workflow identity[(https://docs.microsoft.com/cli/azure/logic/workflow/identity) |
+| [az logic workflow identity](/cli/azure/logic/workflow/identity) |
 
 ## az monitor
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az monitor app-insights workbook identity[(https://docs.microsoft.com/cli/azure/monitor/app-insights/workbook/identity) |
+| [az monitor app-insights workbook identity](/cli/azure/monitor/app-insights/workbook/identity) |
 
 ## az mysql
 
@@ -212,14 +212,14 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az network application-gateway identity[(https://docs.microsoft.com/cli/azure/network/application-gateway/identity) |
-| [az network express-route port identity[(https://docs.microsoft.com/cli/azure/network/express-route/port/identity) |
+| [az network application-gateway identity](/cli/azure/network/application-gateway/identity) |
+| [az network express-route port identity](/cli/azure/network/express-route/port/identity) |
 
 ## az nexusidentity
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az nexusidentity[(https://docs.microsoft.com/cli/azure/nexusidentity) |
+| [az nexusidentity](/cli/azure/nexusidentity) |
 
 ## az policy
 
@@ -227,38 +227,29 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |---|---|
 | [az policy assignment identity](/cli/azure/policy) | [Built-in policies for Azure Monitor](/azure/azure-monitor/essentials/diagnostics-settings-policies-deployifnotexists)
 
+## az postgres
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az postgres flexible-server identity](/cli/azure/postgres/flexible-server/identity) |
+
 ## az redis
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az redis identity](/cli/azure/redis/identity) | [Managed identity for storage](/azure/azure-cache-for-redis/cache-managed-identity)
 
-## az postgres
-
-|Reference subgroup|Azure CLI article showing reference use
-|---|---|
-| [az postgres flexible-server identity[(https://docs.microsoft.com/cli/azure/postgres/flexible-server/identity) |
-
-## az redis
-
-|Reference subgroup|Azure CLI article showing reference use
-|---|---|
-| [az redis identity[(https://docs.microsoft.com/cli/azure/redis/identity) |
-
-|Reference subgroup|Azure CLI article showing reference use
-|---|---|
-
 ## az servicebus
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az servicebus namespace identity[(https://docs.microsoft.com/cli/azure/servicebus/namespace/identity) |
+| [az servicebus namespace identity](/cli/azure/servicebus/namespace/identity) |
 
 ## az signalr
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az signalr identity[(https://docs.microsoft.com/cli/azure/signalr/identity) |
+| [az signalr identity](/cli/azure/signalr/identity) |
 
 ## az spring
 
@@ -279,13 +270,13 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az stack-hci cluster identity[(https://docs.microsoft.com/cli/azure/stack-hci/cluster/identity) |
+| [az stack-hci cluster identity](/cli/azure/stack-hci/cluster/identity) |
 
 ## az staticwebapp
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az staticwebapp identity[(https://docs.microsoft.com/cli/azure/staticwebapp/identity) |
+| [az staticwebapp identity](/cli/azure/staticwebapp/identity) |
 
 ## az synapse
 
@@ -324,8 +315,8 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
-| [az vmware private-cloud identity[(https://docs.microsoft.com/cli/azure/vmware/private-cloud/identity) |
-| [az vmware private-cloud identity-source[(https://docs.microsoft.com/cli/azure/vmware/private-cloud/identity-source) |
+| [az vmware private-cloud identity](/cli/azure/vmware/private-cloud/identity) |
+| [az vmware private-cloud identity-source](/cli/azure/vmware/private-cloud/identity-source) |
 
 ## az webapp
 
