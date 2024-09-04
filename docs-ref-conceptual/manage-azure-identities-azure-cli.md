@@ -21,7 +21,7 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |Reference subgroup|Azure CLI article showing reference use|
 |---|---|
 | [az acr identity](/cli/azure/acr/identity) | [Troubleshoot a customer-managed key](/azure/container-registry/tutorial-troubleshoot-customer-managed-keys)
-
+| [az acr task identity[(https://docs.microsoft.com/cli/azure/acr/task/identity) | |
 ## az aks
 
 |Reference subgroup|Azure CLI article showing reference use
@@ -30,6 +30,12 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |  | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
 | [az aks pod-identity exception](/cli/azure/aks/pod-identity/exception) | [Troubleshoot Azure Kubernetes Service backup and restore](/azure/backup/azure-kubernetes-service-backup-troubleshoot)
 |  | [Use Microsoft Entra pod-managed identities in Azure Kubernetes Service (Preview)](/azure/aks/use-azure-ad-pod-identity)
+
+## az ams
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az ams account identity[(https://docs.microsoft.com/cli/azure/ams/account/identity) |
 
 ## az appconfig
 
@@ -44,6 +50,18 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |---|---|
 | [az backup vault identity](/cli/azure/backup/vault/identity) | [Save and manage MARS agent passphrase securely in Azure Key Vault](/azure/backup/save-backup-passphrase-securely-in-azure-key-vault)
 |  | [Encrypt backup data by using customer-managed keys](/azure/backup/encryption-at-rest-with-cmk)
+
+## az batch
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az batch account identity[(https://docs.microsoft.com/cli/azure/batch/account/identity) |
+
+## az cognitiveservices
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az cognitiveservices account identity[(https://docs.microsoft.com/cli/azure/cognitiveservices/account/identity) |
 
 ## az communication
 
@@ -78,11 +96,23 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |  | [Create and manage container copy jobs in Azure Cosmos DB (Preview)](/azure/cosmos-db/how-to-container-copy)
 |  | [Configure customer-managed keys for your Azure Cosmos DB account with Azure Managed HSM Key Vault](/azure/cosmos-db/how-to-setup-customer-managed-keys-mhsm)
 
+## az disk-encryption-set
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az disk-encryption-set identity[(https://docs.microsoft.com/cli/azure/disk-encryption-set/identity) |
+
 ## az dt
 
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az dt identity](/cli/azure/dt/identity) | [Set up an Azure Digital Twins instance and authentication (CLI)](/azure/digital-twins/how-to-set-up-instance-cli)
+
+## az eventhubs
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az eventhubs namespace identity[(https://docs.microsoft.com/cli/azure/eventhubs/namespace/identity) |
 
 ## az functionapp
 
@@ -158,6 +188,18 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 | [az iot hub identity](/cli/azure/iot/hub/identity) | [Configure IoT Hub file uploads using Azure CLI](/azure/iot-hub/iot-hub-configure-file-upload-cli)
 | [az iot hub module-identity](/cli/azure/iot/hub/module-identity) | [Deploy Azure IoT Edge modules with Azure CLI](/azure/iot-edge/how-to-deploy-modules-cli)
 
+## az logic
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az logic workflow identity[(https://docs.microsoft.com/cli/azure/logic/workflow/identity) |
+
+## az monitor
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az monitor app-insights workbook identity[(https://docs.microsoft.com/cli/azure/monitor/app-insights/workbook/identity) |
+
 ## az mysql
 
 |Reference subgroup|Azure CLI article showing reference use
@@ -165,6 +207,19 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 | [az mysql flexible-server identity](/cli/azure/mysql/flexible-server/identity) | [Migrate an application to use passwordless connections with Azure Database for MySQL](/azure/developer/java/spring-framework/migrate-mysql-to-passwordless-connection)
 |  | [Configure passwordless database connections for Java apps on Oracle WebLogic Servers](/azure/developer/java/ee/how-to-configure-passwordless-datasource)
 |  | [Use Java and JDBC with Azure Database for MySQL - Flexible Server](/azure/mysql/flexible-server/connect-java)
+
+## az network
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az network application-gateway identity[(https://docs.microsoft.com/cli/azure/network/application-gateway/identity) |
+| [az network express-route port identity[(https://docs.microsoft.com/cli/azure/network/express-route/port/identity) |
+
+## az nexusidentity
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az nexusidentity[(https://docs.microsoft.com/cli/azure/nexusidentity) |
 
 ## az policy
 
@@ -177,6 +232,33 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |Reference subgroup|Azure CLI article showing reference use
 |---|---|
 | [az redis identity](/cli/azure/redis/identity) | [Managed identity for storage](/azure/azure-cache-for-redis/cache-managed-identity)
+
+## az postgres
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az postgres flexible-server identity[(https://docs.microsoft.com/cli/azure/postgres/flexible-server/identity) |
+
+## az redis
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az redis identity[(https://docs.microsoft.com/cli/azure/redis/identity) |
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+
+## az servicebus
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az servicebus namespace identity[(https://docs.microsoft.com/cli/azure/servicebus/namespace/identity) |
+
+## az signalr
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az signalr identity[(https://docs.microsoft.com/cli/azure/signalr/identity) |
 
 ## az spring
 
@@ -192,6 +274,18 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |  | [Migrate a Node.js application to use passwordless connections with Azure SQL Database](/azure/azure-sql/database/azure-sql-passwordless-migration-nodejs)
 |  | [Migrate a Java application to use passwordless connections with Azure SQL Database](/azure/developer/java/spring-framework/migrate-sql-database-to-passwordless-connection)
 |  | [Migrate an application to use passwordless connections with Azure Database for MySQL](/azure/developer/java/spring-framework/migrate-mysql-to-passwordless-connection)
+
+## az stack-hci
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az stack-hci cluster identity[(https://docs.microsoft.com/cli/azure/stack-hci/cluster/identity) |
+
+## az staticwebapp
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az staticwebapp identity[(https://docs.microsoft.com/cli/azure/staticwebapp/identity) |
 
 ## az synapse
 
@@ -225,6 +319,13 @@ There are many Azure CLI reference commands that help you to work with Azure ide
 |  | [Send Prometheus data to Azure Monitor by using managed identity authentication](/azure/azure-monitor/containers/prometheus-remote-write-managed-identity)
 |  | [Create a chaos experiment that uses an agent-based fault with the Azure CLI](/azure/chaos-studio/chaos-studio-tutorial-agent-based-cli)
 |  | [Connect your Azure identity provider to the Azure Key Vault Secrets Store CSI Driver in Azure Kubernetes Service (AKS)](/azure/aks/csi-secrets-store-identity-access)
+
+## az vmware
+
+|Reference subgroup|Azure CLI article showing reference use
+|---|---|
+| [az vmware private-cloud identity[(https://docs.microsoft.com/cli/azure/vmware/private-cloud/identity) |
+| [az vmware private-cloud identity-source[(https://docs.microsoft.com/cli/azure/vmware/private-cloud/identity-source) |
 
 ## az webapp
 
