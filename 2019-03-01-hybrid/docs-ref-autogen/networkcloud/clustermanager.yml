@@ -4,7 +4,7 @@ name: az networkcloud clustermanager
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **networkcloud** extension for the Azure CLI (version 2.51.0 or higher). The extension will automatically install the first time you run an **az networkcloud clustermanager** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **networkcloud** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az networkcloud clustermanager** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage cluster manager.
 status: Preview
@@ -27,12 +27,20 @@ directCommands:
                                           [--analytics-workspace-id]
                                           [--location]
                                           [--managed-resource-group-configuration]
+                                          [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--mi-user-assigned]
                                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                           [--tags]
   examples:
   - summary: |-
       Create or update cluster manager
     syntax: az networkcloud clustermanager create --name "clusterManagerName" --location "location" --analytics-workspace-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/microsoft.operationalInsights/workspaces/logAnalyticsWorkspaceName" --fabric-controller-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/fabricControllerName" --managed-resource-group-configuration name="my-managed-rg" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName"
+  - summary: |-
+      Create or update cluster manager with system assigned identity
+    syntax: az networkcloud clustermanager create --name "clusterManagerName" --location "location" --analytics-workspace-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/microsoft.operationalInsights/workspaces/logAnalyticsWorkspaceName" --fabric-controller-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/fabricControllerName" --managed-resource-group-configuration name="my-managed-rg" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --mi-system-assigned
+  - summary: |-
+      Create or update cluster manager with user assigned identity
+    syntax: az networkcloud clustermanager create --name "clusterManagerName" --location "location" --analytics-workspace-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/microsoft.operationalInsights/workspaces/logAnalyticsWorkspaceName" --fabric-controller-id "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/fabricControllerName" --managed-resource-group-configuration name="my-managed-rg" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName" --mi-user-assigned "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUAI"
   requiredParameters:
   - isRequired: true
     name: --cluster-manager-name --name -n
@@ -56,6 +64,13 @@ directCommands:
   - name: --managed-resource-group-configuration
     summary: |-
       The configuration of the managed resource group associated with the resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --mi-system-assigned
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable system assigned identity.
+  - name: --mi-user-assigned
+    summary: |-
+      Space separated resource IDs to add user-assigned identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -173,6 +188,8 @@ directCommands:
   syntax: >-
     az networkcloud clustermanager update [--cluster-manager-name]
                                           [--ids]
+                                          [--mi-system-assigned {0, 1, f, false, n, no, t, true, y, yes}]
+                                          [--mi-user-assigned]
                                           [--resource-group]
                                           [--subscription]
                                           [--tags]
@@ -180,6 +197,12 @@ directCommands:
   - summary: |-
       Update tags for cluster manager
     syntax: az networkcloud clustermanager update --name "clusterManagerName" --tags key1="myvalue1" key2="myvalue2" --resource-group "resourceGroupName"
+  - summary: |-
+      Add system assigned identity to cluster manager
+    syntax: az networkcloud clustermanager update --name "clusterManagerName" --resource-group "resourceGroupName" --mi-system-assigned
+  - summary: |-
+      Add user assigned identity to cluster manager
+    syntax: az networkcloud clustermanager update --name "clusterManagerName" --resource-group "resourceGroupName" --mi-user-assigned "/subscriptions/subscriptionId/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUAI"
   optionalParameters:
   - name: --cluster-manager-name --name -n
     summary: |-
@@ -187,6 +210,13 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --mi-system-assigned
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable system assigned identity.
+  - name: --mi-user-assigned
+    summary: |-
+      Space separated resource IDs to add user-assigned identities.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
