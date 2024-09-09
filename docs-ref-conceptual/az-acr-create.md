@@ -136,7 +136,7 @@ Use the following links to learn practical ways to implement `az acr create` in 
 | AKS | quickstart | [Develop on Azure Kubernetes Service (AKS) with Helm](https://learn.microsoft.com/azure/aks/quickstart-helm) |
 | Azure Container Apps | tutorial| ['Tutorial: Run GitHub Actions runners and Azure Pipelines agents with Azure Container Apps jobs'](/azure/container-apps/tutorial-ci-cd-runners-jobs) |
 
-**DISCUSSION NOTE:** There are 69 conceptual articles that use `az acr create`. The list above is the top 10 based based on July 2024 PVs sorted in DESC order.
+**DISCUSSION NOTE:** There are 69 conceptual articles that use `az acr create`. The list above is the top 10 based based on July 2024 PVs sorted in DESC order. Because there are so many articles, we can prioritize based on Azure service, or some other logic. We will also need to standardized on a table or a list.
 
 ## az acr delete
 

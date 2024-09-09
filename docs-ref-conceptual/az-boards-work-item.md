@@ -102,6 +102,8 @@ Use the following link to learn practical ways to implement `az boards work-item
 
 - [Customize your pipeline](/azure/devops/pipelines/customize-pipeline)
 
+**DISCUSSION NOTE:** There is currently only 1 conceptual article that uses this reference command. For commands with no conceptual article, the new H3 will be omitted entirely, just like the `Examples` H3 is not visible when there are no examples. An option we can discuss is providing a link to the Azure service landing page.
+
 ## az boards work-item delete
 
 Delete a work item
