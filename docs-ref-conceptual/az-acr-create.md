@@ -12,7 +12,7 @@ ms.custom: devx-track-azurecli
 
 Manage private registries with Azure Container Registries.
 
-**DISCUSSION NOTE:** Link to current reference content: https://learn.microsoft.com/en-us/cli/azure/acr
+**DISCUSSION NOTE:** Link to current reference content: https://learn.microsoft.com/cli/azure/acr
 
 ## Commands
 
@@ -114,7 +114,7 @@ Space-separated tags: key[=value] [key[=value] ...]. Use "" to clear existing ta
 `--workspace` Preview
 Name or ID of the Log Analytics workspace to send registry diagnostic logs to. All events will be enabled. You can use "az monitor log-analytics workspace create" to create one. Extra billing may apply.
 
--`-zone-redundancy` Preview
+`--zone-redundancy` Preview
 Indicates whether or not zone redundancy should be enabled for this registry or replication. For more information, such as supported locations, please visit https://aka.ms/acr/az. Zone-redundancy cannot be updated. Defaults to 'Disabled'.
 
 Accepted values: Disabled, Enabled
@@ -125,16 +125,16 @@ Use the following links to learn practical ways to implement `az acr create` in 
 
 | Azure subject area | Content type | Article |
 |-|-|-|
-| Azure DevOps | tutorial | [Build and push Docker images to Azure Container Registry with Docker templates](https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/containers/acr-template) |
-| Azure App Service | tutorial | ['Tutorial: Build and run a custom image in Azure App Service'](https://learn.microsoft.com/en-us/azure/app-service/tutorial-custom-container) |
+| Azure DevOps | tutorial | [Build and push Docker images to Azure Container Registry with Docker templates](/azure/devops/pipelines/ecosystems/containers/acr-template) |
+| Azure App Service | tutorial | ['Tutorial: Build and run a custom image in Azure App Service'](/azure/app-service/tutorial-custom-container) |
 | AKS | how-to guide | [Integrate Azure Container Registry with Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/cluster-container-registry-integration) |
-| Azure DevOps | tutorial | [Create a service connection and build and publish Docker images to Azure Container Registry](https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/containers/publish-to-acr) |
+| Azure DevOps | tutorial | [Create a service connection and build and publish Docker images to Azure Container Registry](/azure/devops/pipelines/ecosystems/containers/publish-to-acr) |
 | AKS | how-to guide | [Deploy to Azure Kubernetes Service with Azure Pipelines](https://learn.microsoft.com/azure/aks/devops-pipeline) |
-| Azure App Service | tutorial | [Deploy a Flask or FastAPI web app as a container in Azure App Service](https://learn.microsoft.com/en-us/azure/developer/python/tutorial-containerize-simple-web-app-for-app-service) |
-| Azure Container Apps | tutorial | [Tutorial: Build and deploy your app to Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/tutorial-code-to-cloud) |
-| Azure Container Registry| tutorial | [Tutorial - Quick container image build](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tutorial-quick-task) |
+| Azure App Service | tutorial | [Deploy a Flask or FastAPI web app as a container in Azure App Service](/azure/developer/python/tutorial-containerize-simple-web-app-for-app-service) |
+| Azure Container Apps | tutorial | [Tutorial: Build and deploy your app to Azure Container Apps](/azure/container-apps/tutorial-code-to-cloud) |
+| Azure Container Registry| tutorial | [Tutorial - Quick container image build](/azure/container-registry/container-registry-tutorial-quick-task) |
 | AKS | quickstart | [Develop on Azure Kubernetes Service (AKS) with Helm](https://learn.microsoft.com/azure/aks/quickstart-helm) |
-| Azure Container Apps | tutorial| ['Tutorial: Run GitHub Actions runners and Azure Pipelines agents with Azure Container Apps jobs'](https://learn.microsoft.com/en-us/azure/container-apps/tutorial-ci-cd-runners-jobs) |
+| Azure Container Apps | tutorial| ['Tutorial: Run GitHub Actions runners and Azure Pipelines agents with Azure Container Apps jobs'](/azure/container-apps/tutorial-ci-cd-runners-jobs) |
 
 **DISCUSSION NOTE:** There are 69 conceptual articles that use `az acr create`. The list above is the top 10 based based on July 2024 PVs sorted in DESC order.
 

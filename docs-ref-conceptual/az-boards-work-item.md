@@ -15,7 +15,7 @@ ms.custom: devx-track-azurecli
 
 Manage work items.
 
-**DISCUSSION NOTE:** Link to current reference content: https://learn.microsoft.com/en-us/cli/azure/boards/work-item
+**DISCUSSION NOTE:** Link to current reference content: https://learn.microsoft.com/cli/azure/boards/work-item
 
 ## Commands
 
@@ -98,7 +98,7 @@ Reason for the state of the work item.
 
 ### Learn
 
-Use the following link to learn practical ways to implement `az boards work-item` in your environment.
+Use the following link to learn practical ways to implement `az boards work-item create` in your environment.
 
 - [Customize your pipeline](/azure/devops/pipelines/customize-pipeline)
 
