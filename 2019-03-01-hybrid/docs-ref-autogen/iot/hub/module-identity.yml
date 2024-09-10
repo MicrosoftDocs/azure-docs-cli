@@ -52,7 +52,7 @@ directCommands:
     defaultValue: "key"
     parameterValueGroup: "key, login"
     summary: |-
-      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
@@ -108,7 +108,7 @@ directCommands:
     defaultValue: "key"
     parameterValueGroup: "key, login"
     summary: |-
-      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
@@ -144,7 +144,7 @@ directCommands:
     defaultValue: "key"
     parameterValueGroup: "key, login"
     summary: |-
-      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
@@ -161,17 +161,21 @@ directCommands:
 - uid: az_iot_hub_module-identity_renew-key
   name: az iot hub module-identity renew-key
   summary: |-
-    Renew target keys of an IoT Hub device module with sas authentication.
+    Renew target keys of IoT Hub device modules with sas authentication.
+  description: |-
+    Currently etags and key type `swap` are not supported for bulk key regeneration.
+    Bulk Key regeneration will yeild a different output format from single module key regeneration.
   status: GA
   sourceType: Extension
   syntax: >-
     az iot hub module-identity renew-key --device-id
                                          --hub-name
-                                         --key-type {primary, secondary, swap}
+                                         --key-type {both, primary, secondary, swap}
                                          --module-id
                                          [--auth-type {key, login}]
                                          [--etag]
                                          [--login]
+                                         [--no-progress {false, true}]
                                          [--resource-group]
   examples:
   - summary: |-
@@ -180,6 +184,12 @@ directCommands:
   - summary: |-
       Swap the primary and secondary keys.
     syntax: az iot hub module-identity renew-key -m {module_name} -d {device_id} -n {iothub_name} --kt swap
+  - summary: |-
+      Renew the secondary key for two modules.
+    syntax: az iot hub module-identity renew-key -m {module_name} {module_name} -d {device_id} -n {iothub_name} --kt secondary
+  - summary: |-
+      Renew both keys for all modules in the device.
+    syntax: az iot hub module-identity renew-key -m * -d {device_id} -n {iothub_name} --kt both
   requiredParameters:
   - isRequired: true
     name: --device-id -d
@@ -191,25 +201,29 @@ directCommands:
       IoT Hub name or hostname. Required if --login is not provided.
   - isRequired: true
     name: --key-type --kt
-    parameterValueGroup: "primary, secondary, swap"
+    parameterValueGroup: "both, primary, secondary, swap"
     summary: |-
       Target key type to regenerate.
   - isRequired: true
     name: --module-id -m
     summary: |-
-      Target Module Id.
+      Space seperated list of target Module Ids. Use `*` for all modules.
   optionalParameters:
   - name: --auth-type
     defaultValue: "key"
     parameterValueGroup: "key, login"
     summary: |-
-      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
   - name: --etag -e
     summary: |-
-      Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
+      Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used. This arguement only applies to `swap`.
   - name: --login -l
     summary: |-
       This command supports an entity connection string with rights to perform action. Use to avoid session login via "az login". If both an entity connection string and name are provided the connection string takes priority. Required if --hub-name is not provided.
+  - name: --no-progress
+    parameterValueGroup: "false, true"
+    summary: |-
+      Hide the progress bar for bulk key regeneration.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -240,7 +254,7 @@ directCommands:
     defaultValue: "key"
     parameterValueGroup: "key, login"
     summary: |-
-      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
   - name: --hub-name -n
     summary: |-
       IoT Hub name or hostname. Required if --login is not provided.
@@ -292,7 +306,7 @@ directCommands:
     defaultValue: "key"
     parameterValueGroup: "key, login"
     summary: |-
-      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type=<auth-type-value>`.
+      Indicates whether the operation should auto-derive a policy key or use the current Azure AD session. If the authentication type is login and the resource hostname is provided, resource lookup will be skipped unless needed.You can configure the default using `az configure --defaults iothub-data-auth-type={auth-type-value}`.
   - name: --etag -e
     summary: |-
       Etag or entity tag corresponding to the last state of the resource. If no etag is provided the value '*' is used.
