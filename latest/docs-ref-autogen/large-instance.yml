@@ -22,7 +22,8 @@ directCommands:
     az large-instance create --instance-name
                              --resource-group
                              [--ali-id]
-                             [--hardware-profile]
+                             [--azure-large-instance-size {S112, S144, S144m, S192, S192m, S192xm, S224, S224m, S224om, S224oo, S224oom, S224ooo, S224se, S384, S384m, S384xm, S384xxm, S448, S448m, S448om, S448oo, S448oom, S448ooo, S448se, S576m, S576xm, S672, S672m, S672om, S672oo, S672oom, S672ooo, S72, S72m, S768, S768m, S768xm, S896, S896m, S896om, S896oo, S896oom, S896ooo, S96, S960m}]
+                             [--hardware-type {Cisco_UCS, HPE, SDFLEX}]
                              [--hw-revision]
                              [--location]
                              [--network-profile]
@@ -33,8 +34,8 @@ directCommands:
                              [--tags]
   examples:
   - summary: |-
-      AzureLargeInstance_Create
-    syntax: az large-instance create -g myResourceGroup -n myALInstance -l westus --tags "{testkey:testvalue}" --instance-id 23415635-4d7e-41dc-9598-8194f22c24e1 --power-state started --ppg /subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.Compute/proximityPlacementGroups/myplacementgroup --hw-revision Rev 3 --hardware-profile "{hardware-type:Cisco_UCS,azure-large-instance-size:S72}" --network-profile "{network-interfaces:[{ip-address:100.100.100.100}],circuit-id:/subscriptions/f0f4887f-d13c-4943-a8ba-d7da28d2a3fd/resourceGroups/myResourceGroup/providers/Microsoft.Network/expressRouteCircuit}" --storage-profile "{nfs-ip-address:200.200.200.200}" --os-profile "{computer-name:myComputerName,os-type:SUSE,version:'12 SP1',ssh-public-key:'{ssh-rsa public key}'}"
+      Create an Azure Large Storage Instance
+    syntax: az large-instance create -g myResourceGroup -n myALInstance -l westus -sku S72
   requiredParameters:
   - isRequired: true
     name: --instance-name --name -n
@@ -48,9 +49,14 @@ directCommands:
   - name: --ali-id --instance-id
     summary: |-
       Specifies the Azure Large Instance unique ID.
-  - name: --hardware-profile
+  - name: --azure-large-instance-size --sku
+    parameterValueGroup: "S112, S144, S144m, S192, S192m, S192xm, S224, S224m, S224om, S224oo, S224oom, S224ooo, S224se, S384, S384m, S384xm, S384xxm, S448, S448m, S448om, S448oo, S448oom, S448ooo, S448se, S576m, S576xm, S672, S672m, S672om, S672oo, S672oom, S672ooo, S72, S72m, S768, S768m, S768xm, S896, S896m, S896om, S896oo, S896oom, S896ooo, S96, S960m"
     summary: |-
-      Specifies the hardware settings for the Azure Large Instance.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Specifies the Azure Large Instance SKU.
+  - name: --hardware-type
+    parameterValueGroup: "Cisco_UCS, HPE, SDFLEX"
+    summary: |-
+      Name of the hardware type (vendor and/or their product name).
   - name: --hw-revision
     summary: |-
       Hardware revision of an Azure Large Instance.
@@ -90,6 +96,10 @@ directCommands:
                              [--resource-group]
                              [--subscription]
                              [--yes]
+  examples:
+  - summary: |-
+      AzureLargeInstance_Delete
+    syntax: az large-instance delete --resource-group myResourceGroup --instance-name myAzureLargeInstance
   optionalParameters:
   - name: --ids
     summary: |-
