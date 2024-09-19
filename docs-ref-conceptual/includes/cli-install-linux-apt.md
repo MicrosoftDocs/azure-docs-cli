@@ -13,7 +13,7 @@ ms.custom: devx-track-azurecli, linux-related-content
     | Distribution | Version                                                                |
     |:-------------|:-----------------------------------------------------------------------|
     | Ubuntu       | 20.04 LTS (Focal Fossa), 22.04 (Jammy Jellyfish), 24.04 (Noble Numbat) |
-    | Debian       | 10 (Buster), 11 (Bullseye), 12 (Bookworm)                              |
+    | Debian       | 11 (Bullseye), 12 (Bookworm)                              |
 
 - Ubuntu 20.04 (Focal Fossa) and 20.10 (Groovy Gorilla) include an `azure-cli` package with version `2.0.81` provided by the `universe` repository. This package is outdated and not recommended. If this package is installed, remove the package before continuing by running the command `sudo apt remove azure-cli -y && sudo apt autoremove -y`.  For more information on `apt remove`, see the [Ubuntu package management](https://ubuntu.com/server/docs/package-management) or [ask ubuntu](https://askubuntu.com/search?q=apt+autoremove).
 
