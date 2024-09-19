@@ -140,7 +140,7 @@ Here are some common problems seen when installing the Azure CLI on Windows. If 
 
 ### PATH variable not set
 
-Close and reopen any active terminal window. This should fix the problem.
+The most common cause of this problem is that the active terminal window has not been restarted after installation. Close and reopen any active terminal window.
 
 ### Proxy blocks connection
 
