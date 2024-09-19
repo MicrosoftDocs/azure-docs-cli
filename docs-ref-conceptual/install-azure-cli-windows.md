@@ -142,6 +142,10 @@ You can now run the Azure CLI with the `az` command from either Windows Command 
 
 Here are some common problems seen when installing the Azure CLI on Windows. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
+### PATH variable not set
+
+Close and reopen any active terminal window. This should fix the problem.
+
 ### Proxy blocks connection
 
 If you can't download the MSI installer because your proxy is blocking the connection, make sure that
@@ -163,7 +167,7 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 * `https://aka.ms/`
 * `https://azcliprod.blob.core.windows.net/`
 
-### Migrate to 64-bit Azure CLI
+### Performance problems
 
 Starting from 2.51.0, Azure CLI also provides 64-bit MSI which is recommended for better performance.
 
