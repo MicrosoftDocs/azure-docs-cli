@@ -41,7 +41,7 @@ Shorthand syntax in `Full Value` format is JSON surrounded by _double quotes_. D
 }
 ```
 
-When passing JSON in a parameter value, the JSON is flattened and surrounded by double quotes.
+When you pass JSON in a parameter value, the JSON is flattened and wrapped in double quotes.
 
 ```bash
 az some-command --contact "{name:Bill,age:20,paid:true,emails:[Bill@microsoft.com,Bill@outlook.com],address:{country:USA,company:Microsoft,details:{line1:'15590 NE 31st St',line2:'Redmond, WA'}}}"
@@ -52,7 +52,7 @@ az some-command --contact "{name:Bill,age:20,paid:true,emails:[Bill@microsoft.co
 Shorthand syntax for partial value is composed of two parts joined by an equal (`=`) sign between the index `key` and the `value`.
 Here's an example: `key=value`.
 
-The value can be a simple string, full value format, JSON, or a JSON file path. Using the JSON example above, pass properties for the `--contact` parameter following these examples:
+The value can be a simplified string, full value format, JSON, or a JSON file path. Using the JSON example provided, pass properties for the `--contact` parameter following these examples:
 
 Use `Partial Value` for a single key-value pair.
 
@@ -80,7 +80,7 @@ az some-command --contact address.details="{line1:'15590 NE 31st St',line2:'Redm
 
 ## Combine full and partial value shorthand syntax
 
-You can combine full and partial value syntax, but always start with `Full Value` followed by `Partial Value`. If you reverse the order, the final data will only be the `Full Value` without properties defined in `Partial Value`.
+You can combine full and partial value syntax, but always start with `Full Value` followed by `Partial Value`. If you reverse the order, the final data only contains the `Full Value` without properties defined in `Partial Value`.
 
 Use `Full Value` followed by `Partial Value`:
 
@@ -104,12 +104,12 @@ az some-command --contact address.details=./address_details.JSON
 
 ## Single Quotes String
 
-_Single Quotes String_ is used to pass a __string__ value with special characters: `:`, `,`, `{`, `}`, `[`, `]`, `null`, `??` and space.
+_Single Quotes String_ is used to pass a __string__ value with special characters: `:`, `,`, `{`, `}`, `[`, `]`, `null`, `??`, and space.
 These characters often have other meanings when parsing shorthand syntax. Single quotes tell the parser to treat everything as a string.
 
 ## Pass a string value with a space and other special characters
 
-Here is example JSON to pass as a value in the `--contact` parameter:
+Here's example JSON to pass as a value in the `--contact` parameter:
 
 ```JSON
 {
@@ -132,7 +132,7 @@ Use single quotes in `Partial Value` format:
 az some-command --contact name="'Bill RP'" data="'{a: [1, 2]}'"
 ```
 
-In the next example, it is also possible to remove single quotes for the `name` key. The parser will not distinguish between a `Full Value` expression, `null` value or the `??` flag.
+In the next example, it's also possible to remove single quotes for the `name` key. The parser doesn't distinguish between a `Full Value` expression, `null` value, or the `??` flag.
 
 Use `Partial Value` format:
 
@@ -140,9 +140,9 @@ Use `Partial Value` format:
 az some-command --contact name="Bill RP"
 ```
 
-## Pass an apostrophe (`'`)
+## Work with apostrophes
 
-The apostrophe character (`'`) needs special escape (`/'`) in _Single Quotes String_ in order to distinguish the end of a _Single Quotes String_.  A forward slash (`/`) is an escape character __only__ after an apostrophe (`'`) in _Single Quotes String_. If `/` is not in _Single Quotes String_ or `/` is not after `'`, `/` is a normal character.
+The apostrophe character (`'`) needs special escape (`/'`) in _Single Quotes String_ in order to distinguish the end of a _Single Quotes String_. A forward slash (`/`) is an escape character __only__ after an apostrophe (`'`) in _Single Quotes String_. If `/` isn't in _Single Quotes String_ or `/` isn't after `'`, `/` is a normal character.
 
 Pass `Full Value` format:
 
@@ -156,7 +156,7 @@ Pass `Partial Value` format:
 az some-command --contact name="'bill'/s'"
 ```
 
-If value is not in _Single Quotes String_, you don't need to add an escape character after `'`.
+If `value` isn't in _Single Quotes String_, you don't need to add an escape character after `'`.
 
 Pass `Partial Value` format:
 
@@ -195,7 +195,7 @@ az some-command --contact motto="One man's bug is another man's lesson."
 
 ### Pass the word "null" as a string value
 
-Sometime it's required to pass a "null" string value. In order to distinguish with `null` value, it needs to be a _Single Quotes String_.
+Sometime you need to pass a "null" string value. In order to distinguish with `null` value, it needs to be a _Single Quotes String_.
 For example if you want to pass "null" string into the _name_ property in the `--contact` parameter:
 
 JSON:
@@ -250,7 +250,7 @@ az some-command --contact name=Bill address=null
 
 ### Use a `null` value in update commands
 
-In update commands, a `null` value is often used to unset properties of a object, or remove elements of an array or a dictionary.
+In update commands, a `null` value is often used to unset properties of an object, or remove elements of an array or a dictionary.
 
 ```JSON
 {
@@ -276,7 +276,7 @@ In update commands, a `null` value is often used to unset properties of a object
 }
 ```
 
-If there already exists a resource with the JSON values shown above, passing a `null` value in an update command will reset the key's value.
+If there already exists a resource with the JSON values shown above, passing a `null` value in an update command resets the key's value.
 
 ```bash
 az some-update-command --contact address=null
@@ -290,7 +290,7 @@ az some-update-command --emails [0]=null
 
 ## Use `??` to show help
 
-The use of double question marks `??` is a special keyword to show the available help for a parameter or sub-property. It can also be used within shorthand syntax to get help.
+The use of double question marks `??` is a special keyword to show the available help for a parameter or subproperty. It can also be used within shorthand syntax to get help.
 
 > [!NOTE]
 >
