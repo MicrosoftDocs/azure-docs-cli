@@ -1,12 +1,9 @@
 ---
 title: Create a resource using a service principal and the Azure CLI | Microsoft Docs
 description: Learn how to create a resource using a service principal and the Azure CLI.
-author: dbradish-microsoft
-ms.author: dbradish
-ms.date: 10/10/2023
-ms.topic: conceptual
+ms.date: 06/05/2024
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure service principal, create service principal azure, create service principal azure cli
 ---

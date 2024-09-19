@@ -5,10 +5,9 @@ author: jiasli
 ms.author: jiasli
 manager: yonzhan
 ms.date: 06/19/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos
 ---
 

@@ -4,7 +4,7 @@ description: Learn how to sign into Azure using an managed identity and the Azur
 ms.date: 09/02/2024
 ms.topic: concept-article
 ms.service: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 #customer intent: As an app developer, I need to security automate authentication to Azure using a managed identity.
 ---
 

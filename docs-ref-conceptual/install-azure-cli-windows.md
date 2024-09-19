@@ -6,9 +6,8 @@ ms.author: jiasli
 manager: yonzhan
 ms.service: azure-cli
 ms.date: 08/19/2024
-ms.topic: conceptual
-ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.topic: concept-article
+ms.custom: devx-track-azurecli
 keywords: Install azure cli, azure cli download, cli for windows, install azure cli on windows, azure cli windows, install azure cli windows
 ---
 

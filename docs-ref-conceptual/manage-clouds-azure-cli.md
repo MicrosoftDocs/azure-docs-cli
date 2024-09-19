@@ -1,13 +1,10 @@
 ---
 title: Azure cloud management - Azure CLI | Microsoft Docs
 description: Create, sign in, and manage multiple clouds with the Azure CLI. Learn how to get information on clouds, change the current cloud, and register/unregister new clouds.
-author: dbradish-microsoft
-ms.author: dbradish
 ms.date: 06/19/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure cloud management
 ---
 

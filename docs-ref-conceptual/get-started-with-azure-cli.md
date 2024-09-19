@@ -1,13 +1,10 @@
 ---
 title: Get started with Azure Command-Line Interface (CLI) | Microsoft Docs
 description: Learn how to start using the Azure CLI by completing common commands. You can begin using the Azure CLI by running it in an Azure Cloud Shell environment.
-author: dbradish-microsoft
-ms.author: dbradish
 ms.date: 03/07/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli 
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure cli, how to use azure cli, azure command line interface, how to open azure cli, azure cli commands
 ---
 # Get started with Azure CLI

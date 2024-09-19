@@ -4,10 +4,9 @@ description: Learn about the MSAL-based Azure CLI.
 author: jiasli
 ms.author: jiasli
 ms.date: 08/1/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: msal, msal-based azure cli
 ---
 

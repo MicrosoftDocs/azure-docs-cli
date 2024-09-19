@@ -1,13 +1,10 @@
 ---
 title: How to install and manage Azure CLI extensions | Microsoft Docs
 description: Learn how to find, install, uninstall, and manage extensions with Azure CLI. Use the Azure CLI to load extensions provided and maintained by Microsoft.
-author: dbradish-microsoft
-ms.author: dbradish
-ms.date: 08/2/2023
-ms.topic: conceptual
+ms.date: 06/05/2024
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli 
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: manage extensions, microsoft extensions, install extensions, uninstall extensions, azure extensions, azure cli extensions
 ---
 
