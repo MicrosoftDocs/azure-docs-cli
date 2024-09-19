@@ -134,11 +134,7 @@ Available Azure CLI versions can be found at [Azure CLI release notes](./release
 
 You can now run the Azure CLI with the `az` command from either Windows Command Prompt or PowerShell.
 
-## Enable Tab Completion in PowerShell
-
-[!INCLUDE [tab-completion](includes/tab-completion.md)]
-
-## Troubleshooting
+## Troubleshooting installation
 
 Here are some common problems seen when installing the Azure CLI on Windows. If you experience a problem not covered here, [file an issue on GitHub](https://github.com/Azure/azure-cli/issues).
 
@@ -167,7 +163,23 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 * `https://aka.ms/`
 * `https://azcliprod.blob.core.windows.net/`
 
+For more information, see [Work behind a proxy](./use-azure-cli-successfully-troubleshooting.md#work-behind-a-proxy) in the Azure CLI troubleshooting guide.
+
 ### Slow response times
+
+See [Migrate to 64-bit Azure CLI](#migrate-to-64-bit-azure-cli)
+
+## Enable Tab Completion in PowerShell
+
+[!INCLUDE [tab-completion](includes/tab-completion.md)]
+
+## Update the Azure CLI
+
+[!INCLUDE [az upgrade](includes/az-upgrade.md)]
+
+If you are using ZIP distribution, please delete the old installation folder and extract the new version to the _same location_.
+
+## Migrate to 64-bit Azure CLI
 
 Starting from 2.51.0, Azure CLI also provides 64-bit MSI which is recommended for better performance.
 
@@ -178,12 +190,6 @@ Follow these steps to migrate to Azure CLI 64-bit:
 1. Install extensions by running `az extension add --name <extension> --version <version>`. If you don't want to reinstall extensions manually, the Azure CLI will prompt you to install an extension on first use. For more information on installing extensions, see [How to install extensions](/cli/azure/azure-cli-extensions-overview#how-to-install-extensions).
 
 If you have issues after migration, you can uninstall the 64-bit and reinstall the 32-bit MSI. If you have made a backup of your 32-bit extension folder, restore (rename) your extension folder after the change.
-
-## Update the Azure CLI
-
-[!INCLUDE [az upgrade](includes/az-upgrade.md)]
-
-If you are using ZIP distribution, please delete the old installation folder and extract the new version to the _same location_.
 
 ## Uninstall
 
