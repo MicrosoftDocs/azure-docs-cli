@@ -1431,9 +1431,11 @@ directCommands:
                                             [--resource-group]
                                             [--secret]
                                             [--server]
+                                            [--service-principal]
                                             [--source-id]
                                             [--target-id]
                                             [--target-resource-group]
+                                            [--workload-identity]
                                             [--yes]
   examples:
   - summary: |-
@@ -1489,14 +1491,26 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret name=XX secret=XX
+             --secret name=XX secret-uri=XX
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
+      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id            : Required. Client id of the service principal.
+      object-id            : Optional. Object id of the service principal (Enterprise Application).
+      secret               : Required. Secret of the service principal.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1506,6 +1520,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the mysql flexible server. Required if '--target-id' is not specified.
+  - name: --workload-identity
+    summary: |-
+      The user-assigned managed identity used to create workload identity federation.
+    description: |-
+      Usage: --workload-identity <user-identity-resource-id> mysql-identity-id=<mysql-identity-id>
+
+      user-identity-resource-id: Required. The resource id of the user assigned identity. Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
+      mysql-identity-id    : Optional. ID of identity used for MySQL flexible server Microsoft Entra Authentication. Ignore it if you are the server Microsoft Entra administrator.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -1739,9 +1761,11 @@ directCommands:
                                                [--resource-group]
                                                [--secret]
                                                [--server]
+                                               [--service-principal]
                                                [--source-id]
                                                [--target-id]
                                                [--target-resource-group]
+                                               [--workload-identity]
                                                [--yes]
   examples:
   - summary: |-
@@ -1797,14 +1821,25 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret name=XX secret=XX
+             --secret name=XX secret-uri=XX
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
+      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
       Name of postgres flexible server. Required if '--target-id' is not specified.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -1814,6 +1849,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the flexible postgres service. Required if '--target-id' is not specified.
+  - name: --workload-identity
+    summary: |-
+      The user-assigned managed identity used to create workload identity federation.
+    description: |-
+      Usage: --workload-identity <user-identity-resource-id>
+
+      user-identity-resource-id: Required. The resource id of the user assigned identity.
+      Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
@@ -2341,9 +2384,11 @@ directCommands:
                                  [--secret]
                                  [--server]
                                  [--service-endpoint {false, true}]
+                                 [--service-principal]
                                  [--source-id]
                                  [--target-id]
                                  [--target-resource-group]
+                                 [--workload-identity]
                                  [--yes]
   examples:
   - summary: |-
@@ -2403,10 +2448,12 @@ directCommands:
       The secret auth info.
     description: |-
       Usage: --secret name=XX secret=XX
+             --secret name=XX secret-uri=XX
              --secret name=XX secret-name=XX
 
       name    : Required. Username or account name for secret auth.
       secret  : One of <secret, secret-uri, secret-name> is required. Password or account key for secret auth.
+      secret-uri  : One of <secret, secret-uri, secret-name> is required. Keyvault secret uri which stores password.
       secret-name : One of <secret, secret-uri, secret-name> is required. Keyvault secret name which stores password. It's for AKS only.
   - name: --server
     summary: |-
@@ -2415,6 +2462,15 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Connect target service by service endpoint. Source resource must be in the VNet and target SKU must support service endpoint feature.
+  - name: --service-principal
+    summary: |-
+      The service principal auth info.
+    description: |-
+      Usage: --service-principal client-id=XX secret=XX
+
+      client-id      : Required. Client id of the service principal.
+      object-id      : Optional. Object id of the service principal (Enterprise Application).
+      secret         : Required. Secret of the service principal.
   - name: --source-id
     summary: |-
       The resource id of a aks. Required if ['--resource-group', '--name'] are not specified.
@@ -2424,6 +2480,14 @@ directCommands:
   - name: --target-resource-group --tg
     summary: |-
       The resource group which contains the sql server. Required if '--target-id' is not specified.
+  - name: --workload-identity
+    summary: |-
+      The user-assigned managed identity used to create workload identity federation.
+    description: |-
+      Usage: --workload-identity <user-identity-resource-id>
+
+      user-identity-resource-id: Required. The resource id of the user assigned identity.
+      Please DO NOT use AKS control plane identity and kubelet identity which is not supported by federated identity credential.
   - name: --yes -y
     defaultValue: "False"
     summary: |-
