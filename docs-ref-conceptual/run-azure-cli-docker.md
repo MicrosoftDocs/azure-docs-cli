@@ -4,10 +4,9 @@ description: Learn how to run a Docker container hosting the Azure CLI. Docker g
 author: jiasli
 ms.author: jiasli
 ms.date: 03/14/2024
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure cli docker, docker azure cli
 ---
 

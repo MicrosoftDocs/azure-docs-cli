@@ -1,8 +1,6 @@
 ---
 title: Azure CLI release highlights | Microsoft Docs
 description: Learn what's new in the Azure CLI. Read about new features and upcoming changes. Check here for announcements.
-author: dbradish-microsoft
-ms.author: dbradish
 ms.date: 08/01/2024
 ms.topic: concept-article
 ms.service: azure-cli

@@ -1,13 +1,10 @@
 ---
 title: Get virtual machines information with queries (VM) – Azure CLI | Microsoft Docs
 description: Learn how to get virtual machines (VM) information with Azure CLI queries.
-ms.date: 01/08/2024
-author: dbradish-microsoft
-ms.author: dbradish
-ms.tool: azure-cli
+ms.date: 06/05/2024
 ms.topic: tutorial
 ms.service: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: azure cli show vm information, queries in azure cli
 ---
 

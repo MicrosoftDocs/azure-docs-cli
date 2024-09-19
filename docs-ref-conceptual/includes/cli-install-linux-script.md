@@ -1,7 +1,5 @@
 ---
-author: dbradish-microsoft
-ms.author: dbradish
-ms.date: 06/17/2024
+ms.date: 06/19/2024
 ms.topic: include
 ms.service: azure-cli
 ms.custom: devx-track-azurecli, linux-related-content
