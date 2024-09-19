@@ -1,10 +1,10 @@
 ---
-title: Query Azure CLI command results | Microsoft Docs
-description: Learn to use the Azure CLI --query parameter syntax and return information about Azure resources. Find tips to JMESPath syntax.
-ms.date: 06/26/2024
+title: Use shorthand syntax with parameters | Microsoft Docs
+description: Learn to use shorthand syntax with Azure CLI parameters. Pass JSON values easily with simplified shorthand syntax.
+ms.date: 08/20/2024
 ms.topic: concept-article
 ms.custom: devx-track-azurecli
-#customer intent: As a new user of the Azure CLI, I keep receiving errors when trying to use the --query parameter in commands.  I need to see examples that include syntax differences between Bash and PowerShell scripting languages.
+#customer intent: As an Azure CLI developer, I need to learn an easier way to work with JSON syntax in Azure CLI parameter values.
 ---
 
 # How to use shorthand syntax with Azure CLI
@@ -78,43 +78,6 @@ Use `Partial Value` for _details_ property of _address_.
 az some-command --contact address.details="{line1:'15590 NE 31st St',line2:'Redmond, WA'}"
 ```
 
-### Pass JSON in a file
-
-It's also possible to pass a JSON file as a parameter value. This is the recommended approach when working with complex JSON.
-
-```bash
-az some-command --contact address.details=./address_details.JSON
-```
-
-## Work with special characters
-
-When your JSON file contains special characters, full or partial value shorthand syntax can be used. In the following example, the `motto` value contains an apostrophe (`'`).
-
-```JSON
-{
-  "name": "Bill",
-  "motto": "One man's bug is another man's lesson.",
-  "age": 20,
-  "paid": true,
-  "emails": [
-    "Bill@microsoft.com",
-    "Bill@outlook.com"
-  ]
-}
-```
-
-In `Full Value` format, use a [__Single Quotes String__](#single-quotes-string) and replace the `'` with  `'/`.
-
-```bash
-az some-command --contact "{name:Bill,motto:'One man'/s bug is another man'/s lesson.',age:20,paid:true,emails:[Bill@microsoft.com,Bill@outlook.com]}"
-```
-
-In `Partial Value` format, a value containing an apostrophe can be parsed as string, surrounded by double quotes.
-
-```bash
-az some-command --contact motto="One man's bug is another man's lesson."
-```
-
 ## Combine full and partial value shorthand syntax
 
 Combine full and partial value syntax, but always start with `Full Value` followed by `Partial Value`. If you reverse the order, the final data will only be the `Full Value` without properties defined in `Partial Value`.
@@ -129,6 +92,14 @@ You can also patch a new element of list property in `Full Value`. For example y
 
 ```bash
 az some-command --contact "{name:Bill,age:20,paid:true,emails:[Bill@microsoft.com]}" emails[1]="Bill@outlook.com" motto="One man's bug is another man's lesson."
+```
+
+## Pass JSON in a file
+
+It's also possible to pass a JSON file as a parameter value. This is the recommended approach when working with complex JSON.
+
+```bash
+az some-command --contact address.details=./address_details.JSON
 ```
 
 ## Use `??` to show help
@@ -202,7 +173,124 @@ Show help message of the element of `--contant.emails` property when writing `Pa
 az some-command --contact emails[0]="??"
 ```
 
-## Pass a `null` Value
+## Single Quotes String
+
+_Single Quotes String_ is used to pass a __string__ value with special characters: `:`, `,`, `{`, `}`, `[`, `]`, `null`, `??` and space.
+These characters often have other meanings when parsing shorthand syntax. Single quotes tell the parser to treat everything as a string.
+
+## Pass a string value with a space and other special characters
+
+Here is example JSON to pass as a value in the `--contact` parameter:
+
+```JSON
+{
+  "name": "Bill RP",
+  "age": 20,
+  "paid": true,
+  "data": "{a: [1, 2]}"
+}
+```
+
+Use single quotes in `Full Value` format:
+
+```bash
+az some-command --contact "{name:'Bill RP',age:20,paid:true,data:'{a: [1, 2]}'}"
+```
+
+Use single quotes in `Partial Value` format:
+
+```bash
+az some-command --contact name="'Bill RP'" data="'{a: [1, 2]}'"
+```
+
+In the next example, it is also possible to remove single quotes for the `name` key. The parser will not distinguish between a `Full Value` expression, `null` value or the `??` flag.
+
+Use `Partial Value` format:
+
+```bash
+az some-command --contact name="Bill RP"
+```
+
+## Pass an apostrophe (`'`)
+
+The apostrophe character (`'`) needs special escape (`/'`) in _Single Quotes String_ in order to distinguish the end of a _Single Quotes String_.  A forward slash (`/`) is an escape character __only__ after an apostrophe (`'`) in _Single Quotes String_. If `/` is not in _Single Quotes String_ or `/` is not after `'`, `/` is a normal character.
+
+Here's an example:
+
+Pass `Full Value` format:
+
+```bash
+az some-command --contact "{name:'bill'/s',age:20,paid:true}"
+```
+
+Pass `Partial Value` format:
+
+```bash
+az some-command --contact name="'bill'/s'"
+```
+
+If value is not in _Single Quotes String_, you don't need to add an escape character after `'`.
+
+Pass `Partial Value` format:
+
+```bash
+az some-command --contact name="bill's"
+```
+
+Here's another example using the following JSON:
+
+```JSON
+{
+  "name": "Bill",
+  "motto": "One man's bug is another man's lesson.",
+  "age": 20,
+  "paid": true,
+  "emails": [
+    "Bill@microsoft.com",
+    "Bill@outlook.com"
+  ]
+}
+```
+
+In `Full Value` format, use a [__Single Quotes String__](#single-quotes-string) and replace the `'` with  `'/`.
+
+```bash
+az some-command --contact "{name:Bill,motto:'One man'/s bug is another man'/s lesson.',age:20,paid:true,emails:[Bill@microsoft.com,Bill@outlook.com]}"
+```
+
+In `Partial Value` format, a value containing an apostrophe can be parsed as string, surrounded by double quotes.
+
+```bash
+az some-command --contact motto="One man's bug is another man's lesson."
+```
+
+## Work with NULL values
+
+### Pass the word "null" as a string value
+
+Sometime it's required to pass a "null" string value. In order to distinguish with `null` value, it needs to be a _Single Quotes String_.
+For example if you want to pass "null" string into name property in --contact parameter:
+
+JSON:
+```JSON
+{
+  "name": "null",
+  "age": 20,
+  "paid": true
+}
+```
+
+Pass `Full Value` format:
+```bash
+az some-command --contact "{name:'null',age:20,paid:true}"
+```
+
+Pass `Partial Value` format:
+```bash
+az some-command --contact name="'null'"
+```
+
+### Pass a `null` value
 
 Shorthand syntax support `null` keyword in both `Full Value` and `Partial Value` formats.
 
@@ -234,7 +322,7 @@ Pass `null` in `Partial Value`:
 az some-command --contact name=Bill address=null
 ```
 
-## Use a `null` value in update commands
+### Use a `null` value in update commands
 
 In update commands, a `null` value is usually used to unset properties of a object or remove elements of an array or a dictionary.
 
@@ -272,92 +360,4 @@ Here's another example that removes the first element of a resource's email:
 
 ```bash
 az some-update-command --emails [0]=null
-```
-
-## Single Quotes String
-
-_Single Quotes String_ is used to pass a __string__ value with special characters: `:`, `,`, `{`, `}`, `[`, `]`, `null`, `??` and space.
-These characters often have other meanings when parsing shorthand syntax. Single quotes tell the parser to treat everything as a string.
-
-## Pass a string value with space and other special characters
-
-Here is example JSON to pass as a value in the `--contact` parameter:
-
-```JSON
-{
-  "name": "Bill RP",
-  "age": 20,
-  "paid": true,
-  "data": "{a: [1, 2]}"
-}
-```
-
-Use single quotes in `Full Value` format:
-
-```bash
-az some-command --contact "{name:'Bill RP',age:20,paid:true,data:'{a: [1, 2]}'}"
-```
-
-Use single quotes in `Partial Value` format:
-
-```bash
-az some-command --contact name="'Bill RP'" data="'{a: [1, 2]}'"
-```
-
-In the next example, it is also possible to remove single quotes for the `name` key. The parser will not distinguish between a `Full Value` expression, `null` value or the `??` flag.
-
-Use `Partial Value` format:
-
-```bash
-az some-command --contact name="Bill RP"
-```
-
-## Pass a "null" string value
-
-Sometime it's required to pass a "null" string value. In order to distinguish with `null` value, it needs to be a _Single Quotes String_.
-For example if you want to pass "null" string into name property in --contact parameter:
-
-JSON:
-```JSON
-{
-  "name": "null",
-  "age": 20,
-  "paid": true
-}
-```
-
-Pass `Full Value` format:
-```bash
-az some-command --contact "{name:'null',age:20,paid:true}"
-```
-
-Pass `Partial Value` format:
-```bash
-az some-command --contact name="'null'"
-```
-
-## Pass an apostrophe (`'`)
-
-The apostrophe character (`'`) needs special escape (`/'`) in _Single Quotes String_ in order to distinguish the end of a _Single Quotes String_.  A forward slash (`/`) is an escape character __only__ after an apostrophe (`'`) in _Single Quotes String_. If `/` is not in _Single Quotes String_ or `/` is not after `'`, `/` is a normal character.
-
-Here's an example:
-
-Pass `Full Value` format:
-
-```bash
-az some-command --contact "{name:'bill'/s',age:20,paid:true}"
-```
-
-Pass `Partial Value` format:
-
-```bash
-az some-command --contact name="'bill'/s'"
-```
-
-If value is not in _Single Quotes String_, you don't need to add an escape character after `'`.
-
-Pass `Partial Value` format:
-
-```bash
-az some-command --contact name="bill's"
 ```
