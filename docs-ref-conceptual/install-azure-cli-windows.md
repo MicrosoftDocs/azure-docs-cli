@@ -5,7 +5,7 @@ author: jiasli
 ms.author: jiasli
 manager: yonzhan
 ms.service: azure-cli
-ms.date: 09/13/2023
+ms.date: 08/19/2024
 ms.topic: conceptual
 ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
