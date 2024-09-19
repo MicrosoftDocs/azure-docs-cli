@@ -70,12 +70,12 @@ directCommands:
     Add or update an outbound rule in the managed network for a workspace.
   description: |-
     This command can be used to specify an outbound rule for the managed network of the workspace. The needed parameters are defined by --type.
-    For --type service_tag use 
-                --service-tag, --port-ranges, --protocol
+    For --type service_tag use
+                --service-tag, --port-ranges, --protocol, [Optional] --address-prefixes
     For --type fqdn use
                 --destination
     For --type private_endpoint use
-                --service-resource-id, --subresource-target, --spark-enabled.
+                --service-resource-id, --subresource-target, [Optional] --spark-enabled, [Optional] --fqdns.
   status: GA
   sourceType: Extension
   syntax: >-
@@ -83,7 +83,9 @@ directCommands:
                                       --rule
                                       --type
                                       --workspace-name
+                                      [--address-prefixes]
                                       [--destination]
+                                      [--fqdns]
                                       [--no-wait]
                                       [--port-ranges]
                                       [--protocol]
@@ -109,9 +111,15 @@ directCommands:
     summary: |-
       Name of the Azure ML workspace. You can configure the default workspace using `az configure --defaults workspace=<name>`.
   optionalParameters:
+  - name: --address-prefixes
+    summary: |-
+      For ServiceTag rules: [Optional] list of CIDR prefixes or IP ranges, when provided, --service-tag will be ignored and --address-prefixes will be used instead.
   - name: --destination
     summary: |-
       For FQDN rules: Fully qualified domain name to which outbound connections are allowed, required for fqdn outbound rule.
+  - name: --fqdns
+    summary: |-
+      For PrivateEndpoint rules: [Optional] A comma-separated list of FQDNs particular to the Private Endpoint resource creation. For application gateway PEs, this is the FQDN which will resolve to the private IP of the application gateway PE inside the workspace's managed network. For example: "contoso.com,contoso2.com".
   - name: --no-wait
     defaultValue: "False"
     summary: |-
