@@ -167,7 +167,7 @@ In order to get the MSI, your proxy needs to allow HTTPS connections to the foll
 * `https://aka.ms/`
 * `https://azcliprod.blob.core.windows.net/`
 
-### Performance problems
+### Slow response times
 
 Starting from 2.51.0, Azure CLI also provides 64-bit MSI which is recommended for better performance.
 
