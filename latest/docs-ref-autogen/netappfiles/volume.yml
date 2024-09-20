@@ -430,7 +430,7 @@ directCommands:
     Create the specified volume within the capacity pool.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az netappfiles' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az netappfiles volume create --account-name
@@ -438,14 +438,17 @@ directCommands:
                                  --name
                                  --pool-name
                                  --resource-group
-                                 --subnet
                                  --vnet
+                                 [--accept-grow-capacity-pool-for-short-term-clone-split {Accepted, Declined}]
+                                 [--allowed-clients]
                                  [--avs-data-store {Disabled, Enabled}]
-                                 [--backup-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--backup-id]
                                  [--backup-policy-id]
                                  [--backup-vault-id]
+                                 [--ca-retrieval-policy {Default, Never, OnRead}]
                                  [--capacity-pool-resource-id]
+                                 [--chown-mode {Restricted, Unrestricted}]
+                                 [--cifs {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
                                  [--default-group-quota]
@@ -455,10 +458,19 @@ directCommands:
                                  [--enable-subvolumes {Disabled, Enabled}]
                                  [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
                                  [--endpoint-type {dst, src}]
+                                 [--export-policy-rules]
+                                 [--has-root-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--kerberos-enabled {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--kerberos5-r {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--kerberos5-rw {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--kerberos5i-r {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--kerberos5i-rw {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--kerberos5p-r {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--kerberos5p-rw {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id]
+                                 [--language {ar, ar.utf-8, c, c.utf-8, cs, cs.utf-8, da, da.utf-8, de, de.utf-8, en, en-us, en-us.utf-8, en.utf-8, es, es.utf-8, fi, fi.utf-8, fr, fr.utf-8, he, he.utf-8, hr, hr.utf-8, hu, hu.utf-8, it, it.utf-8, ja, ja-jp.932, ja-jp.932.utf-8, ja-jp.pck, ja-jp.pck-v2, ja-jp.pck-v2.utf-8, ja-jp.pck.utf-8, ja-v1, ja-v1.utf-8, ja.utf-8, ko, ko.utf-8, nl, nl.utf-8, no, no.utf-8, pl, pl.utf-8, pt, pt.utf-8, ro, ro.utf-8, ru, ru.utf-8, sk, sk.utf-8, sl, sl.utf-8, sv, sv.utf-8, tr, tr.utf-8, utf8mb4, zh, zh-tw, zh-tw.big5, zh-tw.big5.utf-8, zh-tw.utf-8, zh.gbk, zh.gbk.utf-8, zh.utf-8}]
                                  [--ldap-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--location]
                                  [--network-features {Basic, Standard}]
@@ -468,11 +480,11 @@ directCommands:
                                  [--ppg]
                                  [--protocol-types]
                                  [--relocation-requested {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--remote-path]
                                  [--remote-volume-id]
                                  [--remote-volume-region]
-                                 [--replication-id]
                                  [--replication-schedule {_10minutely, daily, hourly}]
-                                 [--rules]
+                                 [--rule-index]
                                  [--security-style {ntfs, unix}]
                                  [--service-level {Premium, Standard, StandardZRS, Ultra}]
                                  [--smb-access-based-enumeration {Disabled, Enabled}]
@@ -482,9 +494,12 @@ directCommands:
                                  [--snapshot-dir-visible {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--snapshot-id]
                                  [--snapshot-policy-id]
+                                 [--subnet]
                                  [--tags]
                                  [--throughput-mibps]
                                  [--unix-permissions]
+                                 [--unix-read-only {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--unix-read-write {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--usage-threshold]
                                  [--volume-spec-name]
                                  [--volume-type]
@@ -492,7 +507,13 @@ directCommands:
   examples:
   - summary: |-
       Create an ANF volume
-    syntax: az netappfiles volume create -g group --account-name aname --pool-name pname --volume-name vname -l location --service-level "Premium" --usage-threshold 107374182400 --creation-token "unique-token" --protocol-types NFSv3 --vnet myvnet --subnet-id "/subscriptions/mysubsid/resourceGroups/myrg/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/default" --rules "[{allowed_clients:'0.0.0.0/0',rule_index:1,unix_read_only:true,unix_read_write:false,cifs:false,nfsv3:true,nfsv41:false}]"
+    syntax: az netappfiles volume create -g group --account-name aname --pool-name pname --volume-name vname -l location --service-level "Premium" --usage-threshold 100 --creation-token "unique-token" --protocol-types NFSv3 --vnet myvnet --subnet-id "/subscriptions/mysubsid/resourceGroups/myrg/providers/Microsoft.Network/virtualNetworks/myvnet/subnets/default" --rules '[{"allowed_clients":"0.0.0.0/0","rule_index":"1","unix_read_only":"true","unix_read_write":"false","cifs":"false","nfsv3":"true","nfsv41":"false"}]'
+  - summary: |-
+      Create an ANF volume with zones (Availability Zone) specified
+    syntax: az netappfiles volume create -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname -l westus2 --service-level premium --usage-threshold 100 --file-path "unique-file-path" --vnet myvnet --subnet mysubnet --protocol-types NFSv3 --zones zone1
+  - summary: |-
+      Create an ANF volume with CMK Encryption
+    syntax: az netappfiles volume create -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname -l westus2 --service-level premium --usage-threshold 100 --file-path "unique-file-path" --vnet myvnet --subnet mysubnet --protocol-types NFSv3 --network-features Standard --protocol-types NFSv4.1 --rule-index 1 --allowed-clients '10.7.0.0/24' --kerberos-enabled false --encryption-key-source  Microsoft.KeyVault --kv-private-endpoint-id myPrivateEndpointId
   requiredParameters:
   - isRequired: true
     name: --account-name -a
@@ -515,35 +536,46 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - isRequired: true
-    name: --subnet --subnet-id
-    summary: |-
-      The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes.
-  - isRequired: true
     name: --vnet
     summary: |-
       Name or Resource ID of the vnet. If you want to use a vnet in other resource group or subscription, please provide the Resource ID instead of the name of the vnet.
   optionalParameters:
+  - name: --accept-grow-capacity-pool-for-short-term-clone-split --grow-pool-clone-split
+    parameterValueGroup: "Accepted, Declined"
+    summary: |-
+      While auto splitting the short term clone volume, if the parent pool does not have enough space to accommodate the volume after split, it will be automatically resized, which will lead to increased billing. To accept capacity pool size auto grow and create a short term clone volume, set the property as accepted.
+  - name: --allowed-clients
+    summary: |-
+      Client ingress specification as comma separated string with IPv4 CIDRs, IPv4 host addresses and host names. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
   - name: --avs-data-store
     defaultValue: "Disabled"
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose.
-  - name: --backup-enabled
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Backup Enabled.
   - name: --backup-id
     summary: |-
-      UUID v4 or resource identifier used to identify the Backup.
+      Resource identifier used to identify the Backup.
   - name: --backup-policy-id
     summary: |-
       Backup Policy Resource ID.
   - name: --backup-vault-id
     summary: |-
       Backup Vault Resource ID.
+  - name: --ca-retrieval-policy --cool-access-retrieval-policy
+    parameterValueGroup: "Default, Never, OnRead"
+    summary: |-
+      CoolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:   Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.  Never - No client-driven data is pulled from cool tier to standard storage.
   - name: --capacity-pool-resource-id --pool-resource-id
     summary: |-
       Pool Resource Id used in case of creating a volume through volume group.
+  - name: --chown-mode
+    parameterValueGroup: "Restricted, Unrestricted"
+    summary: |-
+      This parameter specifies who is authorized to change the ownership of a file. restricted - Only root user can change the ownership of the file. unrestricted - Non-root users can change ownership of files that they own. Possible values include- Restricted, Unrestricted. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
+  - name: --cifs
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows CIFS protocol. Enable only for CIFS type volumes. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
   - name: --cool-access
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -556,7 +588,7 @@ directCommands:
     defaultValue: "0"
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-  - name: --default-quota-enabled --is-default-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -583,6 +615,13 @@ directCommands:
     parameterValueGroup: "dst, src"
     summary: |-
       Indicates whether the local volume is the source or destination for the Volume Replication.
+  - name: --export-policy-rules --rules
+    summary: |-
+      Export policy rule  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --has-root-access
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Has root access to volume. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
   - name: --is-large-volume
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -597,9 +636,37 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later.
+  - name: --kerberos5-r
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5 Read only access. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
+  - name: --kerberos5-rw
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5 Read and write access. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
+  - name: --kerberos5i-r
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5i Readonly access. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
+  - name: --kerberos5i-rw
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5i Read and write access. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
+  - name: --kerberos5p-r
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5p Readonly access. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
+  - name: --kerberos5p-rw
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Kerberos5p Read and write access. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
   - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
     summary: |-
       The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+  - name: --language
+    parameterValueGroup: "ar, ar.utf-8, c, c.utf-8, cs, cs.utf-8, da, da.utf-8, de, de.utf-8, en, en-us, en-us.utf-8, en.utf-8, es, es.utf-8, fi, fi.utf-8, fr, fr.utf-8, he, he.utf-8, hr, hr.utf-8, hu, hu.utf-8, it, it.utf-8, ja, ja-jp.932, ja-jp.932.utf-8, ja-jp.pck, ja-jp.pck-v2, ja-jp.pck-v2.utf-8, ja-jp.pck.utf-8, ja-v1, ja-v1.utf-8, ja.utf-8, ko, ko.utf-8, nl, nl.utf-8, no, no.utf-8, pl, pl.utf-8, pt, pt.utf-8, ro, ro.utf-8, ru, ru.utf-8, sk, sk.utf-8, sl, sl.utf-8, sv, sv.utf-8, tr, tr.utf-8, utf8mb4, zh, zh-tw, zh-tw.big5, zh-tw.big5.utf-8, zh-tw.utf-8, zh.gbk, zh.gbk.utf-8, zh.utf-8"
+    summary: |-
+      Language.
   - name: --ldap-enabled
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
@@ -634,22 +701,22 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Has relocation been requested for this volume.
+  - name: --remote-path
+    summary: |-
+      The full path to a volume that is to be migrated into ANF. Required for Migration volumes  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --remote-volume-id --remote-volume-resource-id
     summary: |-
       The resource ID of the remote volume.
   - name: --remote-volume-region
     summary: |-
       The remote region for the other end of the Volume Replication.
-  - name: --replication-id
-    summary: |-
-      Id.
   - name: --replication-schedule
     parameterValueGroup: "_10minutely, daily, hourly"
     summary: |-
       Schedule.
-  - name: --rules
+  - name: --rule-index
     summary: |-
-      Export policy rule  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Order index. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
   - name: --security-style
     defaultValue: "unix"
     parameterValueGroup: "ntfs, unix"
@@ -664,7 +731,7 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
-  - name: --smb-ca --smb-continuously-available
+  - name: --smb-ca --smb-continuously-available --smb-continuously-avl
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -685,10 +752,14 @@ directCommands:
       If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true).
   - name: --snapshot-id
     summary: |-
-      UUID v4 or resource identifier used to identify the Snapshot.
+      Resource identifier used to identify the Snapshot.
   - name: --snapshot-policy-id
     summary: |-
       Snapshot Policy ResourceId.
+  - name: --subnet --subnet-id
+    defaultValue: "default"
+    summary: |-
+      The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes.
   - name: --tags
     summary: |-
       Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
@@ -696,13 +767,20 @@ directCommands:
     summary: |-
       Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume.
   - name: --unix-permissions
-    defaultValue: "0770"
     summary: |-
       UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.
-  - name: --usage-threshold
-    defaultValue: "107374182400"
+  - name: --unix-read-only
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Maximum storage quota allowed for a file system in bytes.
+      Read only access. Exists for backwards compatibility, please use --export-policy-rules (--rules) instead.
+  - name: --unix-read-write
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Read and write access. Exists for backwards compatibility, please use --export-policy-rules --rules instead.
+  - name: --usage-threshold
+    defaultValue: "100"
+    summary: |-
+      Maximum storage quota allowed for a file system in GiB.
   - name: --volume-spec-name
     summary: |-
       Volume spec name is the application specific designation or identifier for the particular volume in a volume group for e.g. data, log.
@@ -719,6 +797,60 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/netappfiles/_help.py
+  syntax: >-
+    az netappfiles volume delete [--account-name]
+                                 [--force {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--ids]
+                                 [--name]
+                                 [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                 [--pool-name]
+                                 [--resource-group]
+                                 [--subscription]
+                                 [--yes]
+  examples:
+  - summary: |-
+      Delete an ANF volume
+    syntax: az netappfiles volume delete -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname
+  optionalParameters:
+  - name: --account-name -a
+    summary: |-
+      The name of the NetApp account.
+  - name: --force --force-delete
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      An option to force delete the volume. Will cleanup resources connected to the particular volume.
+  - name: --ids
+    summary: |-
+      One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --name --volume-name -n -v
+    summary: |-
+      The name of the volume.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
+  - name: --pool-name -p
+    summary: |-
+      The name of the capacity pool.
+  - name: --resource-group -g
+    summary: |-
+      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --subscription
+    summary: |-
+      Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
+- uid: az_netappfiles_volume_delete(netappfiles-preview)
+  name: az netappfiles volume delete
+  extensionSuffix: netappfiles-preview
+  summary: |-
+    Delete the specified volume.
+  status: Preview
+  isPreview: true
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+  sourceType: Extension
   syntax: >-
     az netappfiles volume delete [--account-name]
                                  [--force {0, 1, f, false, n, no, t, true, y, yes}]
@@ -898,7 +1030,7 @@ directCommands:
     List all volumes within the capacity pool.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az netappfiles' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az netappfiles volume list --account-name
@@ -906,6 +1038,10 @@ directCommands:
                                --resource-group
                                [--max-items]
                                [--next-token]
+  examples:
+  - summary: |-
+      List all subvolumes of a ANF volume
+    syntax: az netappfiles subvolume list -g mygroup --account-name myaccountname  --pool-name mypoolname --volume-name myvolumename
   requiredParameters:
   - isRequired: true
     name: --account-name -a
@@ -979,7 +1115,7 @@ directCommands:
     Migrate the backups under volume to backup vault.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az netappfiles' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az netappfiles volume migrate-backup --backup-vault-id
@@ -1015,7 +1151,7 @@ directCommands:
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
-  - name: --volume-name
+  - name: --volume-name -v
     summary: |-
       The name of the volume.
 - uid: az_netappfiles_volume_pool-change
@@ -1333,7 +1469,7 @@ directCommands:
     Get the details of the specified volume.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az netappfiles' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az netappfiles volume show [--account-name]
@@ -1342,6 +1478,10 @@ directCommands:
                                [--pool-name]
                                [--resource-group]
                                [--subscription]
+  examples:
+  - summary: |-
+      Returns the properties of the given ANF volume
+    syntax: az netappfiles volume show -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname
   optionalParameters:
   - name: --account-name -a
     summary: |-
@@ -1629,15 +1769,15 @@ directCommands:
     Update the specified volume within the capacity pool.
   status: Preview
   isPreview: true
-  previewOrExperimentalInfo: "Command group 'az netappfiles' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
   sourceType: Extension
   syntax: >-
     az netappfiles volume update [--account-name]
                                  [--add]
                                  [--avs-data-store {Disabled, Enabled}]
-                                 [--backup-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--backup-policy-id]
                                  [--backup-vault-id]
+                                 [--ca-retrieval-policy {Default, Never, OnRead}]
                                  [--capacity-pool-resource-id]
                                  [--cool-access {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--coolness-period]
@@ -1649,14 +1789,16 @@ directCommands:
                                  [--enable-subvolumes {Disabled, Enabled}]
                                  [--encryption-key-source {Microsoft.KeyVault, Microsoft.NetApp}]
                                  [--endpoint-type {dst, src}]
+                                 [--export-policy-rules]
                                  [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--ids]
                                  [--is-large-volume {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--is-restoring {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--key-vault-private-endpoint-resource-id]
+                                 [--language {ar, ar.utf-8, c, c.utf-8, cs, cs.utf-8, da, da.utf-8, de, de.utf-8, en, en-us, en-us.utf-8, en.utf-8, es, es.utf-8, fi, fi.utf-8, fr, fr.utf-8, he, he.utf-8, hr, hr.utf-8, hu, hu.utf-8, it, it.utf-8, ja, ja-jp.932, ja-jp.932.utf-8, ja-jp.pck, ja-jp.pck-v2, ja-jp.pck-v2.utf-8, ja-jp.pck.utf-8, ja-v1, ja-v1.utf-8, ja.utf-8, ko, ko.utf-8, nl, nl.utf-8, no, no.utf-8, pl, pl.utf-8, pt, pt.utf-8, ro, ro.utf-8, ru, ru.utf-8, sk, sk.utf-8, sl, sl.utf-8, sv, sv.utf-8, tr, tr.utf-8, utf8mb4, zh, zh-tw, zh-tw.big5, zh-tw.big5.utf-8, zh-tw.utf-8, zh.gbk, zh.gbk.utf-8, zh.utf-8}]
                                  [--ldap-enabled {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--name]
-                                 [--network-features {Basic, Standard}]
+                                 [--network-features {Basic, Basic_Standard, Standard, Standard_Basic}]
                                  [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                  [--placement-rules]
                                  [--policy-enforced {0, 1, f, false, n, no, t, true, y, yes}]
@@ -1664,13 +1806,10 @@ directCommands:
                                  [--ppg]
                                  [--protocol-types]
                                  [--relocation-requested {0, 1, f, false, n, no, t, true, y, yes}]
-                                 [--remote-volume-id]
                                  [--remote-volume-region]
                                  [--remove]
-                                 [--replication-id]
                                  [--replication-schedule {_10minutely, daily, hourly}]
                                  [--resource-group]
-                                 [--rules]
                                  [--security-style {ntfs, unix}]
                                  [--service-level {Premium, Standard, StandardZRS, Ultra}]
                                  [--set]
@@ -1689,6 +1828,10 @@ directCommands:
                                  [--vnet]
                                  [--volume-spec-name]
                                  [--volume-type]
+  examples:
+  - summary: |-
+      Update an ANF volume
+    syntax: az netappfiles volume update -g mygroup --account-name myaccname --pool-name mypoolname --name myvolname --service-level ultra --usage-threshold 100 --tags mytag=specialvol
   optionalParameters:
   - name: --account-name -a
     summary: |-
@@ -1700,16 +1843,16 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Specifies whether the volume is enabled for Azure VMware Solution (AVS) datastore purpose.
-  - name: --backup-enabled
-    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
-    summary: |-
-      Backup Enabled.
   - name: --backup-policy-id
     summary: |-
       Backup Policy Resource ID.
   - name: --backup-vault-id
     summary: |-
       Backup Vault Resource ID.
+  - name: --ca-retrieval-policy --cool-access-retrieval-policy
+    parameterValueGroup: "Default, Never, OnRead"
+    summary: |-
+      CoolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:   Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.  Never - No client-driven data is pulled from cool tier to standard storage.
   - name: --capacity-pool-resource-id --pool-resource-id
     summary: |-
       Pool Resource Id used in case of creating a volume through volume group.
@@ -1726,7 +1869,7 @@ directCommands:
   - name: --default-group-quota --default-group-quota-in-ki-bs
     summary: |-
       Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
-  - name: --default-quota-enabled --is-default-quota-enabled
+  - name: --default-quota-enabled --is-def-quota-enabled --is-default-quota-enabled
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Specifies if default quota is enabled for the volume.
@@ -1749,6 +1892,9 @@ directCommands:
     parameterValueGroup: "dst, src"
     summary: |-
       Indicates whether the local volume is the source or destination for the Volume Replication.
+  - name: --export-policy-rules --rules
+    summary: |-
+      Export policy rule  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -1767,6 +1913,10 @@ directCommands:
   - name: --key-vault-private-endpoint-resource-id --kv-private-endpoint-id
     summary: |-
       The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'.
+  - name: --language
+    parameterValueGroup: "ar, ar.utf-8, c, c.utf-8, cs, cs.utf-8, da, da.utf-8, de, de.utf-8, en, en-us, en-us.utf-8, en.utf-8, es, es.utf-8, fi, fi.utf-8, fr, fr.utf-8, he, he.utf-8, hr, hr.utf-8, hu, hu.utf-8, it, it.utf-8, ja, ja-jp.932, ja-jp.932.utf-8, ja-jp.pck, ja-jp.pck-v2, ja-jp.pck-v2.utf-8, ja-jp.pck.utf-8, ja-v1, ja-v1.utf-8, ja.utf-8, ko, ko.utf-8, nl, nl.utf-8, no, no.utf-8, pl, pl.utf-8, pt, pt.utf-8, ro, ro.utf-8, ru, ru.utf-8, sk, sk.utf-8, sl, sl.utf-8, sv, sv.utf-8, tr, tr.utf-8, utf8mb4, zh, zh-tw, zh-tw.big5, zh-tw.big5.utf-8, zh-tw.utf-8, zh.gbk, zh.gbk.utf-8, zh.utf-8"
+    summary: |-
+      Language.
   - name: --ldap-enabled
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -1775,9 +1925,9 @@ directCommands:
     summary: |-
       The name of the volume.
   - name: --network-features
-    parameterValueGroup: "Basic, Standard"
+    parameterValueGroup: "Basic, Basic_Standard, Standard, Standard_Basic"
     summary: |-
-      Basic network, or Standard features available to the volume.
+      Basic network, or Standard features available to the volume. hide me.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -1802,18 +1952,12 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Has relocation been requested for this volume.
-  - name: --remote-volume-id --remote-volume-resource-id
-    summary: |-
-      The resource ID of the remote volume.
   - name: --remote-volume-region
     summary: |-
       The remote region for the other end of the Volume Replication.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
-  - name: --replication-id
-    summary: |-
-      Id.
   - name: --replication-schedule
     parameterValueGroup: "_10minutely, daily, hourly"
     summary: |-
@@ -1821,9 +1965,6 @@ directCommands:
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  - name: --rules
-    summary: |-
-      Export policy rule  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --security-style
     parameterValueGroup: "ntfs, unix"
     summary: |-
@@ -1839,7 +1980,7 @@ directCommands:
     parameterValueGroup: "Disabled, Enabled"
     summary: |-
       Enables access based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume.
-  - name: --smb-ca --smb-continuously-available
+  - name: --smb-ca --smb-continuously-available --smb-continuously-avl
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enables continuously available share property for smb volume. Only applicable for SMB volume.
@@ -1875,7 +2016,7 @@ directCommands:
       UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.
   - name: --usage-threshold
     summary: |-
-      Maximum storage quota allowed for a file system in bytes.
+      Maximum storage quota allowed for a file system in GiB.
   - name: --vnet
     summary: |-
       Name or Resource ID of the vnet. If you want to use a vnet in other resource group or subscription, please provide the Resource ID instead of the name of the vnet.
@@ -1957,9 +2098,7 @@ directCommands:
   extensionSuffix: netappfiles-preview
   summary: |-
     Place the CLI in a waiting state until a condition is met.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: "Command group 'az netappfiles' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
+  status: GA
   sourceType: Extension
   syntax: >-
     az netappfiles volume wait [--account-name]
@@ -2026,6 +2165,7 @@ commands:
 - az_netappfiles_volume_create
 - az_netappfiles_volume_create(netappfiles-preview)
 - az_netappfiles_volume_delete
+- az_netappfiles_volume_delete(netappfiles-preview)
 - az_netappfiles_volume_export-policy
 - az_netappfiles_volume_export-policy_add
 - az_netappfiles_volume_export-policy_list

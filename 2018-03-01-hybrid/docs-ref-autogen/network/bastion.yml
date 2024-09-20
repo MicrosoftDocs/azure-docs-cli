@@ -4,7 +4,7 @@ name: az network bastion
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **bastion** extension for the Azure CLI (version 2.43.0 or higher). The extension will automatically install the first time you run an **az network bastion** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **bastion** extension for the Azure CLI (version 2.62.0 or higher). The extension will automatically install the first time you run an **az network bastion** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Azure Bastion host machines.
 status: GA
@@ -13,10 +13,8 @@ directCommands:
 - uid: az_network_bastion_create
   name: az network bastion create
   summary: |-
-    Create a Azure Bastion host machine.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Create the specified Bastion Host.
+  status: GA
   sourceType: Extension
   syntax: >-
     az network bastion create --name
@@ -26,20 +24,28 @@ directCommands:
                               [--disable-copy-paste {0, 1, f, false, n, no, t, true, y, yes}]
                               [--enable-ip-connect {0, 1, f, false, n, no, t, true, y, yes}]
                               [--enable-tunneling {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--file-copy {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--kerberos {0, 1, f, false, n, no, t, true, y, yes}]
                               [--location]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--scale-units]
-                              [--sku {Basic, Standard}]
+                              [--session-recording {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--shareable-link {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--sku {Basic, Premium, Standard}]
                               [--tags]
+                              [--zones]
   examples:
   - summary: |-
       Create a Azure Bastion host machine.
     syntax: az network bastion create --location westus2 --name MyBastionHost --public-ip-address MyPublicIpAddress --resource-group MyResourceGroup --vnet-name MyVnet
+  - summary: |-
+      Create a Azure Bastion host machine with zones.
+    syntax: az network bastion create --location westus2 --name MyBastionHost --public-ip-address MyPublicIpAddress --resource-group MyResourceGroup --vnet-name MyVnet --zones 1 2 3
   requiredParameters:
   - isRequired: true
     name: --name -n
     summary: |-
-      Name of the bastion host.
+      The name of the Bastion Host.
   - isRequired: true
     name: --public-ip-address
     summary: |-
@@ -47,7 +53,7 @@ directCommands:
   - isRequired: true
     name: --resource-group -g
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Resource group name of the Bastion Host.
   - isRequired: true
     name: --vnet-name
     summary: |-
@@ -57,42 +63,64 @@ directCommands:
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Disable copy and paste for all sessions on this Azure Bastion resource.
+      Enable/Disable Copy/Paste feature of the Bastion Host resource.
   - name: --enable-ip-connect
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Enable IP-based Connections on this Azure Bastion resource.
+      Enable/Disable IP Connect feature of the Bastion Host resource.
   - name: --enable-tunneling
     defaultValue: "False"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Enable Native Client Support on this Azure Bastion resource.
+      Enable/Disable Tunneling feature of the Bastion Host resource.
+  - name: --file-copy
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable/Disable File Copy feature of the Bastion Host resource.
+  - name: --kerberos
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable/Disable Kerberos feature of the Bastion Host resource.
   - name: --location -l
     summary: |-
-      Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+      Resource location.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --scale-units
+    defaultValue: "2"
     summary: |-
-      Scale units for the Bastion Host resource with the range of [2, 50].
+      The scale units for the Bastion Host resource.
+  - name: --session-recording
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable/Disable Session Recording feature of the Bastion Host resource.
+  - name: --shareable-link
+    defaultValue: "False"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable/Disable Shareable Link of the Bastion Host resource.
   - name: --sku
     defaultValue: "Standard"
-    parameterValueGroup: "Basic, Standard"
+    parameterValueGroup: "Basic, Premium, Standard"
     summary: |-
-      SKU of this Bastion Host.
+      Sku of this Bastion Host.
   - name: --tags
     summary: |-
-      Space-separated tags: key[=value] [key[=value] ...].  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --zones
+    summary: |-
+      A list of availability zones denoting where the resource needs to come from.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_network_bastion_delete
   name: az network bastion delete
   summary: |-
-    Delete a Azure Bastion host machine.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Delete the specified Bastion Host.
+  status: GA
   sourceType: Extension
   syntax: >-
     az network bastion delete [--ids]
@@ -100,6 +128,7 @@ directCommands:
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--resource-group]
                               [--subscription]
+                              [--yes]
   examples:
   - summary: |-
       Delete a Azure Bastion host machine.
@@ -110,34 +139,45 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
     summary: |-
-      Name of the bastion host.
+      The name of the Bastion Host.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Resource group name of the Bastion Host.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_network_bastion_list
   name: az network bastion list
   summary: |-
-    List all Azure Bastion host machines.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    List all Bastion Hosts in a resource group.
+  status: GA
   sourceType: Extension
-  syntax: az network bastion list [--resource-group]
+  syntax: >-
+    az network bastion list [--max-items]
+                            [--next-token]
+                            [--resource-group]
   examples:
   - summary: |-
-      List all Azure Bastion host machines.
+      List all Azure Bastion host machines in a resource group.
     syntax: az network bastion list -g MyResourceGroup
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Resource group name of the Bastion Host.
 - uid: az_network_bastion_rdp
   name: az network bastion rdp
   summary: |-
@@ -205,10 +245,8 @@ directCommands:
 - uid: az_network_bastion_show
   name: az network bastion show
   summary: |-
-    Show a Azure Bastion host machine.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Get the specified Bastion Host.
+  status: GA
   sourceType: Extension
   syntax: >-
     az network bastion show [--ids]
@@ -225,10 +263,10 @@ directCommands:
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
   - name: --name -n
     summary: |-
-      Name of the bastion host.
+      The name of the Bastion Host.
   - name: --resource-group -g
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Resource group name of the Bastion Host.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
@@ -356,26 +394,35 @@ directCommands:
 - uid: az_network_bastion_update
   name: az network bastion update
   summary: |-
-    Update a Azure Bastion host machine.
-  status: Preview
-  isPreview: true
-  previewOrExperimentalInfo: 'This command is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus'
+    Update the specified Bastion Host.
+  status: GA
   sourceType: Extension
   syntax: >-
     az network bastion update [--add]
+                              [--bastion-host-name]
                               [--disable-copy-paste {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--dns-name]
                               [--enable-ip-connect {0, 1, f, false, n, no, t, true, y, yes}]
                               [--enable-tunneling {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--file-copy {0, 1, f, false, n, no, t, true, y, yes}]
                               [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                               [--ids]
-                              [--name]
+                              [--ip-configurations]
+                              [--kerberos {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--location]
+                              [--network-acls]
                               [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                               [--remove]
                               [--resource-group]
                               [--scale-units]
+                              [--session-recording {0, 1, f, false, n, no, t, true, y, yes}]
                               [--set]
-                              [--sku {Basic, Standard}]
+                              [--shareable-link {0, 1, f, false, n, no, t, true, y, yes}]
+                              [--sku]
                               [--subscription]
+                              [--tags]
+                              [--virtual-network]
+                              [--zones]
   examples:
   - summary: |-
       Update a Azure Bastion host machine to enable native client support.
@@ -384,18 +431,28 @@ directCommands:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+  - name: --bastion-host-name --name -n
+    summary: |-
+      The name of the Bastion Host.
   - name: --disable-copy-paste
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Disable copy and paste for all sessions on this Azure Bastion resource.
+      Enable/Disable Copy/Paste feature of the Bastion Host resource.
+  - name: --dns-name
+    summary: |-
+      FQDN for the endpoint on which bastion host is accessible.
   - name: --enable-ip-connect
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Enable IP-based Connections on this Azure Bastion resource.
+      Enable/Disable IP Connect feature of the Bastion Host resource.
   - name: --enable-tunneling
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      Enable Native Client Support on this Azure Bastion resource.
+      Enable/Disable Tunneling feature of the Bastion Host resource.
+  - name: --file-copy
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable/Disable File Copy feature of the Bastion Host resource.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -403,9 +460,19 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
-  - name: --name -n
+  - name: --ip-configurations
     summary: |-
-      Name of the bastion host.
+      IP configuration of the Bastion Host resource.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --kerberos
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable/Disable Kerberos feature of the Bastion Host resource.
+  - name: --location -l
+    summary: |-
+      Resource location.
+  - name: --network-acls
+    summary: |-
+      ACL rules for Developer Bastion Host.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -415,20 +482,36 @@ directCommands:
       Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
   - name: --resource-group -g
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Resource group name of the Bastion Host.
   - name: --scale-units
     summary: |-
-      Scale units for the Bastion Host resource with the range of [2, 50].
+      The scale units for the Bastion Host resource.
+  - name: --session-recording
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Enable/Disable Session Recording feature of the Bastion Host resource.
   - name: --set
     summary: |-
       Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
-  - name: --sku
-    parameterValueGroup: "Basic, Standard"
+  - name: --shareable-link
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      SKU of this Bastion Host.
+      Enable/Disable Shareable Link of the Bastion Host resource.
+  - name: --sku
+    summary: |-
+      The sku of this Bastion Host.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --tags
+    summary: |-
+      Resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --virtual-network
+    summary: |-
+      Reference to an existing virtual network required for Developer Bastion Host only.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --zones
+    summary: |-
+      A list of availability zones denoting where the resource needs to come from.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 - uid: az_network_bastion_wait
   name: az network bastion wait
   summary: |-
@@ -436,18 +519,21 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az network bastion wait [--created]
+    az network bastion wait [--bastion-host-name]
+                            [--created]
                             [--custom]
                             [--deleted]
                             [--exists]
                             [--ids]
                             [--interval]
-                            [--name]
                             [--resource-group]
                             [--subscription]
                             [--timeout]
                             [--updated]
   optionalParameters:
+  - name: --bastion-host-name --name -n
+    summary: |-
+      The name of the Bastion Host.
   - name: --created
     defaultValue: "False"
     summary: |-
@@ -470,12 +556,9 @@ directCommands:
     defaultValue: "30"
     summary: |-
       Polling interval in seconds.
-  - name: --name -n
-    summary: |-
-      Name of the bastion host.
   - name: --resource-group -g
     summary: |-
-      Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+      Resource group name of the Bastion Host.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.

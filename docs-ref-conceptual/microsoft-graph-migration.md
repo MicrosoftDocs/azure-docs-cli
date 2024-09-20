@@ -4,9 +4,9 @@ description: Learn about the Microsoft Graph migration of Azure CLI.
 author: jiasli
 ms.author: jiasli
 ms.date: 08/1/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.custom: devx-track-azurecli, seo-azure-cli
+ms.custom: devx-track-azurecli
 keywords: microsoft graph, ms graph, active directory graph, ad graph, azure cli 
 ---
 

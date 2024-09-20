@@ -1,12 +1,9 @@
 ---
 title: Azure command line tools survey guidance
 description: This article contains guidance about the Azure command line tools survey.
-author: dbradish-microsoft
-ms.author: dbradish
 ms.date: 06/19/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 ---
 

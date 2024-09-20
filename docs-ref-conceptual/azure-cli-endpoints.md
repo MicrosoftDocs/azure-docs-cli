@@ -1,12 +1,9 @@
 --- 
 title: Endpoints used when installing the Azure CLI  | Microsoft Docs
-description: Learn what endpoints are used when installing the Azure CLI.  These URLs are sometimes added to allowlists when working behind a firewall.
-author: dbradish-microsoft
-ms.author: dbradish
-ms.topic: conceptual
+description: Learn what endpoints are used when installing the Azure CLI.  These URLs are sometimes added to allowlists when working behind a firewall
+ms.topic: concept-article
 ms.custom: devx-track-azurecli
-ms.date: 08/1/2023
-ms.tool: azure-cli
+ms.date: 07/24/2024
 ---
 
 # Azure CLI endpoints for proxy bypass

@@ -1,12 +1,9 @@
 ---
 title: Delete Azure resources using a script | Microsoft Docs
 description: Learn how to delete Azure resources at scale using a for-each loop
-author: dbradish-microsoft
-ms.author: dbradish
 ms.date: 12/04/2023
-ms.topic: conceptual
+ms.topic: concept-article
 ms.service: azure-cli
-ms.tool: azure-cli
 ms.custom: devx-track-azurecli
 keywords: azure, 
 ---
