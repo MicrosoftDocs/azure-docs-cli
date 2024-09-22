@@ -13,6 +13,12 @@ keywords: Azure CLI, new articles, new references, new samples, announcements
 
 This page highlights new features and upcoming changes for the Azure CLI.
 
+## Multi-factor authentication (MFA)
+
+Microsoft will require MFA for all Azure users in a gradual and methodical rollout. For more information, see the [original Microsoft announcement](https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/microsoft-will-require-mfa-for-all-azure-users/ba-p/4140391) and [June 2024 update](https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/update-on-mfa-requirements-for-azure-sign-in/ba-p/4177584).
+
+As more information becomes available specific to the Azure CLI, we'll post information on this page.
+
 ## Docker container image
 
 Beginning with Azure CLI version 2.67.0, to be released on November 19, 2024, the default Docker container image for Azure CLI will be based on Azure Linux. To avoid any disruptions, review and update any dependencies you may have on the default Docker container image for Azure CLI.

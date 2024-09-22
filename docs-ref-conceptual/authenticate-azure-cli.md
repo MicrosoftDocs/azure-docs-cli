@@ -23,6 +23,12 @@ There are five authentication options when working with the Azure CLI:
 | [Sign in with a managed identity](./authenticate-azure-cli-managed-identity.md) | [Managed identities](/entra/identity/managed-identities-azure-resources/overview) provide an Azure-managed identity for applications to use when connecting to resources that support Microsoft Entra authentication. Using a managed identity eliminates the need for you to manage secrets, credentials, certificates, and keys.
 | [Sign in using an service principal](./authenticate-azure-cli-service-principal.md) | When you write scripts, using a [service principal](/entra/identity-platform/app-objects-and-service-principals) is the recommended authentication approach. You grant just the appropriate permissions needed to a service principal keeping your automation secure.
 
+## Multi-factor authentication (MFA)
+
+[!INCLUDE [MFA](includes/multifactor-authentication.md)]
+
+**When writing scripts to manage Azure resources, be aware of this upcoming change.**
+
 ## Find or change your current subscription
 
 After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, change your default subscription using `az account set --subscription`.
