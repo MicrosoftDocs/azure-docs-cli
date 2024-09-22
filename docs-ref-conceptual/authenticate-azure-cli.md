@@ -27,8 +27,6 @@ There are five authentication options when working with the Azure CLI:
 
 [!INCLUDE [MFA](includes/multifactor-authentication.md)]
 
-**When writing scripts to manage Azure resources, be aware of this upcoming change.**
-
 ## Find or change your current subscription
 
 After you sign in, CLI commands are run against your default subscription. If you have multiple subscriptions, change your default subscription using `az account set --subscription`.
