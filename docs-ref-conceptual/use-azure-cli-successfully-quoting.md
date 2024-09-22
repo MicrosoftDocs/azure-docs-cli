@@ -197,6 +197,8 @@ These next three examples are all **incorrect** in Windows Command.
 
 ---
 
+Learn more about working with JSON parameter values in [How to use shorthand syntax with Azure CLI](./use-azure-cli-successfully-shorthand.md).
+
 ## Empty strings
 
 * In PowerShell, if your value is an empty quotes string (`''`), use `'""'`.
