@@ -15,9 +15,9 @@ This page highlights new features and upcoming changes for the Azure CLI.
 
 ## Multi-factor authentication (MFA)
 
-Microsoft will require MFA for all Azure users in a gradual and methodical rollout. For more information, see the [original Microsoft announcement](https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/microsoft-will-require-mfa-for-all-azure-users/ba-p/4140391) and [June 2024 update](https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/update-on-mfa-requirements-for-azure-sign-in/ba-p/4177584).
+[!INCLUDE [MFA](includes/multifactor-authentication.md)]
 
-As more information becomes available specific to the Azure CLI, we'll post information on this page.
+As more information becomes available that is specific to the Azure CLI, we'll post more details on this page.
 
 ## Docker container image
 
