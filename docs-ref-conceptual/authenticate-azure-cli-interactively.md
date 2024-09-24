@@ -179,6 +179,10 @@ see [How-to change your active tenant](manage-azure-subscriptions-azure-cli.md#c
 az login --scope https://management.core.windows.net//.default
 ```
 
+## Multi-factor authentication (MFA)
+
+[!INCLUDE [MFA](includes/multifactor-authentication.md)]
+
 ## Logout
 
 To remove access to Azure, use the [az logout](/cli/azure/reference-index#az-logout) command.
