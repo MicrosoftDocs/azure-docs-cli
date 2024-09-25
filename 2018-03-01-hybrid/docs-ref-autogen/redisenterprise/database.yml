@@ -4,7 +4,7 @@ name: az redisenterprise database
 extensionInformation: >-
   > [!NOTE]
 
-  > This reference is part of the **redisenterprise** extension for the Azure CLI (version 2.45.0 or higher). The extension will automatically install the first time you run an **az redisenterprise database** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
+  > This reference is part of the **redisenterprise** extension for the Azure CLI (version 2.61.0 or higher). The extension will automatically install the first time you run an **az redisenterprise database** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
   Manage Redis Enterprise databases.
 status: GA
@@ -19,8 +19,10 @@ directCommands:
   syntax: >-
     az redisenterprise database create --cluster-name
                                        --resource-group
+                                       [--access-keys-auth {Disabled, Enabled}]
                                        [--client-protocol {Encrypted, Plaintext}]
                                        [--clustering-policy {EnterpriseCluster, OSSCluster}]
+                                       [--defer-upgrade {Deferred, NotDeferred}]
                                        [--eviction-policy {AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL}]
                                        [--group-nickname]
                                        [--linked-database]
@@ -38,6 +40,10 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
+  - name: --access-keys-auth --access-keys-authentication
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Access database using keys - default is enabled. This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created.
   - name: --client-protocol
     parameterValueGroup: "Encrypted, Plaintext"
     summary: |-
@@ -46,6 +52,10 @@ directCommands:
     parameterValueGroup: "EnterpriseCluster, OSSCluster"
     summary: |-
       Clustering policy - default is OSSCluster. Specified at create time.
+  - name: --defer-upgrade
+    parameterValueGroup: "Deferred, NotDeferred"
+    summary: |-
+      Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade.
   - name: --eviction-policy
     parameterValueGroup: "AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL"
     summary: |-
@@ -250,6 +260,8 @@ directCommands:
   syntax: >-
     az redisenterprise database list --cluster-name
                                      --resource-group
+                                     [--max-items]
+                                     [--next-token]
   requiredParameters:
   - isRequired: true
     name: --cluster-name
@@ -259,6 +271,13 @@ directCommands:
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_redisenterprise_database_list-keys
   name: az redisenterprise database list-keys
   summary: |-
@@ -350,9 +369,11 @@ directCommands:
   status: GA
   sourceType: Extension
   syntax: >-
-    az redisenterprise database update [--add]
+    az redisenterprise database update [--access-keys-auth {Disabled, Enabled}]
+                                       [--add]
                                        [--client-protocol {Encrypted, Plaintext}]
                                        [--cluster-name]
+                                       [--defer-upgrade {Deferred, NotDeferred}]
                                        [--eviction-policy {AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL}]
                                        [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--ids]
@@ -363,6 +384,10 @@ directCommands:
                                        [--set]
                                        [--subscription]
   optionalParameters:
+  - name: --access-keys-auth --access-keys-authentication
+    parameterValueGroup: "Disabled, Enabled"
+    summary: |-
+      Access database using keys - default is enabled. This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created.
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
@@ -373,6 +398,10 @@ directCommands:
   - name: --cluster-name
     summary: |-
       The name of the RedisEnterprise cluster.
+  - name: --defer-upgrade
+    parameterValueGroup: "Deferred, NotDeferred"
+    summary: |-
+      Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade.
   - name: --eviction-policy
     parameterValueGroup: "AllKeysLFU, AllKeysLRU, AllKeysRandom, NoEviction, VolatileLFU, VolatileLRU, VolatileRandom, VolatileTTL"
     summary: |-
@@ -462,6 +491,13 @@ directCommands:
     summary: |-
       Wait until updated with provisioningState at 'Succeeded'.
 commands:
+- az_redisenterprise_database_access-policy-assignment
+- az_redisenterprise_database_access-policy-assignment_create
+- az_redisenterprise_database_access-policy-assignment_delete
+- az_redisenterprise_database_access-policy-assignment_list
+- az_redisenterprise_database_access-policy-assignment_show
+- az_redisenterprise_database_access-policy-assignment_update
+- az_redisenterprise_database_access-policy-assignment_wait
 - az_redisenterprise_database_create
 - az_redisenterprise_database_delete
 - az_redisenterprise_database_export
