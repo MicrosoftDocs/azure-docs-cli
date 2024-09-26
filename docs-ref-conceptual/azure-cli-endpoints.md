@@ -137,7 +137,7 @@ synapse_analytics_endpoint | *.dev.azuresynapse.azure.cn
 
 Azure CLI extensions are optional and installed separately.  The Azure CLI uses https://aka.ms/azure-cli-extension-index-v1 to fetch a list of extensions.  This _aka.ms_ link points to https://github.com/Azure/azure-cli/blob/3feea02888ea67f033f407174a3a7a340158b81a/src/azure-cli-core/azure/cli/core/extension/_index.py#L11.  
 
-All extensions install with endpoint **azcliprod.blob.core.windows.net** with the following exceptions:
+All extensions install with endpoint **azcliprod.blob.core.windows.net** and **azurecliextensionsync.blob.core.windows.net** with the following exceptions:
 
 |Extension name | Endpoint
 |-|-|
