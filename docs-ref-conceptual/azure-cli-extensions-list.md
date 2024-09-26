@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/24/2024
+ms.date: 09/25/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -70,7 +70,7 @@ You will be prompted to install an extension on first use.
 |[cli-translator](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) | 2.13.0 | Translate ARM template to executable Azure CLI scripts. | Experimental | [0.3.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/cli-translator) |
 |[cloud-service](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudservice) | 2.55.0 | Microsoft Azure Command-Line Tools ComputeManagementClient Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/cloudservice/HISTORY.rst) |
 |[command-change](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change) | 2.19.0 | Microsoft Azure Command-Line Tools CommandChange Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/command-change/HISTORY.rst) |
-|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.59.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.9.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
+|[communication](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication) | 2.59.0 | Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension | GA | [1.10.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/communication/HISTORY.rst) |
 |[compute-diagnostic-rp](https://github.com/Azure/azure-cli-extensions/tree/main/src/compute-diagnostic-rp) | 2.56.0 | Microsoft Azure Command-Line Tools ComputeDiagnosticRp Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/compute-diagnostic-rp/HISTORY.rst) |
 |[confcom](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom) | 2.26.2 | Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confcom/HISTORY.rst) |
 |[confidentialledger](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger) | 2.15.0 | Microsoft Azure Command-Line Tools ConfidentialLedger Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/confidentialledger/HISTORY.rst) |
@@ -180,7 +180,7 @@ You will be prompted to install an extension on first use.
 |[qumulo](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo) | 2.48.0 | Microsoft Azure Command-Line Tools Qumulo Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/qumulo/HISTORY.rst) |
 |[quota](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota) | 2.54.0 | Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/quota/HISTORY.rst) |
 |[rdbms-connect](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect) | 2.19.0 | Support for testing connection to Azure Database for MySQL & PostgreSQL servers. | GA | [1.0.6](https://github.com/Azure/azure-cli-extensions/tree/main/src/rdbms-connect/HISTORY.rst) |
-|[redisenterprise](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise) | 2.45.0 | Microsoft Azure Command-Line Tools RedisEnterprise Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise/HISTORY.rst) |
+|[redisenterprise](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise) | 2.61.0 | Microsoft Azure Command-Line Tools RedisEnterprise Extension. | GA | [1.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/redisenterprise/HISTORY.rst) |
 |[reservation](https://github.com/Azure/azure-cli-extensions/tree/main/src/reservation) | 2.50.0 | Microsoft Azure Command-Line Tools Reservation Extension | GA | [0.3.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/reservation/HISTORY.rst) |
 |[resource-graph](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph) | 2.22.0 | Support for querying Azure resources with Resource Graph. | GA | [2.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/resource-graph/HISTORY.rst) |
 |[resource-mover](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-mover) | 2.50.0 | Microsoft Azure Command-Line Tools ResourceMoverServiceAPI Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/resource-mover/HISTORY.rst) |
