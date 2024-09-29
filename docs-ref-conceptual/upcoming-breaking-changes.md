@@ -1,15 +1,10 @@
 ---
 title: Upcoming Breaking Changes - Azure CLI | Microsoft Docs
 description: Learn about breaking changes coming to Azure CLI in the next breaking change release
-manager: mkluck
-author: dbradish-microsoft
-ms.author: dbradish
 ms.date: 09/27/2024
 ms.topic: article
 ms.service: azure-cli
-ms.tool: azure-cli
 ms.custom: devx-track-azurecli, seo-azure-cli
-keywords: azure cli updates, azure cli notes, azure cli versions, azure cli breaking changes
 ---
 
 # Upcoming breaking changes in Azure CLI
