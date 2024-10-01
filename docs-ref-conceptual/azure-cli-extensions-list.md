@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/30/2024
+ms.date: 10/01/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -109,7 +109,7 @@ You will be prompted to install an extension on first use.
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 2.0.41 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) |
 |[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.55.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
-|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
+|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
 |[footprint](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint/HISTORY.rst) |
 |[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.57.0 | Manage networking Front Doors. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
