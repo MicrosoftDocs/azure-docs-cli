@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 09/30/2024
+ms.date: 10/03/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -57,7 +57,7 @@ You will be prompted to install an extension on first use.
 |[azure-devops](https://github.com/Microsoft/azure-devops-cli-extension) | 2.30.0 | Tools for managing Azure DevOps. | GA | [1.0.1](https://github.com/Microsoft/azure-devops-cli-extension) |
 |[azure-firewall](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall) | 2.61.0 | Manage Azure Firewall resources. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/azure-firewall/HISTORY.rst) |
 |[azure-iot](https://github.com/azure/azure-iot-cli-extension) | 2.46.0 | The Azure IoT extension for Azure CLI. | GA | [0.25.0](https://github.com/azure/azure-iot-cli-extension) |
-|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.53.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.6.0b4](https://github.com/azure/azure-iot-ops-cli-extension) |
+|[azure-iot-ops](https://github.com/azure/azure-iot-ops-cli-extension) | 2.53.0 | The Azure IoT Operations extension for Azure CLI. | Preview | [0.7.0b1](https://github.com/azure/azure-iot-ops-cli-extension) |
 |[azure-sphere](https://docs.microsoft.com/azure-sphere) | 2.45.0 | The Azure Sphere extension for Azure CLI. | GA | [1.0.1](https://docs.microsoft.com/azure-sphere) |
 |[azurelargeinstance](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance) | 2.57.0 | Microsoft Azure Command-Line Tools Azurelargeinstance Extension. | Preview | [1.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/azurelargeinstance/HISTORY.rst) |
 |[azurestackhci](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) | 2.15.0 | Microsoft Azure Command-Line Tools AzureStackHCI Extension | Experimental | [0.2.9](https://github.com/Azure/azure-cli-extensions/tree/master/src/azurestackhci) |
@@ -109,7 +109,7 @@ You will be prompted to install an extension on first use.
 |[eventgrid](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid) | 2.51.0 | Microsoft Azure Command-Line Tools EventGrid Command Module. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/eventgrid/HISTORY.rst) |
 |[express-route-cross-connection](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) | 2.0.41 | Manage customer ExpressRoute circuits using an ExpressRoute cross-connection. | GA | [0.1.1](https://github.com/Azure/azure-cli-extensions/tree/master/src/express-route-cross-connection) |
 |[firmwareanalysis](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis) | 2.55.0 | Microsoft Azure Command-Line Tools Firmwareanalysis Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/firmwareanalysis/HISTORY.rst) |
-|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
+|[fleet](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet) | 2.61.0 | Microsoft Azure Command-Line Tools Fleet Extension | GA | [1.4.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fleet/HISTORY.rst) |
 |[fluid-relay](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay) | 2.39.0 | Microsoft Azure Command-Line Tools FluidRelay Extension. | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/fluid-relay/HISTORY.rst) |
 |[footprint](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint) | 2.11.0 | Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension | Experimental | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/footprint/HISTORY.rst) |
 |[front-door](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door) | 2.57.0 | Manage networking Front Doors. | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/front-door/HISTORY.rst) |
@@ -158,7 +158,7 @@ You will be prompted to install an extension on first use.
 |[multicloud-connector](https://github.com/Azure/azure-cli-extensions/tree/main/src/multicloud-connector) | 2.61.0 | Microsoft Azure Command-Line Tools MulticloudConnector Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/multicloud-connector/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview) | 2.61.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview/HISTORY.rst) |
 |[network-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics) | 2.51.0 | Microsoft Azure Command-Line Tools NetworkAnalytics Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics/HISTORY.rst) |
-|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.61.0 | Support for Azure Operator Nexus network cloud commands based on 2024-06-01-preview API version. | Preview | [2.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
+|[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.61.0 | Support for Azure Operator Nexus network cloud commands based on 2024-07-01 API version. | Preview | [2.0.0b4](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
 |[new-relic](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic) | 2.57.0 | Microsoft Azure Command-Line Tools NewRelic Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/new-relic/HISTORY.rst) |
 |[next](https://github.com/Azure/azure-cli-extensions/tree/main/src/next) | 2.20.0 | Microsoft Azure Command-Line Tools Next Extension | Experimental | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/next/HISTORY.rst) |
 |[nexusidentity](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity) | 2.59.0 | Microsoft Azure Command-Line Tools Nexusidentity Extension | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/master/src/nexusidentity/HISTORY.rst) |
@@ -211,7 +211,7 @@ You will be prompted to install an extension on first use.
 |[timeseriesinsights](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights) | 2.50.0 | Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension | GA | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/timeseriesinsights/HISTORY.rst) |
 |[traffic-collector](https://github.com/Azure/azure-cli-extensions/tree/main/src/traffic-collector) | 2.40.0 | Microsoft Azure Command-Line Tools TrafficCollector Extension. | GA | [0.1.3](https://github.com/Azure/azure-cli-extensions/tree/main/src/traffic-collector/HISTORY.rst) |
 |[trustedsigning](https://github.com/Azure/azure-cli-extensions/tree/main/src/trustedsigning) | 2.57.0 | Microsoft Azure Command-Line Tools Trustedsigning Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/trustedsigning/HISTORY.rst) |
-|[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.57.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
+|[virtual-network-manager](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager) | 2.61.0 | Microsoft Azure Command-Line Tools NetworkManagementClient Extension | GA | [1.3.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-manager/HISTORY.rst) |
 |[virtual-network-tap](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap) | 2.0.46 | Manage virtual network taps (VTAP). | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-network-tap/HISTORY.rst) |
 |[virtual-wan](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan) | 2.55.0 | Manage virtual WAN, hubs, VPN gateways and VPN sites. | GA | [1.0.1](https://github.com/Azure/azure-cli-extensions/tree/main/src/virtual-wan/HISTORY.rst) |
 |[vm-repair](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair) | 2.0.67 | Auto repair commands to fix VMs. | GA | [1.0.9](https://github.com/Azure/azure-cli-extensions/tree/main/src/vm-repair/HISTORY.rst) |
