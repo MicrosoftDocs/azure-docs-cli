@@ -6,7 +6,7 @@ extensionInformation: >-
 
   > This reference is part of the **azure-iot-ops** extension for the Azure CLI (version 2.53.0 or higher). The extension will automatically install the first time you run an **az iot ops support** command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  IoT Operations support command space.
+  IoT Operations support operations.
 status: Preview
 isPreview: true
 previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -20,11 +20,12 @@ directCommands:
     {Supported service APIs}
     - mqttbroker.iotoperations.azure.com/[v1beta1]
     - opcuabroker.iotoperations.azure.com/[v1beta1]
-    - orchestrator.iotoperations.azure.com/[v1]
-    - akri.sh/[v0]
-    - deviceregistry.microsoft.com/[v1beta1]
+    - deviceregistry.microsoft.com/[v1beta2]
     - clusterconfig.azure.com/[v1]
     - connectivity.iotoperations.azure.com/[v1beta1]
+    - arccontainerstorage.azure.net/[v1]
+    - secret-sync.x-k8s.io/v1alpha1
+    - secrets-store.csi.x-k8s.io/v1
 
     Note: logs from evicted pod will not be captured, as they are inaccessible. For details
     on why a pod was evicted, please refer to the related pod and node files.
@@ -37,7 +38,7 @@ directCommands:
                                      [--bundle-dir]
                                      [--context]
                                      [--log-age]
-                                     [--ops-service {akri, auto, billing, broker, dataflow, deviceregistry, opcua, orc}]
+                                     [--ops-service {acs, akri, billing, broker, dataflow, deviceregistry, opcua, schemaregistry, secretstore}]
   examples:
   - summary: |-
       Basic usage with default options. This form of the command will auto detect IoT Operations APIs and build a suitable bundle capturing the last 24 hours of container logs. The bundle will be produced in the current working directory.
@@ -51,6 +52,18 @@ directCommands:
   - summary: |-
       Include mqtt broker traces in the support bundle. This is an alias for stats trace fetch capability.
     syntax: az iot ops support create-bundle --ops-service broker --broker-traces
+  - summary: |-
+      Include arc container storage resources in the support bundle.
+    syntax: az iot ops support create-bundle --ops-service acs
+  - summary: |-
+      Include secretstore resources in the support bundle.
+    syntax: az iot ops support create-bundle --ops-service secretstore
+  - summary: |-
+      Include multiple services in the support bundle with single --ops-service flag.
+    syntax: az iot ops support create-bundle --ops-service broker opcua deviceregistry
+  - summary: |-
+      Include multiple services in the support bundle with multiple --ops-service flags.
+    syntax: az iot ops support create-bundle --ops-service broker --ops-service opcua --ops-service deviceregistry
   optionalParameters:
   - name: --broker-traces
     parameterValueGroup: "false, true"
@@ -67,10 +80,9 @@ directCommands:
     summary: |-
       Container log age in seconds.
   - name: --ops-service --svc
-    defaultValue: "auto"
-    parameterValueGroup: "akri, auto, billing, broker, dataflow, deviceregistry, opcua, orc"
+    parameterValueGroup: "acs, akri, billing, broker, dataflow, deviceregistry, opcua, schemaregistry, secretstore"
     summary: |-
-      The IoT Operations service the support bundle creation should apply to. If auto is selected, the operation will detect which services are available.
+      The IoT Operations service the support bundle creation should apply to. If no service is provided, the operation will default to capture all services. --ops-service can be used one or more times.
 commands:
 - az_iot_ops_support_create-bundle
 globalParameters:
@@ -98,4 +110,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: IoT Operations support command space.
+  description: IoT Operations support operations.
