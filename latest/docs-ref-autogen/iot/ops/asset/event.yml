@@ -24,21 +24,18 @@ directCommands:
     az iot ops asset event add --asset
                                --en
                                --resource-group
-                               [--capability-id]
                                [--name]
                                [--observability-mode]
                                [--qs]
+                               [--replace {false, true}]
                                [--sampling-interval]
   examples:
   - summary: |-
       Add an event to an asset.
-    syntax: az iot ops asset event add --asset {asset} -g {resource_group} --event-notifier {event_notifier}
+    syntax: az iot ops asset event add --asset myasset -g myresourcegroup --event-notifier eventId --name eventName
   - summary: |-
-      Add an event to an asset with capability id, event name, observability mode, custom queue size, and custom sampling interval.
-    syntax: az iot ops asset event add --asset {asset} -g {resource_group} --event-notifier {event_notifier} --name {name} --capability-id {capability_id} --observability-mode {observability_mode} --queue-size {queue_size} --sampling-interval {sampling_interval}
-  - summary: |-
-      Add an event to an asset with the given pre-filled values.
-    syntax: az iot ops asset event add --asset MyAsset -g MyRG --event-notifier eventId --name eventName --capability-id tagId1 --observability-mode log --queue-size 2 --sampling-interval 500
+      Add an event to an asset with event name, observability mode, custom queue size, and custom sampling interval.
+    syntax: az iot ops asset event add --asset MyAsset -g MyRG --event-notifier eventId --name eventName --observability-mode log --queue-size 2 --sampling-interval 500
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -53,9 +50,6 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   optionalParameters:
-  - name: --capability-id --ci
-    summary: |-
-      Capability Id. If not provided, event name will be used.
   - name: --name -n
     summary: |-
       Event name.
@@ -65,6 +59,10 @@ directCommands:
   - name: --qs --queue-size
     summary: |-
       Custom queue size.
+  - name: --replace
+    parameterValueGroup: "false, true"
+    summary: |-
+      Replace the event if another event with the same name is already present.
   - name: --sampling-interval --si
     summary: |-
       Custom sampling interval (in milliseconds).
@@ -73,7 +71,7 @@ directCommands:
   summary: |-
     Export events in an asset.
   description: |-
-    The file name will be {asset_name}_dataPoints.{file_type}.
+    The file name will be {asset_name}_events.{file_type}.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'iot ops' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
@@ -81,22 +79,19 @@ directCommands:
   syntax: >-
     az iot ops asset event export --asset
                                   --resource-group
-                                  [--format {csv, json, portal-csv, yaml}]
+                                  [--format {csv, json, yaml}]
                                   [--od]
                                   [--replace {false, true}]
   examples:
   - summary: |-
       Export all events in an asset in JSON format.
-    syntax: az iot ops asset event export --asset {asset} -g {resource_group}
+    syntax: az iot ops asset event export --asset myasset -g myresourcegroup
   - summary: |-
-      Export all events in an asset in CSV format in a specific output directory.
-    syntax: az iot ops asset event export --asset {asset} -g {resource_group} --format csv --output-dir {output_directory}
-  - summary: |-
-      Export all events in an asset in CSV format that can be uploaded to the DOE portal.
-    syntax: az iot ops asset event export --asset {asset} -g {resource_group} --format portal-csv
+      Export all events in an asset in CSV format in a specific output directory that can be uploaded to the Digital Operations Experience.
+    syntax: az iot ops asset event export --asset myasset -g myresourcegroup --format csv --output-dir myAssetFiles
   - summary: |-
       Export all events in an asset in YAML format. Replace the file if one is present already.
-    syntax: az iot ops asset event export --asset {asset} -g {resource_group} --format yaml --replace
+    syntax: az iot ops asset event export --asset myasset -g myresourcegroup --format yaml --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -109,7 +104,7 @@ directCommands:
   optionalParameters:
   - name: --format -f
     defaultValue: "json"
-    parameterValueGroup: "csv, json, portal-csv, yaml"
+    parameterValueGroup: "csv, json, yaml"
     summary: |-
       File format.
   - name: --od --output-dir
@@ -137,11 +132,11 @@ directCommands:
                                   [--replace {false, true}]
   examples:
   - summary: |-
-      Import all events from a file. These events will be appended to the asset's current events.
-    syntax: az iot ops asset event import --asset {asset} -g {resource_group} --input-file {input_file}
+      Import all events from a file. These events will be appended to the asset's current events. Events with duplicate names will be ignored.
+    syntax: az iot ops asset event import --asset myasset -g myresourcegroup --input-file myasset_events.yaml
   - summary: |-
-      Import all events from a file. These events will replace the asset's current events.
-    syntax: az iot ops asset event import --asset {asset} -g {resource_group} --input-file {input_file} --replace
+      Import all events from a file. These events will appended the asset's current events. Events with duplicate names will replace the current asset events.
+    syntax: az iot ops asset event import --asset myasset -g myresourcegroup --input-file myasset_events.csv --replace
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -150,7 +145,7 @@ directCommands:
   - isRequired: true
     name: --if --input-file
     summary: |-
-      File path for the file containing the events. The following file types are supported: csv, json, portal-csv, yaml.
+      File path for the file containing the events. The following file types are supported: json, csv, yaml.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -160,7 +155,7 @@ directCommands:
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
-      Replace all asset events with those from the file. If false, the file events will be appended.
+      Replace duplicate asset events with those from the file. If false, the file events will be ignored. Duplicate asset events will be determined by name.
 - uid: az_iot_ops_asset_event_list
   name: az iot ops asset event list
   summary: |-
@@ -175,7 +170,7 @@ directCommands:
   examples:
   - summary: |-
       List all events in an asset.
-    syntax: az iot ops asset event list --asset {asset} -g {resource_group}
+    syntax: az iot ops asset event list --asset myasset -g myresourcegroup
   requiredParameters:
   - isRequired: true
     name: --asset -a
@@ -195,32 +190,25 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az iot ops asset event remove --asset
+                                  --name
                                   --resource-group
-                                  [--en]
-                                  [--name]
   examples:
   - summary: |-
-      Remove an event from an asset via the event notifier.
-    syntax: az iot ops asset event remove --asset {asset} -g {resource_group} --event-notifier {event_notifier}
-  - summary: |-
       Remove an event from an asset via the event name.
-    syntax: az iot ops asset event remove --asset {asset} -g {resource_group} --name {name}
+    syntax: az iot ops asset event remove --asset myasset -g myresourcegroup --name myevent
   requiredParameters:
   - isRequired: true
     name: --asset -a
     summary: |-
       Asset name.
   - isRequired: true
+    name: --name -n
+    summary: |-
+      Event name.
+  - isRequired: true
     name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
-  optionalParameters:
-  - name: --en --event-notifier
-    summary: |-
-      Event notifier.
-  - name: --name -n
-    summary: |-
-      Event name.
 commands:
 - az_iot_ops_asset_event_add
 - az_iot_ops_asset_event_export
