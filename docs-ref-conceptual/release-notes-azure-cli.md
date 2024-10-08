@@ -1,7 +1,7 @@
 ---
 title: Release notes & updates – Azure CLI | Microsoft Docs
 description: Learn about the latest Azure Command-Line Interface (CLI) release notes and updates for both the current and beta versions of the CLI
-ms.date: 09/03/2024
+ms.date: 10/01/2024
 ms.topic: concept-article
 ms.service: azure-cli
 ms.custom: devx-track-azurecli
@@ -9,6 +9,92 @@ keywords: azure cli updates, azure cli notes, azure cli versions
 ---
 
 # Azure CLI release notes
+
+## October 01, 2024
+
+Version 2.65.0
+
+### ACR
+
+* Fix #21900: `az acr task identity remove`: Fix incorrect operation_group setting
+* `az acr credential-set`: Improve help message
+
+### AD
+
+* `az ad app create/update`: Add `--service-management-reference` argument
+
+### AKS
+
+* `az aks nodepool delete-machines`: Add support to delete specific machines in an agent pool
+
+### App Config
+
+* `az appconfig`: Add premium SKU support
+
+### App Service
+
+* `az functionapp config set`: Map parameters explicitly for the internal update_site_configs function call
+
+### Compute
+
+* `az vm/vmss create`: Add `--ssh-key-type` parameter to support generating Ed25519 SSH keys
+* `az vm image list`: Expose ImageDeprecationStatus property in output
+
+### Container app
+
+* Fix #29849: `az containerapp job stop`: Fix stop execution response
+* Fix #29166: `az containerapp compose create`: Support image with tag and support get ACR from image
+
+### Cosmos DB
+
+* `az cosmosdb restore`: Add `--disable-ttl` to support for Restore with Time-To-Live Disabled
+
+### DataLake
+
+* `az dla`: Deprecate datalake analytics
+
+### HDInsight
+
+* `az hdinsight update`: Add parameter `--assign-identity-type` to allow to update to `SystemAssigned` identity.
+
+### Monitor
+
+* `az monitor action-group create`: Adjust formatting of `--actions` help message
+* `az monitor action-group update`: Adjust formatting of `--add-actions` help message
+* `az monitor action-group notification create`: Adjust formatting of `--add-actions` help message
+
+### MySQL
+
+* `az mysql flexible-server create/update`: Add `--accelerated-logs` to support configuring accelerated logs for Business Critical tier
+
+### NetAppFiles
+
+* `az netappfiles volume create`: Fix subnet id as resource id
+
+### Network
+
+* `az network vnet peering`: Refine command interface of subnet peering
+
+### Packaging
+
+* Release Docker image based on Azure Linux 3.0
+* Include `jq` in Azure Linux docker image
+* Drop Debian 10 support
+* Use Azure Linux 3.0 (`mcr.microsoft.com/azurelinux/base/core:3.0`) as the base image for docker image tag `latest` and `2.65.0`
+
+### Profile
+
+* `az login`: Fall back to device code flow in GitHub Codespaces
+
+### RDBMS
+
+* `az postgres flexible-server update`: Support case-insensitive input for `--tier`, `--performance-tier`, `--sku`, and `--maintenance-window`
+* `az postgres flexible-server migration create`: Add AWS_AURORA as a migration source type for PostgreSql
+
+### SQL
+
+* `az sql elastic-pool create`: Set `min_capacity` to `None` for non-serverless SKUs
+* `az sql mi create/update`: Add gpv2 parameter and iops parameter
 
 ## September 03, 2024
 
