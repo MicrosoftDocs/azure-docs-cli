@@ -9,7 +9,7 @@ directCommands:
 - uid: az_managedservices_definition_create
   name: az managedservices definition create
   summary: |-
-    Creates a new registration definition.
+    Create a registration definition.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
@@ -20,19 +20,20 @@ directCommands:
                                          --tenant-id
                                          [--definition-id]
                                          [--description]
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--plan-name]
                                          [--plan-product]
                                          [--plan-publisher]
                                          [--plan-version]
   examples:
   - summary: |-
-      Creates a registration definition under the default subscription scope with the required parameters.
+      Create a registration definition under the default subscription scope with the required parameters.
     syntax: az managedservices definition create --name mydef --tenant-id dab3375b-6197-4a15-a44b-16c41faa91d7 --principal-id b6f6c88a-5b7a-455e-ba40-ce146d4d3671 --role-definition-id ccdd72a7-3385-48ef-bd42-f606fba81ae7
   requiredParameters:
   - isRequired: true
     name: --name
     summary: |-
-      The name of the registration definition.
+      Name of the registration definition.
   - isRequired: true
     name: --principal-id
     summary: |-
@@ -44,46 +45,57 @@ directCommands:
   - isRequired: true
     name: --tenant-id
     summary: |-
-      The managed by tenant id.
+      Id of the managedBy tenant.
   optionalParameters:
   - name: --definition-id
     summary: |-
-      Can be used to override the generated registration definition id.
+      Guid of the registration definition.
   - name: --description
     summary: |-
-      The friendly description.
+      Description of the registration definition.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --plan-name
     summary: |-
       The plan name.
   - name: --plan-product
     summary: |-
-      The plan product.
+      The product code.
   - name: --plan-publisher
     summary: |-
-      The plan publisher.
+      The publisher ID.
   - name: --plan-version
     summary: |-
-      The plan version.
+      The plan's version.
 - uid: az_managedservices_definition_delete
   name: az managedservices definition delete
   summary: |-
-    Deletes a registration.
+    Delete a registration definition.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
-  syntax: az managedservices definition delete --definition
+  syntax: >-
+    az managedservices definition delete --definition
+                                         [--yes]
   examples:
   - summary: |-
-      Deletes the registration definition given its identifier under the default subscription scope.
+      Delete the registration definition given its identifier under the default subscription scope.
     syntax: az managedservices definition delete --definition af8772a0-fd9c-4ddc-8ad0-7d4b3913d7dd
   - summary: |-
-      Deletes the registration definition given its fully qualified resource id.
+      Delete the registration definition given its fully qualified resource id.
     syntax: az managedservices definition delete --definition /subscriptions/39033314-9b39-4c7b-84fd-0e26e55f15dc/providers/Microsoft.ManagedServices/registrationDefinitions/1d693e4f-9e79-433a-b3a2-afce1f8b61ec
   requiredParameters:
   - isRequired: true
     name: --definition
     summary: |-
-      The identifier (guid) or the fully qualified resource id of the registration definition. When resource id is used, subscription id and resource group parameters are ignored.
+      Guid of the registration definition.
+  optionalParameters:
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_managedservices_definition_list
   name: az managedservices definition list
   summary: |-
@@ -91,36 +103,100 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
-  syntax: az managedservices definition list
+  syntax: >-
+    az managedservices definition list [--max-items]
+                                       [--next-token]
   examples:
   - summary: |-
-      Lists all the registration definitions under the default subscription scope.
+      List all the registration definitions under the default subscription scope.
     syntax: az managedservices definition list
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_managedservices_definition_show
   name: az managedservices definition show
   summary: |-
-    Gets a registration definition.
+    Show the registration definition details.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
   syntax: az managedservices definition show --definition
   examples:
   - summary: |-
-      Gets the registration definition given its identifier under the default subscription scope.
+      Show the registration definition given its identifier under the default subscription scope.
     syntax: az managedservices definition show --definition af8772a0-fd9c-4ddc-8ad0-7d4b3913d7dd
   - summary: |-
-      Gets the registration definition given its fully qualified resource id.
+      Show the registration definition given its fully qualified resource id.
     syntax: az managedservices definition show --definition /subscriptions/39033314-9b39-4c7b-84fd-0e26e55f15dc/providers/Microsoft.ManagedServices/registrationDefinitions/1d693e4f-9e79-433a-b3a2-afce1f8b61ec
   requiredParameters:
   - isRequired: true
     name: --definition
     summary: |-
-      The identifier (guid) or the fully qualified resource id of the registration definition. When resource id is used, subscription id and resource group parameters are ignored.
+      Guid of the registration definition.
+- uid: az_managedservices_definition_wait
+  name: az managedservices definition wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
+  syntax: >-
+    az managedservices definition wait --definition
+                                       --scope
+                                       [--created]
+                                       [--custom]
+                                       [--deleted]
+                                       [--exists]
+                                       [--interval]
+                                       [--timeout]
+                                       [--updated]
+  requiredParameters:
+  - isRequired: true
+    name: --definition
+    summary: |-
+      Guid of the registration definition.
+  - isRequired: true
+    name: --scope
+    summary: |-
+      Scope of the resource.
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_managedservices_definition_create
 - az_managedservices_definition_delete
 - az_managedservices_definition_list
 - az_managedservices_definition_show
+- az_managedservices_definition_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -146,5 +222,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/16/2019
+  ms.date: 09/03/2024
   description: Manage the registration definitions in Azure.

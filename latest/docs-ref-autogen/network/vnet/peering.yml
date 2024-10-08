@@ -80,6 +80,7 @@ directCommands:
     summary: |-
       Do not wait for the long-running operation to finish.
   - name: --peer-complete-vnets
+    defaultValue: "True"
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Whether complete virtual network address space is peered.
@@ -230,20 +231,30 @@ directCommands:
 - uid: az_network_vnet_peering_update
   name: az network vnet peering update
   summary: |-
-    Update a peering.
+    Update a peering in the specified virtual network.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
   syntax: >-
     az network vnet peering update [--add]
+                                   [--allow-forwarded-traffic {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--allow-gateway-transit {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--allow-vnet-access {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--enable-only-ipv6 {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--ids]
+                                   [--local-subnet-names]
                                    [--name]
                                    [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--peer-complete-vnets {0, 1, f, false, n, no, t, true, y, yes}]
+                                   [--remote-subnet-names]
+                                   [--remote-vnet]
                                    [--remove]
                                    [--resource-group]
                                    [--set]
                                    [--subscription]
+                                   [--sync-remote {true}]
+                                   [--use-remote-gateways {0, 1, f, false, n, no, t, true, y, yes}]
                                    [--vnet-name]
   examples:
   - summary: |-
@@ -261,7 +272,23 @@ directCommands:
   optionalParameters:
   - name: --add
     summary: |-
-      Add an object to a list of objects by specifying a path and key value pairs.  Example: --add property.listProperty <key=value, string or JSON string>.
+      Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --allow-forwarded-traffic
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows forwarded traffic from the local VNet to the remote VNet.
+  - name: --allow-gateway-transit
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows gateway link to be used in the remote VNet.
+  - name: --allow-vnet-access
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows access from the local VNet to the remote VNet.
+  - name: --enable-only-ipv6
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Whether only Ipv6 address space is peered for subnet peering.
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -269,6 +296,9 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --local-subnet-names
+    summary: |-
+      List of local subnet names that are subnet peered with remote virtual network.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --name -n
     summary: |-
       The name of the VNet peering.
@@ -276,18 +306,36 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --peer-complete-vnets
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Whether complete virtual network address space is peered.
+  - name: --remote-subnet-names
+    summary: |-
+      List of remote subnet names from remote virtual network that are subnet peered.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --remote-vnet
+    summary: |-
+      Name or ID of the remote VNet.
   - name: --remove
     summary: |-
-      Remove a property or an element from a list.  Example: --remove property.list <indexToRemove> OR --remove propertyToRemove.
+      Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --set
     summary: |-
-      Update an object by specifying a property path and value to set.  Example: --set property1.property2=<value>.
+      Update an object by specifying a property path and value to set.  Example: `--set property1.property2=<value>`.
   - name: --subscription
     summary: |-
       Name or ID of subscription. You can configure the default subscription using `az account set -s NAME_OR_ID`.
+  - name: --sync-remote
+    parameterValueGroup: "true"
+    summary: |-
+      Parameter indicates the intention to sync the peering with the current address space on the remote vNet after it's updated.
+  - name: --use-remote-gateways
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Allows VNet to use the remote VNet's gateway. Remote VNet gateway must have --allow-gateway-transit enabled for remote peering. Only 1 peering can have this flag enabled. Cannot be set if the VNet already has a gateway.
   - name: --vnet-name
     summary: |-
       The virtual network (VNet) name.

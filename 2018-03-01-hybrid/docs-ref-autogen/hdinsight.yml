@@ -263,7 +263,7 @@ directCommands:
   optionalParameters:
   - name: --assign-identity
     summary: |-
-      The name or ID of user assigned identity.
+      The name or ID of user assigned identity. Skip this field when assign_identity_type is SystemAssigned.
   - name: --autoscale-count --autoscale-workernode-count
     summary: |-
       The scheduled workernode count.
@@ -622,7 +622,7 @@ directCommands:
 - uid: az_hdinsight_update
   name: az hdinsight update
   summary: |-
-    Update the tags or identity of the specified HDInsight cluster.
+    Update the tags or identity of the specified HDInsight cluster. Setting the identity property will override the existing identity configuration of the cluster.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/hdinsight/_help.py
@@ -630,12 +630,25 @@ directCommands:
     az hdinsight update --name
                         --resource-group
                         [--assign-identity]
+                        [--assign-identity-type]
                         [--no-wait]
                         [--tags]
   examples:
   - summary: |-
       Update the tags.
     syntax: az hdinsight update --name MyCluster --resource-group rg --tags key=value
+  - summary: |-
+      Update manage identity with single UserAssigned msi.
+    syntax: az hdinsight update --name MyCluster --resource-group rg --assign-identity-type UserAssigned --assign-identity MyMsi
+  - summary: |-
+      Update manage identity with multiple UserAssigned msi.
+    syntax: az hdinsight update --name MyCluster --resource-group rg --assign-identity-type UserAssigned --assign-identity MyMsi1 MyMsi2
+  - summary: |-
+      Update SystemAssigned manage identity.
+    syntax: az hdinsight update --name MyCluster --resource-group rg --assign-identity-type SystemAssigned
+  - summary: |-
+      Update manage identity with SystemAssigned,UserAssigned msi.
+    syntax: az hdinsight update --name MyCluster --resource-group rg --assign-identity-type "SystemAssigned,UserAssigned" --assign-identity MyMsi1
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -648,7 +661,10 @@ directCommands:
   optionalParameters:
   - name: --assign-identity
     summary: |-
-      The name or ID of user assigned identity.
+      The name or ID of user assigned identity. Skip this field when assign_identity_type is SystemAssigned.
+  - name: --assign-identity-type
+    summary: |-
+      The type of identity used for the cluster. Allowed values: `None`, `SystemAssigned`, `SystemAssigned,UserAssigned`, `UserAssigned`.
   - name: --no-wait
     defaultValue: "False"
     summary: |-
@@ -786,5 +802,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 08/26/2024
+  ms.date: 09/20/2024
   description: Manage HDInsight resources.

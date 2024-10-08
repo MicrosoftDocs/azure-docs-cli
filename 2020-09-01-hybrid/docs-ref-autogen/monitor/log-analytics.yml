@@ -6,7 +6,7 @@ importantNote: >-
 
   > This command group has commands that are defined in two or more extensions. Each extension will automatically install the first time you run an extension command. [Learn more](https://learn.microsoft.com/cli/azure/azure-cli-extensions-overview) about extensions.
 summary: |-
-  Commands for querying data in Log Analytics workspaces.
+  Manage Azure log analytics.
 status: GA
 sourceType: Extension
 directCommands:
@@ -24,13 +24,10 @@ directCommands:
   examples:
   - summary: |-
       Execute a simple query over past 3.5 days.
-    syntax: az monitor log-analytics query -w workspace-customId --analytics-query "AzureActivity | summarize count() by bin(timestamp, 1h)" -t P3DT12H
+    syntax: az monitor log-analytics query -w workspace-customId --analytics-query "AzureActivity | summarize count() by bin(TimeGenerated, 1h)" -t P3DT12H
   - summary: |-
       Execute a saved query in workspace
-    syntax: >-
-      QUERY=$(az monitor log-analytics workspace saved-search show -g resource-group --workspace-name workspace-name -n query-name --query query --output tsv)
-
-      az monitor log-analytics query -w workspace-customId --analytics-query "$QUERY"
+    syntax: az monitor log-analytics query -w workspace-customId --analytics-query $(az monitor log-analytics workspace saved-search show -g resource-group --workspace-name workspace-name -n query-name --query query --output tsv)
   requiredParameters:
   - isRequired: true
     name: --analytics-query
@@ -46,7 +43,7 @@ directCommands:
       Timespan over which to query. Defaults to querying all available data.
   - name: --workspaces
     summary: |-
-      Additional workspaces to union data for querying. Specify additional workspace IDs separated by space.
+      Additional workspaces to union data for querying. Specify additional workspace IDs separated by space.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
 commands:
 - az_monitor_log-analytics_query
 - az_monitor_log-analytics_solution
@@ -81,4 +78,4 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  description: Commands for querying data in Log Analytics workspaces.
+  description: Manage Azure log analytics.

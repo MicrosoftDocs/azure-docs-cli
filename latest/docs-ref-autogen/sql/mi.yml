@@ -32,8 +32,10 @@ directCommands:
                      [--external-admin-principal-type]
                      [--external-admin-sid]
                      [--family]
+                     [--gpv2 {false, true}]
                      [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
                      [--instance-pool-name]
+                     [--iops]
                      [--key-id]
                      [--license-type {BasePrice, LicenseIncluded}]
                      [--location]
@@ -98,6 +100,9 @@ directCommands:
   - summary: |-
       Create managed instance which uses Windows authentication metadata mode
     syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} --am Windows
+  - summary: |-
+      Create GPv2 managed instance with specified IOPS limit
+    syntax: az sql mi create -g mygroup -n myinstance -l mylocation -i -u myusername -p mypassword --subnet /subscriptions/{SubID}/resourceGroups/{ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{VNETName}/subnets/{SubnetName} -e GeneralPurpose --gpv2 true -f Gen8IH -c 4 --storage 256GB --iops 3000
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -161,6 +166,10 @@ directCommands:
   - name: --family -f
     summary: |-
       The compute generation component of the sku. Allowed values include: Gen4, Gen5.
+  - name: --gpv2
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether or not this is a GPv2 variant of General Purpose edition.
   - name: --identity-type -t
     parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
     summary: |-
@@ -168,6 +177,9 @@ directCommands:
   - name: --instance-pool-name
     summary: |-
       Name of the Instance Pool where managed instance will be placed.
+  - name: --iops
+    summary: |-
+      The storage iops of the managed instance. Storage iops can be specified in increments of 1.
   - name: --key-id -k
     summary: |-
       The key vault URI for encryption.
@@ -497,9 +509,11 @@ directCommands:
                      [--edition]
                      [--family]
                      [--force-string]
+                     [--gpv2 {false, true}]
                      [--identity-type {None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned}]
                      [--ids]
                      [--instance-pool-name]
+                     [--iops]
                      [--key-id]
                      [--license-type {BasePrice, LicenseIncluded}]
                      [--maint-config-id]
@@ -577,6 +591,9 @@ directCommands:
   - summary: |-
       Update managed instance to use Windows authentication metadata mode
     syntax: az sql mi update -g mygroup -n myinstance --am Windows
+  - summary: |-
+      Update managed instance to GPv2 with specified IOPS limit
+    syntax: az sql mi update -g mygroup -n myinstance -e GeneralPurpose --gpv2 true --iops 3000
   optionalParameters:
   - name: --add
     defaultValue: "[]"
@@ -613,6 +630,10 @@ directCommands:
     defaultValue: "False"
     summary: |-
       When using 'set' or 'add', preserve string literals instead of attempting to convert to JSON.
+  - name: --gpv2
+    parameterValueGroup: "false, true"
+    summary: |-
+      Whether or not this is a GPv2 variant of General Purpose edition.
   - name: --identity-type -t
     parameterValueGroup: "None, SystemAssigned, SystemAssigned,UserAssigned, UserAssigned"
     summary: |-
@@ -623,6 +644,9 @@ directCommands:
   - name: --instance-pool-name
     summary: |-
       Name of the Instance Pool where managed instance will be placed.
+  - name: --iops
+    summary: |-
+      The storage iops of the managed instance. Storage iops can be specified in increments of 1.
   - name: --key-id -k
     summary: |-
       The key vault URI for encryption.
@@ -789,5 +813,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 08/06/2024
+  ms.date: 09/13/2024
   description: Manage SQL managed instances.
