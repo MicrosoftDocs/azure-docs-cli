@@ -13,9 +13,9 @@ keywords: Install azure cli, azure cli macos, macos cli, install azure cli macos
 
 # Install Azure CLI on macOS
 
-The Azure Command-Line Interface (CLI) allows the execution of commands through a terminal using interactive command-line prompts or a script. You can install the Azure CLI locally on macOS computers. The Azure CLI on macOS allows the execution of various commands through a terminal using interactive command-line prompts or a script.
+The Azure Command-Line Interface (CLI) is a cross-platform command-line tool that can be installed locally on macOS computers. You can use the Azure CLI to connect to Azure and execute administrative commands on Azure resources using interactive command-line prompts or a script.
 
-For the macOS platform, you can install the Azure CLI with [homebrew package manager](https://brew.sh). Homebrew makes it easy to keep your
+For the macOS platform, install the Azure CLI with [homebrew package manager](https://brew.sh). Homebrew makes it easy to keep your
 installation of the CLI update to date. The CLI package has been tested on macOS versions 10.9 and later.
 
 [!INCLUDE [current-version](includes/current-version.md)]
