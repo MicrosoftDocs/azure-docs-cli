@@ -80,6 +80,7 @@ Version 2.65.0
 * Release Docker image based on Azure Linux 3.0
 * Include `jq` in Azure Linux docker image
 * Drop Debian 10 support
+* Use Azure Linux 3.0 (`mcr.microsoft.com/azurelinux/base/core:3.0`) as the base image for docker image tag `latest` and `2.65.0`
 
 ### Profile
 
