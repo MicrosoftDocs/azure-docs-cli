@@ -9,13 +9,14 @@ directCommands:
 - uid: az_managedservices_assignment_create
   name: az managedservices assignment create
   summary: |-
-    Creates a new registration assignment.
+    Create a registration assignment.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
   syntax: >-
     az managedservices assignment create --definition
                                          [--assignment-id]
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--resource-group]
   examples:
   - summary: |-
@@ -28,30 +29,36 @@ directCommands:
   - isRequired: true
     name: --definition
     summary: |-
-      The fully qualified resource id of the registration definition.
+      Fully qualified path of the registration definition.
   optionalParameters:
   - name: --assignment-id
     summary: |-
       Can be used to override the generated registration assignment id.
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_managedservices_assignment_delete
   name: az managedservices assignment delete
   summary: |-
-    Deletes the registration assignment.
+    Delete a registration assignment.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
   syntax: >-
     az managedservices assignment delete --assignment
+                                         [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                                          [--resource-group]
+                                         [--yes]
   examples:
   - summary: |-
-      Deletes an assignment given its identifier under the default subscription scope.
+      Delete an assignment given its identifier under the default subscription scope.
     syntax: az managedservices assignment delete --assignment d3087cf0-e180-4cca-b147-54ae00c7b504
   - summary: |-
-      Deletes an assignment given its fully qualified resource id.
+      Delete an assignment given its fully qualified resource id
     syntax: az managedservices assignment delete --assignment /subscriptions/a62076fa-768a-403c-9d9d-6a9919aae441/providers/Microsoft.ManagedServices/registrationAssignments/0c3e9687-b461-4615-b6e4-74d54998d6e4
   requiredParameters:
   - isRequired: true
@@ -59,9 +66,17 @@ directCommands:
     summary: |-
       The identifier (guid) or the fully qualified resource id of the registration assignment. When resource id is used, subscription id and resource group parameters are ignored.
   optionalParameters:
+  - name: --no-wait
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Do not wait for the long-running operation to finish.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+  - name: --yes -y
+    defaultValue: "False"
+    summary: |-
+      Do not prompt for confirmation.
 - uid: az_managedservices_assignment_list
   name: az managedservices assignment list
   summary: |-
@@ -70,7 +85,9 @@ directCommands:
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
   syntax: >-
-    az managedservices assignment list [--include-definition {false, true}]
+    az managedservices assignment list [--include-definition {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--max-items]
+                                       [--next-token]
                                        [--resource-group]
   examples:
   - summary: |-
@@ -84,32 +101,38 @@ directCommands:
     syntax: az managedservices assignment list --include-definition true
   optionalParameters:
   - name: --include-definition
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      When provided, gets the associated registration definition details.
+      Tells whether to return registration definition details also along with registration assignment details.
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
 - uid: az_managedservices_assignment_show
   name: az managedservices assignment show
   summary: |-
-    Gets a registration assignment.
+    Show registration assignment.
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
   syntax: >-
     az managedservices assignment show --assignment
-                                       [--include-definition {false, true}]
+                                       [--include-definition {0, 1, f, false, n, no, t, true, y, yes}]
                                        [--resource-group]
   examples:
   - summary: |-
-      Get an assignment given its identifier under the default subscription scope.
+      Show an assignment given its identifier under the default subscription scope.
     syntax: az managedservices assignment show --assignment d3087cf0-e180-4cca-b147-54ae00c7b504
   - summary: |-
-      Get an assignment given its fully qualified resource id.
+      Show an assignment given its fully qualified resource id.
     syntax: az managedservices assignment show --assignment /subscriptions/a62076fa-768a-403c-9d9d-6a9919aae441/providers/Microsoft.ManagedServices/registrationAssignments/0c3e9687-b461-4615-b6e4-74d54998d6e4
   - summary: |-
-      Get an assignment given its identifier under the default subscription scope with the registration definition details.
+      Show an assignment given its identifier under the default subscription scope with the registration definition details.
     syntax: az managedservices assignment show --assignment d3087cf0-e180-4cca-b147-54ae00c7b504 --include-definition true
   requiredParameters:
   - isRequired: true
@@ -118,17 +141,77 @@ directCommands:
       The identifier (guid) or the fully qualified resource id of the registration assignment. When resource id is used, subscription id and resource group parameters are ignored.
   optionalParameters:
   - name: --include-definition
-    parameterValueGroup: "false, true"
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
-      When provided, gets the associated registration definition details.
+      Tells whether to return registration definition details also along with registration assignment details.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
+- uid: az_managedservices_assignment_wait
+  name: az managedservices assignment wait
+  summary: |-
+    Place the CLI in a waiting state until a condition is met.
+  status: GA
+  sourceType: Core
+  editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/managedservices/_help.py
+  syntax: >-
+    az managedservices assignment wait --assignment
+                                       --scope
+                                       [--created]
+                                       [--custom]
+                                       [--deleted]
+                                       [--exists]
+                                       [--include-definition {0, 1, f, false, n, no, t, true, y, yes}]
+                                       [--interval]
+                                       [--timeout]
+                                       [--updated]
+  requiredParameters:
+  - isRequired: true
+    name: --assignment
+    summary: |-
+      The identifier (guid) or the fully qualified resource id of the registration assignment. When resource id is used, subscription id and resource group parameters are ignored.
+  - isRequired: true
+    name: --scope
+    summary: |-
+      Scope of the resource.
+  optionalParameters:
+  - name: --created
+    defaultValue: "False"
+    summary: |-
+      Wait until created with 'provisioningState' at 'Succeeded'.
+  - name: --custom
+    summary: |-
+      Wait until the condition satisfies a custom JMESPath query. E.g. provisioningState!='InProgress', instanceView.statuses[?code=='PowerState/running'].
+  - name: --deleted
+    defaultValue: "False"
+    summary: |-
+      Wait until deleted.
+  - name: --exists
+    defaultValue: "False"
+    summary: |-
+      Wait until the resource exists.
+  - name: --include-definition
+    parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
+    summary: |-
+      Tells whether to return registration definition details also along with registration assignment details.
+  - name: --interval
+    defaultValue: "30"
+    summary: |-
+      Polling interval in seconds.
+  - name: --timeout
+    defaultValue: "3600"
+    summary: |-
+      Maximum wait in seconds.
+  - name: --updated
+    defaultValue: "False"
+    summary: |-
+      Wait until updated with provisioningState at 'Succeeded'.
 commands:
 - az_managedservices_assignment_create
 - az_managedservices_assignment_delete
 - az_managedservices_assignment_list
 - az_managedservices_assignment_show
+- az_managedservices_assignment_wait
 globalParameters:
 - name: --debug
   summary: |-
@@ -154,5 +237,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 09/16/2019
+  ms.date: 09/03/2024
   description: Manage the registration assignments in Azure.

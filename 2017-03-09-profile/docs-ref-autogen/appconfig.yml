@@ -21,13 +21,22 @@ directCommands:
                         [--disable-local-auth {false, true}]
                         [--enable-public-network {false, true}]
                         [--enable-purge-protection {false, true}]
+                        [--no-replica {false, true}]
+                        [--replica-location]
+                        [--replica-name]
                         [--retention-days]
-                        [--sku {Free, Standard}]
+                        [--sku {Free, Premium, Standard}]
                         [--tags]
   examples:
   - summary: |-
       Create an App Configuration store with name, location, sku, tags and resource group.
     syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --sku Standard --tags key1=value1 key2=value2
+  - summary: |-
+      Create a premium sku App Configuration store with a replica
+    syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --sku Premium --replica-name MyReplica --replica-location eastus
+  - summary: |-
+      Create a premium sku App Configuration store without a replica
+    syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --sku Premium --no-replica
   - summary: |-
       Create an App Configuration store with name, location, sku and resource group with system assigned identity.
     syntax: az appconfig create -g MyResourceGroup -n MyAppConfiguration -l westus --sku Standard --assign-identity
@@ -66,12 +75,22 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Property specifying whether protection against purge is enabled for this App Configuration store. Setting this property to true activates protection against purge for this App Configuration store and its contents. Enabling this functionality is irreversible.
+  - name: --no-replica
+    parameterValueGroup: "false, true"
+    summary: |-
+      Proceed without replica creation for premium tier store.
+  - name: --replica-location
+    summary: |-
+      The location of the replica of the App Configuration store.
+  - name: --replica-name
+    summary: |-
+      Name of the replica of the App Configuration store.
   - name: --retention-days
     summary: |-
       Number of days to retain the soft delete enabled App Configuration store after deleting. Must be a positive integer between 0 and 7.
   - name: --sku
     defaultValue: "Standard"
-    parameterValueGroup: "Free, Standard"
+    parameterValueGroup: "Free, Premium, Standard"
     summary: |-
       The sku of the App Configuration store.
   - name: --tags
@@ -256,15 +275,18 @@ directCommands:
                         [--encryption-key-version]
                         [--identity-client-id]
                         [--resource-group]
-                        [--sku {Free, Standard}]
+                        [--sku {Free, Premium, Standard}]
                         [--tags]
   examples:
   - summary: |-
       Update tags of an App Configuration store
     syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --tags key1=value1 key2=value2
   - summary: |-
-      Upgrade sku of an App Configuration store to standard
+      Upgrade sku of an App Configuration store to the standard tier
     syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --sku Standard
+  - summary: |-
+      Upgrade sku of an App Configuration store to the premium tier
+    syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --sku Premium
   - summary: |-
       Enable customer encryption key with system assigned identity
     syntax: az appconfig update -g MyResourceGroup -n MyAppConfiguration --encryption-key-name myKey --encryption-key-version keyVersion --encryption-key-vault https://keyVaultName.vault.azure.net
@@ -308,7 +330,7 @@ directCommands:
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
   - name: --sku
-    parameterValueGroup: "Free, Standard"
+    parameterValueGroup: "Free, Premium, Standard"
     summary: |-
       The sku of the App Configuration store.
   - name: --tags
@@ -395,5 +417,5 @@ globalParameters:
   summary: |-
     Increase logging verbosity. Use --debug for full debug logs.
 metadata:
-  ms.date: 08/27/2024
+  ms.date: 09/06/2024
   description: Manage App Configurations.
