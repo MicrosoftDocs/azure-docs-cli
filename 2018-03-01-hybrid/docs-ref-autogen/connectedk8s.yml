@@ -20,6 +20,8 @@ directCommands:
     az connectedk8s connect --name
                             --resource-group
                             [--azure-hybrid-benefit {False, NotApplicable, True}]
+                            [--config]
+                            [--config-protected]
                             [--container-log-path]
                             [--correlation-id]
                             [--custom-ca-cert]
@@ -30,6 +32,7 @@ directCommands:
                             [--enable-oidc-issuer {false, true}]
                             [--enable-private-link {false, true}]
                             [--enable-wi {false, true}]
+                            [--gateway-resource-id]
                             [--infrastructure {LTSCWindows 10 Enterprise LTSC, Windows 10 Enterprise, Windows 10 Enterprise LTSC 2019, Windows 10 Enterprise LTSC 2021, Windows 10 Enterprise N, Windows 10 Enterprise N LTSC 2019, Windows 10 Enterprise N LTSC 2021, Windows 10 IoT Enterprise, Windows 10 IoT Enterprise LTSC 2019, Windows 10 IoT Enterprise LTSC 2021, Windows 10 Pro, Windows 11 Enterprise, Windows 11 Enterprise N, Windows 11 IoT Enterprise, Windows 11 Pro, Windows Server 2019, Windows Server 2019 Datacenter, Windows Server 2019 Standard, Windows Server 2022, Windows Server 2022 Datacenter, Windows Server 2022 Standard, aws, azure, azure_stack_edge, azure_stack_hci, azure_stack_hub, gcp, generic, vsphere, windows_server}]
                             [--kube-config]
                             [--kube-context]
@@ -72,6 +75,9 @@ directCommands:
   - summary: |-
       Onboard a connected kubernetes cluster with oidc issuer enabled using a self hosted issuer url for public cloud cluster.
     syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName --enable-oidc-issuer --self-hosted-issuer aksissuerurl
+  - summary: |-
+      Onboard a connected kubernetes cluster with azure gateway feature enabled.
+    syntax: az connectedk8s connect -g resourceGroupName -n connectedClusterName --gateway-resource-id gatewayResourceId
   requiredParameters:
   - isRequired: true
     name: --name -n
@@ -86,6 +92,14 @@ directCommands:
     parameterValueGroup: "False, NotApplicable, True"
     summary: |-
       Flag to enable/disable Azure Hybrid Benefit feature.
+  - name: --config --configuration-settings
+    summary: |-
+      Configuration Settings as key=value pair.  Repeat parameter for each setting. Do not use this for secrets, as this value is returned in response.
+    isPreview: true
+  - name: --config-protected --config-protected-settings
+    summary: |-
+      Configuration Protected Settings as key=value pair.  Repeat parameter for each setting.  Only the key is returned in response, the value is not.
+    isPreview: true
   - name: --container-log-path
     summary: |-
       Override the default container log path to enable fluent-bit logging.
@@ -114,7 +128,7 @@ directCommands:
     defaultValue: "False"
     parameterValueGroup: "false, true"
     summary: |-
-      Enable creation of OIDC issuer url used for workload identity.
+      Enable creation of OIDC issuer url used for workload identity federation.
     isPreview: true
   - name: --enable-private-link
     parameterValueGroup: "false, true"
@@ -126,6 +140,10 @@ directCommands:
     parameterValueGroup: "false, true"
     summary: |-
       Enable workload identity webhook.
+    isPreview: true
+  - name: --gateway-resource-id
+    summary: |-
+      ArmID of the Arc Gateway resource.
     isPreview: true
   - name: --infrastructure
     defaultValue: "generic"
@@ -513,14 +531,18 @@ directCommands:
   syntax: >-
     az connectedk8s update [--auto-upgrade {false, true}]
                            [--azure-hybrid-benefit {False, NotApplicable, True}]
+                           [--config]
+                           [--config-protected]
                            [--container-log-path]
                            [--custom-ca-cert]
+                           [--disable-gateway {false, true}]
                            [--disable-proxy]
                            [--disable-wi {false, true}]
                            [--distribution {aks, aks_edge_k3s, aks_edge_k8s, aks_engine, aks_management, aks_workload, canonical, capz, eks, generic, gke, k3s, karbon, kind, minikube, openshift, rancher_rke, tkg}]
                            [--distribution-version]
                            [--enable-oidc-issuer {false, true}]
                            [--enable-wi {false, true}]
+                           [--gateway-resource-id]
                            [--ids]
                            [--kube-config]
                            [--kube-context]
@@ -553,6 +575,12 @@ directCommands:
   - summary: |-
       Disable the workload identity webhook on a connected kubernetes cluster.
     syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --disable-workload-identity
+  - summary: |-
+      Update a connected kubernetes cluster with azure gateway feature enabled.
+    syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --gateway-resource-id gatewayResourceId
+  - summary: |-
+      Disable the azure gateway feature on a connected kubernetes cluster.
+    syntax: az connectedk8s update -g resourceGroupName -n connectedClusterName --disable-gateway
   optionalParameters:
   - name: --auto-upgrade
     parameterValueGroup: "false, true"
@@ -562,12 +590,26 @@ directCommands:
     parameterValueGroup: "False, NotApplicable, True"
     summary: |-
       Flag to enable/disable Azure Hybrid Benefit feature.
+  - name: --config --configuration-settings
+    summary: |-
+      Configuration Settings as key=value pair.  Repeat parameter for each setting. Do not use this for secrets, as this value is returned in response.
+    isPreview: true
+  - name: --config-protected --config-protected-settings
+    summary: |-
+      Configuration Protected Settings as key=value pair.  Repeat parameter for each setting.  Only the key is returned in response, the value is not.
+    isPreview: true
   - name: --container-log-path
     summary: |-
       Override the default container log path to enable fluent-bit logging.
   - name: --custom-ca-cert --proxy-cert
     summary: |-
       Path to the certificate file for proxy or custom Certificate Authority.
+  - name: --disable-gateway
+    defaultValue: "False"
+    parameterValueGroup: "false, true"
+    summary: |-
+      Flag to disable Arc Gateway.
+    isPreview: true
   - name: --disable-proxy
     defaultValue: "False"
     summary: |-
@@ -587,12 +629,16 @@ directCommands:
   - name: --enable-oidc-issuer
     parameterValueGroup: "false, true"
     summary: |-
-      Enable creation of OIDC issuer url used for workload identity.
+      Enable creation of OIDC issuer url used for workload identity federation.
     isPreview: true
   - name: --enable-wi --enable-workload-identity
     parameterValueGroup: "false, true"
     summary: |-
       Enable workload identity webhook.
+    isPreview: true
+  - name: --gateway-resource-id
+    summary: |-
+      ArmID of the Arc Gateway resource.
     isPreview: true
   - name: --ids
     summary: |-
