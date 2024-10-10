@@ -64,6 +64,7 @@ directCommands:
                            [--location]
                            [--network-security-group]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--pe-vnet-policies {Basic, Disabled}]
                            [--subnet-name]
                            [--subnet-prefixes]
                            [--subnets]
@@ -111,16 +112,13 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable encryption on the virtual network.
-    isPreview: true
   - name: --encryption-enforcement-policy --encryption-policy
     parameterValueGroup: "AllowUnencrypted, DropUnencrypted"
     summary: |-
       To control if the Virtual Machine without encryption is allowed in encrypted Virtual Network or not.
-    isPreview: true
   - name: --flowtimeout
     summary: |-
       The FlowTimeout value (in minutes) for the Virtual Network.
-    isPreview: true
   - name: --location -l
     summary: |-
       Resource location.
@@ -131,6 +129,10 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --pe-vnet-policies --private-endpoint-vnet-policies
+    parameterValueGroup: "Basic, Disabled"
+    summary: |-
+      Private Endpoint VNet Policies.
   - name: --subnet-name
     summary: |-
       Name of a new subnet to create within the VNet.
@@ -189,7 +191,10 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
-  syntax: az network vnet list [--resource-group]
+  syntax: >-
+    az network vnet list [--max-items]
+                         [--next-token]
+                         [--resource-group]
   examples:
   - summary: |-
       List all virtual networks in a subscription.
@@ -201,6 +206,12 @@ directCommands:
       List virtual networks in a subscription which specify a certain address prefix.
     syntax: az network vnet list --query "[?contains(addressSpace.addressPrefixes, '10.0.0.0/16')]"
   optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
   - name: --resource-group -g
     summary: |-
       Name of resource group. You can configure the default group using `az configure --defaults group=<name>`.
@@ -244,7 +255,10 @@ directCommands:
   status: GA
   sourceType: Core
   editLink: https://github.com/Azure/azure-cli/blob/dev/src/azure-cli/azure/cli/command_modules/network/_help.py
-  syntax: az network vnet list-endpoint-services --location
+  syntax: >-
+    az network vnet list-endpoint-services --location
+                                           [--max-items]
+                                           [--next-token]
   examples:
   - summary: |-
       List the endpoint services available for use in the West US region.
@@ -254,6 +268,13 @@ directCommands:
     name: --location -l
     summary: |-
       Location. Values from: `az account list-locations`. You can configure the default location using `az configure --defaults location=<location>`.
+  optionalParameters:
+  - name: --max-items
+    summary: |-
+      Total number of items to return in the command's output. If the total number of items available is more than the value specified, a token is provided in the command's output. To resume pagination, provide the token value in `--next-token` argument of a subsequent command.
+  - name: --next-token
+    summary: |-
+      Token to specify where to start paginating. This is the token value from a previously truncated response.
 - uid: az_network_vnet_show
   name: az network vnet show
   summary: |-
@@ -308,6 +329,7 @@ directCommands:
                            [--ids]
                            [--name]
                            [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
+                           [--pe-vnet-policies {Basic, Disabled}]
                            [--remove]
                            [--resource-group]
                            [--set]
@@ -347,16 +369,13 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Enable encryption on the virtual network.
-    isPreview: true
   - name: --encryption-enforcement-policy --encryption-policy
     parameterValueGroup: "AllowUnencrypted, DropUnencrypted"
     summary: |-
       To control if the Virtual Machine without encryption is allowed in encrypted Virtual Network or not.
-    isPreview: true
   - name: --flowtimeout
     summary: |-
       The FlowTimeout value (in minutes) for the Virtual Network.
-    isPreview: true
   - name: --force-string
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -371,6 +390,10 @@ directCommands:
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
       Do not wait for the long-running operation to finish.
+  - name: --pe-vnet-policies --private-endpoint-vnet-policies
+    parameterValueGroup: "Basic, Disabled"
+    summary: |-
+      Private Endpoint VNet Policies.
   - name: --remove
     summary: |-
       Remove a property or an element from a list.  Example: `--remove property.list <indexToRemove>` OR `--remove propertyToRemove`.
