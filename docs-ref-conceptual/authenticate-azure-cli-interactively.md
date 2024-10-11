@@ -214,9 +214,8 @@ However, when you clear your subscription cache, you cannot run Azure CLI comman
 
 When your default browser is Microsoft Edge, you might encounter the following error when attempting
 to sign in to Azure interactively with `az login`: "_The connection for this site isn't secure._" To
-resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in Microsoft
-
-Edge. Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
+resolve this issue, visit [edge://net-internals/#hsts](edge://net-internals/#hsts) in Microsoft Edge. 
+Add `localhost` under "_Delete domain security policy_" and select <kbd>Delete</kbd>.
 
 ## See also
 
