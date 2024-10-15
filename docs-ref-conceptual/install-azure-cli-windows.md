@@ -21,8 +21,8 @@ for the list of supported package managers or how to install manually under WSL.
 
 **There are four ways to install the Azure CLI in Windows:**
 
-* [Microsoft Installer (MSI)](#tabs=azure-cli)
-* [Microsoft Installer (MSI) in PowerShell](/cli/azure/install-azure-cli-windows?tabs=powershell)
+* [Microsoft Installer (MSI)](#install-or-update?tabs=azure-cli)
+* [Microsoft Installer (MSI) in PowerShell](?tabs=powershell#install-or-update)
 * [Windows package manager](/cli/azure/install-azure-cli-windows?tabs=winget)
 * [ZIP package](/cli/azure/install-azure-cli-windows?tabs=zip)
 
