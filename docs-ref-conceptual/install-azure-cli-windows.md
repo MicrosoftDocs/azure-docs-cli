@@ -19,9 +19,9 @@ For Windows, the Azure CLI is installed via an MSI or a ZIP package, which gives
 When you perform an installation for Windows Subsystem for Linux (WSL), packages are available for your Linux distribution. See the [main install page](install-azure-cli.md)
 for the list of supported package managers or how to install manually under WSL.
 
-There are four ways to install the Azure CLI in Windows:
+**There are four ways to install the Azure CLI in Windows:**
 
-* [Microsoft Installer (MSI)](/cli/azure/install-azure-cli-windows?tabs=azure-cli)
+* [Microsoft Installer (MSI)](#tabs=azure-cli)
 * [Microsoft Installer (MSI) in PowerShell](/cli/azure/install-azure-cli-windows?tabs=powershell)
 * [Windows package manager](/cli/azure/install-azure-cli-windows?tabs=winget)
 * [ZIP package](/cli/azure/install-azure-cli-windows?tabs=zip)
