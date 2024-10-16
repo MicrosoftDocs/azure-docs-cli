@@ -92,10 +92,6 @@ Easily find the LTS release date by running the `az version` command. Notice the
 }  
 ```
 
-The following image illustrates the release cadence and support lifecycle of Azure CLI for STS and LTS releases.
-
-![Support Lifecycle](./media/support-lifecycle/support-lifecycle.png)
-
 The following table provides examples of how the release cadence correlates with the support
 lifecycle:
 
