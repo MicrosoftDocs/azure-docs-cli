@@ -177,7 +177,7 @@ Here are examples for using variables and looping through a list when working wi
 
 Use these scripts to save IDs to variables:
 
-### [Bash](#tab/bash2)
+### [Cmd](#tab/cmd2)
 
 ```azurecli
 ECHO OFF
@@ -201,7 +201,7 @@ az vm stop --ids $vm_ids # CLI stops all VMs in parallel
 
 Use these scripts to loop through a list:
 
-### [Bash](#tab/bash2)
+### [Cmd](#tab/cmd2)
 
 ```azurecli
 ECHO OFF
