@@ -121,9 +121,9 @@ lifecycle:
 | 2.75.0         | July 2025        |                  | Minor        | STS          | 2.76.0                  | 2.66.x |
 | 2.76.0         | August 2025      |                  | Minor        | STS          | 2.77.0                  | 2.66.x |
 | 2.77.0         | September 2025   |                  | Minor        | STS          | 2.78.0                  | 2.66.x |
-| 2.78.0         | October 2025     |                  | Minor        | STS          | 2.79.0                  | 2.66.x |
-| 2.79.0         | November 2025    | Yes              | Major        | **LTS**      | _**2.91.0**_            | 2.79.0 | 
-| 2.80.0         | December 2025    | Yes              | Minor        | STS          | 2.81.0                  | 2.79.x | 
+| 2.78.0         | October 2025     |                  | Minor        | **LTS**      | _**2.91.0**_            | 2.78.0 |
+| 2.79.0         | November 2025    | Yes              | Major        | STS          | 2.80.0                  | 2.78.x |
+| 2.80.0         | December 2025    |                  | Minor        | STS          | 2.81.0                  | 2.78.x |
 
 **Examples:**
 
