@@ -15,43 +15,54 @@ directCommands:
 - uid: az_quantum_execute
   name: az quantum execute
   summary: |-
-    Submit a job to run on Azure Quantum, and waits for the result.
+    Submit a job to run on Azure Quantum, and wait for the result. Equivalent to `az quantum run`.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'quantum' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az quantum execute --location
+    az quantum execute --job-input-file
+                       --job-input-format
+                       --location
                        --resource-group
                        --target-id
                        --workspace-name
                        [--entry-point]
-                       [--job-input-file]
-                       [--job-input-format]
                        [--job-name]
                        [--job-output-format]
                        [--job-params]
-                       [--no-build]
-                       [--project]
                        [--shots]
                        [--storage]
                        [--target-capability]
-                       [<PROGRAM_ARGS>]
   examples:
   - summary: |-
-      Submit a Q# program from the current folder and wait for the result.
-    syntax: az quantum execute -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget
-  - summary: |-
-      Submit and wait for a Q# program from the current folder with job and program parameters.
+      Run QIR bitcode from a file in the current folder and wait for the result.
     syntax: >-
       az quantum execute -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget \
-          --job-params key1=value1 key2=value2 -- --n-qubits=3
+          --job-name MyJob --job-input-format qir.v1 --job-input-file MyQirBitcode.bc \
+          --entry-point MyQirEntryPoint
   - summary: |-
-      Submit and wait for a Q# program from the current folder with a target-capability parameter.
+      Run a Quil pass-through job on the Rigetti simulator and wait for the result.
     syntax: >-
-      az quantum execute -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget \
-          --target-capability MyTargetCapability
+      az quantum execute -g MyResourceGroup -w MyWorkspace -l MyLocation \
+         -t rigetti.sim.qvm --job-name MyJob --job-input-file MyProgram.quil \
+         --job-input-format rigetti.quil.v1 --job-output-format rigetti.quil-results.v1
+  - summary: |-
+      Submit a Qiskit circuit to the IonQ simulator with job params and wait for the results.
+    syntax: >-
+      az quantum execute -g MyResourceGroup -w MyWorkspace -l MyLocation \
+         -t ionq.simulator --job-name MyJobName --job-input-file MyCircuit.json \
+         --job-input-format ionq.circuit.v1 --job-output-format ionq.quantum-results.v1 \
+         --job-params count=100 content-type=application/json
   requiredParameters:
+  - isRequired: true
+    name: --job-input-file
+    summary: |-
+      The location of the input file to submit.
+  - isRequired: true
+    name: --job-input-format
+    summary: |-
+      The format of the file to submit.
   - isRequired: true
     name: --location -l
     summary: |-
@@ -71,81 +82,76 @@ directCommands:
   optionalParameters:
   - name: --entry-point
     summary: |-
-      The entry point for the QIR program or circuit. Required for QIR. Ignored on Q# jobs.
-  - name: --job-input-file
-    summary: |-
-      The location of the input file to submit. Required for QIR, QIO, and pass-through jobs. Ignored on Q# jobs.
-  - name: --job-input-format
-    summary: |-
-      The format of the file to submit. Omit this parameter on Q# jobs.
+      The entry point for the QIR program or circuit. Required for QIR jobs.
   - name: --job-name
     summary: |-
       A friendly name to give to this run of the program.
   - name: --job-output-format
     summary: |-
-      The expected job output format. Ignored on Q# jobs.
+      The expected job output format.
   - name: --job-params
     summary: |-
       Job parameters passed to the target as a list of key=value pairs, json string, or `@{file}` with json content.
-  - name: --no-build
-    defaultValue: "False"
-    summary: |-
-      [Deprecated] If specified, the Q# program is not built before submitting.
-  - name: --project
-    summary: |-
-      [Deprecated] The location of the Q# project to submit. Defaults to current folder.
   - name: --shots
     summary: |-
-      The number of times to run the Q# program on the given target.
+      The number of times to run the program on the given target.
   - name: --storage
     summary: |-
       If specified, the ConnectionString of an Azure Storage is used to store job data and results.
   - name: --target-capability
     summary: |-
       Target-capability parameter passed to the compiler.
-  - name: <PROGRAM_ARGS>
-    summary: |-
-      List of arguments expected by the Q# operation specified as --name=value after `--`.
 - uid: az_quantum_run
   name: az quantum run
   summary: |-
-    Equivalent to `az quantum execute`.
+    Submit a job to run on Azure Quantum, and wait for the result. Equivalent to `az quantum execute`.
   status: Preview
   isPreview: true
   previewOrExperimentalInfo: "Command group 'quantum' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az quantum run --location
+    az quantum run --job-input-file
+                   --job-input-format
+                   --location
                    --resource-group
                    --target-id
                    --workspace-name
                    [--entry-point]
-                   [--job-input-file]
-                   [--job-input-format]
                    [--job-name]
                    [--job-output-format]
                    [--job-params]
-                   [--no-build]
-                   [--project]
                    [--shots]
                    [--storage]
                    [--target-capability]
-                   [<PROGRAM_ARGS>]
   examples:
   - summary: |-
-      Submit a Q# program from the current folder and wait for the result.
-    syntax: az quantum run -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget
-  - summary: |-
-      Submit and wait for a Q# program from the current folder with job and program parameters.
+      Run QIR bitcode from a file in the current folder and wait for the result.
     syntax: >-
       az quantum run -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget \
-          --job-params key1=value1 key2=value2 -- --n-qubits=3
+          --job-name MyJob --job-input-format qir.v1 --job-input-file MyQirBitcode.bc \
+          --entry-point MyQirEntryPoint
   - summary: |-
-      Submit and wait for a Q# program from the current folder with a target-capability parameter.
+      Run a Quil pass-through job on the Rigetti simulator and wait for the result.
     syntax: >-
-      az quantum run -g MyResourceGroup -w MyWorkspace -l MyLocation -t MyTarget \
-          --target-capability MyTargetCapability
+      az quantum run -g MyResourceGroup -w MyWorkspace -l MyLocation \
+         -t rigetti.sim.qvm --job-name MyJob --job-input-file MyProgram.quil \
+         --job-input-format rigetti.quil.v1 --job-output-format rigetti.quil-results.v1
+  - summary: |-
+      Submit a Qiskit circuit to the IonQ simulator with job params and wait for the results.
+    syntax: >-
+      az quantum run -g MyResourceGroup -w MyWorkspace -l MyLocation \
+         -t ionq.simulator --job-name MyJobName --job-input-file MyCircuit.json \
+         --job-input-format ionq.circuit.v1 --job-output-format ionq.quantum-results.v1 \
+         --job-params count=100 content-type=application/json
   requiredParameters:
+  - isRequired: true
+    name: --job-input-file
+    summary: |-
+      The location of the input file to submit.
+  - isRequired: true
+    name: --job-input-format
+    summary: |-
+      The format of the file to submit.
   - isRequired: true
     name: --location -l
     summary: |-
@@ -165,41 +171,25 @@ directCommands:
   optionalParameters:
   - name: --entry-point
     summary: |-
-      The entry point for the QIR program or circuit. Required for QIR. Ignored on Q# jobs.
-  - name: --job-input-file
-    summary: |-
-      The location of the input file to submit. Required for QIR, QIO, and pass-through jobs. Ignored on Q# jobs.
-  - name: --job-input-format
-    summary: |-
-      The format of the file to submit. Omit this parameter on Q# jobs.
+      The entry point for the QIR program or circuit. Required for QIR jobs.
   - name: --job-name
     summary: |-
       A friendly name to give to this run of the program.
   - name: --job-output-format
     summary: |-
-      The expected job output format. Ignored on Q# jobs.
+      The expected job output format.
   - name: --job-params
     summary: |-
       Job parameters passed to the target as a list of key=value pairs, json string, or `@{file}` with json content.
-  - name: --no-build
-    defaultValue: "False"
-    summary: |-
-      [Deprecated] If specified, the Q# program is not built before submitting.
-  - name: --project
-    summary: |-
-      [Deprecated] The location of the Q# project to submit. Defaults to current folder.
   - name: --shots
     summary: |-
-      The number of times to run the Q# program on the given target.
+      The number of times to run the program on the given target.
   - name: --storage
     summary: |-
       If specified, the ConnectionString of an Azure Storage is used to store job data and results.
   - name: --target-capability
     summary: |-
       Target-capability parameter passed to the compiler.
-  - name: <PROGRAM_ARGS>
-    summary: |-
-      List of arguments expected by the Q# operation specified as --name=value after `--`.
 commands:
 - az_quantum_execute
 - az_quantum_job
