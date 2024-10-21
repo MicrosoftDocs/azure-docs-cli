@@ -22,15 +22,19 @@ directCommands:
                           --extended-capacity-size-tib
                           --resource-group
                           --sku
+                          [--auto-scale-policy {Disabled, Enabled, None}]
                           [--availability-zones]
+                          [--capacity-unit-scale-up]
+                          [--increase-capacity-unit]
                           [--location]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--public-network-access {Disabled, Enabled}]
                           [--tags]
+                          [--unused-size-tib]
   examples:
   - summary: |-
       Create an Elastic SAN.
-    syntax: az elastic-san create -n "san_name" -g "rg" --tags '{key1810:aaaa}' -l southcentralusstg --base-size-tib 23 --extended-capacity-size-tib 14 --sku '{name:Premium_LRS,tier:Premium}' --public-network-access Enabled
+    syntax: az elastic-san create -n "san_name" -g "rg" --tags '{key1810:aaaa}' -l southcentralusstg --base-size-tib 23 --extended-capacity-size-tib 14 --sku '{name:Premium_LRS,tier:Premium}' --public-network-access Enabled --auto-scale-policy-enforcement Enabled --capacity-unit-scale-up-limit-tib 17 --increase-capacity-unit-by-tib 4 --unused-size-tib 24
   requiredParameters:
   - isRequired: true
     name: --base-size-tib
@@ -53,9 +57,22 @@ directCommands:
     summary: |-
       Resource sku  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   optionalParameters:
+  - name: --auto-scale-policy --auto-scale-policy-enforcement
+    parameterValueGroup: "Disabled, Enabled, None"
+    summary: |-
+      Enable or Disable scale up setting on Elastic San Appliance.
+    isPreview: true
   - name: --availability-zones
     summary: |-
       Logical zone for Elastic San resource; example: ["1"].  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --capacity-unit-scale-up --capacity-unit-scale-up-limit-tib
+    summary: |-
+      Maximum scale up size on Elastic San appliance in TiB.
+    isPreview: true
+  - name: --increase-capacity-unit --increase-capacity-unit-by-tib
+    summary: |-
+      Unit to increase Capacity Unit on Elastic San appliance in TiB.
+    isPreview: true
   - name: --location -l
     summary: |-
       The geo-location where the resource lives.  When not specified, the location of the resource group will be used.
@@ -70,6 +87,10 @@ directCommands:
   - name: --tags
     summary: |-
       Azure resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --unused-size-tib
+    summary: |-
+      Unused size on Elastic San appliance in TiB.
+    isPreview: true
 - uid: az_elastic-san_delete
   name: az elastic-san delete
   summary: |-
@@ -183,12 +204,15 @@ directCommands:
   sourceType: Extension
   syntax: >-
     az elastic-san update [--add]
+                          [--auto-scale-policy {Disabled, Enabled, None}]
                           [--availability-zones]
                           [--base-size-tib]
+                          [--capacity-unit-scale-up]
                           [--elastic-san-name]
                           [--extended-capacity-size-tib]
                           [--force-string {0, 1, f, false, n, no, t, true, y, yes}]
                           [--ids]
+                          [--increase-capacity-unit]
                           [--no-wait {0, 1, f, false, n, no, t, true, y, yes}]
                           [--public-network-access {Disabled, Enabled}]
                           [--remove]
@@ -197,20 +221,30 @@ directCommands:
                           [--sku]
                           [--subscription]
                           [--tags]
+                          [--unused-size-tib]
   examples:
   - summary: |-
       Update an Elastic SAN.
-    syntax: az elastic-san update -n "san_name" -g "rg" --tags '{key1710:bbbb}' --base-size-tib 25 --extended-capacity-size-tib 15
+    syntax: az elastic-san update -n "san_name" -g "rg" --tags '{key1710:bbbb}' --base-size-tib 25 --extended-capacity-size-tib 15 --auto-scale-policy-enforcement Disabled --capacity-unit-scale-up-limit-tib 18 --increase-capacity-unit-by-tib 5 --unused-size-tib 25
   optionalParameters:
   - name: --add
     summary: |-
       Add an object to a list of objects by specifying a path and key value pairs.  Example: `--add property.listProperty <key=value, string or JSON string>`.
+  - name: --auto-scale-policy --auto-scale-policy-enforcement
+    parameterValueGroup: "Disabled, Enabled, None"
+    summary: |-
+      Enable or Disable scale up setting on Elastic San Appliance.
+    isPreview: true
   - name: --availability-zones
     summary: |-
       Logical zone for Elastic San resource; example: ["1"].  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
   - name: --base-size-tib
     summary: |-
       Base size of the Elastic San appliance in TiB.
+  - name: --capacity-unit-scale-up --capacity-unit-scale-up-limit-tib
+    summary: |-
+      Maximum scale up size on Elastic San appliance in TiB.
+    isPreview: true
   - name: --elastic-san-name --name -n
     summary: |-
       The name of the ElasticSan.
@@ -224,6 +258,10 @@ directCommands:
   - name: --ids
     summary: |-
       One or more resource IDs (space-delimited). It should be a complete resource ID containing all information of 'Resource Id' arguments. You should provide either --ids or other 'Resource Id' arguments.
+  - name: --increase-capacity-unit --increase-capacity-unit-by-tib
+    summary: |-
+      Unit to increase Capacity Unit on Elastic San appliance in TiB.
+    isPreview: true
   - name: --no-wait
     parameterValueGroup: "0, 1, f, false, n, no, t, true, y, yes"
     summary: |-
@@ -250,6 +288,10 @@ directCommands:
   - name: --tags
     summary: |-
       Azure resource tags.  Support shorthand-syntax, json-file and yaml-file. Try "??" to show more.
+  - name: --unused-size-tib
+    summary: |-
+      Unused size on Elastic San appliance in TiB.
+    isPreview: true
 - uid: az_elastic-san_wait
   name: az elastic-san wait
   summary: |-
