@@ -4,7 +4,7 @@ description: A complete list of officially supported Azure Command-Line Interfac
 author: haroldrandom
 ms.author: jianzen
 manager: yonzhan,yungezz
-ms.date: 10/21/2024
+ms.date: 10/22/2024
 ms.topic: article
 ms.service: azure-cli
 ms.devlang: azure-cli
@@ -32,7 +32,7 @@ You will be prompted to install an extension on first use.
 |[ad](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad) | 2.15.0 | Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension | GA | [0.1.0](https://github.com/Azure/azure-cli-extensions/tree/master/src/ad/HISTORY.rst) |
 |[aem](https://github.com/Azure/azure-cli-extensions) | 2.19.1 | Manage Azure Enhanced Monitoring Extensions for SAP | GA | [0.3.0](https://github.com/Azure/azure-cli-extensions) |
 |[ai-examples](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples) | 2.2.0 | Add AI powered examples to help content. | Preview | [0.2.5](https://github.com/Azure/azure-cli-extensions/tree/master/src/ai-examples/HISTORY.rst) |
-|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [9.0.0b6](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
+|[aks-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview) | 2.61.0 | Provides a preview for upcoming AKS features | Preview | [9.0.0b7](https://github.com/Azure/azure-cli-extensions/tree/main/src/aks-preview/HISTORY.rst) |
 |[aksarc](https://learn.microsoft.com/en-us/azure/aks/hybrid/) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | GA | [1.2.23](https://learn.microsoft.com/en-us/azure/aks/hybrid/) |
 |[akshybrid](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) | 2.32.0 | Microsoft Azure Command-Line Tools HybridContainerService Extension | Experimental | [0.1.2](https://dev.azure.com/msazure/msk8s/_git/hybridaks-utils/azcli/akshybrid) |
 |[alb](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb) | 2.51.0 | Microsoft Azure Command-Line Tools ALB Extension. | Preview | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/alb/HISTORY.rst) |
@@ -155,6 +155,7 @@ You will be prompted to install an extension on first use.
 |[monitor-control-service](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service) | 2.61.0 | Microsoft Azure Command-Line Tools MonitorClient Extension | GA | [1.2.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-control-service/HISTORY.rst) |
 |[monitor-pipeline-group](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-pipeline-group) | 2.61.0 | Microsoft Azure Command-Line Tools MonitorPipelineGroup Extension. | Preview | [1.0.0b2](https://github.com/Azure/azure-cli-extensions/tree/main/src/monitor-pipeline-group/HISTORY.rst) |
 |[multicloud-connector](https://github.com/Azure/azure-cli-extensions/tree/main/src/multicloud-connector) | 2.61.0 | Microsoft Azure Command-Line Tools MulticloudConnector Extension. | GA | [1.0.0](https://github.com/Azure/azure-cli-extensions/tree/main/src/multicloud-connector/HISTORY.rst) |
+|[neon](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon) | 2.61.0 | Microsoft Azure Command-Line Tools Neon Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/neon/HISTORY.rst) |
 |[netappfiles-preview](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview) | 2.61.0 | Provides a preview for upcoming Azure NetApp Files (ANF) features. | Preview | [1.0.0b3](https://github.com/Azure/azure-cli-extensions/tree/main/src/netappfiles-preview/HISTORY.rst) |
 |[network-analytics](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics) | 2.51.0 | Microsoft Azure Command-Line Tools NetworkAnalytics Extension. | Preview | [1.0.0b1](https://github.com/Azure/azure-cli-extensions/tree/main/src/network-analytics/HISTORY.rst) |
 |[networkcloud](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud) | 2.61.0 | Support for Azure Operator Nexus network cloud commands based on 2024-07-01 API version. | Preview | [2.0.0b5](https://github.com/Azure/azure-cli-extensions/tree/main/src/networkcloud/HISTORY.rst) |
