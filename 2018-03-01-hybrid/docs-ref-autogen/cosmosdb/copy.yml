@@ -79,11 +79,12 @@ directCommands:
   previewOrExperimentalInfo: "Command group 'cosmosdb copy' is in preview and under development. Reference and support levels: https://aka.ms/CLI_refstatus"
   sourceType: Extension
   syntax: >-
-    az cosmosdb copy create --dest-account
-                            --resource-group
+    az cosmosdb copy create --resource-group
                             --src-account
+                            [--dest-account]
                             [--dest-cassandra]
                             [--dest-mongo]
+                            [--dest-mongo-vcore]
                             [--dest-nosql]
                             [--job-name]
                             [--mode]
@@ -103,11 +104,10 @@ directCommands:
   - summary: |-
       Copy Azure Cosmos DB API for MongoDB collection
     syntax: az cosmosdb copy create -g "rg1" --job-name "j1" --src-account "acc1" --dest-account "acc1" --src-mongo database=d1 collection=c1 --dest-mongo database=d2 collection=c2
+  - summary: |-
+      Copy Azure Cosmos DB API from MongoDB(RU) collection to Mongo(vCore) collection
+    syntax: az cosmosdb copy create -g "rg1" --job-name "j1" --src-account "acc1" --src-mongo database=d1 collection=c1 --dest-mongo-vcore database=d2 collection=c2 connectionStringKeyVaultUri=<link_to_Azure_KeyVault_secret>
   requiredParameters:
-  - isRequired: true
-    name: --dest-account
-    summary: |-
-      Name of the Azure Cosmos DB destination database account.
   - isRequired: true
     name: --resource-group -g
     summary: |-
@@ -117,6 +117,9 @@ directCommands:
     summary: |-
       Name of the Azure Cosmos DB source database account.
   optionalParameters:
+  - name: --dest-account
+    summary: |-
+      Name of the Azure Cosmos DB destination database account.
   - name: --dest-cassandra
     summary: |-
       Destination table.
@@ -131,6 +134,14 @@ directCommands:
       Usage: --dest-mongo database=XX collection=XX'
       database: Database name.
       collection: Collection name.
+  - name: --dest-mongo-vcore
+    summary: |-
+      Destination Mongo(vCore) collection.
+    description: |-
+      Usage: --dest-mongo-vcore database=XX collection=XX connectionStringKeyVaultUri=XX'
+      database: Database name.
+      collection: Collection name.
+      connectionStringKeyVaultUri: Link to Azure KeyVault secret containing connection string.
   - name: --dest-nosql
     summary: |-
       Destination container.
